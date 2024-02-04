@@ -1,0 +1,40 @@
+{
+  "name": "@modelscope-studio/lint-config",
+  "version": "0.0.0",
+  "private": false,
+  "description": "ModelScope Gradio Components",
+  "repository": "git@github.com:modelscope/modelscope-studio.git",
+  "license": "Apache-2.0",
+  "exports": {
+    "./eslint": {
+      "import": "./eslint.js",
+      "require": "./eslint.js"
+    },
+    "./stylelint": {
+      "import": "./stylelint.js",
+      "require": "./stylelint.js"
+    }
+  },
+  "dependencies": {
+    "@typescript-eslint/eslint-plugin": "^6.7.0",
+    "@typescript-eslint/parser": "^6.7.0",
+    "eslint-config-prettier": "^9.0.0",
+    "eslint-import-resolver-typescript": "^3.6.0",
+    "eslint-plugin-import": "^2.28.1",
+    "eslint-plugin-jsx-a11y": "^6.7.1",
+    "eslint-plugin-prettier": "5.0.0",
+    "eslint-plugin-react": "^7.33.2",
+    "eslint-plugin-react-hooks": "^4.6.0",
+    "eslint-plugin-simple-import-sort": "^10.0.0",
+    "eslint-plugin-svelte": "^2.35.1",
+    "postcss": "^8.4.32",
+    "postcss-less": "^6.0.0",
+    "stylelint-config-ali": "^2.1.0",
+    "stylelint-config-rational-order": "^0.1.2",
+    "stylelint-config-standard": "^36.0.0",
+    "stylelint-declaration-block-no-ignored-properties": "^2.8.0",
+    "stylelint-order": "^6.0.4",
+    "stylelint-prettier": "^5.0.0",
+    "svelte-eslint-parser": "^0.33.1"
+  }
+}

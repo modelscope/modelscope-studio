@@ -1,0 +1,222 @@
+.ms-markdown {
+  a,
+  a:hover {
+    color: #2f81f7;
+  }
+
+  .ms-heading {
+    display: flex;
+    align-items: center;
+
+    .ms-heading-anchor {
+      margin-left: -25px;
+      padding-right: 8px;
+      color: var(--body-text-color-subdued);
+      line-height: 1;
+      opacity: 0;
+    }
+
+    .ms-heading-anchor > svg {
+      color: var(--body-text-color-subdued);
+    }
+
+    &:hover {
+      .ms-heading-anchor {
+        opacity: 1;
+      }
+    }
+  }
+
+  &.markdown-body {
+    font-size: inherit;
+    background: none;
+
+    pre:has(.ms-markdown-code) {
+      padding: 0;
+      overflow: unset;
+    }
+
+    /* KaTeX */
+    span.katex {
+      font-size: var(--text-lg);
+      direction: ltr;
+    }
+  }
+
+  & &-select-box-card {
+    width: 100%;
+    cursor: pointer;
+
+    &-equal-height {
+      height: 100%;
+    }
+
+    &:hover:not(.ms-markdown-select-box-card-disabled) {
+      border-color: var(--primary-300);
+    }
+
+    &-disabled {
+      color: var(--ant-color-text-disabled);
+      cursor: not-allowed;
+    }
+
+    &.ms-markdown-select-box-card-selected {
+      &:hover {
+        border-color: var(--primary-500);
+      }
+
+      border-color: var(--primary-500);
+    }
+
+    .ant-card-cover {
+      margin: 0;
+    }
+
+    img,
+    .ant-image-mask {
+      width: 100% !important;
+      border-radius: var(--ant-border-radius-lg) var(--ant-border-radius-lg) 0 0 !important;
+    }
+
+    .ant-image {
+      width: 100%;
+
+      img {
+        width: 100%;
+        object-fit: cover;
+      }
+    }
+  }
+
+  & &-select-box-submit-btn {
+    margin-top: 8px;
+
+    button {
+      background-color: var(--ant-color-primary);
+    }
+  }
+
+  &-accordion {
+    p,
+    li {
+      font-size: 16px;
+    }
+
+    .ant-collapse-header {
+      outline: none !important;
+    }
+  }
+
+  &-code {
+    &&-dark {
+      .ms-markdown-code-header {
+        background-color: #222;
+      }
+    }
+
+    &-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+      height: 36px;
+      padding: 5px 1em;
+      background-color: rgba(0, 0, 0, 0.03);
+
+      &-copy {
+        color: var(--body-text-color-subdued);
+        font-size: 17px;
+        cursor: pointer;
+
+        &:hover {
+          color: var(--body-text-color);
+        }
+      }
+    }
+  }
+
+  .dot-blink() {
+    margin-left: 3px;
+    color: var(--color-accent);
+    font-weight: bold;
+    vertical-align: baseline;
+    animation: blink 1s steps(5, start) infinite;
+    content: '_';
+  }
+
+  &-flushing > p,
+  &-flushing > li,
+  &-flushing > dl,
+  &-flushing > dt,
+  &-flushing > dd,
+  &-flushing > h1,
+  &-flushing > h2,
+  &-flushing > h3,
+  &-flushing > h4,
+  &-flushing > h5,
+  &-flushing > h6,
+  &-flushing > td {
+    &:last-child {
+      &::after {
+        .dot-blink();
+      }
+    }
+  }
+
+  &-flushing > ol:last-child li:last-child,
+  &-flushing > pre:last-child code,
+  &-flushing > ul:last-child li:last-child {
+    &::after {
+      .dot-blink();
+    }
+  }
+
+  &-flushing > .ms-markdown-accordion.ms-markdown-accordion-typing {
+    .ms-markdown-accordion-title:last-child,
+    .ms-markdown-accordion-body:last-child {
+      &-typing-string {
+        &::after {
+          .dot-blink();
+        }
+      }
+
+      & > p,
+      & > ul,
+      & > ol,
+      & > dl,
+      & > dt,
+      & > dd,
+      & > h1,
+      & > h2,
+      & > h3,
+      & > h4,
+      & > h5,
+      & > h6,
+      & > td {
+        &:last-child {
+          &::after {
+            .dot-blink();
+          }
+        }
+      }
+
+      & > ol:last-child li:last-child,
+      & > pre:last-child code,
+      & > ul:last-child li:last-child {
+        &::after {
+          .dot-blink();
+        }
+      }
+    }
+  }
+
+  &-flushing-empty::after {
+    .dot-blink();
+  }
+
+  @keyframes blink {
+    to {
+      visibility: hidden;
+    }
+  }
+}
