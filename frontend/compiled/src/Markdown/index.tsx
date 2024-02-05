@@ -44,15 +44,12 @@ export interface MarkdownProps extends MarkdownContextValue {
   preview?: boolean;
   disabled?: boolean;
   render_markdown?: boolean;
-  latex_delimiters?: {
-    left: string;
-    right: string;
-    display: boolean;
-  }[];
   line_breaks?: boolean;
   on_load?: () => void;
   header_links?: boolean;
   last_flushing_end_index?: number;
+  enable_latex?: boolean;
+  latex_single_dollar_delimiter?: boolean;
   enable_base64?: boolean;
 }
 
@@ -70,7 +67,6 @@ export const Markdown = defineComponent<MarkdownProps>((props) => {
   const {
     render_markdown = true,
     sanitize_html = true,
-    latex_delimiters: _latex_delimiters = [],
     text: _text = '',
     line_breaks = true,
     flushing,
@@ -82,7 +78,9 @@ export const Markdown = defineComponent<MarkdownProps>((props) => {
     end = true,
     on_load: _on_load,
     last_flushing_end_index,
+    latex_single_dollar_delimiter = true,
     enable_base64,
+    enable_latex = true,
     on_custom,
     header_links = false,
     custom_components = defaultCustomComponents,
@@ -195,7 +193,14 @@ export const Markdown = defineComponent<MarkdownProps>((props) => {
             remarkDirectiveRehype,
             [remarkGfm, { singleTilde: false }],
             line_breaks ? remarkBreaks : null,
-            remarkMath,
+            enable_latex
+              ? [
+                  remarkMath,
+                  {
+                    singleDollarTextMath: latex_single_dollar_delimiter,
+                  },
+                ]
+              : null,
           ].filter(Boolean) as NonNullable<
             ReactMarkdownOptions['remarkPlugins']
           >
@@ -205,7 +210,7 @@ export const Markdown = defineComponent<MarkdownProps>((props) => {
         }}
         rehypePlugins={
           [
-            rehypeKatex,
+            enable_latex ? rehypeKatex : null,
             rehypeRaw,
             rehypeInlineCodeProperty,
             sanitize_html ? [rehypeSanitize, sanitizeSchema] : null,

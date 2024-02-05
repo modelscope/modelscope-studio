@@ -20,6 +20,7 @@ Use accordion tag:
 ```json
 {{"text": "glorious weather", "resolution": "1024*1024"}}
 ```
+
 </accordion>
 
 Qwen preset:

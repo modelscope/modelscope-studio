@@ -24,14 +24,11 @@
     change: never;
     custom: CustomData;
   }>;
-  export let latex_delimiters: {
-    left: string;
-    right: string;
-    display: boolean;
-  }[];
   export let header_links = false;
 
   // custom
+  export let enable_latex: boolean;
+  export let latex_single_dollar_delimiter: boolean;
   export let enable_base64 = false;
   export let preview = true;
   export let custom_components: CustomComponents = {};
@@ -71,7 +68,8 @@
       {rtl}
       on:change={() => gradio.dispatch('change')}
       on:custom={(e) => gradio.dispatch('custom', e.detail)}
-      {latex_delimiters}
+      {enable_latex}
+      {latex_single_dollar_delimiter}
       {sanitize_html}
       {line_breaks}
       {header_links}

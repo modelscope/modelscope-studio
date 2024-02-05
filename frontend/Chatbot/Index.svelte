@@ -53,11 +53,8 @@
   export let layout: 'bubble' | 'panel' = 'bubble';
   export let render_markdown = true;
   export let line_breaks = true;
-  export let latex_delimiters: {
-    left: string;
-    right: string;
-    display: boolean;
-  }[];
+  export let enable_latex: boolean;
+  export let latex_single_dollar_delimiter: boolean;
   export let gradio: Gradio<{
     change: typeof value;
     select: SelectData;
@@ -180,7 +177,8 @@
       {flushing_speed}
       {show_share_button}
       value={_value}
-      {latex_delimiters}
+      {enable_latex}
+      {latex_single_dollar_delimiter}
       {render_markdown}
       complete_message={!loading_status ||
         loading_status?.status === 'complete'}

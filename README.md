@@ -9,7 +9,7 @@
 <p>
 
 <p align="center">
-🤖 <a href="https://modelscope.cn/studios/modelscope/modelscope-studio/summary">Modelscope Studio</a> ｜ 🤗 <a href="https://huggingface.co/spaces/modelscope/modelscope-studio">HuggingFace Space</a>
+<a href="https://github.com/modelscope/modelscope-studio">Github</a> | 🤖 <a href="https://modelscope.cn/studios/modelscope/modelscope-studio/summary">Modelscope Studio</a> ｜ 🤗 <a href="https://huggingface.co/spaces/modelscope/modelscope-studio">HuggingFace Space</a>
 <br>
   <a href="README-zh_CN.md">中文</a>&nbsp ｜ &nbspEnglish
 </p>

@@ -14,11 +14,8 @@
   export let theme: string = 'light';
   export let sanitize_html = true;
   export let line_breaks = false;
-  export let latex_delimiters: {
-    left: string;
-    right: string;
-    display: boolean;
-  }[];
+  export let enable_latex: boolean;
+  export let latex_single_dollar_delimiter: boolean;
   export let header_links = false;
   export let preview = true;
   export let enable_base64 = false;
@@ -47,7 +44,8 @@
     {enable_base64}
     {preview}
     text={value}
-    {latex_delimiters}
+    {enable_latex}
+    {latex_single_dollar_delimiter}
     {sanitize_html}
     {line_breaks}
     {header_links}

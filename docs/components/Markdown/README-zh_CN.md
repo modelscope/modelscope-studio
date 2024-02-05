@@ -60,11 +60,13 @@ custom_select.js
 
 ### props
 
-| 属性              | 类型                                                            | 默认值 | 描述                                                                        |
-| ----------------- | --------------------------------------------------------------- | ------ | --------------------------------------------------------------------------- |
-| enable_base64     | bool                                                            | False  | 是否支持渲染的内容为 base64，因为直接渲染 base64 有安全问题，默认为 False。 |
-| preview           | bool                                                            | True   | 是否开启图片预览功能                                                        |
-| custom_components | dict\[str, CustomComponentDict\] CustomComponentDict 定义见下方 | None   | 支持用户定义自定义标签，并通过 js 控制标签渲染样式与触发 python 事件。      |
+| 属性                          | 类型                                                            | 默认值 | 描述                                                                        |
+| ----------------------------- | --------------------------------------------------------------- | ------ | --------------------------------------------------------------------------- |
+| enable_base64                 | bool                                                            | False  | 是否支持渲染的内容为 base64，因为直接渲染 base64 有安全问题，默认为 False。 |
+| enable_latex                  | bool                                                            | True   | 是否支持 Latex 公式渲染                                                     |
+| latex_single_dollar_delimiter | bool                                                            | True   | 是否支持单`$`符号在 Latex 公式中渲染                                        |
+| preview                       | bool                                                            | True   | 是否开启图片预览功能                                                        |
+| custom_components             | dict\[str, CustomComponentDict\] CustomComponentDict 定义见下方 | None   | 支持用户定义自定义标签，并通过 js 控制标签渲染样式与触发 python 事件。      |
 
 **CustomComponent 定义如下**
 

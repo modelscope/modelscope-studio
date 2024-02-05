@@ -10,11 +10,8 @@
   export let custom_components: CustomComponents = {};
   export let sanitize_html: boolean;
   export let line_breaks: boolean;
-  export let latex_delimiters: {
-    left: string;
-    right: string;
-    display: boolean;
-  }[];
+  export let enable_latex: boolean;
+  export let latex_single_dollar_delimiter: boolean;
 </script>
 
 <div
@@ -29,7 +26,8 @@
     text={value}
     {theme}
     disabled={true}
-    {latex_delimiters}
+    {enable_latex}
+    {latex_single_dollar_delimiter}
     {sanitize_html}
     {line_breaks}
   />

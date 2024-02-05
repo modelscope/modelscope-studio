@@ -40,11 +40,8 @@
         (MultimodalMessage | null)[] | null,
       ][]
     | null = null;
-  export let latex_delimiters: {
-    left: string;
-    right: string;
-    display: boolean;
-  }[];
+  export let enable_latex: boolean;
+  export let latex_single_dollar_delimiter: boolean;
   export let pending_message = false;
   export let complete_message = false;
   export let selectable = false;
@@ -299,7 +296,8 @@
                         {enable_base64}
                         {preview}
                         message={message.text}
-                        {latex_delimiters}
+                        {enable_latex}
+                        {latex_single_dollar_delimiter}
                         {sanitize_html}
                         {render_markdown}
                         {line_breaks}

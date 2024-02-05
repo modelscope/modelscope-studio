@@ -80,7 +80,6 @@ class ModelScopeChatbot(Component):
             elem_classes: list[str] | str | None = None,
             render: bool = True,
             height: int | None = None,
-            latex_delimiters: list[dict[str, str | bool]] | None = None,
             rtl: bool = False,
             show_share_button: bool | None = None,
             show_copy_button: bool = False,
@@ -98,6 +97,8 @@ class ModelScopeChatbot(Component):
             flushing: bool = True,
             flushing_speed: int = 5,
             enable_base64: bool = False,
+            enable_latex: bool = True,
+            latex_single_dollar_delimiter: bool = True,
             preview: bool = True,
             llm_thinking_presets: list[dict] = [],
             data_postprocess: Callable | None = None,
@@ -117,7 +118,8 @@ class ModelScopeChatbot(Component):
             elem_classes: An optional list of strings that are assigned as the classes of this component in the HTML DOM. Can be used for targeting CSS styles.
             render: If False, component will not render be rendered in the Blocks context. Should be used if the intention is to assign event listeners now but render the component later.
             height: height of the component in pixels.
-            latex_delimiters: A list of dicts of the form {"left": open delimiter (str), "right": close delimiter (str), "display": whether to display in newline (bool)} that will be used to render LaTeX expressions. If not provided, `latex_delimiters` is set to `[{ "left": "$$", "right": "$$", "display": True }]`, so only expressions enclosed in $$ delimiters will be rendered as LaTeX, and in a new line. Pass in an empty list to disable LaTeX rendering. For more information, see the [KaTeX documentation](https://katex.org/docs/autorender.html).
+            enable_latex: If True, will enable LaTeX rendering.
+            latex_single_dollar_delimiter: If True, will enable single dollar delimiter for LaTeX rendering.
             rtl: If True, sets the direction of the rendered text to right-to-left. Default is False, which renders text left-to-right.
             show_share_button: If True, will show a share icon in the corner of the component that allows user to share outputs to Hugging Face Spaces Discussions. If False, icon does not appear. If set to None (default behavior), then the icon appears if this Gradio app is launched on Spaces, but not otherwise.
             show_copy_button: If True, will show a copy button for each chatbot message.
@@ -140,9 +142,8 @@ class ModelScopeChatbot(Component):
         self.likeable = likeable
         self.height = height
         self.rtl = rtl
-        if latex_delimiters is None:
-            latex_delimiters = [{"left": "$$", "right": "$$", "display": True}]
-        self.latex_delimiters = latex_delimiters
+        self.enable_latex = enable_latex
+        self.latex_single_dollar_delimiter = latex_single_dollar_delimiter
         self.show_share_button = show_share_button
         self.render_markdown = render_markdown
         self.show_copy_button = show_copy_button

@@ -120,7 +120,8 @@ class Docs:
             if item["type"] == "text":
                 md = mgr.Markdown(item["value"],
                                   header_links=True,
-                                  custom_components=custom_components)
+                                  custom_components=custom_components,
+                                  preview=False)
                 deps = [dep for dep in [components_tabs, self.tabs] if dep]
                 if len(deps) > 0:
                     md.custom(fn=on_tab_link_click, outputs=deps)
