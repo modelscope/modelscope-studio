@@ -73,45 +73,60 @@ export async function copy_to_clipboard(value: string) {
 }
 
 export const format_chat_for_sharing = async (
-  chat: [MultimodalMessage | null, MultimodalMessage | null][]
+  chat: [
+    (MultimodalMessage | null)[] | null,
+    (MultimodalMessage | null)[] | null,
+  ][]
 ): Promise<string> => {
   const messages = await Promise.all(
     chat.map(async (message_pair) => {
       return await Promise.all(
-        message_pair.map((message, i) => {
-          if (message === null) return '';
-          const speaker_emoji = i === 0 ? '😃' : '🤖';
-          let html_content = message.text;
-
-          if (Array.isArray(message.files) && message.files.length > 0) {
-            html_content += '<br/>';
-            message.files.forEach((fileMessage) => {
-              const file = fileMessage.file;
-              if (!file?.url) return '';
-              const file_url = file.url;
-              if (file.mime_type?.includes('audio')) {
-                html_content += `<audio controls src="${file_url}"></audio>`;
-              } else if (file.mime_type?.includes('video')) {
-                html_content += `<video controls src="${file_url}"></video>`;
-              } else if (file.mime_type?.includes('image')) {
-                html_content += `<img src="${file_url}" />`;
-              } else {
-                html_content += `<a target="_blank" rel="noreferrer" href="${file_url}">${fileMessage.alt_text || fileMessage.file.alt_text || fileMessage.file.orig_name}</a>`;
-              }
-            });
+        message_pair.map((message_item, i) => {
+          if (!message_item) {
+            return [];
           }
+          const speaker_emoji = i === 0 ? '😃' : '🤖';
+          return message_item.map((message) => {
+            if (!message) {
+              return '';
+            }
+            let html_content = message.text;
 
-          return `${speaker_emoji}${message.name ? ` ${message.name}` : ''}: ${html_content}`;
+            if (Array.isArray(message.files) && message.files.length > 0) {
+              html_content += '<br/>';
+              message.files.forEach((fileMessage) => {
+                const file = fileMessage.file;
+                if (!file?.url) return '';
+                const file_url = file.url;
+                if (file.mime_type?.includes('audio')) {
+                  html_content += `<audio controls src="${file_url}"></audio>`;
+                } else if (file.mime_type?.includes('video')) {
+                  html_content += `<video controls src="${file_url}"></video>`;
+                } else if (file.mime_type?.includes('image')) {
+                  html_content += `<img src="${file_url}" />`;
+                } else {
+                  html_content += `<a target="_blank" rel="noreferrer" href="${file_url}">${fileMessage.alt_text || fileMessage.file.alt_text || fileMessage.file.orig_name}</a>`;
+                }
+              });
+            }
+
+            return `${speaker_emoji}${message.name ? ` ${message.name}` : ''}: ${html_content}`;
+          });
         })
       );
     })
   );
   return messages
-    .map((message_pair) =>
-      message_pair.join(
+    .map((message_pair) => {
+      return message_pair.map((message_item) => {
+        return message_item.join('\n');
+      });
+    })
+    .map((message_pair) => {
+      return message_pair.join(
         message_pair[0] !== '' && message_pair[1] !== '' ? '\n' : ''
-      )
-    )
+      );
+    })
     .join('\n');
 };
 
