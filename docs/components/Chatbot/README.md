@@ -76,6 +76,8 @@ class FileMessage(GradioModel):
 
 
 class MultimodalMessage(GradioModel):
+    # By default, message index is used as id. it will cause the message to be re-rendered when id changed.
+    id: Optional[str] = None
     name: Optional[str] = None
     text: Optional[str] = None
     flushing: Optional[bool] = None

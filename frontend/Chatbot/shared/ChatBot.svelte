@@ -233,7 +233,7 @@
       {#each value as message_pair, i}
         {#each message_pair as message_item, j}
           {#if message_item}
-            {#each message_item as message, k}
+            {#each message_item as message, k (message?.id || `${i}-${j}-${k}`)}
               {#if message}
                 <div
                   class="message-row {layout} {j == 0 ? 'user-row' : 'bot-row'}"

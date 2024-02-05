@@ -35,6 +35,7 @@ export type FileMessage = {
 };
 
 export type MultimodalMessage = {
+  id?: string;
   text: string;
   original_text: string;
   name?: string;

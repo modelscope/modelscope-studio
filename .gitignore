@@ -31,7 +31,7 @@ lib-cov
 
 # Coverage directory used by tools like istanbul
 coverage
-
+tests
 # Dependency directories
 bower_components
 node_modules/
