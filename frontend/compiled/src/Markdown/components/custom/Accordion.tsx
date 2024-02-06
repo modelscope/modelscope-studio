@@ -68,8 +68,7 @@ export const Accordion: Components['accordion'] = ({
       ? (last_flushing_end_index || 0) > (node.position?.end.offset || 0) || end
       : true;
   const flushingEnd = flushing
-    ? typeof text[node.position?.end.offset || 0] === 'string' ||
-      text.length === node.position?.end.offset
+    ? typeof text[node.position?.end.offset || 0] === 'string'
     : true;
 
   const hasEnd = flushingEnd && textEnd;
