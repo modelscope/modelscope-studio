@@ -9,7 +9,7 @@
 <p>
 
 <p align="center">
-<a href="https://github.com/modelscope/modelscope-studio">GitHub</a> | 🤖 <a href="https://modelscope.cn/studios/modelscope/modelscope-studio/summary">Modelscope Studio</a> ｜ 🤗 <a href="https://huggingface.co/spaces/modelscope/modelscope-studio">HuggingFace Space</a>
+<a href="https://github.com/modelscope/modelscope-studio">GitHub</a> | 🤖 <a href="https://modelscope.cn/studios/modelscope/modelscope-studio/summary">Modelscope Studio</a> ｜ 🤗 <a href="https://huggingface.co/spaces/modelscope/modelscope-studio">Hugging Face Space</a>
 <br>
   <a href="README-zh_CN.md">中文</a>&nbsp ｜ &nbsp<a href="README.md">English</a>&nbsp ｜ &nbsp日本語
 </p>
@@ -60,7 +60,7 @@ demo.queue().launch()
 
 現在サポートされているコンポーネントは以下の通りです:
 
-- Chatbot: gradioチャットボット拡張コンポーネントは、マルチモーダルコンテンツ出力、マルチボットシナリオ、会話コンテンツ内のカスタムレンダリングコンポーネントやイベントインタラクションをサポートします。
+- Chatbot: gradio チャットボット拡張コンポーネントは、マルチモーダルコンテンツ出力、マルチボットシナリオ、会話コンテンツ内のカスタムレンダリングコンポーネントやイベントインタラクションをサポートします。
 - MultimodalInput: ファイルアップロード、録画、写真撮影などの機能をサポートするマルチモーダル入力ボックス。
 - Markdown: gradio Markdown 拡張コンポーネントは、マルチモーダルコンテンツ（オーディオ、ビデオ、音声、ファイル、テキスト）の出力をサポートします。
 - ImageGallery (WIP): gradio Gallery 拡張コンポーネントは、ウォーターフォール形式の画像表示をサポートします。
