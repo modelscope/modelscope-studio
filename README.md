@@ -9,9 +9,9 @@
 <p>
 
 <p align="center">
-<a href="https://github.com/modelscope/modelscope-studio">Github</a> | 🤖 <a href="https://modelscope.cn/studios/modelscope/modelscope-studio/summary">Modelscope Studio</a> ｜ 🤗 <a href="https://huggingface.co/spaces/modelscope/modelscope-studio">HuggingFace Space</a>
+<a href="https://github.com/modelscope/modelscope-studio">GitHub</a> | 🤖 <a href="https://modelscope.cn/studios/modelscope/modelscope-studio/summary">Modelscope Studio</a> ｜ 🤗 <a href="https://huggingface.co/spaces/modelscope/modelscope-studio">Hugging Face Space</a>
 <br>
-  <a href="README-zh_CN.md">中文</a>&nbsp ｜ &nbspEnglish
+  <a href="README-zh_CN.md">中文</a>&nbsp ｜ &nbspEnglish&nbsp ｜ &nbsp<a href="README-ja_JP.md">日本語</a>
 </p>
 
 `modelscope_studio` is a set of extension component libraries based on gradio 4.x, dedicated to serving the various extension needs of gradio applications within the ModelScope Studio. It mainly focuses on enhancing conversational scenarios, supporting multimodal contexts, and providing assistance for various other specialized scenarios.
