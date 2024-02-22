@@ -15,6 +15,7 @@
     "format": "prettier --cache --write '**/*.{js,jsx,tsx,ts,svelte,less,md,yaml,yml,json}' --no-error-on-unmatched-pattern",
     "lint:js": "eslint . --fix  --cache --ext .js,.jsx,.ts,.tsx,.svelte frontend",
     "lint:ts": "tsc",
+    "lint:py": "flake8 . && isort . && yapf --in-place --recursive --exclude=node_modules/ .",
     "lint:style": "stylelint --allow-empty-input --cache --fix \"**/*.{less,css}\" "
   },
   "devDependencies": {
