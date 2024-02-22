@@ -69,8 +69,7 @@ class ModelScopeChatbot(Component):
     def __init__(
             self,
             value: list[list[str | tuple[str] | tuple[str | Path, str] | None]]
-        | Callable
-        | None = None,
+        | Callable | None = None,
             *,
             label: str | None = None,
             every: float | None = None,
@@ -210,9 +209,10 @@ class ModelScopeChatbot(Component):
             chat_message = MultimodalMessage(**chat_message)
         if isinstance(chat_message, MultimodalMessage):
             if chat_message.avatar and isinstance(chat_message.avatar, str):
-                chat_message.avatar = FileData(path=file,
-                                               orig_name=Path(file).name,
-                                               size=Path(file).stat().st_size)
+                chat_message.avatar = FileData(
+                    path=chat_message.avatar,
+                    orig_name=Path(chat_message.avatar).name,
+                    size=Path(chat_message.avatar).stat().st_size)
             if chat_message.files is not None and len(chat_message.files) > 0:
                 for i, file in enumerate(chat_message.files):
                     if isinstance(file, FileData):
@@ -239,8 +239,8 @@ class ModelScopeChatbot(Component):
         payload: ChatbotData | None,
     ) -> List[List[MultimodalMessage | None]]:
         if self.data_preprocess:
-            value = self.data_preprocess(self, value)
-            payload = self.__class__.data_postprocess(self, payload)
+            payload = self.data_preprocess(self, payload)
+            payload = self.__class__.data_preprocess(self, payload)
         if payload is None:
             return payload
         processed_messages = []

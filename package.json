@@ -9,12 +9,14 @@
     "prepare": "husky install",
     "dev": "gradio cc dev",
     "dev:compiled": "pnpm -F '@modelscope-studio/compiled' dev",
-    "build": "rimraf dist && pnpm -F '@modelscope-studio/compiled' build && gradio cc build --no-generate-docs",
+    "build:compiled": "pnpm -F '@modelscope-studio/compiled' build",
+    "build": "rimraf dist && pnpm run build:compiled && gradio cc build --no-generate-docs",
     "build:pure": "rimraf dist && gradio cc build --no-generate-docs",
     "lint": "npm-run-all --parallel lint:* && npm run format",
     "format": "prettier --cache --write '**/*.{js,jsx,tsx,ts,svelte,less,md,yaml,yml,json}' --no-error-on-unmatched-pattern",
     "lint:js": "eslint . --fix  --cache --ext .js,.jsx,.ts,.tsx,.svelte frontend",
     "lint:ts": "tsc",
+    "lint:py": "flake8 . && isort . && yapf --in-place --recursive --exclude=node_modules/ .",
     "lint:style": "stylelint --allow-empty-input --cache --fix \"**/*.{less,css}\" "
   },
   "devDependencies": {

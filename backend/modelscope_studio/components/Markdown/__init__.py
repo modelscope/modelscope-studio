@@ -6,6 +6,7 @@ from typing import Any, Callable, List, Optional, TypedDict
 from gradio.components.base import Component
 from gradio.events import Events
 from gradio_client.documentation import document, set_documentation_group
+
 from modelscope_studio.utils import process_links, resolve_frontend_dir
 
 set_documentation_group("component")
@@ -119,7 +120,7 @@ class ModelScopeMarkdown(Component):
 
     def preprocess(self, payload: str | None) -> str | None:
         if self.data_preprocess:
-            value = self.data_preprocess(self, value)
+            payload = self.data_preprocess(self, payload)
         payload = self.__class__.data_postprocess(self, payload)
         return payload
 

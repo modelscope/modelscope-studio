@@ -1,5 +1,6 @@
 {
   "*.{less,css}": ["pnpm run lint:style", "pnpm run format"],
   "*.{js,jsx,ts,tsx}": ["pnpm run lint:js", "pnpm run format"],
-  "*.{md,yaml,yml,json,html}": ["pnpm run format"]
+  "*.{md,yaml,yml,json,html}": ["pnpm run format"],
+  "*.py": ["pnpm run lint:py"]
 }

@@ -1,0 +1,12 @@
+[flake8]
+exclude =
+  node_modules/
+max-line-length = 9999
+avoid-escape = no
+ignore =
+    E121
+    E131
+    F401
+    F403
+    W503
+    W504

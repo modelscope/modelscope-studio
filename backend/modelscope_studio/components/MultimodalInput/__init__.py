@@ -8,6 +8,7 @@ from gradio.data_classes import FileData, GradioModel
 from gradio.events import Events
 from gradio_client import utils as client_utils
 from gradio_client.documentation import document, set_documentation_group
+
 from modelscope_studio.utils import resolve_frontend_dir
 
 set_documentation_group("component")
@@ -50,42 +51,38 @@ class ModelScopeMultimodalInput(FormComponent):
     def data_preprocess(component_instance, value):
         return value
 
-    def __init__(
-        self,
-        value: MultimodalInputData | str | None = None,
-        *,
-        lines: int = 1,
-        max_lines: int = 20,
-        placeholder: str | None = None,
-        label: str | None = None,
-        info: str | None = None,
-        every: float | None = None,
-        show_label: bool | None = None,
-        container: bool = True,
-        scale: int | None = None,
-        min_width: int = 160,
-        interactive: bool | None = None,
-        visible: bool = True,
-        elem_id: str | None = None,
-        autofocus: bool = False,
-        autoscroll: bool = True,
-        elem_classes: list[str] | str | None = None,
-        render: bool = True,
-        type: Literal["text", "password", "email"] = "text",
-        text_align: Literal["left", "right"] | None = None,
-        rtl: bool = False,
-        show_copy_button: bool = False,
-        data_postprocess: Callable | None = None,
-        data_preprocess: Callable | None = None,
-        sources: list[Literal['upload', 'microphone', 'webcam']] = ['upload'],
-        # gradio UploadButton props
-        upload_button_props: dict | None = None,
-        # gradio Button props
-        submit_button_props: dict | None = None,
-        # props: height(int)
-        file_preview_props: dict | None = None,
-        # props: mirror_webcam(bool), include_audio(bool)
-        webcam_props: dict | None = None):
+    def __init__(self,
+                 value: MultimodalInputData | str | None = None,
+                 *,
+                 lines: int = 1,
+                 max_lines: int = 20,
+                 placeholder: str | None = None,
+                 label: str | None = None,
+                 info: str | None = None,
+                 every: float | None = None,
+                 show_label: bool | None = None,
+                 container: bool = True,
+                 scale: int | None = None,
+                 min_width: int = 160,
+                 interactive: bool | None = None,
+                 visible: bool = True,
+                 elem_id: str | None = None,
+                 autofocus: bool = False,
+                 autoscroll: bool = True,
+                 elem_classes: list[str] | str | None = None,
+                 render: bool = True,
+                 type: Literal["text", "password", "email"] = "text",
+                 text_align: Literal["left", "right"] | None = None,
+                 rtl: bool = False,
+                 show_copy_button: bool = False,
+                 data_postprocess: Callable | None = None,
+                 data_preprocess: Callable | None = None,
+                 sources: list[Literal['upload', 'microphone',
+                                       'webcam']] = ['upload'],
+                 upload_button_props: dict | None = None,
+                 submit_button_props: dict | None = None,
+                 file_preview_props: dict | None = None,
+                 webcam_props: dict | None = None):
         """
         Parameters:
             value: default text to provide in textarea. If callable, the function will be called whenever the app loads to set the initial value of the component.
@@ -160,7 +157,7 @@ class ModelScopeMultimodalInput(FormComponent):
             self,
             payload: MultimodalInputData | None) -> MultimodalInputData | None:
         if self.data_preprocess:
-            value = self.data_preprocess(self, value)
+            payload = self.data_preprocess(self, payload)
         payload = self.__class__.data_postprocess(self, payload)
         if payload.files is not None and len(payload.files) > 0:
             for i, file in enumerate(payload.files):
