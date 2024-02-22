@@ -240,7 +240,7 @@ class ModelScopeChatbot(Component):
     ) -> List[List[MultimodalMessage | None]]:
         if self.data_preprocess:
             payload = self.data_preprocess(self, payload)
-            payload = self.__class__.data_postprocess(self, payload)
+            payload = self.__class__.data_preprocess(self, payload)
         if payload is None:
             return payload
         processed_messages = []
