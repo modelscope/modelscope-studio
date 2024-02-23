@@ -37,7 +37,8 @@ export type FileMessage = {
 export type MultimodalMessage = {
   id?: string;
   text: string;
-  original_text: string;
+  elem_id?: string;
+  elem_classes?: string | string[];
   name?: string;
   avatar?: string | FileData | null;
   flushing?: boolean;

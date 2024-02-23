@@ -24,6 +24,7 @@
   } from './utils';
   import {
     copy_to_clipboard,
+    ensureArray,
     format_chat_for_sharing,
     should_flushing,
   } from './utils';
@@ -236,7 +237,12 @@
             {#each message_item as message, k (message?.id || `${i}-${j}-${k}`)}
               {#if message}
                 <div
-                  class="message-row {layout} {j == 0 ? 'user-row' : 'bot-row'}"
+                  id={message.elem_id}
+                  class="message-row {layout} {j == 0
+                    ? 'user-row'
+                    : 'bot-row'} {message.elem_classes
+                    ? ensureArray(message.elem_classes).join(' ')
+                    : ''}"
                 >
                   {#if message.avatar || avatar_images[j][k]}
                     {@const message_name = get_message_name(message, j, k)}

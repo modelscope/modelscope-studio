@@ -6,9 +6,9 @@ tags:
   - Markdown
   - gradio-template-Chatbot
   - gradio-template-Markdown
-title: modelscope_gradio_components V0.0.1b8
-colorFrom: red
-colorTo: red
+title: modelscope-studio
+colorFrom: blue
+colorTo: gray
 sdk: docker
 pinned: false
 license: apache-2.0

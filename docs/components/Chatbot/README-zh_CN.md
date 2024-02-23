@@ -79,6 +79,10 @@ class FileMessage(GradioModel):
 class MultimodalMessage(GradioModel):
     # 默认以 index 为作为 id，id 改变会导致 message 重新渲染
     id: Optional[str] = None
+    # message 容器的 elem id
+    elem_id: Optional[str] = None
+    # message 容器的 elem classes
+    elem_classes: Optional[list[str] | str] = None
     name: Optional[str] = None
     text: Optional[str] = None
     flushing: Optional[bool] = None

@@ -48,6 +48,7 @@ typings/
 
 # Output of 'npm pack'
 *.tgz
+*.whl
 
 # xconsole
 src/.xconsole
