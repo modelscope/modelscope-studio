@@ -127,7 +127,7 @@ class ModelScopeChatbot(Component):
             enable_latex: If True, will enable LaTeX rendering.
             latex_single_dollar_delimiter: If True, will enable single dollar delimiter for LaTeX rendering.
             rtl: If True, sets the direction of the rendered text to right-to-left. Default is False, which renders text left-to-right.
-            show_share_button: If True, will show a share icon in the corner of the component that allows user to share outputs to Hugging Face Spaces Discussions. If False, icon does not appear. If set to None (default behavior), then the icon appears if this Gradio app is launched on Spaces, but not otherwise.
+            show_share_button: If True, will show a share icon in the corner of the component that allows user to share outputs. If False, icon does not appear.
             show_copy_button: If True, will show a copy button for each chatbot message.
             avatar_images: Tuple of two avatar image paths or URLs or dict ("avatar" and "name") or list (each item receives the previous parameters) for user(s) and bot(s) (in that order). Pass None for either the user or bot image to skip. Must be within the working directory of the Gradio app or an external URL and use `gr.update` to update.
             sanitize_html: If False, will disable HTML sanitization for chatbot messages. This is not recommended, as it can lead to security vulnerabilities.

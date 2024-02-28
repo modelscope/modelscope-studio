@@ -73,6 +73,8 @@ export const SelectBox: Components['select-box'] = (nodeProps) => {
         sm?: number;
         md?: number;
         lg?: number;
+        xl?: number;
+        xxl?: number;
       }>(columns || '', {});
 
       const _spans = Object.keys(columnsObject).reduce((acc, key) => {
