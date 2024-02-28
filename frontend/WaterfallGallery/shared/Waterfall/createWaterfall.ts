@@ -22,7 +22,6 @@ export function createLayoutObserver(
 ) {
   let sizeObserver: ResizeObserver; // size changes
   let childrenObserver: MutationObserver; // element changes
-  let attrsObserver: MutationObserver; // attrs changes
 
   let isLayingOut = false;
 
@@ -33,14 +32,12 @@ export function createLayoutObserver(
       rerender();
       el[widthSymbol] = el.offsetWidth;
       el[heightSymbol] = el.offsetHeight;
-      attrsObserver.takeRecords();
       isLayingOut = false;
     });
   }
 
   function mount() {
     if (!el) return;
-    // 监听大小变化
     sizeObserver = new ResizeObserver((entries) => {
       if (
         entries.some((entry) => {
@@ -61,7 +58,6 @@ export function createLayoutObserver(
       sizeObserver.observe(child);
     });
 
-    // 监听元素增删
     childrenObserver = new MutationObserver((entries) => {
       entries.forEach((entry) => {
         entry.addedNodes.forEach(
@@ -75,17 +71,12 @@ export function createLayoutObserver(
     });
     childrenObserver.observe(el, { childList: true, attributes: false });
 
-    // 监听属性变化
-    attrsObserver = new MutationObserver(() => layout());
-    attrsObserver.observe(el, { childList: false, attributes: true });
-
     layout();
   }
 
   function unmount() {
     sizeObserver?.disconnect();
     childrenObserver?.disconnect();
-    attrsObserver?.disconnect();
   }
 
   return { layout, mount, unmount };

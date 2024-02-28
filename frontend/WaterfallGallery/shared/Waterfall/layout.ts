@@ -47,7 +47,6 @@ export function waterfall_layout<T>(
   if (len) {
     const width =
       (getWidth(container) - widthGap * (cols - 1) - (pl + pr)) / cols;
-
     children.forEach((el) => {
       setWidth(el, width);
     });

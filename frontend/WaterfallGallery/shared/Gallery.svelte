@@ -41,7 +41,6 @@
   export let selected_index: number | null = null;
   export let gap: number | [number, number] = 8;
   let waterfall_grid_el: HTMLDivElement;
-  let load_more_el: HTMLParagraphElement;
   let breakpointColumns: [breakpoint: number, column: number][] = [];
   let cols: number;
   let client_height = 0;
@@ -179,6 +178,19 @@
 
   let el: HTMLButtonElement[] = [];
   let container_element: HTMLDivElement;
+  let scrollTimer: ReturnType<typeof setTimeout> | null = null;
+  const handle_scroll = (e: UIEvent) => {
+    if (!has_more || scrollTimer) {
+      return;
+    }
+    const element = e.target as HTMLDivElement;
+    if (element.scrollHeight - element.scrollTop - 80 <= element.clientHeight) {
+      scrollTimer = setTimeout(() => {
+        dispatch('load_more');
+        scrollTimer = null;
+      }, 500);
+    }
+  };
 
   async function scroll_to_img(index: number | null): Promise<void> {
     if (typeof index !== 'number') return;
@@ -235,7 +247,6 @@
     link.click();
     URL.revokeObjectURL(url);
   }
-  let is_visible = false;
 
   function createWaterfall() {
     waterfall?.unmount();
@@ -244,28 +255,13 @@
       gap,
     });
   }
-  $: cols, createWaterfall();
-
-  onDestroy(() => {
-    waterfall?.unmount();
-  });
-
-  let observer: IntersectionObserver;
-
-  $: {
-    if (load_more_el && has_more) {
-      observer && observer.disconnect();
-      observer = new IntersectionObserver((entries) => {
-        if (entries[0].isIntersecting && !is_visible) {
-          dispatch('load_more');
-        }
-        is_visible = entries[0].isIntersecting;
-      });
-      observer.observe(load_more_el);
-    }
+  $: if (waterfall_grid_el) {
+    cols, createWaterfall();
   }
+
   onDestroy(() => {
-    observer && observer.disconnect();
+    scrollTimer && clearTimeout(scrollTimer);
+    waterfall?.unmount();
   });
 
   $: selected_image =
@@ -361,12 +357,14 @@
   {/if}
   <div
     bind:clientHeight={client_height}
+    on:scroll={handle_scroll}
     class="grid-wrap"
-    class:fixed-height={!height || height == 'auto'}
+    class:fixed-height={!height || height === 'auto'}
+    style="height: {height}px;"
   >
     <div
       class="grid-container"
-      style="--object-fit: {object_fit};"
+      style="--object-fit: {object_fit}; min-height: {height}px;"
       class:pt-6={show_label}
     >
       {#if show_share_button}
@@ -414,7 +412,6 @@
       </div>
     </div>
     <p
-      bind:this={load_more_el}
       class="loading-line"
       class:visible={!(selected_image && allow_preview) && has_more}
     >
@@ -551,11 +548,11 @@
     padding: var(--size-2);
     height: var(--size-full);
     overflow-y: scroll;
+    box-sizing: content-box;
   }
 
   .grid-container {
     gap: var(--spacing-lg);
-    height: var(--height);
   }
 
   .icon-button {

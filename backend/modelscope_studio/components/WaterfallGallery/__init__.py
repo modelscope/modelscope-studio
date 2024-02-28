@@ -115,13 +115,14 @@ class ModelScopeWaterfallGallery(Component):
             type: The format the image is converted to before being passed into the prediction function. "numpy" converts the image to a numpy array with shape (height, width, 3) and values from 0 to 255, "pil" converts the image to a PIL image object, "filepath" passes a str path to a temporary file containing the image. If the image is SVG, the `type` is ignored and the filepath of the SVG is returned.
             action_label: The label for the action button.
             has_more: If True, will show the "Load More" button.
-            gap: The gap (px) between images.
+            gap: The gap (px) between images. If a tuple is passed, the first value is the gap for width and the second value is the gap for height.If a number is passed, the gap will be the same for width and height.
             show_progress: The gradio progress bar when loading more images.
             likeable: Whether the gallery image display a like or dislike button. Set automatically by the .like method but has to be present in the signature for it to show up in the config.
             clickable: Whether the gallery image display an action button. Set automatically by the .click method but has to be present in the signature for it to show up in the config.
         """
         self.columns = columns
         self.height = height
+        self.gap = gap
         self.preview = preview
         self.allow_preview = allow_preview
         self.has_more = has_more
@@ -182,9 +183,9 @@ class ModelScopeWaterfallGallery(Component):
             if isinstance(img, dict):
                 img = GalleryImage(**img)
             if isinstance(img, GalleryImage):
-                img = img.image
                 liked = img.liked
                 meta = img.meta
+                img = img.image
             if isinstance(img, np.ndarray):
                 file = processing_utils.save_img_array_to_cache(
                     img, cache_dir=self.GRADIO_CACHE)
@@ -193,6 +194,9 @@ class ModelScopeWaterfallGallery(Component):
                 file = processing_utils.save_pil_to_cache(
                     img, cache_dir=self.GRADIO_CACHE)
                 file_path = str(utils.abspath(file))
+            elif isinstance(img, FileData):
+                file_path = img.path
+                orig_name = img.orig_name
             elif isinstance(img, str):
                 file_path = img
                 if is_http_url_like(img):
@@ -206,6 +210,7 @@ class ModelScopeWaterfallGallery(Component):
                 orig_name = img.name
             else:
                 raise ValueError(f"Cannot process type as image: {type(img)}")
+
             return GalleryImage(image=FileData(path=file_path,
                                                url=url,
                                                orig_name=orig_name),
