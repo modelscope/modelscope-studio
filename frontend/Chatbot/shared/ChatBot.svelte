@@ -322,8 +322,6 @@
                             alt_text={file.alt_text}
                             file={file.file}
                           />
-                        {:else if pending_message && j === 1}
-                          <Pending {layout} />
                         {/if}
                       {/each}
                     </button>
@@ -365,6 +363,9 @@
           {/if}
         {/each}
       {/each}
+      {#if pending_message}
+        <Pending {layout} />
+      {/if}
     {/if}
   </div>
 </div>
@@ -402,10 +403,6 @@
 
   .message-wrap > div :global(p:not(:first-child)) {
     margin-top: var(--spacing-xxl);
-  }
-
-  .message-wrap :global(audio) {
-    width: 100%;
   }
 
   .message {
@@ -630,6 +627,10 @@
     text-decoration: underline;
   }
 
+  .message-wrap .message :global(audio) {
+    width: 100%;
+    min-width: 300px;
+  }
   .message-wrap .bot :global(table),
   .message-wrap .bot :global(tr),
   .message-wrap .bot :global(td),
