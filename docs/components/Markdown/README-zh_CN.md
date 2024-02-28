@@ -42,7 +42,7 @@ template只能做简单的变量替换，如果想要引入更多自定义的行
 custom_select.js
 
 ```js
-<file src="./resources/custom_components/custom_select.js"></file>
+<file src="../resources/custom_components/custom_select.js"></file>
 ```
 
 </demo-suffix>

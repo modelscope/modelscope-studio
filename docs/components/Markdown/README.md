@@ -38,7 +38,7 @@ The template can only perform simple variable replacements. If you want to intro
 custom_select.js
 
 ```js
-<file src="./resources/custom_components/custom_select.js"></file>
+<file src="../resources/custom_components/custom_select.js"></file>
 ```
 
 </demo-suffix>

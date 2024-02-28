@@ -6,7 +6,7 @@ import modelscope_studio as mgr
 
 
 def resolve_assets(relative_path):
-    return os.path.join(os.path.dirname(__file__), "../resources",
+    return os.path.join(os.path.dirname(__file__), "../../resources",
                         relative_path)
 
 

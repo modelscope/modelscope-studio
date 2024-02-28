@@ -5,6 +5,7 @@ max-line-length = 9999
 avoid-escape = no
 ignore =
     E121
+    E126
     E131
     F401
     F403

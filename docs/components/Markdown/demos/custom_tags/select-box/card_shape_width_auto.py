@@ -10,7 +10,8 @@ options = [{
     "label":
     "A",
     "imgSrc":
-    os.path.join(os.path.dirname(__file__), '../../../resources/screen.jpeg'),
+    os.path.join(os.path.dirname(__file__),
+                 '../../../../resources/screen.jpeg'),
     "value":
     "a"
 }, "b", "c", "d"]
