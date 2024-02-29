@@ -85,8 +85,6 @@ class ModelScopeWaterfallGallery(Component):
                  type: Literal["numpy", "pil", "filepath"] = "filepath",
                  action_label: str | None = "Click",
                  has_more: bool = False,
-                 show_progress: Literal['full', 'minimal', 'hidden']
-                 | None = None,
                  gap: int | tuple[int, int] | None = 8,
                  clickable: bool | None = None,
                  likeable: bool | None = None):
@@ -116,7 +114,6 @@ class ModelScopeWaterfallGallery(Component):
             action_label: The label for the action button.
             has_more: If True, will show the "Load More" button.
             gap: The gap (px) between images. If a tuple is passed, the first value is the gap for width and the second value is the gap for height.If a number is passed, the gap will be the same for width and height.
-            show_progress: The gradio progress bar when loading more images.
             likeable: Whether the gallery image display a like or dislike button. Set automatically by the .like method but has to be present in the signature for it to show up in the config.
             clickable: Whether the gallery image display an action button. Set automatically by the .click method but has to be present in the signature for it to show up in the config.
         """
@@ -128,7 +125,6 @@ class ModelScopeWaterfallGallery(Component):
         self.has_more = has_more
         self.likeable = likeable
         self.clickable = clickable
-        self.show_progress = show_progress
         self.show_download_button = ((utils.get_space() is not None)
                                      if show_download_button is None else
                                      show_download_button)

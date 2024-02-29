@@ -49,12 +49,12 @@ export const Heading: Components['h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6'] = ({
         node?.tagName || 'h1',
         {
           ...props,
-          className: cls(props.className, 'ms-heading'),
+          className: cls(props.className, 'ms-markdown-heading'),
         },
         <>
           {header_links ? (
             <a
-              className="ms-heading-anchor"
+              className="ms-markdown-heading-anchor"
               id={id}
               href={`#${id}`}
               dangerouslySetInnerHTML={{ __html: LINK_ICON_CODE }}

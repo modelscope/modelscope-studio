@@ -13,7 +13,6 @@
   import type { Breakpoints, GalleryData } from './shared/utils';
 
   export let loading_status: LoadingStatus;
-  export let show_progress: LoadingStatus['show_progress'] = 'full';
   export let show_label: boolean;
   export let has_more: boolean;
   export let label: string;
@@ -67,12 +66,18 @@
   {min_width}
   allow_overflow={false}
 >
-  <StatusTracker
-    autoscroll={gradio.autoscroll}
-    i18n={gradio.i18n}
-    {...loading_status}
-    {show_progress}
-  />
+  {#if loading_status}
+    <StatusTracker
+      autoscroll={gradio.autoscroll}
+      i18n={gradio.i18n}
+      {...loading_status}
+      show_progress={loading_status.show_progress === 'hidden'
+        ? 'hidden'
+        : has_more
+          ? 'minimal'
+          : loading_status.show_progress}
+    />
+  {/if}
   <Gallery
     on:click={(e) => gradio.dispatch('click', e.detail)}
     on:change={() => gradio.dispatch('change', value)}
