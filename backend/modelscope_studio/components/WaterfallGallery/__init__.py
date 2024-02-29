@@ -85,6 +85,7 @@ class ModelScopeWaterfallGallery(Component):
                  type: Literal["numpy", "pil", "filepath"] = "filepath",
                  action_label: str | None = "Click",
                  has_more: bool = False,
+                 load_more_button_props: dict | None = None,
                  gap: int | tuple[int, int] | None = 8,
                  clickable: bool | None = None,
                  likeable: bool | None = None):
@@ -101,7 +102,7 @@ class ModelScopeWaterfallGallery(Component):
             elem_id: An optional string that is assigned as the id of this component in the HTML DOM. Can be used for targeting CSS styles.
             elem_classes: An optional list of strings that are assigned as the classes of this component in the HTML DOM. Can be used for targeting CSS styles.
             render: If False, component will not render be rendered in the Blocks context. Should be used if the intention is to assign event listeners now but render the component later.
-            columns: Represents the number of images that should be shown in one row, for each of the six standard screen sizes (<576px, <768px, <992px, <1200px, <1600px, >1600px). If fewer than 6 are given then the last will be used for all subsequent breakpoints
+            columns: Represents the number of images that should be shown in one row, for each of the six standard screen sizes (<576px, <768px, <992px, <1200px, <1600px, >1600px). If fewer than 6 are given then the last will be used for all subsequent breakpoints.
             height: The height of the gallery component, specified in pixels if a number is passed, or in CSS units if a string is passed. If more images are displayed than can fit in the height, a scrollbar will appear.
             allow_preview: If True, images in the gallery will be enlarged when they are clicked. Default is True.
             preview: If True, Gallery will start in preview mode, which shows all of the images as thumbnails and allows the user to click on them to view them in full size. Only works if allow_preview is True.
@@ -111,8 +112,9 @@ class ModelScopeWaterfallGallery(Component):
             show_download_button: If True, will show a download button in the corner of the selected image. If False, the icon does not appear. Default is True.
             interactive: If True, the gallery will be interactive, allowing the user to upload images. If False, the gallery will be static. Default is True.
             type: The format the image is converted to before being passed into the prediction function. "numpy" converts the image to a numpy array with shape (height, width, 3) and values from 0 to 255, "pil" converts the image to a PIL image object, "filepath" passes a str path to a temporary file containing the image. If the image is SVG, the `type` is ignored and the filepath of the SVG is returned.
-            action_label: The label for the action button.
+            action_label: The label for the action button. Only displayed if `clickable` is set to True.
             has_more: If True, will show the "Load More" button.
+            load_more_button_props: gradio Button props.
             gap: The gap (px) between images. If a tuple is passed, the first value is the gap for width and the second value is the gap for height.If a number is passed, the gap will be the same for width and height.
             likeable: Whether the gallery image display a like or dislike button. Set automatically by the .like method but has to be present in the signature for it to show up in the config.
             clickable: Whether the gallery image display an action button. Set automatically by the .click method but has to be present in the signature for it to show up in the config.
@@ -123,6 +125,7 @@ class ModelScopeWaterfallGallery(Component):
         self.preview = preview
         self.allow_preview = allow_preview
         self.has_more = has_more
+        self.load_more_button_props = load_more_button_props
         self.likeable = likeable
         self.clickable = clickable
         self.show_download_button = ((utils.get_space() is not None)
@@ -180,6 +183,7 @@ class ModelScopeWaterfallGallery(Component):
                 img = GalleryImage(**img)
             if isinstance(img, GalleryImage):
                 liked = img.liked
+                caption = img.caption
                 meta = img.meta
                 img = img.image
             if isinstance(img, np.ndarray):

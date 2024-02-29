@@ -1,7 +1,7 @@
 <script lang="ts">
   import { BlockLabel, Empty, IconButton, ShareButton } from '@gradio/atoms';
+  import { BaseButton } from '@gradio/button';
   import { Download, Image as ImageIcon } from '@gradio/icons';
-  import { Loader } from '@gradio/statustracker';
   import { ModifyUpload } from '@gradio/upload';
   import type {
     I18nFormatter,
@@ -40,6 +40,7 @@
   export let i18n: I18nFormatter;
   export let selected_index: number | null = null;
   export let gap: number | [number, number] = 8;
+  export let load_more_button_props: Record<string, any> = {};
   let waterfall_grid_el: HTMLDivElement;
   let breakpointColumns: [breakpoint: number, column: number][] = [];
   let cols: number;
@@ -178,19 +179,6 @@
 
   let el: HTMLButtonElement[] = [];
   let container_element: HTMLDivElement;
-  let scrollTimer: ReturnType<typeof setTimeout> | null = null;
-  const handle_scroll = (e: UIEvent) => {
-    if (!has_more || scrollTimer) {
-      return;
-    }
-    const element = e.target as HTMLDivElement;
-    if (element.scrollHeight - element.scrollTop - 80 <= element.clientHeight) {
-      scrollTimer = setTimeout(() => {
-        dispatch('load_more');
-        scrollTimer = null;
-      }, 500);
-    }
-  };
 
   async function scroll_to_img(index: number | null): Promise<void> {
     if (typeof index !== 'number') return;
@@ -260,7 +248,6 @@
   }
 
   onDestroy(() => {
-    scrollTimer && clearTimeout(scrollTimer);
     waterfall?.unmount();
   });
 
@@ -357,7 +344,6 @@
   {/if}
   <div
     bind:clientHeight={client_height}
-    on:scroll={handle_scroll}
     class="grid-wrap"
     class:fixed-height={!height || height === 'auto'}
     style="height: {height}px;"
@@ -415,7 +401,18 @@
       class="loading-line"
       class:visible={!(selected_image && allow_preview) && has_more}
     >
-      <Loader margin={false} />
+      <BaseButton
+        {...load_more_button_props}
+        on:click={() => {
+          dispatch('load_more');
+        }}
+      >
+        {i18n(
+          load_more_button_props.value ||
+            load_more_button_props.label ||
+            'Load More'
+        )}</BaseButton
+      >
     </p>
   </div>
 {/if}
@@ -450,6 +447,7 @@
     display: none;
   }
   .loading-line.visible {
+    margin-top: 20px;
     display: flex;
     align-items: center;
     justify-content: center;

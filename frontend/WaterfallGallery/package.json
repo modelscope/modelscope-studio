@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "@gradio/atoms": "0.4.1",
+    "@gradio/button": "^0.2.17",
     "@gradio/client": "0.9.4",
     "@gradio/icons": "0.3.2",
     "@gradio/statustracker": "0.4.3",

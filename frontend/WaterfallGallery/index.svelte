@@ -15,6 +15,7 @@
   export let loading_status: LoadingStatus;
   export let show_label: boolean;
   export let has_more: boolean;
+
   export let label: string;
   export let action_label: string;
   export let elem_id = '';
@@ -46,6 +47,13 @@
     like: LikeData;
     prop_change: Record<string, any>;
   }>;
+
+  export let load_more_button_props: Record<string, any> = {};
+  let _load_more_button_props: typeof load_more_button_props = {};
+  $: _load_more_button_props = {
+    ..._load_more_button_props,
+    ...load_more_button_props,
+  };
   const dispatch = createEventDispatcher();
 
   const handle_like = (data: LikeData) => {
@@ -95,6 +103,7 @@
     {value}
     {show_label}
     {object_fit}
+    load_more_button_props={_load_more_button_props}
     {has_more}
     {columns}
     {height}
