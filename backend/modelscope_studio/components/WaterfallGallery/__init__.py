@@ -102,7 +102,7 @@ class ModelScopeWaterfallGallery(Component):
             elem_id: An optional string that is assigned as the id of this component in the HTML DOM. Can be used for targeting CSS styles.
             elem_classes: An optional list of strings that are assigned as the classes of this component in the HTML DOM. Can be used for targeting CSS styles.
             render: If False, component will not render be rendered in the Blocks context. Should be used if the intention is to assign event listeners now but render the component later.
-            columns: Represents the number of images that should be shown in one row, for each of the six standard screen sizes (<576px, <768px, <992px, <1200px, <1600px, >1600px). If fewer than 6 are given then the last will be used for all subsequent breakpoints.
+            columns: Represents the number of images that should be shown in one row, for each of the six standard screen sizes (<576px(xs)、<768px(sm)、<992px(md)、<1200px(lg)、<1600px(xl)、>1600px(xll)). If fewer than 6 are given then the last will be used for all subsequent breakpoints. If a dict is passed in, you can represents the number of images for each size screen with [xs,sm,md,lg,xl,xll] as the key.
             height: The height of the gallery component, specified in pixels if a number is passed, or in CSS units if a string is passed. If more images are displayed than can fit in the height, a scrollbar will appear.
             allow_preview: If True, images in the gallery will be enlarged when they are clicked. Default is True.
             preview: If True, Gallery will start in preview mode, which shows all of the images as thumbnails and allows the user to click on them to view them in full size. Only works if allow_preview is True.

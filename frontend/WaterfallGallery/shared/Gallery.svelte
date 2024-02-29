@@ -2,6 +2,7 @@
   import { BlockLabel, Empty, IconButton, ShareButton } from '@gradio/atoms';
   import { BaseButton } from '@gradio/button';
   import { Download, Image as ImageIcon } from '@gradio/icons';
+  import { Loader } from '@gradio/statustracker';
   import { ModifyUpload } from '@gradio/upload';
   import type {
     I18nFormatter,
@@ -27,6 +28,7 @@
   export let show_label = true;
   export let has_more = false;
   export let label: string;
+  export let pending: boolean;
   export let action_label: string;
   export let value: GalleryData | null = null;
   export let columns: number | number[] | Breakpoints | undefined = [2];
@@ -401,18 +403,22 @@
       class="loading-line"
       class:visible={!(selected_image && allow_preview) && has_more}
     >
-      <BaseButton
-        {...load_more_button_props}
-        on:click={() => {
-          dispatch('load_more');
-        }}
-      >
-        {i18n(
-          load_more_button_props.value ||
-            load_more_button_props.label ||
-            'Load More'
-        )}</BaseButton
-      >
+      {#if pending}
+        <Loader margin={false} />
+      {:else}
+        <BaseButton
+          {...load_more_button_props}
+          on:click={() => {
+            dispatch('load_more');
+          }}
+        >
+          {i18n(
+            load_more_button_props.value ||
+              load_more_button_props.label ||
+              'Load More'
+          )}</BaseButton
+        >
+      {/if}
     </p>
   </div>
 {/if}

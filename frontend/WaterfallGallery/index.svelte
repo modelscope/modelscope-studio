@@ -96,6 +96,7 @@
     on:load_more={() => {
       gradio.dispatch('load_more', value);
     }}
+    pending={loading_status?.status === 'pending'}
     {likeable}
     {clickable}
     {label}
