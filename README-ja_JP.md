@@ -63,7 +63,7 @@ demo.queue().launch()
 - Chatbot: gradio チャットボット拡張コンポーネントは、マルチモーダルコンテンツ出力、マルチボットシナリオ、会話コンテンツ内のカスタムレンダリングコンポーネントやイベントインタラクションをサポートします。
 - MultimodalInput: ファイルアップロード、録画、写真撮影などの機能をサポートするマルチモーダル入力ボックス。
 - Markdown: gradio Markdown 拡張コンポーネントは、マルチモーダルコンテンツ（オーディオ、ビデオ、音声、ファイル、テキスト）の出力をサポートします。
-- WaterfallGallery (WIP): gradio Gallery 拡張コンポーネントは、ウォーターフォール形式の画像表示をサポートします。
+- WaterfallGallery: gradio Gallery 拡張コンポーネントは、ウォーターフォール形式の画像表示をサポートします。
 - その他のコンポーネント...
 
 詳しい使い方は[ドキュメントと例](https://modelscope.cn/studios/modelscope/modelscope-studio/summary)を参照して下さい

@@ -63,7 +63,7 @@ The currently supported components include:
 - Chatbot: gradio Chatbot extension component, supports multi-modal content output, multi-bot scenarios, and custom rendering components and event interactions within the conversation content.
 - MultimodalInput: A multi-modal input box, supporting functions such as file upload, recording, and photography.
 - Markdown: gradio Markdown extension component, supports the output of multi-modal content (audio, video, voice, files, text).
-- WaterfallGallery (WIP): gradio Gallery extension component, supports waterfall-style image display.
+- WaterfallGallery: gradio Gallery extension component, supports waterfall-style image display.
 - More components...
 
 For detailed usage, see [Documentation and Examples](https://modelscope.cn/studios/modelscope/modelscope-studio/summary)
