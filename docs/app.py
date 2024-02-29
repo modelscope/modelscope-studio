@@ -3,6 +3,7 @@ from components.Chatbot.app import docs as chatbot_docs
 from components.Docs import Docs
 from components.Markdown.app import docs as markdown_docs
 from components.MultimodalInput.app import docs as multimodel_input_docs
+from components.WaterfallGallery.app import docs as waterfall_gallery_docs
 
 readme_docs = Docs(__file__)
 
@@ -11,6 +12,7 @@ docs = [
     ["Chatbot", chatbot_docs],
     ["Markdown", markdown_docs],
     ["MultimodalInput", multimodel_input_docs],
+    ["WaterfallGallery", waterfall_gallery_docs],
 ]
 
 with gr.Blocks() as demo:

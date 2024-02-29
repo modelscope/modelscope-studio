@@ -131,7 +131,8 @@ class CustomComponentDict(TypedDict):
 
 ### event listeners
 
-| 事件                           | 描述                                                                                                                                                                                                                                      |
-| ------------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `mgr.Chatbot.flushed(fn, ···)` | 当打字机效果结束时触发。EventData 为：<br/> - index：当前 message 的 index tuple。<br/> - value：当前 message value。                                                                                                                     |
-| `mgr.Chatbot.custom(fn, ···)`  | 自定义标签触发事件时触发，EventData 为：<br/> - index：前 message 的 index tuple。<br/> - tag：当前触发的标签。<br/> - tag_index：当前触发标签的 index，此 index 在 mesage 的 index tuple 基础上重新计算。<br/> - value：自定义传入的值。 |
+| 事件                           | 描述                                                                                                                  |
+| ------------------------------ | --------------------------------------------------------------------------------------------------------------------- |
+| `mgr.Chatbot.flushed(fn, ···)` | 当打字机效果结束时触发。EventData 为：<br/> - index：当前 message 的 index tuple。<br/> - value：当前 message value。 |
+
+| `mgr.Chatbot.custom(fn, ···)` | 自定义标签触发事件时触发，EventData 为：<br/> - index：当前 message 的 index tuple ([message index, user group(index 0) or bot group(index 1), user/bot group index])。<br/> - tag：当前触发的标签。<br/> - tag_index：当前触发标签的 index，此 index 在 message 的 index tuple 基础上重新计算。<br/> - value：自定义传入的值。 |
