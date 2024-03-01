@@ -4,29 +4,6 @@
     color: #2f81f7;
   }
 
-  .ms-heading {
-    display: flex;
-    align-items: center;
-
-    .ms-heading-anchor {
-      margin-left: -25px;
-      padding-right: 8px;
-      color: var(--body-text-color-subdued);
-      line-height: 1;
-      opacity: 0;
-    }
-
-    .ms-heading-anchor > svg {
-      color: var(--body-text-color-subdued);
-    }
-
-    &:hover {
-      .ms-heading-anchor {
-        opacity: 1;
-      }
-    }
-  }
-
   &.markdown-body {
     font-size: inherit;
     background: none;
@@ -93,6 +70,29 @@
 
     button {
       background-color: var(--ant-color-primary);
+    }
+  }
+
+  &-heading {
+    display: flex;
+    align-items: center;
+
+    &-anchor {
+      margin-left: -25px;
+      padding-right: 8px;
+      color: var(--body-text-color-subdued);
+      line-height: 1;
+      opacity: 0;
+
+      > svg {
+        color: var(--body-text-color-subdued);
+      }
+    }
+
+    &:hover {
+      .ms-markdown-heading-anchor {
+        opacity: 1;
+      }
     }
   }
 

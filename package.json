@@ -6,7 +6,7 @@
   "repository": "git@github.com:modelscope/modelscope-studio.git",
   "license": "Apache-2.0",
   "scripts": {
-    "prepare": "husky install",
+    "prepare": "husky || true",
     "dev": "gradio cc dev",
     "dev:compiled": "pnpm -F '@modelscope-studio/compiled' dev",
     "build:compiled": "pnpm -F '@modelscope-studio/compiled' build",

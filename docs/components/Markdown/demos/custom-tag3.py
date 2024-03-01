@@ -9,7 +9,7 @@ options = ["a", "b", "c"]
 
 
 def resolve_assets(relative_path):
-    return os.path.join(os.path.dirname(__file__), "../resources",
+    return os.path.join(os.path.dirname(__file__), "../../resources",
                         relative_path)
 
 

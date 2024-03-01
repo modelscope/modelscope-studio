@@ -120,6 +120,33 @@ importers:
         specifier: ^7.6.4
         version: 7.6.4
 
+  frontend/WaterfallGallery:
+    dependencies:
+      '@gradio/atoms':
+        specifier: 0.4.1
+        version: 0.4.1(svelte@4.2.9)
+      '@gradio/button':
+        specifier: ^0.2.17
+        version: 0.2.17(svelte@4.2.9)
+      '@gradio/client':
+        specifier: 0.9.4
+        version: 0.9.4
+      '@gradio/icons':
+        specifier: 0.3.2
+        version: 0.3.2
+      '@gradio/statustracker':
+        specifier: 0.4.3
+        version: 0.4.3(svelte@4.2.9)
+      '@gradio/upload':
+        specifier: 0.5.7
+        version: 0.5.7(svelte@4.2.9)
+      '@gradio/utils':
+        specifier: 0.2.0
+        version: 0.2.0(svelte@4.2.9)
+      dequal:
+        specifier: ^2.0.2
+        version: 2.0.3
+
   frontend/compiled:
     dependencies:
       '@ant-design/cssinjs':
@@ -1306,6 +1333,17 @@ packages:
       - utf-8-validate
     dev: false
 
+  /@gradio/client@0.9.4:
+    resolution: {integrity: sha512-Cx7mly8EjenEr5udLtwfMFW3gKci4ZBAlp/f0oCtSgbWNnsqymMYuaItBUD/WiNPS14Y68ptG0HjIfaWti7QAg==}
+    engines: {node: '>=18.0.0'}
+    dependencies:
+      bufferutil: 4.0.8
+      semiver: 1.1.0
+      ws: 8.16.0(bufferutil@4.0.8)
+    transitivePeerDependencies:
+      - utf-8-validate
+    dev: false
+
   /@gradio/column@0.1.0:
     resolution: {integrity: sha512-P24nqqVnMXBaDA1f/zSN5HZRho4PxP8Dq+7VltPHlmxIEiZYik2AJ4J0LeuIha34FDO0guu/16evdrpvGIUAfw==}
     dev: false
@@ -1327,6 +1365,18 @@ packages:
 
   /@gradio/theme@0.2.0:
     resolution: {integrity: sha512-33c68Nk7oRXLn08OxPfjcPm7S4tXGOUV1I1bVgzdM2YV5o1QBOS1GEnXPZPu/CEYPePLMB6bsDwffrLEyLGWVQ==}
+    dev: false
+
+  /@gradio/upload@0.5.7(svelte@4.2.9):
+    resolution: {integrity: sha512-pEHzcThfD7UEQ9FP3QRlNp57pgXOGKYypzsv9dlzKZb+sTTc0C67uXIVWhtRmm7jznx/Vb3etgIVdCJGjTd3BQ==}
+    dependencies:
+      '@gradio/atoms': 0.4.1(svelte@4.2.9)
+      '@gradio/client': 0.9.4
+      '@gradio/icons': 0.3.2
+      '@gradio/utils': 0.2.0(svelte@4.2.9)
+    transitivePeerDependencies:
+      - svelte
+      - utf-8-validate
     dev: false
 
   /@gradio/upload@0.6.1(svelte@4.2.9):

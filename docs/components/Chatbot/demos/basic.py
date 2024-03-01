@@ -35,14 +35,14 @@ with gr.Blocks() as demo:
     chatbot = mgr.Chatbot(
         value=conversation,
         avatar_images=[
-            os.path.join(os.path.dirname(__file__), "../resources/user.jpeg"),
-            {
-                "name":
-                "bot",
-                "avatar":
-                os.path.join(os.path.dirname(__file__),
-                             "../resources/bot.jpeg")
-            }
+            os.path.join(os.path.dirname(__file__),
+                         "../../resources/user.jpeg"), {
+                             "name":
+                             "bot",
+                             "avatar":
+                             os.path.join(os.path.dirname(__file__),
+                                          "../../resources/bot.jpeg")
+                         }
         ],
         height=600,
     )

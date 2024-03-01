@@ -7,7 +7,7 @@ from modelscope_studio.components.Chatbot.llm_thinking_presets import qwen
 
 
 def resolve_assets(relative_path):
-    return os.path.join(os.path.dirname(__file__), "../resources",
+    return os.path.join(os.path.dirname(__file__), "../../resources",
                         relative_path)
 
 

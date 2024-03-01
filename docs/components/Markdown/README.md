@@ -38,7 +38,7 @@ The template can only perform simple variable replacements. If you want to intro
 custom_select.js
 
 ```js
-<file src="./resources/custom_components/custom_select.js"></file>
+<file src="../resources/custom_components/custom_select.js"></file>
 ```
 
 </demo-suffix>
@@ -80,6 +80,6 @@ class CustomComponentDict(TypedDict):
 
 ### Event Listeners
 
-| Event                          | Description                                                                                                                                                                                                                                                                                                                                                                                                   |
-| ------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `mgr.Markdown.custom(fn, ···)` | Triggered when a custom tag event occurs. EventData is: <br/> - index: The index tuple of the current message ([message index, user group(index 0) or bot group(index 1), user/bot group index]).<br/> - tag: The current tag that triggered the event.<br/> - tag_index: The index of the current triggered tag, re-calculated based on the message’s index tuple.<br/> - value: The custom value passed in. |
+| Event                          | Description                                                                                                                                                                                                        |
+| ------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `mgr.Markdown.custom(fn, ···)` | Triggered when a custom tag event occurs. EventData is: <br/> - tag: The current tag that triggered the event.<br/> - tag_index: The index of the current triggered tag.<br/> - value: The custom value passed in. |

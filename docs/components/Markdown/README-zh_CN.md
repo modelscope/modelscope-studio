@@ -42,7 +42,7 @@ template只能做简单的变量替换，如果想要引入更多自定义的行
 custom_select.js
 
 ```js
-<file src="./resources/custom_components/custom_select.js"></file>
+<file src="../resources/custom_components/custom_select.js"></file>
 ```
 
 </demo-suffix>
@@ -84,6 +84,6 @@ class CustomComponentDict(TypedDict):
 
 ### event listeners
 
-| 事件                           | 描述                                                                                                                                                                                                                                                                                                                           |
-| ------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `mgr.Markdown.custom(fn, ···)` | 自定义标签触发事件时触发，EventData 为：<br/> - index：当前 message 的 index tuple ([message index, user group(index 0) or bot group(index 1), user/bot group index])。<br/> - tag：当前触发的标签。<br/> - tag_index：当前触发标签的 index，此 index 在 mesage 的 index tuple 基础上重新计算。<br/> - value：自定义传入的值。 |
+| 事件                           | 描述                                                                                                             |
+| ------------------------------ | ---------------------------------------------------------------------------------------------------------------- |
+| `mgr.Markdown.custom(fn, ···)` | 自定义标签触发事件时触发，EventData 为：<br/> - tag_index：当前触发标签的 index。<br/> - value：自定义传入的值。 |
