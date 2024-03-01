@@ -8,7 +8,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "modelscope_studio"
-version = "0.0.8"
+version = "0.1.0"
 description = "A set of extension component, inluding components for conversational input and display in multimodal scenarios, as well as more components for vertical scenarios."
 readme = "README.md"
 license = "Apache-2.0"
@@ -45,6 +45,7 @@ artifacts = [
   "backend/modelscope_studio/components/Chatbot/templates",
   "backend/modelscope_studio/components/MultimodalInput/templates",
   "backend/modelscope_studio/components/Markdown/templates",
+  "backend/modelscope_studio/components/WaterfallGallery/templates",
 ]
 
 [tool.hatch.build.targets.sdist]

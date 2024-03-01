@@ -1,2 +1,2 @@
 modelscope_studio
-modelscope_studio-0.0.8-py3-none-any.whl
+modelscope_studio-0.1.0-py3-none-any.whl
