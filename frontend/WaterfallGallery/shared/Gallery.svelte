@@ -1,6 +1,7 @@
 <script lang="ts">
   import { BlockLabel, Empty, IconButton, ShareButton } from '@gradio/atoms';
   import { BaseButton } from '@gradio/button';
+  import { type FileData, normalise_file } from '@gradio/client';
   import { Download, Image as ImageIcon } from '@gradio/icons';
   import { Loader } from '@gradio/statustracker';
   import { ModifyUpload } from '@gradio/upload';
@@ -34,6 +35,8 @@
   export let columns: number | number[] | Breakpoints | undefined = [2];
   export let height: number | 'auto' = 'auto';
   export let preview: boolean;
+  export let root: string;
+  export let proxy_url: string;
   export let allow_preview = true;
   export let show_share_button = false;
   export let likeable: boolean;
@@ -100,7 +103,13 @@
   $: was_reset = value == null || value.length === 0 ? true : was_reset;
 
   let resolved_value: GalleryData | null = null;
-  $: resolved_value = value == null ? null : value;
+  $: resolved_value =
+    value == null
+      ? null
+      : value.map((item) => {
+          item.image = normalise_file(item.image, root, proxy_url) as FileData;
+          return item;
+        });
   let prev_value: GalleryData | null = value;
   if (selected_index == null && preview && value?.length) {
     selected_index = 0;

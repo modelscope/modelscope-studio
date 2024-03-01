@@ -13,8 +13,8 @@ def resolve_assets(relative_path):
 
 def load_more(_gallery):
     time.sleep(1)
+    _gallery.append(resolve_assets('modelscope.svg'))
     _gallery.append(resolve_assets('bot.jpeg'))
-    _gallery.append(resolve_assets('bot2.jpeg'))
     _gallery.append(resolve_assets('user.jpeg'))
     _gallery.append(resolve_assets('screen.jpeg'))
     has_more = True
@@ -26,9 +26,9 @@ def load_more(_gallery):
 with gr.Blocks() as demo:
     gallery = mgr.WaterfallGallery(
         value=[
-            resolve_assets('bot.jpeg'),
+            resolve_assets('modelscope.svg'),
             # pass a tuple
-            [resolve_assets('bot2.jpeg'), 'bot2'],
+            [resolve_assets('bot.jpeg'), 'bot'],
             # pass a dict
             {
                 "image": resolve_assets('user.jpeg'),

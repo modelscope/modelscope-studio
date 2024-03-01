@@ -37,6 +37,8 @@
   export let object_fit: 'contain' | 'cover' | 'fill' | 'none' | 'scale-down' =
     'cover';
   export let show_download_button = false;
+  export let root: string;
+  export let proxy_url: string;
   export let gradio: Gradio<{
     change: typeof value;
     select: SelectData;
@@ -102,6 +104,8 @@
     {label}
     {action_label}
     {value}
+    {root}
+    {proxy_url}
     {show_label}
     {object_fit}
     load_more_button_props={_load_more_button_props}

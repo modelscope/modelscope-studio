@@ -17,9 +17,9 @@ def fn():
 with gr.Blocks() as demo:
     gallery = mgr.WaterfallGallery(
         value=[
-            resolve_assets('bot.jpeg'),
+            resolve_assets('modelscope.svg'),
             # pass a tuple
-            [resolve_assets('bot2.jpeg'), 'bot2'],
+            [resolve_assets('bot.jpeg'), 'bot'],
             # pass a dict
             {
                 "image": resolve_assets('user.jpeg'),
