@@ -75,11 +75,11 @@ ${current_changelog.replace(`# ${pkg_name}`, '').trim()}
     writeFileSync(join(dir, 'CHANGELOG.md'), new_changelog);
   }
 
-  bump_rest_packages(version);
+  bump_packages(version);
 
   unlinkSync(join(pkg_meta.rootDir, '.changeset', '_changelog.json'));
 
-  function bump_rest_packages(newVersion: string) {
+  function bump_packages(newVersion: string) {
     for (const pkg_name in all_packages) {
       const { dir, packageJson } = all_packages[pkg_name];
       const newPackageJson = {
@@ -87,6 +87,9 @@ ${current_changelog.replace(`# ${pkg_name}`, '').trim()}
       };
       newPackageJson.version = newVersion;
       updatePackageJson(join(dir, 'package.json'), newPackageJson);
+      if (packages[pkg_name]) {
+        continue;
+      }
       const current_changelog_path = join(dir, 'CHANGELOG.md');
       const current_changelog = existsSync(current_changelog_path)
         ? readFileSync(current_changelog_path, 'utf-8')
