@@ -25,7 +25,7 @@ jobs:
         with:
           python-version: '3.9'
       - name: Install Python Dependencies
-        run: pip install gradio twine
+        run: pip install gradio twine build
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
@@ -44,6 +44,8 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Build Packages
         run: pip install -e '.' && pnpm run build
+      - name: Check Build
+        run: if [ -d dist ]; then echo "Build success"; else echo "Build failed"; exit 1; fi
       - name: Publish package to PyPI
         if: steps.changesets.outputs.hasChangesets == 'true'
         run: twine upload dist/* --skip-existing -u __token__ -p ${{ secrets.PYPI_TOKEN }}
