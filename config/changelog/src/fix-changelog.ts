@@ -29,11 +29,9 @@ function run() {
     )
   ) as ChangesetMetaCollection;
 
-  const rest_packages = pkg_meta.packages.reduce(
+  const all_packages = pkg_meta.packages.reduce(
     (acc, pkg) => {
-      if (!packages[pkg.packageJson.name]) {
-        acc[pkg.packageJson.name] = pkg;
-      }
+      acc[pkg.packageJson.name] = pkg;
       return acc;
     },
     {} as Record<string, Package>
@@ -82,8 +80,8 @@ ${current_changelog.replace(`# ${pkg_name}`, '').trim()}
   unlinkSync(join(pkg_meta.rootDir, '.changeset', '_changelog.json'));
 
   function bump_rest_packages(newVersion: string) {
-    for (const pkg_name in rest_packages) {
-      const { dir, packageJson } = rest_packages[pkg_name];
+    for (const pkg_name in all_packages) {
+      const { dir, packageJson } = all_packages[pkg_name];
       const newPackageJson = {
         ...packageJson,
       };
