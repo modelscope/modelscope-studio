@@ -14,6 +14,6 @@
     "resolveJsonModule": true,
     "noImplicitOverride": true,
   },
-  "include": ["frontend", "fixtures.d.ts"],
+  "include": ["frontend", "config", "fixtures.d.ts"],
   "exclude": ["node_modules"],
 }

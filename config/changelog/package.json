@@ -1,0 +1,31 @@
+{
+  "name": "@modelscope-studio/changelog",
+  "version": "0.1.0",
+  "private": false,
+  "description": "ModelScope Studio Changelog",
+  "repository": "git@github.com:modelscope/modelscope-studio.git",
+  "license": "Apache-2.0",
+  "exports": {
+    ".": {
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.cjs",
+      "types": "./dist/index.d.ts"
+    }
+  },
+  "main": "dist/index.cjs",
+  "module": "dist/index.mjs",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsup"
+  },
+  "dependencies": {
+    "@changesets/get-github-info": "^0.6.0",
+    "@manypkg/get-packages": "^2.2.0",
+    "detect-indent": "^7.0.1"
+  },
+  "devDependencies": {
+    "@changesets/types": "^6.0.0",
+    "@types/node": "^20.11.24",
+    "tsup": "^8.0.2"
+  }
+}

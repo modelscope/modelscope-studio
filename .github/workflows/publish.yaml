@@ -1,0 +1,49 @@
+name: publish
+
+on:
+  push:
+    branches:
+      - main
+env:
+  CI: true
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}-publish
+  cancel-in-progress: true
+
+jobs:
+  build-n-publish:
+    timeout-minutes: 15
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code Repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Set up Python 3.9
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.9'
+      - name: Install Python Dependencies
+        run: pip install gradio twine
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16
+      - name: Install Pnpm
+        run: npm i pnpm@latest -g
+      - name: Install Node Dependencies
+        run: pnpm install
+      - name: Build Packages
+        run: pnpm run ci:build
+      - name: Create Release Pull Request to Update Versions
+        id: changesets
+        uses: changesets/action@v1
+        with:
+          version: pnpm run ci:version
+          commit: 'chore: update versions'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Publish package to PyPI
+        if: steps.changesets.outputs.hasChangesets == 'false'
+        run: twine upload dist/* --skip-existing -u __token__ -p ${{ secrets.PYPI_TOKEN }}
