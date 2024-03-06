@@ -45,5 +45,5 @@ jobs:
       - name: Build Packages
         run: pip install -e '.' && pnpm run build
       - name: Publish package to PyPI
-        if: steps.changesets.outputs.hasChangesets == 'false'
+        if: steps.changesets.outputs.hasChangesets == 'true'
         run: twine upload dist/* --skip-existing -u __token__ -p ${{ secrets.PYPI_TOKEN }}
