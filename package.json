@@ -20,8 +20,7 @@
     "lint:style": "stylelint --allow-empty-input --cache --fix \"**/*.{less,css}\" ",
     "changeset": "changeset",
     "fix-changelog": "node ./config/changelog/dist/fix-changelog.mjs",
-    "ci:version": "changeset version && pnpm run fix-changelog",
-    "ci:build": "pnpm -F '@modelscope-studio/changelog' build && pnpm run build"
+    "ci:version": "pnpm -F '@modelscope-studio/changelog' build && changeset version && pnpm run fix-changelog"
   },
   "devDependencies": {
     "@changesets/cli": "^2.27.1",

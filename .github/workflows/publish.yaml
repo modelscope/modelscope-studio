@@ -34,8 +34,6 @@ jobs:
         run: npm i pnpm@latest -g
       - name: Install Node Dependencies
         run: pnpm install
-      - name: Build Packages
-        run: pnpm run ci:build
       - name: Create Release Pull Request to Update Versions
         id: changesets
         uses: changesets/action@v1
@@ -44,6 +42,8 @@ jobs:
           commit: 'chore: update versions'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Build Packages
+        run: pip install -e '.' && pnpm run build
       - name: Publish package to PyPI
         if: steps.changesets.outputs.hasChangesets == 'false'
         run: twine upload dist/* --skip-existing -u __token__ -p ${{ secrets.PYPI_TOKEN }}
