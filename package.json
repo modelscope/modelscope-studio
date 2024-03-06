@@ -20,6 +20,7 @@
     "lint:style": "stylelint --allow-empty-input --cache --fix \"**/*.{less,css}\" ",
     "changeset": "changeset",
     "fix-changelog": "node ./config/changelog/dist/fix-changelog.mjs",
+    "ci:publish": "chmod +x ./scripts/create-tag.sh && ./scripts/create-tag.sh",
     "ci:version": "pnpm -F '@modelscope-studio/changelog' build && changeset version && pnpm run fix-changelog"
   },
   "devDependencies": {

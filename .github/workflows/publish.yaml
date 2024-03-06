@@ -41,6 +41,7 @@ jobs:
           version: pnpm run ci:version
           title: 'chore: update versions'
           commit: 'chore: update versions'
+          publish: pnpm run ci:publish
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Build Packages
