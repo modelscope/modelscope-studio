@@ -118,4 +118,7 @@ async function run() {
   await createRelease(version, tag, changelog);
 }
 
-run();
+run().catch((e) => {
+  console.error(e);
+  process.exit(1);
+});

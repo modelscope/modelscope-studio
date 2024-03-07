@@ -1,3 +1,4 @@
+import { setOutput } from '@actions/core';
 import { exec } from '@actions/exec';
 import { getPackagesSync } from '@manypkg/get-packages';
 import fs from 'fs';
@@ -50,6 +51,7 @@ async function run() {
   }
   await build();
   await publish();
+  setOutput('published', 'true');
 }
 run().catch((e) => {
   console.error(e);
