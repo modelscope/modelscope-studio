@@ -93,6 +93,8 @@ const createRelease = async (
       body: changelog,
       prerelease: version.includes('-'),
     });
+    // eslint-disable-next-line no-console
+    console.log(`${tag} released`);
   } catch (err) {
     // if we can't find a changelog, the user has probably disabled changelogs
     if (

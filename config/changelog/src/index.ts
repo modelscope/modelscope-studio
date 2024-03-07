@@ -191,17 +191,14 @@ const changelogFunctions: ChangelogFunctions = {
 
       const [, _type, summary] = changeset.summary
         .trim()
-        .match(/^(feat|fix|chore)\s*:\s*([^]*)/im) || [
-        null,
-        'chore',
-        changeset.summary,
-      ];
+        .match(/^(.+)\s*:\s*([^]*)/im) || [null, 'chore', changeset.summary];
 
       const formatted_summary = handle_line(summary, prefix, suffix);
 
-      (lines[release.name] as ChangesetMeta)[
-        _type as Exclude<keyof ChangesetMeta, 'current_changelog' | 'dir'>
-      ].push({
+      const convertedType =
+        _type === 'feat' || _type === 'fix' ? _type : 'chore';
+
+      (lines[release.name] as ChangesetMeta)[convertedType].push({
         summary: formatted_summary,
       });
     });

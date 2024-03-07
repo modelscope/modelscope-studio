@@ -55,7 +55,7 @@ function run() {
       [
         [features, '### Features'],
         [fixes, '### Fixes'],
-        [others, '### Other Changes'],
+        [others, '### Misc Changes'],
       ] as const
     )
       .filter(([s]) => s.length > 0)

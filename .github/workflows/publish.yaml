@@ -41,17 +41,13 @@ jobs:
           version: pnpm run ci:version
           title: 'chore: update versions'
           commit: 'chore: update versions'
-          publish: pnpm run ci:publish
+          publish: pnpm run ci:create-tag-n-release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           REPO: ${{ github.event.repository.name }}
           OWNER: ${{ github.repository_owner }}
-      - name: Build Packages
+      - name: Build Packages and Publish to PyPI
         if: steps.changesets.outputs.hasChangesets != 'true'
-        run: pip install -e '.' && pnpm run build
-      - name: Check Build Results
-        if: steps.changesets.outputs.hasChangesets != 'true'
-        run: if [ -d dist ]; then echo "Build success"; else echo "Build failed"; exit 1; fi
-      - name: Publish package to PyPI
-        if: steps.changesets.outputs.hasChangesets != 'true'
-        run: twine upload dist/* --skip-existing -u __token__ -p ${{ secrets.PYPI_TOKEN }}
+        run: pnpm run ci:publish
+        env:
+          PYPI_TOKEN: ${{ secrets.PYPI_TOKEN }}

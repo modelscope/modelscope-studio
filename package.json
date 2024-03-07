@@ -20,7 +20,8 @@
     "lint:style": "stylelint --allow-empty-input --cache --fix \"**/*.{less,css}\" ",
     "changeset": "changeset",
     "fix-changelog": "node ./config/changelog/dist/fix-changelog.mjs",
-    "ci:publish": "tsx ./scripts/create-tag-n-release.ts",
+    "ci:create-tag-n-release": "tsx ./scripts/create-tag-n-release.ts",
+    "ci:publish": "tsx ./scripts/publish-to-pypi.ts",
     "ci:version": "pnpm -F '@modelscope-studio/changelog' build && changeset version && pnpm run fix-changelog"
   },
   "devDependencies": {
@@ -35,6 +36,7 @@
     "eslint": "^8.56.0",
     "husky": "^9.0.10",
     "lint-staged": "^15.2.1",
+    "node-fetch": "^3.3.2",
     "npm-run-all": "^4.1.5",
     "prettier": "^3.2.4",
     "prettier-plugin-packagejson": "^2.4.10",
