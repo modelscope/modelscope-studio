@@ -44,10 +44,12 @@ jobs:
           publish: pnpm run ci:publish
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          REPO: ${{ github.event.repository.name }}
+          OWNER: ${{ github.repository_owner }}
       - name: Build Packages
         if: steps.changesets.outputs.hasChangesets != 'true'
         run: pip install -e '.' && pnpm run build
-      - name: Check Build
+      - name: Check Build Results
         if: steps.changesets.outputs.hasChangesets != 'true'
         run: if [ -d dist ]; then echo "Build success"; else echo "Build failed"; exit 1; fi
       - name: Publish package to PyPI
