@@ -189,9 +189,14 @@ const changelogFunctions: ChangelogFunctions = {
           .trim();
       }
 
-      const [, _type, summary] = changeset.summary
+      const [, _type, , summary] = changeset.summary
         .trim()
-        .match(/^(.+)\s*:\s*([^]*)/im) || [null, 'chore', changeset.summary];
+        .match(/^(\w+)(\(.*\))?:\s*(.*)$/im) || [
+        null,
+        'chore',
+        null, // chore(feat): xxx => feat
+        changeset.summary,
+      ];
 
       const formatted_summary = handle_line(summary, prefix, suffix);
 
