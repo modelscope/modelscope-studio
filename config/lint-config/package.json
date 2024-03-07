@@ -1,8 +1,8 @@
 {
   "name": "@modelscope-studio/lint-config",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "private": false,
-  "description": "ModelScope Gradio Components",
+  "description": "ModelScope Studio Lint Config",
   "repository": "git@github.com:modelscope/modelscope-studio.git",
   "license": "Apache-2.0",
   "exports": {

@@ -1,7 +1,7 @@
 {
   "name": "modelscope_studio",
-  "version": "0.0.0",
-  "private": false,
+  "version": "0.1.0",
+  "private": true,
   "description": "ModelScope Gradio Components",
   "repository": "git@github.com:modelscope/modelscope-studio.git",
   "license": "Apache-2.0",
@@ -17,15 +17,26 @@
     "lint:js": "eslint . --fix  --cache --ext .js,.jsx,.ts,.tsx,.svelte frontend",
     "lint:ts": "tsc",
     "lint:py": "flake8 . && isort . && yapf --in-place --recursive --exclude=node_modules/ .",
-    "lint:style": "stylelint --allow-empty-input --cache --fix \"**/*.{less,css}\" "
+    "lint:style": "stylelint --allow-empty-input --cache --fix \"**/*.{less,css}\" ",
+    "changeset": "changeset",
+    "fix-changelog": "node ./config/changelog/dist/fix-changelog.mjs",
+    "ci:create-tag-n-release": "tsx ./scripts/create-tag-n-release.ts",
+    "ci:publish": "tsx ./scripts/publish-to-pypi.ts",
+    "ci:version": "pnpm -F '@modelscope-studio/changelog' build && changeset version && pnpm run fix-changelog"
   },
   "devDependencies": {
+    "@actions/exec": "^1.1.1",
+    "@actions/github": "^6.0.0",
+    "@changesets/cli": "^2.27.1",
     "@commitlint/cli": "^18.6.0",
     "@commitlint/config-conventional": "^18.6.0",
+    "@manypkg/get-packages": "^2.2.0",
+    "@modelscope-studio/changelog": "workspace:*",
     "@modelscope-studio/lint-config": "workspace:*",
     "eslint": "^8.56.0",
     "husky": "^9.0.10",
     "lint-staged": "^15.2.1",
+    "node-fetch": "^3.3.2",
     "npm-run-all": "^4.1.5",
     "prettier": "^3.2.4",
     "prettier-plugin-packagejson": "^2.4.10",
@@ -34,6 +45,7 @@
     "stylelint": "^16.2.1",
     "svelte": "^4.2.9",
     "tslib": "^2.6.2",
+    "tsx": "^4.7.1",
     "typescript": "^5.3.3"
   },
   "main_changeset": true
