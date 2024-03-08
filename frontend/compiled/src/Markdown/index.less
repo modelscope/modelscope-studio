@@ -143,32 +143,44 @@
     animation: blink 1s steps(5, start) infinite;
     content: '_';
   }
+  .handle-elements() {
+    .handle() {
+      & > p,
+      & > dt,
+      & > dd,
+      & > h1,
+      & > h2,
+      & > h3,
+      & > h4,
+      & > h5,
+      & > h6,
+      & > td,
+      & > pre:last-child code {
+        &:last-child {
+          &::after {
+            .dot-blink();
+          }
+        }
+      }
+    }
 
-  &-flushing > p,
-  &-flushing > li,
-  &-flushing > dl,
-  &-flushing > dt,
-  &-flushing > dd,
-  &-flushing > h1,
-  &-flushing > h2,
-  &-flushing > h3,
-  &-flushing > h4,
-  &-flushing > h5,
-  &-flushing > h6,
-  &-flushing > td {
-    &:last-child {
-      &::after {
-        .dot-blink();
+    .handle();
+
+    & > ol:last-child li,
+    & > ul:last-child li {
+      &:last-child {
+        &:not(:has(p, dt, dd, h1, h2, h3, h4, h5, h6, td, pre)) {
+          &::after {
+            .dot-blink();
+          }
+        }
+        .handle();
       }
     }
   }
 
-  &-flushing > ol:last-child li:last-child,
-  &-flushing > pre:last-child code,
-  &-flushing > ul:last-child li:last-child {
-    &::after {
-      .dot-blink();
-    }
+  &-flushing {
+    .handle-elements();
   }
 
   &-flushing > .ms-markdown-accordion.ms-markdown-accordion-typing {
@@ -180,33 +192,7 @@
         }
       }
 
-      & > p,
-      & > ul,
-      & > ol,
-      & > dl,
-      & > dt,
-      & > dd,
-      & > h1,
-      & > h2,
-      & > h3,
-      & > h4,
-      & > h5,
-      & > h6,
-      & > td {
-        &:last-child {
-          &::after {
-            .dot-blink();
-          }
-        }
-      }
-
-      & > ol:last-child li:last-child,
-      & > pre:last-child code,
-      & > ul:last-child li:last-child {
-        &::after {
-          .dot-blink();
-        }
-      }
+      .handle-elements();
     }
   }
 
