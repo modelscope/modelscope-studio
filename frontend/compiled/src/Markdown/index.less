@@ -141,7 +141,7 @@
     font-weight: bold;
     vertical-align: baseline;
     animation: blink 1s steps(5, start) infinite;
-    content: '_';
+    content: '_' !important;
   }
   .handle-elements() {
     .handle() {
@@ -196,8 +196,10 @@
     }
   }
 
-  &-flushing-empty::after {
-    .dot-blink();
+  &-flushing-empty {
+    &::after {
+      .dot-blink();
+    }
   }
 
   @keyframes blink {

@@ -185,6 +185,9 @@ class ModelScopeChatbot(Component):
         if avatar_images is None:
             pass
         else:
+            if len(self.avatar_images) != 2:
+                raise ValueError(
+                    "Expected avatar_images to be a tuple of length 2.")
             for i, avatar_image_item in enumerate(self.avatar_images):
                 if isinstance(avatar_image_item, (list, tuple)):
                     for j, avatar_image in enumerate(avatar_image_item):

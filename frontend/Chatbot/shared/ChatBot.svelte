@@ -70,8 +70,10 @@
   export let flushing_speed = 3;
   export let theme = 'light';
   let div: HTMLDivElement;
+  // the scroll container is scrolling
   let container_scroll: boolean;
   let is_programmatic_scroll = false;
+  // if user scrolled
   let user_scrolled = false;
   let container_scroll_timer: number;
   const dispatch = createEventDispatcher<{
