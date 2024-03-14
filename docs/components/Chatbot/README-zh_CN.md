@@ -53,6 +53,12 @@ Observation: <result>「任意 md 内容，将作为完成调用的展示的下�
 
 <demo name="select-box"></demo>
 
+### 支持图表展示
+
+在返回的内容中加入 `chart` 标签，更多用法详见 <tab-link component-tab="Markdown">Markdown 内置自定义标签</tab-link>
+
+<demo name="chart"></demo>
+
 ### 多 bot 场景
 
 <demo name="multi_bots"></demo>
