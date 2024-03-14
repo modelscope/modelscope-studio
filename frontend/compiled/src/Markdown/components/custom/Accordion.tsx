@@ -5,6 +5,7 @@ import { Collapse } from 'antd';
 import cls from 'classnames';
 
 import { useMarkdownContext } from '../../context';
+import { useCustomProps } from '../../hooks/useCustomProps';
 
 export interface AccordionProps {
   children?: React.ReactNode[];
@@ -56,20 +57,14 @@ export const AccordionBody: React.FC<{
   );
 };
 
-export const Accordion: Components['accordion'] = ({
-  children,
-  title,
-  node,
-}) => {
-  const { flushing, text, end, last_flushing_end_index } = useMarkdownContext();
-
+export const Accordion: Components['accordion'] = (nodeProps) => {
+  const { flushing, end, last_flushing_end_index } = useMarkdownContext();
+  const [{ children, title, node }, { tagEnd }] = useCustomProps(nodeProps);
   const textEnd =
     typeof end === 'boolean'
       ? (last_flushing_end_index || 0) > (node.position?.end.offset || 0) || end
       : true;
-  const flushingEnd = flushing
-    ? typeof text[node.position?.end.offset || 0] === 'string'
-    : true;
+  const flushingEnd = flushing ? tagEnd : true;
 
   const hasEnd = flushingEnd && textEnd;
   const [open, setOpen] = useState(!hasEnd);

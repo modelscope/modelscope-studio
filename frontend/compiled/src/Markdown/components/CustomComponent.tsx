@@ -54,10 +54,11 @@ export interface CustomComponentProps {
 }
 
 export const CustomComponent: React.FC<CustomComponentProps> = (nodeProps) => {
-  const [{ node, ...props }, tagIndex] = useCustomProps(nodeProps);
+  const [{ node, ...props }, { tagIndex, tagEnd }] = useCustomProps(nodeProps);
   const divRef = useRef<HTMLDivElement>(null);
   const tag = node.tagName;
-  const { on_custom, custom_components } = useMarkdownContext();
+  const { on_custom, custom_components, theme } = useMarkdownContext();
+
   const onCustom = (data?: any) => {
     on_custom(tag, tagIndex, data);
   };
@@ -85,7 +86,7 @@ export const CustomComponent: React.FC<CustomComponentProps> = (nodeProps) => {
 
   useEffect(() => {
     const el = divRef.current;
-    if (!el) {
+    if (!el || !tagEnd) {
       return;
     }
     let userProps: Record<PropertyKey, any> = {};
@@ -94,8 +95,15 @@ export const CustomComponent: React.FC<CustomComponentProps> = (nodeProps) => {
       onMountFn = callback;
     };
     if (js) {
+      let formattedStr = js.trim();
+      if (formattedStr.startsWith(';')) {
+        formattedStr = formattedStr.slice(1);
+      }
+      if (formattedStr.endsWith(';')) {
+        formattedStr = formattedStr.slice(0, -1);
+      }
       userProps =
-        new Function(`return ${js}`)()(
+        new Function(`return ${formattedStr}`)()(
           // props
           filterProps,
           // cc
@@ -106,6 +114,7 @@ export const CustomComponent: React.FC<CustomComponentProps> = (nodeProps) => {
           {
             el,
             onMount,
+            theme,
           }
         ) || {};
     }
@@ -124,7 +133,7 @@ export const CustomComponent: React.FC<CustomComponentProps> = (nodeProps) => {
     return () => {
       el.innerHTML = '';
     };
-  }, [filterProps, js, template]);
+  }, [filterProps, js, template, theme, tagEnd]);
 
   return <div ref={divRef} />;
 };

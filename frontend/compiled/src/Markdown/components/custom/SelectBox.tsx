@@ -54,7 +54,7 @@ export const SelectBox: Components['select-box'] = (nodeProps) => {
       columns,
       ...props
     },
-    tagIndex,
+    { tagIndex },
   ] = useCustomProps(nodeProps);
 
   const selectOnce = typeof _selectOnce === 'string';
