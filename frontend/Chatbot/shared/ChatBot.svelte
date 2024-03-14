@@ -250,9 +250,7 @@
                     {@const message_name = get_message_name(message, j, k)}
                     <div
                       class="avatar-container {avatar_image_align}"
-                      style={typeof avatar_image_width === 'number'
-                        ? `width: ${avatar_image_width}px;`
-                        : undefined}
+                      style:width={`${typeof avatar_image_width === 'number' ? avatar_image_width + 'px' : avatar_image_width}`}
                     >
                       <img
                         class="avatar-image"

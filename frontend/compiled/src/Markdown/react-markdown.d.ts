@@ -2,6 +2,7 @@ import {
   AccordionProps,
   AccordionTitleProps,
 } from './components/custom/Accordion';
+import { ChartProps } from './components/custom/Chart';
 import { FileProps } from './components/custom/File';
 import { FlushingEndProps } from './components/custom/FlushingEnd';
 import { SelectBoxProps } from './components/custom/SelectBox';
@@ -14,6 +15,7 @@ declare global {
       accordion: AccordionProps;
       'accordion-title': AccordionTitleProps;
       'flushing-end': FlushingEndProps;
+      chart: ChartProps;
     }
   }
 }
