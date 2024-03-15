@@ -52,6 +52,12 @@ Include the `select-box` tag in the returned content for more usage details, see
 
 <demo name="select-box"></demo>
 
+### Support for Chart Display
+
+Include the `chart` tag in the returned content for more usage details, see <tab-link component-tab="Markdown">Markdown Built-in Custom Tags <tab-link component-tab="Markdown">.
+
+<demo name="chart"></demo>
+
 ### Multi-bot Scenarios
 
 <demo name="multi_bots"></demo>

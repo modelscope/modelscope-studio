@@ -39,6 +39,10 @@ export default defineConfig({
         assetFileNames: '[name]/index[extname]',
         chunkFileNames: (chunk) => {
           const entryModuleId = chunk.moduleIds[chunk.moduleIds.length - 1];
+          if (entryModuleId.includes('node_modules')) {
+            const slices = entryModuleId.split('node_modules/');
+            return slices[slices.length - 1];
+          }
           if (
             path.basename(entryModuleId, path.extname(entryModuleId)) ===
             'index'

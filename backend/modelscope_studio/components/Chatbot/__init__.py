@@ -93,7 +93,7 @@ class ModelScopeChatbot(Component):
                                  str | Path | None | dict | list | tuple]
         | None = None,
             avatar_image_align: Literal['top', 'middle', 'bottom'] = 'bottom',
-            avatar_image_width: int = 45,
+            avatar_image_width: Union[int, Literal['auto']] = 45,
             sanitize_html: bool = True,
             render_markdown: bool = True,
             bubble_full_width: bool = True,
@@ -131,7 +131,7 @@ class ModelScopeChatbot(Component):
             show_copy_button: If True, will show a copy button for each chatbot message.
             avatar_images: Tuple of two avatar image paths or URLs or dict ("avatar" and "name") or list (each item receives the previous parameters) for user(s) and bot(s) (in that order). Pass None for either the user or bot image to skip. Must be within the working directory of the Gradio app or an external URL and use `gr.update` to update.
             sanitize_html: If False, will disable HTML sanitization for chatbot messages. This is not recommended, as it can lead to security vulnerabilities.
-            avatar_image_width: Width of the avatar image in pixels.
+            avatar_image_width: Width of the avatar image in pixels, pass in `auto` to automatically stretch in each message.
             avatar_image_align: Aligns the avatar images to the top, middle, or bottom of the message.
             render_markdown: If False, will disable Markdown rendering for chatbot messages.
             bubble_full_width: If False, the chat bubble will fit to the content of the message. If True (default), the chat bubble will be the full width of the component.

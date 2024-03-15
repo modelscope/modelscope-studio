@@ -25,11 +25,16 @@ Include the `accordion` tag in the returned content for more usage details, see 
 Include the `select-box` tag in the returned content for more usage details, see <tab-link tab="custom_tags/select-box">select-box</tab-link>
 <demo name="select-box"></demo>
 
+### Support for Chart Display
+
+Include the `chart` tag in the returned content for more usage details, see <tab-link tab="custom_tags/chart">chart</tab-link>
+<demo name="chart"></demo>
+
 ### Custom Tags (Advanced Usage, Requires Frontend Knowledge)
 
 <demo name="custom-tag"></demo>
 
-#### Importing js
+#### Import JS
 
 <demo name="custom-tag2"></demo>
 The template can only perform simple variable replacements. If you want to introduce more custom behaviors, such as conditional judgments, loop rendering, etc., please use js to control the element for processing. Here is a simple example:
@@ -77,6 +82,7 @@ class CustomComponentDict(TypedDict):
 
 - <tab-link tab="custom_tags/select-box">select-box</tab-link>
 - <tab-link tab="custom_tags/accordion">accordion</tab-link>
+- <tab-link tab="custom_tags/chart">chart</tab-link>
 
 ### Event Listeners
 

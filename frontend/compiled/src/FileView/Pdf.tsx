@@ -104,7 +104,7 @@ export const Pdf: React.FC<PdfProps> = ({ src, height, width = '100%' }) => {
       return;
     }
     lastWidthRef.current = el.getBoundingClientRect().width;
-    let timeout: number | null = null;
+    let timeout: ReturnType<typeof setTimeout>;
     // listen el width changed
     const resizeObserver = new ResizeObserver((entries) => {
       const entry = entries[0];
@@ -117,7 +117,7 @@ export const Pdf: React.FC<PdfProps> = ({ src, height, width = '100%' }) => {
         lastWidthRef.current = rect.width;
         timeout = setTimeout(() => {
           renderPdf();
-        }, 500) as unknown as number;
+        }, 500);
       }
     });
     resizeObserver.observe(el);

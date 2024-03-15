@@ -27,6 +27,12 @@
 
 <demo name="select-box"></demo>
 
+### 支持图表展示
+
+在返回的内容中加入 `chart` 标签，更多用法详见 <tab-link tab="custom_tags/chart">chart</tab-link>
+
+<demo name="chart"></demo>
+
 ### 自定义标签（高阶用法，需要了解前端知识）
 
 <demo name="custom-tag"></demo>
@@ -81,6 +87,7 @@ class CustomComponentDict(TypedDict):
 
 - <tab-link tab="custom_tags/select-box">select-box</tab-link>
 - <tab-link tab="custom_tags/accordion">accordion</tab-link>
+- <tab-link tab="custom_tags/chart">chart</tab-link>
 
 ### event listeners
 

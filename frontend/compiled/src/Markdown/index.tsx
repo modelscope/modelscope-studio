@@ -20,6 +20,7 @@ import { Anchor } from './components/Anchor';
 import { Audio } from './components/Audio';
 import { Code } from './components/Code';
 import { Accordion, AccordionTitle } from './components/custom/Accordion';
+import { Chart } from './components/custom/Chart';
 import { File } from './components/custom/File';
 import { FlushingEnd } from './components/custom/FlushingEnd';
 import { SelectBox } from './components/custom/SelectBox';
@@ -59,6 +60,7 @@ const buildInCustomComponents = {
   accordion: Accordion,
   'flushing-end': FlushingEnd,
   file: File,
+  chart: Chart,
 };
 
 const defaultCustomComponents: MarkdownProps['custom_components'] = {};
@@ -75,6 +77,7 @@ export const Markdown = defineComponent<MarkdownProps>((props) => {
     style,
     preview = true,
     theme = 'light',
+    locale,
     end = true,
     on_load: _on_load,
     last_flushing_end_index,
@@ -131,6 +134,7 @@ export const Markdown = defineComponent<MarkdownProps>((props) => {
         video: ['src', 'loop', 'autoplay', 'autoPlay', 'muted', 'controls'],
         audio: ['src', 'loop', 'autoplay', 'autoPlay', 'muted', 'controls'],
         accordion: ['title'],
+        chart: ['options'],
         'select-box': [
           'value',
           'options',
@@ -179,6 +183,7 @@ export const Markdown = defineComponent<MarkdownProps>((props) => {
         preview,
         flushing,
         theme,
+        locale,
         disabled,
         header_links,
         last_flushing_end_index,
