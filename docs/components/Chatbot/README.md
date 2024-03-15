@@ -4,7 +4,7 @@ Upgraded gradio Chatbot.
 
 - Supports uniform frontend streaming output of messages
 - Supports output of multimodal content (audio, video, image, text)
-- Built-in tags (chart、select-box、accordion)
+- Built-in tags (chart, select-box, accordion)
 - Supports multi-agent scenarios
 - Supports custom rendering components and interaction with Python events
 

@@ -3,7 +3,7 @@
 Upgraded gradio Markdown.
 
 - Supports output of multimodal content (audio, video, image, text)
-- Built-in tags (chart、select-box、accordion)
+- Built-in tags (chart, select-box, accordion)
 - Supports custom rendering components and interaction with Python events
 
 ## How to Use
