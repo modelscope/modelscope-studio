@@ -87,6 +87,7 @@ class CustomComponentDict(TypedDict):
 
 - <tab-link tab="custom_tags/select-box">select-box</tab-link>
 - <tab-link tab="custom_tags/accordion">accordion</tab-link>
+- <tab-link tab="custom_tags/chart">chart</tab-link>
 
 ### event listeners
 
