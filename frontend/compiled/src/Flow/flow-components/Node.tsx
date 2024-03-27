@@ -480,7 +480,7 @@ export const Node = memo<NodeProps<FlowNode>>(
                                   {renderPorts(
                                     attr.ports,
                                     (i) =>
-                                      `attr(${attr.name})-attr_item(${index})-${attrIndex}-${i}`
+                                      `attr(${attr.name})-attr_item_index(${index})-${attrIndex}-${i}`
                                   )}
                                 </div>
                               );

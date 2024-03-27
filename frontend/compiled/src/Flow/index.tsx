@@ -33,7 +33,7 @@ import type {
   FlowStoreData,
   ReactFlowProps,
 } from './type';
-import { attrItemMatcher, attrMatcher, createId } from './utils';
+import { attrItemIndexMatcher, attrMatcher, createId } from './utils';
 
 import '@xyflow/react/dist/style.css';
 import './index.less';
@@ -202,14 +202,14 @@ export const Flow = defineComponent<FlowProps>((props) => {
   const onConnect: ReactFlowProps['onConnect'] = (params) => {
     const [, sourceAttr] = params.sourceHandle?.match(attrMatcher) || [];
     const [, sourceAttrItem] = sourceAttr
-      ? params.sourceHandle?.match(attrItemMatcher) || [null, null]
+      ? params.sourceHandle?.match(attrItemIndexMatcher) || [null, null]
       : [null, null];
     const [, targetAttr] = params.targetHandle?.match(attrMatcher) || [
       null,
       null,
     ];
     const [, targetAttrItem] = targetAttr
-      ? params.targetHandle?.match(attrItemMatcher) || [null, null]
+      ? params.targetHandle?.match(attrItemIndexMatcher) || [null, null]
       : [null, null];
 
     setEdges(

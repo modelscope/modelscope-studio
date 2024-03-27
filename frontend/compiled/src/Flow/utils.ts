@@ -9,7 +9,7 @@ const elk = new ELK();
 const ajv = new Ajv();
 
 export const attrMatcher = /attr\((\w+)\)/;
-export const attrItemMatcher = /attr_item\((\w+)\)/;
+export const attrItemIndexMatcher = /attr_item_index\((\w+)\)/;
 
 // ***** validation *****
 
