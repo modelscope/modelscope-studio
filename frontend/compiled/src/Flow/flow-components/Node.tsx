@@ -45,6 +45,9 @@ import { FlowNode, FlowNodeSchema } from '../type';
 import {
   compileValidationSchema,
   createId,
+  getAttrHandleId,
+  getAttrItemHandleId,
+  getHandleId,
   getValidationErrorMessage,
   updateNodeAttrs,
 } from '../utils';
@@ -142,7 +145,7 @@ export const Node = memo<NodeProps<FlowNode>>(
         source: [],
         target: [],
       },
-      getId: (index: number) => string
+      getId: (type: 'source' | 'target', index: number) => string
     ) => {
       return (
         <>
@@ -154,7 +157,7 @@ export const Node = memo<NodeProps<FlowNode>>(
                   'ms-flow-node-handle',
                   `ms-flow-node-handle-${port}`
                 )}
-                id={`target-${getId(i)}`}
+                id={getId('target', i)}
                 type="target"
                 position={port}
               >
@@ -170,7 +173,7 @@ export const Node = memo<NodeProps<FlowNode>>(
                   'ms-flow-node-handle',
                   `ms-flow-node-handle-${port}`
                 )}
-                id={`source-${getId(i)}`}
+                id={getId('source', i)}
                 type="source"
                 position={port}
               >
@@ -477,10 +480,15 @@ export const Node = memo<NodeProps<FlowNode>>(
                                       {content}
                                     </FormListItemWrapper>
                                   </Form.Item>
-                                  {renderPorts(
-                                    attr.ports,
-                                    (i) =>
-                                      `attr(${attr.name})-attr_item_index(${index})-${attrIndex}-${i}`
+                                  {renderPorts(attr.ports, (type, i) =>
+                                    getAttrItemHandleId({
+                                      nodeId: nodeId || '',
+                                      type,
+                                      attr: attr.name,
+                                      handleIndex: i,
+                                      attrIndex,
+                                      attrItemIndex: index,
+                                    })
                                   )}
                                 </div>
                               );
@@ -501,9 +509,14 @@ export const Node = memo<NodeProps<FlowNode>>(
                     >
                       {content}
                     </Form.Item>
-                    {renderPorts(
-                      attr.ports,
-                      (i) => `attr(${attr.name})-${attrIndex}-${i}`
+                    {renderPorts(attr.ports, (type, i) =>
+                      getAttrHandleId({
+                        nodeId: nodeId || '',
+                        type,
+                        handleIndex: i,
+                        attrIndex,
+                        attr: attr.name,
+                      })
                     )}
                   </div>
                 );
@@ -576,7 +589,12 @@ export const Node = memo<NodeProps<FlowNode>>(
             source: sourcePorts,
             target: targetPorts,
           },
-          (i) => `${i}`
+          (type, i) =>
+            getHandleId({
+              type,
+              nodeId: nodeId || '',
+              handleIndex: i,
+            })
         )}
       </>
     );

@@ -130,6 +130,11 @@ export interface FlowEdge extends Edge {
   };
 }
 
+export interface ElkPortsId {
+  id: string;
+  properties: { side: 'WEST' | 'EAST' | 'NORTH' | 'SOUTH' };
+}
+
 export interface UploadFile {
   url: string;
   name: string;
