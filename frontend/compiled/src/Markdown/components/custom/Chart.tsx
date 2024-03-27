@@ -44,7 +44,7 @@ export const Chart: Components['chart'] = (props) => {
       return;
     }
     const instance = asyncEcharts.init(el, theme, {
-      locale: langs[locale],
+      locale: langs[locale] || 'en',
     });
     instance.setOption(options, true);
     let timeout: ReturnType<typeof setTimeout>;
