@@ -62,7 +62,7 @@ export const Node = memo<NodeProps<FlowNode>>(
     const reactFlow = useReactFlow<FlowNode>();
     const {
       locale,
-      flowSchema,
+      nodesSchema,
       setNodes,
       disabled,
       useFlowStore,
@@ -74,8 +74,8 @@ export const Node = memo<NodeProps<FlowNode>>(
     const inputRef = useRef<InputRef | null>(null);
     // the schema of the current node
     const schema = useMemo(
-      () => flowSchema.nodes.find((item) => item.name === data.name),
-      [data.name, flowSchema.nodes]
+      () => nodesSchema[data.name],
+      [data.name, nodesSchema]
     );
     const { nodeCount } = useFlowStore((state) => ({
       nodeCount: state.nodeCounts[data.name],
@@ -96,7 +96,7 @@ export const Node = memo<NodeProps<FlowNode>>(
     const addable = schema.addable ?? true;
     const hasAttrs = schema.attrs && schema.attrs?.length >= 1;
 
-    const defaultNodeWidth = hasAttrs ? 360 : 200;
+    const defaultNodeWidth = hasAttrs ? 360 : undefined;
     const nodeWidth = schema.width || defaultNodeWidth;
     const nodeHeight = schema.height;
 
@@ -203,6 +203,7 @@ export const Node = memo<NodeProps<FlowNode>>(
         ? {
             key: 'duplicate',
             label: i18n('duplicate', locale),
+            disabled: typeof schema.max === 'number' && nodeCount >= schema.max,
             onClick() {
               if (!nodeId) {
                 return;
@@ -349,26 +350,10 @@ export const Node = memo<NodeProps<FlowNode>>(
                     content = <Input.TextArea />;
                     break;
                   case 'radio':
-                    content = (
-                      <Radio.Group>
-                        {attr.options?.map((option) => (
-                          <Radio key={option.value} value={option.value}>
-                            {option.label}
-                          </Radio>
-                        ))}
-                      </Radio.Group>
-                    );
+                    content = <Radio.Group />;
                     break;
                   case 'checkbox':
-                    content = (
-                      <Checkbox.Group>
-                        {attr.options?.map((option) => (
-                          <Checkbox key={option.value} value={option.value}>
-                            {option.label}
-                          </Checkbox>
-                        ))}
-                      </Checkbox.Group>
-                    );
+                    content = <Checkbox.Group />;
                     break;
                   case 'number':
                     content = <InputNumber style={{ width: '100%' }} />;
@@ -377,7 +362,6 @@ export const Node = memo<NodeProps<FlowNode>>(
                     content = (
                       <Select
                         style={{ width: '100%' }}
-                        options={attr.options}
                         getPopupContainer={() =>
                           containerRef.current || document.body
                         }
@@ -521,7 +505,7 @@ export const Node = memo<NodeProps<FlowNode>>(
                   </div>
                 );
 
-                const isAccordion = attr.is_accordion ?? true;
+                const isAccordion = attr.accordion ?? true;
 
                 return (
                   <Collapse

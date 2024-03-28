@@ -22,7 +22,7 @@ export const CustomComponent: React.FC<CustomComponentProps> = ({
   ...props
 }) => {
   const divRef = useRef<HTMLDivElement>(null);
-  const { theme, on_custom } = useFlow();
+  const { theme, on_custom, locale } = useFlow();
 
   const onCustom = (data?: any) => {
     onChange?.(data);
@@ -34,6 +34,7 @@ export const CustomComponent: React.FC<CustomComponentProps> = ({
     theme,
     onCustom,
     component,
+    locale,
     componentProps: props,
     extraProps: useMemo(() => {
       return index !== undefined

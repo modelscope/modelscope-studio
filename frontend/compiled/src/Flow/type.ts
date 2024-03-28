@@ -37,9 +37,8 @@ export interface FlowNodeSchema {
   height?: number;
   addable?: boolean;
   deletable?: boolean;
-  // addable will be false when the count of nodes is greater than max
+  // node sum limit
   max?: number;
-  // deletable will be false when the count of nodes is less than min
   min?: number;
   description?: string;
   ports?: {
@@ -72,10 +71,10 @@ export interface FlowNodeSchema {
     // for antd component props
     props?: Record<string, any>;
     // for radio, checkbox, select
-    options?: Array<{
-      label: string;
-      value: string;
-    }>;
+    // options?: Array<{
+    //   label: string;
+    //   value: string;
+    // }>;
     ports?: {
       source?: Position[];
       sourceConnections?: PortConnection[];
@@ -88,7 +87,7 @@ export interface FlowNodeSchema {
           min?: number;
           max?: number;
         };
-    is_accordion?: boolean;
+    accordion?: boolean;
     required?:
       | boolean
       | {
@@ -136,6 +135,7 @@ export interface ElkPortsId {
 }
 
 export interface UploadFile {
+  path: string;
   url: string;
   name: string;
 }

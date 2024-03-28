@@ -15,7 +15,7 @@ import {
 export interface FlowContextValue {
   theme: 'light' | 'dark';
   disabled?: boolean;
-  locale?: string;
+  locale: string;
   custom_components: CustomComponents;
   on_custom: (options: FlowCustomData) => void;
   maxZoom: number;
@@ -24,6 +24,7 @@ export interface FlowContextValue {
   flowSchema: {
     nodes: FlowNodeSchema[];
   };
+  nodesSchema: Record<string, FlowNodeSchema>;
   setNodes: (
     value: (nodes: FlowNode[]) => FlowNode[],
     options?: { updateNodeCounts?: boolean; dataChanged?: boolean }
@@ -45,7 +46,9 @@ export const FlowContext = createContext<FlowContextValue>({
   flowSchema: {
     nodes: [],
   },
+  nodesSchema: {},
   theme: 'light',
+  locale: 'en-US',
   on_custom: () => {},
   custom_components: {},
 });

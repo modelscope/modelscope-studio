@@ -2,6 +2,7 @@
 
 <script lang="ts">
   import { Block } from '@gradio/atoms';
+  import { get_fetchable_url_or_file } from '@gradio/client';
   import type { LoadingStatus } from '@gradio/statustracker';
   import { StatusTracker } from '@gradio/statustracker';
   import type { Gradio } from '@gradio/utils';
@@ -12,7 +13,7 @@
   } from '@modelscope-studio/compiled';
 
   import Flow from './shared/Flow.svelte';
-  import { type FlowData } from './shared/utils';
+  import { createId, type FlowData } from './shared/utils';
 
   export let gradio: Gradio<{
     change: FlowData;
@@ -20,6 +21,7 @@
     custom: FlowCustomData;
   }>;
   export let root: string;
+  export let proxy_url: string;
   export let elem_id = '';
   export let elem_classes: string[] = [];
   export let visible = true;
@@ -43,6 +45,37 @@
   export let max_zoom = 2;
   export let hide_attribution = false;
   export let custom_components: CustomComponents = {};
+
+  // process schema
+  $: _schema = {
+    ...schema,
+    nodes: schema.nodes.map((node) => ({
+      ...node,
+      icon: node.icon
+        ? get_fetchable_url_or_file(node.icon, root, proxy_url)
+        : undefined,
+    })),
+  };
+  $: _value = {
+    nodes: value.nodes?.map((v) => {
+      return {
+        ...v,
+        id: v.id || createId(),
+        type: 'ms-node',
+        position: {
+          x: v.position?.x || 0,
+          y: v.position?.y || 0,
+        },
+      };
+    }),
+    edges: value.edges?.map((v) => {
+      return {
+        ...v,
+        id: v.id || createId(),
+        type: 'ms-edge',
+      };
+    }),
+  };
 </script>
 
 <Block
@@ -63,11 +96,11 @@
   {/if}
   <Flow
     {root}
-    {value}
+    value={_value}
     {interactive}
     {custom_components}
     {height}
-    {schema}
+    schema={_schema}
     {hide_attribution}
     {show_sidebar}
     {show_minimap}

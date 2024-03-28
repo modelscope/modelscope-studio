@@ -54,41 +54,27 @@
         upload_fn
       );
       return (
-        val
-          ?.filter(Boolean)
-          .map((v) => ({ name: v?.orig_name || '', url: v?.url || '' })) || []
+        val?.filter(Boolean).map((v) => ({
+          name: v?.orig_name || '',
+          url: v?.url || '',
+          path: v?.path || '',
+        })) || []
       );
     } catch (e) {
       console.error(e);
       return [];
     }
   };
-
-  // resolve ports
-  $: _value = {
-    nodes: value.nodes?.map((v) => {
-      return {
-        ...v,
-        type: 'ms-node',
-      };
-    }),
-    edges: value.edges?.map((v) => {
-      return {
-        ...v,
-        type: 'ms-edge',
-      };
-    }),
-  };
 </script>
 
 <Flow
   disabled={!interactive}
   elem_style={`height: ${height}px`}
-  nodes={_value.nodes}
+  nodes={value.nodes}
   {on_change}
   {on_upload}
   {on_custom}
-  edges={_value.edges}
+  edges={value.edges}
   {schema}
   {theme}
   {hide_attribution}

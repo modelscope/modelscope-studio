@@ -10,10 +10,11 @@ import {
   ReactFlowInstance,
   updateEdge,
 } from '@xyflow/react';
-import { useCallback, useMemo, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { Store } from '@subscribe-kit/core';
 import { theme as AntdTheme } from 'antd';
 import cls from 'classnames';
+import { isNumber } from 'lodash-es';
 
 import { defineComponent } from '../defineComponent';
 import { useRefValue } from '../shared';
@@ -117,6 +118,16 @@ export const Flow = defineComponent<FlowProps>((props) => {
       {} as Record<string, FlowNodeSchema>
     );
   }, [schema.nodes]);
+
+  const nodesSchema = useMemo(() => {
+    return (schema.nodes || []).reduce(
+      (acc, node) => {
+        acc[node.name] = node;
+        return acc;
+      },
+      {} as Record<string, FlowNodeSchema>
+    );
+  }, [schema.nodes]);
   const { flowStore, useFlowStore } = useMemo(() => {
     const store = new Store<FlowStoreData>({
       initialValues: {
@@ -130,9 +141,8 @@ export const Flow = defineComponent<FlowProps>((props) => {
     };
   }, []);
 
-  const setNodes: FlowContextValue['setNodes'] = useCallback((cb, options) => {
-    const newNodes = cb(nodesRef.current);
-    if (options?.updateNodeCounts) {
+  const updateNodeCounts = useCallback(
+    (newNodes: FlowNode[]) => {
       const newNodeCounts = newNodes.reduce(
         (prev, cur) => {
           if (!prev[cur.data.name]) {
@@ -144,7 +154,22 @@ export const Flow = defineComponent<FlowProps>((props) => {
         {} as Record<string, number>
       );
       flowStore.setValue('nodeCounts', newNodeCounts);
-    }
+    },
+    [flowStore]
+  );
+
+  // update node counts when nodes changed
+  useEffect(() => {
+    updateNodeCounts(nodes);
+  }, [nodes, updateNodeCounts]);
+
+  const setNodes: FlowContextValue['setNodes'] = useCallback((cb, options) => {
+    const newNodes = cb(nodesRef.current);
+    // perf: optimize
+    // if (options?.updateNodeCounts) {
+    //   updateNodeCounts(newNodes);
+    // }
+
     onChangeRef.current?.(
       {
         nodes: newNodes,
@@ -326,7 +351,19 @@ export const Flow = defineComponent<FlowProps>((props) => {
   const onBeforeDelete: ReactFlowProps['onBeforeDelete'] = async (params) => {
     return {
       edges: params.edges,
-      nodes: params.nodes.filter((n) => !undeletableNodes[n.data.name]),
+      nodes: params.nodes.filter((n) => {
+        // if deletable or schema.min < the node count
+        const isUndeleteableNode = undeletableNodes[n.data.name];
+        if (isUndeleteableNode) {
+          return false;
+        }
+        const nodeSchema = nodesSchema[n.data.name];
+
+        return (
+          !isNumber(nodeSchema.min) ||
+          nodeSchema.min < flowStore.values.nodeCounts[n.data.name]
+        );
+      }),
     };
   };
 
@@ -338,12 +375,9 @@ export const Flow = defineComponent<FlowProps>((props) => {
     if (!sourceNode || !targetNode) {
       return false;
     }
-    const sourceNodeSchema = schema.nodes.find(
-      (node) => node.name === sourceNode.data.name
-    );
-    const targetNodeSchema = schema.nodes.find(
-      (node) => node.name === targetNode.data.name
-    );
+    const sourceNodeSchema = nodesSchema[sourceNode.data.name];
+    const targetNodeSchema = nodesSchema[targetNode.data.name];
+
     if (!sourceNodeSchema || !targetNodeSchema) {
       return false;
     }
@@ -413,6 +447,7 @@ export const Flow = defineComponent<FlowProps>((props) => {
             locale,
             on_custom,
             custom_components,
+            nodesSchema,
             flowSchema: {
               ...defaultSchema,
               ...schema,
@@ -430,6 +465,7 @@ export const Flow = defineComponent<FlowProps>((props) => {
           locale,
           on_custom,
           custom_components,
+          nodesSchema,
           schema,
         ])}
       >

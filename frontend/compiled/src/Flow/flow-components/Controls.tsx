@@ -9,7 +9,7 @@ import {
 import { Button, Card, Select, SelectProps, Space } from 'antd';
 
 import { useFlow } from '../FlowContext';
-import { FlowEdge, FlowNode, FlowNodeSchema } from '../type';
+import { FlowEdge, FlowNode } from '../type';
 import { getLayoutedNodes } from '../utils';
 
 export const Controls: React.FC = () => {
@@ -17,16 +17,7 @@ export const Controls: React.FC = () => {
   const { zoom } = useViewport();
   const { maxZoom, minZoom } = useFlow();
 
-  const { setNodes, flowSchema } = useFlow();
-  const nodesSchema = useMemo(() => {
-    return flowSchema.nodes.reduce(
-      (acc, node) => {
-        acc[node.name] = node;
-        return acc;
-      },
-      {} as Record<string, FlowNodeSchema>
-    );
-  }, [flowSchema.nodes]);
+  const { setNodes, nodesSchema } = useFlow();
 
   const zoomOptions: Required<SelectProps>['options'] = useMemo(() => {
     const defaultItems = [0.25, 0.5, 1, 1.5, 2];

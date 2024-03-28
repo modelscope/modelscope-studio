@@ -1,4 +1,4 @@
-import { useEffect, useMemo } from 'react';
+import { useEffect, useMemo, useRef } from 'react';
 
 import { CustomComponents } from '../type';
 
@@ -52,6 +52,7 @@ export interface CustomComponentOptions {
   extraProps?: Record<string, any>;
   target: React.RefObject<HTMLDivElement>;
   theme: string;
+  locale: string;
   onCustom: (data?: any) => void;
   onBeforeRender?: () => boolean;
 }
@@ -60,6 +61,7 @@ export function useCustomComponent(options: CustomComponentOptions) {
   const {
     target,
     theme,
+    locale,
     onCustom,
     component,
     componentProps,
@@ -122,6 +124,7 @@ export function useCustomComponent(options: CustomComponentOptions) {
             el,
             onMount,
             theme,
+            locale,
           }
         ) || {};
     }
@@ -143,6 +146,7 @@ export function useCustomComponent(options: CustomComponentOptions) {
   }, [
     filterProps,
     js,
+    locale,
     onBeforeRenderRef,
     onCustomRef,
     target,

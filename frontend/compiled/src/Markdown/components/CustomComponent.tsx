@@ -16,7 +16,7 @@ export const CustomComponent: React.FC<CustomComponentProps> = (nodeProps) => {
   const [{ node, ...props }, { tagIndex, tagEnd }] = useCustomProps(nodeProps);
   const divRef = useRef<HTMLDivElement>(null);
   const tag = node.tagName;
-  const { on_custom, custom_components, theme } = useMarkdownContext();
+  const { on_custom, custom_components, theme, locale } = useMarkdownContext();
 
   const onCustom = (data?: any) => {
     on_custom(tag, tagIndex, data);
@@ -35,6 +35,7 @@ export const CustomComponent: React.FC<CustomComponentProps> = (nodeProps) => {
     extraProps,
     onCustom,
     theme,
+    locale,
     onBeforeRender: () => tagEnd,
   });
 
