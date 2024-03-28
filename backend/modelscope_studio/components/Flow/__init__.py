@@ -1,9 +1,10 @@
 from __future__ import annotations
 
-from typing import Any, Callable, Dict, List, Union
+from typing import Any, Callable, Dict, List
 
+from gradio import processing_utils
 from gradio.components.base import Component
-from gradio.data_classes import FileData, GradioModel
+from gradio.data_classes import GradioModel
 from gradio.events import Events
 from gradio_client.documentation import document
 
@@ -48,10 +49,12 @@ class ModelScopeFlow(Component):
         """
         Parameters:
             value: FlowData or dict
+            height: Height of the Flow
             hide_attribution: This component is made with react-flow. By default, we render a small attribution in the corner of your flows that links back to the react-flow. The reason: https://reactflow.dev/learn/troubleshooting/remove-attribution
         """
         self.height = height
-        self.schema = schema
+        self.schema = self._process_schema(schema)
+
         self.custom_components = custom_components
         self.show_sidebar = show_sidebar
         self.show_minimap = show_minimap
@@ -59,7 +62,6 @@ class ModelScopeFlow(Component):
         self.min_zoom = min_zoom
         self.max_zoom = max_zoom
         self.hide_attribution = hide_attribution
-
         super().__init__(
             label=label,
             info=info,
@@ -75,6 +77,17 @@ class ModelScopeFlow(Component):
             render=render,
             value=value,
         )
+
+    def _process_schema(self, schema: dict | None):
+        if isinstance(schema, dict):
+            nodes = schema.get('nodes', [])
+            for node in nodes:
+                icon_url = node.get('icon')
+                if isinstance(icon_url, str):
+                    node[
+                        "icon"] = processing_utils.move_resource_to_block_cache(
+                            icon_url, self)
+        return schema
 
     def preprocess(self, payload: FlowData | dict | None) -> dict | None:
         if payload is None:
