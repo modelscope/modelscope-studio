@@ -15,11 +15,11 @@
     "jsx": "react-jsx",
     "types": ["vite/client"],
     /* Linting */
-    "strict": true,
+    "strict": true
     // "noUnusedLocals": true,
     // "noUnusedParameters": true,
     // "noFallthroughCasesInSwitch": true
   },
   "include": ["src", "components", "index.ts", "global.d.ts"],
-  "references": [{ "path": "./tsconfig.node.json" }],
+  "references": [{ "path": "./tsconfig.node.json" }]
 }

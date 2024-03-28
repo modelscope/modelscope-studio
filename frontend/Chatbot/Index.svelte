@@ -11,7 +11,7 @@
   import type { Gradio, ShareData } from '@gradio/utils';
   import type {
     CustomComponents,
-    CustomData,
+    MarkdownCustomData,
   } from '@modelscope-studio/compiled';
 
   import ChatBot from './shared/ChatBot.svelte';
@@ -62,7 +62,7 @@
     error: string;
     like: LikeData;
     flushed: FlushData;
-    custom: CustomData & {
+    custom: MarkdownCustomData & {
       index: [number, number, number];
     };
   }>;

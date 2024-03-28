@@ -1,8 +1,8 @@
 <script lang="ts">
   import {
     type CustomComponents,
-    type CustomData,
     Markdown,
+    type MarkdownCustomData,
   } from '@modelscope-studio/compiled';
   import { createEventDispatcher } from 'svelte';
 
@@ -23,7 +23,7 @@
 
   const dispatch = createEventDispatcher<{
     change: undefined;
-    custom: CustomData;
+    custom: MarkdownCustomData;
   }>();
 
   function on_custom(tag: string, tag_index: number, v?: any) {

@@ -5,8 +5,8 @@
   import { copy } from '@gradio/utils';
   import {
     type CustomComponents,
-    type CustomData,
     FileView,
+    type MarkdownCustomData,
   } from '@modelscope-studio/compiled';
   import { dequal } from 'dequal/lite';
   import { afterUpdate, createEventDispatcher } from 'svelte';
@@ -81,7 +81,7 @@
     select: SelectData;
     like: LikeData;
     flushed: FlushData;
-    custom: CustomData & { index: [number, number, number] };
+    custom: MarkdownCustomData & { index: [number, number, number] };
   }>();
   const on_container_scroll = (): void => {
     if (is_programmatic_scroll) {
@@ -134,7 +134,7 @@
     i: number,
     j: number,
     k: number,
-    custom_data: CustomData
+    custom_data: MarkdownCustomData
   ): void {
     dispatch('custom', {
       index: [i, j, k],

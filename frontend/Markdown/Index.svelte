@@ -5,7 +5,7 @@
   import type { Gradio } from '@gradio/utils';
   import type {
     CustomComponents,
-    CustomData,
+    MarkdownCustomData,
   } from '@modelscope-studio/compiled';
 
   import Markdown from './shared/Markdown.svelte';
@@ -22,7 +22,7 @@
   export let root: string;
   export let gradio: Gradio<{
     change: never;
-    custom: CustomData;
+    custom: MarkdownCustomData;
   }>;
   export let header_links = false;
 

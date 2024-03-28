@@ -1,5 +1,8 @@
 <script lang="ts">
-  import { type CustomData, Markdown } from '@modelscope-studio/compiled';
+  import {
+    Markdown,
+    type MarkdownCustomData,
+  } from '@modelscope-studio/compiled';
   import { afterUpdate, createEventDispatcher, onDestroy } from 'svelte';
 
   export let message = '';
@@ -23,7 +26,7 @@
   const dispatch = createEventDispatcher<{
     flushed: string;
     update: void;
-    custom: CustomData;
+    custom: MarkdownCustomData;
   }>();
   const skip_tag_reg =
     /:::llm-thinking|::llm-thinking-title|::accordion-title|:flushing-end/g;

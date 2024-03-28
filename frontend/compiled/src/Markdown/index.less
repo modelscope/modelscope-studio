@@ -5,12 +5,14 @@
   }
 
   &.markdown-body {
+    color: inherit;
     font-size: inherit;
     background: none;
 
     pre:has(.ms-markdown-code) {
       padding: 0;
       overflow: unset;
+      background-color: var(--code-background-fill) !important;
     }
 
     /* KaTeX */
