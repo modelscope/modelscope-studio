@@ -53,8 +53,6 @@ class ModelScopeFlow(Component):
             hide_attribution: This component is made with react-flow. By default, we render a small attribution in the corner of your flows that links back to the react-flow. The reason: https://reactflow.dev/learn/troubleshooting/remove-attribution
         """
         self.height = height
-        self.schema = self._process_schema(schema)
-
         self.custom_components = custom_components
         self.show_sidebar = show_sidebar
         self.show_minimap = show_minimap
@@ -77,6 +75,7 @@ class ModelScopeFlow(Component):
             render=render,
             value=value,
         )
+        self.schema = self._process_schema(schema)
 
     def _process_schema(self, schema: dict | None):
         if isinstance(schema, dict):
