@@ -1,5 +1,5 @@
 import { Panel, useReactFlow, useViewport } from '@xyflow/react';
-import React, { useMemo } from 'react';
+import React, { useEffect, useMemo, useRef } from 'react';
 import {
   FullscreenOutlined,
   LayoutOutlined,
@@ -15,9 +15,9 @@ import { getLayoutedNodes } from '../utils';
 export const Controls: React.FC = () => {
   const reactFlow = useReactFlow<FlowNode, FlowEdge>();
   const { zoom } = useViewport();
-  const { maxZoom, minZoom } = useFlow();
-
-  const { setNodes, nodesSchema } = useFlow();
+  const { maxZoom, minZoom, setNodes, nodesSchema, useFlowStore } = useFlow();
+  const layoutUpdateRef = useRef(false);
+  const nodesString = useFlowStore((state) => state.nodesString);
 
   const zoomOptions: Required<SelectProps>['options'] = useMemo(() => {
     const defaultItems = [0.25, 0.5, 1, 1.5, 2];
@@ -29,6 +29,14 @@ export const Controls: React.FC = () => {
         value,
       }));
   }, [maxZoom, minZoom]);
+
+  useEffect(() => {
+    if (layoutUpdateRef.current) {
+      reactFlow.fitView();
+      layoutUpdateRef.current = false;
+    }
+  }, [nodesString, reactFlow]);
+
   return (
     <Panel position="bottom-right">
       <Card
@@ -86,10 +94,7 @@ export const Controls: React.FC = () => {
                 }
               );
               setNodes(() => layoutedNodes);
-
-              requestAnimationFrame(() => {
-                reactFlow.fitView();
-              });
+              layoutUpdateRef.current = true;
             }}
           />
         </Space>

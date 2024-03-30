@@ -13,7 +13,7 @@
   } from '@modelscope-studio/compiled';
 
   import Flow from './shared/Flow.svelte';
-  import { createId, type FlowData } from './shared/utils';
+  import { type FlowData } from './shared/utils';
 
   export let gradio: Gradio<{
     change: FlowData;
@@ -56,26 +56,6 @@
         : undefined,
     })),
   };
-  $: _value = {
-    nodes: value.nodes?.map((v) => {
-      return {
-        ...v,
-        id: v.id || createId(),
-        type: 'ms-node',
-        position: {
-          x: v.position?.x || 0,
-          y: v.position?.y || 0,
-        },
-      };
-    }),
-    edges: value.edges?.map((v) => {
-      return {
-        ...v,
-        id: v.id || createId(),
-        type: 'ms-edge',
-      };
-    }),
-  };
 </script>
 
 <Block
@@ -96,7 +76,7 @@
   {/if}
   <Flow
     {root}
-    value={_value}
+    {value}
     {interactive}
     {custom_components}
     {height}

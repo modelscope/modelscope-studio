@@ -13,7 +13,6 @@ export function getURLFileExtension(url: string) {
 export function isMobile() {
   return window.innerWidth <= 480;
 }
-
 export function safeParseJSON<T>(str: string, defaultValue: T): T {
   try {
     if (!str) {

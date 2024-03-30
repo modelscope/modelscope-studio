@@ -14,7 +14,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { Store } from '@subscribe-kit/core';
 import { theme as AntdTheme } from 'antd';
 import cls from 'classnames';
-import { isNumber } from 'lodash-es';
+import { isNumber, isObject } from 'lodash-es';
 
 import { defineComponent } from '../defineComponent';
 import { useRefValue } from '../shared';
@@ -34,7 +34,7 @@ import type {
   FlowStoreData,
   ReactFlowProps,
 } from './type';
-import { attrItemIndexMatcher, attrMatcher, createId } from './utils';
+import { createId, parseHandleIdObject } from './utils';
 
 import '@xyflow/react/dist/style.css';
 import './index.less';
@@ -87,8 +87,8 @@ export const Flow = defineComponent<FlowProps>((props) => {
     show_sidebar = true,
     show_controls = true,
     show_minimap = true,
-    nodes = [],
-    edges = [],
+    nodes: userNodes = [],
+    edges: userEdges = [],
     on_upload,
     locale = 'en-US',
     on_change,
@@ -100,6 +100,32 @@ export const Flow = defineComponent<FlowProps>((props) => {
   } = props;
   const { token } = AntdTheme.useToken();
   const onChangeRef = useRefValue(on_change);
+  const edges = useMemo(() => {
+    return userEdges.map((edge) => {
+      return {
+        ...edge,
+        type: 'ms-edge',
+        markerEnd: {
+          type: MarkerType.ArrowClosed,
+          color: token.colorPrimary,
+        },
+        zIndex: 1001,
+      };
+    });
+  }, [token.colorPrimary, userEdges]);
+  const nodes = useMemo(() => {
+    return userNodes.map((node) => {
+      return {
+        ...node,
+        id: node.id || createId(),
+        type: 'ms-node',
+        position: {
+          x: node.position?.x || 0,
+          y: node.position?.y || 0,
+        },
+      };
+    });
+  }, [userNodes]);
   const nodesRef = useRefValue(nodes);
   const edgesRef = useRefValue(edges);
   const edgeUpdateSuccessfulRef = useRef(true);
@@ -132,6 +158,7 @@ export const Flow = defineComponent<FlowProps>((props) => {
     const store = new Store<FlowStoreData>({
       initialValues: {
         nodeCounts: {},
+        nodesString: '',
       },
     });
 
@@ -153,7 +180,10 @@ export const Flow = defineComponent<FlowProps>((props) => {
         },
         {} as Record<string, number>
       );
-      flowStore.setValue('nodeCounts', newNodeCounts);
+      flowStore.setValues((draft) => {
+        draft.nodeCounts = newNodeCounts;
+        draft.nodesString = JSON.stringify(newNodes);
+      });
     },
     [flowStore]
   );
@@ -225,18 +255,12 @@ export const Flow = defineComponent<FlowProps>((props) => {
   };
 
   const onConnect: ReactFlowProps['onConnect'] = (params) => {
-    const [, sourceAttr] = params.sourceHandle?.match(attrMatcher) || [];
-    const [, sourceAttrItem] = sourceAttr
-      ? params.sourceHandle?.match(attrItemIndexMatcher) || [null, null]
-      : [null, null];
-    const [, targetAttr] = params.targetHandle?.match(attrMatcher) || [
-      null,
-      null,
-    ];
-    const [, targetAttrItem] = targetAttr
-      ? params.targetHandle?.match(attrItemIndexMatcher) || [null, null]
-      : [null, null];
+    const { attr: sourceAttr, attrItemIndex: sourceAttrItem } =
+      parseHandleIdObject(params.sourceHandle || '');
+    const { attr: targetAttr, attrItemIndex: targetAttrItem } =
+      parseHandleIdObject(params.targetHandle || '');
 
+    // TODO: item index
     setEdges(
       (eds) => {
         return addEdge(
@@ -381,22 +405,48 @@ export const Flow = defineComponent<FlowProps>((props) => {
     if (!sourceNodeSchema || !targetNodeSchema) {
       return false;
     }
-    const [, sourceAttr] = connection.sourceHandle?.match(attrMatcher) || [
-      null,
-      null,
-    ];
-    const [, targetAttr] = connection.targetHandle?.match(attrMatcher) || [
-      null,
-      null,
-    ];
-    const sourceConnections = sourceAttr
-      ? sourceNodeSchema.attrs?.find((attr) => attr.name === sourceAttr)?.ports
-          ?.sourceConnections
-      : sourceNodeSchema.ports?.sourceConnections;
-    const targetConnections = targetAttr
-      ? targetNodeSchema.attrs?.find((attr) => attr.name === targetAttr)?.ports
-          ?.targetConnections
-      : targetNodeSchema.ports?.targetConnections;
+
+    const { attr: sourceAttr, attrItemIndex: sourceAttrItem } =
+      parseHandleIdObject(connection.sourceHandle || '');
+    const { attr: targetAttr, attrItemIndex: targetAttrItem } =
+      parseHandleIdObject(connection.targetHandle || '');
+
+    const getSourceConnections = () => {
+      if (sourceAttrItem) {
+        const listOptions = sourceNodeSchema.attrs?.find(
+          (attr) => attr.name === sourceAttr
+        )?.list;
+        if (isObject(listOptions)) {
+          return listOptions.ports?.sourceConnections;
+        }
+        return;
+      }
+      if (sourceAttr) {
+        return sourceNodeSchema.attrs?.find((attr) => attr.name === sourceAttr)
+          ?.ports?.sourceConnections;
+      }
+      return sourceNodeSchema.ports?.sourceConnections;
+    };
+
+    const getTargetConnections = () => {
+      if (targetAttrItem) {
+        const listOptions = targetNodeSchema.attrs?.find(
+          (attr) => attr.name === targetAttr
+        )?.list;
+        if (isObject(listOptions)) {
+          return listOptions.ports?.targetConnections;
+        }
+        return;
+      }
+      if (targetAttr) {
+        return targetNodeSchema.attrs?.find((attr) => attr.name === targetAttr)
+          ?.ports?.targetConnections;
+      }
+      return targetNodeSchema.ports?.targetConnections;
+    };
+
+    const sourceConnections = getSourceConnections();
+    const targetConnections = getTargetConnections();
     // judge if the connection is valid
     if (
       (!sourceConnections ||

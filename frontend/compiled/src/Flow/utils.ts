@@ -2,32 +2,70 @@ import { Position } from '@xyflow/react';
 import Ajv, { ErrorObject, Schema as JSONSchema } from 'ajv';
 import localize from 'ajv-i18n/localize/zh';
 import ELK, { ElkNode } from 'elkjs/lib/elk.bundled';
+import { isObject } from 'lodash-es';
 
-import type { ElkPortsId, FlowEdge, FlowNode, FlowNodeSchema } from './type';
+import type {
+  ElkPortsId,
+  FlowEdge,
+  FlowNode,
+  FlowNodeSchema,
+  HandleIdObject,
+} from './type';
 
 // ***** Layout *****
+
+export function stringifyHandleIdObject(options: HandleIdObject) {
+  return Object.keys(options).reduce((acc, key) => {
+    let prefix = '';
+    if (acc) {
+      prefix += '__$__';
+    }
+    return acc + prefix + `${key}=${options[key as keyof HandleIdObject]}`;
+  }, '');
+}
+
+export function parseHandleIdObject(str: string) {
+  const handleIdObject = {} as HandleIdObject;
+  str.split('__$__').forEach((item) => {
+    const [key, ...value] = item.split('=');
+    (handleIdObject as any)[key] = value.join('=');
+  });
+  return handleIdObject;
+}
 
 export function getAttrItemHandleId(options: {
   nodeId: string;
   type: 'target' | 'source';
   attr: string;
-  attrIndex: number;
   attrItemIndex: number;
   handleIndex: number;
 }) {
-  const { attr, type, nodeId, attrIndex, attrItemIndex, handleIndex } = options;
-  return `${nodeId}-${type}-attr(${attr})-attr_item_index(${attrItemIndex})-${attrIndex}-${handleIndex}`;
+  const { attr, type, nodeId, attrItemIndex, handleIndex } = options;
+  // return `${nodeId}-${type}-attr(${attr})-attr_item_index(${attrItemIndex})-${handleIndex}`;
+  // sort props
+  return stringifyHandleIdObject({
+    nodeId,
+    type,
+    attr,
+    attrItemIndex,
+    handleIndex,
+  });
 }
 
 export function getAttrHandleId(options: {
   nodeId: string;
   type: 'target' | 'source';
   attr: string;
-  attrIndex: number;
   handleIndex: number;
 }) {
-  const { nodeId, attr, type, attrIndex, handleIndex } = options;
-  return `${nodeId}-${type}-attr(${attr})-${attrIndex}-${handleIndex}`;
+  const { nodeId, attr, type, handleIndex } = options;
+  // return `${nodeId}-${type}-attr(${attr})-${handleIndex}`;
+  return stringifyHandleIdObject({
+    nodeId,
+    type,
+    attr,
+    handleIndex,
+  });
 }
 
 export function getHandleId(options: {
@@ -36,7 +74,12 @@ export function getHandleId(options: {
   handleIndex: number;
 }) {
   const { nodeId, type, handleIndex } = options;
-  return `${nodeId}-${type}-${handleIndex}`;
+  // return `${nodeId}-${type}-${handleIndex}`;
+  return stringifyHandleIdObject({
+    nodeId,
+    type,
+    handleIndex,
+  });
 }
 
 const position2side = {
@@ -59,26 +102,24 @@ const layoutOptions = {
 };
 
 const getPortsIds = (node: FlowNode, schema: FlowNodeSchema): ElkPortsId[] => {
+  const combine = (
+    ports: [sourcePorts?: Position[], targetPorts?: Position[]]
+  ) => {
+    return [
+      { type: 'source', ports: ports[0] },
+      { type: 'target', ports: ports[1] },
+    ] as const;
+  };
   const sourcePorts = schema.ports?.source || [Position.Right];
   const targetPorts = schema.ports?.target || [Position.Left];
   const portsIds: ElkPortsId[] = [];
-  sourcePorts.forEach((port, i) => {
-    portsIds.push({
-      id: getHandleId({
-        nodeId: node.id || '',
-        type: 'source',
-        handleIndex: i,
-      }),
-      properties: {
-        side: position2side[port],
-      },
-    });
-  }),
-    targetPorts.forEach((port, i) => {
+
+  combine([sourcePorts, targetPorts]).forEach(({ type, ports }) => {
+    ports?.forEach((port, i) => {
       portsIds.push({
         id: getHandleId({
           nodeId: node.id || '',
-          type: 'target',
+          type,
           handleIndex: i,
         }),
         properties: {
@@ -86,73 +127,51 @@ const getPortsIds = (node: FlowNode, schema: FlowNodeSchema): ElkPortsId[] => {
         },
       });
     });
-  schema.attrs?.forEach((attr, attrIndex) => {
-    attr.ports?.source?.forEach((port, handleIndex) => {
-      const options = {
-        nodeId: node.id || '',
-        attr: attr.name,
-        type: 'source',
-        attrIndex,
-        handleIndex,
-      } as const;
-      if (attr.list) {
-        ((node.data.attrs?.[attr.name] || []) as any[]).forEach(
-          (_, attrItemIndex) => {
-            portsIds.push({
-              id: getAttrItemHandleId({
-                ...options,
-                attrItemIndex,
-              }),
-              properties: {
-                side: position2side[port],
-              },
-            });
-          }
-        );
-      } else {
-        portsIds.push({
-          id: getAttrHandleId({
-            ...options,
-          }),
-          properties: {
-            side: position2side[port],
-          },
+  });
+
+  schema.attrs?.forEach((attr) => {
+    combine([attr.ports?.source, attr.ports?.target]).forEach(
+      ({ type, ports }) => {
+        ports?.forEach((port, handleIndex) => {
+          portsIds.push({
+            id: getAttrHandleId({
+              nodeId: node.id || '',
+              attr: attr.name,
+              type,
+              handleIndex,
+            }),
+            properties: {
+              side: position2side[port],
+            },
+          });
         });
       }
-    });
-    attr.ports?.target?.forEach((port, handleIndex) => {
-      const options = {
-        nodeId: node.id || '',
-        attr: attr.name,
-        type: 'target',
-        attrIndex,
-        handleIndex,
-      } as const;
-      if (attr.list) {
-        ((node.data.attrs?.[attr.name] || []) as any[]).forEach(
-          (_, attrItemIndex) => {
-            portsIds.push({
-              id: getAttrItemHandleId({
-                ...options,
-                attrItemIndex,
-              }),
-              properties: {
-                side: position2side[port],
-              },
-            });
-          }
-        );
-      } else {
-        portsIds.push({
-          id: getAttrHandleId({
-            ...options,
-          }),
-          properties: {
-            side: position2side[port],
-          },
-        });
-      }
-    });
+    );
+
+    if (isObject(attr.list) && attr.list.ports) {
+      combine([attr.list.ports.source, attr.list.ports.target]).forEach(
+        ({ type, ports }) => {
+          ports?.forEach((port, handleIndex) => {
+            ((node.data.attrs?.[attr.name] || []) as any[]).forEach(
+              (_, attrItemIndex) => {
+                portsIds.push({
+                  id: getAttrItemHandleId({
+                    nodeId: node.id || '',
+                    attr: attr.name,
+                    type,
+                    handleIndex,
+                    attrItemIndex,
+                  }),
+                  properties: {
+                    side: position2side[port],
+                  },
+                });
+              }
+            );
+          });
+        }
+      );
+    }
   });
 
   return portsIds;
@@ -207,9 +226,6 @@ export const getLayoutedNodes = async (
 
 // ***** Layout *****
 
-export const attrMatcher = /attr\((\w+)\)/;
-export const attrItemIndexMatcher = /attr_item_index\((\w+)\)/;
-
 // ***** validation *****
 const ajv = new Ajv();
 
@@ -240,6 +256,16 @@ export function getValidationErrorMessage(
 
 // ***** validation *****
 
+// ***** data *****
+// TODO: convert data
+export function flowData2RenderData() {}
+
+export function renderData2FlowData(nodes: FlowNode[], edges: FlowEdge[]) {}
+
+// ***** data *****
+
+// ***** misc *****
+
 export function updateNodeAttrs(
   node: FlowNode,
   attrs: Record<string, any>,
@@ -268,3 +294,5 @@ export function createId() {
   const randomPart = Math.random().toString(36).substring(2, 12);
   return timestamp + randomPart;
 }
+
+// ***** misc *****

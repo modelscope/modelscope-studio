@@ -307,9 +307,11 @@ export const Node = memo<NodeProps<FlowNode>>(
                   title
                 )}
               </div>
-              <div className="ms-flow-node-header-description">
-                {schema.description}
-              </div>
+              {schema.description && (
+                <div className="ms-flow-node-header-description">
+                  {schema.description}
+                </div>
+              )}
             </div>
           }
           styles={{
@@ -340,7 +342,7 @@ export const Node = memo<NodeProps<FlowNode>>(
               initialValues={attrs}
               disabled={disabled}
             >
-              {schema.attrs?.map((attr, attrIndex) => {
+              {schema.attrs?.map((attr) => {
                 let content: React.ReactNode = null;
                 switch (attr.type) {
                   case 'input':
@@ -464,15 +466,18 @@ export const Node = memo<NodeProps<FlowNode>>(
                                       {content}
                                     </FormListItemWrapper>
                                   </Form.Item>
-                                  {renderPorts(attr.ports, (type, i) =>
-                                    getAttrItemHandleId({
-                                      nodeId: nodeId || '',
-                                      type,
-                                      attr: attr.name,
-                                      handleIndex: i,
-                                      attrIndex,
-                                      attrItemIndex: index,
-                                    })
+                                  {renderPorts(
+                                    isObject(attr.list)
+                                      ? attr.list.ports
+                                      : undefined,
+                                    (type, i) =>
+                                      getAttrItemHandleId({
+                                        nodeId: nodeId || '',
+                                        type,
+                                        attr: attr.name,
+                                        handleIndex: i,
+                                        attrItemIndex: index,
+                                      })
                                   )}
                                 </div>
                               );
@@ -482,6 +487,14 @@ export const Node = memo<NodeProps<FlowNode>>(
                         );
                       }}
                     </Form.List>
+                    {renderPorts(attr.ports, (type, i) =>
+                      getAttrHandleId({
+                        nodeId: nodeId || '',
+                        type,
+                        handleIndex: i,
+                        attr: attr.name,
+                      })
+                    )}
                   </div>
                 ) : (
                   <div className="ms-flow-node-field">
@@ -498,7 +511,6 @@ export const Node = memo<NodeProps<FlowNode>>(
                         nodeId: nodeId || '',
                         type,
                         handleIndex: i,
-                        attrIndex,
                         attr: attr.name,
                       })
                     )}

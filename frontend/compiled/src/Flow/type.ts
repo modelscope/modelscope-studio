@@ -19,6 +19,7 @@ export interface FlowCustomData {
 
 export interface FlowStoreData {
   nodeCounts: Record<string, number>;
+  nodesString: string;
 }
 
 export type PortConnection =
@@ -84,6 +85,12 @@ export interface FlowNodeSchema {
     list?:
       | boolean
       | {
+          ports?: {
+            source?: Position[];
+            sourceConnections?: PortConnection[];
+            target?: Position[];
+            targetConnections?: PortConnection[];
+          };
           min?: number;
           max?: number;
         };
@@ -127,6 +134,14 @@ export interface FlowEdge extends Edge {
       index?: number;
     };
   };
+}
+
+export interface HandleIdObject {
+  nodeId: string;
+  type: 'target' | 'source';
+  attr?: string;
+  attrItemIndex?: number;
+  handleIndex: number;
 }
 
 export interface ElkPortsId {
