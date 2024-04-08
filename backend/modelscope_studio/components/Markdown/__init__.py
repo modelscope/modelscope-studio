@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 import inspect
-from typing import Any, Callable, List, Optional, TypedDict
+from typing import Any, Callable, Dict, List, Optional, TypedDict
 
 from gradio.components.base import Component
 from gradio.events import Events
@@ -49,7 +49,7 @@ class ModelScopeMarkdown(Component):
         rtl: bool = False,
         visible: bool = True,
         elem_id: str | None = None,
-        elem_classes: list[str] | str | None = None,
+        elem_classes: List[str] | str | None = None,
         render: bool = True,
         sanitize_html: bool = True,
         line_breaks: bool = False,
@@ -60,7 +60,7 @@ class ModelScopeMarkdown(Component):
         preview: bool = True,
         data_postprocess: Callable | None = None,
         data_preprocess: Callable | None = None,
-        custom_components: dict[str, CustomComponentDict] | None = None,
+        custom_components: Dict[str, CustomComponentDict] | None = None,
     ):
         """
         Parameters:
@@ -127,5 +127,5 @@ class ModelScopeMarkdown(Component):
     def example_inputs(self) -> Any:
         return "# Hello!"
 
-    def api_info(self) -> dict[str, Any]:
+    def api_info(self) -> Dict[str, Any]:
         return {"type": "string"}

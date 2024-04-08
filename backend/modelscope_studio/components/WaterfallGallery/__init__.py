@@ -57,7 +57,7 @@ class ModelScopeWaterfallGallery(Component):
     data_model = GalleryData
 
     def __init__(self,
-                 value: (list[GalleryImageType | CaptionedGalleryImageType
+                 value: (List[GalleryImageType | CaptionedGalleryImageType
                               | GalleryImage] | Callable
                          | None) = None,
                  *,
@@ -69,7 +69,7 @@ class ModelScopeWaterfallGallery(Component):
                  min_width: int = 160,
                  visible: bool = True,
                  elem_id: str | None = None,
-                 elem_classes: list[str] | str | None = None,
+                 elem_classes: List[str] | str | None = None,
                  render: bool = True,
                  columns: int | tuple | dict | None = 2,
                  height: int | float | None = None,
@@ -155,7 +155,7 @@ class ModelScopeWaterfallGallery(Component):
 
     def postprocess(
         self,
-        value: list[GalleryImageType | CaptionedGalleryImageType
+        value: List[GalleryImageType | CaptionedGalleryImageType
                     | GalleryImage | dict] | None,
         # **kwargs
     ) -> GalleryData:
