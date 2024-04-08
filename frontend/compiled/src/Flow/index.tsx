@@ -4,6 +4,7 @@ import {
   applyEdgeChanges,
   applyNodeChanges,
   Background,
+  BackgroundProps,
   MarkerType,
   MiniMap,
   ReactFlow,
@@ -60,6 +61,7 @@ export interface FlowProps {
   show_sidebar?: boolean;
   show_minimap?: boolean;
   show_controls?: boolean;
+  background_props?: BackgroundProps;
   min_zoom?: number;
   max_zoom?: number;
 }
@@ -95,6 +97,7 @@ export const Flow = defineComponent<FlowProps>((props) => {
     custom_components,
     className,
     style,
+    background_props,
   } = props;
   const { token } = AntdTheme.useToken();
   const onChangeRef = useRefValue(on_change);
@@ -510,7 +513,7 @@ export const Flow = defineComponent<FlowProps>((props) => {
           colorMode={theme}
         >
           {show_sidebar && <Sidebar />}
-          <Background />
+          <Background {...background_props} />
           {show_controls && <Controls />}
           {show_minimap && <MiniMap position="top-right" />}
         </ReactFlow>

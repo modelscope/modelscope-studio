@@ -44,6 +44,12 @@
   export let min_zoom = 0.1;
   export let max_zoom = 2;
   export let custom_components: CustomComponents = {};
+  export let background_props: FlowProps['background_props'] = {};
+  let _background_props: typeof background_props = {};
+  $: _background_props = {
+    ..._background_props,
+    ...background_props,
+  };
   // process schema
   $: _schema = {
     ...schema,
@@ -77,6 +83,7 @@
     {value}
     {interactive}
     {custom_components}
+    background_props={_background_props}
     {height}
     schema={_schema}
     {show_sidebar}

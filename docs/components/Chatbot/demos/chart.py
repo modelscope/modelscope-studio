@@ -35,6 +35,7 @@ Chart:
 with gr.Blocks() as demo:
     mgr.Chatbot(
         value=conversation,
+        flushing=False,
         height=600,
     )
 

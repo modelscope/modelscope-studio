@@ -17,11 +17,7 @@ export const FormListItemWrapper: React.FC<FormListItemWrapperProps> = ({
   ...args
 }) => {
   return (
-    <div
-      style={{
-        display: 'flex',
-      }}
-    >
+    <div className="ms-flow-node-form-list-item">
       {showRemove && (
         <MinusCircleOutlined
           onClick={() => {
@@ -29,7 +25,7 @@ export const FormListItemWrapper: React.FC<FormListItemWrapperProps> = ({
           }}
         />
       )}
-      <div style={{ flex: 1, marginLeft: 8 }}>
+      <div className="ms-flow-node-form-list-item-content">
         {React.isValidElement(children)
           ? React.cloneElement(children, {
               index,

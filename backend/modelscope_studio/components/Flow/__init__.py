@@ -42,6 +42,7 @@ class ModelScopeFlow(Component):
                  show_sidebar: bool | None = None,
                  show_minimap: bool | None = None,
                  show_controls: bool | None = None,
+                 background_props: dict | None = None,
                  min_zoom: float | int | None = 0.1,
                  max_zoom: float | int | None = 2,
                  custom_components: dict | None = None):
@@ -55,6 +56,7 @@ class ModelScopeFlow(Component):
         self.show_sidebar = show_sidebar
         self.show_minimap = show_minimap
         self.show_controls = show_controls
+        self.background_props = background_props
         self.min_zoom = min_zoom
         self.max_zoom = max_zoom
 

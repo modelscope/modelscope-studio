@@ -23,6 +23,7 @@
   export let max_zoom: number;
   export let schema: FlowProps['schema'];
   export let custom_components: CustomComponents;
+  export let background_props: FlowProps['background_props'];
 
   const upload_fn = getContext<typeof upload_files>('upload_files');
 
@@ -77,6 +78,7 @@
   {schema}
   {theme}
   {custom_components}
+  {background_props}
   {show_sidebar}
   {show_minimap}
   {show_controls}
