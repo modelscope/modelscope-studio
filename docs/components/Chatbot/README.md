@@ -88,7 +88,7 @@ class MultimodalMessage(GradioModel):
     # elem id of message container
     elem_id: Optional[str] = None
     # elem classes of message container
-    elem_classes: Optional[list[str] | str] = None
+    elem_classes: Optional[List[str] | str] = None
     name: Optional[str] = None
     text: Optional[str] = None
     flushing: Optional[bool] = None

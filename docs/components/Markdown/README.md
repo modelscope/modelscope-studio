@@ -67,7 +67,7 @@ The following APIs are additional extended parameters beyond the original gradio
 | preview                       | bool                                                                | True          | Whether to enable image preview functionality.                                                             |
 | enable_latex                  | bool                                                                | True          | Whether to enable LaTeX rendering.                                                                         |
 | latex_single_dollar_delimiter | bool                                                                | True          | Whether to enable single dollar delimiter `$` for LaTeX rendering.                                         |
-| custom_components             | dict[str, CustomComponentDict] CustomComponentDict definition below | None          | Supports user-defined custom tags and controls tag rendering styles and triggers Python events through js. |
+| custom_components             | Dict[str, CustomComponentDict] CustomComponentDict definition below | None          | Supports user-defined custom tags and controls tag rendering styles and triggers Python events through js. |
 |                               |
 
 **CustomComponent definition is as follows:**

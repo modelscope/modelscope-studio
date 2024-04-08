@@ -8,7 +8,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "modelscope_studio"
-version = "0.1.5"
+version = "0.1.6"
 description = "A set of extension component, inluding components for conversational input and display in multimodal scenarios, as well as more components for vertical scenarios."
 readme = "README.md"
 license = "Apache-2.0"
@@ -49,7 +49,9 @@ artifacts = [
 ]
 
 [tool.hatch.build.targets.sdist]
+exclude = ["__pycache__"]
 include = ["/backend/modelscope_studio"]
 
 [tool.hatch.build.targets.wheel]
 packages = ["/backend/modelscope_studio"]
+exclude = ["__pycache__"]

@@ -89,7 +89,7 @@ class MultimodalMessage(GradioModel):
     # message 容器的 elem id
     elem_id: Optional[str] = None
     # message 容器的 elem classes
-    elem_classes: Optional[list[str] | str] = None
+    elem_classes: Optional[List[str] | str] = None
     name: Optional[str] = None
     text: Optional[str] = None
     flushing: Optional[bool] = None

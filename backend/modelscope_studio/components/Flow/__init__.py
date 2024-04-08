@@ -35,7 +35,7 @@ class ModelScopeFlow(Component):
                  interactive: bool | None = None,
                  visible: bool = True,
                  elem_id: str | None = None,
-                 elem_classes: list[str] | str | None = None,
+                 elem_classes: List[str] | str | None = None,
                  render: bool = True,
                  height: int | None = 600,
                  schema: dict | None = None,

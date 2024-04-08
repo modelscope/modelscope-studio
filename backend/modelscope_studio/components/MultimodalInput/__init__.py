@@ -23,9 +23,9 @@ class MultimodalInputData(GradioModel):
 class ModelScopeMultimodalInput(FormComponent):
     """
     Creates a textarea for user to enter string input or display string output.
-    Preprocessing: passes textarea value as a {dict(text=str, files=list[str])} into the function.
-    Postprocessing: expects a {str|dict(text=str, files=list[str])} returned from function and sets textarea value to it.
-    Examples-format: a {str|dict(text=str, files=list[str])} representing the textbox input.
+    Preprocessing: passes textarea value as a {dict(text=str, files=List[str])} into the function.
+    Postprocessing: expects a {str|dict(text=str, files=List[str])} returned from function and sets textarea value to it.
+    Examples-format: a {str|dict(text=str, files=List[str])} representing the textbox input.
 
     Demos: hello_world, diff_texts, sentence_builder
     Guides: creating-a-chatbot, real-time-speech-recognition
@@ -69,7 +69,7 @@ class ModelScopeMultimodalInput(FormComponent):
                  elem_id: str | None = None,
                  autofocus: bool = False,
                  autoscroll: bool = True,
-                 elem_classes: list[str] | str | None = None,
+                 elem_classes: List[str] | str | None = None,
                  render: bool = True,
                  type: Literal["text", "password", "email"] = "text",
                  text_align: Literal["left", "right"] | None = None,
@@ -77,7 +77,7 @@ class ModelScopeMultimodalInput(FormComponent):
                  show_copy_button: bool = False,
                  data_postprocess: Callable | None = None,
                  data_preprocess: Callable | None = None,
-                 sources: list[Literal['upload', 'microphone',
+                 sources: List[Literal['upload', 'microphone',
                                        'webcam']] = ['upload'],
                  upload_button_props: dict | None = None,
                  submit_button_props: dict | None = None,
