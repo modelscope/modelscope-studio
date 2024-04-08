@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import inspect
 from pathlib import Path
-from typing import Any, Callable, List, Literal, Optional, Tuple, Union
+from typing import Any, Callable, Dict, List, Literal, Optional, Tuple, Union
 
 from gradio import processing_utils
 from gradio.components.base import Component
@@ -27,7 +27,7 @@ class MultimodalMessage(GradioModel):
     # elem id of message container
     elem_id: Optional[str] = None
     # elem classes of message container
-    elem_classes: Optional[Union[list[str], str]] = None
+    elem_classes: Optional[Union[List[str], str]] = None
     name: Optional[str] = None
     text: Optional[str] = None
     flushing: Optional[bool] = None
@@ -72,7 +72,7 @@ class ModelScopeChatbot(Component):
 
     def __init__(
             self,
-            value: list[list[str | tuple[str] | tuple[str | Path, str] | None]]
+            value: List[List[str | tuple[str] | tuple[str | Path, str] | None]]
         | Callable | None = None,
             *,
             label: str | None = None,
@@ -83,7 +83,7 @@ class ModelScopeChatbot(Component):
             min_width: int = 160,
             visible: bool = True,
             elem_id: str | None = None,
-            elem_classes: list[str] | str | None = None,
+            elem_classes: List[str] | str | None = None,
             render: bool = True,
             height: int | None = None,
             rtl: bool = False,
@@ -106,10 +106,10 @@ class ModelScopeChatbot(Component):
             enable_latex: bool = True,
             latex_single_dollar_delimiter: bool = True,
             preview: bool = True,
-            llm_thinking_presets: list[dict] = [],
+            llm_thinking_presets: List[dict] = [],
             data_postprocess: Callable | None = None,
             data_preprocess: Callable | None = None,
-            custom_components: dict[str, CustomComponentDict] | None = None):
+            custom_components: Dict[str, CustomComponentDict] | None = None):
         """
         Parameters:
             value: Default value to show in chatbot. If callable, the function will be called whenever the app loads to set the initial value of the component.
@@ -321,7 +321,7 @@ class ModelScopeChatbot(Component):
 
     def postprocess(
         self,
-        value: list[list[str | dict | MultimodalInputData | MultimodalMessage
+        value: List[List[str | dict | MultimodalInputData | MultimodalMessage
                          | None] | tuple],
     ) -> ChatbotData:
         if self.data_postprocess:
