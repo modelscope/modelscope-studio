@@ -48,7 +48,7 @@ export interface FlowNodeSchema {
     target?: Position[];
     targetConnections?: PortConnection[];
   };
-  // TODO
+  // TODO: attr groups
   // attrsGroups?: Array<{
   //   name: string
   //   title?: string
@@ -121,19 +121,37 @@ export interface FlowNode extends Node {
   };
 }
 
-export interface FlowEdge extends Edge {
-  data: {
-    source: string;
-    target: string;
+export interface FlowEdge extends Edge {}
+
+export interface FlowData {
+  nodes: FlowNode[];
+  edges: FlowEdge[];
+}
+
+export interface FlowRenderData {
+  nodes?: Array<{
+    id?: string;
+    position?: FlowNode['position'];
+    data?: Record<string, any>;
+    title?: string;
+    name?: string;
+    [key: string]: any;
+  }>;
+  edges?: Array<{
+    id?: string;
+    source?: string;
+    target?: string;
     sourcePort?: {
-      attr: string;
-      index?: number;
+      handleIndex?: number;
+      attr?: string;
+      attrItemIndex?: number;
     };
     targetPort?: {
-      attr: string;
-      index?: number;
+      handleIndex?: number;
+      attr?: string;
+      attrItemIndex?: number;
     };
-  };
+  }>;
 }
 
 export interface HandleIdObject {

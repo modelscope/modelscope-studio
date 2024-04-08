@@ -1,4 +1,4 @@
-import { Position } from '@xyflow/react';
+import { MarkerType, Position } from '@xyflow/react';
 import Ajv, { ErrorObject, Schema as JSONSchema } from 'ajv';
 import localize from 'ajv-i18n/localize/zh';
 import ELK, { ElkNode } from 'elkjs/lib/elk.bundled';
@@ -6,19 +6,30 @@ import { isObject } from 'lodash-es';
 
 import type {
   ElkPortsId,
+  FlowData,
   FlowEdge,
   FlowNode,
   FlowNodeSchema,
+  FlowRenderData,
   HandleIdObject,
 } from './type';
 
 // ***** Layout *****
 
+const handleIdSplitter = '__$__';
+
 export function stringifyHandleIdObject(options: HandleIdObject) {
   return Object.keys(options).reduce((acc, key) => {
+    if (
+      ([undefined, null] as any[]).includes(
+        options[key as keyof HandleIdObject]
+      )
+    ) {
+      return acc;
+    }
     let prefix = '';
     if (acc) {
-      prefix += '__$__';
+      prefix += handleIdSplitter;
     }
     return acc + prefix + `${key}=${options[key as keyof HandleIdObject]}`;
   }, '');
@@ -26,18 +37,18 @@ export function stringifyHandleIdObject(options: HandleIdObject) {
 
 export function parseHandleIdObject(str: string) {
   const handleIdObject = {} as HandleIdObject;
-  str.split('__$__').forEach((item) => {
+  str.split(handleIdSplitter).forEach((item) => {
     const [key, ...value] = item.split('=');
     (handleIdObject as any)[key] = value.join('=');
   });
   return handleIdObject;
 }
 
-export function getAttrItemHandleId(options: {
+export function getHandleId(options: {
   nodeId: string;
   type: 'target' | 'source';
-  attr: string;
-  attrItemIndex: number;
+  attr?: string;
+  attrItemIndex?: number;
   handleIndex: number;
 }) {
   const { attr, type, nodeId, attrItemIndex, handleIndex } = options;
@@ -48,36 +59,6 @@ export function getAttrItemHandleId(options: {
     type,
     attr,
     attrItemIndex,
-    handleIndex,
-  });
-}
-
-export function getAttrHandleId(options: {
-  nodeId: string;
-  type: 'target' | 'source';
-  attr: string;
-  handleIndex: number;
-}) {
-  const { nodeId, attr, type, handleIndex } = options;
-  // return `${nodeId}-${type}-attr(${attr})-${handleIndex}`;
-  return stringifyHandleIdObject({
-    nodeId,
-    type,
-    attr,
-    handleIndex,
-  });
-}
-
-export function getHandleId(options: {
-  nodeId: string;
-  type: 'target' | 'source';
-  handleIndex: number;
-}) {
-  const { nodeId, type, handleIndex } = options;
-  // return `${nodeId}-${type}-${handleIndex}`;
-  return stringifyHandleIdObject({
-    nodeId,
-    type,
     handleIndex,
   });
 }
@@ -134,7 +115,7 @@ const getPortsIds = (node: FlowNode, schema: FlowNodeSchema): ElkPortsId[] => {
       ({ type, ports }) => {
         ports?.forEach((port, handleIndex) => {
           portsIds.push({
-            id: getAttrHandleId({
+            id: getHandleId({
               nodeId: node.id || '',
               attr: attr.name,
               type,
@@ -155,7 +136,7 @@ const getPortsIds = (node: FlowNode, schema: FlowNodeSchema): ElkPortsId[] => {
             ((node.data.attrs?.[attr.name] || []) as any[]).forEach(
               (_, attrItemIndex) => {
                 portsIds.push({
-                  id: getAttrItemHandleId({
+                  id: getHandleId({
                     nodeId: node.id || '',
                     attr: attr.name,
                     type,
@@ -257,10 +238,102 @@ export function getValidationErrorMessage(
 // ***** validation *****
 
 // ***** data *****
-// TODO: convert data
-export function flowData2RenderData() {}
+// convert data
+export function renderData2FlowData(
+  renderData: FlowRenderData,
+  options: { markerEndColor: string }
+): FlowData {
+  return {
+    nodes:
+      renderData.nodes?.map((node) => {
+        return {
+          ...node,
+          id: node.id || createId(),
+          type: 'ms-node',
+          position: {
+            x: node.position?.x || 0,
+            y: node.position?.y || 0,
+          },
+          data: {
+            title: node.title,
+            name: node.name || '',
+            attrs: node.data,
+          },
+        };
+      }) || [],
+    edges:
+      renderData.edges?.map((edge) => {
+        return {
+          ...edge,
+          id: edge.id || '',
+          source: edge.source || '',
+          target: edge.target || '',
+          type: 'ms-edge',
+          sourceHandle: getHandleId({
+            nodeId: edge.source || '',
+            type: 'source',
+            handleIndex: edge.sourcePort?.handleIndex || 0,
+            attr: edge.sourcePort?.attr,
+            attrItemIndex: edge.sourcePort?.attrItemIndex,
+          }),
+          targetHandle: getHandleId({
+            nodeId: edge.target || '',
+            type: 'target',
+            handleIndex: edge.targetPort?.handleIndex || 0,
+            attr: edge.targetPort?.attr,
+            attrItemIndex: edge.targetPort?.attrItemIndex,
+          }),
+          markerEnd: {
+            type: MarkerType.ArrowClosed,
+            color: options.markerEndColor,
+          },
+          zIndex: 1001,
+        };
+      }) || [],
+  };
+}
 
-export function renderData2FlowData(nodes: FlowNode[], edges: FlowEdge[]) {}
+export function flowData2RenderData(flowData: FlowData): FlowRenderData {
+  return {
+    nodes: flowData.nodes.map(({ id, data, type, ...node }) => {
+      return {
+        ...node,
+        name: data.name,
+        id,
+        title: data.title,
+        data: data.attrs || {},
+      };
+    }),
+    edges: flowData.edges.map(
+      ({ sourceHandle, targetHandle, type, markerEnd, zIndex, ...edge }) => {
+        const {
+          attr: sourceAttr,
+          attrItemIndex: sourceAttrItem,
+          handleIndex: sourceHandleIndex = 0,
+        } = parseHandleIdObject(sourceHandle || '');
+        const {
+          attr: targetAttr,
+          attrItemIndex: targetAttrItem,
+          handleIndex: targetHandleIndex = 0,
+        } = parseHandleIdObject(targetHandle || '');
+        return {
+          ...edge,
+          id: edge.id,
+          sourcePort: {
+            attr: sourceAttr,
+            attrItemIndex: sourceAttrItem ? +sourceAttrItem : undefined,
+            handleIndex: +sourceHandleIndex,
+          },
+          targetPort: {
+            attr: targetAttr,
+            attrItemIndex: targetAttrItem ? +targetAttrItem : undefined,
+            handleIndex: +targetHandleIndex,
+          },
+        };
+      }
+    ),
+  };
+}
 
 // ***** data *****
 

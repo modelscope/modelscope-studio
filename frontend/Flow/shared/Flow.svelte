@@ -19,7 +19,6 @@
   export let show_sidebar: boolean;
   export let show_minimap: boolean;
   export let show_controls: boolean;
-  export let hide_attribution: boolean;
   export let min_zoom: number;
   export let max_zoom: number;
   export let schema: FlowProps['schema'];
@@ -77,7 +76,6 @@
   edges={value.edges}
   {schema}
   {theme}
-  {hide_attribution}
   {custom_components}
   {show_sidebar}
   {show_minimap}

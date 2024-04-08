@@ -1,6 +1,6 @@
-import { FlowProps } from '@modelscope-studio/compiled';
+import { FlowRenderData } from '@modelscope-studio/compiled';
 
 export interface FlowData {
-  nodes?: NonNullable<FlowProps['nodes']>;
-  edges?: NonNullable<FlowProps['edges']>;
+  nodes?: NonNullable<FlowRenderData['nodes']>;
+  edges?: NonNullable<FlowRenderData['edges']>;
 }

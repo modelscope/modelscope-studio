@@ -8,6 +8,7 @@ import {
 import { Button, Card, theme } from 'antd';
 import cls from 'classnames';
 
+import { isMobile } from '../../utils';
 import { useFlow } from '../FlowContext';
 import type { FlowDragData, FlowNodeSchema } from '../type';
 import { createId } from '../utils';
@@ -19,7 +20,7 @@ export const Sidebar: React.FC = () => {
     disabled: flowDisabled,
     useFlowStore,
   } = useFlow();
-  const [collapse, setCollapse] = useState(false);
+  const [collapse, setCollapse] = useState(isMobile);
   const reactFlow = useReactFlow();
   const { token } = theme.useToken();
   const { nodeCounts } = useFlowStore((state) => ({

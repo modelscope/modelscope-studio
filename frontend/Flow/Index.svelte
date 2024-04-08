@@ -38,14 +38,12 @@
   export let schema: FlowProps['schema'] = {
     nodes: [],
   };
-  export let show_sidebar = true;
-  export let show_minimap = true;
-  export let show_controls = true;
+  export let show_sidebar: boolean;
+  export let show_minimap: boolean;
+  export let show_controls: boolean;
   export let min_zoom = 0.1;
   export let max_zoom = 2;
-  export let hide_attribution = false;
   export let custom_components: CustomComponents = {};
-
   // process schema
   $: _schema = {
     ...schema,
@@ -81,7 +79,6 @@
     {custom_components}
     {height}
     schema={_schema}
-    {hide_attribution}
     {show_sidebar}
     {show_minimap}
     {show_controls}

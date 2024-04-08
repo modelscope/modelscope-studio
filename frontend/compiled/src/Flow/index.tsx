@@ -18,7 +18,7 @@ import { isNumber, isObject } from 'lodash-es';
 
 import { defineComponent } from '../defineComponent';
 import { useRefValue } from '../shared';
-import { safeParseJSON } from '../utils';
+import { isMobile, safeParseJSON } from '../utils';
 
 import { ConnectionLine } from './flow-components/ConnectionLine';
 import { Controls } from './flow-components/Controls';
@@ -31,10 +31,16 @@ import type {
   FlowEdge,
   FlowNode,
   FlowNodeSchema,
+  FlowRenderData,
   FlowStoreData,
   ReactFlowProps,
 } from './type';
-import { createId, parseHandleIdObject } from './utils';
+import {
+  createId,
+  flowData2RenderData,
+  parseHandleIdObject,
+  renderData2FlowData,
+} from './utils';
 
 import '@xyflow/react/dist/style.css';
 import './index.less';
@@ -50,19 +56,12 @@ export interface FlowProps {
   edges: FlowEdge[];
   disabled?: boolean;
   theme?: 'dark' | 'light';
-  on_change?: (
-    value: {
-      nodes: FlowNode[];
-      edges: FlowEdge[];
-    },
-    data_changed?: boolean
-  ) => void;
+  on_change?: (value: FlowRenderData, data_changed?: boolean) => void;
   show_sidebar?: boolean;
   show_minimap?: boolean;
   show_controls?: boolean;
   min_zoom?: number;
   max_zoom?: number;
-  hide_attribution?: boolean;
 }
 
 const edgeTypes: ReactFlowProps['edgeTypes'] = {
@@ -86,7 +85,7 @@ export const Flow = defineComponent<FlowProps>((props) => {
     min_zoom: minZoom = 0.1,
     show_sidebar = true,
     show_controls = true,
-    show_minimap = true,
+    show_minimap = !isMobile(),
     nodes: userNodes = [],
     edges: userEdges = [],
     on_upload,
@@ -96,36 +95,20 @@ export const Flow = defineComponent<FlowProps>((props) => {
     custom_components,
     className,
     style,
-    hide_attribution,
   } = props;
   const { token } = AntdTheme.useToken();
   const onChangeRef = useRefValue(on_change);
-  const edges = useMemo(() => {
-    return userEdges.map((edge) => {
-      return {
-        ...edge,
-        type: 'ms-edge',
-        markerEnd: {
-          type: MarkerType.ArrowClosed,
-          color: token.colorPrimary,
-        },
-        zIndex: 1001,
-      };
-    });
-  }, [token.colorPrimary, userEdges]);
-  const nodes = useMemo(() => {
-    return userNodes.map((node) => {
-      return {
-        ...node,
-        id: node.id || createId(),
-        type: 'ms-node',
-        position: {
-          x: node.position?.x || 0,
-          y: node.position?.y || 0,
-        },
-      };
-    });
-  }, [userNodes]);
+  const { nodes, edges } = useMemo(() => {
+    return renderData2FlowData(
+      {
+        nodes: userNodes,
+        edges: userEdges,
+      },
+      {
+        markerEndColor: token.colorPrimary,
+      }
+    );
+  }, [token.colorPrimary, userEdges, userNodes]);
   const nodesRef = useRefValue(nodes);
   const edgesRef = useRefValue(edges);
   const edgeUpdateSuccessfulRef = useRef(true);
@@ -201,10 +184,10 @@ export const Flow = defineComponent<FlowProps>((props) => {
     // }
 
     onChangeRef.current?.(
-      {
+      flowData2RenderData({
         nodes: newNodes,
         edges: edgesRef.current,
-      },
+      }),
       options?.dataChanged
     );
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -214,10 +197,10 @@ export const Flow = defineComponent<FlowProps>((props) => {
     const newEdges = cb(edgesRef.current);
 
     onChangeRef.current?.(
-      {
+      flowData2RenderData({
         nodes: nodesRef.current,
         edges: newEdges,
-      },
+      }),
       options?.dataChanged
     );
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -255,12 +238,6 @@ export const Flow = defineComponent<FlowProps>((props) => {
   };
 
   const onConnect: ReactFlowProps['onConnect'] = (params) => {
-    const { attr: sourceAttr, attrItemIndex: sourceAttrItem } =
-      parseHandleIdObject(params.sourceHandle || '');
-    const { attr: targetAttr, attrItemIndex: targetAttrItem } =
-      parseHandleIdObject(params.targetHandle || '');
-
-    // TODO: item index
     setEdges(
       (eds) => {
         return addEdge(
@@ -270,22 +247,6 @@ export const Flow = defineComponent<FlowProps>((props) => {
             markerEnd: {
               type: MarkerType.ArrowClosed,
               color: token.colorPrimary,
-            },
-            data: {
-              source: params.source,
-              target: params.target,
-              sourcePort: sourceAttr
-                ? {
-                    attr: sourceAttr,
-                    index: sourceAttrItem ? +sourceAttrItem : undefined,
-                  }
-                : undefined,
-              targetPort: targetAttr
-                ? {
-                    attr: targetAttr,
-                    index: targetAttrItem ? +targetAttrItem : undefined,
-                  }
-                : undefined,
             },
             zIndex: 1001,
           },
@@ -523,7 +484,7 @@ export const Flow = defineComponent<FlowProps>((props) => {
           nodeTypes={nodeTypes}
           edgeTypes={edgeTypes}
           proOptions={{
-            hideAttribution: !!hide_attribution,
+            hideAttribution: true,
           }}
           nodesDraggable={!disabled}
           nodesConnectable={!disabled}

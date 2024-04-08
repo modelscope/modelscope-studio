@@ -45,8 +45,6 @@ import { FlowNode, FlowNodeSchema } from '../type';
 import {
   compileValidationSchema,
   createId,
-  getAttrHandleId,
-  getAttrItemHandleId,
   getHandleId,
   getValidationErrorMessage,
   updateNodeAttrs,
@@ -77,9 +75,7 @@ export const Node = memo<NodeProps<FlowNode>>(
       () => nodesSchema[data.name],
       [data.name, nodesSchema]
     );
-    const { nodeCount } = useFlowStore((state) => ({
-      nodeCount: state.nodeCounts[data.name],
-    }));
+    const nodeCount = useFlowStore((state) => state.nodeCounts[data.name]);
     const [form] = Form.useForm();
 
     if (!schema) {
@@ -99,7 +95,6 @@ export const Node = memo<NodeProps<FlowNode>>(
     const defaultNodeWidth = hasAttrs ? 360 : undefined;
     const nodeWidth = schema.width || defaultNodeWidth;
     const nodeHeight = schema.height;
-
     const onValueChanges: FormProps['onValuesChange'] = (_, values) => {
       setNodes(
         (nodes) =>
@@ -471,7 +466,7 @@ export const Node = memo<NodeProps<FlowNode>>(
                                       ? attr.list.ports
                                       : undefined,
                                     (type, i) =>
-                                      getAttrItemHandleId({
+                                      getHandleId({
                                         nodeId: nodeId || '',
                                         type,
                                         attr: attr.name,
@@ -488,7 +483,7 @@ export const Node = memo<NodeProps<FlowNode>>(
                       }}
                     </Form.List>
                     {renderPorts(attr.ports, (type, i) =>
-                      getAttrHandleId({
+                      getHandleId({
                         nodeId: nodeId || '',
                         type,
                         handleIndex: i,
@@ -507,7 +502,7 @@ export const Node = memo<NodeProps<FlowNode>>(
                       {content}
                     </Form.Item>
                     {renderPorts(attr.ports, (type, i) =>
-                      getAttrHandleId({
+                      getHandleId({
                         nodeId: nodeId || '',
                         type,
                         handleIndex: i,
@@ -596,6 +591,9 @@ export const Node = memo<NodeProps<FlowNode>>(
     );
   },
   (prev, next) => {
-    return prev.data === next.data && prev.selected === next.selected;
+    return (
+      JSON.stringify(prev.data) === JSON.stringify(next.data) &&
+      prev.selected === next.selected
+    );
   }
 );

@@ -39,18 +39,16 @@ class ModelScopeFlow(Component):
                  render: bool = True,
                  height: int | None = 600,
                  schema: dict | None = None,
-                 show_sidebar: bool | None = True,
-                 show_minimap: bool | None = True,
-                 show_controls: bool | None = True,
+                 show_sidebar: bool | None = None,
+                 show_minimap: bool | None = None,
+                 show_controls: bool | None = None,
                  min_zoom: float | int | None = 0.1,
                  max_zoom: float | int | None = 2,
-                 custom_components: dict | None = None,
-                 hide_attribution: bool | None = False):
+                 custom_components: dict | None = None):
         """
         Parameters:
             value: FlowData or dict
             height: Height of the Flow
-            hide_attribution: This component is made with react-flow. By default, we render a small attribution in the corner of your flows that links back to the react-flow. The reason: https://reactflow.dev/learn/troubleshooting/remove-attribution
         """
         self.height = height
         self.custom_components = custom_components
@@ -59,7 +57,7 @@ class ModelScopeFlow(Component):
         self.show_controls = show_controls
         self.min_zoom = min_zoom
         self.max_zoom = max_zoom
-        self.hide_attribution = hide_attribution
+
         super().__init__(
             label=label,
             info=info,

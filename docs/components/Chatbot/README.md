@@ -49,13 +49,13 @@ Observation: <result>「Any md content will be displayed in the drop-down box wh
 
 ### Support for User Selection Interaction
 
-Include the `select-box` tag in the returned content for more usage details, see <tab-link component-tab="Markdown">Markdown Built-in Custom Tags <tab-link component-tab="Markdown">.
+Include the `select-box` tag in the returned content. For more usage details, see <tab-link component-tab="Markdown">Markdown Built-in Custom Tags </tab-link>.
 
 <demo name="select-box"></demo>
 
 ### Support for Chart Display
 
-Include the `chart` tag in the returned content for more usage details, see <tab-link component-tab="Markdown">Markdown Built-in Custom Tags <tab-link component-tab="Markdown">.
+Include the `chart` tag in the returned content. For more usage details, see <tab-link component-tab="Markdown">Markdown Built-in Custom Tags </tab-link>.
 
 <demo name="chart"></demo>
 

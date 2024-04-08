@@ -40,14 +40,14 @@
     "node-fetch": "^3.3.2",
     "npm-run-all": "^4.1.5",
     "prettier": "^3.2.5",
-    "prettier-plugin-packagejson": "^2.4.12",
+    "prettier-plugin-packagejson": "^2.4.14",
     "prettier-plugin-svelte": "^3.2.2",
     "rimraf": "^5.0.5",
     "stylelint": "^16.2.1",
     "svelte": "^4.2.12",
     "tslib": "^2.6.2",
-    "tsx": "^4.7.1",
-    "typescript": "^5.4.3"
+    "tsx": "^4.7.2",
+    "typescript": "^5.4.4"
   },
   "main_changeset": true
 }

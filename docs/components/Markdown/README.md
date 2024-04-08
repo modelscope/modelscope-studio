@@ -18,17 +18,17 @@ Upgraded gradio Markdown.
 
 ### Support for Accordion Content Display
 
-Include the `accordion` tag in the returned content for more usage details, see <tab-link tab="custom_tags/accordion">accordion</tab-link>
+Include the `accordion` tag in the returned content. For more usage details, see <tab-link tab="custom_tags/accordion">accordion</tab-link>
 <demo name="accordion"></demo>
 
 ### Support for User Selection Interaction
 
-Include the `select-box` tag in the returned content for more usage details, see <tab-link tab="custom_tags/select-box">select-box</tab-link>
+Include the `select-box` tag in the returned content. For more usage details, see <tab-link tab="custom_tags/select-box">select-box</tab-link>
 <demo name="select-box"></demo>
 
 ### Support for Chart Display
 
-Include the `chart` tag in the returned content for more usage details, see <tab-link tab="custom_tags/chart">chart</tab-link>
+Include the `chart` tag in the returned content. For more usage details, see <tab-link tab="custom_tags/chart">chart</tab-link>
 <demo name="chart"></demo>
 
 ### Custom Tags (Advanced Usage, Requires Frontend Knowledge)
