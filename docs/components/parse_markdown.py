@@ -10,7 +10,6 @@ enable_tags = ["demo", "demo-prefix", "demo-suffix", "file"]
 
 
 class MarkdownParser(HTMLParser):
-
     def __init__(self, read_file=None):
         super().__init__()
         self.value = [{"type": "text", "value": ""}]

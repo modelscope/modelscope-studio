@@ -11,7 +11,6 @@ def process_html_links(html: str, transformer: Callable):
     img_src_regex = re.compile(r'"imgSrc": *"(.*?)"')
 
     def replace_src(type):
-
         def replace(match):
             src = match.group(1)
             new_url = transformer(src) if transformer else src
@@ -46,7 +45,6 @@ def process_markdown_links(markdown: str, transformer: Callable):
 
 
 def process_links(text: str, block: Component):
-
     def link_transformer(src: str):
         if (src.startswith("http") or src.startswith("https")):
             return src

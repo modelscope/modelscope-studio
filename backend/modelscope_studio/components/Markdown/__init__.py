@@ -1,21 +1,16 @@
 from __future__ import annotations
 
 import inspect
-from typing import Any, Callable, Dict, List, Optional, TypedDict
+from typing import Any, Callable, Dict, List
 
 from gradio.components.base import Component
 from gradio.events import Events
 from gradio_client.documentation import document, set_documentation_group
 
-from modelscope_studio.utils import process_links, resolve_frontend_dir
+from modelscope_studio.utils import (CustomComponentDict, process_links,
+                                     resolve_frontend_dir)
 
 set_documentation_group("component")
-
-
-class CustomComponentDict(TypedDict):
-    props: Optional[List[str]]
-    template: Optional[str]
-    js: Optional[str]
 
 
 @document()

@@ -1,6 +1,7 @@
 from __future__ import annotations
 
-from typing import Any, Callable, Dict, List
+from typing import (Any, Callable, Dict, List, Literal, Optional, Tuple,
+                    TypedDict, Union)
 
 from gradio import processing_utils
 from gradio.components.base import Component
@@ -8,12 +9,35 @@ from gradio.data_classes import GradioModel
 from gradio.events import Events
 from gradio_client.documentation import document
 
-from modelscope_studio.utils import resolve_frontend_dir
+from modelscope_studio.utils import CustomComponentDict, resolve_frontend_dir
+
+from .edge import *
+from .edge import Edge
+from .node import *
+from .node import Node
+from .node_schema import *
+from .node_schema import NodeSchemaDict
 
 
 class FlowData(GradioModel):
-    nodes: List[Dict[str, Any]] = []
-    edges: List[Dict[str, Any]] = []
+    nodes: Optional[List[Union[Node, dict]]] = []
+    edges: Optional[List[Union[Edge, dict]]] = []
+
+
+class FlowSchemaDict(TypedDict):
+    nodes: Optional[List[Union[NodeSchemaDict, dict]]] = []
+
+
+class BackgroundPropsDict(TypedDict):
+    color: Optional[str]
+    className: Optional[str]
+    # The gap between patterns. Passing in a tuple allows you to control the x and y gap independently.
+    gap: Optional[Union[int, Tuple[int, int]]]
+    # The radius of each dot or the size of each rectangle if BackgroundVariant.Dots or BackgroundVariant.Cross is used. This defaults to 1 or 6 respectively, or ignored if BackgroundVariant.Lines is used.
+    size: Optional[int]
+    offset: Optional[int]
+    lineWidth: Optional[int]
+    variant: Optional[Literal['dots', 'lines', 'cross']]
 
 
 @document()
@@ -37,19 +61,22 @@ class ModelScopeFlow(Component):
                  elem_id: str | None = None,
                  elem_classes: List[str] | str | None = None,
                  render: bool = True,
-                 height: int | None = 600,
-                 schema: dict | None = None,
+                 height: int | str | None = 600,
+                 schema: Union[FlowSchemaDict, dict] | None = None,
                  show_sidebar: bool | None = None,
                  show_minimap: bool | None = None,
                  show_controls: bool | None = None,
                  background_props: dict | None = None,
                  min_zoom: float | int | None = 0.1,
                  max_zoom: float | int | None = 2,
-                 custom_components: dict | None = None):
+                 custom_components: Dict[str, CustomComponentDict]
+                 | None = None):
         """
         Parameters:
             value: FlowData or dict
-            height: Height of the Flow
+            height: The height of the flow component, specified in pixels if a number is passed, or in CSS units if a string is passed.
+            schema: Define the nodes and edges for the flow.
+            custom_components: Define the custom node types for the flow schema.
         """
         self.height = height
         self.custom_components = custom_components
@@ -75,10 +102,11 @@ class ModelScopeFlow(Component):
             render=render,
             value=value,
         )
+
         self.schema = self._process_schema(schema)
 
-    def _process_schema(self, schema: dict | None):
-        if isinstance(schema, dict):
+    def _process_schema(self, schema: Union[FlowSchemaDict, dict] | None):
+        if schema is not None:
             nodes = schema.get('nodes', [])
             for node in nodes:
                 icon_url = node.get('icon')

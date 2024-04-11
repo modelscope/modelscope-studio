@@ -18,7 +18,7 @@ import cls from 'classnames';
 import { isNumber, isObject } from 'lodash-es';
 
 import { defineComponent } from '../defineComponent';
-import { useRefValue } from '../shared';
+import { useMemoizedEqualValue, useRefValue } from '../shared';
 import { isMobile, safeParseJSON } from '../utils';
 
 import { ConnectionLine } from './flow-components/ConnectionLine';
@@ -78,6 +78,9 @@ const defaultSchema: FlowProps['schema'] = {
   nodes: [],
 };
 
+const initialNodes: FlowNode[] = [];
+const initialEdges: FlowEdge[] = [];
+
 export const Flow = defineComponent<FlowProps>((props) => {
   const {
     disabled,
@@ -88,8 +91,8 @@ export const Flow = defineComponent<FlowProps>((props) => {
     show_sidebar = true,
     show_controls = true,
     show_minimap = !isMobile(),
-    nodes: userNodes = [],
-    edges: userEdges = [],
+    nodes: userNodes = initialNodes,
+    edges: userEdges = initialEdges,
     on_upload,
     locale = 'en-US',
     on_change,
@@ -99,6 +102,7 @@ export const Flow = defineComponent<FlowProps>((props) => {
     style,
     background_props,
   } = props;
+
   const { token } = AntdTheme.useToken();
   const onChangeRef = useRefValue(on_change);
   const { nodes, edges } = useMemo(() => {
@@ -444,7 +448,6 @@ export const Flow = defineComponent<FlowProps>((props) => {
     }
     return false;
   };
-
   return (
     <div className={cls('ms-flow', className)} style={style}>
       <FlowContext.Provider

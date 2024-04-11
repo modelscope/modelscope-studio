@@ -34,7 +34,7 @@
   export let min_width: number | undefined = undefined;
   export let loading_status: LoadingStatus | undefined = undefined;
   export let interactive: boolean;
-  export let height = 600;
+  export let height: number | string = 600;
   export let schema: FlowProps['schema'] = {
     nodes: [],
   };
@@ -46,6 +46,7 @@
   export let custom_components: CustomComponents = {};
   export let background_props: FlowProps['background_props'] = {};
   let _background_props: typeof background_props = {};
+
   $: _background_props = {
     ..._background_props,
     ...background_props,

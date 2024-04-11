@@ -53,6 +53,7 @@ export const ComponentConfigProvider: React.FC<ComponentConfigProviderProps> = (
     >
       <StyleProvider
         hashPriority="high"
+        // theme.useToken will rerender when this prop changed
         transformers={useMemo(() => [legacyLogicalPropertiesTransformer], [])}
       >
         {children}

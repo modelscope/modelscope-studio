@@ -11,9 +11,9 @@ from gradio.events import Events
 from gradio_client import utils as client_utils
 from gradio_client.documentation import document, set_documentation_group
 
-from modelscope_studio.components.Markdown import CustomComponentDict
 from modelscope_studio.components.MultimodalInput import MultimodalInputData
-from modelscope_studio.utils import process_links, resolve_frontend_dir
+from modelscope_studio.utils import (CustomComponentDict, process_links,
+                                     resolve_frontend_dir)
 
 
 class FileMessage(GradioModel):

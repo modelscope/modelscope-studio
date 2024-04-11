@@ -66,12 +66,13 @@
   export let interactive: boolean;
   export let sources: ('upload' | 'microphone' | 'webcam')[] = ['upload'];
 
-  $: sources = Array.from(new Set(sources));
+  $: _sources = Array.from(new Set(sources));
   // upload button
   export let root = '';
   export let proxy_url = '';
 
   export let upload_button_props: Record<string, any> = {};
+
   let _upload_button_props: typeof upload_button_props = {};
   $: _upload_button_props = {
     ..._upload_button_props,
@@ -79,6 +80,7 @@
   };
 
   export let webcam_props: Record<string, any> = {};
+
   let _webcam_props: typeof webcam_props = {};
   $: _webcam_props = {
     ..._webcam_props,
@@ -100,7 +102,6 @@
     ..._file_preview_props,
     ...file_preview_props,
   };
-
   let uploading = false;
   const upload_fn = getContext<typeof upload_files>('upload_files');
   const upload: ContextValue['upload'] = async (files) => {
@@ -178,7 +179,7 @@
   </div>
   <div class="controls">
     <span class="input-tools">
-      {#each sources as source}
+      {#each _sources as source}
         {#if source === 'upload'}
           <span class="tool-button upload-button">
             <UploadButton

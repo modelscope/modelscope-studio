@@ -98,7 +98,7 @@ export interface FlowNodeSchema {
     required?:
       | boolean
       | {
-          message: string;
+          message?: string;
         };
     json_schema_validator?: JSONSchema;
     // validators json schema

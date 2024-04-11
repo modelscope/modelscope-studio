@@ -66,7 +66,6 @@ is_modelscope_studio = os.getenv('MODELSCOPE_ENVIRONMENT') == 'studio'
 
 
 class Docs:
-
     def __init__(self, file_path: str, markdown_files: list = None):
         self.file_path = file_path
         self.demo_modules = get_demo_modules(file_path)
@@ -132,7 +131,6 @@ class Docs:
                                  suffix=item["suffix"])
 
     def render(self, components_tabs=None):
-
         def tab_link_click(data: gr.EventData):
             tab: str = data._data["value"].get("tab", '')
             component_tab: str = data._data["value"].get("component_tab", '')

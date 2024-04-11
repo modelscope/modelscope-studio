@@ -14,7 +14,7 @@
   export let root: string;
   export let value: FlowData;
   export let interactive: boolean;
-  export let height: number;
+  export let height: number | string;
   export let theme: string = 'light';
   export let show_sidebar: boolean;
   export let show_minimap: boolean;
@@ -69,7 +69,7 @@
 
 <Flow
   disabled={!interactive}
-  elem_style={`height: ${height}px`}
+  elem_style={`height: ${typeof height === 'number' ? height + 'px' : height}`}
   nodes={value.nodes}
   {on_change}
   {on_upload}
