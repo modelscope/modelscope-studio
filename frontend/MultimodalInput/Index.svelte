@@ -66,7 +66,7 @@
   export let interactive: boolean;
   export let sources: ('upload' | 'microphone' | 'webcam')[] = ['upload'];
 
-  $: sources = Array.from(new Set(sources));
+  $: _sources = Array.from(new Set(sources));
   // upload button
   export let root = '';
   export let proxy_url = '';
@@ -178,7 +178,7 @@
   </div>
   <div class="controls">
     <span class="input-tools">
-      {#each sources as source}
+      {#each _sources as source}
         {#if source === 'upload'}
           <span class="tool-button upload-button">
             <UploadButton
