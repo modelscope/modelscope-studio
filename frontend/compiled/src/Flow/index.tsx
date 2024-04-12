@@ -84,7 +84,7 @@ const initialEdges: FlowEdge[] = [];
 export const Flow = defineComponent<FlowProps>((props) => {
   const {
     disabled,
-    schema,
+    schema: userSchema,
     theme = 'light',
     max_zoom: maxZoom = 2,
     min_zoom: minZoom = 0.1,
@@ -102,6 +102,8 @@ export const Flow = defineComponent<FlowProps>((props) => {
     style,
     background_props,
   } = props;
+
+  const schema = useMemoizedEqualValue(userSchema);
 
   const { token } = AntdTheme.useToken();
   const onChangeRef = useRefValue(on_change);
