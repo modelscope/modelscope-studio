@@ -49,7 +49,7 @@ def get_demo_modules(file_path: str):
     demos = [
         demo for demo in list_demos(
             os.path.join(os.path.dirname(file_path), "demos"))
-        if demo.endswith(".py")
+        if demo.endswith(".py") and not demo.startswith("__")
     ]
     demo_modules = {}
     for demo in demos:
@@ -93,23 +93,41 @@ class Docs:
                   "r") as f:
             return f.read()
 
-    def render_demo(self, demo_name, prefix='', suffix=''):
+    def render_demo(self,
+                    demo_name,
+                    code_position='left',
+                    prefix='',
+                    suffix=''):
         content = self.read_file(f"./demos/{demo_name}.py")
         module = self.demo_modules[demo_name]
         with gr.Accordion("Show Demo", open=False):
-            with gr.Row():
-                with gr.Column():
-                    mgr.Markdown(f"""
-{prefix}
+
+            def render_code():
+                mgr.Markdown(f"""{prefix}
 ````python
 {content}
 ````
-{suffix}
-""",
-                                 header_links=True,
-                                 custom_components=custom_components)
+{suffix}""",
+                             header_links=True,
+                             custom_components=custom_components)
+
+            if code_position == 'top':
+                with gr.Row():
+                    with gr.Column():
+                        render_code()
+            with gr.Row():
+                if code_position == 'left':
+                    with gr.Column():
+                        render_code()
                 with gr.Column():
                     module.demo.render()
+                if code_position == 'right':
+                    with gr.Column():
+                        render_code()
+            if code_position == 'bottom':
+                with gr.Row():
+                    with gr.Column():
+                        render_code()
 
     def render_markdown(self,
                         markdown_file,
@@ -129,7 +147,8 @@ class Docs:
             elif item["type"] == "demo":
                 self.render_demo(item["name"],
                                  prefix=item["prefix"],
-                                 suffix=item["suffix"])
+                                 suffix=item["suffix"],
+                                 code_position=item["code_position"])
 
     def render(self, components_tabs=None):
 

@@ -42,10 +42,16 @@ class MarkdownParser(HTMLParser):
             return
         if tag == "demo":
             self.value.append({
-                "type": "demo",
-                "name": dict(attrs)["name"],
-                "prefix": "",
-                "suffix": ""
+                "type":
+                "demo",
+                "code_position":
+                dict(attrs).get("code-position", 'left'),
+                "name":
+                dict(attrs)["name"],
+                "prefix":
+                "",
+                "suffix":
+                ""
             })
         elif tag == "file":
             content = self.read_file(dict(attrs)["src"])

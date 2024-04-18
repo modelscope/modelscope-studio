@@ -18,6 +18,9 @@ export default defineConfig({
       tsconfigPath: path.resolve(__dirname, 'tsconfig.build.json'),
       outDir: libOutDir,
     }),
+    {
+      name: 'inject-polyfill',
+    },
   ],
   define: {
     'process.env.NODE_ENV': JSON.stringify('production'),

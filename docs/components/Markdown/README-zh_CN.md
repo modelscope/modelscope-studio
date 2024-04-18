@@ -55,7 +55,7 @@ custom_select.js
 </demo-suffix>
 </demo>
 
-#### 与 Python 侧交互
+#### 与 Python 交互
 
 在 js 中可以使用`cc.dispatch`触发 Python 侧监听的`custom`事件，以前面的custom_select.js为例，我们在前端调用了`cc.dispatch(options[i])`，则会向 Python 侧同时发送通知。
 
@@ -75,7 +75,7 @@ custom_select.js
 | preview                       | bool                                                            | True   | 是否开启图片预览功能                                                        |
 | custom_components             | dict\[str, CustomComponentDict\] CustomComponentDict 定义见下方 | None   | 支持用户定义自定义标签，并通过 js 控制标签渲染样式与触发 python 事件。      |
 
-**CustomComponent 定义如下**
+**CustomComponentDict 定义如下**
 
 ```python
 class CustomComponentDict(TypedDict):

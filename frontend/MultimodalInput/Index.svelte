@@ -72,6 +72,7 @@
   export let proxy_url = '';
 
   export let upload_button_props: Record<string, any> = {};
+
   let _upload_button_props: typeof upload_button_props = {};
   $: _upload_button_props = {
     ..._upload_button_props,
@@ -79,6 +80,7 @@
   };
 
   export let webcam_props: Record<string, any> = {};
+
   let _webcam_props: typeof webcam_props = {};
   $: _webcam_props = {
     ..._webcam_props,
@@ -100,7 +102,6 @@
     ..._file_preview_props,
     ...file_preview_props,
   };
-
   let uploading = false;
   const upload_fn = getContext<typeof upload_files>('upload_files');
   const upload: ContextValue['upload'] = async (files) => {

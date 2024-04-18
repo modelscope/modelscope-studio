@@ -1,0 +1,325 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "definitions": {
+    "Attrs": {
+      "type": "object"
+    },
+    "FlowNodeAttrSchema": {
+      "properties": {
+        "accordion": {
+          "default": true,
+          "description": "Enable/disable accordion UI.",
+          "type": "boolean"
+        },
+        "description": {
+          "description": "A brief explanation about the attribute purpose.",
+          "type": "string"
+        },
+        "disabled": {
+          "default": false,
+          "description": "Disables user editing of the attribute value. By default, attributes are editable.",
+          "type": "boolean"
+        },
+        "json_schema_validator": {
+          "$ref": "#/definitions/Record<string,any>",
+          "description": "Validates attribute values using JSON schema."
+        },
+        "list": {
+          "anyOf": [
+            {
+              "properties": {
+                "max": {
+                  "description": "Maximum number of items in the list.",
+                  "type": "number"
+                },
+                "min": {
+                  "description": "Minimum number of items in the list.",
+                  "type": "number"
+                },
+                "ports": {
+                  "description": "Port configurations for each item in the list.",
+                  "properties": {
+                    "source": {
+                      "default": [],
+                      "description": "Source ports for the list item as a connection.",
+                      "items": {
+                        "$ref": "#/definitions/Position"
+                      },
+                      "type": "array"
+                    },
+                    "sourceConnections": {
+                      "description": "Allowed the source ports of this list item to connect to other nodes or attributes. Defaults to all nodes and attributes",
+                      "items": {
+                        "$ref": "#/definitions/PortConnection"
+                      },
+                      "type": "array"
+                    },
+                    "target": {
+                      "description": "Target ports for the list item as a connection",
+                      "items": {
+                        "$ref": "#/definitions/Position"
+                      },
+                      "type": "array"
+                    },
+                    "targetConnections": {
+                      "description": "Allowed other nodes or attributes allowed to connect to the target ports of this list item. Defaults to all nodes and attributes",
+                      "items": {
+                        "$ref": "#/definitions/PortConnection"
+                      },
+                      "type": "array"
+                    }
+                  },
+                  "type": "object"
+                }
+              },
+              "type": "object"
+            },
+            {
+              "type": "boolean"
+            }
+          ],
+          "default": false,
+          "description": "Indicates whether the attribute is a list."
+        },
+        "name": {
+          "description": "Unique attribute name used as a key in the node data. Mandatory.",
+          "type": "string"
+        },
+        "ports": {
+          "description": "Configurations for the node attribute ports.",
+          "properties": {
+            "source": {
+              "default": [],
+              "description": "Source ports for the attribute as a connection.",
+              "items": {
+                "$ref": "#/definitions/Position"
+              },
+              "type": "array"
+            },
+            "sourceConnections": {
+              "description": "Allowed the source ports of this attribute to connect to other nodes or attributes. Defaults to all nodes and attributes",
+              "items": {
+                "$ref": "#/definitions/PortConnection"
+              },
+              "type": "array"
+            },
+            "target": {
+              "default": [],
+              "description": "Target ports for the attribute as a connection",
+              "items": {
+                "$ref": "#/definitions/Position"
+              },
+              "type": "array"
+            },
+            "targetConnections": {
+              "description": "Allowed other nodes or attributes allowed to connect to the target ports of this attribute. Defaults to all nodes and attributes",
+              "items": {
+                "$ref": "#/definitions/PortConnection"
+              },
+              "type": "array"
+            }
+          },
+          "type": "object"
+        },
+        "props": {
+          "$ref": "#/definitions/Record<string,any>",
+          "description": "Configuration options specific to the chosen component type, supporting Ant Design ({@link https://ant.design/components/overview/}) or custom component properties."
+        },
+        "required": {
+          "anyOf": [
+            {
+              "properties": {
+                "message": {
+                  "type": "string"
+                }
+              },
+              "type": "object"
+            },
+            {
+              "type": "boolean"
+            }
+          ],
+          "default": false,
+          "description": "Specifies if the attribute value is mandatory. By default, attributes are optional."
+        },
+        "title": {
+          "description": "Display title for the attribute, defaults to the attribute name if not provided.",
+          "type": "string"
+        },
+        "type": {
+          "anyOf": [
+            {
+              "allOf": [
+                {
+                  "properties": {},
+                  "type": "object"
+                },
+                {
+                  "type": "string"
+                }
+              ]
+            },
+            {
+              "enum": [
+                "checkbox",
+                "input",
+                "number",
+                "radio",
+                "select",
+                "switch",
+                "textarea",
+                "upload"
+              ],
+              "type": "string"
+            }
+          ],
+          "default": "'input'",
+          "description": "Attribute input type. Can be one of the built-in Ant Design components or a custom component. Defaults to 'input'."
+        }
+      },
+      "type": "object"
+    },
+    "FlowNodeSchema": {
+      "properties": {
+        "addable": {
+          "default": true,
+          "description": "Enables/disables adding more instances of this node.",
+          "type": "boolean"
+        },
+        "attrs": {
+          "description": "Configuration of the node's attributes.",
+          "items": {
+            "$ref": "#/definitions/FlowNodeAttrSchema"
+          },
+          "type": "array"
+        },
+        "deletable": {
+          "default": true,
+          "description": "Enables/disables deleting existing instances of this node.",
+          "type": "boolean"
+        },
+        "description": {
+          "description": "A short description of the node's purpose.",
+          "type": "string"
+        },
+        "height": {
+          "description": "Height of the node.",
+          "type": "number"
+        },
+        "icon": {
+          "description": "Display icon for the node.",
+          "type": "string"
+        },
+        "max": {
+          "description": "Maximum number of this node type that can exist simultaneously.",
+          "type": "number"
+        },
+        "min": {
+          "description": "Minimum number of this node type that must exist simultaneously.",
+          "type": "number"
+        },
+        "name": {
+          "description": "As a unique identifier for the node. Mandatory.",
+          "type": "string"
+        },
+        "ports": {
+          "description": "Configurations for the node's connection ports.",
+          "properties": {
+            "source": {
+              "default": "['right']",
+              "description": "Source ports for the node as a connection.",
+              "items": {
+                "$ref": "#/definitions/Position"
+              },
+              "type": "array"
+            },
+            "sourceConnections": {
+              "description": "Allowed the source ports of this node to connect to other nodes or attributes. Defaults to all nodes and attributes",
+              "items": {
+                "$ref": "#/definitions/PortConnection"
+              },
+              "type": "array"
+            },
+            "target": {
+              "default": "['left']",
+              "description": "Target ports for the node as a connection",
+              "items": {
+                "$ref": "#/definitions/Position"
+              },
+              "type": "array"
+            },
+            "targetConnections": {
+              "description": "Allowed other nodes or attributes allowed to connect to the target ports of this node. Defaults to all nodes and attributes",
+              "items": {
+                "$ref": "#/definitions/PortConnection"
+              },
+              "type": "array"
+            }
+          },
+          "type": "object"
+        },
+        "show_toolbar": {
+          "default": true,
+          "description": "Shows/hides the toolbar (delete, copy, rename, etc.).",
+          "type": "boolean"
+        },
+        "template": {
+          "description": "Initial values for the node's attributes when creating a new instance.",
+          "properties": {
+            "attrs": {
+              "$ref": "#/definitions/Attrs",
+              "description": "Attribute values corresponding to their names in the `attrs` field, e.g., `{ \"a\": 1, \"b\": 2 }`."
+            }
+          },
+          "type": "object"
+        },
+        "title": {
+          "description": "Display title for the node, defaults to the node name if not provided.",
+          "type": "string"
+        },
+        "width": {
+          "description": "Width of the node.",
+          "type": "number"
+        }
+      },
+      "type": "object"
+    },
+    "PortConnection": {
+      "anyOf": [
+        {
+          "properties": {
+            "attrs": {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            },
+            "name": {
+              "type": "string"
+            }
+          },
+          "type": "object"
+        },
+        {
+          "type": "string"
+        }
+      ]
+    },
+    "Position": {
+      "enum": ["left", "top", "right", "bottom"],
+      "type": "string"
+    },
+    "Record<string,any>": {
+      "type": "object"
+    }
+  },
+  "properties": {
+    "nodes": {
+      "items": {
+        "$ref": "#/definitions/FlowNodeSchema"
+      },
+      "type": "array"
+    }
+  },
+  "type": "object"
+}

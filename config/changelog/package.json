@@ -20,12 +20,12 @@
   },
   "dependencies": {
     "@changesets/get-github-info": "^0.6.0",
-    "@manypkg/get-packages": "^2.2.0",
+    "@manypkg/get-packages": "^2.2.1",
     "detect-indent": "^7.0.1"
   },
   "devDependencies": {
     "@changesets/types": "^6.0.0",
-    "@types/node": "^20.11.24",
+    "@types/node": "^20.12.5",
     "tsup": "^8.0.2"
   }
 }

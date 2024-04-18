@@ -1,0 +1,66 @@
+{
+  "$schema": "https://raw.githubusercontent.com/modelscope/modelscope-studio/main/frontend/Flow/schema.json",
+  "nodes": [
+    {
+      "max": 1,
+      "min": 1,
+      "addable": false,
+      "show_toolbar": false,
+      "name": "start",
+      "title": "Start",
+      "ports": {
+        "source": ["right"],
+        "target": []
+      }
+    },
+    {
+      "icon": "https://img.alicdn.com/imgextra/i4/O1CN01fvt4it25rEZU4Gjso_!!6000000007579-2-tps-128-128.png",
+      "name": "agent",
+      "title": "Agent Node",
+      "description": "Agent Flow Node",
+      "ports": {
+        "target": ["left"],
+        "source": []
+      },
+      "attrs": [
+        {
+          "name": "prompt",
+          "title": "Agent Prompt",
+          "type": "textarea",
+          "required": {
+            "message": "Agent Prompt is required"
+          }
+        },
+        {
+          "name": "tool",
+          "title": "Tools",
+          "type": "select",
+          "props": {
+            "mode": "multiple",
+            "options": [
+              { "label": "Wanx Image Generation", "value": "image_gen" },
+              { "label": "Code Interpreter", "value": "code_interpreter" },
+              { "label": "Web Browsing", "value": "web_browser" }
+            ]
+          }
+        },
+        {
+          "name": "condition",
+          "title": "Jump Condition",
+          "list": {
+            "min": 1,
+            "ports": {
+              "source": ["right"]
+            }
+          },
+          "accordion": false
+        }
+      ],
+      "template": {
+        "attrs": {
+          "condition": [""]
+        }
+      }
+    }
+  ]
+}

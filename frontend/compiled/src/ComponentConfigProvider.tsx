@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import {
   legacyLogicalPropertiesTransformer,
   StyleProvider,
@@ -36,21 +36,25 @@ export const ComponentConfigProvider: React.FC<ComponentConfigProviderProps> = (
 
   return (
     <ConfigProvider
-      theme={{
-        cssVar: true,
-        token: {
-          colorPrimary: primaryColor,
-        },
-        algorithm:
-          theme === 'dark'
-            ? AntdTheme.darkAlgorithm
-            : AntdTheme.defaultAlgorithm,
-      }}
+      theme={useMemo(
+        () => ({
+          cssVar: true,
+          token: {
+            colorPrimary: primaryColor,
+          },
+          algorithm:
+            theme === 'dark'
+              ? AntdTheme.darkAlgorithm
+              : AntdTheme.defaultAlgorithm,
+        }),
+        [theme]
+      )}
       locale={localeConfig}
     >
       <StyleProvider
         hashPriority="high"
-        transformers={[legacyLogicalPropertiesTransformer]}
+        // theme.useToken will rerender when this prop changed
+        transformers={useMemo(() => [legacyLogicalPropertiesTransformer], [])}
       >
         {children}
       </StyleProvider>

@@ -1,0 +1,234 @@
+/* stylelint-disable selector-class-pattern */
+.ms-flow {
+  width: 100%;
+  height: 100%;
+
+  &-sidebar {
+    position: relative;
+    box-sizing: border-box;
+    width: 20%;
+    min-width: 180px;
+    max-width: 280px;
+    height: 100%;
+    margin: 0;
+    transition: transform 0.2s linear;
+
+    &-collapse {
+      transform: translateX(-100%);
+    }
+
+    &-handle {
+      position: absolute;
+      top: 50%;
+      right: 0;
+      z-index: 1;
+      transform: translate(50%, -50%);
+
+      &-collapse {
+        transform: translate(100%, -50%);
+      }
+    }
+
+    &-list {
+      width: 100%;
+      height: 100%;
+      padding: 4px;
+      overflow: auto;
+    }
+
+    & &-item {
+      width: 100%;
+      margin-bottom: 10px;
+
+      &-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin: 0;
+        font-size: 16px;
+
+        &-title {
+          display: flex;
+          align-items: center;
+
+          img {
+            width: 18px;
+            height: 18px;
+            margin-right: 6px;
+          }
+        }
+
+        &-add {
+          flex-shrink: 0;
+        }
+      }
+
+      &-desc {
+        margin: 0;
+        margin-top: 6px;
+        font-size: 12px;
+      }
+    }
+  }
+
+  .react-flow__handle {
+    background: var(--ms-flow-handle-bg);
+
+    &.connectingto {
+      background: var(--ms-flow-handle-bg-error);
+    }
+
+    &.valid {
+      background: var(--ms-flow-handle-bg-success);
+    }
+  }
+
+  .react-flow__node {
+    &.selected {
+      z-index: 1002 !important;
+    }
+
+    &:hover {
+      .ms-flow-node {
+        &-handle {
+          opacity: 1;
+
+          &-left {
+            transform: translate(-50%, -50%) scale(2);
+          }
+
+          &-right {
+            transform: translate(50%, -50%) scale(2);
+          }
+
+          &-top {
+            transform: translate(-50%, -50%) scale(2);
+          }
+
+          &-bottom {
+            transform: translate(-50%, 50%) scale(2);
+          }
+        }
+      }
+    }
+  }
+
+  &-node {
+    &-form-list-item {
+      display: flex;
+
+      &-content {
+        flex: 1;
+        width: 0;
+        height: 100%;
+        margin-left: 8px;
+      }
+    }
+
+    .ant-input {
+      padding: var(--ant-input-padding-block) var(--ant-input-padding-inline);
+      font-size: var(--ant-input-input-font-size);
+      line-height: var(--ant-line-height);
+      border-radius: var(--ant-border-radius);
+    }
+
+    .ant-input-outlined {
+      background-color: var(--ant-color-bg-container);
+      border-color: var(--ant-color-border);
+      border-width: var(--ant-line-width);
+    }
+
+    .ant-switch {
+      background-color: var(--ant-color-text-quaternary);
+    }
+
+    &-header {
+      padding: 4px 0;
+
+      &-title {
+        display: flex;
+        align-items: center;
+        height: 34px;
+        font-size: 14px;
+
+        img {
+          width: 18px;
+          height: 18px;
+          margin-right: 4px;
+        }
+      }
+
+      &-description {
+        margin-bottom: 4px;
+        font-weight: normal;
+        font-size: 12px;
+        opacity: 0.5;
+      }
+    }
+    // fix collapse closed
+    .ant-collapse-content-hidden {
+      height: 0;
+    }
+
+    .ant-collapse-content-inactive {
+      display: block !important;
+      overflow: hidden;
+
+      .ms-flow-node-field.ms-flow-node-field-item {
+        position: unset;
+      }
+    }
+
+    &-field-list {
+      .ms-flow-node-field {
+        .ant-form-item-explain-error {
+          padding-left: 22px;
+        }
+      }
+
+      .ant-form-item-explain-error {
+        color: var(--ms-flow-node-text-error);
+      }
+    }
+
+    &-field {
+      padding: 0 8px;
+
+      &-item {
+        position: relative;
+      }
+    }
+
+    &-field-label {
+      &-required {
+        &::before {
+          margin-right: 3px;
+          color: var(--ms-flow-node-text-error);
+          content: '*';
+        }
+      }
+    }
+
+    &-handle {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 10px;
+      height: 10px;
+      color: #fff;
+      font-size: 7px;
+      opacity: 0.7;
+      transition: 0.2s all linear;
+
+      &-icon {
+        pointer-events: none;
+      }
+    }
+  }
+
+  &-controls {
+    &-zoom-select {
+      width: 90px;
+    }
+  }
+}

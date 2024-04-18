@@ -1,11 +1,4 @@
-export interface CustomComponents {
-  [component: string]: {
-    template?: string;
-    js?: string;
-    props?: string[];
-  };
-}
-export interface CustomData {
+export interface MarkdownCustomData {
   tag: string;
   tag_index: number;
   value?: any;
