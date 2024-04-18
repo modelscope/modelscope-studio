@@ -43,6 +43,7 @@ dev = ["build", "twine"]
 artifacts = [
   "*.pyi",
   "backend/modelscope_studio/components/Chatbot/templates",
+  "backend/modelscope_studio/components/Flow/templates",
   "backend/modelscope_studio/components/MultimodalInput/templates",
   "backend/modelscope_studio/components/Markdown/templates",
   "backend/modelscope_studio/components/WaterfallGallery/templates",
