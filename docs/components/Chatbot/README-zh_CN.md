@@ -123,7 +123,7 @@ class ChatbotData(GradioRootModel):
 | llm_thinking_presets          | list\[dict\]                                                                     | \[\]     | llm 思考链路解析预设，可以将 llm 调用工具的输出格式转为固定的前端展示格式，需要从modelscope_studio.Chatbot.llm_thinking_presets引入，目前支持：qwen                                                                                                                                                      |
 | custom_components             | dict\[str, CustomComponentDict\] CustomComponentDict 定义见下方                  | None     | 支持用户定义自定义标签，并通过 js 控制标签渲染样式与触发 python 事件。                                                                                                                                                                                                                                   |
 
-**CustomComponent 定义如下**
+**CustomComponentDict 定义如下**
 
 ```python
 class CustomComponentDict(TypedDict):

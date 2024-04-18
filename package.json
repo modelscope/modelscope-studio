@@ -10,7 +10,7 @@
     "dev": "gradio cc dev",
     "dev:compiled": "pnpm -F '@modelscope-studio/compiled' dev",
     "build:compiled": "pnpm -F '@modelscope-studio/compiled' build",
-    "build": "rimraf dist && pnpm run build:compiled && gradio cc build --no-generate-docs",
+    "build": "rimraf dist && pnpm run build:compiled && pnpm -F '@modelscope-studio/flow' build && gradio cc build --no-generate-docs",
     "build:pure": "rimraf dist && gradio cc build --no-generate-docs",
     "lint": "npm-run-all --parallel lint:* && npm run format",
     "format": "prettier --cache --write '**/*.{js,jsx,tsx,ts,svelte,less,md,yaml,yml,json}' --no-error-on-unmatched-pattern",

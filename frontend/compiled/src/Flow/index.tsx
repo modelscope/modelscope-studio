@@ -61,7 +61,7 @@ export interface FlowProps {
   show_sidebar?: boolean;
   show_minimap?: boolean;
   show_controls?: boolean;
-  background_props?: BackgroundProps;
+  background_props?: BackgroundProps | BackgroundProps[];
   min_zoom?: number;
   max_zoom?: number;
 }
@@ -450,6 +450,7 @@ export const Flow = defineComponent<FlowProps>((props) => {
     }
     return false;
   };
+
   return (
     <div className={cls('ms-flow', className)} style={style}>
       <FlowContext.Provider
@@ -518,7 +519,13 @@ export const Flow = defineComponent<FlowProps>((props) => {
           colorMode={theme}
         >
           {show_sidebar && <Sidebar />}
-          <Background {...background_props} />
+          {Array.isArray(background_props) ? (
+            background_props.map((item, index) => (
+              <Background id={`${index}`} key={index} {...item} />
+            ))
+          ) : (
+            <Background {...background_props} />
+          )}
           {show_controls && <Controls />}
           {show_minimap && <MiniMap position="top-right" />}
         </ReactFlow>

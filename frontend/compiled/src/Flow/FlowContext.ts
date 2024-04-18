@@ -8,6 +8,7 @@ import {
   FlowEdge,
   FlowNode,
   FlowNodeSchema,
+  FlowSchema,
   FlowStoreData,
   UploadFile,
 } from './type';
@@ -21,9 +22,7 @@ export interface FlowContextValue {
   maxZoom: number;
   minZoom: number;
   onUpload?: (files: File[]) => Promise<UploadFile[]>;
-  flowSchema: {
-    nodes: FlowNodeSchema[];
-  };
+  flowSchema: FlowSchema;
   nodesSchema: Record<string, FlowNodeSchema>;
   setNodes: (
     value: (nodes: FlowNode[]) => FlowNode[],

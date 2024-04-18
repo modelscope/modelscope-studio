@@ -50,7 +50,7 @@ custom_select.js
 </demo-suffix>
 </demo>
 
-#### Interaction with Python Side
+#### Interaction with Python
 
 In js, you can use `cc.dispatch` to trigger the `custom` event listened to on the Python side. Taking the previous custom_select.js as an example, when we call `cc.dispatch(options[i])` on the frontend, a notification will be sent to the Python side simultaneously.
 <demo name="custom-tag4"></demo>
@@ -66,7 +66,7 @@ The following APIs are additional extended parameters beyond the original gradio
 | enable_base64                 | bool                                                                | False         | Whether to support rendering content as base64, since rendering base64 is unsafe, the default is False.    |
 | preview                       | bool                                                                | True          | Whether to enable image preview functionality.                                                             |
 | enable_latex                  | bool                                                                | True          | Whether to enable LaTeX rendering.                                                                         |
-| latex_single_dollar_delimiter | bool                                                                | True          | Whether to enable single dollar delimiter `$` for LaTeX rendering.                                         |
+| latex_single_dollar_delimiter | bool                                                                | True          | Whe ther to enable single dollar delimiter `$` for LaTeX rendering.                                        |
 | custom_components             | Dict[str, CustomComponentDict] CustomComponentDict definition below | None          | Supports user-defined custom tags and controls tag rendering styles and triggers Python events through js. |
 |                               |
 

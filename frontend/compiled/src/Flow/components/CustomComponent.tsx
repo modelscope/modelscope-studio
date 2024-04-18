@@ -10,6 +10,7 @@ export interface CustomComponentProps {
   node: string;
   component: CustomComponents[string];
   index?: number;
+  id: string;
 }
 
 export const CustomComponent: React.FC<CustomComponentProps> = ({
@@ -19,6 +20,7 @@ export const CustomComponent: React.FC<CustomComponentProps> = ({
   attr,
   node,
   index,
+  id,
   ...props
 }) => {
   const divRef = useRef<HTMLDivElement>(null);
@@ -26,7 +28,7 @@ export const CustomComponent: React.FC<CustomComponentProps> = ({
 
   const onCustom = (data?: any) => {
     onChange?.(data);
-    on_custom({ value: data, attr, index, node });
+    on_custom({ id, node, attr, index, value: data });
   };
 
   useCustomComponent({

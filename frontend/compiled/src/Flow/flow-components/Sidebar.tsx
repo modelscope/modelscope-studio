@@ -88,6 +88,9 @@ export const Sidebar: React.FC = () => {
               styles={{
                 body: {
                   padding: 10,
+                  display: 'flex',
+                  flexDirection: 'column',
+                  justifyContent: 'center',
                 },
               }}
             >
@@ -134,12 +137,14 @@ export const Sidebar: React.FC = () => {
                   }}
                 />
               </h3>
-              <p
-                style={{ color: token.colorTextDescription }}
-                className="ms-flow-sidebar-item-desc"
-              >
-                {nodeSchema.description}
-              </p>
+              {nodeSchema.description && (
+                <p
+                  style={{ color: token.colorTextDescription }}
+                  className="ms-flow-sidebar-item-desc"
+                >
+                  {nodeSchema.description}
+                </p>
+              )}
             </Card>
           );
         })}

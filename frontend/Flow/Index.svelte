@@ -43,14 +43,26 @@
   export let show_controls: boolean;
   export let min_zoom = 0.1;
   export let max_zoom = 2;
+  export let sync_on_data_change = false;
   export let custom_components: CustomComponents = {};
   export let background_props: FlowProps['background_props'] = {};
   let _background_props: typeof background_props = {};
-
-  $: _background_props = {
-    ..._background_props,
-    ...background_props,
-  };
+  $: _value = value;
+  function update_background_props() {
+    if (Array.isArray(background_props)) {
+      _background_props = background_props;
+      return;
+    }
+    if (Array.isArray(_background_props)) {
+      _background_props = background_props;
+    } else {
+      _background_props = {
+        ..._background_props,
+        ...background_props,
+      };
+    }
+  }
+  $: background_props, update_background_props();
   // process schema
   $: _schema = {
     ...schema,
@@ -81,7 +93,7 @@
   {/if}
   <Flow
     {root}
-    {value}
+    value={_value}
     {interactive}
     {custom_components}
     background_props={_background_props}
@@ -96,9 +108,18 @@
     on:custom={(e) => gradio.dispatch('custom', e.detail)}
     on:change={(e) => {
       const { value: newValue, data_changed } = e.detail;
-      value = newValue;
+      if (sync_on_data_change) {
+        if (!data_changed) {
+          _value = newValue;
+        }
+      } else {
+        value = newValue;
+      }
       gradio.dispatch('change', newValue);
       if (data_changed) {
+        if (sync_on_data_change) {
+          value = newValue;
+        }
         gradio.dispatch('data_change', newValue);
       }
     }}

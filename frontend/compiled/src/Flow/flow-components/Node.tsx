@@ -368,7 +368,7 @@ export const Node = memo<NodeProps<FlowNode>>(
                   case 'switch':
                     content = <Switch />;
                     break;
-                  case 'file':
+                  case 'upload':
                     content = <FileUpload />;
                     break;
                   default:
@@ -376,6 +376,7 @@ export const Node = memo<NodeProps<FlowNode>>(
                       const component = custom_components[attr.type];
                       content = (
                         <CustomComponent
+                          id={nodeId || ''}
                           node={schema.name}
                           component={component}
                           attr={attr.name}
