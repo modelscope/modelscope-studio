@@ -1,4 +1,5 @@
-import { useEffect, useMemo } from 'react';
+import { useEffect, useMemo, useRef } from 'react';
+import { isFunction } from 'lodash-es';
 
 import { CustomComponents } from '../type';
 
@@ -70,6 +71,8 @@ export function useCustomComponent(options: CustomComponentOptions) {
   } = options;
   const onCustomRef = useRefValue(onCustom);
   const onBeforeRenderRef = useRefValue(onBeforeRender);
+  const onDestroyFnRef = useRef<() => void>();
+  const mountRef = useRef(false);
   const template = component.template || '';
   const js = component.js?.trim() || '';
   const filterProps = useMemoizedEqualValue(
@@ -99,10 +102,20 @@ export function useCustomComponent(options: CustomComponentOptions) {
       return;
     }
     let userProps: Record<PropertyKey, any> = {};
-    let onMountFn: (el: HTMLDivElement) => void = () => {};
-    const onMount = (callback: (el: HTMLDivElement) => void) => {
+    let onMountFn: (el: HTMLDivElement) => void | (() => void) = () => {};
+    let onUpdateFn = () => {};
+    let updateCallAfterMount = false;
+    const onMount = (callback: (el: HTMLDivElement) => void | (() => void)) => {
       onMountFn = callback;
     };
+    const onUpdate = (
+      callback: () => void,
+      onUpdateOptions: { callAfterMount?: boolean }
+    ) => {
+      onUpdateFn = callback;
+      updateCallAfterMount = onUpdateOptions?.callAfterMount || false;
+    };
+
     if (js) {
       let formattedStr = js.trim();
       if (formattedStr.startsWith(';')) {
@@ -123,6 +136,7 @@ export function useCustomComponent(options: CustomComponentOptions) {
           {
             el,
             onMount,
+            onUpdate,
             theme,
             locale,
           }
@@ -139,10 +153,15 @@ export function useCustomComponent(options: CustomComponentOptions) {
       });
       el.appendChild(fragment);
     }
-    onMountFn(el);
-    return () => {
-      el.innerHTML = '';
-    };
+    if (!mountRef.current) {
+      onDestroyFnRef.current = onMountFn(el) || (() => {});
+      mountRef.current = true;
+      if (updateCallAfterMount) {
+        onUpdateFn();
+      }
+    } else {
+      onUpdateFn();
+    }
   }, [
     filterProps,
     js,
@@ -153,4 +172,16 @@ export function useCustomComponent(options: CustomComponentOptions) {
     template,
     theme,
   ]);
+  useEffect(() => {
+    return () => {
+      if (isFunction(onDestroyFnRef.current)) {
+        onDestroyFnRef.current();
+      }
+      if (target.current) {
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+        target.current.innerHTML = '';
+      }
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 }

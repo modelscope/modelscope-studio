@@ -15,12 +15,29 @@ custom tag:<custom-tag value="aaa"></custom-tag>
                 # The `js` property should be a string containing a JavaScript Function.
                 "js":
                 """
-(props, cc, { el, onMount }) => {
-    // `onMount` will be called after the template rendered
+(props, cc, { el, onMount, onUpdate }) => {
+    // `onMount` will be called after the template first rendered
     onMount(() => {
       // `el` is the container element
       console.log(el)
+
+      // the return function will be called when the component is being unmounted
+      return () => {
+        console.log('unmount')
+      }
     })
+
+    // `onUpdate` will be called when the props changed
+    onUpdate(() => {
+      console.log(props)
+    })
+    onUpdate(
+      () => {
+        console.log(props, 'after mount')
+      },
+      // By default, the callback will not be called when the component is being mounted. Set `callAfterMount` to true to enable it.
+      { callAfterMount: true }
+    )
     console.log(props.children) // By default, `props` will be passed a property named `children`, which can get the content in the tag, such as 'xx' in '<tag>xx</tag>'.
 
     // The return value will be merged with `props` and passed to the template.
