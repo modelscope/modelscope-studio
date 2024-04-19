@@ -102,7 +102,9 @@ export const Flow = defineComponent<FlowProps>((props) => {
     style,
     background_props,
   } = props;
-
+  const id = useMemo(() => {
+    return createId();
+  }, []);
   const schema = useMemoizedEqualValue(userSchema);
 
   const { token } = AntdTheme.useToken();
@@ -491,6 +493,7 @@ export const Flow = defineComponent<FlowProps>((props) => {
       >
         <ReactFlow<FlowNode, FlowEdge>
           nodeTypes={nodeTypes}
+          id={`flow_${id}`}
           edgeTypes={edgeTypes}
           proOptions={{
             hideAttribution: true,

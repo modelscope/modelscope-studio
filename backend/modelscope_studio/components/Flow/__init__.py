@@ -30,6 +30,7 @@ class FlowSchemaDict(TypedDict):
 
 class BackgroundPropsDict(TypedDict):
     color: Optional[str]
+    bgColor: Optional[str]
     className: Optional[str]
     # The gap between patterns. Passing in a tuple allows you to control the x and y gap independently.
     gap: Optional[Union[int, Tuple[int, int]]]

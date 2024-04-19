@@ -29,11 +29,12 @@ def on_data_change(_flow):
 flow_props = ["show_sidebar", "show_minimap", "show_controls"]
 
 
-def on_change(_flow_config, _bgc_variant, _bgc_color, _bgc_gap, _bgc_size,
-              _bgc_offset, _bgc_line_width):
+def on_change(_flow_config, _bgc_variant, _bgc_color, _bgc_bg_color, _bgc_gap,
+              _bgc_size, _bgc_offset, _bgc_line_width):
     new_props = {}
     new_background_props = {
         "variant": _bgc_variant,
+        "bgColor": _bgc_bg_color,
         "color": _bgc_color,
         "gap": _bgc_gap,
         "size": _bgc_size,
@@ -63,6 +64,8 @@ with gr.Blocks() as demo:
                 with gr.Column():
                     bgc_color = gr.ColorPicker(label="color", value="")
                 with gr.Column():
+                    bgc_bg_color = gr.ColorPicker(label="bgColor", value="")
+                with gr.Column():
                     bgc_gap = gr.Slider(label="gap", value=28)
                 with gr.Column():
                     bgc_size = gr.Slider(label="size",
@@ -89,13 +92,13 @@ with gr.Blocks() as demo:
                     background_props=BackgroundPropsDict(variant='dots'))
     gr.on(triggers=[
         flow_config.change, bgc_variant.change, bgc_color.change,
-        bgc_gap.change, bgc_size.change, bgc_offset.change,
-        bgc_line_width.change
+        bgc_bg_color.change, bgc_gap.change, bgc_size.change,
+        bgc_offset.change, bgc_line_width.change
     ],
           fn=on_change,
           inputs=[
-              flow_config, bgc_variant, bgc_color, bgc_gap, bgc_size,
-              bgc_offset, bgc_line_width
+              flow_config, bgc_variant, bgc_color, bgc_bg_color, bgc_gap,
+              bgc_size, bgc_offset, bgc_line_width
           ],
           outputs=[flow])
     flow.data_change(fn=on_data_change, inputs=[flow])
