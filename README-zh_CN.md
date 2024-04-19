@@ -64,6 +64,7 @@ demo.queue().launch()
 - MultimodalInput: 多模态输入框，支持上传文件、录音、照相等功能。
 - Markdown: gradio Markdown 扩展组件，支持输出多模态内容（音频、视频、语音、文件、文本）。
 - WaterfallGallery: gradio Gallery 扩展组件，支持瀑布流的图像展示。
+- Flow: 基于 [reactflow](https://reactflow.dev/) 的 Flow 组件，支持通过 schema 定制节点渲染。
 - 更多组件...
 
 详细使用参见 [文档与示例](https://modelscope.cn/studios/modelscope/modelscope-studio/summary)

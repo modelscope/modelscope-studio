@@ -64,6 +64,7 @@ The currently supported components include:
 - MultimodalInput: A multi-modal input box, supporting functions such as file upload, recording, and photography.
 - Markdown: gradio Markdown extension component, supports the output of multi-modal content (audio, video, voice, files, text).
 - WaterfallGallery: gradio Gallery extension component, supports waterfall-style image display.
+- Flow: A Flow component implemented based on [reactflow](https://reactflow.dev/), supports customization of node rendering through a schema.
 - More components...
 
 For detailed usage, see [Documentation and Examples](https://modelscope.cn/studios/modelscope/modelscope-studio/summary)

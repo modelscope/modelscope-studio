@@ -41,3 +41,4 @@ pip install modelscope_studio
 - <tab-link component-tab="MultimodalInput">MultimodalInput</tab-link>
 - <tab-link component-tab="Markdown">Markdown</tab-link>
 - <tab-link component-tab="WaterfallGallery">WaterfallGallery</tab-link>
+- <tab-link component-tab="Flow">Flow</tab-link>
