@@ -1,6 +1,6 @@
 {
   "name": "modelscope_studio",
-  "version": "0.1.7",
+  "version": "0.2.0",
   "private": true,
   "description": "ModelScope Gradio Components",
   "repository": "git@github.com:modelscope/modelscope-studio.git",
@@ -20,9 +20,10 @@
     "lint:style": "stylelint --allow-empty-input --cache --fix \"**/*.{less,css}\" ",
     "changeset": "changeset",
     "fix-changelog": "node ./config/changelog/dist/fix-changelog.mjs",
+    "version": "changeset version && pnpm run fix-changelog",
     "ci:create-tag-n-release": "tsx ./scripts/create-tag-n-release.ts",
     "ci:publish": "tsx ./scripts/publish-to-pypi.ts",
-    "ci:version": "pnpm -F '@modelscope-studio/changelog' build && changeset version && pnpm run fix-changelog"
+    "ci:version": "pnpm -F '@modelscope-studio/changelog' build && pnpm run version"
   },
   "devDependencies": {
     "@actions/core": "^1.10.1",

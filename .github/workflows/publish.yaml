@@ -1,9 +1,10 @@
 name: publish
 
 on:
-  push:
-    branches:
-      - main
+  # disabled for now
+  # push:
+  #   branches:
+  #     - main
 env:
   CI: true
 
