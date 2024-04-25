@@ -247,7 +247,7 @@ def from_spaces(space_name: str, token: str | None,
 
     if space_details is None:
         raise ValueError(
-            f"Could not find Space: {space_name}. If it is a private or gated Space, please provide your Hugging Face access token (https://modelscope.cn/my/myaccesstoken) as the argument for the `token` parameter."
+            f"Could not find Space: {space_name}. If it is a private or gated Space, please provide your ModelScope access token (https://modelscope.cn/my/myaccesstoken) as the argument for the `token` parameter."
         )
     studio_token = httpx.get("https://modelscope.cn/api/v1/studios/token",
                              cookies=cookies).json().get('Data').get("Token")
