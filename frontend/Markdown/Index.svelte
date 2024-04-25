@@ -20,6 +20,7 @@
   export let sanitize_html = true;
   export let line_breaks = false;
   export let root: string;
+  export let proxy_url: null | string;
   export let gradio: Gradio<{
     change: never;
     custom: MarkdownCustomData;
@@ -33,7 +34,7 @@
   export let preview = true;
   export let custom_components: CustomComponents = {};
   const redirect_src_url = (src: string): string => {
-    const replaceStr = `${root}/file=`;
+    const replaceStr = `${root}${proxy_url ? `/proxy=${proxy_url.endsWith('/') ? proxy_url.slice(0, -1) : proxy_url}` : ''}/file=`;
     return src.includes(replaceStr)
       ? src
       : src.replaceAll('/file=', replaceStr);

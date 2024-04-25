@@ -326,7 +326,6 @@ class ModelScopeChatbot(Component):
     ) -> ChatbotData:
         if self.data_postprocess:
             value = self.data_postprocess(self, value)
-
         value = self.__class__.data_postprocess(self, value)
         if value is None:
             return ChatbotData(root=[])

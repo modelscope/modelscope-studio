@@ -69,7 +69,7 @@
   $: _sources = Array.from(new Set(sources));
   // upload button
   export let root = '';
-  export let proxy_url = '';
+  // export let proxy_url = '';
 
   export let upload_button_props: Record<string, any> = {};
 
@@ -257,8 +257,6 @@
         gradio.dispatch('change', value);
       }}
       loading={uploading}
-      {proxy_url}
-      {root}
       theme={gradio.theme}
       i18n={gradio.i18n}
       value={value.files}

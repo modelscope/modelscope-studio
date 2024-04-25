@@ -83,7 +83,7 @@
   let _avatar_images: [AvatarImage[], AvatarImage[]];
 
   const redirect_src_url = (src: string): string => {
-    const replaceStr = `${root}/file=`;
+    const replaceStr = `${root}${proxy_url ? `/proxy=${proxy_url.endsWith('/') ? proxy_url.slice(0, -1) : proxy_url}` : ''}/file=`;
     return src.includes(replaceStr)
       ? src
       : src.replaceAll('/file=', replaceStr);

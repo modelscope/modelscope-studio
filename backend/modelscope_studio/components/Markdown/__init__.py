@@ -116,7 +116,7 @@ class ModelScopeMarkdown(Component):
     def preprocess(self, payload: str | None) -> str | None:
         if self.data_preprocess:
             payload = self.data_preprocess(self, payload)
-        payload = self.__class__.data_postprocess(self, payload)
+        payload = self.__class__.data_preprocess(self, payload)
         return payload
 
     def example_inputs(self) -> Any:
