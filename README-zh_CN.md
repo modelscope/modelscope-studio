@@ -5,7 +5,7 @@
     <span style="font-size: 30px; vertical-align: middle;">
     ✖️
     </span>
-    <img src="https://www.gradio.app/_app/immutable/assets/gradio.8a5e8876.svg" height="60" style="vertical-align: middle;">
+    <img src="https://github.com/gradio-app/gradio/raw/main/readme_files/gradio.svg" height="60" style="vertical-align: middle;">
 <p>
 
 <p align="center">

@@ -1,6 +1,5 @@
 <script lang="ts">
   import { ShareButton } from '@gradio/atoms';
-  import { get_fetchable_url_or_file } from '@gradio/client';
   import type { I18nFormatter } from '@gradio/utils';
   import { copy } from '@gradio/utils';
   import {
@@ -8,6 +7,7 @@
     FileView,
     type MarkdownCustomData,
   } from '@modelscope-studio/compiled';
+  import { get_fetchable_url_or_file } from '@modelscope-studio/shared';
   import { dequal } from 'dequal/lite';
   import { afterUpdate, createEventDispatcher } from 'svelte';
 

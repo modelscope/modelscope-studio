@@ -12,14 +12,14 @@
     "./package.json": "./package.json"
   },
   "dependencies": {
-    "@gradio/atoms": "0.4.1",
-    "@gradio/button": "^0.2.17",
-    "@gradio/client": "0.10.1",
-    "@gradio/icons": "0.3.2",
-    "@gradio/statustracker": "0.4.3",
-    "@gradio/utils": "0.2.0",
+    "@gradio/atoms": "0.7.0",
+    "@gradio/button": "^0.2.31",
+    "@gradio/client": "0.16.0",
+    "@gradio/icons": "0.4.0",
+    "@gradio/statustracker": "0.4.12",
+    "@gradio/utils": "0.3.2",
     "@modelscope-studio/compiled": "workspace:*",
-    "wavesurfer.js": "^7.6.4"
+    "wavesurfer.js": "^7.7.11"
   },
   "main_changeset": true
 }

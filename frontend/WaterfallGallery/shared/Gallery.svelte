@@ -1,7 +1,7 @@
 <script lang="ts">
   import { BlockLabel, Empty, IconButton, ShareButton } from '@gradio/atoms';
   import { BaseButton } from '@gradio/button';
-  import { type FileData, normalise_file } from '@gradio/client';
+  import { type FileData } from '@gradio/client';
   import { Download, Image as ImageIcon } from '@gradio/icons';
   import { Loader } from '@gradio/statustracker';
   import { ModifyUpload } from '@gradio/upload';
@@ -11,6 +11,7 @@
     SelectData,
     ShareData,
   } from '@gradio/utils';
+  import { normalise_file } from '@modelscope-studio/shared';
   import { dequal } from 'dequal';
   import { createEventDispatcher, onDestroy, tick } from 'svelte';
 

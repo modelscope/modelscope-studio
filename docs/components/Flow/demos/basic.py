@@ -14,7 +14,8 @@ with open((os.path.join(os.path.dirname(__file__),
 data = {
     "nodes": [
         Node(id="start-node", name="start", position=dict(x=0, y=0)),
-        Node(name="agent",
+        Node(id="initial-agent-node",
+             name="agent",
              position=dict(x=200, y=0),
              data=dict(condition=['']))
     ],

@@ -1,7 +1,6 @@
 <script lang="ts">
   import IconButton from '@gradio/atoms/src/IconButton.svelte';
   import type { FileData } from '@gradio/client';
-  // import { normalise_file } from '@gradio/client';
   import type { I18nFormatter, SelectData } from '@gradio/utils';
   import { FileView } from '@modelscope-studio/compiled';
   import { createEventDispatcher } from 'svelte';
