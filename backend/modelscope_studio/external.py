@@ -1,6 +1,6 @@
 import copy
 import warnings
-from typing import Callable, List, Tuple
+from typing import Callable, List, Tuple, Union
 
 import gradio
 import gradio.utils
@@ -15,8 +15,10 @@ from packaging import version
 
 import modelscope_studio.components
 
+_endpoint = "https://modelscope.cn"
 
-def blocks_from_config(config: dict, fns: list[Callable],
+
+def blocks_from_config(config: dict, fns: List[Callable],
                        proxy_url: str) -> Blocks:
     """
         Factory method that creates a Blocks from a config and list of functions. Used
@@ -46,7 +48,7 @@ def blocks_from_config(config: dict, fns: list[Callable],
         # Gradio app C, then the proxy_urls of the components in A need to be the
         # URL of C, not B. The else clause below handles this case.
         if block_config["props"].get("proxy_url") is None:
-            block_config["props"]["proxy_url"] = f"{proxy_url}"
+            block_config["props"]["proxy_url"] = f"{proxy_url}/"
         postprocessed_value = block_config["props"].pop("value", None)
 
         constructor_args = cls.recover_kwargs(block_config["props"])
@@ -127,6 +129,7 @@ def blocks_from_config(config: dict, fns: list[Callable],
                 original_mapping[o] for o in dependency["outputs"]
             ]
             dependency.pop("status_tracker", None)
+            dependency.pop("zerogpu", None)
             dependency["preprocess"] = False
             dependency["postprocess"] = False
             if is_then_event:
@@ -164,14 +167,18 @@ def blocks_from_config(config: dict, fns: list[Callable],
         # Allows some use of Interface-specific methods with loaded Spaces
         if first_dependency and Context.root_block:
             blocks.predict = [fns[0]]
-            blocks.input_components = [
-                Context.root_block.blocks[i]
-                for i in first_dependency["inputs"]
-            ]
-            blocks.output_components = [
-                Context.root_block.blocks[o]
-                for o in first_dependency["outputs"]
-            ]
+            if version.Version(gradio.__version__) < version.Version("4.28.0"):
+                blocks.input_components = [
+                    Context.root_block.blocks[i]
+                    for i in first_dependency["inputs"]
+                ]
+                blocks.output_components = [
+                    Context.root_block.blocks[o]
+                    for o in first_dependency["outputs"]
+                ]
+            else:
+                blocks.input_components = first_dependency.inputs
+                blocks.output_components = first_dependency.outputs
             blocks.__name__ = "Interface"
             blocks.api_mode = True
     blocks.proxy_urls = proxy_urls
@@ -180,8 +187,8 @@ def blocks_from_config(config: dict, fns: list[Callable],
 
 def load(
     name: str,
-    token: str | None = None,
-    custom_components: List[Tuple[str, type]] | None = [],
+    token: Union[str, None] = None,
+    custom_components: Union[List[Tuple[str, type]], None] = [],
     **kwargs,
 ) -> Blocks:
     """
@@ -207,8 +214,8 @@ def load(
 
 def load_blocks_from_repo(
     name: str,
-    token: str | None,
-    custom_components: List[Tuple[str, type]] | None,
+    token: Union[str, None],
+    custom_components: Union[List[Tuple[str, type]], None],
     **kwargs,
 ) -> Blocks:
     """Creates and returns a Blocks instance from a ModelScope Studio repo."""
@@ -226,31 +233,21 @@ def load_blocks_from_repo(
     return blocks
 
 
-def from_spaces(space_name: str, token: str | None,
-                custom_components: List[Tuple[str, type]] | None,
-                **kwargs) -> Blocks:
-    space_url = f"https://modelscope.cn/studios/{space_name}"
+def from_spaces(space_name: str, token: Union[str, None],
+                custom_components: Union[List[Tuple[str, type]],
+                                         None], **kwargs) -> Blocks:
+    space_url = f"{_endpoint}/studios/{space_name}"
 
     print(f"Fetching Space from: {space_url}")
-    cookies = None
     if token is not None:
-        cookies = httpx.post(
-            "https://modelscope.cn/api/v1/login",
-            json={
-                "AccessToken": token
-            },
-        ).cookies
+        access = httpx.get(
+            f"{_endpoint}/api/v1/studio/{space_name}/access?sdk_token={token}",
+        ).json().get("Data", {}).get('access')
 
-    space_details = (httpx.get(
-        f"https://modelscope.cn/api/v1/studio/{space_name}",
-        cookies=cookies).json().get('Data'))
-
-    if space_details is None:
+    if not access:
         raise ValueError(
             f"Could not find Space: {space_name}. If it is a private or gated Space, please provide your ModelScope access token (https://modelscope.cn/my/myaccesstoken) as the argument for the `token` parameter."
         )
-    studio_token = httpx.get("https://modelscope.cn/api/v1/studios/token",
-                             cookies=cookies).json().get('Data').get("Token")
 
     if kwargs:
         warnings.warn(
@@ -259,44 +256,28 @@ def from_spaces(space_name: str, token: str | None,
             "Blocks or Interface locally. You may find this Guide helpful: "
             "https://gradio.app/using_blocks_like_functions/")
     return from_spaces_blocks(space_name=space_name,
-                              studio_token=studio_token,
+                              token=token,
                               custom_components=custom_components)
 
 
 def from_spaces_blocks(
-        space_name: str, studio_token: str | None,
-        custom_components: List[Tuple[str, type]] | None) -> Blocks:
+        space_name: str, token: Union[str, None],
+        custom_components: Union[List[Tuple[str, type]], None]) -> Blocks:
     component_or_layout_class = gradio.utils.component_or_layout_class
-
-    def override_component_or_layout_class(cls_name: str):
-        components = [
-            (name, cls)
-            for name, cls in modelscope_studio.components.__dict__.items()
-            if isinstance(cls, type)
-        ] + custom_components
-        for name, cls in components:
-            if name.lower() == cls_name.replace(
-                    "_",
-                    "") and (issubclass(cls, gradio.components.Component)
-                             or issubclass(cls, gradio.blocks.BlockContext)):
-                return cls
-        return component_or_layout_class(cls_name)
-
-    gradio.utils.component_or_layout_class = override_component_or_layout_class
     try:
-        space = f"https://modelscope.cn/api/v1/studio/{space_name}/gradio/"
-
-        headers = {}
-        if studio_token is not None:
-            headers['x-studio-token'] = studio_token
-
+        space = f"{_endpoint}/api/v1/studio/{space_name}/gradio/"
+        kwargs = {}
+        if version.Version(gradio.__version__) > version.Version('4.19.1'):
+            kwargs["upload_files"] = False
+            kwargs["download_files"] = False
+            kwargs["_skip_components"] = False
+        elif version.Version(gradio.__version__) == version.Version('4.19.1'):
+            kwargs["download_files"] = False
         client = Client(
             space,
-            headers=headers,
-            upload_files=False,
-            download_files=False,
-            _skip_components=False,
-        )
+            # convert to modelscope token
+            hf_token=token,
+            **kwargs)
         # We set deserialize to False to avoid downloading output files from the server.
         # Instead, we serve them as URLs using the /proxy/ endpoint directly from the server.
 
@@ -317,8 +298,38 @@ def from_spaces_blocks(
                 predict_fns.append(endpoint.make_end_to_end_fn(helper))
             else:
                 predict_fns.append(None)
+        has_custom_component = False
 
-        blocks = blocks_from_config(client.config, predict_fns, client.src)
+        components = [
+            (name, cls)
+            for name, cls in modelscope_studio.components.__dict__.items()
+            if isinstance(cls, type)
+        ] + (custom_components or [])
+
+        def override_component_or_layout_class(cls_name: str):
+            for name, cls in components:
+                if name.lower() == cls_name.replace("_", "") and (
+                        issubclass(cls, gradio.components.Component)
+                        or issubclass(cls, gradio.blocks.BlockContext)):
+                    return cls
+            return component_or_layout_class(cls_name)
+
+        for component in client.config.get("components", []):
+            for (name, cls) in components:
+                if (name.lower() == component["props"]["name"].replace(
+                        "_", "")):
+                    has_custom_component = True
+                    break
+            if has_custom_component:
+                break
+
+        client_src = client.src[:-1] if client.src.endswith(
+            '/') else client.src
+        if has_custom_component:
+            gradio.utils.component_or_layout_class = override_component_or_layout_class
+            blocks = blocks_from_config(client.config, predict_fns, client_src)
+        else:
+            blocks = Blocks.from_config(client.config, predict_fns, client_src)
     finally:
         gradio.utils.component_or_layout_class = component_or_layout_class
 
