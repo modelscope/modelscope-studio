@@ -7,7 +7,7 @@
   "author": "",
   "main": "./src/index.ts",
   "dependencies": {
-    "@gradio/client": "0.16.0"
+    "@gradio/client": "0.17.0"
   },
   "main_changeset": true
 }

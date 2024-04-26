@@ -11,15 +11,18 @@
     "./package.json": "./package.json"
   },
   "dependencies": {
-    "@gradio/atoms": "0.7.0",
-    "@gradio/button": "^0.2.31",
-    "@gradio/client": "0.16.0",
+    "@gradio/atoms": "0.7.1",
+    "@gradio/button": "^0.2.32",
+    "@gradio/client": "0.17.0",
     "@gradio/icons": "0.4.0",
-    "@gradio/statustracker": "0.4.12",
-    "@gradio/upload": "0.8.5",
-    "@gradio/utils": "0.3.2",
+    "@gradio/statustracker": "0.5.0",
+    "@gradio/upload": "0.9.0",
+    "@gradio/utils": "0.4.0",
     "@modelscope-studio/shared": "workspace:*",
     "dequal": "^2.0.2"
+  },
+  "devDependencies": {
+    "@gradio/preview": "0.8.0"
   },
   "main_changeset": true
 }

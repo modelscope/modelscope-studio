@@ -51,6 +51,7 @@
         await prepare_files(files),
         root,
         undefined,
+        undefined,
         upload_fn
       );
       return (

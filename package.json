@@ -47,7 +47,7 @@
     "stylelint": "^16.4.0",
     "svelte": "^4.2.15",
     "tslib": "^2.6.2",
-    "tsx": "^4.7.2",
+    "tsx": "^4.7.3",
     "typescript": "^5.4.5"
   },
   "main_changeset": true
