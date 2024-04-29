@@ -21,7 +21,7 @@
     "dequal": "^2.0.3"
   },
   "devDependencies": {
-    "@gradio/preview": "0.8.0"
+    "@gradio/preview": "0.8.3"
   },
   "main_changeset": true
 }

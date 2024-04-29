@@ -109,6 +109,7 @@ def blocks_from_config(config: dict, fns: List[Callable],
             _targets = dependency.pop("targets")
             trigger = dependency.pop("trigger", None)
             is_then_event = False
+            is_success_event = False
 
             # This assumes that you cannot combine multiple .then() events in a single
             # gr.on() event, which is true for now. If this changes, we will need to
@@ -119,6 +120,13 @@ def blocks_from_config(config: dict, fns: List[Callable],
                         "This logic assumes that .then() events are not combined with other events in a single gr.on() event"
                     )
                 is_then_event = True
+            elif (not isinstance(_targets[0], int)
+                  and _targets[0][1] == "success"):
+                if len(_targets) != 1:
+                    raise ValueError(
+                        "This logic assumes that .success() events are not combined with other events in a single gr.on() event"
+                    )
+                is_success_event = True
 
             dependency.pop("backend_fn")
             dependency.pop("documentation", None)
@@ -138,7 +146,7 @@ def blocks_from_config(config: dict, fns: List[Callable],
                 dependency["trigger_only_on_success"] = dependency.pop(
                     "trigger_only_on_success")
                 dependency["no_target"] = True
-            elif not isinstance(_targets[0], int) and _targets[0][0] is None:
+            elif is_success_event:
                 targets = [EventListenerMethod(None, _targets[0][1])]
                 dependency["trigger_after"] = dependency.pop("trigger_after")
                 dependency["trigger_only_on_success"] = dependency.pop(
@@ -239,10 +247,14 @@ def from_spaces(space_name: str, token: Union[str, None],
     space_url = f"{_endpoint}/studios/{space_name}"
 
     print(f"Fetching Space from: {space_url}")
+    access = False
+
     if token is not None:
-        access = httpx.get(
+        response = httpx.get(
             f"{_endpoint}/api/v1/studio/{space_name}/access?sdk_token={token}",
-        ).json().get("Data", {}).get('access')
+        )
+        if response.status_code == 200:
+            access = response.json().get("Data", {}).get('access')
 
     if not access:
         raise ValueError(
@@ -285,6 +297,11 @@ def from_spaces_blocks(
             raise GradioVersionIncompatibleError(
                 f"Gradio version 4.x cannot load spaces with versions less than 4.x ({client.app_version})."
                 "Please downgrade to version 3 to load this space.")
+
+        if client.app_version != version.Version(gradio.__version__):
+            print(
+                f"Gradio local version {gradio.__version__} does not match the space version {client.app_version}, it might lead to some compatibility issues."
+            )
 
         # Use end_to_end_fn here to properly upload/download all files
         predict_fns = []
