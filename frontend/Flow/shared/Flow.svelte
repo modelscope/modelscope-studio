@@ -47,6 +47,9 @@
 
   const on_upload = async (files: File[]): Promise<UploadFile[]> => {
     try {
+      if (!interactive) {
+        return [];
+      }
       const val = await upload(
         await prepare_files(files),
         root,

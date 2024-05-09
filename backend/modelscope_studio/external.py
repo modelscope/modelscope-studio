@@ -249,12 +249,11 @@ def from_spaces(space_name: str, token: Union[str, None],
     print(f"Fetching Space from: {space_url}")
     access = False
 
-    if token is not None:
-        response = httpx.get(
-            f"{_endpoint}/api/v1/studio/{space_name}/access?sdk_token={token}",
-        )
-        if response.status_code == 200:
-            access = response.json().get("Data", {}).get('access')
+    response = httpx.get(
+        f"{_endpoint}/api/v1/studio/{space_name}/access?sdk_token={token}", )
+
+    if response.status_code == 200:
+        access = response.json().get("Data", {}).get('access')
 
     if not access:
         raise ValueError(
@@ -315,38 +314,43 @@ def from_spaces_blocks(
                 predict_fns.append(endpoint.make_end_to_end_fn(helper))
             else:
                 predict_fns.append(None)
-        has_custom_component = False
-
-        components = [
-            (name, cls)
-            for name, cls in modelscope_studio.components.__dict__.items()
-            if isinstance(cls, type)
-        ] + (custom_components or [])
-
-        def override_component_or_layout_class(cls_name: str):
-            for name, cls in components:
-                if name.lower() == cls_name.replace("_", "") and (
-                        issubclass(cls, gradio.components.Component)
-                        or issubclass(cls, gradio.blocks.BlockContext)):
-                    return cls
-            return component_or_layout_class(cls_name)
-
-        for component in client.config.get("components", []):
-            for (name, cls) in components:
-                if (name.lower() == component["props"]["name"].replace(
-                        "_", "")):
-                    has_custom_component = True
-                    break
-            if has_custom_component:
-                break
-
         client_src = client.src[:-1] if client.src.endswith(
             '/') else client.src
-        if has_custom_component:
-            gradio.utils.component_or_layout_class = override_component_or_layout_class
-            blocks = blocks_from_config(client.config, predict_fns, client_src)
-        else:
+        if version.Version(gradio.__version__) >= version.Version('4.29.0'):
             blocks = Blocks.from_config(client.config, predict_fns, client_src)
+        else:
+            has_custom_component = False
+
+            components = [
+                (name, cls)
+                for name, cls in modelscope_studio.components.__dict__.items()
+                if isinstance(cls, type)
+            ] + (custom_components or [])
+
+            def override_component_or_layout_class(cls_name: str):
+                for name, cls in components:
+                    if name.lower() == cls_name.replace("_", "") and (
+                            issubclass(cls, gradio.components.Component)
+                            or issubclass(cls, gradio.blocks.BlockContext)):
+                        return cls
+                return component_or_layout_class(cls_name)
+
+            for component in client.config.get("components", []):
+                for (name, cls) in components:
+                    if (name.lower() == component["props"]["name"].replace(
+                            "_", "")):
+                        has_custom_component = True
+                        break
+                if has_custom_component:
+                    break
+
+            if has_custom_component:
+                gradio.utils.component_or_layout_class = override_component_or_layout_class
+                blocks = blocks_from_config(client.config, predict_fns,
+                                            client_src)
+            else:
+                blocks = Blocks.from_config(client.config, predict_fns,
+                                            client_src)
     finally:
         gradio.utils.component_or_layout_class = component_or_layout_class
 
