@@ -1,6 +1,6 @@
 # load
 
-该特性与 [gr.load](https://www.gradio.app/docs/gradio/load) 类似。允许用户从 ModelScope Studio 仓库构造 demo。
+该特性与 [gr.load](https://www.gradio.app/docs/gradio/load) 类似。允许用户从已有创空间 [ModelScope Studio](https://modelscope.cn/studios) 仓库构造 demo。
 
 ## 如何使用
 

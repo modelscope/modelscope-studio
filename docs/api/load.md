@@ -1,6 +1,6 @@
 # load
 
-This feature is similar to [gr.load](https://www.gradio.app/docs/gradio/load). Allow users to Construct a demo from a ModelScope Studio repo.
+This feature is similar to [gr.load](https://www.gradio.app/docs/gradio/load). Allow users to Construct a demo from a [ModelScope Studio](https://modelscope.cn/studios) repo.
 
 ## How to Use
 
