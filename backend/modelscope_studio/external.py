@@ -1,6 +1,6 @@
 import copy
 import warnings
-from typing import Callable, List, Tuple, Union
+from typing import Callable, List, Union
 
 import gradio
 import gradio.utils
@@ -196,7 +196,6 @@ def blocks_from_config(config: dict, fns: List[Callable],
 def load(
     name: str,
     token: Union[str, None] = None,
-    custom_components: Union[List[Tuple[str, type]], None] = [],
     **kwargs,
 ) -> Blocks:
     """
@@ -204,9 +203,8 @@ def load(
     and output components are automatically loaded from the repo. Note that if a Space is loaded, certain high-level attributes of the Blocks (e.g.
     custom `css`, `js`, and `head` attributes) will not be loaded.
     Parameters:
-        name: the name of the model (e.g. "gpt2" or "facebook/bart-base") or space (e.g. "flax-community/spanish-gpt2")
-        token: optional access token for loading private ModelScope Studio Spaces. Find your token here: https://modelscope.cn/my/myaccesstoken.
-        Warning: only provide this if you are loading a trusted private Space as it can be read by the Space you are loading.
+        name: the name of the ModelScope Studio repo (e.g. "modelscope/modelscope-studio").
+        token: optional access token for loading private ModelScope Studio repo. Find your sdk token here: https://modelscope.cn/my/myaccesstoken.
     Returns:
         a Gradio Blocks object for the given model
     Example:
@@ -214,16 +212,12 @@ def load(
         demo = gr.load("modelscope/modelscope-studio")
         demo.launch()
     """
-    return load_blocks_from_repo(name=name,
-                                 token=token,
-                                 custom_components=custom_components,
-                                 **kwargs)
+    return load_blocks_from_repo(name=name, token=token, **kwargs)
 
 
 def load_blocks_from_repo(
     name: str,
     token: Union[str, None],
-    custom_components: Union[List[Tuple[str, type]], None],
     **kwargs,
 ) -> Blocks:
     """Creates and returns a Blocks instance from a ModelScope Studio repo."""
@@ -236,14 +230,11 @@ def load_blocks_from_repo(
         raise ValueError(
             f"parameter: src must be one of {factory_methods.keys()}")
 
-    blocks: gradio.Blocks = factory_methods[src](name, token,
-                                                 custom_components, **kwargs)
+    blocks: gradio.Blocks = factory_methods[src](name, token, **kwargs)
     return blocks
 
 
-def from_spaces(space_name: str, token: Union[str, None],
-                custom_components: Union[List[Tuple[str, type]],
-                                         None], **kwargs) -> Blocks:
+def from_spaces(space_name: str, token: Union[str, None], **kwargs) -> Blocks:
     space_url = f"{_endpoint}/studios/{space_name}"
 
     print(f"Fetching Space from: {space_url}")
@@ -266,14 +257,16 @@ def from_spaces(space_name: str, token: Union[str, None],
             "Instead, please load the Space as a function and use it to create a "
             "Blocks or Interface locally. You may find this Guide helpful: "
             "https://gradio.app/using_blocks_like_functions/")
-    return from_spaces_blocks(space_name=space_name,
-                              token=token,
-                              custom_components=custom_components)
+    return from_spaces_blocks(
+        space_name=space_name,
+        token=token,
+    )
 
 
 def from_spaces_blocks(
-        space_name: str, token: Union[str, None],
-        custom_components: Union[List[Tuple[str, type]], None]) -> Blocks:
+    space_name: str,
+    token: Union[str, None],
+) -> Blocks:
     component_or_layout_class = gradio.utils.component_or_layout_class
     try:
         space = f"{_endpoint}/api/v1/studio/{space_name}/gradio/"
@@ -325,7 +318,7 @@ def from_spaces_blocks(
                 (name, cls)
                 for name, cls in modelscope_studio.components.__dict__.items()
                 if isinstance(cls, type)
-            ] + (custom_components or [])
+            ]
 
             def override_component_or_layout_class(cls_name: str):
                 for name, cls in components:

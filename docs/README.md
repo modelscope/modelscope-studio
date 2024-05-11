@@ -35,6 +35,10 @@ license: apache-2.0
 pip install modelscope_studio
 ```
 
+## API
+
+- <tab-link component-tab="API">load</tab-link>
+
 ## Components
 
 - <tab-link component-tab="Chatbot">Chatbot</tab-link>
