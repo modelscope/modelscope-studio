@@ -18,12 +18,14 @@ const langs: Record<string, string> = {
   'zh-CN': 'zh',
 };
 
+// eslint-disable-next-line @typescript-eslint/consistent-type-imports
 let echarts: typeof import('echarts') | undefined;
 
 export const Chart: Components['chart'] = (props) => {
   const { options: _options = '', style, className } = props;
   const { theme, locale } = useMarkdownContext();
   const [asyncEcharts, setAsyncEcharts] = useState<
+    // eslint-disable-next-line @typescript-eslint/consistent-type-imports
     typeof import('echarts') | undefined
   >(echarts);
   const divRef = useRef<HTMLDivElement>(null);

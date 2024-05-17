@@ -242,7 +242,6 @@ def from_spaces(space_name: str, token: Union[str, None], **kwargs) -> Blocks:
 
     response = httpx.get(
         f"{_endpoint}/api/v1/studio/{space_name}/access?sdk_token={token}", )
-
     if response.status_code == 200:
         access = response.json().get("Data", {}).get('access')
 
