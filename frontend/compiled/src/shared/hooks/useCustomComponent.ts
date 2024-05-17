@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useRef } from 'react';
 import { isFunction } from 'lodash-es';
 
-import { CustomComponents } from '../type';
+import type { CustomComponents } from '../type';
 
 import { useMemoizedEqualValue } from './useMemoizedEqualValue';
 import { useRefValue } from './useRefValue';

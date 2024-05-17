@@ -1,4 +1,4 @@
-import { FileData } from '@gradio/client';
+import type { FileData } from '@gradio/client';
 
 export interface MutilmodalInputData {
   text: string;

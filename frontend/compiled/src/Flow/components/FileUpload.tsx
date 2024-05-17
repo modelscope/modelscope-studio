@@ -4,7 +4,7 @@ import { Upload, type UploadProps } from 'antd';
 
 import { useFlow } from '../FlowContext';
 import { i18n } from '../i18n';
-import { UploadFile } from '../type';
+import type { UploadFile } from '../type';
 
 export interface FileUploadProps extends Omit<UploadProps, 'onChange'> {
   value?: UploadFile[];

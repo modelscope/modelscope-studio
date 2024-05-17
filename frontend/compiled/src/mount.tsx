@@ -1,10 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 
-import {
-  ComponentConfigProvider,
-  ComponentConfigProviderProps,
-} from './ComponentConfigProvider';
+import type { ComponentConfigProviderProps } from './ComponentConfigProvider';
+import { ComponentConfigProvider } from './ComponentConfigProvider';
 
 export function mount<T extends {}>(
   container: HTMLElement,

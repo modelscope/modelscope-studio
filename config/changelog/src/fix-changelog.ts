@@ -3,7 +3,7 @@ import detectIndent from 'detect-indent';
 import { existsSync, readFileSync, unlinkSync, writeFileSync } from 'fs';
 import { join } from 'path';
 
-import { ChangesetMeta, ChangesetMetaCollection } from './type';
+import type { ChangesetMeta, ChangesetMetaCollection } from './type';
 
 const pkg_meta = getPackagesSync(process.cwd());
 

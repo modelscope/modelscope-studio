@@ -1,17 +1,8 @@
 import { useEffect, useMemo, useState } from 'react';
 import type { Components } from 'react-markdown';
-import {
-  Button,
-  Card,
-  Checkbox,
-  CheckboxOptionType,
-  Col,
-  ColProps,
-  Radio,
-  Row,
-  Space,
-} from 'antd';
-import { CheckboxGroupProps } from 'antd/es/checkbox';
+import type { CheckboxOptionType, ColProps } from 'antd';
+import { Button, Card, Checkbox, Col, Radio, Row, Space } from 'antd';
+import type { CheckboxGroupProps } from 'antd/es/checkbox';
 import cls from 'classnames';
 import { isObject } from 'lodash-es';
 

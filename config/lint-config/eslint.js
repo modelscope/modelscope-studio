@@ -122,7 +122,10 @@ module.exports = {
         'no-shadow': 'off',
         'import/default': 'off',
         '@typescript-eslint/no-shadow': 'error',
-        '@typescript-eslint/consistent-type-imports': 'error',
+        '@typescript-eslint/consistent-type-imports': [
+          'error',
+          { fixStyle: 'inline-type-imports' },
+        ],
         '@typescript-eslint/no-empty-function': 'off',
         '@typescript-eslint/no-empty-interface': 'off',
         '@typescript-eslint/ban-ts-comment': [

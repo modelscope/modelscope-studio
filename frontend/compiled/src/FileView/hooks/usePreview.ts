@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { ImageProps } from 'antd';
+import type { ImageProps } from 'antd';
 
 export function usePreview(): ImageProps['preview'] {
   const [visible, setVisible] = useState(false);

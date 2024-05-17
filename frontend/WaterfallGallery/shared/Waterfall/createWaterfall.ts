@@ -1,4 +1,5 @@
-import { waterfall_layout, WaterfallOptions } from './layout';
+import type { WaterfallOptions } from './layout';
+import { waterfall_layout } from './layout';
 
 export const isElement = (el: Node): el is Element => el.nodeType == 1;
 

@@ -1,4 +1,5 @@
-import { Handle, HandleComponentProps } from '@xyflow/react';
+import type { HandleComponentProps } from '@xyflow/react';
+import { Handle } from '@xyflow/react';
 import { theme } from 'antd';
 
 export interface ConnectionHandleProps extends HandleComponentProps {}

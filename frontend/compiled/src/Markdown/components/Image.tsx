@@ -1,5 +1,5 @@
 import type { Components } from 'react-markdown';
-import { ImageProps } from 'antd';
+import type { ImageProps } from 'antd';
 
 import { FileView } from '../../FileView';
 import { useMarkdownContext } from '../context';

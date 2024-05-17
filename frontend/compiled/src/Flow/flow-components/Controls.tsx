@@ -6,10 +6,11 @@ import {
   MinusOutlined,
   PlusOutlined,
 } from '@ant-design/icons';
-import { Button, Card, Select, SelectProps, Space } from 'antd';
+import type { SelectProps } from 'antd';
+import { Button, Card, Select, Space } from 'antd';
 
 import { useFlow } from '../FlowContext';
-import { FlowEdge, FlowNode } from '../type';
+import type { FlowEdge, FlowNode } from '../type';
 import { getLayoutedNodes } from '../utils';
 
 export const Controls: React.FC = () => {
