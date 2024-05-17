@@ -124,7 +124,7 @@ module.exports = {
         '@typescript-eslint/no-shadow': 'error',
         '@typescript-eslint/consistent-type-imports': [
           'error',
-          { fixStyle: 'inline-type-imports' },
+          { fixStyle: 'inline-type-imports', disallowTypeAnnotations: false },
         ],
         '@typescript-eslint/no-empty-function': 'off',
         '@typescript-eslint/no-empty-interface': 'off',
