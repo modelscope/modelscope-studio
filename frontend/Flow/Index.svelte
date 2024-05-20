@@ -93,6 +93,7 @@
   {/if}
   <Flow
     {root}
+    {gradio}
     value={_value}
     {interactive}
     {custom_components}

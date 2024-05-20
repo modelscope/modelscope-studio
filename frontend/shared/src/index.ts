@@ -1,4 +1,4 @@
-import { FileData } from '@gradio/client';
+import { FileData, upload_files } from '@gradio/client';
 
 export function normalise_file(
   file: FileData | null,
@@ -83,4 +83,45 @@ export function get_fetchable_url_or_file(
   return proxy_url
     ? `/proxy=${proxy_url}file=${path}`
     : `${server_url}/file=${path}`;
+}
+
+// for <= gradio 4.19.1
+export async function upload(
+  file_data: FileData[],
+  root: string,
+  upload_fn: typeof upload_files = upload_files
+): Promise<(FileData | null)[] | null> {
+  const files = (Array.isArray(file_data) ? file_data : [file_data]).map(
+    (file) => file.blob!
+  );
+
+  return await Promise.all(
+    await (upload_fn as any)(root, files, undefined, undefined).then(
+      (response: {
+        files?: string[];
+        error?: string;
+        modelscope_upload_error?: boolean;
+      }) => {
+        if (response.modelscope_upload_error) {
+          return [];
+        }
+        if (response.error) {
+          throw new Error(response.error);
+        } else {
+          if (response.files) {
+            return response.files.map((f, i) => {
+              const file = new FileData({
+                ...file_data[i],
+                path: f,
+                url: root + '/file=' + f,
+              });
+              return file;
+            });
+          }
+
+          return [];
+        }
+      }
+    )
+  );
 }

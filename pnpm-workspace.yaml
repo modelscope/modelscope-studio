@@ -1,4 +1,6 @@
 packages:
   - '.'
   - 'config/*'
+  # for https://github.com/gradio-app/gradio/issues/8162
+  - 'frontend'
   - 'frontend/*'

@@ -7,15 +7,11 @@
 
 <script lang="ts">
   import { Block, BlockTitle } from '@gradio/atoms';
-  import {
-    FileData,
-    prepare_files,
-    upload as gradio_upload,
-    upload_files,
-  } from '@gradio/client';
+  import { FileData, prepare_files, upload_files } from '@gradio/client';
   import type { LoadingStatus } from '@gradio/statustracker';
   import { StatusTracker } from '@gradio/statustracker';
   import type { Gradio, SelectData } from '@gradio/utils';
+  import { upload as gradio_upload } from '@modelscope-studio/shared';
   import { getContext } from 'svelte';
 
   import AudioRecorder from './shared/AudioRecorder.svelte';
@@ -107,13 +103,14 @@
   const upload: ContextValue['upload'] = async (files) => {
     try {
       uploading = true;
-      const val = await gradio_upload(
-        await prepare_files(files),
-        root,
-        undefined,
-        undefined,
-        upload_fn
-      );
+      const val = await (upload_fn
+        ? gradio_upload(await prepare_files(files), root, upload_fn)
+        : gradio.client.upload(
+            await prepare_files(files),
+            root,
+            undefined,
+            undefined
+          ));
       return (val?.filter(Boolean) as FileData[]) || [];
     } catch (error) {
       return [];
