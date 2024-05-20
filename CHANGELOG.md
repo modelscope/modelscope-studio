@@ -1,5 +1,13 @@
 # modelscope_studio
 
+## 0.3.0
+
+### Features
+
+- [#20](https://github.com/modelscope/modelscope-studio/pull/20) [`5c435a8`](https://github.com/modelscope/modelscope-studio/commit/5c435a812b903420b49ec894f2e4584fc60ed698) - expose version from modelscope_studio. Thanks [@Col0ring](https://github.com/Col0ring)!
+- [#20](https://github.com/modelscope/modelscope-studio/pull/20) [`9a5dd22`](https://github.com/modelscope/modelscope-studio/commit/9a5dd226ee117d6130baa87cacdf902546ad952a) - upload logic with new gradio version. Thanks [@Col0ring](https://github.com/Col0ring)!
+- [#20](https://github.com/modelscope/modelscope-studio/pull/20) [`6751193`](https://github.com/modelscope/modelscope-studio/commit/67511935140461267c5f27e038836609d4cf1c0f) - add mgr.load for ModelScope studio repo. Thanks [@Col0ring](https://github.com/Col0ring)!
+
 ## 0.2.1
 
 ### Fixes
