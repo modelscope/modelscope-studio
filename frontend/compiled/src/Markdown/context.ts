@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { CustomComponents } from '../shared';
+import type { CustomComponents } from '../shared';
 
 export interface MarkdownContextValue {
   text: string;

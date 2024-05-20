@@ -1,6 +1,7 @@
 import React, { useMemo, useRef } from 'react';
 
-import { CustomComponents, useCustomComponent } from '../../shared';
+import type { CustomComponents } from '../../shared';
+import { useCustomComponent } from '../../shared';
 import { useFlow } from '../FlowContext';
 
 export interface CustomComponentProps {

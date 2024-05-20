@@ -1,4 +1,5 @@
-import { ConnectionLineComponent, getBezierPath } from '@xyflow/react';
+import type { ConnectionLineComponent } from '@xyflow/react';
+import { getBezierPath } from '@xyflow/react';
 import { theme } from 'antd';
 
 export const ConnectionLine: ConnectionLineComponent = ({

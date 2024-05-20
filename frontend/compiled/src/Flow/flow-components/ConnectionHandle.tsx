@@ -1,7 +1,8 @@
-import { Handle, HandleComponentProps } from '@xyflow/react';
+import type { HandleProps } from '@xyflow/react';
+import { Handle } from '@xyflow/react';
 import { theme } from 'antd';
 
-export interface ConnectionHandleProps extends HandleComponentProps {}
+export interface ConnectionHandleProps extends HandleProps {}
 
 export const ConnectionHandle: React.FC<ConnectionHandleProps> = (props) => {
   const { token } = theme.useToken();

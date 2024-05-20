@@ -1,5 +1,6 @@
 <script lang="ts">
-  import { prepare_files, upload, upload_files } from '@gradio/client';
+  import { prepare_files, upload_files } from '@gradio/client';
+  import type { Gradio } from '@gradio/utils';
   import {
     type CustomComponents,
     Flow,
@@ -7,10 +8,12 @@
     type FlowProps,
     type UploadFile,
   } from '@modelscope-studio/compiled';
+  import { upload } from '@modelscope-studio/shared';
   import { createEventDispatcher, getContext } from 'svelte';
 
   import { type FlowData } from './utils';
 
+  export let gradio: Gradio;
   export let root: string;
   export let value: FlowData;
   export let interactive: boolean;
@@ -47,12 +50,17 @@
 
   const on_upload = async (files: File[]): Promise<UploadFile[]> => {
     try {
-      const val = await upload(
-        await prepare_files(files),
-        root,
-        undefined,
-        upload_fn
-      );
+      if (!interactive) {
+        return [];
+      }
+      const val = await (upload_fn
+        ? upload(await prepare_files(files), root, upload_fn)
+        : gradio.client.upload(
+            await prepare_files(files),
+            root,
+            undefined,
+            undefined
+          ));
       return (
         val?.filter(Boolean).map((v) => ({
           name: v?.orig_name || '',

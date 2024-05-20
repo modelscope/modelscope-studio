@@ -1,8 +1,6 @@
 import { useEffect, useMemo } from 'react';
-import ReactMarkdown, {
-  defaultUrlTransform,
-  Options as ReactMarkdownOptions,
-} from 'react-markdown';
+import type { Options as ReactMarkdownOptions } from 'react-markdown';
+import ReactMarkdown, { defaultUrlTransform } from 'react-markdown';
 import cls from 'classnames';
 import deepmerge from 'deepmerge';
 import dark from 'github-markdown-css/github-markdown-dark.css?inline';
@@ -33,7 +31,8 @@ import rehypeSanitize, {
   defaultSchema,
 } from './rehype-plugins/rehype-sanitize';
 import remarkDirectiveRehype from './remark-plugins/remark-directive-rehype';
-import { MarkdownContext, MarkdownContextValue } from './context';
+import type { MarkdownContextValue } from './context';
+import { MarkdownContext } from './context';
 
 import 'katex/dist/katex.min.css';
 import './index.less';

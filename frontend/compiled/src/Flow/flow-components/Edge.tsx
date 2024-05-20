@@ -1,4 +1,5 @@
-import { EdgeProps, getBezierPath } from '@xyflow/react';
+import type { EdgeProps } from '@xyflow/react';
+import { getBezierPath } from '@xyflow/react';
 import React from 'react';
 import { theme } from 'antd';
 

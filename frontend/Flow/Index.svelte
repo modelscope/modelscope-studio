@@ -2,7 +2,6 @@
 
 <script lang="ts">
   import { Block } from '@gradio/atoms';
-  import { get_fetchable_url_or_file } from '@gradio/client';
   import type { LoadingStatus } from '@gradio/statustracker';
   import { StatusTracker } from '@gradio/statustracker';
   import type { Gradio } from '@gradio/utils';
@@ -11,6 +10,7 @@
     type FlowCustomData,
     type FlowProps,
   } from '@modelscope-studio/compiled';
+  import { get_fetchable_url_or_file } from '@modelscope-studio/shared';
 
   import Flow from './shared/Flow.svelte';
   import { type FlowData } from './shared/utils';
@@ -93,6 +93,7 @@
   {/if}
   <Flow
     {root}
+    {gradio}
     value={_value}
     {interactive}
     {custom_components}

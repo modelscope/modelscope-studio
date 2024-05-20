@@ -42,7 +42,7 @@ module.exports = {
     },
     'import/extensions': ['.js', '.jsx', '.mjs'],
     react: {
-      version: '18.2.0',
+      version: '18.3.0',
     },
   },
   rules: {
@@ -122,6 +122,10 @@ module.exports = {
         'no-shadow': 'off',
         'import/default': 'off',
         '@typescript-eslint/no-shadow': 'error',
+        '@typescript-eslint/consistent-type-imports': [
+          'error',
+          { fixStyle: 'inline-type-imports', disallowTypeAnnotations: false },
+        ],
         '@typescript-eslint/no-empty-function': 'off',
         '@typescript-eslint/no-empty-interface': 'off',
         '@typescript-eslint/ban-ts-comment': [

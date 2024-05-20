@@ -1,7 +1,6 @@
 <script lang="ts">
   import IconButton from '@gradio/atoms/src/IconButton.svelte';
   import type { FileData } from '@gradio/client';
-  import { normalise_file } from '@gradio/client';
   import type { I18nFormatter, SelectData } from '@gradio/utils';
   import { FileView } from '@modelscope-studio/compiled';
   import { createEventDispatcher } from 'svelte';
@@ -17,8 +16,8 @@
   export let value: FileData | FileData[];
   export let selectable = false;
   export let i18n: I18nFormatter;
-  export let root: string;
-  export let proxy_url: null | string;
+  // export let root: string;
+  // export let proxy_url: null | string;
   export let theme = 'light';
   export let loading = false;
   export let disabled: boolean;
@@ -28,7 +27,8 @@
 
   $: normalized_files = (Array.isArray(value) ? value : [value]).map(
     (_file) => {
-      const file = normalise_file(_file, root, proxy_url) as FileData;
+      // const file = normalise_file(_file, root, proxy_url) as FileData;
+      const file = _file;
 
       return file;
     }

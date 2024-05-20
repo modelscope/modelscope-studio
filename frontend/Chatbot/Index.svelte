@@ -4,7 +4,7 @@
 
 <script lang="ts">
   import { Block, BlockLabel } from '@gradio/atoms';
-  import { type FileData, normalise_file } from '@gradio/client';
+  import { type FileData } from '@gradio/client';
   import { Chat } from '@gradio/icons';
   import type { LoadingStatus } from '@gradio/statustracker';
   import { StatusTracker } from '@gradio/statustracker';
@@ -13,6 +13,7 @@
     CustomComponents,
     MarkdownCustomData,
   } from '@modelscope-studio/compiled';
+  import { normalise_file } from '@modelscope-studio/shared';
 
   import ChatBot from './shared/ChatBot.svelte';
   import {
@@ -83,7 +84,7 @@
   let _avatar_images: [AvatarImage[], AvatarImage[]];
 
   const redirect_src_url = (src: string): string => {
-    const replaceStr = `${root}/file=`;
+    const replaceStr = `${root}${proxy_url ? `/proxy=${proxy_url.endsWith('/') ? proxy_url.slice(0, -1) : proxy_url}` : ''}/file=`;
     return src.includes(replaceStr)
       ? src
       : src.replaceAll('/file=', replaceStr);

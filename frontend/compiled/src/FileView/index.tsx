@@ -1,6 +1,7 @@
 import React from 'react';
 import { FileOutlined } from '@ant-design/icons';
-import { Image as AntdImage, ImageProps } from 'antd';
+import type { ImageProps } from 'antd';
+import { Image as AntdImage } from 'antd';
 
 import { defineComponent } from '../defineComponent';
 

@@ -1,5 +1,5 @@
 import { createWaterfall } from './createWaterfall';
-import { WaterfallOptions } from './layout';
+import type { WaterfallOptions } from './layout';
 
 export class Waterfall {
   _layout: ReturnType<typeof createWaterfall>;

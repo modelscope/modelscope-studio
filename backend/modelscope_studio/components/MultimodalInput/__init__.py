@@ -158,7 +158,7 @@ class ModelScopeMultimodalInput(FormComponent):
             payload: MultimodalInputData | None) -> MultimodalInputData | None:
         if self.data_preprocess:
             payload = self.data_preprocess(self, payload)
-        payload = self.__class__.data_postprocess(self, payload)
+        payload = self.__class__.data_preprocess(self, payload)
         if payload.files is not None and len(payload.files) > 0:
             for i, file in enumerate(payload.files):
                 if isinstance(file, str):

@@ -3,8 +3,8 @@
   import { Microphone, Pause } from '@gradio/icons';
   import type { I18nFormatter } from '@gradio/utils';
   import { createEventDispatcher, onMount } from 'svelte';
-  import WaveSurfer from 'wavesurfer.js';
   import RecordPlugin from 'wavesurfer.js/dist/plugins/record.js';
+  import WaveSurfer from 'wavesurfer.js/dist/wavesurfer';
 
   import { getContextValue } from './context';
   import RemoveIcon from './RemoveIcon.svelte';

@@ -1,7 +1,9 @@
 import { MarkerType, Position } from '@xyflow/react';
-import Ajv, { ErrorObject, Schema as JSONSchema } from 'ajv';
+import type { ErrorObject, Schema as JSONSchema } from 'ajv';
+import Ajv from 'ajv';
 import localize from 'ajv-i18n/localize/zh';
-import ELK, { ElkNode } from 'elkjs/lib/elk.bundled';
+import type { ElkNode } from 'elkjs/lib/elk.bundled';
+import ELK from 'elkjs/lib/elk.bundled';
 import { isObject } from 'lodash-es';
 
 import type {

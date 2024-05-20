@@ -1,8 +1,8 @@
-import {
-  type Edge,
-  type Node,
+import type {
+  Edge,
+  Node,
   Position,
-  type ReactFlowProps as OriginReactFlowProps,
+  ReactFlowProps as OriginReactFlowProps,
 } from '@xyflow/react';
 
 export type ReactFlowProps = Required<OriginReactFlowProps<FlowNode, FlowEdge>>;

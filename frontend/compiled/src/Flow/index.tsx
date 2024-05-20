@@ -1,14 +1,13 @@
 import { createSelector } from '@subscribe-kit/react';
+import type { BackgroundProps, ReactFlowInstance } from '@xyflow/react';
 import {
   addEdge,
   applyEdgeChanges,
   applyNodeChanges,
   Background,
-  BackgroundProps,
   MarkerType,
   MiniMap,
   ReactFlow,
-  ReactFlowInstance,
   updateEdge,
 } from '@xyflow/react';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
@@ -26,7 +25,8 @@ import { Controls } from './flow-components/Controls';
 import { Edge } from './flow-components/Edge';
 import { Node } from './flow-components/Node';
 import { Sidebar } from './flow-components/Sidebar';
-import { FlowContext, FlowContextValue } from './FlowContext';
+import type { FlowContextValue } from './FlowContext';
+import { FlowContext } from './FlowContext';
 import type {
   FlowDragData,
   FlowEdge,

@@ -20,10 +20,10 @@ import {
   Dropdown,
   Form,
   type FormProps,
-  FormRule,
+  type FormRule,
   Input,
   InputNumber,
-  InputRef,
+  type InputRef,
   type MenuProps,
   Radio,
   Select,
@@ -32,7 +32,7 @@ import {
   theme,
   Tooltip,
 } from 'antd';
-import { FormListProps } from 'antd/es/form';
+import type { FormListProps } from 'antd/es/form';
 import cls from 'classnames';
 import { isNumber, isObject } from 'lodash-es';
 
@@ -41,7 +41,7 @@ import { FileUpload } from '../components/FileUpload';
 import { FormListItemWrapper } from '../components/FormListItemWrapper';
 import { useFlow } from '../FlowContext';
 import { i18n } from '../i18n';
-import { FlowNode, FlowNodeSchema } from '../type';
+import type { FlowNode, FlowNodeSchema } from '../type';
 import {
   compileValidationSchema,
   createId,

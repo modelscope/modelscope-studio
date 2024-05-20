@@ -3,7 +3,7 @@ import detectIndent from 'detect-indent';
 import { existsSync, readFileSync, unlinkSync, writeFileSync } from 'fs';
 import { join } from 'path';
 
-import { ChangesetMeta, ChangesetMetaCollection } from './type';
+import type { ChangesetMeta, ChangesetMetaCollection } from './type';
 
 const pkg_meta = getPackagesSync(process.cwd());
 
@@ -105,7 +105,15 @@ ${current_changelog.replace(`# ${pkg_name}`, '').trim()}
     `.trim();
       writeFileSync(join(dir, 'CHANGELOG.md'), new_changelog);
     }
-
+    const version_path = join(
+      pkg_meta.rootDir,
+      'backend/modelscope_studio/version.py'
+    );
+    const versionPy = readFileSync(version_path, 'utf-8');
+    writeFileSync(
+      version_path,
+      versionPy.replace(/__version__ = ".+"/, `__version__ = "${newVersion}"`)
+    );
     const pyproject_path = join(pkg_meta.rootDir, 'pyproject.toml');
     const pyproject = readFileSync(pyproject_path, 'utf-8');
     writeFileSync(
