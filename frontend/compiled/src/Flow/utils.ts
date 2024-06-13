@@ -297,6 +297,7 @@ export function renderData2FlowData(
 
 export function flowData2RenderData(flowData: FlowData): FlowRenderData {
   return {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     nodes: flowData.nodes.map(({ id, data, type, ...node }) => {
       return {
         ...node,
@@ -307,6 +308,7 @@ export function flowData2RenderData(flowData: FlowData): FlowRenderData {
       };
     }),
     edges: flowData.edges.map(
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       ({ sourceHandle, targetHandle, type, markerEnd, zIndex, ...edge }) => {
         const {
           attr: sourceAttr,
