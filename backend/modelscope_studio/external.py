@@ -270,10 +270,13 @@ def from_spaces_blocks(
     try:
         space = f"{_endpoint}/api/v1/studio/{space_name}/gradio/"
         kwargs = {}
-        if version.Version(gradio.__version__) > version.Version('4.19.1'):
-            kwargs["upload_files"] = False
+        if version.Version(gradio.__version__) > version.Version('4.35.0'):
             kwargs["download_files"] = False
             kwargs["_skip_components"] = False
+        elif version.Version(gradio.__version__) > version.Version('4.19.1'):
+            kwargs["download_files"] = False
+            kwargs["_skip_components"] = False
+            kwargs["upload_files"] = False
         elif version.Version(gradio.__version__) == version.Version('4.19.1'):
             kwargs["download_files"] = False
         client = Client(
@@ -296,7 +299,9 @@ def from_spaces_blocks(
 
         # Use end_to_end_fn here to properly upload/download all files
         predict_fns = []
-        for fn_index, endpoint in enumerate(client.endpoints):
+
+        for fn_index, endpoint in enumerate(client.endpoints) if isinstance(
+                client.endpoints, list) else client.endpoints.items():
             if not isinstance(endpoint, Endpoint):
                 raise TypeError(
                     f"Expected endpoint to be an Endpoint, but got {type(endpoint)}"
