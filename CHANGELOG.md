@@ -1,5 +1,11 @@
 # modelscope_studio
 
+## 0.3.1
+
+### Fixes
+
+- [#23](https://github.com/modelscope/modelscope-studio/pull/23) [`a10188e`](https://github.com/modelscope/modelscope-studio/commit/a10188e3b73013a8c69355671d522556b71873c4) - support gradio 4.35.0 in mgr.load. Thanks [@Col0ring](https://github.com/Col0ring)!
+
 ## 0.3.0
 
 ### Features
