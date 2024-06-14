@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from typing import Any, Dict
+from typing import Any
 
 from gradio.components.base import Component
 from gradio.data_classes import GradioModel
