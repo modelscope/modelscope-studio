@@ -99,7 +99,7 @@ module.exports = {
   },
   overrides: [
     {
-      files: ['*.ts', '*.tsx'],
+      files: ['*.ts', '*.tsx', '*.svelte'],
       parser: '@typescript-eslint/parser',
       plugins: ['@typescript-eslint'],
       extends: [
@@ -147,17 +147,19 @@ module.exports = {
           },
         ],
       },
-    },
-    {
-      extends: ['plugin:svelte/recommended'],
-      files: ['*.svelte'],
-      parser: 'svelte-eslint-parser',
-      parserOptions: {
-        parser: '@typescript-eslint/parser',
-      },
-      rules: {
-        'svelte/no-at-html-tags': 'off',
-      },
+      overrides: [
+        {
+          extends: ['plugin:svelte/recommended'],
+          files: ['*.svelte'],
+          parser: 'svelte-eslint-parser',
+          parserOptions: {
+            parser: '@typescript-eslint/parser',
+          },
+          rules: {
+            'svelte/no-at-html-tags': 'off',
+          },
+        },
+      ],
     },
   ],
 };

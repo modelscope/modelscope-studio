@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { prepare_files, upload_files } from '@gradio/client';
+  import { prepare_files, type upload_files } from '@gradio/client';
   import type { Gradio } from '@gradio/utils';
   import {
     type CustomComponents,

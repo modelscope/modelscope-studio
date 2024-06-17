@@ -1,6 +1,6 @@
 {
-  "name": "@modelscope-studio/markdown",
-  "version": "0.3.1",
+  "name": "@modelscope-studio/lifecycle",
+  "version": "0.3.0",
   "private": false,
   "description": "ModelScope Gradio Components",
   "repository": "git@github.com:modelscope/modelscope-studio.git",
@@ -8,14 +8,11 @@
   "type": "module",
   "exports": {
     ".": "./Index.svelte",
-    "./example": "./Example.svelte",
     "./package.json": "./package.json"
   },
   "dependencies": {
-    "@gradio/atoms": "0.7.4",
-    "@gradio/statustracker": "0.6.0",
     "@gradio/utils": "0.4.2",
-    "@modelscope-studio/compiled": "workspace:*"
+    "svelte-i18n": "^4.0.0"
   },
   "devDependencies": {
     "@gradio/preview": "0.9.1"

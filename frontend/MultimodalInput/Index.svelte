@@ -7,7 +7,11 @@
 
 <script lang="ts">
   import { Block, BlockTitle } from '@gradio/atoms';
-  import { FileData, prepare_files, upload_files } from '@gradio/client';
+  import {
+    type FileData,
+    prepare_files,
+    type upload_files,
+  } from '@gradio/client';
   import type { LoadingStatus } from '@gradio/statustracker';
   import { StatusTracker } from '@gradio/statustracker';
   import type { Gradio, SelectData } from '@gradio/utils';
