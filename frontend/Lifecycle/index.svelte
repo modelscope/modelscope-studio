@@ -86,3 +86,13 @@
     window.removeEventListener('beforeunload', on_before_unload);
   });
 </script>
+
+<div class="lifecycle-placeholder"></div>
+
+<style>
+  .lifecycle-placeholder {
+    width: 0;
+    height: 0;
+    display: none;
+  }
+</style>
