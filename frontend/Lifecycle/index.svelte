@@ -12,6 +12,9 @@
     resize: LifecycleData;
     unmount: LifecycleData;
   }>;
+  export let _bind_mount_event: boolean = false;
+  export let _bind_resize_event: boolean = false;
+  export let _bind_unmount_event: boolean = false;
 
   function get_data(): LifecycleData {
     return {
@@ -51,17 +54,23 @@
 
   function on_mount() {
     value = get_data();
-    gradio.dispatch('mount', get_data());
+    if (_bind_mount_event) {
+      gradio.dispatch('mount', get_data());
+    }
   }
 
   const on_resize = wrap_event(() => {
     value = get_data();
-    gradio.dispatch('resize', get_data());
+    if (_bind_resize_event) {
+      gradio.dispatch('resize', get_data());
+    }
   }, 500);
 
   const on_before_unload = wrap_event(() => {
     value = get_data();
-    gradio.dispatch('unmount', get_data());
+    if (_bind_unmount_event) {
+      gradio.dispatch('unmount', get_data());
+    }
   });
 
   onMount(() => {
