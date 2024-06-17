@@ -29,7 +29,7 @@
     "deepmerge": "^4.3.1",
     "echarts": "^5.5.0",
     "elkjs": "^0.9.3",
-    "github-markdown-css": "^5.5.1",
+    "github-markdown-css": "^5.6.0",
     "github-slugger": "^2.0.0",
     "hastscript": "^9.0.0",
     "katex": "^0.16.10",
@@ -59,7 +59,7 @@
     "@types/react-syntax-highlighter": "^15.5.13",
     "@vitejs/plugin-react-swc": "^3.7.0",
     "less": "^4.2.0",
-    "vite": "^5.2.13",
+    "vite": "^5.3.1",
     "vite-plugin-dts": "^3.9.1",
     "vite-plugin-lib-inject-css": "^2.1.1"
   },
