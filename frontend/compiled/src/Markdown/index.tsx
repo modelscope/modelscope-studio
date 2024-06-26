@@ -37,7 +37,7 @@ import { MarkdownContext } from './context';
 import 'katex/dist/katex.min.css';
 import './index.less';
 
-export * from './type';
+export type * from './type';
 export interface MarkdownProps extends MarkdownContextValue {
   sanitize_html?: boolean;
   flushing?: boolean;

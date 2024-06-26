@@ -34,7 +34,7 @@
   const { upload } = getContextValue();
 
   const handle_upload = async (blobs: Uint8Array[] | Blob[]): Promise<void> => {
-    let _audio_blob = new File(blobs, 'audio.wav', {
+    const _audio_blob = new File(blobs, 'audio.wav', {
       type: 'audio/wav',
     });
     const value = (await upload([_audio_blob]))[0];

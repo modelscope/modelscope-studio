@@ -1,4 +1,8 @@
-module.exports = {
+/**
+ * @see https://prettier.io/docs/en/configuration.html
+ * @type {import("prettier").Config}
+ */
+export default {
   printWidth: 80,
   tabWidth: 2,
   useTabs: false,
@@ -9,10 +13,7 @@ module.exports = {
   trailingComma: 'es5',
   arrowParens: 'always',
   endOfLine: 'lf',
-  plugins: [
-    require.resolve('prettier-plugin-packagejson'),
-    require.resolve('prettier-plugin-svelte'),
-  ],
+  plugins: ['prettier-plugin-packagejson', 'prettier-plugin-svelte'],
   overrides: [
     {
       files: '*.svelte',
