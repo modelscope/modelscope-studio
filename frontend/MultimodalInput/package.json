@@ -20,7 +20,7 @@
     "@gradio/utils": "0.4.2",
     "@modelscope-studio/compiled": "workspace:*",
     "@modelscope-studio/shared": "workspace:*",
-    "wavesurfer.js": "^7.7.15"
+    "wavesurfer.js": "^7.8.0"
   },
   "devDependencies": {
     "@gradio/preview": "0.9.1"

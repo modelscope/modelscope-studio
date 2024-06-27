@@ -84,7 +84,7 @@
   }
 
   function take_picture(): void {
-    var context = canvas.getContext('2d')!;
+    const context = canvas.getContext('2d')!;
 
     if (video_source.videoWidth && video_source.videoHeight) {
       canvas.width = video_source.videoWidth;
@@ -104,10 +104,10 @@
       canvas.toBlob(
         async (blob) => {
           if (blob) {
-            let _image_blob = new File([blob], 'image.png', {
+            const _image_blob = new File([blob], 'image.png', {
               type: 'image/png',
             });
-            let value = (await upload([_image_blob]))[0];
+            const value = (await upload([_image_blob]))[0];
             dispatch('change', value);
           }
         },
@@ -118,7 +118,7 @@
   }
 
   let recording = false;
-  // eslint-disable-next-line no-undef
+
   let recorded_blobs: BlobPart[] = [];
   let stream: MediaStream;
   let mimeType: string;
@@ -127,23 +127,23 @@
   function take_recording(): void {
     if (recording) {
       cleanup();
-      let video_blob = new Blob(recorded_blobs, { type: mimeType });
-      let ReaderObj = new FileReader();
+      const video_blob = new Blob(recorded_blobs, { type: mimeType });
+      const ReaderObj = new FileReader();
       ReaderObj.onload = async function (e): Promise<void> {
         if (e.target) {
-          let _video_blob = new File(
+          const _video_blob = new File(
             [video_blob],
             'video.' + mimeType.substring(6)
           );
-          let value = (await upload([_video_blob]))[0];
+          const value = (await upload([_video_blob]))[0];
           dispatch('change', value);
         }
       };
       ReaderObj.readAsDataURL(video_blob);
     } else {
       recorded_blobs = [];
-      let validMimeTypes = ['video/webm', 'video/mp4'];
-      for (let validMimeType of validMimeTypes) {
+      const validMimeTypes = ['video/webm', 'video/mp4'];
+      for (const validMimeType of validMimeTypes) {
         if (MediaRecorder.isTypeSupported(validMimeType)) {
           mimeType = validMimeType;
           break;

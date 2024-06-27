@@ -5,7 +5,7 @@
   export let handle_action: () => void;
 
   let actioned = false;
-  let Icon = action === 'like' ? Like : Dislike;
+  const Icon = action === 'like' ? Like : Dislike;
 
   function action_feedback(): void {
     actioned = true;

@@ -189,7 +189,7 @@
     scroll_to_img(selected_index);
   }
 
-  let el: HTMLButtonElement[] = [];
+  const el: HTMLButtonElement[] = [];
   let container_element: HTMLDivElement;
 
   async function scroll_to_img(index: number | null): Promise<void> {

@@ -141,13 +141,13 @@
   ): Promise<void> {
     await tick();
     if (lines === max_lines) return;
-    let max =
+    const max =
       max_lines === undefined
         ? false
         : max_lines === undefined // default
           ? 21 * 11
           : 21 * (max_lines + 1);
-    let min = 21 * (lines + 1);
+    const min = 21 * (lines + 1);
 
     const target = event.target as HTMLTextAreaElement;
     target.style.height = '1px';

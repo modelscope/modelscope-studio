@@ -8,7 +8,7 @@ import {
   MarkerType,
   MiniMap,
   ReactFlow,
-  updateEdge,
+  reconnectEdge,
 } from '@xyflow/react';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { Store } from '@subscribe-kit/core';
@@ -46,7 +46,7 @@ import {
 import '@xyflow/react/dist/style.css';
 import './index.less';
 
-export * from './type';
+export type * from './type';
 
 export interface FlowProps {
   on_upload: FlowContextValue['onUpload'];
@@ -269,21 +269,21 @@ export const Flow = defineComponent<FlowProps>((props) => {
       }
     );
   };
-  const onEdgeUpdateStart: ReactFlowProps['onEdgeUpdateStart'] = () => {
+  const onReconnectStart: ReactFlowProps['onReconnectStart'] = () => {
     edgeUpdateSuccessfulRef.current = false;
   };
 
-  const onEdgeUpdate: ReactFlowProps['onEdgeUpdate'] = (
+  const onReconnect: ReactFlowProps['onReconnect'] = (
     oldEdge,
     newConnection
   ) => {
     edgeUpdateSuccessfulRef.current = true;
-    setEdges((els) => updateEdge(oldEdge, newConnection, els), {
+    setEdges((els) => reconnectEdge(oldEdge, newConnection, els), {
       dataChanged: true,
     });
   };
 
-  const onEdgeUpdateEnd: ReactFlowProps['onEdgeUpdateEnd'] = (_, edge) => {
+  const onReconnectedEnd: ReactFlowProps['onReconnectEnd'] = (_, edge) => {
     if (!edgeUpdateSuccessfulRef.current) {
       setEdges((eds) => eds.filter((e) => e.id !== edge.id), {
         dataChanged: true,
@@ -503,9 +503,9 @@ export const Flow = defineComponent<FlowProps>((props) => {
           elementsSelectable={!disabled}
           nodes={nodes}
           onBeforeDelete={onBeforeDelete}
-          onEdgeUpdateStart={onEdgeUpdateStart}
-          onEdgeUpdate={onEdgeUpdate}
-          onEdgeUpdateEnd={onEdgeUpdateEnd}
+          onReconnectStart={onReconnectStart}
+          onReconnect={onReconnect}
+          onReconnectEnd={onReconnectedEnd}
           onNodesChange={onNodesChange}
           isValidConnection={isValidConnection}
           edges={edges}
