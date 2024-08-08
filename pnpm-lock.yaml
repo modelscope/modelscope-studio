@@ -186,7 +186,7 @@ importers:
     devDependencies:
       '@gradio/preview':
         specifier: 0.9.1
-        version: 0.9.1(@babel/core@7.24.7)(@types/node@20.14.9)(less@4.2.0)(postcss-load-config@6.0.1(postcss@8.4.38)(tsx@4.15.7))(postcss@8.4.38)(rollup@4.18.0)(svelte@4.2.18)
+        version: 0.9.1(@babel/core@7.24.7)(@types/node@20.14.9)(less@4.2.0)(postcss-load-config@4.0.2(postcss@8.4.38))(postcss@8.4.38)(rollup@4.18.0)(svelte@4.2.18)
 
   frontend/Chatbot:
     dependencies:
@@ -217,7 +217,7 @@ importers:
     devDependencies:
       '@gradio/preview':
         specifier: 0.9.1
-        version: 0.9.1(@babel/core@7.24.7)(@types/node@20.14.9)(less@4.2.0)(postcss-load-config@6.0.1(postcss@8.4.38)(tsx@4.15.7))(postcss@8.4.38)(rollup@4.18.0)(svelte@4.2.18)
+        version: 0.9.1(@babel/core@7.24.7)(@types/node@20.14.9)(less@4.2.0)(postcss-load-config@4.0.2(postcss@8.4.38))(postcss@8.4.38)(rollup@4.18.0)(svelte@4.2.18)
 
   frontend/Flow:
     dependencies:
@@ -245,7 +245,7 @@ importers:
     devDependencies:
       '@gradio/preview':
         specifier: 0.9.1
-        version: 0.9.1(@babel/core@7.24.7)(@types/node@16.18.101)(less@4.2.0)(postcss-load-config@6.0.1(postcss@8.4.38)(tsx@4.15.7))(postcss@8.4.38)(rollup@4.18.0)(svelte@4.2.18)
+        version: 0.9.1(@babel/core@7.24.7)(@types/node@16.18.101)(less@4.2.0)(postcss-load-config@4.0.2(postcss@8.4.38))(postcss@8.4.38)(rollup@4.18.0)(svelte@4.2.18)
       typescript-json-schema:
         specifier: ^0.64.0
         version: 0.64.0(@swc/core@1.6.5)
@@ -261,7 +261,7 @@ importers:
     devDependencies:
       '@gradio/preview':
         specifier: 0.9.1
-        version: 0.9.1(@babel/core@7.24.7)(@types/node@20.14.9)(less@4.2.0)(postcss-load-config@6.0.1(postcss@8.4.38)(tsx@4.15.7))(postcss@8.4.38)(rollup@4.18.0)(svelte@4.2.18)
+        version: 0.9.1(@babel/core@7.24.7)(@types/node@20.14.9)(less@4.2.0)(postcss-load-config@4.0.2(postcss@8.4.38))(postcss@8.4.38)(rollup@4.18.0)(svelte@4.2.18)
 
   frontend/Markdown:
     dependencies:
@@ -280,7 +280,7 @@ importers:
     devDependencies:
       '@gradio/preview':
         specifier: 0.9.1
-        version: 0.9.1(@babel/core@7.24.7)(@types/node@20.14.9)(less@4.2.0)(postcss-load-config@6.0.1(postcss@8.4.38)(tsx@4.15.7))(postcss@8.4.38)(rollup@4.18.0)(svelte@4.2.18)
+        version: 0.9.1(@babel/core@7.24.7)(@types/node@20.14.9)(less@4.2.0)(postcss-load-config@4.0.2(postcss@8.4.38))(postcss@8.4.38)(rollup@4.18.0)(svelte@4.2.18)
 
   frontend/MultimodalInput:
     dependencies:
@@ -314,7 +314,7 @@ importers:
     devDependencies:
       '@gradio/preview':
         specifier: 0.9.1
-        version: 0.9.1(@babel/core@7.24.7)(@types/node@20.14.9)(less@4.2.0)(postcss-load-config@6.0.1(postcss@8.4.38)(tsx@4.15.7))(postcss@8.4.38)(rollup@4.18.0)(svelte@4.2.18)
+        version: 0.9.1(@babel/core@7.24.7)(@types/node@20.14.9)(less@4.2.0)(postcss-load-config@4.0.2(postcss@8.4.38))(postcss@8.4.38)(rollup@4.18.0)(svelte@4.2.18)
 
   frontend/WaterfallGallery:
     dependencies:
@@ -348,7 +348,7 @@ importers:
     devDependencies:
       '@gradio/preview':
         specifier: 0.9.1
-        version: 0.9.1(@babel/core@7.24.7)(@types/node@20.14.9)(less@4.2.0)(postcss-load-config@6.0.1(postcss@8.4.38)(tsx@4.15.7))(postcss@8.4.38)(rollup@4.18.0)(svelte@4.2.18)
+        version: 0.9.1(@babel/core@7.24.7)(@types/node@20.14.9)(less@4.2.0)(postcss-load-config@4.0.2(postcss@8.4.38))(postcss@8.4.38)(rollup@4.18.0)(svelte@4.2.18)
 
   frontend/compiled:
     dependencies:
@@ -5740,24 +5740,6 @@ packages:
       ts-node:
         optional: true
 
-  postcss-load-config@6.0.1:
-    resolution: {integrity: sha512-oPtTM4oerL+UXmx+93ytZVN82RrlY/wPUV8IeDxFrzIjXOLF1pN+EmKPLbubvKHT2HC20xXsCAH2Z+CKV6Oz/g==}
-    engines: {node: '>= 18'}
-    peerDependencies:
-      jiti: '>=1.21.0'
-      postcss: '>=8.0.9'
-      tsx: ^4.8.1
-      yaml: ^2.4.2
-    peerDependenciesMeta:
-      jiti:
-        optional: true
-      postcss:
-        optional: true
-      tsx:
-        optional: true
-      yaml:
-        optional: true
-
   postcss-markdown@0.36.0:
     resolution: {integrity: sha512-rl7fs1r/LNSB2bWRhyZ+lM/0bwKv9fhl38/06gF6mKMo/NPnp55+K1dSTosSVjFZc0e1ppBlu+WT91ba0PMBfQ==}
     peerDependencies:
@@ -7778,7 +7760,7 @@ snapshots:
   '@babel/code-frame@7.24.2':
     dependencies:
       '@babel/highlight': 7.24.2
-      picocolors: 1.0.0
+      picocolors: 1.0.1
 
   '@babel/code-frame@7.24.7':
     dependencies:
@@ -7882,7 +7864,7 @@ snapshots:
       '@babel/helper-validator-identifier': 7.22.20
       chalk: 2.4.2
       js-tokens: 4.0.0
-      picocolors: 1.0.0
+      picocolors: 1.0.1
 
   '@babel/highlight@7.24.7':
     dependencies:
@@ -8647,7 +8629,7 @@ snapshots:
 
   '@gradio/icons@0.4.1': {}
 
-  '@gradio/preview@0.9.1(@babel/core@7.24.7)(@types/node@16.18.101)(less@4.2.0)(postcss-load-config@6.0.1(postcss@8.4.38)(tsx@4.15.7))(postcss@8.4.38)(rollup@4.18.0)(svelte@4.2.18)':
+  '@gradio/preview@0.9.1(@babel/core@7.24.7)(@types/node@16.18.101)(less@4.2.0)(postcss-load-config@4.0.2(postcss@8.4.38))(postcss@8.4.38)(rollup@4.18.0)(svelte@4.2.18)':
     dependencies:
       '@originjs/vite-plugin-commonjs': 1.0.3
       '@rollup/plugin-sucrase': 5.0.2(rollup@4.18.0)
@@ -8661,7 +8643,7 @@ snapshots:
       sucrase: 3.35.0
       sugarss: 4.0.1(postcss@8.4.38)
       svelte-hmr: 0.16.0(svelte@4.2.18)
-      svelte-preprocess: 5.1.4(@babel/core@7.24.7)(coffeescript@2.7.0)(less@4.2.0)(postcss-load-config@6.0.1(postcss@8.4.38)(tsx@4.15.7))(postcss@8.4.38)(pug@3.0.3)(sass@1.77.5)(stylus@0.63.0)(sugarss@4.0.1(postcss@8.4.38))(svelte@4.2.18)(typescript@5.4.5)
+      svelte-preprocess: 5.1.4(@babel/core@7.24.7)(coffeescript@2.7.0)(less@4.2.0)(postcss-load-config@4.0.2(postcss@8.4.38))(postcss@8.4.38)(pug@3.0.3)(sass@1.77.5)(stylus@0.63.0)(sugarss@4.0.1(postcss@8.4.38))(svelte@4.2.18)(typescript@5.4.5)
       typescript: 5.4.5
       vite: 5.2.13(@types/node@16.18.101)(less@4.2.0)(lightningcss@1.25.1)(sass@1.77.5)(stylus@0.63.0)(sugarss@4.0.1(postcss@8.4.38))
       which: 4.0.0
@@ -8677,7 +8659,7 @@ snapshots:
       - svelte
       - terser
 
-  '@gradio/preview@0.9.1(@babel/core@7.24.7)(@types/node@20.14.9)(less@4.2.0)(postcss-load-config@6.0.1(postcss@8.4.38)(tsx@4.15.7))(postcss@8.4.38)(rollup@4.18.0)(svelte@4.2.18)':
+  '@gradio/preview@0.9.1(@babel/core@7.24.7)(@types/node@20.14.9)(less@4.2.0)(postcss-load-config@4.0.2(postcss@8.4.38))(postcss@8.4.38)(rollup@4.18.0)(svelte@4.2.18)':
     dependencies:
       '@originjs/vite-plugin-commonjs': 1.0.3
       '@rollup/plugin-sucrase': 5.0.2(rollup@4.18.0)
@@ -8691,7 +8673,7 @@ snapshots:
       sucrase: 3.35.0
       sugarss: 4.0.1(postcss@8.4.38)
       svelte-hmr: 0.16.0(svelte@4.2.18)
-      svelte-preprocess: 5.1.4(@babel/core@7.24.7)(coffeescript@2.7.0)(less@4.2.0)(postcss-load-config@6.0.1(postcss@8.4.38)(tsx@4.15.7))(postcss@8.4.38)(pug@3.0.3)(sass@1.77.5)(stylus@0.63.0)(sugarss@4.0.1(postcss@8.4.38))(svelte@4.2.18)(typescript@5.4.5)
+      svelte-preprocess: 5.1.4(@babel/core@7.24.7)(coffeescript@2.7.0)(less@4.2.0)(postcss-load-config@4.0.2(postcss@8.4.38))(postcss@8.4.38)(pug@3.0.3)(sass@1.77.5)(stylus@0.63.0)(sugarss@4.0.1(postcss@8.4.38))(svelte@4.2.18)(typescript@5.4.5)
       typescript: 5.4.5
       vite: 5.2.13(@types/node@20.14.9)(less@4.2.0)(lightningcss@1.25.1)(sass@1.77.5)(stylus@0.63.0)(sugarss@4.0.1(postcss@8.4.38))
       which: 4.0.0
@@ -13766,7 +13748,7 @@ snapshots:
       yaml: 1.10.2
     optionalDependencies:
       postcss: 8.4.38
-      ts-node: 10.9.2(@types/node@20.14.9)(typescript@5.5.2)
+      ts-node: 10.9.2(@swc/core@1.6.5)(@types/node@20.14.9)(typescript@5.5.2)
 
   postcss-load-config@4.0.2(postcss@8.4.38)(ts-node@10.9.2(@swc/core@1.6.5)(@types/node@20.14.9)(typescript@5.5.2)):
     dependencies:
@@ -13775,14 +13757,6 @@ snapshots:
     optionalDependencies:
       postcss: 8.4.38
       ts-node: 10.9.2(@swc/core@1.6.5)(@types/node@20.14.9)(typescript@5.5.2)
-
-  postcss-load-config@6.0.1(postcss@8.4.38)(tsx@4.15.7):
-    dependencies:
-      lilconfig: 3.1.2
-    optionalDependencies:
-      postcss: 8.4.38
-      tsx: 4.15.7
-    optional: true
 
   postcss-markdown@0.36.0(postcss-syntax@0.36.2(postcss-less@6.0.0(postcss@8.4.38))(postcss@8.4.38))(postcss@7.0.39):
     dependencies:
@@ -15343,7 +15317,7 @@ snapshots:
       svelte: 4.2.18
       tiny-glob: 0.2.9
 
-  svelte-preprocess@5.1.4(@babel/core@7.24.7)(coffeescript@2.7.0)(less@4.2.0)(postcss-load-config@6.0.1(postcss@8.4.38)(tsx@4.15.7))(postcss@8.4.38)(pug@3.0.3)(sass@1.77.5)(stylus@0.63.0)(sugarss@4.0.1(postcss@8.4.38))(svelte@4.2.18)(typescript@5.4.5):
+  svelte-preprocess@5.1.4(@babel/core@7.24.7)(coffeescript@2.7.0)(less@4.2.0)(postcss-load-config@4.0.2(postcss@8.4.38))(postcss@8.4.38)(pug@3.0.3)(sass@1.77.5)(stylus@0.63.0)(sugarss@4.0.1(postcss@8.4.38))(svelte@4.2.18)(typescript@5.4.5):
     dependencies:
       '@types/pug': 2.0.10
       detect-indent: 6.1.0
@@ -15356,7 +15330,7 @@ snapshots:
       coffeescript: 2.7.0
       less: 4.2.0
       postcss: 8.4.38
-      postcss-load-config: 6.0.1(postcss@8.4.38)(tsx@4.15.7)
+      postcss-load-config: 4.0.2(postcss@8.4.38)(ts-node@10.9.2(@swc/core@1.6.5)(@types/node@20.14.9)(typescript@5.5.2))
       pug: 3.0.3
       sass: 1.77.5
       stylus: 0.63.0
@@ -15549,25 +15523,6 @@ snapshots:
       yn: 3.1.1
     optionalDependencies:
       '@swc/core': 1.6.5
-    optional: true
-
-  ts-node@10.9.2(@types/node@20.14.9)(typescript@5.5.2):
-    dependencies:
-      '@cspotcode/source-map-support': 0.8.1
-      '@tsconfig/node10': 1.0.11
-      '@tsconfig/node12': 1.0.11
-      '@tsconfig/node14': 1.0.3
-      '@tsconfig/node16': 1.0.4
-      '@types/node': 20.14.9
-      acorn: 8.11.3
-      acorn-walk: 8.3.2
-      arg: 4.1.3
-      create-require: 1.1.1
-      diff: 4.0.2
-      make-error: 1.3.6
-      typescript: 5.5.2
-      v8-compile-cache-lib: 3.0.1
-      yn: 3.1.1
     optional: true
 
   tsconfig-paths@3.15.0:
@@ -15843,7 +15798,7 @@ snapshots:
     dependencies:
       browserslist: 4.22.3
       escalade: 3.1.2
-      picocolors: 1.0.0
+      picocolors: 1.0.1
 
   update-browserslist-db@1.0.16(browserslist@4.23.1):
     dependencies:
