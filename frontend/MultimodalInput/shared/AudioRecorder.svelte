@@ -16,7 +16,7 @@
   let record: RecordPlugin | null = null;
   let micDevices: MediaDeviceInfo[] = [];
   let microphoneContainer: HTMLDivElement;
-
+  let deviceId: string;
   let seconds = 0;
   let interval: number;
   let timing = false;
@@ -58,15 +58,16 @@
   };
 
   const cleanup = (): void => {
+    seconds = 0;
+    timing = false;
+    paused = false;
+    clearInterval(interval);
     if (record?.isPaused()) {
       record?.resumeRecording();
       record?.stopRecording();
     } else {
       record?.stopRecording();
     }
-    seconds = 0;
-    timing = false;
-    paused = false;
   };
 
   const create_mic_waveform = (): void => {
@@ -178,9 +179,13 @@
         <button
           class="record record-button"
           on:click={() =>
-            record?.startRecording().catch(() => {
-              dispatch('error', i18n('audio.allow_recording_access'));
-            })}>{i18n('audio.record')}</button
+            record
+              ?.startRecording({
+                deviceId,
+              })
+              .catch(() => {
+                dispatch('error', i18n('audio.allow_recording_access'));
+              })}>{i18n('audio.record')}</button
         >
       {/if}
     </div>
@@ -188,6 +193,9 @@
       class="mic-select"
       aria-label="Select input device"
       disabled={micDevices.length === 0}
+      on:change={(e) => {
+        deviceId = e.currentTarget.value;
+      }}
     >
       {#if micDevices.length === 0}
         <option value="">{i18n('audio.no_microphone')}</option>

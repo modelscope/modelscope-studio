@@ -60,3 +60,4 @@ yalc.lock
 .eslintcache
 .stylelintcache
 .DS_Store
+.pytest_cache

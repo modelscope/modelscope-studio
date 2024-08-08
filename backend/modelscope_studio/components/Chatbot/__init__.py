@@ -29,10 +29,10 @@ class MultimodalMessage(GradioModel):
     # elem classes of message container
     elem_classes: Optional[Union[List[str], str]] = None
     name: Optional[str] = None
-    text: Optional[str] = None
+    text: Optional[str] = ''
     flushing: Optional[bool] = None
     avatar: Optional[Union[str, FileData]] = ''
-    files: Optional[List[Union[FileMessage, dict, FileData, str]]] = None
+    files: Optional[List[Union[FileMessage, dict, FileData, str, Path]]] = None
 
 
 MultimodalMessageItem = Optional[Union[MultimodalMessage, MultimodalInputData,
@@ -272,8 +272,8 @@ class ModelScopeChatbot(Component):
         return processed_messages
 
     def _postprocess_chat_messages(
-        self,
-        chat_message: MultimodalMessage | MultimodalInputData | dict | None
+        self, chat_message: MultimodalMessage | MultimodalInputData | str
+        | dict | None
     ) -> MultimodalMessage | None:
         if chat_message is None:
             return None
@@ -306,6 +306,13 @@ class ModelScopeChatbot(Component):
                         file=FileData(path=file,
                                       orig_name=Path(file).name,
                                       size=Path(file).stat().st_size,
+                                      mime_type=mime_type))
+                elif isinstance(file, Path):
+                    mime_type = client_utils.get_mimetype(str(file))
+                    new_file = FileMessage(
+                        file=FileData(path=str(file),
+                                      orig_name=file.name,
+                                      size=file.stat().st_size,
                                       mime_type=mime_type))
                 elif isinstance(file, FileData):
                     new_file = FileMessage(file=file.model_copy())

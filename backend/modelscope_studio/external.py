@@ -16,6 +16,7 @@ from packaging import version
 import modelscope_studio.components
 
 _endpoint = "https://modelscope.cn"
+_studio_endpoint = "https://s5k.cn"
 
 
 def blocks_from_config(config: dict, fns: List[Callable],
@@ -268,7 +269,7 @@ def from_spaces_blocks(
 ) -> Blocks:
     component_or_layout_class = gradio.utils.component_or_layout_class
     try:
-        space = f"{_endpoint}/api/v1/studio/{space_name}/gradio/"
+        space = f"{_studio_endpoint}/api/v1/studio/{space_name}/gradio/"
         kwargs = {}
         if version.Version(gradio.__version__) > version.Version('4.35.0'):
             kwargs["download_files"] = False
