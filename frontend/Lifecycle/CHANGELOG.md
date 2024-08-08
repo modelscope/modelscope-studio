@@ -1,5 +1,9 @@
 # @modelscope-studio/lifecycle
 
+## 0.4.1
+
+No significant changes to this package were made in this release.
+
 ## 0.4.0
 
 ### Misc Changes
