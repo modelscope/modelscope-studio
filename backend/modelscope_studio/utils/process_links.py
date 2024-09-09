@@ -48,9 +48,9 @@ def process_markdown_links(markdown: str, transformer: Callable):
 def process_links(text: str, block: Component):
 
     def link_transformer(src: str):
-        if (src.startswith("http") or src.startswith("https")):
+        if (src.startswith("http") or src.startswith("https")
+                or src.startswith("data")):
             return src
-
         file_path = str(utils.abspath(src))
         if (not os.path.exists(file_path)):
             return src
