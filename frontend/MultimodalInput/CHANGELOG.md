@@ -1,5 +1,9 @@
 # @modelscope-studio/multimodal-input
 
+## 0.4.2
+
+No significant changes to this package were made in this release.
+
 ## 0.4.1
 
 ### Fixes

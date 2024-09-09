@@ -1,5 +1,11 @@
 # modelscope_studio
 
+## 0.4.2
+
+### Fixes
+
+- [#29](https://github.com/modelscope/modelscope-studio/pull/29) [`66663c8`](https://github.com/modelscope/modelscope-studio/commit/66663c83d652d0a92e97c4dc4f2a1a08f8603afa) - process base64 link. Thanks [@Col0ring](https://github.com/Col0ring)!
+
 ## 0.4.1
 
 ### Fixes
