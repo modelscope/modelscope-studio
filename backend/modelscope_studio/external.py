@@ -5,7 +5,6 @@ from typing import Callable, List, Union
 import gradio
 import gradio.utils
 import httpx
-import modelscope_studio.components
 from gradio.blocks import Block, BlockContext, Blocks
 from gradio.context import Context
 from gradio.events import EventListenerMethod
@@ -13,6 +12,8 @@ from gradio.exceptions import GradioVersionIncompatibleError
 from gradio_client import Client
 from gradio_client.client import Endpoint
 from packaging import version
+
+import modelscope_studio.components
 
 _endpoint = "https://modelscope.cn"
 _studio_endpoint = "https://s5k.cn"

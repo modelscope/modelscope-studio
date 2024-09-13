@@ -2,6 +2,7 @@ import json
 import os
 
 import gradio as gr
+
 import modelscope_studio as mgr
 
 options = ["a", "b", "c"]
