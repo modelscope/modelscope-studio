@@ -17,6 +17,7 @@ authors = [{ name = "YOUR NAME", email = "YOUREMAIL@domain.com" }]
 keywords = [
   "gradio-custom-component",
   "modelscope-studio",
+  'antd',
   "gradio-template-Chatbot",
 ]
 # Add dependencies here
