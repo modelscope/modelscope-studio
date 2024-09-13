@@ -1,5 +1,4 @@
 import gradio as gr
-
 import modelscope_studio as mgr
 from modelscope_studio.components.Flow import (FlowSchemaDict, Node,
                                                NodeSchemaAttributeDict,

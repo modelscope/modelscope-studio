@@ -1,7 +1,6 @@
 import json
 
 import gradio as gr
-
 import modelscope_studio as mgr
 
 # `label` will display on the page, and `value` is the actual selected value.

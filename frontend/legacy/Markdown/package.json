@@ -1,0 +1,19 @@
+{
+  "name": "@modelscope-studio/legacy-markdown",
+  "version": "0.4.2",
+  "private": false,
+  "description": "ModelScope Gradio Components",
+  "repository": "git@github.com:modelscope/modelscope-studio.git",
+  "license": "Apache-2.0",
+  "type": "module",
+  "exports": {
+    ".": "./Index.svelte",
+    "./example": "./Example.svelte",
+    "./package.json": "./package.json"
+  },
+  "dependencies": {
+    "@modelscope-studio/legacy-compiled": "workspace:*"
+  },
+  "devDependencies": {},
+  "main_changeset": true
+}

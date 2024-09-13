@@ -1,0 +1,16 @@
+{
+  "name": "@modelscope-studio/legacy-lifecycle",
+  "version": "0.4.2",
+  "private": false,
+  "description": "ModelScope Gradio Components",
+  "repository": "git@github.com:modelscope/modelscope-studio.git",
+  "license": "Apache-2.0",
+  "type": "module",
+  "exports": {
+    ".": "./Index.svelte",
+    "./package.json": "./package.json"
+  },
+  "dependencies": {},
+  "devDependencies": {},
+  "main_changeset": true
+}

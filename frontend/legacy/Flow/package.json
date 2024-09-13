@@ -1,0 +1,21 @@
+{
+  "name": "@modelscope-studio/legacy-flow",
+  "version": "0.4.2",
+  "private": false,
+  "description": "ModelScope Gradio Components",
+  "repository": "git@github.com:modelscope/modelscope-studio.git",
+  "license": "Apache-2.0",
+  "type": "module",
+  "exports": {
+    ".": "./Index.svelte",
+    "./package.json": "./package.json"
+  },
+  "scripts": {
+    "build": "typescript-json-schema --skipLibCheck ./schema.ts FlowSchema > ./schema.json"
+  },
+  "dependencies": {
+    "@modelscope-studio/legacy-compiled": "workspace:*"
+  },
+  "devDependencies": {},
+  "main_changeset": true
+}

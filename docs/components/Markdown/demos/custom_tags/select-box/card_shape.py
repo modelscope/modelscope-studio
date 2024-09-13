@@ -2,7 +2,6 @@ import json
 import os
 
 import gradio as gr
-
 import modelscope_studio as mgr
 
 # Card shape supports setting `imgSrc` as the cover.

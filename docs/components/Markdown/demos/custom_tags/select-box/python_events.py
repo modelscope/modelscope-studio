@@ -1,7 +1,6 @@
 import json
 
 import gradio as gr
-
 import modelscope_studio as mgr
 
 options = [{"label": "A", "value": "a"}, "b", "c"]

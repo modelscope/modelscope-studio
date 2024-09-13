@@ -1,0 +1,8 @@
+{
+  "name": "@modelscope-studio/antd-table",
+  "type": "module",
+  "exports": {
+    ".": "./Index.svelte",
+    "./package.json": "./package.json"
+  }
+}

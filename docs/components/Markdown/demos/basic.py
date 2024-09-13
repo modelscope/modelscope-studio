@@ -1,5 +1,4 @@
 import gradio as gr
-
 import modelscope_studio as mgr
 
 with gr.Blocks() as demo:

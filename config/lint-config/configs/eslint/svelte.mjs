@@ -1,7 +1,7 @@
 import eslintPluginSvelte from 'eslint-plugin-svelte';
 
 /**
- * @type {import('eslint').Linter.FlatConfig[]}
+ * @type {import('eslint').Linter.Config[]}
  */
 export const svelte = [
   ...eslintPluginSvelte.configs['flat/recommended'],
@@ -14,6 +14,7 @@ export const svelte = [
     },
     rules: {
       'svelte/no-at-html-tags': 'off',
+      'svelte/valid-compile': 'warn',
     },
   },
 ];

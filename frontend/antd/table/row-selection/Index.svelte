@@ -1,0 +1,42 @@
+<svelte:options accessors={true} />
+
+<script lang="ts">
+  import { importComponent } from '@svelte-preprocess-react/component';
+  import type { Gradio } from '@gradio/utils';
+
+  const AwaitedRowSelection = importComponent(
+    () => import('./RowSelection.svelte')
+  );
+
+  export let gradio: Gradio;
+  export let props: Record<string, any> = {};
+  export let value: string[] | number[];
+  export let as_item: string | undefined;
+  // gradio properties
+  export let visible = true;
+  export let elem_id = '';
+  export let elem_classes: string[] = [];
+  export let elem_style: React.CSSProperties = {};
+</script>
+
+{#await AwaitedRowSelection then RowSelection}
+  <RowSelection
+    {...$$props}
+    {gradio}
+    {props}
+    {as_item}
+    bind:value
+    {visible}
+    {elem_id}
+    {elem_classes}
+    {elem_style}
+  >
+    <slot></slot>
+  </RowSelection>
+{/await}
+
+<style>
+  :global(.ms-gr-antd-noop-class) {
+    display: none;
+  }
+</style>

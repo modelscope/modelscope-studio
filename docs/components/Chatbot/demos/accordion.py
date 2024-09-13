@@ -1,7 +1,6 @@
 import os
 
 import gradio as gr
-
 import modelscope_studio as mgr
 from modelscope_studio.components.Chatbot.llm_thinking_presets import qwen
 
