@@ -6,7 +6,7 @@
     type CustomComponents,
     FileView,
     type MarkdownCustomData,
-  } from '@modelscope-studio/compiled';
+  } from '@modelscope-studio/legacy-compiled';
   import { get_fetchable_url_or_file } from '@utils/upload';
   import { dequal } from 'dequal/lite';
   import { afterUpdate, createEventDispatcher } from 'svelte';

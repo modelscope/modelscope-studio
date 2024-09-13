@@ -1,5 +1,8 @@
 <script lang="ts">
-  import { type CustomComponents, Markdown } from '@modelscope-studio/compiled';
+  import {
+    type CustomComponents,
+    Markdown,
+  } from '@modelscope-studio/legacy-compiled';
 
   const theme = document.body.classList.contains('dark') ? 'dark' : 'light';
   export let value: string;

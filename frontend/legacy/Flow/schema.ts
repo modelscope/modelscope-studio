@@ -1,1 +1,1 @@
-export { FlowSchema } from '@modelscope-studio/compiled/src/Flow/type';
+export { FlowSchema } from '@modelscope-studio/legacy-compiled/src/Flow/type';

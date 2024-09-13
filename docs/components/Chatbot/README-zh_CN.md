@@ -30,7 +30,7 @@
 
 ```python
 import modelscope_studio as mgr
-from modelscope_studio.components.Chatbot.llm_thinking_presets import qwen
+from modelscope_studio.components.legacy.Chatbot.llm_thinking_presets import qwen
 
 # 添加 qwen 解析预设
 mgr.Chatbot(llm_thinking_presets=[qwen()])

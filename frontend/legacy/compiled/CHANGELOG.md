@@ -1,4 +1,4 @@
-# @modelscope-studio/compiled
+# @modelscope-studio/legacy-compiled
 
 ## 0.4.2
 

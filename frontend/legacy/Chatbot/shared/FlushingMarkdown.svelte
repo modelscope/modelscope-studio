@@ -2,7 +2,7 @@
   import {
     Markdown,
     type MarkdownCustomData,
-  } from '@modelscope-studio/compiled';
+  } from '@modelscope-studio/legacy-compiled';
   import { afterUpdate, createEventDispatcher, onDestroy } from 'svelte';
 
   export let message = '';

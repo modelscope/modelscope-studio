@@ -33,7 +33,7 @@ No significant changes to this package were made in this release.
 ### Patch Changes
 
 - Updated dependencies [[`68400a3`](https://github.com/modelscope/modelscope-studio/commit/68400a366d5a8af9a8d14f51577d8db1ebdcceb3)]:
-  - @modelscope-studio/compiled@0.2.1
+  - @modelscope-studio/legacy-compiled@0.2.1
 
 ## 0.2.0
 

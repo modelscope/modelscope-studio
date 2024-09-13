@@ -3,7 +3,7 @@
     type CustomComponents,
     Markdown,
     type MarkdownCustomData,
-  } from '@modelscope-studio/compiled';
+  } from '@modelscope-studio/legacy-compiled';
   import { createEventDispatcher } from 'svelte';
 
   export let elem_classes: string[] = [];

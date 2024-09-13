@@ -2,8 +2,9 @@ import json
 import os
 
 import gradio as gr
+
 import modelscope_studio as mgr
-from modelscope_studio.components.Flow import Edge, Node
+from modelscope_studio.components.legacy.Flow import Edge, Node
 
 with open((os.path.join(os.path.dirname(__file__),
                         "../schema/agents_schema.json"))) as f:

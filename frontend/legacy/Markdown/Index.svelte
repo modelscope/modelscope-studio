@@ -6,7 +6,7 @@
   import type {
     CustomComponents,
     MarkdownCustomData,
-  } from '@modelscope-studio/compiled';
+  } from '@modelscope-studio/legacy-compiled';
 
   import Markdown from './shared/Markdown.svelte';
 

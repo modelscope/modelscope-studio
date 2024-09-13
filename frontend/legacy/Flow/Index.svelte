@@ -9,7 +9,7 @@
     type CustomComponents,
     type FlowCustomData,
     type FlowProps,
-  } from '@modelscope-studio/compiled';
+  } from '@modelscope-studio/legacy-compiled';
   import { get_fetchable_url_or_file } from '@utils/upload';
 
   import Flow from './shared/Flow.svelte';

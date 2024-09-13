@@ -1,6 +1,6 @@
 import os
 
-from modelscope_studio.components.Flow import (
+from modelscope_studio.components.legacy.Flow import (
     FlowSchemaDict, NodeSchemaAttributeDict, NodeSchemaAttributeListDict,
     NodeSchemaAttributeRequiredDict, NodeSchemaDict, NodeSchemaPortsDict,
     NodeSchemaTemplateDict)

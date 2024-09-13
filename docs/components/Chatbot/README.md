@@ -29,7 +29,7 @@ Additionally, to adapt to the toolchain usage of large models, some preset confi
 
 ```python
 import modelscope_studio as mgr
-from modelscope_studio.components.Chatbot.llm_thinking_presets import qwen
+from modelscope_studio.components.legacy.Chatbot.llm_thinking_presets import qwen
 
 # Add qwen preset
 mgr.Chatbot(llm_thinking_presets=[qwen()])

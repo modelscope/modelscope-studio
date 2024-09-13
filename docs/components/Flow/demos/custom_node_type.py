@@ -1,8 +1,9 @@
 import gradio as gr
+
 import modelscope_studio as mgr
-from modelscope_studio.components.Flow import (FlowSchemaDict, Node,
-                                               NodeSchemaAttributeDict,
-                                               NodeSchemaDict)
+from modelscope_studio.components.legacy.Flow import (FlowSchemaDict, Node,
+                                                      NodeSchemaAttributeDict,
+                                                      NodeSchemaDict)
 
 
 def on_data_change(_flow):

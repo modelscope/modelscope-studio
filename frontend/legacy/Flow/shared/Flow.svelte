@@ -7,7 +7,7 @@
     type FlowCustomData,
     type FlowProps,
     type UploadFile,
-  } from '@modelscope-studio/compiled';
+  } from '@modelscope-studio/legacy-compiled';
   import { upload } from '@utils/upload';
   import { createEventDispatcher, getContext } from 'svelte';
 

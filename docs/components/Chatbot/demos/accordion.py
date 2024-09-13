@@ -1,8 +1,10 @@
 import os
 
 import gradio as gr
+
 import modelscope_studio as mgr
-from modelscope_studio.components.Chatbot.llm_thinking_presets import qwen
+from modelscope_studio.components.legacy.Chatbot.llm_thinking_presets import \
+  qwen
 
 
 def resolve_assets(relative_path):

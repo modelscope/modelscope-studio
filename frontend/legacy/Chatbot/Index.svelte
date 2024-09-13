@@ -12,7 +12,7 @@
   import type {
     CustomComponents,
     MarkdownCustomData,
-  } from '@modelscope-studio/compiled';
+  } from '@modelscope-studio/legacy-compiled';
   import { normalise_file } from '@utils/upload';
 
   import ChatBot from './shared/ChatBot.svelte';
