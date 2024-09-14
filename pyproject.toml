@@ -8,7 +8,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "modelscope_studio"
-version = "0.4.2"
+version = "1.0.0-beta.0"
 description = "A set of extension component, inluding components for conversational input and display in multimodal scenarios, as well as more components for vertical scenarios."
 readme = "README.md"
 license = "Apache-2.0"
@@ -193,6 +193,11 @@ artifacts = [
   "/backend/modelscope_studio/components/antd/tree_select/templates",
   "/backend/modelscope_studio/components/antd/tree_select/tree_node/templates",
   "/backend/modelscope_studio/components/antd/upload/dragger/templates",
+  "/backend/modelscope_studio/components/legacy/Chatbot/templates",
+  "/backend/modelscope_studio/components/legacy/Flow/templates",
+  "/backend/modelscope_studio/components/legacy/Markdown/templates",
+  "/backend/modelscope_studio/components/legacy/MultimodalInput/templates",
+  "/backend/modelscope_studio/components/legacy/WaterfallGallery/templates",
 ]
 
 [tool.hatch.build.targets.sdist]

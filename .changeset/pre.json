@@ -16,5 +16,5 @@
     "@modelscope-studio/legacy-waterfall-gallery": "0.4.2",
     "@modelscope-studio/legacy-compiled": "0.4.2"
   },
-  "changesets": []
+  "changesets": ["tough-walls-grab"]
 }
