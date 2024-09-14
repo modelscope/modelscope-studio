@@ -1,5 +1,5 @@
 from timeit import Timer
-from typing import Any, Callable
+from typing import Any, Callable, List, Set, Union
 
 from gradio.component_meta import ComponentMeta
 from gradio.components.base import BlockContext, Component
@@ -21,12 +21,12 @@ class ModelScopeLayoutComponent(BlockContext, metaclass=ComponentMeta):
     def __init__(
             self,
             *,
-            as_item: str | None = None,
+            as_item: Union[str, None] = None,
             # gradio properties
             visible: bool = True,
-            elem_id: str | None = None,
-            elem_classes: list[str] | str | None = None,
-            elem_style: dict | None = None,
+            elem_id: Union[str, None] = None,
+            elem_classes: Union[List[str], str, None] = None,
+            elem_style: Union[dict, None] = None,
             render: bool = True):
         super().__init__(visible=visible,
                          elem_id=elem_id,
@@ -53,17 +53,18 @@ class ModelScopeComponent(Component):
             self,
             value: Any = None,
             *,
-            as_item: str | None = None,
+            as_item: Union[str, None] = None,
             _internal: None = None,
             # gradio properties
             visible: bool = True,
-            elem_id: str | None = None,
-            elem_classes: list[str] | str | None = None,
-            elem_style: dict | None = None,
-            key: int | str | None = None,
-            every: Timer | float | None = None,
-            inputs: Component | list[Component] | set[Component] | None = None,
-            load_fn: Callable | None = None,
+            elem_id: Union[str, None] = None,
+            elem_classes: Union[List[str], str, None] = None,
+            elem_style: Union[dict, None] = None,
+            key: Union[int, str, None] = None,
+            every: Union[Timer, float, None] = None,
+            inputs: Union[Component, List[Component], Set[Component],
+                          None] = None,
+            load_fn: Union[Callable, None] = None,
             render: bool = True):
         super().__init__(visible=visible,
                          value=value,
@@ -109,22 +110,22 @@ class ModelScopeDataLayoutComponent(Component,
         super().__exit__(*args, **kwargs)
 
     def __init__(
-        self,
-        value: Any = None,
-        *,
-        as_item: str | None = None,
-        _internal: None = None,
-        # gradio properties
-        visible: bool = True,
-        elem_id: str | None = None,
-        elem_classes: list[str] | str | None = None,
-        elem_style: dict | None = None,
-        key: int | str | None = None,
-        every: Timer | float | None = None,
-        inputs: Component | list[Component] | set[Component] | None = None,
-        load_fn: Callable | None = None,
-        render: bool = True,
-    ):
+            self,
+            value: Any = None,
+            *,
+            as_item: Union[str, None] = None,
+            _internal: None = None,
+            # gradio properties
+            visible: bool = True,
+            elem_id: Union[str, None] = None,
+            elem_classes: Union[List[str], str, None] = None,
+            elem_style: Union[dict, None] = None,
+            key: Union[int, str, None] = None,
+            every: Union[Timer, float, None] = None,
+            inputs: Union[Component, List[Component], Set[Component],
+                          None] = None,
+            load_fn: Union[Callable, None] = None,
+            render: bool = True):
         super().__init__(
             visible=visible,
             value=value,
