@@ -9,7 +9,7 @@ from gradio.events import Events
 from gradio_client import utils as client_utils
 from gradio_client.documentation import document, set_documentation_group
 
-from modelscope_studio.utils import resolve_frontend_dir
+from ...utils import resolve_frontend_dir
 
 set_documentation_group("component")
 

@@ -7,8 +7,7 @@ from gradio.components.base import Component
 from gradio.events import Events
 from gradio_client.documentation import document, set_documentation_group
 
-from modelscope_studio.utils import (CustomComponentDict, process_links,
-                                     resolve_frontend_dir)
+from ...utils import CustomComponentDict, process_links, resolve_frontend_dir
 
 set_documentation_group("component")
 
@@ -52,6 +51,7 @@ class ModelScopeMarkdown(Component):
         enable_base64: bool = False,
         enable_latex: bool = True,
         latex_single_dollar_delimiter: bool = True,
+        latex_delimiters: list[dict[str, str | bool]] | None = None,
         preview: bool = True,
         data_postprocess: Callable | None = None,
         data_preprocess: Callable | None = None,
@@ -66,6 +66,7 @@ class ModelScopeMarkdown(Component):
             rtl: If True, sets the direction of the rendered text to right-to-left. Default is False, which renders text left-to-right.
             enable_latex: If True, will enable LaTeX rendering.
             latex_single_dollar_delimiter: If True, will enable single dollar delimiter for LaTeX rendering.
+            latex_delimiters: A list of dicts of the form {"left": open delimiter (str), "right": close delimiter (str), "display": whether to display in newline (bool), "inline": whether to render inline (bool)} that will be used to render LaTeX expressions. For more information, see the [KaTeX documentation](https://katex.org/docs/autorender.html).
             elem_id: An optional string that is assigned as the id of this component in the HTML DOM. Can be used for targeting CSS styles.
             elem_classes: An optional list of strings that are assigned as the classes of this component in the HTML DOM. Can be used for targeting CSS styles.
             render: If False, component will not render be rendered in the Blocks context. Should be used if the intention is to assign event listeners now but render the component later.
@@ -79,6 +80,7 @@ class ModelScopeMarkdown(Component):
         self.rtl = rtl
         self.enable_latex = enable_latex
         self.latex_single_dollar_delimiter = latex_single_dollar_delimiter
+        self.latex_delimiters = latex_delimiters
         self.sanitize_html = sanitize_html
         self.preview = preview
         self.line_breaks = line_breaks

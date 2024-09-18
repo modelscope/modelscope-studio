@@ -14,7 +14,7 @@ from gradio_client.documentation import document, set_documentation_group
 from gradio_client.utils import is_http_url_like
 from PIL import Image as _Image  # using _ to minimize namespace pollution
 
-from modelscope_studio.utils import resolve_frontend_dir
+from ...utils import resolve_frontend_dir
 
 set_documentation_group("component")
 

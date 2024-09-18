@@ -9,8 +9,7 @@ from gradio.data_classes import GradioModel
 from gradio.events import Events
 from gradio_client.documentation import document
 
-from modelscope_studio.utils import CustomComponentDict, resolve_frontend_dir
-
+from ...utils import CustomComponentDict, resolve_frontend_dir
 from .edge import *
 from .edge import Edge
 from .node import *

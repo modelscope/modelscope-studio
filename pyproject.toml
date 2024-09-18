@@ -48,11 +48,6 @@ artifacts = [
   "backend/modelscope_studio/components/Markdown/templates",
   "backend/modelscope_studio/components/WaterfallGallery/templates",
   "/backend/modelscope_studio/components/Lifecycle/templates",
-  "/backend/modelscope_studio/components/Chatbot/templates",
-  "/backend/modelscope_studio/components/Flow/templates",
-  "/backend/modelscope_studio/components/Markdown/templates",
-  "/backend/modelscope_studio/components/MultimodalInput/templates",
-  "/backend/modelscope_studio/components/WaterfallGallery/templates",
 ]
 
 [tool.hatch.build.targets.sdist]

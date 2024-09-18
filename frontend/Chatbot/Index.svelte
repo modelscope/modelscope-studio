@@ -12,6 +12,7 @@
   import type {
     CustomComponents,
     MarkdownCustomData,
+    MarkdownProps,
   } from '@modelscope-studio/compiled';
   import { normalise_file } from '@modelscope-studio/shared';
 
@@ -56,6 +57,7 @@
   export let line_breaks = true;
   export let enable_latex: boolean;
   export let latex_single_dollar_delimiter: boolean;
+  export let latex_delimiters: MarkdownProps['latex_delimiters'];
   export let gradio: Gradio<{
     change: typeof value;
     select: SelectData;
@@ -180,6 +182,7 @@
       value={_value}
       {enable_latex}
       {latex_single_dollar_delimiter}
+      {latex_delimiters}
       {render_markdown}
       complete_message={!loading_status ||
         loading_status?.status === 'complete'}
