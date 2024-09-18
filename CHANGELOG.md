@@ -1,5 +1,11 @@
 # modelscope_studio
 
+## 0.5.0
+
+### Features
+
+- [`e271eb4`](https://github.com/modelscope/modelscope-studio/commit/e271eb493c98f1af0abf35d7109188fc7bf1e8c0) - support cutom latex delimiters in Markdown and Chatbot. Thanks [@Col0ring](https://github.com/Col0ring)!
+
 ## 0.4.2
 
 ### Fixes

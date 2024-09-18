@@ -1,6 +1,6 @@
 {
   "name": "@modelscope-studio/frontend",
-  "version": "0.4.2",
+  "version": "0.5.0",
   "devDependencies": {
     "@gradio/preview": "0.9.1"
   }

@@ -1,6 +1,6 @@
 {
   "name": "@modelscope-studio/shared",
-  "version": "0.4.2",
+  "version": "0.5.0",
   "description": "ModelScope Gradio Components",
   "repository": "git@github.com:modelscope/modelscope-studio.git",
   "license": "Apache-2.0",
