@@ -12,6 +12,7 @@ class ModelScopeFilter(ModelScopeLayoutComponent):
 
     def __init__(self,
                  *,
+                 params_mapping: str | None = None,
                  as_item: str | None = None,
                  _internal: None = None,
                  visible: bool = True,
@@ -21,6 +22,7 @@ class ModelScopeFilter(ModelScopeLayoutComponent):
                          render=render,
                          as_item=as_item,
                          **kwargs)
+        self.params_mapping = params_mapping
 
     FRONTEND_DIR = resolve_frontend_dir("filter", type='base')
 

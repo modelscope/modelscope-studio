@@ -5,8 +5,10 @@
     getSetSlotContextFn,
     getSlotContext,
   } from '@svelte-preprocess-react/slot';
+  import { createFunction } from '@utils/createFunction';
 
   export let as_item: string | undefined;
+  export let params_mapping: string;
   // gradio properties
   export let visible = true;
   export let _internal = {};
@@ -15,12 +17,16 @@
     _internal,
     as_item,
     visible,
+    params_mapping,
   });
   $: update({
     _internal,
     as_item,
     visible,
+    params_mapping,
   });
+  $: paramsMapping = $mergedProps.params_mapping;
+  $: paramsMappingFn = createFunction(paramsMapping);
 
   const setSlotContext = getSetSlotContextFn();
 
@@ -31,10 +37,14 @@
       visible: _visible,
       ...restProps
     } = $mergedProps;
-    if (!_as_item) {
-      setSlotContext(undefined);
+    if (paramsMappingFn) {
+      setSlotContext(paramsMappingFn(restProps));
     } else {
-      setSlotContext(restProps);
+      if (!as_item) {
+        setSlotContext(undefined);
+      } else {
+        setSlotContext(restProps);
+      }
     }
   }
 </script>

@@ -1,7 +1,7 @@
 import { getContext, setContext } from 'svelte';
 import { get, type Writable, writable } from 'svelte/store';
 
-const slotsKey = '$$ms-gr-antd-slots-key';
+const slotsKey = '$$ms-gr-slots-key';
 
 export function getSlots() {
   const slots = writable({} as Record<string, HTMLElement>);
@@ -25,7 +25,7 @@ export function getSetSlotFn() {
   };
 }
 
-const slotParamsKey = '$$ms-gr-antd-render-slot-context-key';
+const slotParamsKey = '$$ms-gr-render-slot-context-key';
 
 export function getSetSlotParamsFn() {
   const slotParams = setContext(
@@ -53,7 +53,7 @@ export function getSlotParams() {
     | undefined;
 }
 
-const slotContextKey = '$$ms-gr-antd-context-key';
+const slotContextKey = '$$ms-gr-context-key';
 export function getSetSlotContextFn() {
   const value = writable();
   setContext(slotContextKey, value);
@@ -130,7 +130,7 @@ export function getSlotContext<
   ];
 }
 
-const slotKey = '$$ms-gr-antd-slot-key';
+const slotKey = '$$ms-gr-slot-key';
 
 export function resetSlotKey() {
   setContext(slotKey, writable(undefined));
@@ -142,7 +142,7 @@ export function getSlotKey() {
   return getContext(slotKey) as Writable<string | undefined> | undefined;
 }
 
-const componentSlotContextKey = '$$ms-gr-antd-component-slot-context-key';
+const componentSlotContextKey = '$$ms-gr-component-slot-context-key';
 
 export function setComponentSlotContext({
   slot,

@@ -21,7 +21,7 @@ export type Item<T extends string = 'children'> =
   | undefined;
 
 export function createItemsContext(key: string) {
-  const itemKey = `$$ms-gr-antd-${key}-context-key`;
+  const itemKey = `$$ms-gr-${key}-context-key`;
   function getItems<T extends ('default' | (string & {}))[], V = Item>(
     allowedSlots: T = ['default'] as T
   ): {

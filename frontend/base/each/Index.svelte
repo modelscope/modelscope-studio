@@ -5,7 +5,8 @@
 
   import Each from './Each.svelte';
 
-  export let value: any[] = [];
+  export let context_value: Record<PropertyKey, any>;
+  export let value: Record<PropertyKey, any>[] = [];
   export let as_item: string | undefined;
   // gradio properties
   export let visible = true;
@@ -18,18 +19,25 @@
     value,
     as_item,
     visible,
+    context_value,
   });
   $: update({
     _internal,
     value,
     as_item,
     visible,
+    context_value,
   });
 </script>
 
 {#if $mergedProps.visible}
   {#each $mergedProps.value as item, i}
-    <Each value={item} index={$mergedProps._internal.index || 0} subIndex={i}>
+    <Each
+      {context_value}
+      value={item}
+      index={$mergedProps._internal.index || 0}
+      subIndex={i}
+    >
       <slot />
     </Each>
   {/each}

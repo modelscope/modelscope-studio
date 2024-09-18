@@ -5,12 +5,19 @@
 
   import Fragment from '../fragment/Index.svelte';
 
+  export let context_value: Record<PropertyKey, any>;
   export let index: number;
   export let subIndex: number;
-  export let value: any;
+  export let value: Record<PropertyKey, any>;
   const setSlotContext = getSetSlotContextFn();
-  setSlotContext(value);
-  $: setSlotContext(value);
+  setSlotContext({
+    ...context_value,
+    ...value,
+  });
+  $: setSlotContext({
+    ...context_value,
+    ...value,
+  });
 </script>
 
 <Fragment _internal={{ index, subIndex }}>

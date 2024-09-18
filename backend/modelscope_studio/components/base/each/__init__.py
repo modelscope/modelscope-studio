@@ -22,8 +22,9 @@ class ModelScopeEach(ModelScopeDataLayoutComponent):
 
     def __init__(
             self,
-            value: list | Callable = None,
+            value: list[dict] | Callable = None,
             *,
+            context_value: dict | None = None,
             as_item: str | None = None,
             _internal: None = None,
 
@@ -48,6 +49,7 @@ class ModelScopeEach(ModelScopeDataLayoutComponent):
                          every=every,
                          inputs=inputs,
                          **kwargs)
+        self.context_value = context_value
 
     FRONTEND_DIR = resolve_frontend_dir("each", type='base')
 

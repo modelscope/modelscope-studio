@@ -16,7 +16,7 @@
 
   const listeners: Array<() => void> = [];
 
-  const parent = getContext<TreeNode | undefined>('$$ms-gr-antd-react-wrapper');
+  const parent = getContext<TreeNode | undefined>('$$ms-gr-react-wrapper');
   const { slotKey, slotIndex, subSlotIndex } = getComponentSlotContext() || {};
   const node = svelteInit({
     parent,
@@ -30,7 +30,7 @@
       listeners.push(callback);
     },
   });
-  setContext('$$ms-gr-antd-react-wrapper', node);
+  setContext('$$ms-gr-react-wrapper', node);
   beforeUpdate(() => {
     props.set(extractProps($$props));
   });
