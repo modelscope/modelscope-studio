@@ -8,6 +8,17 @@
 
 # @modelscope-studio/flow
 
+## 0.5.0
+
+No significant changes to this package were made in this release.
+
+## 0.4.3
+
+### Patch Changes
+
+- Updated dependencies [[`e271eb4`](https://github.com/modelscope/modelscope-studio/commit/e271eb493c98f1af0abf35d7109188fc7bf1e8c0)]:
+  - @modelscope-studio/compiled@0.5.0
+
 ## 0.4.2
 
 No significant changes to this package were made in this release.

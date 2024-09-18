@@ -19,7 +19,7 @@ export function safeParseJSON<T>(str: string, defaultValue: T): T {
       return defaultValue;
     }
     return JSON.parse(str) as T;
-  } catch (e) {
+  } catch {
     return defaultValue;
   }
 }

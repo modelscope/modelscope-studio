@@ -3,6 +3,7 @@
     type CustomComponents,
     Markdown,
     type MarkdownCustomData,
+    type MarkdownProps,
   } from '@modelscope-studio/legacy-compiled';
   import { createEventDispatcher } from 'svelte';
 
@@ -16,6 +17,7 @@
   export let line_breaks = false;
   export let enable_latex: boolean;
   export let latex_single_dollar_delimiter: boolean;
+  export let latex_delimiters: MarkdownProps['latex_delimiters'];
   export let header_links = false;
   export let preview = true;
   export let enable_base64 = false;
@@ -46,6 +48,7 @@
     text={value}
     {enable_latex}
     {latex_single_dollar_delimiter}
+    {latex_delimiters}
     {sanitize_html}
     {line_breaks}
     {header_links}

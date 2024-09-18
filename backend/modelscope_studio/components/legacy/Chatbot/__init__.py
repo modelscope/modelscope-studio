@@ -105,6 +105,7 @@ class ModelScopeChatbot(Component):
             enable_base64: bool = False,
             enable_latex: bool = True,
             latex_single_dollar_delimiter: bool = True,
+            latex_delimiters: list[dict[str, str | bool]] | None = None,
             preview: bool = True,
             llm_thinking_presets: List[dict] = [],
             data_postprocess: Callable | None = None,
@@ -126,6 +127,7 @@ class ModelScopeChatbot(Component):
             height: height of the component in pixels.
             enable_latex: If True, will enable LaTeX rendering.
             latex_single_dollar_delimiter: If True, will enable single dollar delimiter for LaTeX rendering.
+            latex_delimiters: A list of dicts of the form {"left": open delimiter (str), "right": close delimiter (str), "display": whether to display in newline (bool), "inline": whether to render inline (bool)} that will be used to render LaTeX expressions. For more information, see the [KaTeX documentation](https://katex.org/docs/autorender.html).
             rtl: If True, sets the direction of the rendered text to right-to-left. Default is False, which renders text left-to-right.
             show_share_button: If True, will show a share icon in the corner of the component that allows user to share outputs. If False, icon does not appear.
             show_copy_button: If True, will show a copy button for each chatbot message.
@@ -150,6 +152,7 @@ class ModelScopeChatbot(Component):
         self.rtl = rtl
         self.enable_latex = enable_latex
         self.latex_single_dollar_delimiter = latex_single_dollar_delimiter
+        self.latex_delimiters = latex_delimiters
         self.show_share_button = show_share_button
         self.render_markdown = render_markdown
         self.show_copy_button = show_copy_button

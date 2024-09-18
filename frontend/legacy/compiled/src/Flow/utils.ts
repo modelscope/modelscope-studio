@@ -219,7 +219,7 @@ const ajvLocales: Record<string, typeof localize> = {
 export function compileValidationSchema(schema: JSONSchema) {
   try {
     return ajv.compile(schema);
-  } catch (error) {
+  } catch {
     return null;
   }
 }

@@ -19,7 +19,7 @@
     try {
       await copy_to_clipboard(value);
       copy_feedback();
-    } catch (error) {
+    } catch {
       //
     }
   }

@@ -6,6 +6,7 @@
   import type {
     CustomComponents,
     MarkdownCustomData,
+    MarkdownProps,
   } from '@modelscope-studio/legacy-compiled';
 
   import Markdown from './shared/Markdown.svelte';
@@ -30,6 +31,7 @@
   // custom
   export let enable_latex: boolean;
   export let latex_single_dollar_delimiter: boolean;
+  export let latex_delimiters: MarkdownProps['latex_delimiters'];
   export let enable_base64 = false;
   export let preview = true;
   export let custom_components: CustomComponents = {};
@@ -71,6 +73,7 @@
       on:custom={(e) => gradio.dispatch('custom', e.detail)}
       {enable_latex}
       {latex_single_dollar_delimiter}
+      {latex_delimiters}
       {sanitize_html}
       {line_breaks}
       {header_links}

@@ -10,6 +10,7 @@ import globals from 'globals';
 export const basic = [
   {
     ignores: [
+      '**/backend/**',
       '**/.git/**',
       '**/node_modules/**',
       '**/*.min.*',

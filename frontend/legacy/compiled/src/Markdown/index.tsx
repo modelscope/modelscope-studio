@@ -33,6 +33,10 @@ import rehypeSanitize, {
 import remarkDirectiveRehype from './remark-plugins/remark-directive-rehype';
 import type { MarkdownContextValue } from './context';
 import { MarkdownContext } from './context';
+import {
+  type RenderMathInElementSpecificOptionsDelimiters,
+  resolveDelimiters,
+} from './math';
 
 import 'katex/dist/katex.min.css';
 import './index.less';
@@ -51,6 +55,7 @@ export interface MarkdownProps extends MarkdownContextValue {
   enable_latex?: boolean;
   latex_single_dollar_delimiter?: boolean;
   enable_base64?: boolean;
+  latex_delimiters?: RenderMathInElementSpecificOptionsDelimiters[];
 }
 
 const buildInCustomComponents = {
@@ -81,13 +86,20 @@ export const Markdown = defineComponent<MarkdownProps>((props) => {
     on_load: _on_load,
     last_flushing_end_index,
     latex_single_dollar_delimiter = true,
+    latex_delimiters,
     enable_base64,
     enable_latex = true,
     on_custom,
     header_links = false,
     custom_components = defaultCustomComponents,
   } = props;
-  const text = _text.trim();
+  const text = useMemo(() => {
+    const v = _text.trim();
+    if (!enable_latex) {
+      return v;
+    }
+    return resolveDelimiters(v, latex_delimiters);
+  }, [_text, latex_delimiters, enable_latex]);
 
   useEffect(() => {
     const styleTagId = '$MODELSCOPE_STUDIO_MARKDOWN_THEME';

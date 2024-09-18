@@ -6,6 +6,7 @@
     type CustomComponents,
     FileView,
     type MarkdownCustomData,
+    type MarkdownProps,
   } from '@modelscope-studio/legacy-compiled';
   import { get_fetchable_url_or_file } from '@utils/upload';
   import { dequal } from 'dequal/lite';
@@ -43,6 +44,7 @@
     | null = null;
   export let enable_latex: boolean;
   export let latex_single_dollar_delimiter: boolean;
+  export let latex_delimiters: MarkdownProps['latex_delimiters'];
   export let pending_message = false;
   export let complete_message = false;
   export let selectable = false;
@@ -303,6 +305,7 @@
                         {preview}
                         message={message.text}
                         {enable_latex}
+                        {latex_delimiters}
                         {latex_single_dollar_delimiter}
                         {sanitize_html}
                         {render_markdown}

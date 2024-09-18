@@ -17,7 +17,7 @@
     "lint:style": "stylelint --allow-empty-input --cache --fix \"**/*.{less,css}\" ",
     "changeset": "changeset",
     "fix-changelog": "node ./config/changelog/dist/fix-changelog.mjs",
-    "version": "changeset version && pnpm -F '@modelscope-studio/changelog' build && pnpm run fix-changelog",
+    "version": "pnpm -F '@modelscope-studio/changelog' build && changeset version && pnpm run fix-changelog",
     "ci:create-tag-n-release": "tsx ./scripts/create-tag-n-release.ts",
     "ci:publish": "tsx ./scripts/publish-to-pypi.ts",
     "ci:version": "pnpm run version"

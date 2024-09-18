@@ -116,7 +116,7 @@
             undefined
           ));
       return (val?.filter(Boolean) as FileData[]) || [];
-    } catch (error) {
+    } catch {
       return [];
     } finally {
       uploading = false;
