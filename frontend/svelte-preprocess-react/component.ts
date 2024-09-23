@@ -1,4 +1,5 @@
 import type { Gradio } from '@gradio/utils';
+import { mapKeys, omit } from 'lodash-es';
 
 export async function initialize() {
   if (!window.ms_globals.initializePromise) {
@@ -16,6 +17,41 @@ export async function importComponent<T extends { default: any }>(
 ): Promise<T['default']> {
   await initialize();
   return importer().then((m) => m.default);
+}
+
+function convertToCamelCase(str: string) {
+  return str.replace(/(^|_)(\w)/g, (_match, _separator, char, index) => {
+    if (index === 0) {
+      return char.toLowerCase();
+    } else {
+      return char.toUpperCase();
+    }
+  });
+}
+
+export function getComponentRestProps<T extends Record<string, any>>(
+  props: T,
+  mapping: Record<keyof T, string> = {} as Record<keyof T, string>
+) {
+  const gradioProps = [
+    'interactive',
+    'gradio',
+    'server',
+    'target',
+    'theme_mode',
+    'root',
+    'name',
+    'visible',
+    'elem_id',
+    'elem_classes',
+    'elem_style',
+    '_internal',
+    'props',
+    'value',
+  ];
+  return mapKeys(omit(props, gradioProps), (_, key) => {
+    return mapping[key] || convertToCamelCase(key);
+  });
 }
 
 export function bindEvents<

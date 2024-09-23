@@ -38,7 +38,7 @@ type ConfigProviderProps = GetProps<typeof AConfigProvider>;
 
 export const ConfigProvider = sveltify<
   Omit<ConfigProviderProps, 'theme' | 'locale'> & {
-    theme_mode: string;
+    themeMode: string;
     theme?: Omit<ConfigProviderProps['theme'], 'algorithm'> & {
       algorithm?: {
         // Auto recognition
@@ -54,7 +54,7 @@ export const ConfigProvider = sveltify<
 >(
   ({
     slots,
-    theme_mode,
+    themeMode,
     id,
     className,
     style,
@@ -66,7 +66,7 @@ export const ConfigProvider = sveltify<
   }) => {
     const [locale, setLocale] = useState<Locale>();
     const algorithm = {
-      dark: theme_mode === 'dark' ? true : false,
+      dark: themeMode === 'dark' ? true : false,
       ...(props.theme?.algorithm || {}),
     };
     const getPopupContainerFunction = useFunction(getPopupContainer);

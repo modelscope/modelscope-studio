@@ -1,6 +1,8 @@
 import { getContext, setContext } from 'svelte';
 import { get, type Writable, writable } from 'svelte/store';
 
+import { getComponentRestProps } from './component';
+
 const slotsKey = '$$ms-gr-slots-key';
 
 export function getSlots() {
@@ -70,8 +72,12 @@ export function getSlotContext<
   T extends {
     as_item?: string;
     _internal: Record<string, any>;
+    restProps?: Record<string, any>;
   },
->(props: T): [Writable<T>, (props: T) => void] {
+>(
+  props: T,
+  restPropsMapping?: Record<keyof T['restProps'], string>
+): [Writable<T>, (props: T) => void] {
   if (!Reflect.has(props, 'as_item') || !Reflect.has(props, '_internal')) {
     throw new Error('`as_item` and `_internal` is required');
   }
@@ -90,20 +96,38 @@ export function getSlotContext<
   resetSlotKey();
   const ctx = getContext(slotContextKey) as Writable<T>;
   const as_item = get(ctx)?.as_item || props.as_item;
-  const initialCtxValue = ctx
+  const initialCtxValue: Record<string, any> = ctx
     ? as_item
-      ? get(ctx)[as_item as keyof T]
+      ? (get(ctx)[as_item as keyof T] as Record<string, any>)
       : get(ctx)
     : {};
-  const mergedProps = writable({
+  const mergeRestProps = (
+    restProps?: Record<string, any>,
+    ctxValue?: Record<string, any>
+  ) => {
+    return restProps
+      ? getComponentRestProps(
+          {
+            ...restProps,
+            ...(ctxValue || {}),
+          },
+          restPropsMapping
+        )
+      : undefined;
+  };
+  const mergedProps = writable<T>({
     ...props,
     ...initialCtxValue,
+    restProps: mergeRestProps(props.restProps, initialCtxValue),
   });
   if (!ctx) {
     return [
       mergedProps,
       (v) => {
-        mergedProps.set(v);
+        mergedProps.set({
+          ...v,
+          restProps: mergeRestProps(v.restProps),
+        });
       },
     ];
   }
@@ -115,16 +139,20 @@ export function getSlotContext<
     mergedProps.update((prev) => ({
       ...prev,
       ...ctxValue,
+      restProps: mergeRestProps(prev.restProps, ctxValue),
     }));
   });
 
   return [
     mergedProps,
     (v) => {
-      const ctxValue = v.as_item ? get(ctx)[v.as_item as keyof T] : get(ctx);
+      const ctxValue: Record<string, any> = v.as_item
+        ? (get(ctx)[v.as_item as keyof T] as Record<string, any>)
+        : get(ctx);
       return mergedProps.set({
         ...v,
         ...ctxValue,
+        restProps: mergeRestProps(v.restProps, ctxValue),
       });
     },
   ];

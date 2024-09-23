@@ -31,6 +31,7 @@
     elem_classes,
     elem_style,
     as_item,
+    restProps: $$restProps,
   });
   const slots = getSlots();
   $: update({
@@ -42,6 +43,7 @@
     elem_classes,
     elem_style,
     as_item,
+    restProps: $$restProps,
   });
 </script>
 
@@ -51,9 +53,10 @@
       className={cls('ms-gr-antd-config-provider', $mergedProps.elem_classes)}
       id={$mergedProps.elem_id}
       style={$mergedProps.elem_style}
+      {...$mergedProps.restProps}
       {...$mergedProps.props}
       slots={$slots}
-      theme_mode={$mergedProps.gradio.theme}
+      themeMode={$mergedProps.gradio.theme}
     >
       <slot />
     </ConfigProvider>

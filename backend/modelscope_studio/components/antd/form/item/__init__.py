@@ -1,10 +1,10 @@
 from __future__ import annotations
 
-from .....utils.dev import ModelScopeDataLayoutComponent, resolve_frontend_dir
+from .....utils.dev import ModelScopeLayoutComponent, resolve_frontend_dir
 from .rule import AntdFormItemRule
 
 
-class AntdFormItem(ModelScopeDataLayoutComponent):
+class AntdFormItem(ModelScopeLayoutComponent):
     """
     """
     Rule = AntdFormItemRule
