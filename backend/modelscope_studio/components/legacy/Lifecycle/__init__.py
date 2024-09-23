@@ -56,6 +56,7 @@ class ModelScopeLifecycle(Component):
 
     def __init__(
         self,
+        value: LifecycleData | dict | None = None,
         *,
         every: float | None = None,
         _bind_mount_event: bool | None = None,
@@ -69,7 +70,7 @@ class ModelScopeLifecycle(Component):
         self._bind_mount_event = _bind_mount_event
         self._bind_resize_event = _bind_resize_event
         self._bind_unmount_event = _bind_unmount_event
-        super().__init__(every=every)
+        super().__init__(value=value, every=every)
 
     def preprocess(
             self, payload: LifecycleData | dict | None
