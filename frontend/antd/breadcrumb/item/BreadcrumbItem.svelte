@@ -91,6 +91,7 @@
         renderSlot($slots['dropdownProps.menu.overflowedIndicator']) ||
         $mergedProps.props.dropdownProps?.menu?.overflowedIndicator,
     };
+
     const dropdownProps = {
       ...($mergedProps.props.dropdownProps || {}),
       dropdownRender: createFunction(
@@ -98,7 +99,7 @@
       ),
       menu:
         Object.values(dropdownMenu).filter(Boolean).length > 0
-          ? menu
+          ? dropdownMenu
           : undefined,
     };
     const currentMergedProps = {

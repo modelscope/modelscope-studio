@@ -39,6 +39,7 @@ export const Table = sveltify<
     pagination,
     loading,
     rowKey,
+    summary,
     rowSelection,
     rowSelectionItems,
     expandableItems,
@@ -73,7 +74,7 @@ export const Table = sveltify<
     const stickyGetContainerFunction = useFunction(stickyConfig.getContainer);
     const onRowFunction = useFunction(onRow);
     const onHeaderRowFunction = useFunction(onHeaderRow);
-
+    const summaryFunction = useFunction(summary);
     return (
       <>
         <div style={{ display: 'none' }}>{children}</div>
@@ -106,6 +107,7 @@ export const Table = sveltify<
           }, [columnItems, columns])}
           onRow={onRowFunction}
           onHeaderRow={onHeaderRowFunction}
+          summary={summaryFunction}
           rowSelection={useMemo(() => {
             return (
               rowSelection ||

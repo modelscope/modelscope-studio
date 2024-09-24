@@ -101,6 +101,8 @@ from .slider.mark import AntdSliderMark as SliderMark
 from .space import AntdSpace as Space
 from .space.compact import AntdSpaceCompact as SpaceCompact
 from .spin import AntdSpin as Spin
+from .splitter import AntdSplitter as Splitter
+from .splitter.panel import AntdSplitterPanel as SplitterPanel
 from .statistic import AntdStatistic as Statistic
 from .statistic import AntdStatisticCountdown as StatisticCountdown
 from .steps import AntdSteps as Steps

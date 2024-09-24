@@ -62,6 +62,9 @@ class AntdButton(ModelScopeLayoutComponent):
             href_target: str | None = None,
             type: Literal["primary", "dashed", "link", "text", "default"]
         | None = "default",
+            variant: Literal["outlined", "dashed", "solid", "filled", "text",
+                             "link"] | None = None,
+            color: Literal['default', 'primary', 'danger'] | None = None,
             as_item: str | None = None,
             _internal: None = None,
             # gradio properties
@@ -89,6 +92,8 @@ class AntdButton(ModelScopeLayoutComponent):
             styles:  Semantic DOM style.
             href_target:  Same as target attribute of a, works when href is specified.
             type:  Set button type.
+            variant: Set button variant.
+            color: Set button color.
         """
         super().__init__(visible=visible,
                          elem_id=elem_id,
@@ -115,6 +120,8 @@ class AntdButton(ModelScopeLayoutComponent):
         self.styles = styles
         self.href_target = href_target
         self.type = type
+        self.variant = variant
+        self.color = color
 
     FRONTEND_DIR = resolve_frontend_dir("button")
 

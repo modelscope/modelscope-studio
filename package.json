@@ -32,7 +32,7 @@
     "@manypkg/get-packages": "^2.2.2",
     "@modelscope-studio/changelog": "workspace:*",
     "@modelscope-studio/lint-config": "workspace:*",
-    "eslint": "^9.10.0",
+    "eslint": "^9.11.0",
     "husky": "^9.1.6",
     "lint-staged": "^15.2.10",
     "node-fetch": "^3.3.2",

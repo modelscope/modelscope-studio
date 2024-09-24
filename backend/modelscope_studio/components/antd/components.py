@@ -99,6 +99,8 @@ from .slider.mark import AntdSliderMark
 from .space import AntdSpace
 from .space.compact import AntdSpaceCompact
 from .spin import AntdSpin
+from .splitter import AntdSplitter
+from .splitter.panel import AntdSplitterPanel
 from .statistic import AntdStatistic, AntdStatisticCountdown
 from .steps import AntdSteps
 from .steps.item import AntdStepsItem

@@ -7,6 +7,7 @@ import { type GetProps, Pagination as APagination } from 'antd';
 export const Pagination = sveltify<
   GetProps<typeof APagination> & {
     onValueChange: (page: number, pageSize: number) => void;
+    children?: React.ReactNode;
   },
   ['showQuickJumper.goButton']
 >(
@@ -16,27 +17,31 @@ export const Pagination = sveltify<
     showTotal,
     showQuickJumper,
     onChange,
+    children,
     ...props
   }) => {
     const showTotalFunction = useFunction(showTotal);
     return (
-      <APagination
-        {...props}
-        showTotal={showTotal ? showTotalFunction : undefined}
-        onChange={(page, pageSize) => {
-          onValueChange(page, pageSize);
-          onChange?.(page, pageSize);
-        }}
-        showQuickJumper={
-          slots['showQuickJumper.goButton']
-            ? {
-                goButton: (
-                  <ReactSlot slot={slots['showQuickJumper.goButton']} />
-                ),
-              }
-            : showQuickJumper
-        }
-      />
+      <>
+        <div style={{ display: 'none' }}>{children}</div>
+        <APagination
+          {...props}
+          showTotal={showTotal ? showTotalFunction : undefined}
+          onChange={(page, pageSize) => {
+            onValueChange(page, pageSize);
+            onChange?.(page, pageSize);
+          }}
+          showQuickJumper={
+            slots['showQuickJumper.goButton']
+              ? {
+                  goButton: (
+                    <ReactSlot slot={slots['showQuickJumper.goButton']} />
+                  ),
+                }
+              : showQuickJumper
+          }
+        />
+      </>
     );
   }
 );

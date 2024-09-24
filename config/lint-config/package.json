@@ -17,8 +17,8 @@
   },
   "dependencies": {
     "@eslint/compat": "^1.1.1",
-    "@eslint/js": "^9.7.0",
-    "@typescript-eslint/parser": "^8.5.0",
+    "@eslint/js": "^9.11.0",
+    "@typescript-eslint/parser": "^8.6.0",
     "eslint-config-prettier": "^9.0.0",
     "eslint-import-resolver-typescript": "^3.6.0",
     "eslint-plugin-import": "^2.29.1",
@@ -26,11 +26,11 @@
     "eslint-plugin-prettier": "5.2.1",
     "eslint-plugin-react": "^7.36.1",
     "eslint-plugin-react-hooks": "^4.6.2",
-    "eslint-plugin-react-refresh": "^0.4.8",
+    "eslint-plugin-react-refresh": "^0.4.12",
     "eslint-plugin-simple-import-sort": "^12.1.0",
-    "eslint-plugin-svelte": "^2.42.0",
+    "eslint-plugin-svelte": "^2.44.0",
     "globals": "^15.6.0",
-    "postcss": "^8.4.38",
+    "postcss": "^8.4.47",
     "postcss-less": "^6.0.0",
     "stylelint-config-ali": "^2.1.1",
     "stylelint-config-rational-order": "^0.1.2",
@@ -38,8 +38,8 @@
     "stylelint-declaration-block-no-ignored-properties": "^2.8.0",
     "stylelint-order": "^6.0.4",
     "stylelint-prettier": "^5.0.2",
-    "svelte-eslint-parser": "^0.41.0",
-    "typescript-eslint": "^8.5.0"
+    "svelte-eslint-parser": "^0.41.1",
+    "typescript-eslint": "^8.6.0"
   },
   "devDependencies": {
     "@types/eslint": "^9.6.1",

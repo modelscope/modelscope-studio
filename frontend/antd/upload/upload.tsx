@@ -50,6 +50,15 @@ export const Upload = sveltify<
       slots['showUploadList.extra'] ||
       typeof showUploadList === 'object';
     const showUploadListConfig = getConfig(showUploadList);
+    const showUploadListShowPreviewIconFunction = useFunction(
+      showUploadListConfig.showPreviewIcon
+    );
+    const showUploadListShowRemoveIconFunction = useFunction(
+      showUploadListConfig.showRemoveIcon
+    );
+    const showUploadListShowDownloadIconFunction = useFunction(
+      showUploadListConfig.showDownloadIcon
+    );
     const beforeUploadFunction = useFunction(beforeUpload);
     const customRequestFunction = useFunction(customRequest);
     const progressFormatFunction = useFunction(progress?.format);
@@ -115,6 +124,15 @@ export const Upload = sveltify<
           supportShowUploadListConfig
             ? {
                 ...showUploadListConfig,
+                showDownloadIcon:
+                  showUploadListShowDownloadIconFunction ||
+                  showUploadListConfig.showDownloadIcon,
+                showRemoveIcon:
+                  showUploadListShowRemoveIconFunction ||
+                  showUploadListConfig.showRemoveIcon,
+                showPreviewIcon:
+                  showUploadListShowPreviewIconFunction ||
+                  showUploadListConfig.showPreviewIcon,
                 downloadIcon: slots['showUploadList.downloadIcon'] ? (
                   <ReactSlot slot={slots['showUploadList.downloadIcon']} />
                 ) : (

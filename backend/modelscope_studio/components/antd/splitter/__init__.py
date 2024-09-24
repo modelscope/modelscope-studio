@@ -4,27 +4,38 @@ from typing import Any, Literal
 
 from gradio.events import EventListener
 
-from .....utils.dev import ModelScopeLayoutComponent, resolve_frontend_dir
+from ....utils.dev import ModelScopeLayoutComponent, resolve_frontend_dir
+from .panel import AntdSplitterPanel
 
 
-class AntdMenuItem(ModelScopeLayoutComponent):
+class AntdSplitter(ModelScopeLayoutComponent):
     """
+    Split panels to isolate.
+
+    Can be used to separate areas horizontally or vertically. When you need to freely drag and adjust the size of each area. When you need to specify the maximum and minimum width and height of an area.
     """
+    Panel = AntdSplitterPanel
 
     EVENTS = [
-        EventListener("title_click",
+        EventListener("resize_start",
+                      doc="Callback before dragging starts.",
                       callback=lambda block: block._internal.update(
-                          bind_titleClick_event=True)),
+                          bind_resizeStart_event=True)),
+        EventListener("resize",
+                      doc="Panel size change callback.",
+                      callback=lambda block: block._internal.update(
+                          bind_resize_event=True)),
+        EventListener("resize_end",
+                      doc="Drag end callback.",
+                      callback=lambda block: block._internal.update(
+                          bind_resizeEnd_event=True)),
     ]
-
-    # supported slots
-    SLOTS = ["title", 'icon', "label", "extra"]
 
     def __init__(
             self,
-            label: str | None = None,
             props: dict | None = None,
             *,
+            layout: Literal['horizontal', 'vertical'] | None = 'horizontal',
             as_item: str | None = None,
             _internal: None = None,
             # gradio properties
@@ -34,6 +45,10 @@ class AntdMenuItem(ModelScopeLayoutComponent):
             elem_style: dict | None = None,
             render: bool = True,
             **kwargs):
+        """
+        Parameters:
+            layout: Layout direction.
+        """
         super().__init__(visible=visible,
                          elem_id=elem_id,
                          elem_classes=elem_classes,
@@ -41,10 +56,10 @@ class AntdMenuItem(ModelScopeLayoutComponent):
                          as_item=as_item,
                          elem_style=elem_style,
                          **kwargs)
-        self.label = label
         self.props = props
+        self.layout = layout
 
-    FRONTEND_DIR = resolve_frontend_dir("menu", "item")
+    FRONTEND_DIR = resolve_frontend_dir("splitter")
 
     @property
     def skip_api(self):

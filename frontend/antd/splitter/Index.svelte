@@ -5,21 +5,17 @@
     bindEvents,
     importComponent,
   } from '@svelte-preprocess-react/component';
-  import {
-    getSetSlotParamsFn,
-    getSlotContext,
-    getSlots,
-  } from '@svelte-preprocess-react/slot';
+  import { getSlotContext, getSlots } from '@svelte-preprocess-react/slot';
   import type React from 'react';
   import type { Gradio } from '@gradio/utils';
   import cls from 'classnames';
   import { writable } from 'svelte/store';
 
-  const AwaitedTypographyBase = importComponent(
-    () => import('./typography.base')
-  );
-  export let component: 'text' | 'title' | 'paragraph' | 'link';
-  export let gradio: Gradio = {} as Gradio;
+  import { getItems } from './context';
+
+  const AwaitedSplitter = importComponent(() => import('./splitter'));
+
+  export let gradio: Gradio;
   export let props: Record<string, any> = {};
   const updatedProps = writable(props);
   $: updatedProps.update((prev) => ({ ...prev, ...props }));
@@ -27,8 +23,7 @@
     layout?: boolean;
   } = {};
 
-  export let value = '';
-  export let as_item: string | undefined = undefined;
+  export let as_item: string | undefined;
   // gradio properties
   export let visible = true;
   export let elem_id = '';
@@ -39,47 +34,41 @@
     gradio,
     props: $updatedProps,
     _internal,
-    value,
     visible,
     elem_id,
     elem_classes,
     elem_style,
     as_item,
+    restProps: $$restProps,
   });
-  const setSlotParams = getSetSlotParamsFn();
   const slots = getSlots();
   $: update({
     gradio,
     props: $updatedProps,
     _internal,
-    value,
     visible,
     elem_id,
     elem_classes,
     elem_style,
     as_item,
+    restProps: $$restProps,
   });
+  const { default: items } = getItems();
 </script>
 
-<!-- $$slots.default and slot fallbacks are not working in gradio -->
 {#if $mergedProps.visible}
-  {#await AwaitedTypographyBase then TypographyBase}
-    <TypographyBase
-      {component}
+  {#await AwaitedSplitter then Splitter}
+    <Splitter
       style={$mergedProps.elem_style}
-      className={cls($mergedProps.elem_classes)}
-      id={$mergedProps.elem_id}
+      className={cls($mergedProps.elem_classes, 'ms-gr-antd-splitter')}
+      {...$mergedProps.restProps}
       {...$mergedProps.props}
       {...bindEvents($mergedProps)}
       slots={$slots}
-      {setSlotParams}
+      items={$items}
     >
-      {#if $mergedProps._internal.layout}
-        <slot></slot>
-      {:else}
-        {$mergedProps.value}
-      {/if}
-    </TypographyBase>
+      <slot />
+    </Splitter>
   {/await}
 {/if}
 

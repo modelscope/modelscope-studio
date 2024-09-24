@@ -29,12 +29,17 @@ export function getSetSlotFn() {
 
 const slotParamsKey = '$$ms-gr-render-slot-context-key';
 
-export function getSetSlotParamsFn() {
+export type SetSlotParams = (
+  key: string,
+  params: any[] | ((prevValue: any[]) => any[])
+) => void;
+
+export function getSetSlotParamsFn(): SetSlotParams {
   const slotParams = setContext(
     slotParamsKey,
     writable<Record<string, any[]>>({})
   );
-  return (key: string, params: any[] | ((prevValue: any[]) => any[])) => {
+  return (key, params) => {
     slotParams.update((v) => {
       if (typeof params === 'function') {
         return {

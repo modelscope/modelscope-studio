@@ -1,6 +1,8 @@
 import { sveltify } from '@svelte-preprocess-react';
 import { ReactSlot } from '@svelte-preprocess-react/react-slot';
+import type { SetSlotParams } from '@svelte-preprocess-react/slot';
 import React, { useMemo } from 'react';
+import { renderSlot } from '@utils/renderSlot';
 import { type GetProps, Typography } from 'antd';
 import type { EllipsisConfig } from 'antd/es/typography/Base';
 import cls from 'classnames';
@@ -20,8 +22,10 @@ export const TypographyBase = sveltify<
     GetProps<typeof Typography.Title> &
     GetProps<typeof Typography.Link> & {
       component: 'title' | 'paragraph' | 'text' | 'link';
+      setSlotParams: SetSlotParams;
     },
   [
+    // list
     'copyable.icon',
     // list
     'copyable.tooltips',
@@ -41,9 +45,11 @@ export const TypographyBase = sveltify<
     copyable,
     editable,
     ellipsis,
+    setSlotParams,
     ...props
   }) => {
     const copyableTooltipsTargets = useTargets(children, 'copyable.tooltips');
+    const copyableIconTargets = useTargets(children, 'copyable.icon');
     const supportCopy =
       slots['copyable.icon'] || copyableTooltipsTargets.length > 0 || copyable;
     const supportEdit =
@@ -86,11 +92,12 @@ export const TypographyBase = sveltify<
                         return <ReactSlot key={index} slot={slot} />;
                       })
                     : copyableConfig.tooltips,
-                icon: slots['copyable.icon'] ? (
-                  <ReactSlot slot={slots['copyable.icon']} />
-                ) : (
-                  copyableConfig.icon
-                ),
+                icon:
+                  copyableIconTargets.length > 0
+                    ? copyableIconTargets.map((slot, index) => {
+                        return <ReactSlot key={index} slot={slot} />;
+                      })
+                    : copyableConfig.icon,
               }
             : undefined
         }
@@ -122,11 +129,12 @@ export const TypographyBase = sveltify<
             : supportEllipsis
               ? ({
                   ...ellipsisConfig,
-                  symbol: slots['ellipsis.symbol'] ? (
-                    <ReactSlot slot={slots['ellipsis.symbol']} />
-                  ) : (
-                    ellipsisConfig.symbol
-                  ),
+                  symbol: slots['ellipsis.symbol']
+                    ? (...args) => {
+                        setSlotParams('ellipsis.symbol', args);
+                        return renderSlot(slots['ellipsis.symbol']);
+                      }
+                    : ellipsisConfig.symbol,
                   tooltip: slots['ellipsis.tooltip'] ? (
                     <ReactSlot slot={slots['ellipsis.tooltip']} />
                   ) : (
