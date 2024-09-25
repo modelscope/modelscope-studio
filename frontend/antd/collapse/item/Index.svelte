@@ -44,6 +44,7 @@
     elem_style,
     as_item,
     label,
+    restProps: $$restProps,
   });
   const slots = getSlots();
   $: update({
@@ -56,6 +57,7 @@
     elem_style,
     as_item,
     label,
+    restProps: $$restProps,
   });
   const setItem = getSetItemFn();
   $: setItem($slotKey, $mergedProps._internal.index || 0, {
@@ -64,6 +66,7 @@
       className: cls($mergedProps.elem_classes, 'ms-gr-antd-collapse-item'),
       id: $mergedProps.elem_id,
       label: $mergedProps.label,
+      ...$mergedProps.restProps,
       ...$mergedProps.props,
       ...bindEvents($mergedProps),
     },

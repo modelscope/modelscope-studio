@@ -41,6 +41,7 @@
     elem_style,
     as_item,
     value,
+    restProps: $$restProps,
   });
   const slots = getSlots();
   $: update({
@@ -53,6 +54,7 @@
     elem_style,
     as_item,
     value,
+    restProps: $$restProps,
   });
   const { presets } = getItems(['presets']);
 </script>
@@ -63,6 +65,7 @@
       style={$mergedProps.elem_style}
       className={cls($mergedProps.elem_classes, 'ms-gr-antd-color-picker')}
       id={$mergedProps.elem_id}
+      {...$mergedProps.restProps}
       {...$mergedProps.props}
       {...bindEvents($mergedProps)}
       value={$mergedProps.props.value ?? $mergedProps.value}

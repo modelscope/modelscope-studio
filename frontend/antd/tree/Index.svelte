@@ -42,6 +42,7 @@
     elem_style,
     as_item,
     value,
+    restProps: $$restProps,
   });
 
   const slots = getSlots();
@@ -55,6 +56,7 @@
     elem_style,
     as_item,
     value,
+    restProps: $$restProps,
   });
   const { treeData, default: children } = getItems(['default', 'treeData']);
 
@@ -74,6 +76,7 @@
       style={$mergedProps.elem_style}
       className={cls($mergedProps.elem_classes, 'ms-gr-antd-tree')}
       id={$mergedProps.elem_id}
+      {...$mergedProps.restProps}
       {...$mergedProps.props}
       {...bindEvents($mergedProps)}
       slots={$slots}

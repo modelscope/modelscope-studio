@@ -46,6 +46,7 @@
     colors,
     default_open,
     label,
+    restProps: $$restProps,
   });
   const slots = getSlots();
   $: update({
@@ -60,6 +61,7 @@
     colors,
     default_open,
     label,
+    restProps: $$restProps,
   });
   const setItem = getSetItemFn();
 
@@ -74,6 +76,7 @@
       label: $mergedProps.label,
       colors: $mergedProps.colors,
       defaultOpen: $mergedProps.default_open,
+      ...$mergedProps.restProps,
       ...$mergedProps.props,
       ...bindEvents($mergedProps),
     },

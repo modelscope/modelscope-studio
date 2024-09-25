@@ -45,6 +45,7 @@
     elem_style,
     as_item,
     value,
+    restProps: $$restProps,
   });
   const slots = getSlots();
   $: update({
@@ -57,6 +58,7 @@
     elem_style,
     as_item,
     value,
+    restProps: $$restProps,
   });
 
   const setExpandableItem = getSetExpandableItemFn();
@@ -72,6 +74,7 @@
         ),
         id: $mergedProps.elem_id,
         expandedRowKeys: $mergedProps.value,
+        ...$mergedProps.restProps,
         ...$mergedProps.props,
         ...events,
         onExpandedRowsChange: (expandedKeys: string[]) => {

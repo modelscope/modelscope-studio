@@ -44,6 +44,7 @@
     elem_style,
     as_item,
     title,
+    restProps: $$restProps,
   });
   const slots = getSlots();
   $: update({
@@ -56,6 +57,7 @@
     elem_style,
     as_item,
     title,
+    restProps: $$restProps,
   });
   const setItem = getSetItemFn();
   const {
@@ -105,6 +107,7 @@
     const currentMergedProps = {
       ...$mergedProps,
       props: {
+        ...$mergedProps.restProps,
         ...$mergedProps.props,
         title: $mergedProps.props.title || title,
         menu: Object.values(menu).filter(Boolean).length > 0 ? menu : undefined,

@@ -43,6 +43,7 @@
     elem_style,
     as_item,
     label,
+    restProps: $$restProps,
   });
   const slots = getSlots();
   $: update({
@@ -55,6 +56,7 @@
     elem_style,
     as_item,
     label,
+    restProps: $$restProps,
   });
   const setItem = getSetItemFn();
 
@@ -64,6 +66,7 @@
       className: cls($mergedProps.elem_classes, 'ms-gr-antd-descriptions-item'),
       id: $mergedProps.elem_id,
       label: $mergedProps.label,
+      ...$mergedProps.restProps,
       ...$mergedProps.props,
       ...bindEvents($mergedProps),
     },

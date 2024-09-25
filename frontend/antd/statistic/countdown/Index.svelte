@@ -36,6 +36,7 @@
     elem_classes,
     elem_style,
     value,
+    restProps: $$restProps,
   });
   $: update({
     gradio,
@@ -47,6 +48,7 @@
     elem_classes,
     elem_style,
     value,
+    restProps: $$restProps,
   });
 </script>
 
@@ -59,6 +61,7 @@
         'ms-gr-antd-statistic-coutdown'
       )}
       id={$mergedProps.elem_id}
+      {...$mergedProps.restProps}
       {...$mergedProps.props}
       {...bindEvents($mergedProps)}
       slots={$slots}

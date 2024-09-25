@@ -39,6 +39,7 @@
     elem_classes,
     elem_style,
     as_item,
+    restProps: $$restProps,
   });
   const slots = getSlots();
   $: update({
@@ -50,6 +51,7 @@
     elem_classes,
     elem_style,
     as_item,
+    restProps: $$restProps,
   });
 </script>
 
@@ -62,6 +64,7 @@
         'ms-gr-antd-alert-error-boundary'
       )}
       id={$mergedProps.elem_id}
+      {...$mergedProps.restProps}
       {...$mergedProps.props}
       {...bindEvents($mergedProps)}
       slots={$slots}

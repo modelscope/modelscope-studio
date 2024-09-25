@@ -22,12 +22,6 @@
   } = {};
 
   export let value = '';
-  export let dashed;
-  export let variant;
-  export let orientation;
-  export let orientation_margin;
-  export let plain;
-  export let type;
   export let as_item: string | undefined;
   // gradio properties
   export let visible = true;
@@ -45,12 +39,7 @@
     elem_classes,
     elem_style,
     as_item,
-    dashed,
-    variant,
-    orientation,
-    orientation_margin,
-    plain,
-    type,
+    restProps: $$restProps,
   });
   const slots = getSlots();
   $: update({
@@ -63,23 +52,14 @@
     elem_classes,
     elem_style,
     as_item,
-    dashed,
-    variant,
-    orientation,
-    orientation_margin,
-    plain,
-    type,
+    restProps: $$restProps,
   });
   $: passed_props = {
     style: $mergedProps.elem_style,
     className: cls($mergedProps.elem_classes, 'ms-gr-antd-divider'),
     id: $mergedProps.elem_id,
-    dashed: $mergedProps.dashed,
-    variant: $mergedProps.variant,
-    orientation: $mergedProps.orientation,
-    orientationMargin: $mergedProps.orientation_margin,
-    plain: $mergedProps.plain,
-    type: $mergedProps.type,
+    ...$mergedProps.restProps,
+    ...$mergedProps.restProps,
     ...$mergedProps.props,
     ...bindEvents($mergedProps),
     slots: $slots,

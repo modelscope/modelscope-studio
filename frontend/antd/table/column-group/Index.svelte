@@ -38,6 +38,7 @@
     elem_style,
     as_item,
     title,
+    restProps: $$restProps,
   });
 
   const slots = getSlots();
@@ -51,6 +52,7 @@
     elem_style,
     as_item,
     title,
+    restProps: $$restProps,
   });
 
   const setColumnItem = getSetColumnItemFn();
@@ -64,6 +66,7 @@
       ),
       id: $mergedProps.elem_id,
       title: $mergedProps.title,
+      ...$mergedProps.restProps,
       ...$mergedProps.props,
       ...bindEvents($mergedProps),
     },

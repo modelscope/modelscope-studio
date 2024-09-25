@@ -39,6 +39,7 @@
     elem_classes,
     elem_style,
     as_item,
+    restProps: $$restProps,
   });
 
   const slots = getSlots();
@@ -52,6 +53,7 @@
     elem_classes,
     elem_style,
     as_item,
+    restProps: $$restProps,
   });
 </script>
 
@@ -60,6 +62,7 @@
     style={$mergedProps.elem_style}
     className={cls($mergedProps.elem_classes, 'ms-gr-antd-notification')}
     id={$mergedProps.elem_id}
+    {...$mergedProps.restProps}
     {...$mergedProps.props}
     {...bindEvents($mergedProps)}
     message={$mergedProps.props.message || $mergedProps.message}

@@ -37,6 +37,7 @@
     elem_classes,
     elem_style,
     as_item,
+    restProps: $$restProps,
   });
 
   const slots = getSlots();
@@ -49,6 +50,7 @@
     elem_classes,
     elem_style,
     as_item,
+    restProps: $$restProps,
   });
   const { items, default: children } = getItems(['items', 'default']);
 </script>
@@ -60,6 +62,7 @@
       style={$mergedProps.elem_style}
       className={cls($mergedProps.elem_classes, 'ms-gr-antd-steps')}
       id={$mergedProps.elem_id}
+      {...$mergedProps.restProps}
       {...$mergedProps.props}
       {...bindEvents($mergedProps)}
       slots={$slots}

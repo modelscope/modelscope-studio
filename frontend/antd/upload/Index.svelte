@@ -38,6 +38,7 @@
     elem_classes,
     elem_style,
     as_item,
+    restProps: $$restProps,
   });
 
   const slots = getSlots();
@@ -51,6 +52,7 @@
     elem_classes,
     elem_style,
     as_item,
+    restProps: $$restProps,
   });
 </script>
 
@@ -62,6 +64,7 @@
       className={cls($mergedProps.elem_classes, 'ms-gr-antd-upload')}
       id={$mergedProps.elem_id}
       fileList={$mergedProps.value}
+      {...$mergedProps.restProps}
       {...$mergedProps.props}
       {...bindEvents($mergedProps)}
       slots={$slots}

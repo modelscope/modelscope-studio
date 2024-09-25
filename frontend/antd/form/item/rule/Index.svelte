@@ -37,6 +37,7 @@
     elem_classes,
     elem_style,
     as_item,
+    restProps: $$restProps,
   });
   $: update({
     gradio,
@@ -47,10 +48,12 @@
     elem_classes,
     elem_style,
     as_item,
+    restProps: $$restProps,
   });
   const setRuleItem = getSetRuleItemFn();
   $: setRuleItem($slotKey, $mergedProps._internal.index || 0, {
     props: {
+      ...$mergedProps.restProps,
       ...$mergedProps.props,
       ...bindEvents($mergedProps),
       transform: createFunction($mergedProps.props.transform),

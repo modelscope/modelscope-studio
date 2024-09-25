@@ -11,7 +11,6 @@
   $: updatedProps.update((prev) => ({ ...prev, ...props }));
   export let _internal: Record<string, any> = {};
 
-  export let script_url: string | string[] = '';
   export let as_item: string | undefined;
   // gradio properties
   export let visible = true;
@@ -19,21 +18,21 @@
   const [mergedProps, update] = getSlotContext({
     props: $updatedProps,
     _internal,
-    script_url,
     visible,
     as_item,
+    restProps: $$restProps,
   });
   $: update({
     props: $updatedProps,
     _internal,
-    script_url,
     visible,
     as_item,
+    restProps: $$restProps,
   });
   const options = setIconfontContext();
   $: {
     const newOptions = {
-      scriptUrl: $mergedProps.script_url,
+      ...$mergedProps.restProps,
       ...$mergedProps.props,
     };
     options.update((prev) => {

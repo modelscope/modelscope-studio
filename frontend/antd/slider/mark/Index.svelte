@@ -44,6 +44,7 @@
     as_item,
     label,
     number,
+    restProps: $$restProps,
   });
   const slots = getSlots();
   $: update({
@@ -57,6 +58,7 @@
     as_item,
     label,
     number,
+    restProps: $$restProps,
   });
   const slot: Writable<HTMLElement> = writable();
   const setItem = getSetItemFn();
@@ -68,6 +70,7 @@
       id: $mergedProps.elem_id,
       number: $mergedProps.number,
       label: $mergedProps.label,
+      ...$mergedProps.restProps,
       ...$mergedProps.props,
       ...bindEvents($mergedProps),
     },

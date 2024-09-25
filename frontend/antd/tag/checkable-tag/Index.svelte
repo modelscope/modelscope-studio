@@ -44,6 +44,7 @@
     as_item,
     value,
     label,
+    restProps: $$restProps,
   });
 
   const slots = getSlots();
@@ -58,6 +59,7 @@
     as_item,
     value,
     label,
+    restProps: $$restProps,
   });
 </script>
 
@@ -68,6 +70,7 @@
       style={$mergedProps.elem_style}
       className={cls($mergedProps.elem_classes, 'ms-gr-antd-tag-checkable-tag')}
       id={$mergedProps.elem_id}
+      {...$mergedProps.restProps}
       {...$mergedProps.props}
       {...bindEvents($mergedProps)}
       slots={$slots}

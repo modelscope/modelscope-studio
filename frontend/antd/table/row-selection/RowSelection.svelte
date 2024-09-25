@@ -46,6 +46,7 @@
     elem_style,
     as_item,
     value,
+    restProps: $$restProps,
   });
   const slots = getSlots();
   $: update({
@@ -58,6 +59,7 @@
     elem_style,
     as_item,
     value,
+    restProps: $$restProps,
   });
   const { selections: selectionsItems } = getSelectionItems(['selections']);
   const setRowSelectionItem = getSetRowSelectionItemFn();
@@ -74,6 +76,7 @@
         selectedRowKeys: $mergedProps.value,
         selections:
           $mergedProps.props.selections || renderItems($selectionsItems),
+        ...$mergedProps.restProps,
         ...$mergedProps.props,
         ...events,
         onChange: (selectedRowKeys: string[] | number[], ...args: any[]) => {

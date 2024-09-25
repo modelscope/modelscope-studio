@@ -37,6 +37,7 @@
     elem_classes,
     elem_style,
     as_item,
+    restProps: $$restProps,
   });
 
   const slots = getSlots();
@@ -49,6 +50,7 @@
     elem_classes,
     elem_style,
     as_item,
+    restProps: $$restProps,
   });
   const setItem = getSetItemFn();
   $: setItem($slotKey, $mergedProps._internal.index || 0, {
@@ -56,6 +58,7 @@
       style: $mergedProps.elem_style,
       className: cls($mergedProps.elem_classes, 'ms-gr-antd-tabs-item'),
       id: $mergedProps.elem_id,
+      ...$mergedProps.restProps,
       ...$mergedProps.props,
       ...bindEvents($mergedProps),
     },

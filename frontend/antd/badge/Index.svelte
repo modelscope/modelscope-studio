@@ -39,6 +39,7 @@
     elem_classes,
     elem_style,
     as_item,
+    restProps: $$restProps,
   });
   const slots = getSlots();
   $: update({
@@ -51,12 +52,14 @@
     elem_classes,
     elem_style,
     as_item,
+    restProps: $$restProps,
   });
 
   $: badge_props = {
     style: $mergedProps.elem_style,
     className: cls($mergedProps.elem_classes, 'ms-gr-antd-badge'),
     id: $mergedProps.elem_id,
+    ...$mergedProps.restProps,
     ...$mergedProps.props,
     ...bindEvents($mergedProps),
     slots: $slots,

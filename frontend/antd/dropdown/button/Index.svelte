@@ -43,6 +43,7 @@
     elem_style,
     as_item,
     value,
+    restProps: $$restProps,
   });
   const slots = getSlots();
   $: update({
@@ -55,6 +56,7 @@
     elem_style,
     as_item,
     value,
+    restProps: $$restProps,
   });
   const { 'menu.items': items } = getItems(['menu.items']);
 </script>
@@ -65,6 +67,7 @@
       style={$mergedProps.elem_style}
       className={cls($mergedProps.elem_classes, 'ms-gr-antd-dropdown-button')}
       id={$mergedProps.elem_id}
+      {...$mergedProps.restProps}
       {...$mergedProps.props}
       {...bindEvents($mergedProps)}
       slots={$slots}

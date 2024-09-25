@@ -41,6 +41,7 @@
     elem_style,
     as_item,
     value,
+    restProps: $$restProps,
   });
 
   const slots = getSlots();
@@ -54,6 +55,7 @@
     elem_style,
     as_item,
     value,
+    restProps: $$restProps,
   });
   const { presets } = getItems(['presets']);
 </script>
@@ -64,6 +66,7 @@
       style={$mergedProps.elem_style}
       className={cls($mergedProps.elem_classes, 'ms-gr-antd-date-picker')}
       id={$mergedProps.elem_id}
+      {...$mergedProps.restProps}
       {...$mergedProps.props}
       {...bindEvents($mergedProps)}
       slots={$slots}

@@ -38,6 +38,7 @@
     elem_style,
     as_item,
     value,
+    restProps: $$restProps,
   });
   const slots = getSlots();
   $: update({
@@ -50,6 +51,7 @@
     elem_style,
     as_item,
     value,
+    restProps: $$restProps,
   });
 </script>
 
@@ -60,6 +62,7 @@
       className={cls($mergedProps.elem_classes, 'ms-gr-antd-rate')}
       id={$mergedProps.elem_id}
       value={$mergedProps.value}
+      {...$mergedProps.restProps}
       {...$mergedProps.props}
       {...bindEvents($mergedProps)}
       slots={$slots}

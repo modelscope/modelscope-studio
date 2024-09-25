@@ -37,6 +37,7 @@
     elem_style,
     as_item,
     title,
+    restProps: $$restProps,
   });
   const slots = getSlots();
   $: update({
@@ -49,6 +50,7 @@
     elem_style,
     as_item,
     title,
+    restProps: $$restProps,
   });
 </script>
 
@@ -58,6 +60,7 @@
       style={$mergedProps.elem_style}
       className={cls($mergedProps.elem_classes, 'ms-gr-antd-tooltip')}
       id={$mergedProps.elem_id}
+      {...$mergedProps.restProps}
       {...$mergedProps.props}
       {...bindEvents($mergedProps)}
       slots={$slots}

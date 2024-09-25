@@ -26,6 +26,9 @@ class AntdIcon(ModelScopeComponent):
             value: str | None = "GithubOutlined",
             props: dict | None = None,
             *,
+            spin: bool = False,
+            rotate: int | float | None = None,
+            component: str | None = None,
             as_item: str | None = None,
             _internal: None = None,
             # gradio properties
@@ -44,6 +47,9 @@ class AntdIcon(ModelScopeComponent):
                          elem_style=elem_style,
                          **kwargs)
         self.props = props
+        self.spin = spin
+        self.rotate = rotate
+        self.component = component
 
     FRONTEND_DIR = resolve_frontend_dir("icon")
 

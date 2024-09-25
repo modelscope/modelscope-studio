@@ -30,16 +30,22 @@
   export let elem_classes: string[] = [];
   export let elem_style: React.CSSProperties = {};
 
-  const [mergedProps, update] = getSlotContext({
-    gradio,
-    props: $updatedProps,
-    _internal,
-    visible,
-    elem_id,
-    elem_classes,
-    elem_style,
-    as_item,
-  });
+  const [mergedProps, update] = getSlotContext(
+    {
+      gradio,
+      props: $updatedProps,
+      _internal,
+      visible,
+      elem_id,
+      elem_classes,
+      elem_style,
+      as_item,
+      restProps: $$restProps,
+    },
+    {
+      elem_target: 'target',
+    }
+  );
   const slots = getSlots();
   $: update({
     gradio,
@@ -50,6 +56,7 @@
     elem_classes,
     elem_style,
     as_item,
+    restProps: $$restProps,
   });
 </script>
 
@@ -62,6 +69,7 @@
         'ms-gr-antd-float-button-back-top'
       )}
       id={$mergedProps.elem_id}
+      {...$mergedProps.restProps}
       {...$mergedProps.props}
       {...bindEvents($mergedProps)}
       slots={$slots}

@@ -39,6 +39,7 @@
     elem_classes,
     elem_style,
     as_item,
+    restProps: $$restProps,
   });
 
   const slots = getSlots();
@@ -51,6 +52,7 @@
     elem_classes,
     elem_style,
     as_item,
+    restProps: $$restProps,
   });
 
   const setColumnItem = getSetColumnItemFn();
@@ -70,6 +72,7 @@
                 'ms-gr-antd-table-column'
               ),
               id: $mergedProps.elem_id,
+              ...$mergedProps.restProps,
               ...$mergedProps.props,
               ...bindEvents($mergedProps),
               render: createFunction($mergedProps.props.render),

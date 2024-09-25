@@ -43,6 +43,7 @@
     elem_style,
     as_item,
     title,
+    restProps: $$restProps,
   });
   const slots = getSlots();
   $: update({
@@ -55,6 +56,7 @@
     elem_style,
     as_item,
     title,
+    restProps: $$restProps,
   });
   const setItem = getSetItemFn();
   const { default: items } = getItems();
@@ -64,6 +66,7 @@
       className: cls($mergedProps.elem_classes, 'ms-gr-antd-tree-node'),
       id: $mergedProps.elem_id,
       title: $mergedProps.title,
+      ...$mergedProps.restProps,
       ...$mergedProps.props,
       ...bindEvents($mergedProps),
     },

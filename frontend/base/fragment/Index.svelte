@@ -18,11 +18,13 @@
     _internal,
     visible,
     as_item,
+    restProps: $$restProps,
   });
   $: update({
     _internal,
     visible,
     as_item,
+    restProps: $$restProps,
   });
 </script>
 

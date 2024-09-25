@@ -40,6 +40,7 @@
     elem_style,
     as_item,
     value,
+    restProps: $$restProps,
   });
   const slots = getSlots();
   $: update({
@@ -52,6 +53,7 @@
     elem_style,
     as_item,
     value,
+    restProps: $$restProps,
   });
 </script>
 
@@ -61,6 +63,7 @@
       style={$mergedProps.elem_style}
       className={cls($mergedProps.elem_classes, 'ms-gr-antd-input-textarea')}
       id={$mergedProps.elem_id}
+      {...$mergedProps.restProps}
       {...$mergedProps.props}
       {...bindEvents($mergedProps)}
       value={$mergedProps.props.value ?? $mergedProps.value}

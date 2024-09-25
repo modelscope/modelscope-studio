@@ -29,7 +29,6 @@
   export let elem_id = '';
   export let elem_classes: string[] = [];
   export let elem_style: React.CSSProperties = {};
-  export let inner_elem_style: React.CSSProperties = {};
   const [mergedProps, update] = getSlotContext({
     gradio,
     props: $updatedProps,
@@ -39,7 +38,7 @@
     elem_classes,
     elem_style,
     as_item,
-    inner_elem_style,
+    restProps: $$restProps,
   });
   const slots = getSlots();
   $: update({
@@ -51,7 +50,7 @@
     elem_classes,
     elem_style,
     as_item,
-    inner_elem_style,
+    restProps: $$restProps,
   });
   const { 'menu.items': items } = getItems(['menu.items']);
 </script>
@@ -62,11 +61,11 @@
       style={$mergedProps.elem_style}
       className={cls($mergedProps.elem_classes, 'ms-gr-antd-dropdown')}
       id={$mergedProps.elem_id}
+      {...$mergedProps.restProps}
       {...$mergedProps.props}
       {...bindEvents($mergedProps)}
       slots={$slots}
       menuItems={$items}
-      innerStyle={$mergedProps.inner_elem_style}
     >
       <slot />
     </Dropdown>

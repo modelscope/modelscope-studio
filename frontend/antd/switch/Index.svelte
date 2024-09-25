@@ -36,6 +36,7 @@
     elem_style,
     as_item,
     value,
+    restProps: $$restProps,
   });
 
   const slots = getSlots();
@@ -49,6 +50,7 @@
     elem_style,
     as_item,
     value,
+    restProps: $$restProps,
   });
 </script>
 
@@ -59,6 +61,7 @@
       className={cls($mergedProps.elem_classes, 'ms-gr-antd-switch')}
       id={$mergedProps.elem_id}
       value={$mergedProps.value}
+      {...$mergedProps.restProps}
       {...$mergedProps.props}
       {...bindEvents($mergedProps)}
       slots={$slots}

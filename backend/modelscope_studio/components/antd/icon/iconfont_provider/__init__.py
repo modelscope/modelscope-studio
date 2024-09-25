@@ -16,6 +16,7 @@ class AntdIconfontProvider(ModelScopeLayoutComponent):
             script_url: str | list[str] | None = None,
             props: dict | None = None,
             *,
+            extra_common_props: dict | None = None,
             as_item: str | None = None,
             _internal: None = None,
             # gradio properties
@@ -27,6 +28,7 @@ class AntdIconfontProvider(ModelScopeLayoutComponent):
                          as_item=as_item,
                          **kwargs)
         self.script_url = script_url
+        self.extra_common_props = extra_common_props
         self.props = props
 
     FRONTEND_DIR = resolve_frontend_dir("icon", "iconfont-provider")

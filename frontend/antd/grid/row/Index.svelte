@@ -23,10 +23,6 @@
     layout?: boolean;
   } = {};
 
-  export let align;
-  export let gutter;
-  export let justify;
-  export let wrap;
   export let as_item: string | undefined;
   // gradio properties
   export let visible = true;
@@ -43,10 +39,7 @@
     elem_classes,
     elem_style,
     as_item,
-    align,
-    gutter,
-    justify,
-    wrap,
+    restProps: $$restProps,
   });
   const slots = getSlots();
   $: update({
@@ -58,10 +51,7 @@
     elem_classes,
     elem_style,
     as_item,
-    align,
-    gutter,
-    justify,
-    wrap,
+    restProps: $$restProps,
   });
   const { default: cols } = getItems();
 </script>
@@ -72,10 +62,7 @@
       style={$mergedProps.elem_style}
       className={cls($mergedProps.elem_classes, 'ms-gr-antd-row')}
       id={$mergedProps.elem_id}
-      align={$mergedProps.align}
-      gutter={$mergedProps.gutter}
-      justify={$mergedProps.justify}
-      wrap={$mergedProps.wrap}
+      {...$mergedProps.restProps}
       {...$mergedProps.props}
       {...bindEvents($mergedProps)}
       slots={$slots}

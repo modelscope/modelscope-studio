@@ -14,9 +14,6 @@
   const AwaitedCardMeta = importComponent(() => import('./card.meta'));
   export let gradio: Gradio;
   export let _internal: Record<string, any> = {};
-  export let avatar;
-  export let description;
-  export let title;
   export let as_item: string | undefined;
   export let props: Record<string, any> = {};
   const updatedProps = writable(props);
@@ -38,9 +35,7 @@
     elem_id,
     elem_classes,
     elem_style,
-    avatar,
-    description,
-    title,
+    restProps: $$restProps,
   });
   $: update({
     gradio,
@@ -51,9 +46,7 @@
     elem_id,
     elem_classes,
     elem_style,
-    avatar,
-    description,
-    title,
+    restProps: $$restProps,
   });
 </script>
 
@@ -63,9 +56,7 @@
       style={$mergedProps.elem_style}
       className={cls($mergedProps.elem_classes, 'ms-gr-antd-card-meta')}
       id={$mergedProps.elem_id}
-      avatar={$mergedProps.avatar}
-      description={$mergedProps.description}
-      title={$mergedProps.title}
+      {...$mergedProps.restProps}
       {...$mergedProps.props}
       {...bindEvents($mergedProps)}
       slots={$slots}

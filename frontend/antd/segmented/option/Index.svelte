@@ -43,6 +43,7 @@
     elem_style,
     as_item,
     value,
+    restProps: $$restProps,
   });
   const slots = getSlots();
   $: update({
@@ -55,6 +56,7 @@
     elem_style,
     as_item,
     value,
+    restProps: $$restProps,
   });
   const setItem = getSetItemFn();
   $: setItem($slotKey, $mergedProps._internal.index || 0, {
@@ -63,6 +65,7 @@
       className: cls($mergedProps.elem_classes, 'ms-gr-antd-segmented-option'),
       id: $mergedProps.elem_id,
       value: $mergedProps.value,
+      ...$mergedProps.restProps,
       ...$mergedProps.props,
       ...bindEvents($mergedProps),
     },

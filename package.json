@@ -12,7 +12,7 @@
     "lint": "npm-run-all --parallel lint:* && npm run format",
     "format": "prettier --cache --write '**/*.{js,jsx,tsx,ts,svelte,less,md,yaml,yml,json}' --no-error-on-unmatched-pattern",
     "lint:js": "eslint . --fix  --cache",
-    "lint:ts": "tsc",
+    "lint:ts": "tsc && svelte-check --tsconfig ./tsconfig.json",
     "lint:py": "flake8 . && isort . && yapf --in-place --recursive --exclude=node_modules/ .",
     "lint:style": "stylelint --allow-empty-input --cache --fix \"**/*.{less,css}\" ",
     "changeset": "changeset",
@@ -43,6 +43,7 @@
     "rimraf": "^6.0.1",
     "stylelint": "^16.9.0",
     "svelte": "^4.2.19",
+    "svelte-check": "^4.0.2",
     "tslib": "^2.7.0",
     "tsx": "^4.19.1",
     "typescript": "^5.6.2"

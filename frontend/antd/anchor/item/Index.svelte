@@ -40,6 +40,7 @@
     elem_classes,
     elem_style,
     as_item,
+    restProps: $$restProps,
   });
   const slots = getSlots();
   $: update({
@@ -51,6 +52,7 @@
     elem_classes,
     elem_style,
     as_item,
+    restProps: $$restProps,
   });
   const setItem = getSetItemFn();
   const { default: items } = getItems();
@@ -59,6 +61,7 @@
       style: $mergedProps.elem_style,
       className: cls($mergedProps.elem_classes, 'ms-gr-antd-anchor-item'),
       id: $mergedProps.elem_id,
+      ...$mergedProps.restProps,
       ...$mergedProps.props,
       ...bindEvents($mergedProps),
     },

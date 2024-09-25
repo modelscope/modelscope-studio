@@ -41,6 +41,7 @@
     elem_style,
     as_item,
     value,
+    restProps: $$restProps,
   });
 
   const slots = getSlots();
@@ -54,6 +55,7 @@
     elem_style,
     as_item,
     value,
+    restProps: $$restProps,
   });
 </script>
 
@@ -66,6 +68,7 @@
         'ms-gr-antd-time-picker-range-picker'
       )}
       id={$mergedProps.elem_id}
+      {...$mergedProps.restProps}
       {...$mergedProps.props}
       {...bindEvents($mergedProps)}
       slots={$slots}

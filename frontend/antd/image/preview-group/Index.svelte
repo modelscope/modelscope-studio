@@ -40,6 +40,7 @@
     elem_style,
     as_item,
     items,
+    restProps: $$restProps,
   });
   const slots = getSlots();
   $: update({
@@ -52,6 +53,7 @@
     elem_style,
     as_item,
     items,
+    restProps: $$restProps,
   });
 </script>
 
@@ -65,6 +67,7 @@
         'ms-gr-antd-image-preview-group'
       )}
       id={$mergedProps.elem_id}
+      {...$mergedProps.restProps}
       {...$mergedProps.props}
       {...bindEvents($mergedProps)}
       slots={$slots}

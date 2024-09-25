@@ -14,7 +14,6 @@
   const AwaitedCardGrid = importComponent(() => import('./card.grid'));
   export let gradio: Gradio;
   export let _internal: Record<string, any> = {};
-  export let hoverable;
   export let as_item: string | undefined;
   export let props: Record<string, any> = {};
   const updatedProps = writable(props);
@@ -33,7 +32,7 @@
     elem_id,
     elem_classes,
     elem_style,
-    hoverable,
+    restProps: $$restProps,
   });
   const slots = getSlots();
   $: update({
@@ -45,7 +44,7 @@
     elem_id,
     elem_classes,
     elem_style,
-    hoverable,
+    restProps: $$restProps,
   });
 </script>
 
@@ -55,7 +54,7 @@
       style={$mergedProps.elem_style}
       className={cls($mergedProps.elem_classes, 'ms-gr-antd-card-grid')}
       id={$mergedProps.elem_id}
-      hoverable={$mergedProps.hoverable}
+      {...$mergedProps.restProps}
       {...$mergedProps.props}
       {...bindEvents($mergedProps)}
       slots={$slots}

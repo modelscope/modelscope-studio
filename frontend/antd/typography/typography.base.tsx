@@ -2,7 +2,7 @@ import { sveltify } from '@svelte-preprocess-react';
 import { ReactSlot } from '@svelte-preprocess-react/react-slot';
 import type { SetSlotParams } from '@svelte-preprocess-react/slot';
 import React, { useMemo } from 'react';
-import { renderSlot } from '@utils/renderSlot';
+import { renderParamsSlot } from '@utils/renderParamsSlot';
 import { type GetProps, Typography } from 'antd';
 import type { EllipsisConfig } from 'antd/es/typography/Base';
 import cls from 'classnames';
@@ -130,10 +130,11 @@ export const TypographyBase = sveltify<
               ? ({
                   ...ellipsisConfig,
                   symbol: slots['ellipsis.symbol']
-                    ? (...args) => {
-                        setSlotParams('ellipsis.symbol', args);
-                        return renderSlot(slots['ellipsis.symbol']);
-                      }
+                    ? renderParamsSlot({
+                        key: 'ellipsis.symbol',
+                        setSlotParams,
+                        slots,
+                      })
                     : ellipsisConfig.symbol,
                   tooltip: slots['ellipsis.tooltip'] ? (
                     <ReactSlot slot={slots['ellipsis.tooltip']} />

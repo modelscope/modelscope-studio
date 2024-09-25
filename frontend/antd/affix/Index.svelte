@@ -28,16 +28,22 @@
   export let elem_classes: string[] = [];
   export let elem_style: React.CSSProperties = {};
 
-  const [mergedProps, update] = getSlotContext({
-    gradio,
-    props: $updatedProps,
-    _internal,
-    visible,
-    elem_id,
-    elem_classes,
-    elem_style,
-    as_item,
-  });
+  const [mergedProps, update] = getSlotContext(
+    {
+      gradio,
+      props: $updatedProps,
+      _internal,
+      visible,
+      elem_id,
+      elem_classes,
+      elem_style,
+      as_item,
+      restProps: $$restProps,
+    },
+    {
+      elem_target: 'target',
+    }
+  );
   const slots = getSlots();
   $: update({
     gradio,
@@ -48,6 +54,7 @@
     elem_classes,
     elem_style,
     as_item,
+    restProps: $$restProps,
   });
 </script>
 
@@ -57,6 +64,7 @@
       style={$mergedProps.elem_style}
       className={cls($mergedProps.elem_classes, 'ms-gr-antd-affix')}
       id={$mergedProps.elem_id}
+      {...$mergedProps.restProps}
       {...$mergedProps.props}
       {...bindEvents($mergedProps)}
       slots={$slots}

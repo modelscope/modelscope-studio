@@ -22,6 +22,7 @@ class AntdFloatButtonBackTop(ModelScopeLayoutComponent):
             self,
             props: dict | None = None,
             *,
+            elem_target: str | None = None,
             as_item: str | None = None,
             _internal: None = None,
             # gradio properties
@@ -39,6 +40,7 @@ class AntdFloatButtonBackTop(ModelScopeLayoutComponent):
                          elem_style=elem_style,
                          **kwargs)
         self.props = props
+        self.elem_target = elem_target
 
     FRONTEND_DIR = resolve_frontend_dir("float-button", "back-top")
 

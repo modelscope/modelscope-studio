@@ -50,6 +50,7 @@
     disabled,
     title,
     required,
+    restProps: $$restProps,
   });
   const slots = getSlots();
   $: update({
@@ -66,6 +67,7 @@
     disabled,
     title,
     required,
+    restProps: $$restProps,
   });
   const setItem = getSetItemFn();
 
@@ -82,6 +84,7 @@
       disabled: $mergedProps.disabled,
       title: $mergedProps.title,
       required: $mergedProps.required,
+      ...$mergedProps.restProps,
       ...$mergedProps.props,
       ...bindEvents($mergedProps),
     },

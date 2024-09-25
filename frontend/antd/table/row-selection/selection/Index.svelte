@@ -45,6 +45,7 @@
     as_item,
     text,
     built_in_selection,
+    restProps: $$restProps,
   });
   const slots = getSlots();
   $: update({
@@ -58,6 +59,7 @@
     as_item,
     text,
     built_in_selection,
+    restProps: $$restProps,
   });
   const setSelectionItem = getSetSelectionItemFn();
   $: setSelectionItem<Item | string>(
@@ -74,6 +76,7 @@
             ),
             id: $mergedProps.elem_id,
             text: $mergedProps.text,
+            ...$mergedProps.restProps,
             ...$mergedProps.props,
             ...bindEvents($mergedProps),
           },

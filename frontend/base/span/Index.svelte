@@ -40,6 +40,7 @@
     elem_id,
     elem_classes,
     elem_style,
+    restProps: $$restProps,
   });
   $: update({
     gradio,
@@ -51,6 +52,7 @@
     elem_id,
     elem_classes,
     elem_style,
+    restProps: $$restProps,
   });
   let events: { event: string; handler: (...args: any[]) => any }[] = [];
 
@@ -86,6 +88,7 @@
         : $mergedProps.elem_style}
       class={$mergedProps.elem_classes.join(' ')}
       id={$mergedProps.elem_id}
+      {...$mergedProps.restProps}
       {...$mergedProps.props}
     >
       {#if $mergedProps._internal.layout}

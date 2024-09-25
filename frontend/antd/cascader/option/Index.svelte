@@ -44,6 +44,7 @@
     as_item,
     value,
     label,
+    restProps: $$restProps,
   });
   const slots = getSlots();
   $: update({
@@ -57,6 +58,7 @@
     as_item,
     value,
     label,
+    restProps: $$restProps,
   });
   const setItem = getSetItemFn();
   const { default: items } = getItems();
@@ -68,6 +70,7 @@
       id: $mergedProps.elem_id,
       label: $mergedProps.label,
       value: $mergedProps.value,
+      ...$mergedProps.restProps,
       ...$mergedProps.props,
       ...bindEvents($mergedProps),
     },

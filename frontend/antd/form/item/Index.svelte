@@ -21,8 +21,6 @@
   export let _internal: {
     layout?: boolean;
   } = {};
-  export let label: string;
-  export let form_name: string | number | (string | number)[];
   export let as_item: string | undefined;
   // gradio properties
   export let visible = true;
@@ -30,18 +28,22 @@
   export let elem_classes: string[] = [];
   export let elem_style: React.CSSProperties = {};
 
-  const [mergedProps, update] = getSlotContext({
-    gradio,
-    props: $updatedProps,
-    _internal,
-    visible,
-    elem_id,
-    elem_classes,
-    elem_style,
-    as_item,
-    label,
-    form_name,
-  });
+  const [mergedProps, update] = getSlotContext(
+    {
+      gradio,
+      props: $updatedProps,
+      _internal,
+      visible,
+      elem_id,
+      elem_classes,
+      elem_style,
+      as_item,
+      restProps: $$restProps,
+    },
+    {
+      form_name: 'name',
+    }
+  );
   const slots = getSlots();
   $: update({
     gradio,
@@ -52,8 +54,7 @@
     elem_classes,
     elem_style,
     as_item,
-    label,
-    form_name,
+    restProps: $$restProps,
   });
   const { rules: ruleItems } = getRuleItems(['rules']);
 </script>
@@ -64,10 +65,9 @@
       style={$mergedProps.elem_style}
       className={cls($mergedProps.elem_classes, 'ms-gr-antd-form-item')}
       id={$mergedProps.elem_id}
+      {...$mergedProps.restProps}
       {...$mergedProps.props}
       {...bindEvents($mergedProps)}
-      name={$mergedProps.props.name ?? $mergedProps.form_name}
-      label={$mergedProps.props.label ?? $mergedProps.label}
       slots={$slots}
       ruleItems={$ruleItems}
     >

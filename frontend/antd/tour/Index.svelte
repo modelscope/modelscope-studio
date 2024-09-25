@@ -39,6 +39,7 @@
     as_item,
     value,
     open,
+    restProps: $$restProps,
   });
 
   const slots = getSlots();
@@ -53,6 +54,7 @@
     as_item,
     value,
     open,
+    restProps: $$restProps,
   });
   const { steps, default: children } = getItems(['steps', 'default']);
 </script>
@@ -64,6 +66,7 @@
       style={$mergedProps.elem_style}
       className={cls($mergedProps.elem_classes, 'ms-gr-antd-tour')}
       id={$mergedProps.elem_id}
+      {...$mergedProps.restProps}
       {...$mergedProps.props}
       {...bindEvents($mergedProps)}
       current={$mergedProps.props.current ?? $mergedProps.value}

@@ -19,18 +19,6 @@
     index?: number;
   } = {};
 
-  export let flex;
-  export let offset;
-  export let order;
-  export let pull;
-  export let push;
-  export let span;
-  export let xs;
-  export let sm;
-  export let md;
-  export let lg;
-  export let xl;
-  export let xxl;
   export let as_item: string | undefined;
   // gradio properties
   export let visible = true;
@@ -47,18 +35,7 @@
     elem_classes,
     elem_style,
     as_item,
-    flex,
-    offset,
-    order,
-    pull,
-    push,
-    span,
-    xs,
-    sm,
-    md,
-    lg,
-    xl,
-    xxl,
+    restProps: $$restProps,
   });
 
   $: update({
@@ -70,18 +47,7 @@
     elem_classes,
     elem_style,
     as_item,
-    flex,
-    offset,
-    order,
-    pull,
-    push,
-    span,
-    xs,
-    sm,
-    md,
-    lg,
-    xl,
-    xxl,
+    restProps: $$restProps,
   });
 
   const slot: Writable<HTMLElement> = writable();
@@ -94,18 +60,8 @@
           style: $mergedProps.elem_style,
           className: cls($mergedProps.elem_classes, 'ms-gr-antd-col'),
           id: $mergedProps.elem_id,
-          flex: $mergedProps.flex,
-          offset: $mergedProps.offset,
-          order: $mergedProps.order,
-          pull: $mergedProps.pull,
-          push: $mergedProps.push,
-          span: $mergedProps.span,
-          xs: $mergedProps.xs,
-          sm: $mergedProps.sm,
-          md: $mergedProps.md,
-          lg: $mergedProps.lg,
-          xl: $mergedProps.xl,
-          xxl: $mergedProps.xxl,
+          ...$mergedProps.restProps,
+          ...$mergedProps.restProps,
           ...$mergedProps.props,
           ...bindEvents($mergedProps),
         },

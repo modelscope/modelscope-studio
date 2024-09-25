@@ -21,13 +21,6 @@
     layout?: boolean;
   } = {};
 
-  export let vertical;
-  export let wrap;
-  export let justify;
-  export let align;
-  export let flex;
-  export let gap;
-  export let component;
   export let as_item: string | undefined;
   // gradio properties
   export let visible = true;
@@ -44,13 +37,7 @@
     elem_classes,
     elem_style,
     as_item,
-    vertical,
-    wrap,
-    justify,
-    align,
-    flex,
-    gap,
-    component,
+    restProps: $$restProps,
   });
   const slots = getSlots();
   $: update({
@@ -62,13 +49,7 @@
     elem_classes,
     elem_style,
     as_item,
-    vertical,
-    wrap,
-    justify,
-    align,
-    flex,
-    gap,
-    component,
+    restProps: $$restProps,
   });
 </script>
 
@@ -78,13 +59,7 @@
       style={$mergedProps.elem_style}
       className={cls($mergedProps.elem_classes, 'ms-gr-antd-flex')}
       id={$mergedProps.elem_id}
-      vertical={$mergedProps.vertical}
-      wrap={$mergedProps.wrap}
-      justify={$mergedProps.justify}
-      align={$mergedProps.align}
-      flex={$mergedProps.flex}
-      gap={$mergedProps.gap}
-      component={$mergedProps.component}
+      {...$mergedProps.restProps}
       {...$mergedProps.props}
       {...bindEvents($mergedProps)}
       slots={$slots}

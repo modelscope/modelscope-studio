@@ -46,6 +46,7 @@
     group_value,
     default_checked,
     disabled,
+    restProps: $$restProps,
   });
   const slots = getSlots();
   $: update({
@@ -62,6 +63,7 @@
     group_value,
     default_checked,
     disabled,
+    restProps: $$restProps,
   });
 </script>
 
@@ -73,6 +75,7 @@
       id={$mergedProps.elem_id}
       checked={$mergedProps.value}
       value={$mergedProps.group_value}
+      {...$mergedProps.restProps}
       {...$mergedProps.props}
       {...bindEvents($mergedProps)}
       slots={$slots}
