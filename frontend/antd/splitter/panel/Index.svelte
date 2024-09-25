@@ -64,7 +64,6 @@
           ),
           id: $mergedProps.elem_id,
           ...$mergedProps.restProps,
-          ...$mergedProps.restProps,
           ...$mergedProps.props,
           ...bindEvents($mergedProps),
         },
