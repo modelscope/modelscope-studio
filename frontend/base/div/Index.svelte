@@ -30,18 +30,22 @@
 
   let el: HTMLDivElement | undefined;
 
-  const [mergedProps, update] = getSlotContext({
-    gradio,
-    props: $updatedProps,
-    _internal,
-    value,
-    as_item,
-    visible,
-    elem_id,
-    elem_classes,
-    elem_style,
-    restProps: $$restProps,
-  });
+  const [mergedProps, update] = getSlotContext(
+    {
+      gradio,
+      props: $updatedProps,
+      _internal,
+      value,
+      as_item,
+      visible,
+      elem_id,
+      elem_classes,
+      elem_style,
+      restProps: $$restProps,
+    },
+    undefined,
+    { shouldRestSlotKey: !_internal.fragment }
+  );
   $: update({
     gradio,
     props: $updatedProps,

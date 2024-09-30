@@ -81,8 +81,19 @@ export function getSlotContext<
   },
 >(
   props: T,
-  restPropsMapping?: Record<keyof T['restProps'], string>
-): [Writable<T>, (props: T) => void] {
+  restPropsMapping?: Record<keyof T['restProps'], string>,
+  options?: {
+    shouldRestSlotKey?: boolean;
+  }
+): [
+  Writable<
+    T & {
+      originalRestProps?: Record<string, any>;
+    }
+  >,
+  (props: T) => void,
+] {
+  const shouldRestSlotKey = options?.shouldRestSlotKey ?? true;
   if (!Reflect.has(props, 'as_item') || !Reflect.has(props, '_internal')) {
     throw new Error('`as_item` and `_internal` is required');
   }
@@ -98,7 +109,9 @@ export function getSlotContext<
     });
   }
   // reset slot key to make sure the sub component does not be affected by gr.Slot()
-  resetSlotKey();
+  if (shouldRestSlotKey) {
+    resetSlotKey();
+  }
   const ctx = getContext(slotContextKey) as Writable<T>;
   const as_item = get(ctx)?.as_item || props.as_item;
   const initialCtxValue: Record<string, any> = ctx
@@ -124,6 +137,7 @@ export function getSlotContext<
     ...props,
     ...initialCtxValue,
     restProps: mergeRestProps(props.restProps, initialCtxValue),
+    originalRestProps: props.restProps,
   });
   if (!ctx) {
     return [
@@ -132,6 +146,7 @@ export function getSlotContext<
         mergedProps.set({
           ...v,
           restProps: mergeRestProps(v.restProps),
+          originalRestProps: v.restProps,
         });
       },
     ];
@@ -158,6 +173,7 @@ export function getSlotContext<
         ...v,
         ...ctxValue,
         restProps: mergeRestProps(v.restProps, ctxValue),
+        originalRestProps: v.restProps,
       });
     },
   ];

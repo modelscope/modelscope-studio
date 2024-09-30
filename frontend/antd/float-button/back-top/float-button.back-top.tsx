@@ -11,19 +11,24 @@ export const FloatButtonBackTop = sveltify<
   const targetFunction = useFunction(target);
   return (
     <>
+      <div style={{ display: 'none' }}>{children}</div>
       <AFloatButton.BackTop
         {...props}
         target={targetFunction}
-        icon={slots.icon ? <ReactSlot slot={slots.icon} /> : props.icon}
+        icon={slots.icon ? <ReactSlot clone slot={slots.icon} /> : props.icon}
         description={
           slots.description ? (
-            <ReactSlot slot={slots.description} />
+            <ReactSlot clone slot={slots.description} />
           ) : (
             props.description
           )
         }
         tooltip={
-          slots.tooltip ? <ReactSlot slot={slots.tooltip} /> : props.tooltip
+          slots.tooltip ? (
+            <ReactSlot clone slot={slots.tooltip} />
+          ) : (
+            props.tooltip
+          )
         }
         badge={{
           ...props.badge,
@@ -34,7 +39,6 @@ export const FloatButtonBackTop = sveltify<
           ),
         }}
       />
-      {children}
     </>
   );
 });

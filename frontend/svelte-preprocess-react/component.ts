@@ -29,26 +29,28 @@ function convertToCamelCase(str: string) {
   });
 }
 
+const gradioProps = [
+  'interactive',
+  'gradio',
+  'server',
+  'target',
+  'theme_mode',
+  'root',
+  'name',
+  'visible',
+  'elem_id',
+  'elem_classes',
+  'elem_style',
+  '_internal',
+  'props',
+  'value',
+  'attached_events',
+];
+
 export function getComponentRestProps<T extends Record<string, any>>(
   props: T,
   mapping: Record<keyof T, string> = {} as Record<keyof T, string>
 ) {
-  const gradioProps = [
-    'interactive',
-    'gradio',
-    'server',
-    'target',
-    'theme_mode',
-    'root',
-    'name',
-    'visible',
-    'elem_id',
-    'elem_classes',
-    'elem_style',
-    '_internal',
-    'props',
-    'value',
-  ];
   return mapKeys(omit(props, gradioProps), (_, key) => {
     return mapping[key] || convertToCamelCase(key);
   });
@@ -59,9 +61,17 @@ export function bindEvents<
     gradio: Gradio;
     _internal: Record<string, any>;
     props: Record<string, any>;
+    restProps?: Record<string, any>;
+    originalRestProps?: Record<string, any>;
   },
 >(props: T) {
-  const { gradio, _internal: internal, ...component } = props;
+  const {
+    gradio,
+    _internal: internal,
+    restProps,
+    originalRestProps,
+    ...component
+  } = props;
 
   return Object.keys(internal).reduce(
     (acc, key) => {
@@ -96,19 +106,24 @@ export function bindEvents<
             event.replace(/[A-Z]/g, (letter) => '_' + letter.toLowerCase()),
             {
               payload,
-              component,
+              component: {
+                ...component,
+                ...omit(originalRestProps, gradioProps),
+              },
             }
           );
         };
 
         if (splitted.length > 1) {
           let value: Record<PropertyKey, any> = {
-            ...(component.props[splitted[0]] || {}),
+            ...(component.props[splitted[0]] || restProps?.[splitted[0]] || {}),
           };
           acc[splitted[0]] = value;
           for (let i = 1; i < splitted.length - 1; i++) {
             const prop = {
-              ...(component.props[splitted[i]] || {}),
+              ...(component.props[splitted[i]] ||
+                restProps?.[splitted[i]] ||
+                {}),
             };
             value[splitted[i]] = prop;
             value = prop;

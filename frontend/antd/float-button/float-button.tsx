@@ -11,18 +11,23 @@ export const FloatButton = sveltify<
 >(({ slots, children, ...props }) => {
   return (
     <>
+      <div style={{ display: 'none' }}>{children}</div>
       <AFloatButton
         {...props}
-        icon={slots.icon ? <ReactSlot slot={slots.icon} /> : props.icon}
+        icon={slots.icon ? <ReactSlot clone slot={slots.icon} /> : props.icon}
         description={
           slots.description ? (
-            <ReactSlot slot={slots.description} />
+            <ReactSlot clone slot={slots.description} />
           ) : (
             props.description
           )
         }
         tooltip={
-          slots.tooltip ? <ReactSlot slot={slots.tooltip} /> : props.tooltip
+          slots.tooltip ? (
+            <ReactSlot clone slot={slots.tooltip} />
+          ) : (
+            props.tooltip
+          )
         }
         badge={{
           ...props.badge,
@@ -33,8 +38,6 @@ export const FloatButton = sveltify<
           ),
         }}
       />
-      {/* render the slots */}
-      {children}
     </>
   );
 });

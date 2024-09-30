@@ -16,17 +16,18 @@ class AntdButton(ModelScopeLayoutComponent):
 
     In Ant Design we provide 5 types of button.
 
-    Primary button: used for the main action, there can be at most one primary button in a section.
-    Default button: used for a series of actions without priority.
-    Dashed button: commonly used for adding more actions.
-    Text button: used for the most secondary action.
-    Link button: used for external links.
+    - Primary button: used for the main action, there can be at most one primary button in a section.
+    - Default button: used for a series of actions without priority.
+    - Dashed button: commonly used for adding more actions.
+    - Text button: used for the most secondary action.
+    - Link button: used for external links.
+
     And 4 other properties additionally.
 
-    danger: used for actions of risk, like deletion or authorization.
-    ghost: used in situations with complex background, home pages usually.
-    disabled: used when actions are not available.
-    loading: adds a loading spinner in button, avoids multiple submits too.
+    - danger: used for actions of risk, like deletion or authorization.
+    - ghost: used in situations with complex background, home pages usually.
+    - disabled: used when actions are not available.
+    - loading: adds a loading spinner in button, avoids multiple submits too.
     """
     Group = AntdButtonGroup
 

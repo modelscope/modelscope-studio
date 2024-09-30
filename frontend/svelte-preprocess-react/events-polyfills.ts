@@ -37,7 +37,6 @@ Element.prototype.addEventListener = function <K extends keyof ElementEventMap>(
   options?: boolean | AddEventListenerOptions
 ): void {
   if (options === undefined) options = false;
-
   // declare listener
   this._addEventListener(type, listener, options);
 

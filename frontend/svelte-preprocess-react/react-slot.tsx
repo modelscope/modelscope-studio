@@ -22,6 +22,7 @@ function cloneElementWithEvents(element: HTMLElement) {
   const elementsChildrenArray = Array.from(element.children);
   for (let i = 0; i < elementsChildrenArray.length; i++) {
     const child = elementsChildrenArray[i];
+
     const clonedChild = cloneElementWithEvents(child as HTMLElement);
     clonedElement.replaceChild(clonedChild, clonedElement.children[i]);
   }
@@ -48,6 +49,7 @@ export const ReactSlot = forwardRef<HTMLElement, ReactSlotProps>(
         return;
       }
       let cloned = slot;
+
       function mountElementProps() {
         let child = cloned as Element;
         if (
