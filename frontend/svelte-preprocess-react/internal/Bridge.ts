@@ -63,6 +63,7 @@ const Bridge: React.FC<BridgeProps> = ({ createPortal, node }) => {
         key: `bridge${subnode.key}`,
         createPortal,
         node: subnode,
+        // slotKey
         nodeSlotKey: subSlotKeys[i],
       })
     );
@@ -81,12 +82,14 @@ const Bridge: React.FC<BridgeProps> = ({ createPortal, node }) => {
       );
     }
   }
+
   // render in different container
-  return createPortal(
+  const element =
     children === undefined
       ? React.createElement(node.reactComponent, props)
-      : React.createElement(node.reactComponent, props, children),
-    target
-  );
+      : React.createElement(node.reactComponent, props, ...children);
+  target._reactElement = element;
+
+  return createPortal(element, target);
 };
 export default Bridge;

@@ -1,4 +1,5 @@
-import React, { forwardRef, useEffect, useRef } from 'react';
+import React, { forwardRef, useEffect, useRef, useState } from 'react';
+import { createPortal } from 'react-dom';
 import { styleObject2HtmlStyle } from '@utils/styleObject2String';
 
 export interface ReactSlotProps {
@@ -9,7 +10,33 @@ export interface ReactSlotProps {
 }
 
 function cloneElementWithEvents(element: HTMLElement) {
-  const clonedElement = element.cloneNode(true) as HTMLElement;
+  const portals: React.ReactPortal[] = [];
+
+  const clonedElement = element.cloneNode(false) as HTMLElement;
+
+  if (element._reactElement) {
+    portals.push(
+      createPortal(
+        React.cloneElement(element._reactElement, {
+          ...element._reactElement.props,
+          children: React.Children.toArray(
+            element._reactElement.props.children
+          ).map((child) => {
+            // get svelte-slot
+            if (React.isValidElement(child) && child.props.__slot__) {
+              return child;
+            }
+            return null;
+          }),
+        }),
+        clonedElement
+      )
+    );
+    return {
+      clonedElement,
+      portals,
+    };
+  }
   // clone eventListener
   Object.keys(element.getEventListeners()).forEach((eventName) => {
     const listeners = element.getEventListeners(
@@ -20,14 +47,21 @@ function cloneElementWithEvents(element: HTMLElement) {
     });
   });
   const elementsChildrenArray = Array.from(element.children);
+
   for (let i = 0; i < elementsChildrenArray.length; i++) {
     const child = elementsChildrenArray[i];
 
-    const clonedChild = cloneElementWithEvents(child as HTMLElement);
-    clonedElement.replaceChild(clonedChild, clonedElement.children[i]);
+    const { clonedElement: clonedChild, portals: portalsChildren } =
+      cloneElementWithEvents(child as HTMLElement);
+    portals.push(...portalsChildren);
+    clonedElement.appendChild(clonedChild);
+    // clonedElement.replaceChild(clonedChild, clonedElement.children[i]);
   }
 
-  return clonedElement;
+  return {
+    clonedElement,
+    portals,
+  };
 }
 
 function mountElRef(elRef: React.ForwardedRef<HTMLElement>, el: HTMLElement) {
@@ -44,6 +78,7 @@ function mountElRef(elRef: React.ForwardedRef<HTMLElement>, el: HTMLElement) {
 export const ReactSlot = forwardRef<HTMLElement, ReactSlotProps>(
   ({ slot, clone, className, style }, elRef) => {
     const ref = useRef<HTMLElement>();
+    const [children, setChildren] = useState<React.ReactElement[]>([]);
     useEffect(() => {
       if (!ref.current || !slot) {
         return;
@@ -82,7 +117,9 @@ export const ReactSlot = forwardRef<HTMLElement, ReactSlotProps>(
       let observer: MutationObserver | null = null;
       if (clone && window.MutationObserver) {
         function render() {
-          cloned = cloneElementWithEvents(slot);
+          const { portals, clonedElement } = cloneElementWithEvents(slot);
+          cloned = clonedElement;
+          setChildren(portals);
           cloned.style.display = 'contents';
           mountElementProps();
           ref.current?.appendChild(cloned);
@@ -115,9 +152,14 @@ export const ReactSlot = forwardRef<HTMLElement, ReactSlotProps>(
         observer?.disconnect();
       };
     }, [slot, clone, className, style, elRef]);
-    return React.createElement('react-child', {
-      ref,
-      style: { display: 'contents' },
-    });
+
+    return React.createElement(
+      'react-child',
+      {
+        ref,
+        style: { display: 'contents' },
+      },
+      ...children
+    );
   }
 );

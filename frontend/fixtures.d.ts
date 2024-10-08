@@ -9,3 +9,7 @@ declare module '*?inline' {
 interface Window {
   __gradio_space__: any;
 }
+
+interface Element {
+  _reactElement: React.ReactElement;
+}

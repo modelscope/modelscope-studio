@@ -12,7 +12,6 @@ export const Icon = sveltify<
   const icon = icons[name as keyof typeof icons] as React.ComponentType<
     GetProps<typeof icons.default>
   >;
-
   return (
     <>
       {icon ? (

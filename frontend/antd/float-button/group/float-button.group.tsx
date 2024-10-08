@@ -14,8 +14,8 @@ export const FloatButtonGroup = sveltify<
   ['icon', 'closeIcon', 'description', 'tooltip', 'badge.count']
 >(({ children, slots, style, shape = 'circle', className, ...props }) => {
   const { token } = theme.useToken();
-  const [slotsChildren, restChildren] = useSlotsChildren(children);
 
+  const [slotsChildren, restChildren] = useSlotsChildren(children);
   return (
     <>
       <div style={{ display: 'none' }}>{slotsChildren}</div>
