@@ -2,6 +2,7 @@ import { sveltify } from '@svelte-preprocess-react';
 import { ReactSlot } from '@svelte-preprocess-react/react-slot';
 import type { SetSlotParams } from '@svelte-preprocess-react/slot';
 import React, { useMemo } from 'react';
+import { useSlotsChildren } from '@utils/hooks/useSlotsChildren';
 import { renderParamsSlot } from '@utils/renderParamsSlot';
 import { type GetProps, Typography } from 'antd';
 import type { EllipsisConfig } from 'antd/es/typography/Base';
@@ -78,82 +79,89 @@ export const TypographyBase = sveltify<
           return Typography.Link;
       }
     }, [component]);
+    const [slotsChildren, restChildren] = useSlotsChildren(children);
     return (
-      <TypographyComponent
-        {...props}
-        className={cls(className, `ms-gr-antd-typography-${component}`)}
-        copyable={
-          supportCopy
-            ? {
-                ...getConfig(copyable),
-                tooltips:
-                  copyableTooltipsTargets.length > 0
-                    ? copyableTooltipsTargets.map((slot, index) => {
-                        return <ReactSlot key={index} slot={slot} />;
-                      })
-                    : copyableConfig.tooltips,
-                icon:
-                  copyableIconTargets.length > 0
-                    ? copyableIconTargets.map((slot, index) => {
-                        return <ReactSlot key={index} slot={slot} />;
-                      })
-                    : copyableConfig.icon,
-              }
-            : undefined
-        }
-        editable={
-          supportEdit
-            ? {
-                ...editableConfig,
-                icon: slots['editable.icon'] ? (
-                  <ReactSlot slot={slots['editable.icon']} />
-                ) : (
-                  editableConfig.icon
-                ),
-                tooltip: slots['editable.tooltip'] ? (
-                  <ReactSlot slot={slots['editable.tooltip']} />
-                ) : (
-                  editableConfig.tooltip
-                ),
-                enterIcon: slots['editable.enterIcon'] ? (
-                  <ReactSlot slot={slots['editable.enterIcon']} />
-                ) : (
-                  editableConfig.enterIcon
-                ),
-              }
-            : undefined
-        }
-        ellipsis={
-          (component === 'link'
-            ? !!supportEllipsis
-            : supportEllipsis
-              ? ({
-                  ...ellipsisConfig,
-                  symbol: slots['ellipsis.symbol']
-                    ? renderParamsSlot({
-                        key: 'ellipsis.symbol',
-                        setSlotParams,
-                        slots,
-                      })
-                    : ellipsisConfig.symbol,
-                  tooltip: slots['ellipsis.tooltip'] ? (
-                    <ReactSlot slot={slots['ellipsis.tooltip']} />
+      <>
+        <div style={{ display: 'none' }}>{slotsChildren}</div>
+        <TypographyComponent
+          {...props}
+          className={cls(className, `ms-gr-antd-typography-${component}`)}
+          copyable={
+            supportCopy
+              ? {
+                  ...getConfig(copyable),
+                  tooltips:
+                    copyableTooltipsTargets.length > 0
+                      ? copyableTooltipsTargets.map((slot, index) => {
+                          return <ReactSlot key={index} slot={slot} />;
+                        })
+                      : copyableConfig.tooltips,
+                  icon:
+                    copyableIconTargets.length > 0
+                      ? copyableIconTargets.map((slot, index) => {
+                          return <ReactSlot key={index} slot={slot} />;
+                        })
+                      : copyableConfig.icon,
+                }
+              : undefined
+          }
+          editable={
+            supportEdit
+              ? {
+                  ...editableConfig,
+                  icon: slots['editable.icon'] ? (
+                    <ReactSlot slot={slots['editable.icon']} />
                   ) : (
-                    {
-                      ...ellipsisConfig.tooltip,
-                      title: slots['ellipsis.tooltip.title'] ? (
-                        <ReactSlot slot={slots['ellipsis.tooltip.title']} />
-                      ) : (
-                        ellipsisConfig.tooltip.title
-                      ),
-                    }
+                    editableConfig.icon
                   ),
-                } as EllipsisConfig)
-              : undefined) as boolean
-        }
-      >
-        {children}
-      </TypographyComponent>
+                  tooltip: slots['editable.tooltip'] ? (
+                    <ReactSlot slot={slots['editable.tooltip']} />
+                  ) : (
+                    editableConfig.tooltip
+                  ),
+                  enterIcon: slots['editable.enterIcon'] ? (
+                    <ReactSlot slot={slots['editable.enterIcon']} />
+                  ) : (
+                    editableConfig.enterIcon
+                  ),
+                }
+              : undefined
+          }
+          ellipsis={
+            (component === 'link'
+              ? !!supportEllipsis
+              : supportEllipsis
+                ? ({
+                    ...ellipsisConfig,
+                    symbol: slots['ellipsis.symbol']
+                      ? renderParamsSlot(
+                          {
+                            key: 'ellipsis.symbol',
+                            setSlotParams,
+                            slots,
+                          },
+                          { clone: true }
+                        )
+                      : ellipsisConfig.symbol,
+                    tooltip: slots['ellipsis.tooltip'] ? (
+                      <ReactSlot slot={slots['ellipsis.tooltip']} />
+                    ) : (
+                      {
+                        ...ellipsisConfig.tooltip,
+                        title: slots['ellipsis.tooltip.title'] ? (
+                          <ReactSlot slot={slots['ellipsis.tooltip.title']} />
+                        ) : (
+                          ellipsisConfig.tooltip?.title
+                        ),
+                      }
+                    ),
+                  } as EllipsisConfig)
+                : undefined) as boolean
+          }
+        >
+          {restChildren}
+        </TypographyComponent>
+      </>
     );
   }
 );

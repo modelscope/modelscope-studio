@@ -34,8 +34,8 @@ class AntdDropdownButton(ModelScopeLayoutComponent):
 
     # supported slots
     SLOTS = [
-        "icon", 'buttonsRender', "menu.expandIcon", 'menu.overflowedIndicator',
-        "menu.items"
+        "icon", 'dropdownRender', 'buttonsRender', "menu.expandIcon",
+        'menu.overflowedIndicator', "menu.items"
     ]
 
     def __init__(

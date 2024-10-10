@@ -50,6 +50,7 @@ class AntdBreadcrumbItem(ModelScopeLayoutComponent):
         "menu.expandIcon",
         'menu.overflowedIndicator',
         "menu.items",
+        "dropdownProps.dropdownRender",
         "dropdownProps.menu.expandIcon",
         'dropdownProps.menu.overflowedIndicator',
         "dropdownProps.menu.items",

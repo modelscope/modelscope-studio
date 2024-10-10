@@ -7,9 +7,18 @@
   "license": "Apache-2.0",
   "type": "module",
   "exports": {
-    ".": "./Index.svelte",
-    "./example": "./Example.svelte",
-    "./package.json": "./package.json"
+    "./example": {
+      "default": "./Example.svelte",
+      "gradio": "./Example.svelte"
+    },
+    ".": {
+      "default": "./Index.svelte",
+      "gradio": "./Index.svelte"
+    },
+    "./package.json": {
+      "default": "./package.json",
+      "gradio": "./package.json"
+    }
   },
   "dependencies": {
     "@modelscope-studio/legacy-compiled": "workspace:*"

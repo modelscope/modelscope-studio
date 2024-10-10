@@ -14,7 +14,7 @@ class AntdBreadcrumb(ModelScopeLayoutComponent):
     EVENTS = []
 
     # supported slots
-    SLOTS = ['separator', 'items']
+    SLOTS = ['separator', 'itemRender', 'items']
 
     def __init__(
             self,

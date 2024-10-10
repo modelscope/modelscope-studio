@@ -18,8 +18,10 @@ export const Pagination = sveltify<
     showQuickJumper,
     onChange,
     children,
+    itemRender,
     ...props
   }) => {
+    const itemRenderFunction = useFunction(itemRender);
     const showTotalFunction = useFunction(showTotal);
     return (
       <>
@@ -27,6 +29,7 @@ export const Pagination = sveltify<
         <APagination
           {...props}
           showTotal={showTotal ? showTotalFunction : undefined}
+          itemRender={itemRenderFunction}
           onChange={(page, pageSize) => {
             onValueChange(page, pageSize);
             onChange?.(page, pageSize);

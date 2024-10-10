@@ -5,7 +5,11 @@
     bindEvents,
     importComponent,
   } from '@svelte-preprocess-react/component';
-  import { getSlotContext, getSlots } from '@svelte-preprocess-react/slot';
+  import {
+    getSetSlotParamsFn,
+    getSlotContext,
+    getSlots,
+  } from '@svelte-preprocess-react/slot';
   import type React from 'react';
   import type { Gradio } from '@gradio/utils';
   import cls from 'classnames';
@@ -58,7 +62,7 @@
     value,
     restProps: $$restProps,
   });
-
+  const setSlotParams = getSetSlotParamsFn();
   const { items, default: children } = getItems(['default', 'items']);
 </script>
 
@@ -85,6 +89,7 @@
           selected_keys: selectedKeys,
         };
       }}
+      {setSlotParams}
     >
       <slot></slot>
     </Menu>

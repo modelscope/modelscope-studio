@@ -3,6 +3,7 @@
 <script lang="ts">
   import { bindEvents } from '@svelte-preprocess-react/component';
   import {
+    getSetSlotParamsFn,
     getSlotContext,
     getSlotKey,
     getSlots,
@@ -10,6 +11,7 @@
   import type { Gradio } from '@gradio/utils';
   import { createFunction } from '@utils/createFunction';
   import { renderItems } from '@utils/renderItems';
+  import { renderParamsSlot } from '@utils/renderParamsSlot';
   import { renderSlot } from '@utils/renderSlot';
   import cls from 'classnames';
   import { writable } from 'svelte/store';
@@ -60,6 +62,7 @@
     restProps: $$restProps,
   });
   const setItem = getSetItemFn();
+  const setSlotParams = getSetSlotParamsFn();
   const {
     'menu.items': menuItems,
     'dropdownProps.menu.items': dropdownMenuItems,
@@ -72,9 +75,16 @@
           ? renderItems($menuItems)
           : undefined,
       expandIcon:
-        renderSlot($slots['menu.expandIcon'], {
-          clone: true,
-        }) || $mergedProps.props.menu?.expandIcon,
+        renderParamsSlot(
+          {
+            setSlotParams,
+            slots: $slots,
+            key: 'menu.expandIcon',
+          },
+          {
+            clone: true,
+          }
+        ) || $mergedProps.props.menu?.expandIcon,
       overflowedIndicator:
         renderSlot($slots['menu.overflowedIndicator']) ||
         $mergedProps.props.menu?.overflowedIndicator,
@@ -87,8 +97,16 @@
           ? renderItems($dropdownMenuItems)
           : undefined,
       expandIcon:
-        renderSlot($slots['dropdownProps.menu.expandIcon'], { clone: true }) ||
-        $mergedProps.props.dropdownProps?.menu?.expandIcon,
+        renderParamsSlot(
+          {
+            setSlotParams,
+            slots: $slots,
+            key: 'dropdownProps.menu.expandIcon',
+          },
+          {
+            clone: true,
+          }
+        ) || $mergedProps.props.dropdownProps?.menu?.expandIcon,
       overflowedIndicator:
         renderSlot($slots['dropdownProps.menu.overflowedIndicator']) ||
         $mergedProps.props.dropdownProps?.menu?.overflowedIndicator,
@@ -96,9 +114,18 @@
 
     const dropdownProps = {
       ...($mergedProps.props.dropdownProps || {}),
-      dropdownRender: createFunction(
-        $mergedProps.props.dropdownProps?.dropdownRender
-      ),
+      dropdownRender: $slots['dropdownProps.dropdownRender']
+        ? renderParamsSlot(
+            {
+              setSlotParams,
+              slots: $slots,
+              key: 'dropdownProps.dropdownRender',
+            },
+            {
+              clone: true,
+            }
+          )
+        : createFunction($mergedProps.props.dropdownProps?.dropdownRender),
       menu:
         Object.values(dropdownMenu).filter(Boolean).length > 0
           ? dropdownMenu

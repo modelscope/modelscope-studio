@@ -2,7 +2,13 @@
   "name": "@modelscope-studio/antd-card",
   "type": "module",
   "exports": {
-    ".": "./Index.svelte",
-    "./package.json": "./package.json"
+    ".": {
+      "default": "./Index.svelte",
+      "gradio": "./Index.svelte"
+    },
+    "./package.json": {
+      "default": "./package.json",
+      "gradio": "./package.json"
+    }
   }
 }

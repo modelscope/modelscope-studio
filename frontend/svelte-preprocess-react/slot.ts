@@ -55,9 +55,11 @@ export function getSetSlotParamsFn(): SetSlotParams {
   };
 }
 export function getSlotParams() {
-  return getContext(slotParamsKey) as
+  const slotParams = getContext(slotParamsKey) as
     | Writable<Record<string, any[]>>
     | undefined;
+  setContext(slotParamsKey, undefined);
+  return slotParams;
 }
 
 const slotContextKey = '$$ms-gr-context-key';

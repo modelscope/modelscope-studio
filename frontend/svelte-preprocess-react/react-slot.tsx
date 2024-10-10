@@ -24,7 +24,19 @@ function cloneElementWithEvents(element: HTMLElement) {
           ).map((child) => {
             // get svelte-slot
             if (React.isValidElement(child) && child.props.__slot__) {
-              return child;
+              const {
+                portals: childPortals,
+                clonedElement: childClonedElement,
+              } = cloneElementWithEvents(child.props.el);
+              // Child Component
+              return React.cloneElement(child, {
+                ...child.props,
+                el: childClonedElement,
+                children: [
+                  ...React.Children.toArray(child.props.children),
+                  ...childPortals,
+                ],
+              });
             }
             return null;
           }),
@@ -46,16 +58,21 @@ function cloneElementWithEvents(element: HTMLElement) {
       clonedElement.addEventListener(type, listener, useCapture);
     });
   });
-  const elementsChildrenArray = Array.from(element.children);
+  const elementsChildrenArray = Array.from(element.childNodes);
 
   for (let i = 0; i < elementsChildrenArray.length; i++) {
     const child = elementsChildrenArray[i];
-
-    const { clonedElement: clonedChild, portals: portalsChildren } =
-      cloneElementWithEvents(child as HTMLElement);
-    portals.push(...portalsChildren);
-    clonedElement.appendChild(clonedChild);
-    // clonedElement.replaceChild(clonedChild, clonedElement.children[i]);
+    // element
+    if (child.nodeType === 1) {
+      const { clonedElement: clonedChild, portals: portalsChildren } =
+        cloneElementWithEvents(child as HTMLElement);
+      portals.push(...portalsChildren);
+      clonedElement.appendChild(clonedChild);
+      // clonedElement.replaceChild(clonedChild, clonedElement.children[i]);
+      // text
+    } else if (child.nodeType === 3) {
+      clonedElement.appendChild(child.cloneNode());
+    }
   }
 
   return {

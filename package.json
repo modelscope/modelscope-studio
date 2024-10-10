@@ -23,30 +23,30 @@
     "ci:version": "pnpm run version"
   },
   "devDependencies": {
-    "@actions/core": "^1.10.1",
+    "@actions/core": "^1.11.1",
     "@actions/exec": "^1.1.1",
     "@actions/github": "^6.0.0",
-    "@changesets/cli": "^2.27.8",
+    "@changesets/cli": "^2.27.9",
     "@commitlint/cli": "^19.5.0",
     "@commitlint/config-conventional": "^19.5.0",
     "@manypkg/get-packages": "^2.2.2",
     "@modelscope-studio/changelog": "workspace:*",
     "@modelscope-studio/lint-config": "workspace:*",
-    "eslint": "^9.11.0",
+    "eslint": "^9.12.0",
     "husky": "^9.1.6",
     "lint-staged": "^15.2.10",
     "node-fetch": "^3.3.2",
     "npm-run-all": "^4.1.5",
     "prettier": "^3.3.3",
-    "prettier-plugin-packagejson": "^2.5.2",
-    "prettier-plugin-svelte": "^3.2.6",
+    "prettier-plugin-packagejson": "^2.5.3",
+    "prettier-plugin-svelte": "^3.2.7",
     "rimraf": "^6.0.1",
     "stylelint": "^16.9.0",
     "svelte": "^4.2.19",
-    "svelte-check": "^4.0.2",
+    "svelte-check": "^4.0.4",
     "tslib": "^2.7.0",
     "tsx": "^4.19.1",
-    "typescript": "^5.6.2"
+    "typescript": "^5.6.3"
   },
   "main_changeset": true
 }

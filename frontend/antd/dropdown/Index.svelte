@@ -5,7 +5,11 @@
     bindEvents,
     importComponent,
   } from '@svelte-preprocess-react/component';
-  import { getSlotContext, getSlots } from '@svelte-preprocess-react/slot';
+  import {
+    getSetSlotParamsFn,
+    getSlotContext,
+    getSlots,
+  } from '@svelte-preprocess-react/slot';
   import type React from 'react';
   import type { Gradio } from '@gradio/utils';
   import cls from 'classnames';
@@ -52,6 +56,7 @@
     as_item,
     restProps: $$restProps,
   });
+  const setSlotParams = getSetSlotParamsFn();
   const { 'menu.items': items } = getItems(['menu.items']);
 </script>
 
@@ -66,6 +71,7 @@
       {...bindEvents($mergedProps)}
       slots={$slots}
       menuItems={$items}
+      {setSlotParams}
     >
       <slot />
     </Dropdown>
