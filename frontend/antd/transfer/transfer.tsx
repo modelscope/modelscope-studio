@@ -1,14 +1,17 @@
 import { sveltify } from '@svelte-preprocess-react';
 import { ReactSlot } from '@svelte-preprocess-react/react-slot';
+import type { SetSlotParams } from '@svelte-preprocess-react/slot';
 import React from 'react';
 import { useFunction } from '@utils/hooks/useFunction';
 import { useTargets } from '@utils/hooks/useTargets';
+import { renderParamsSlot } from '@utils/renderParamsSlot';
 import { type GetProps, Transfer as ATransfer } from 'antd';
 
 export const Transfer = sveltify<
   GetProps<typeof ATransfer> & {
     children?: React.ReactNode;
     onValueChange: (value: (string | number)[]) => void;
+    setSlotParams: SetSlotParams;
   },
   [
     'selectionsIcon',
@@ -16,6 +19,7 @@ export const Transfer = sveltify<
     'footer',
     'locale.notFoundContent',
     'selectAllLabels',
+    'render',
   ]
 >(
   ({
@@ -28,6 +32,7 @@ export const Transfer = sveltify<
     locale,
     onChange,
     onValueChange,
+    setSlotParams,
     ...props
   }) => {
     const titles = useTargets(children, 'titles');
@@ -63,18 +68,19 @@ export const Transfer = sveltify<
               : locale
           }
           render={
-            renderFunction ||
-            ((item) => ({
-              label: item.title || item.label,
-              value: item.value || item.title || item.label,
-            }))
+            slots.render
+              ? renderParamsSlot({ slots, setSlotParams, key: 'render' })
+              : renderFunction ||
+                ((item) => ({
+                  label: item.title || item.label,
+                  value: item.value || item.title || item.label,
+                }))
           }
           filterOption={filterOptionFunction}
           footer={
-            footerFunction ||
-            (slots.footer
-              ? () => (slots.footer ? <ReactSlot slot={slots.footer} /> : null)
-              : footer)
+            slots.footer
+              ? renderParamsSlot({ slots, setSlotParams, key: 'footer' })
+              : footerFunction || footer
           }
           titles={
             titles.length > 0

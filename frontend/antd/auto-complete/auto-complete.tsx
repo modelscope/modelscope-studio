@@ -1,9 +1,11 @@
 import { sveltify } from '@svelte-preprocess-react';
 import { AutoCompleteContext } from '@svelte-preprocess-react/context';
 import { ReactSlot } from '@svelte-preprocess-react/react-slot';
+import type { SetSlotParams } from '@svelte-preprocess-react/slot';
 import { forwardRef, useMemo } from 'react';
 import { useFunction } from '@utils/hooks/useFunction';
 import { renderItems } from '@utils/renderItems';
+import { renderParamsSlot } from '@utils/renderParamsSlot';
 import { AutoComplete as AAutoComplete, type GetProps } from 'antd';
 
 import { type Item } from './context';
@@ -31,8 +33,9 @@ export const AutoComplete = sveltify<
   GetProps<typeof AAutoComplete> & {
     optionItems: Item[];
     onValueChange: (value: string) => void;
+    setSlotParams: SetSlotParams;
   },
-  ['allowClear.clearIcon', 'children', 'notFoundContent']
+  ['allowClear.clearIcon', 'children', 'dropdownRender', 'notFoundContent']
 >(
   ({
     slots,
@@ -45,6 +48,7 @@ export const AutoComplete = sveltify<
     getPopupContainer,
     dropdownRender,
     elRef,
+    setSlotParams,
     ...props
   }) => {
     const getPopupContainerFunction = useFunction(getPopupContainer);
@@ -89,7 +93,18 @@ export const AutoComplete = sveltify<
           }
           filterOption={filterOptionFunction || filterOption}
           getPopupContainer={getPopupContainerFunction}
-          dropdownRender={dropdownRenderFunction}
+          dropdownRender={
+            slots.dropdownRender
+              ? renderParamsSlot(
+                  {
+                    slots,
+                    setSlotParams,
+                    key: 'dropdownRender',
+                  },
+                  { clone: true }
+                )
+              : dropdownRenderFunction
+          }
         >
           {slots.children ? (
             <AutoCompleteChildrenWrapper>

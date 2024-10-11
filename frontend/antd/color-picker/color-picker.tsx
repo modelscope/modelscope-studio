@@ -1,8 +1,10 @@
 import { sveltify } from '@svelte-preprocess-react';
+import type { SetSlotParams } from '@svelte-preprocess-react/slot';
 import { useMemo } from 'react';
 import { useFunction } from '@utils/hooks/useFunction';
 import { useTargets } from '@utils/hooks/useTargets';
 import { renderItems } from '@utils/renderItems';
+import { renderParamsSlot } from '@utils/renderParamsSlot';
 import { ColorPicker as AColorPicker, type GetProps } from 'antd';
 
 import { type Item } from './context';
@@ -13,7 +15,9 @@ export const ColorPicker = sveltify<
     onChange?: (value: string, ...args: any[]) => void;
     value_format: 'rgb' | 'hex' | 'hsb';
     presetItems: Item[];
-  }
+    setSlotParams: SetSlotParams;
+  },
+  ['panelRender', 'showText']
 >(
   ({
     onValueChange,
@@ -25,6 +29,8 @@ export const ColorPicker = sveltify<
     presetItems,
     children,
     value_format,
+    setSlotParams,
+    slots,
     ...props
   }) => {
     const panelRenderFunction = useFunction(panelRender);
@@ -48,8 +54,16 @@ export const ColorPicker = sveltify<
               >(presetItems)
             );
           }, [presets, presetItems])}
-          showText={showTextFunction}
-          panelRender={panelRenderFunction}
+          showText={
+            slots.showText
+              ? renderParamsSlot({ slots, setSlotParams, key: 'showText' })
+              : showTextFunction || showText
+          }
+          panelRender={
+            slots.panelRender
+              ? renderParamsSlot({ slots, setSlotParams, key: 'panelRender' })
+              : panelRenderFunction
+          }
           onChange={(v, ...args) => {
             const color = {
               rgb: v.toRgbString(),

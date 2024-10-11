@@ -1,9 +1,11 @@
 import { sveltify } from '@svelte-preprocess-react';
 import { ReactSlot } from '@svelte-preprocess-react/react-slot';
+import type { SetSlotParams } from '@svelte-preprocess-react/slot';
 import React, { useMemo } from 'react';
 import { useFunction } from '@utils/hooks/useFunction';
 import { omitUndefinedProps } from '@utils/omitUndefinedProps';
 import { renderItems } from '@utils/renderItems';
+import { renderParamsSlot } from '@utils/renderParamsSlot';
 import { type GetProps, TreeSelect as ATreeSelect } from 'antd';
 
 import { type Item } from './context';
@@ -14,6 +16,7 @@ export const TreeSelect = sveltify<
   TreeSelectProps & {
     slotItems: Item[];
     onValueChange: (options: string | string[]) => void;
+    setSlotParams: SetSlotParams;
   },
   [
     'allowClear.clearIcon',
@@ -21,6 +24,9 @@ export const TreeSelect = sveltify<
     'notFoundContent',
     'suffixIcon',
     'switcherIcon',
+    'dropdownRender',
+    'tagRender',
+    'treeTitleRender',
   ]
 >(
   ({
@@ -37,6 +43,7 @@ export const TreeSelect = sveltify<
     slotItems,
     maxTagPlaceholder,
     elRef,
+    setSlotParams,
     ...props
   }) => {
     const filterTreeNodeFunction = useFunction(filterTreeNode);
@@ -54,7 +61,9 @@ export const TreeSelect = sveltify<
           renderItems<NonNullable<TreeSelectProps['treeData']>[number]>(
             slotItems
           ),
-        dropdownRender: dropdownRenderFunction,
+        dropdownRender: slots.dropdownRender
+          ? renderParamsSlot({ slots, setSlotParams, key: 'dropdownRender' })
+          : dropdownRenderFunction,
         allowClear: slots['allowClear.clearIcon']
           ? {
               clearIcon: <ReactSlot slot={slots['allowClear.clearIcon']} />,
@@ -65,22 +74,24 @@ export const TreeSelect = sveltify<
         ) : (
           props.suffixIcon
         ),
-        switcherIcon: slots.switcherIcon ? (
-          <ReactSlot slot={slots.switcherIcon} />
-        ) : (
-          props.switcherIcon
-        ),
+        switcherIcon: slots.switcherIcon
+          ? renderParamsSlot({ slots, setSlotParams, key: 'switcherIcon' })
+          : props.switcherIcon,
         getPopupContainer: getPopupContainerFunction,
-        tagRender: tagRenderFunction,
-        treeTitleRender: treeTitleRenderFunction,
+        tagRender: slots.tagRender
+          ? renderParamsSlot({ slots, setSlotParams, key: 'tagRender' })
+          : tagRenderFunction,
+        treeTitleRender: slots.treeTitleRender
+          ? renderParamsSlot({ slots, setSlotParams, key: 'treeTitleRender' })
+          : treeTitleRenderFunction,
         filterTreeNode: filterTreeNodeFunction || filterTreeNode,
-        maxTagPlaceholder:
-          maxTagPlaceholderFunction ||
-          (slots.maxTagPlaceholder ? (
-            <ReactSlot slot={slots.maxTagPlaceholder} />
-          ) : (
-            maxTagPlaceholder
-          )),
+        maxTagPlaceholder: slots.maxTagPlaceholder
+          ? renderParamsSlot({
+              slots,
+              setSlotParams,
+              key: 'maxTagPlaceholder',
+            })
+          : maxTagPlaceholderFunction || maxTagPlaceholder,
         notFoundContent: slots.notFoundContent ? (
           <ReactSlot slot={slots.notFoundContent} />
         ) : (
@@ -95,6 +106,7 @@ export const TreeSelect = sveltify<
       maxTagPlaceholder,
       maxTagPlaceholderFunction,
       props,
+      setSlotParams,
       slotItems,
       slots,
       tagRenderFunction,

@@ -1,13 +1,16 @@
 import { sveltify } from '@svelte-preprocess-react';
 import { ReactSlot } from '@svelte-preprocess-react/react-slot';
+import type { SetSlotParams } from '@svelte-preprocess-react/slot';
 import { useFunction } from '@utils/hooks/useFunction';
+import { renderParamsSlot } from '@utils/renderParamsSlot';
 import { type GetProps, Input as AInput } from 'antd';
 
 export const InputTextarea = sveltify<
   GetProps<typeof AInput.TextArea> & {
     onValueChange: (value: string) => void;
+    setSlotParams: SetSlotParams;
   },
-  ['allowClear.clearIcon']
+  ['allowClear.clearIcon', 'showCount.formatter']
 >(
   ({
     slots,
@@ -17,6 +20,7 @@ export const InputTextarea = sveltify<
     onValueChange,
     onChange,
     elRef,
+    setSlotParams,
     ...props
   }) => {
     const countStrategyFunction = useFunction(count?.strategy);
@@ -37,11 +41,19 @@ export const InputTextarea = sveltify<
             onValueChange(e.target.value);
           }}
           showCount={
-            typeof showCount === 'object' && showCountFunction
+            slots['showCount.formatter']
               ? {
-                  formatter: showCountFunction,
+                  formatter: renderParamsSlot({
+                    slots,
+                    setSlotParams,
+                    key: 'showCount.formatter',
+                  }),
                 }
-              : showCount
+              : typeof showCount === 'object' && showCountFunction
+                ? {
+                    formatter: showCountFunction,
+                  }
+                : showCount
           }
           count={{
             ...count,

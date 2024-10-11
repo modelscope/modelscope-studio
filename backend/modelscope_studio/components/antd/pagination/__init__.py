@@ -27,7 +27,7 @@ class AntdPagination(ModelScopeDataLayoutComponent):
     ]
 
     # supported slots
-    SLOTS = ['showQuickJumper.goButton']
+    SLOTS = ['showQuickJumper.goButton', 'itemRender']
 
     data_model = PaginationData
 

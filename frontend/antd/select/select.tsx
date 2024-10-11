@@ -1,8 +1,10 @@
 import { sveltify } from '@svelte-preprocess-react';
 import { ReactSlot } from '@svelte-preprocess-react/react-slot';
+import type { SetSlotParams } from '@svelte-preprocess-react/slot';
 import { useMemo } from 'react';
 import { useFunction } from '@utils/hooks/useFunction';
 import { renderItems } from '@utils/renderItems';
+import { renderParamsSlot } from '@utils/renderParamsSlot';
 import { type GetProps, Select as ASelect } from 'antd';
 
 import { type Item } from './context';
@@ -11,6 +13,7 @@ export const Select = sveltify<
   GetProps<typeof ASelect> & {
     optionItems: Item[];
     onValueChange: (value: string | number | (string | number)[]) => void;
+    setSlotParams: SetSlotParams;
   },
   [
     'allowClear.clearIcon',
@@ -19,6 +22,10 @@ export const Select = sveltify<
     'notFoundContent',
     'removeIcon',
     'suffixIcon',
+    'dropdownRender',
+    'optionRender',
+    'tagRender',
+    'labelRender',
   ]
 >(
   ({
@@ -37,6 +44,7 @@ export const Select = sveltify<
     filterSort,
     maxTagPlaceholder,
     elRef,
+    setSlotParams,
     ...props
   }) => {
     const getPopupContainerFunction = useFunction(getPopupContainer);
@@ -106,18 +114,51 @@ export const Select = sveltify<
           }
           filterOption={filterOptionFunction || filterOption}
           maxTagPlaceholder={
-            maxTagPlaceholderFunction ||
-            (slots.maxTagPlaceholder ? (
-              <ReactSlot slot={slots.maxTagPlaceholder} />
-            ) : (
-              maxTagPlaceholder
-            ))
+            slots.maxTagPlaceholder
+              ? renderParamsSlot({
+                  slots,
+                  setSlotParams,
+                  key: 'maxTagPlaceholder',
+                })
+              : maxTagPlaceholderFunction
           }
           getPopupContainer={getPopupContainerFunction}
-          dropdownRender={dropdownRenderFunction}
-          optionRender={optionRenderFunction}
-          tagRender={tagRenderFunction}
-          labelRender={labelRenderFunction}
+          dropdownRender={
+            slots.dropdownRender
+              ? renderParamsSlot({
+                  slots,
+                  setSlotParams,
+                  key: 'dropdownRender',
+                })
+              : dropdownRenderFunction
+          }
+          optionRender={
+            slots.optionRender
+              ? renderParamsSlot({
+                  slots,
+                  setSlotParams,
+                  key: 'optionRender',
+                })
+              : optionRenderFunction
+          }
+          tagRender={
+            slots.tagRender
+              ? renderParamsSlot({
+                  slots,
+                  setSlotParams,
+                  key: 'tagRender',
+                })
+              : tagRenderFunction
+          }
+          labelRender={
+            slots.labelRender
+              ? renderParamsSlot({
+                  slots,
+                  setSlotParams,
+                  key: 'labelRender',
+                })
+              : labelRenderFunction
+          }
           filterSort={filterSortFunction}
         />
       </>

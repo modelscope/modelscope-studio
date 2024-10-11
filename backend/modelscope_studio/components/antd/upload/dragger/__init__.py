@@ -46,6 +46,8 @@ class AntdUploadDragger(ModelScopeDataLayoutComponent):
         'showUploadList.previewIcon',
         'showUploadList.removeIcon',
         'showUploadList.downloadIcon',
+        'iconRender',
+        'itemRender',
     ]
 
     data_model = ListFiles

@@ -1,7 +1,9 @@
 import { sveltify } from '@svelte-preprocess-react';
 import { ReactSlot } from '@svelte-preprocess-react/react-slot';
+import type { SetSlotParams } from '@svelte-preprocess-react/slot';
 import { useMemo } from 'react';
 import { useFunction } from '@utils/hooks/useFunction';
+import { renderParamsSlot } from '@utils/renderParamsSlot';
 import { type GetProps, TimePicker as ATimePicker } from 'antd';
 import dayjs from 'dayjs';
 
@@ -43,6 +45,7 @@ export const TimePicker = sveltify<
       ...args: any[]
     ) => void;
     onValueChange: (date: number | string) => void;
+    setSlotParams: SetSlotParams;
   },
   [
     'allowClear.clearIcon',
@@ -52,6 +55,8 @@ export const TimePicker = sveltify<
     'superNextIcon',
     'superPrevIcon',
     'renderExtraFooter',
+    'cellRender',
+    'panelRender',
   ]
 >(
   ({
@@ -72,6 +77,7 @@ export const TimePicker = sveltify<
     onPanelChange,
     onCalendarChange,
     children,
+    setSlotParams,
     elRef,
     ...props
   }) => {
@@ -113,8 +119,16 @@ export const TimePicker = sveltify<
           disabledTime={disabledTimeFunction}
           disabledDate={disabledDateFunction}
           getPopupContainer={getPopupContainerFunction}
-          cellRender={cellRenderFunction}
-          panelRender={panelRenderFunction}
+          cellRender={
+            slots.cellRender
+              ? renderParamsSlot({ slots, setSlotParams, key: 'cellRender' })
+              : cellRenderFunction
+          }
+          panelRender={
+            slots.panelRender
+              ? renderParamsSlot({ slots, setSlotParams, key: 'panelRender' })
+              : panelRenderFunction
+          }
           onPanelChange={(date, ...args) => {
             const formattedDates = formatDate(date);
             onPanelChange?.(formattedDates, ...args);

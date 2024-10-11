@@ -1,8 +1,10 @@
 import { sveltify } from '@svelte-preprocess-react';
 import { ReactSlot } from '@svelte-preprocess-react/react-slot';
+import type { SetSlotParams } from '@svelte-preprocess-react/slot';
 import { useMemo } from 'react';
 import { useFunction } from '@utils/hooks/useFunction';
 import { renderItems } from '@utils/renderItems';
+import { renderParamsSlot } from '@utils/renderParamsSlot';
 import { DatePicker as ADatePicker, type GetProps } from 'antd';
 import dayjs from 'dayjs';
 
@@ -43,6 +45,7 @@ export const DatePicker = sveltify<
     ) => void;
     onValueChange: (date: ReturnType<typeof formatDate>) => void;
     presetItems: Item[];
+    setSlotParams: SetSlotParams;
   },
   [
     'allowClear.clearIcon',
@@ -52,6 +55,8 @@ export const DatePicker = sveltify<
     'superNextIcon',
     'superPrevIcon',
     'renderExtraFooter',
+    'cellRender',
+    'panelRender',
   ]
 >(
   ({
@@ -73,6 +78,7 @@ export const DatePicker = sveltify<
     onValueChange,
     onPanelChange,
     children,
+    setSlotParams,
     elRef,
     ...props
   }) => {
@@ -124,8 +130,16 @@ export const DatePicker = sveltify<
           showTime={validShowTime}
           disabledDate={disabledDateFunction}
           getPopupContainer={getPopupContainerFunction}
-          cellRender={cellRenderFunction}
-          panelRender={panelRenderFunction}
+          cellRender={
+            slots.cellRender
+              ? renderParamsSlot({ slots, setSlotParams, key: 'cellRender' })
+              : cellRenderFunction
+          }
+          panelRender={
+            slots.panelRender
+              ? renderParamsSlot({ slots, setSlotParams, key: 'panelRender' })
+              : panelRenderFunction
+          }
           presets={useMemo(() => {
             return (
               presets ||
@@ -150,10 +164,11 @@ export const DatePicker = sveltify<
           }}
           renderExtraFooter={
             slots.renderExtraFooter
-              ? () =>
-                  slots.renderExtraFooter ? (
-                    <ReactSlot slot={slots.renderExtraFooter} />
-                  ) : null
+              ? renderParamsSlot({
+                  slots,
+                  setSlotParams,
+                  key: 'renderExtraFooter',
+                })
               : props.renderExtraFooter
           }
           prevIcon={

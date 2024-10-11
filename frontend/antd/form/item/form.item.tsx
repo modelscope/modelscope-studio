@@ -45,16 +45,21 @@ export const FormItem = sveltify<
     ruleItems,
     rules,
     children,
+    hasFeedback,
     ...props
   }) => {
     const supportTooltipConfig =
       slots['tooltip.icon'] ||
       slots['tooltip.title'] ||
       typeof tooltip === 'object';
+    const supportHasFeedbackConfig = typeof hasFeedback === 'object';
+    const hasFeedbackConfig = getConfig(hasFeedback);
+    const hasFeedbackIconsFunction = useFunction(hasFeedbackConfig.icons);
     const getValueFromEventFunction = useFunction(getValueFromEvent);
     const getValuePropsFunction = useFunction(getValueProps);
     const normalizeFunction = useFunction(normalize);
     const shouldUpdateFunction = useFunction(shouldUpdate);
+
     const tooltipConfig = getConfig(tooltip);
     const tooltipAfterOpenChangeFunction = useFunction(
       tooltipConfig.afterOpenChange
@@ -65,6 +70,14 @@ export const FormItem = sveltify<
     return (
       <AForm.Item
         {...props}
+        hasFeedback={
+          supportHasFeedbackConfig
+            ? {
+                ...hasFeedbackConfig,
+                icons: hasFeedbackIconsFunction || hasFeedbackConfig.icons,
+              }
+            : hasFeedback
+        }
         getValueFromEvent={getValueFromEventFunction}
         getValueProps={getValuePropsFunction}
         normalize={normalizeFunction}

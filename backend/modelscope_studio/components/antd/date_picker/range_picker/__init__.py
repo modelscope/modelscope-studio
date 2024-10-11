@@ -37,6 +37,8 @@ class AntdDatePickerRangePicker(ModelScopeDataLayoutComponent):
         'superPrevIcon',
         'renderExtraFooter',
         'separator',
+        'cellRender',
+        'panelRender',
     ]
 
     def __init__(

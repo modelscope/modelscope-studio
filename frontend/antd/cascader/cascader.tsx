@@ -1,8 +1,10 @@
 import { sveltify } from '@svelte-preprocess-react';
 import { ReactSlot } from '@svelte-preprocess-react/react-slot';
+import type { SetSlotParams } from '@svelte-preprocess-react/slot';
 import { useMemo } from 'react';
 import { useFunction } from '@utils/hooks/useFunction';
 import { renderItems } from '@utils/renderItems';
+import { renderParamsSlot } from '@utils/renderParamsSlot';
 import { Cascader as ACascader, type CascaderProps } from 'antd';
 
 import { type Item } from './context';
@@ -19,6 +21,7 @@ export const Cascader = sveltify<
     onValueChange: (value: string[] | number[]) => void;
     onLoadData?: (...args: any[]) => void;
     optionItems: Item[];
+    setSlotParams: SetSlotParams;
   },
   [
     'allowClear.clearIcon',
@@ -27,6 +30,10 @@ export const Cascader = sveltify<
     'notFoundContent',
     'expandIcon',
     'removeIcon',
+    'displayRender',
+    'tagRender',
+    'dropdownRender',
+    'showSearch.render',
   ]
 >(
   ({
@@ -45,6 +52,7 @@ export const Cascader = sveltify<
     showSearch,
     optionItems,
     options,
+    setSlotParams,
     ...props
   }) => {
     const getPopupContainerFunction = useFunction(getPopupContainer);
@@ -53,7 +61,8 @@ export const Cascader = sveltify<
     const optionRenderFunction = useFunction(optionRender);
     const dropdownRenderFunction = useFunction(dropdownRender);
     const maxTagPlaceholderFunction = useFunction(maxTagPlaceholder);
-    const supportShowSearchConfig = typeof showSearch === 'object';
+    const supportShowSearchConfig =
+      typeof showSearch === 'object' || slots['showSearch.render'];
     const showSearchConfig = getConfig(showSearch);
     const showSearchFilterFunction = useFunction(showSearchConfig.filter);
     const showSearchRenderFunction = useFunction(showSearchConfig.render);
@@ -77,17 +86,47 @@ export const Cascader = sveltify<
               ? {
                   ...showSearchConfig,
                   filter: showSearchFilterFunction || showSearchConfig.filter,
-                  render: showSearchRenderFunction || showSearchConfig.render,
+                  render: slots['showSearch.render']
+                    ? renderParamsSlot({
+                        slots,
+                        setSlotParams,
+                        key: 'showSearch.render',
+                      })
+                    : showSearchRenderFunction || showSearchConfig.render,
                   sort: showSearchSortFunction || showSearchConfig.sort,
                 }
               : showSearch
           }
           loadData={onLoadData}
           optionRender={optionRenderFunction}
-          dropdownRender={dropdownRenderFunction}
           getPopupContainer={getPopupContainerFunction}
-          displayRender={displayRenderFunction}
-          tagRender={tagRenderFunction}
+          dropdownRender={
+            slots.dropdownRender
+              ? renderParamsSlot({
+                  slots,
+                  setSlotParams,
+                  key: 'dropdownRender',
+                })
+              : dropdownRenderFunction
+          }
+          displayRender={
+            slots.displayRender
+              ? renderParamsSlot({
+                  slots,
+                  setSlotParams,
+                  key: 'displayRender',
+                })
+              : displayRenderFunction
+          }
+          tagRender={
+            slots.tagRender
+              ? renderParamsSlot({
+                  slots,
+                  setSlotParams,
+                  key: 'tagRender',
+                })
+              : tagRenderFunction
+          }
           onChange={(v, ...args) => {
             onChange?.(v, ...args);
             onValueChange(v);
@@ -121,12 +160,13 @@ export const Cascader = sveltify<
             )
           }
           maxTagPlaceholder={
-            maxTagPlaceholderFunction ||
-            (slots.maxTagPlaceholder ? (
-              <ReactSlot slot={slots.maxTagPlaceholder} />
-            ) : (
-              maxTagPlaceholder
-            ))
+            slots.maxTagPlaceholder
+              ? renderParamsSlot({
+                  slots,
+                  setSlotParams,
+                  key: 'maxTagPlaceholder',
+                })
+              : maxTagPlaceholderFunction || maxTagPlaceholder
           }
           allowClear={
             slots['allowClear.clearIcon']

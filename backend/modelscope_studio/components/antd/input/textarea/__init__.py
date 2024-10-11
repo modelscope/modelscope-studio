@@ -24,7 +24,7 @@ class AntdInputTextarea(ModelScopeDataLayoutComponent):
     ]
 
     # supported slots
-    SLOTS = ['allowClear.clearIcon']
+    SLOTS = ['allowClear.clearIcon', 'showCount.formatter']
 
     def __init__(
             self,

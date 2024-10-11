@@ -1,8 +1,10 @@
 import { sveltify } from '@svelte-preprocess-react';
 import { ReactSlot } from '@svelte-preprocess-react/react-slot';
+import type { SetSlotParams } from '@svelte-preprocess-react/slot';
 import { useMemo } from 'react';
 import { useFunction } from '@utils/hooks/useFunction';
 import { renderItems } from '@utils/renderItems';
+import { renderParamsSlot } from '@utils/renderParamsSlot';
 import { DatePicker as ADatePicker, type GetProps } from 'antd';
 import dayjs from 'dayjs';
 
@@ -38,6 +40,7 @@ export const DateRangePicker = sveltify<
     ) => void;
     onValueChange: (dates: [number | null, number | null]) => void;
     presetItems: Item[];
+    setSlotParams: SetSlotParams;
   },
   [
     'allowClear.clearIcon',
@@ -48,6 +51,8 @@ export const DateRangePicker = sveltify<
     'superPrevIcon',
     'renderExtraFooter',
     'separator',
+    'cellRender',
+    'panelRender',
   ]
 >(
   ({
@@ -70,8 +75,8 @@ export const DateRangePicker = sveltify<
     onPanelChange,
     onCalendarChange,
     children,
+    setSlotParams,
     elRef,
-
     ...props
   }) => {
     const disabledDateFunction = useFunction(disabledDate);
@@ -133,8 +138,16 @@ export const DateRangePicker = sveltify<
           showTime={validShowTime}
           disabledDate={disabledDateFunction}
           getPopupContainer={getPopupContainerFunction}
-          cellRender={cellRenderFunction}
-          panelRender={panelRenderFunction}
+          cellRender={
+            slots.cellRender
+              ? renderParamsSlot({ slots, setSlotParams, key: 'cellRender' })
+              : cellRenderFunction
+          }
+          panelRender={
+            slots.panelRender
+              ? renderParamsSlot({ slots, setSlotParams, key: 'panelRender' })
+              : panelRenderFunction
+          }
           presets={useMemo(() => {
             return (
               presets ||
@@ -163,10 +176,11 @@ export const DateRangePicker = sveltify<
           }}
           renderExtraFooter={
             slots.renderExtraFooter
-              ? () =>
-                  slots.renderExtraFooter ? (
-                    <ReactSlot slot={slots.renderExtraFooter} />
-                  ) : null
+              ? renderParamsSlot({
+                  slots,
+                  setSlotParams,
+                  key: 'renderExtraFooter',
+                })
               : props.renderExtraFooter
           }
           prevIcon={
@@ -213,7 +227,7 @@ export const DateRangePicker = sveltify<
           }
           separator={
             slots.separator ? (
-              <ReactSlot slot={slots.separator} />
+              <ReactSlot slot={slots.separator} clone />
             ) : (
               props.separator
             )

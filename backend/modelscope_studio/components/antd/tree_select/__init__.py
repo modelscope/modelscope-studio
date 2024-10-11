@@ -42,6 +42,9 @@ class AntdTreeSelect(ModelScopeDataLayoutComponent):
         'notFoundContent',
         'suffixIcon',
         'switcherIcon',
+        'dropdownRender',
+        'tagRender',
+        'treeTitleRender',
     ]
 
     def __init__(

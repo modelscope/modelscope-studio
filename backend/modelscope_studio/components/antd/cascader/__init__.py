@@ -39,6 +39,10 @@ class AntdCascader(ModelScopeDataLayoutComponent):
         'notFoundContent',
         'expandIcon',
         'removeIcon',
+        'displayRender',
+        'tagRender',
+        'dropdownRender',
+        'showSearch.render',
     ]
 
     def __init__(

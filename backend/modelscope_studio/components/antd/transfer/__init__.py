@@ -29,11 +29,8 @@ class AntdTransfer(ModelScopeDataLayoutComponent):
 
     # supported slots
     SLOTS = [
-        'selectionsIcon',
-        'titles',
-        'footer',
-        'locale.notFoundContent',
-        'selectAllLabels',
+        'selectionsIcon', 'titles', 'footer', 'locale.notFoundContent',
+        'selectAllLabels', 'render'
     ]
 
     def __init__(

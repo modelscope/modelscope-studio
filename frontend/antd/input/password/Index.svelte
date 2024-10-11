@@ -5,7 +5,11 @@
     bindEvents,
     importComponent,
   } from '@svelte-preprocess-react/component';
-  import { getSlotContext, getSlots } from '@svelte-preprocess-react/slot';
+  import {
+    getSetSlotParamsFn,
+    getSlotContext,
+    getSlots,
+  } from '@svelte-preprocess-react/slot';
   import type React from 'react';
   import type { Gradio } from '@gradio/utils';
   import cls from 'classnames';
@@ -43,6 +47,9 @@
     restProps: $$restProps,
   });
   const slots = getSlots();
+
+  const setSlotParams = getSetSlotParamsFn();
+
   $: update({
     gradio,
     props: $updatedProps,
@@ -71,6 +78,7 @@
       onValueChange={(v) => {
         value = v;
       }}
+      {setSlotParams}
     >
       <slot />
     </InputPassword>

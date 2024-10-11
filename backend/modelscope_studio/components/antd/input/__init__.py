@@ -34,7 +34,8 @@ class AntdInput(ModelScopeDataLayoutComponent):
 
     # supported slots
     SLOTS = [
-        'addonAfter', 'addonBefore', 'allowClear.clearIcon', 'prefix', 'suffix'
+        'addonAfter', 'addonBefore', 'allowClear.clearIcon', 'prefix',
+        'suffix', 'showCount.formatter'
     ]
 
     def __init__(

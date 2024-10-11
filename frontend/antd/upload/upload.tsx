@@ -1,8 +1,9 @@
 import { sveltify } from '@svelte-preprocess-react';
-import { ReactSlot } from '@svelte-preprocess-react/react-slot';
+import type { SetSlotParams } from '@svelte-preprocess-react/slot';
 import { useMemo } from 'react';
 import type { FileData } from '@gradio/client';
 import { useFunction } from '@utils/hooks/useFunction';
+import { renderParamsSlot } from '@utils/renderParamsSlot';
 import { type GetProps, Upload as AUpload } from 'antd';
 
 function getConfig<T>(value: T): Partial<T & Record<PropertyKey, any>> {
@@ -17,12 +18,15 @@ export const Upload = sveltify<
     onChange?: (value: string[]) => void;
     upload: (files: File[]) => Promise<(FileData | null)[]>;
     fileList: FileData[];
+    setSlotParams: SetSlotParams;
   },
   [
     'showUploadList.extra',
     'showUploadList.previewIcon',
     'showUploadList.removeIcon',
     'showUploadList.downloadIcon',
+    'iconRender',
+    'itemRender',
   ]
 >(
   ({
@@ -41,6 +45,7 @@ export const Upload = sveltify<
     onValueChange,
     onRemove,
     fileList,
+    setSlotParams,
     ...props
   }) => {
     const supportShowUploadListConfig =
@@ -84,8 +89,16 @@ export const Upload = sveltify<
         data={dataFunction || data}
         previewFile={previewFileFunction}
         isImageUrl={isImageUrlFunction}
-        itemRender={itemRenderFunction}
-        iconRender={iconRenderFunction}
+        itemRender={
+          slots.itemRender
+            ? renderParamsSlot({ slots, setSlotParams, key: 'itemRender' })
+            : itemRenderFunction
+        }
+        iconRender={
+          slots.iconRender
+            ? renderParamsSlot({ slots, setSlotParams, key: 'iconRender' })
+            : iconRenderFunction
+        }
         onRemove={(file) => {
           onRemove?.(file);
           const index = validFileList.findIndex((v) => v.uid === file.uid);
@@ -133,26 +146,34 @@ export const Upload = sveltify<
                 showPreviewIcon:
                   showUploadListShowPreviewIconFunction ||
                   showUploadListConfig.showPreviewIcon,
-                downloadIcon: slots['showUploadList.downloadIcon'] ? (
-                  <ReactSlot slot={slots['showUploadList.downloadIcon']} />
-                ) : (
-                  showUploadListConfig.downloadIcon
-                ),
-                removeIcon: slots['showUploadList.removeIcon'] ? (
-                  <ReactSlot slot={slots['showUploadList.removeIcon']} />
-                ) : (
-                  showUploadListConfig.removeIcon
-                ),
-                previewIcon: slots['showUploadList.previewIcon'] ? (
-                  <ReactSlot slot={slots['showUploadList.previewIcon']} />
-                ) : (
-                  showUploadListConfig.previewIcon
-                ),
-                extra: slots['showUploadList.extra'] ? (
-                  <ReactSlot slot={slots['showUploadList.extra']} />
-                ) : (
-                  showUploadListConfig.extra
-                ),
+                downloadIcon: slots['showUploadList.downloadIcon']
+                  ? renderParamsSlot({
+                      slots,
+                      setSlotParams,
+                      key: 'showUploadList.downloadIcon',
+                    })
+                  : showUploadListConfig.downloadIcon,
+                removeIcon: slots['showUploadList.removeIcon']
+                  ? renderParamsSlot({
+                      slots,
+                      setSlotParams,
+                      key: 'showUploadList.removeIcon',
+                    })
+                  : showUploadListConfig.removeIcon,
+                previewIcon: slots['showUploadList.previewIcon']
+                  ? renderParamsSlot({
+                      slots,
+                      setSlotParams,
+                      key: 'showUploadList.previewIcon',
+                    })
+                  : showUploadListConfig.previewIcon,
+                extra: slots['showUploadList.extra']
+                  ? renderParamsSlot({
+                      slots,
+                      setSlotParams,
+                      key: 'showUploadList.extra',
+                    })
+                  : showUploadListConfig.extra,
               }
             : showUploadList
         }

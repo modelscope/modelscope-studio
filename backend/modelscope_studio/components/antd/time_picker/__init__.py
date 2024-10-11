@@ -35,6 +35,8 @@ class AntdTimePicker(ModelScopeDataLayoutComponent):
         'superNextIcon',
         'superPrevIcon',
         'renderExtraFooter',
+        'cellRender',
+        'panelRender',
     ]
 
     def __init__(

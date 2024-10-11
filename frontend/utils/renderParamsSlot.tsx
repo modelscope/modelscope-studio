@@ -16,6 +16,6 @@ export function renderParamsSlot(
 ) {
   return (...args: any[]) => {
     setSlotParams(key, args);
-    return renderSlot(slots[key], options);
+    return renderSlot(slots[key], { clone: true, ...options });
   };
 }

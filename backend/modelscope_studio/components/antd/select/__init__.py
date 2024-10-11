@@ -44,6 +44,7 @@ class AntdSelect(ModelScopeDataLayoutComponent):
     # supported slots
     SLOTS = [
         'allowClear.clearIcon', 'maxTagPlaceholder', 'menuItemSelectedIcon',
+        'dropdownRender', 'optionRender', 'tagRender', 'labelRender',
         'notFoundContent', 'removeIcon', 'suffixIcon', 'options'
     ]
 

@@ -40,6 +40,8 @@ class AntdDatePicker(ModelScopeDataLayoutComponent):
         'superNextIcon',
         'superPrevIcon',
         'renderExtraFooter',
+        'cellRender',
+        'panelRender',
     ]
 
     def __init__(

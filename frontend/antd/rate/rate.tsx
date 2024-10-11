@@ -1,11 +1,13 @@
 import { sveltify } from '@svelte-preprocess-react';
-import { ReactSlot } from '@svelte-preprocess-react/react-slot';
+import type { SetSlotParams } from '@svelte-preprocess-react/slot';
+import { renderParamsSlot } from '@utils/renderParamsSlot';
 import { type GetProps, Rate as ARate } from 'antd';
 
 export const Rate = sveltify<
   GetProps<typeof ARate> & {
     onValueChange: (value: number) => void;
     children?: React.ReactNode;
+    setSlotParams: SetSlotParams;
   },
   ['character']
 >(
@@ -15,6 +17,7 @@ export const Rate = sveltify<
     onValueChange,
     character,
     onChange,
+    setSlotParams,
     elRef,
     ...props
   }) => {
@@ -29,7 +32,12 @@ export const Rate = sveltify<
             onValueChange(v);
           }}
           character={
-            slots.character ? <ReactSlot slot={slots.character} /> : character
+            slots.character
+              ? renderParamsSlot(
+                  { slots, setSlotParams, key: 'character' },
+                  { clone: true }
+                )
+              : character
           }
         />
       </>

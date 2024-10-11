@@ -33,7 +33,7 @@ class AntdColorPicker(ModelScopeDataLayoutComponent):
     ]
 
     # supported slots
-    SLOTS = ["presets"]
+    SLOTS = ["presets", 'panelRender', 'showText']
 
     def __init__(
             self,

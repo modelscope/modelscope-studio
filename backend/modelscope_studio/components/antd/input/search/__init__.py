@@ -28,12 +28,8 @@ class AntdInputSearch(ModelScopeDataLayoutComponent):
 
     # supported slots
     SLOTS = [
-        'addonAfter',
-        'addonBefore',
-        'allowClear.clearIcon',
-        'prefix',
-        'suffix',
-        'enterButton',
+        'addonAfter', 'addonBefore', 'allowClear.clearIcon', 'prefix',
+        'suffix', 'enterButton', 'showCount.formatter'
     ]
 
     def __init__(

@@ -1,13 +1,23 @@
 import { sveltify } from '@svelte-preprocess-react';
 import { ReactSlot } from '@svelte-preprocess-react/react-slot';
+import type { SetSlotParams } from '@svelte-preprocess-react/slot';
 import { useFunction } from '@utils/hooks/useFunction';
+import { renderParamsSlot } from '@utils/renderParamsSlot';
 import { type GetProps, Input as AInput } from 'antd';
 
 export const InputPassword = sveltify<
   GetProps<typeof AInput.Password> & {
     onValueChange: (value: string) => void;
+    setSlotParams: SetSlotParams;
   },
-  ['addonAfter', 'addonBefore', 'allowClear.clearIcon', 'prefix', 'suffix']
+  [
+    'addonAfter',
+    'addonBefore',
+    'allowClear.clearIcon',
+    'prefix',
+    'suffix',
+    'showCount.formatter',
+  ]
 >(
   ({
     slots,
@@ -17,6 +27,7 @@ export const InputPassword = sveltify<
     onValueChange,
     onChange,
     elRef,
+    setSlotParams,
     ...props
   }) => {
     const countStrategyFunction = useFunction(count?.strategy);
@@ -37,11 +48,19 @@ export const InputPassword = sveltify<
             onValueChange(e.target.value);
           }}
           showCount={
-            typeof showCount === 'object' && showCountFunction
+            slots['showCount.formatter']
               ? {
-                  formatter: showCountFunction,
+                  formatter: renderParamsSlot({
+                    slots,
+                    setSlotParams,
+                    key: 'showCount.formatter',
+                  }),
                 }
-              : showCount
+              : typeof showCount === 'object' && showCountFunction
+                ? {
+                    formatter: showCountFunction,
+                  }
+                : showCount
           }
           count={{
             ...count,
