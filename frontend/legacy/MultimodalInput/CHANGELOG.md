@@ -1,5 +1,11 @@
 # @modelscope-studio/legacy-multimodal-input
 
+## 1.0.0-beta.1
+
+### Features
+
+- [`025f728`](https://github.com/modelscope/modelscope-studio/commit/025f72825bdafbc60b4a09e577a363e43189bd1d) - migrate to gradio 5. Thanks [@Col0ring](https://github.com/Col0ring)!
+
 ## 1.0.0-beta.0
 
 ### Features
