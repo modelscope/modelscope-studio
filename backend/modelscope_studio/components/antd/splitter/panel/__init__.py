@@ -7,8 +7,11 @@ from .....utils.dev import ModelScopeLayoutComponent, resolve_frontend_dir
 
 class AntdSplitterPanel(ModelScopeLayoutComponent):
     """
+    Ant Design: https://ant.design/components/splitter
+
     Split panels to isolate.
 
+    When to use:
     Can be used to separate areas horizontally or vertically. When you need to freely drag and adjust the size of each area. When you need to specify the maximum and minimum width and height of an area.
     """
 

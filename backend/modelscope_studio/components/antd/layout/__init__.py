@@ -13,6 +13,16 @@ from .sider import AntdLayoutSider
 
 class AntdLayout(ModelScopeLayoutComponent):
     """
+    Ant Design: https://ant.design/components/layout
+
+    Handling the overall layout of a page.
+
+    Component overview:
+    - Layout: The layout wrapper, in which Header Sider Content Footer or Layout itself can be nested, and can be placed in any parent container.
+    - Header: The top layout with the default style, in which any element can be nested, and must be placed in Layout.
+    - Sider: The sidebar with default style and basic functions, in which any element can be nested, and must be placed in Layout.
+    - Content: The content layout with the default style, in which any element can be nested, and must be placed in Layout.
+    - Footer: The bottom layout with the default style, in which any element can be nested, and must be placed in Layout.
     """
 
     Content = AntdLayoutContent
@@ -30,6 +40,7 @@ class AntdLayout(ModelScopeLayoutComponent):
             self,
             props: dict | None = None,
             *,
+            has_sider: bool | None = None,
             as_item: str | None = None,
             _internal: None = None,
             # gradio properties
@@ -39,6 +50,10 @@ class AntdLayout(ModelScopeLayoutComponent):
             elem_style: dict | None = None,
             render: bool = True,
             **kwargs):
+        """
+        Parameters:
+            has_sider: Whether contain Sider in children, don't have to assign it normally. Useful in ssr avoid style flickering.
+        """
         super().__init__(visible=visible,
                          elem_id=elem_id,
                          elem_classes=elem_classes,
@@ -47,6 +62,7 @@ class AntdLayout(ModelScopeLayoutComponent):
                          elem_style=elem_style,
                          **kwargs)
         self.props = props
+        self.has_sider = has_sider
 
     FRONTEND_DIR = resolve_frontend_dir("layout")
 

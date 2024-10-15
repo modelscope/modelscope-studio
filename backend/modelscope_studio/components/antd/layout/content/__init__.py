@@ -9,6 +9,16 @@ from .....utils.dev import ModelScopeLayoutComponent, resolve_frontend_dir
 
 class AntdLayoutContent(ModelScopeLayoutComponent):
     """
+    Ant Design: https://ant.design/components/layout
+
+    Handling the overall layout of a page.
+
+    Component overview:
+    - Layout: The layout wrapper, in which Header Sider Content Footer or Layout itself can be nested, and can be placed in any parent container.
+    - Header: The top layout with the default style, in which any element can be nested, and must be placed in Layout.
+    - Sider: The sidebar with default style and basic functions, in which any element can be nested, and must be placed in Layout.
+    - Content: The content layout with the default style, in which any element can be nested, and must be placed in Layout.
+    - Footer: The bottom layout with the default style, in which any element can be nested, and must be placed in Layout.
     """
     EVENTS = [
         EventListener("click",

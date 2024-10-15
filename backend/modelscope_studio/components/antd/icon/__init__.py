@@ -8,6 +8,9 @@ from .iconfont_provider import AntdIconfontProvider
 
 class AntdIcon(ModelScopeComponent):
     """
+    Ant Design: https://ant.design/components/icon
+
+    Semantic vector graphics.
     """
 
     IconfontProvider = AntdIconfontProvider
@@ -28,6 +31,7 @@ class AntdIcon(ModelScopeComponent):
             *,
             spin: bool = False,
             rotate: int | float | None = None,
+            two_tone_color: str | None = None,
             component: str | None = None,
             as_item: str | None = None,
             _internal: None = None,
@@ -38,6 +42,13 @@ class AntdIcon(ModelScopeComponent):
             elem_style: dict | None = None,
             render: bool = True,
             **kwargs):
+        """
+        Parameters:
+            rotate: Rotate by n degrees (not working in IE9).
+            spin: Rotate icon with animation.
+            two_tone_color: Only supports the two-tone icon. Specify the primary color.
+            component: The component used for the root node.
+        """
         super().__init__(value=value,
                          visible=visible,
                          elem_id=elem_id,
@@ -50,6 +61,7 @@ class AntdIcon(ModelScopeComponent):
         self.spin = spin
         self.rotate = rotate
         self.component = component
+        self.two_tone_color = two_tone_color
 
     FRONTEND_DIR = resolve_frontend_dir("icon")
 

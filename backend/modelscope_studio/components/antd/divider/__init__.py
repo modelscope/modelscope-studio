@@ -7,9 +7,13 @@ from ....utils.dev import ModelScopeLayoutComponent, resolve_frontend_dir
 
 class AntdDivider(ModelScopeLayoutComponent):
     """
+    Ant Design: https://ant.design/components/divider
+
     A divider line separates different content.
-    Divide sections of an article.
-    Divide inline text and links such as the operation column of table.
+
+    When to use:
+    - Divide sections of an article.
+    - Divide inline text and links such as the operation column of table.
     """
 
     EVENTS = []

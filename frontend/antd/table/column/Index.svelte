@@ -11,7 +11,6 @@
   import type React from 'react';
   import type { Gradio } from '@gradio/utils';
   import { createFunction } from '@utils/createFunction';
-  import { renderSlot } from '@utils/renderSlot';
   import cls from 'classnames';
   import { writable } from 'svelte/store';
 

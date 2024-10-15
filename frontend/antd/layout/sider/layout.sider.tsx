@@ -11,7 +11,12 @@ export const LayoutSider = sveltify<
     <ALayout.Sider
       {...props}
       trigger={
-        slots.trigger ? <ReactSlot slot={slots.trigger} /> : props.trigger
+        slots.trigger ? (
+          <ReactSlot slot={slots.trigger} clone />
+        ) : props.trigger === undefined ? null : props.trigger ===
+          'default' ? undefined : (
+          props.trigger
+        )
       }
     />
   );

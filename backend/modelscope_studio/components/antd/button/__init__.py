@@ -10,8 +10,11 @@ from .group import AntdButtonGroup
 
 class AntdButton(ModelScopeLayoutComponent):
     """
+    Ant Design: https://ant.design/components/button
+
     To trigger an operation.
 
+    When to use:
     A button means an operation (or a series of operations). Clicking a button will trigger its corresponding business logic.
 
     In Ant Design we provide 5 types of button.

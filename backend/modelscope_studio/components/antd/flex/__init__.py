@@ -7,9 +7,13 @@ from ....utils.dev import ModelScopeLayoutComponent, resolve_frontend_dir
 
 class AntdFlex(ModelScopeLayoutComponent):
     """
+    Ant Design: https://ant.design/components/flex
+
     A flex layout container for alignment.
-    Good for setting spacing between elements.
-    Suitable for setting various horizontal and vertical alignments.
+
+    When to use:
+    - Good for setting spacing between elements.
+    - Suitable for setting various horizontal and vertical alignments.
     """
 
     EVENTS = []
@@ -19,11 +23,17 @@ class AntdFlex(ModelScopeLayoutComponent):
             props: dict | None = None,
             *,
             vertical: bool = False,
-            wrap: str | bool = "nowrap",
-            justify: str | None = "normal",
-            align: str | None = "normal",
+            wrap: Literal['nowrap', 'wrap', 'wrap-reverse'] | bool = "nowrap",
+            justify: Literal['normal', 'start', 'end', 'flex-start',
+                             'flex-end', 'center', 'left', 'right',
+                             'space-between', 'space-around', 'space-evenly',
+                             'stretch', 'safe', 'unsafe'] | None = "normal",
+            align: Literal['normal', 'start', 'end', 'flex-start', 'flex-end',
+                           'center', 'self-start', 'self-end', 'baseline',
+                           'unsafe'] | None = "normal",
             flex: str | None = "normal",
-            gap: Literal["small", "middle", "large"] | str | int | None = None,
+            gap: Literal["small", "middle", "large"] | str | int | float
+        | None = None,
             component: str | None = None,
             as_item: str | None = None,
             _internal: None = None,

@@ -11,7 +11,11 @@ from .meta import AntdCardMeta
 
 class AntdCard(ModelScopeLayoutComponent):
     """
+    Ant Design: https://ant.design/components/card
+
     A container for displaying information.
+
+    When to use:
     A card can be used to display content related to a single subject. The content can consist of multiple elements of varying types and sizes.
     """
     Grid = AntdCardGrid
