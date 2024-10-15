@@ -1,6 +1,9 @@
 import { sveltify } from '@svelte-preprocess-react';
 import { ReactSlot } from '@svelte-preprocess-react/react-slot';
+import type { SetSlotParams } from '@svelte-preprocess-react/slot';
 import { useFunction } from '@utils/hooks/useFunction';
+import { omitUndefinedProps } from '@utils/omitUndefinedProps';
+import { renderParamsSlot } from '@utils/renderParamsSlot';
 import { type GetProps, Image as AImage } from 'antd';
 
 function getConfig<T>(value: T): Partial<T & Record<PropertyKey, any>> {
@@ -11,22 +14,51 @@ function getConfig<T>(value: T): Partial<T & Record<PropertyKey, any>> {
 }
 type ImageProps = GetProps<typeof AImage>;
 export const Image = sveltify<
-  ImageProps,
-  ['placeholder', 'preview.mask', 'preview.closeIcon']
->(({ slots, preview, ...props }) => {
+  ImageProps & {
+    setSlotParams: SetSlotParams;
+  },
+  [
+    'placeholder',
+    'preview.mask',
+    'preview.closeIcon',
+    'preview.toolbarRender',
+    'preview.imageRender',
+  ]
+>(({ slots, preview, setSlotParams, ...props }) => {
   const previewConfig = getConfig(preview);
   const supportPreview =
-    slots['preview.mask'] || slots['preview.closeIcon'] || preview !== false;
+    slots['preview.mask'] ||
+    slots['preview.closeIcon'] ||
+    slots['preview.toolbarRender'] ||
+    slots['preview.imageRender'] ||
+    preview !== false;
   const getContainerFunction = useFunction(previewConfig.getContainer);
+  const previewToolbarRenderFunction = useFunction(previewConfig.toolbarRender);
+  const previewImageRenderFunction = useFunction(previewConfig.imageRender);
 
   return (
     <AImage
       {...props}
       preview={
         supportPreview
-          ? ({
+          ? (omitUndefinedProps({
               ...previewConfig,
               getContainer: getContainerFunction,
+              toolbarRender: slots['preview.toolbarRender']
+                ? renderParamsSlot({
+                    slots,
+                    setSlotParams,
+                    key: 'preview.toolbarRender',
+                  })
+                : previewToolbarRenderFunction,
+              imageRender: slots['preview.imageRender']
+                ? renderParamsSlot({
+                    slots,
+                    setSlotParams,
+                    key: 'preview.imageRender',
+                  })
+                : previewImageRenderFunction,
+
               ...(slots['preview.mask'] || Reflect.has(previewConfig, 'mask')
                 ? {
                     mask: slots['preview.mask'] ? (
@@ -41,7 +73,7 @@ export const Image = sveltify<
               ) : (
                 previewConfig.closeIcon
               ),
-            } as ImageProps['preview'])
+            }) as ImageProps['preview'])
           : false
       }
       placeholder={

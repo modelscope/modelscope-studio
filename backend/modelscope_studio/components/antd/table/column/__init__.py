@@ -16,7 +16,7 @@ class AntdTableColumn(ModelScopeLayoutComponent):
 
     # supported slots
     SLOTS = [
-        'filterDropdown', 'filterIcon', 'title', 'sortIcon',
+        'filterDropdown', 'filterIcon', 'render', 'title', 'sortIcon',
         'showSorterTooltip.title'
     ]
 

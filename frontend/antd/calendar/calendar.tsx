@@ -1,6 +1,8 @@
 import { sveltify } from '@svelte-preprocess-react';
+import type { SetSlotParams } from '@svelte-preprocess-react/slot';
 import { useMemo } from 'react';
 import { useFunction } from '@utils/hooks/useFunction';
+import { renderParamsSlot } from '@utils/renderParamsSlot';
 import { Calendar as ACalendar, type GetProps } from 'antd';
 import dayjs from 'dayjs';
 
@@ -19,7 +21,9 @@ export const Calendar = sveltify<
     onPanelChange?: (date: number, ...args: any[]) => void;
     onSelect?: (date: number, ...args: any[]) => void;
     onValueChange: (date: number) => void;
-  }
+    setSlotParams: SetSlotParams;
+  },
+  ['cellRender', 'fullCellRender', 'headerRender']
 >(
   ({
     disabledDate,
@@ -30,9 +34,17 @@ export const Calendar = sveltify<
     onPanelChange,
     onSelect,
     onValueChange,
+    setSlotParams,
+    cellRender,
+    fullCellRender,
+    headerRender,
+    slots,
     ...props
   }) => {
     const disabledDateFunction = useFunction(disabledDate);
+    const cellRenderFunction = useFunction(cellRender);
+    const fullCellRenderFunction = useFunction(fullCellRender);
+    const headerRenderFunction = useFunction(headerRender);
     const validValue = useMemo(() => {
       return value ? formatDayjs(value) : undefined;
     }, [value]);
@@ -51,6 +63,21 @@ export const Calendar = sveltify<
         defaultValue={validDefaultValue}
         validRange={validValidRange}
         disabledDate={disabledDateFunction}
+        cellRender={
+          slots.cellRender
+            ? renderParamsSlot({ slots, setSlotParams, key: 'cellRender' })
+            : cellRenderFunction
+        }
+        fullCellRender={
+          slots.fullCellRender
+            ? renderParamsSlot({ slots, setSlotParams, key: 'fullCellRender' })
+            : fullCellRenderFunction
+        }
+        headerRender={
+          slots.headerRender
+            ? renderParamsSlot({ slots, setSlotParams, key: 'headerRender' })
+            : headerRenderFunction
+        }
         onChange={(date, ...args) => {
           onValueChange(date.valueOf() / 1000);
           onChange?.(date.valueOf() / 1000, ...args);

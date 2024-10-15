@@ -3,6 +3,7 @@
 <script lang="ts">
   import { bindEvents } from '@svelte-preprocess-react/component';
   import {
+    getSetSlotParamsFn,
     getSlotContext,
     getSlotKey,
     getSlots,
@@ -10,7 +11,6 @@
   import type React from 'react';
   import type { Gradio } from '@gradio/utils';
   import { createFunction } from '@utils/createFunction';
-  import { renderSlot } from '@utils/renderSlot';
   import cls from 'classnames';
   import { writable } from 'svelte/store';
 
@@ -60,7 +60,7 @@
     value,
     restProps: $$restProps,
   });
-
+  const setSlotParams = getSetSlotParamsFn();
   const setExpandableItem = getSetExpandableItemFn();
   $: {
     const events = bindEvents($mergedProps);
@@ -86,13 +86,20 @@
         ),
         expandedRowRender: createFunction($mergedProps.props.expandedRowRender),
         rowExpandable: createFunction($mergedProps.props.rowExpandable),
-        expandIcon: $slots['expandIcon']
-          ? () => renderSlot($slots['expandIcon'])
-          : $mergedProps.props.expandIcon,
-        columnTitle:
-          renderSlot($slots['columnTitle']) || $mergedProps.props.columnTitle,
+        expandIcon: $mergedProps.props.expandIcon,
+        columnTitle: $mergedProps.props.columnTitle,
       },
-      slots: {},
+      slots: {
+        ...$slots,
+        expandIcon: {
+          el: $slots['expandIcon'],
+          callback: setSlotParams,
+        },
+        expandedRowRender: {
+          el: $slots['expandedRowRender'],
+          callback: setSlotParams,
+        },
+      },
     });
   }
 </script>

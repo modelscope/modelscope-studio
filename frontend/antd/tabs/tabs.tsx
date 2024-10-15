@@ -1,9 +1,11 @@
 import { sveltify } from '@svelte-preprocess-react';
 import { ReactSlot } from '@svelte-preprocess-react/react-slot';
+import type { SetSlotParams } from '@svelte-preprocess-react/slot';
 import React, { useMemo } from 'react';
 import { useFunction } from '@utils/hooks/useFunction';
 import { omitUndefinedProps } from '@utils/omitUndefinedProps';
 import { renderItems } from '@utils/renderItems';
+import { renderParamsSlot } from '@utils/renderParamsSlot';
 import { type GetProps, Tabs as ATabs } from 'antd';
 
 import { type Item } from './context';
@@ -12,10 +14,12 @@ export const Tabs = sveltify<
   GetProps<typeof ATabs> & {
     slotItems: Item[];
     onValueChange: (activeKey: string) => void;
+    setSlotParams: SetSlotParams;
   },
   [
     'addIcon',
     'removeIcon',
+    'renderTabBar',
     'tabBarExtraContent',
     'tabBarExtraContent.left',
     'tabBarExtraContent.right',
@@ -31,10 +35,13 @@ export const Tabs = sveltify<
     slotItems,
     more,
     children,
+    renderTabBar,
+    setSlotParams,
     ...props
   }) => {
     const indicatorSizeFunction = useFunction(indicator?.size);
     const getMorePopupContainerFunction = useFunction(more?.getPopupContainer);
+    const renderTabBarFunction = useFunction(renderTabBar);
     return (
       <>
         <div style={{ display: 'none' }}>{children}</div>
@@ -47,6 +54,15 @@ export const Tabs = sveltify<
                   size: indicatorSizeFunction,
                 }
               : indicator
+          }
+          renderTabBar={
+            slots.renderTabBar
+              ? renderParamsSlot({
+                  slots,
+                  setSlotParams,
+                  key: 'renderTabBar',
+                })
+              : renderTabBarFunction
           }
           items={useMemo(() => {
             return (

@@ -3,6 +3,7 @@
 <script lang="ts">
   import { bindEvents } from '@svelte-preprocess-react/component';
   import {
+    getSetSlotParamsFn,
     getSlotContext,
     getSlotKey,
     getSlots,
@@ -58,6 +59,7 @@
     title,
     restProps: $$restProps,
   });
+  const setSlotParams = getSetSlotParamsFn();
   const setItem = getSetItemFn();
   const { default: items } = getItems();
   $: setItem($slotKey, $mergedProps._internal.index || 0, {
@@ -70,7 +72,13 @@
       ...$mergedProps.props,
       ...bindEvents($mergedProps),
     },
-    slots: $slots,
+    slots: {
+      ...$slots,
+      icon: {
+        el: $slots.icon,
+        fallback: setSlotParams,
+      },
+    },
     children: $items.length > 0 ? $items : undefined,
   });
 </script>

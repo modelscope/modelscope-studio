@@ -5,7 +5,11 @@
     bindEvents,
     importComponent,
   } from '@svelte-preprocess-react/component';
-  import { getSlotContext, getSlots } from '@svelte-preprocess-react/slot';
+  import {
+    getSetSlotParamsFn,
+    getSlotContext,
+    getSlots,
+  } from '@svelte-preprocess-react/slot';
   import type React from 'react';
   import type { Gradio } from '@gradio/utils';
   import cls from 'classnames';
@@ -60,6 +64,8 @@
   });
   const { treeData, default: children } = getItems(['default', 'treeData']);
 
+  const setSlotParams = getSetSlotParamsFn();
+
   const onValueChange = (val: Record<string, any>) => {
     value = {
       expanded_keys: val.expandedKeys,
@@ -89,6 +95,7 @@
       checkedKeys={$mergedProps.props.checkedKeys ||
         $mergedProps.value.checked_keys}
       {onValueChange}
+      {setSlotParams}
     >
       <slot></slot>
     </DirectoryTree>

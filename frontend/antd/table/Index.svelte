@@ -5,7 +5,11 @@
     bindEvents,
     importComponent,
   } from '@svelte-preprocess-react/component';
-  import { getSlotContext, getSlots } from '@svelte-preprocess-react/slot';
+  import {
+    getSetSlotParamsFn,
+    getSlotContext,
+    getSlots,
+  } from '@svelte-preprocess-react/slot';
   import type React from 'react';
   import type { Gradio } from '@gradio/utils';
   import cls from 'classnames';
@@ -54,6 +58,7 @@
     data_source,
     restProps: $$restProps,
   });
+  const setSlotParams = getSetSlotParamsFn();
   const { rowSelection: rowSelectionItems } = getRowSelectionItems([
     'rowSelection',
   ]);
@@ -76,6 +81,7 @@
       rowSelectionItems={$rowSelectionItems}
       expandableItems={$expandableItems}
       columnItems={$columnItems}
+      {setSlotParams}
     >
       <slot></slot>
     </Table>

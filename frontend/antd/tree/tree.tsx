@@ -1,9 +1,11 @@
 import { sveltify } from '@svelte-preprocess-react';
 import { ReactSlot } from '@svelte-preprocess-react/react-slot';
+import type { SetSlotParams } from '@svelte-preprocess-react/slot';
 import React, { useMemo } from 'react';
 import { useFunction } from '@utils/hooks/useFunction';
 import { omitUndefinedProps } from '@utils/omitUndefinedProps';
 import { renderItems } from '@utils/renderItems';
+import { renderParamsSlot } from '@utils/renderParamsSlot';
 import { type GetProps, Tree as ATree } from 'antd';
 
 import { type Item } from './context';
@@ -21,6 +23,7 @@ export const Tree = sveltify<
         | React.Key[]
         | { checked: React.Key[]; halfChecked: React.Key[] };
     }) => void;
+    setSlotParams: SetSlotParams;
   },
   [
     'switcherLoadingIcon',
@@ -28,6 +31,7 @@ export const Tree = sveltify<
     'showLine.showLeafIcon',
     'icon',
     'draggable.icon',
+    'titleRender',
   ]
 >(
   ({
@@ -43,6 +47,7 @@ export const Tree = sveltify<
     children,
     directory,
     slotItems,
+    setSlotParams,
     ...props
   }) => {
     const filterTreeNodeFunction = useFunction(filterTreeNode);
@@ -60,20 +65,27 @@ export const Tree = sveltify<
           renderItems<NonNullable<TreeProps['treeData']>[number]>(slotItems),
         showLine: slots['showLine.showLeafIcon']
           ? {
-              showLeafIcon: <ReactSlot slot={slots['showLine.showLeafIcon']} />,
+              showLeafIcon: renderParamsSlot({
+                slots,
+                setSlotParams,
+                key: 'showLine.showLeafIcon',
+              }),
             }
           : props.showLine,
-        icon: slots.icon ? <ReactSlot slot={slots.icon} /> : props.icon,
+        icon: slots.icon
+          ? renderParamsSlot({ slots, setSlotParams, key: 'icon' })
+          : props.icon,
         switcherLoadingIcon: slots.switcherLoadingIcon ? (
           <ReactSlot slot={slots.switcherLoadingIcon} />
         ) : (
           props.switcherLoadingIcon
         ),
-        switcherIcon: slots.switcherIcon ? (
-          <ReactSlot slot={slots.switcherIcon} />
-        ) : (
-          props.switcherIcon
-        ),
+        switcherIcon: slots.switcherIcon
+          ? renderParamsSlot({ slots, setSlotParams, key: 'switcherIcon' })
+          : props.switcherIcon,
+        titleRender: slots.titleRender
+          ? renderParamsSlot({ slots, setSlotParams, key: 'titleRender' })
+          : props.titleRender,
         draggable:
           slots['draggable.icon'] || draggableNodeDraggableFunction
             ? {
@@ -94,6 +106,7 @@ export const Tree = sveltify<
       slotItems,
       slots,
       treeData,
+      setSlotParams,
     ]);
     return (
       <>

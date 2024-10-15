@@ -1,8 +1,11 @@
 import { sveltify } from '@svelte-preprocess-react';
 import { ReactSlot } from '@svelte-preprocess-react/react-slot';
+import type { SetSlotParams } from '@svelte-preprocess-react/slot';
 import React, { useMemo } from 'react';
 import { useFunction } from '@utils/hooks/useFunction';
+import { omitUndefinedProps } from '@utils/omitUndefinedProps';
 import { renderItems } from '@utils/renderItems';
+import { renderParamsSlot } from '@utils/renderParamsSlot';
 import { type GetProps, Table as ATable } from 'antd';
 
 import type { Item } from './context';
@@ -20,6 +23,7 @@ export const Table = sveltify<
     rowSelectionItems: Item[];
     expandableItems: Item[];
     columnItems: Item[];
+    setSlotParams: SetSlotParams;
   },
   [
     'footer',
@@ -27,7 +31,9 @@ export const Table = sveltify<
     'loading.tip',
     'loading.indicator',
     'pagination.showQuickJumper.goButton',
+    'pagination.itemRender',
     'showSorterTooltip.title',
+    'summary',
   ]
 >(
   ({
@@ -48,6 +54,7 @@ export const Table = sveltify<
     showSorterTooltip,
     onRow,
     onHeaderRow,
+    setSlotParams,
     ...props
   }) => {
     const getPopupContainerFunction = useFunction(getPopupContainer);
@@ -56,7 +63,8 @@ export const Table = sveltify<
       slots['loading.tip'] || slots['loading.indicator'];
     const loadingConfig = getConfig(loading);
     const supportPaginationConfig =
-      slots['pagination.showQuickJumper.goButton'];
+      slots['pagination.showQuickJumper.goButton'] ||
+      slots['pagination.itemRender'];
     const paginationConfig = getConfig(pagination);
     const paginationShowTotalFunction = useFunction(paginationConfig.showTotal);
     const rowKeyFunction = useFunction(rowKey);
@@ -107,7 +115,11 @@ export const Table = sveltify<
           }, [columnItems, columns])}
           onRow={onRowFunction}
           onHeaderRow={onHeaderRowFunction}
-          summary={summaryFunction}
+          summary={
+            slots.summary
+              ? renderParamsSlot({ slots, setSlotParams, key: 'summary' })
+              : summaryFunction
+          }
           rowSelection={useMemo(() => {
             return (
               rowSelection ||
@@ -145,7 +157,7 @@ export const Table = sveltify<
           }
           pagination={
             supportPaginationConfig
-              ? {
+              ? omitUndefinedProps({
                   ...paginationConfig,
                   showTotal: paginationShowTotalFunction,
                   showQuickJumper: slots['pagination.showQuickJumper.goButton']
@@ -157,7 +169,14 @@ export const Table = sveltify<
                         ),
                       }
                     : paginationConfig.showQuickJumper,
-                }
+                  itemRender: slots['pagination.itemRender']
+                    ? renderParamsSlot({
+                        slots,
+                        setSlotParams,
+                        key: 'pagination.itemRender',
+                      })
+                    : paginationConfig.itemRender,
+                })
               : pagination
           }
           getPopupContainer={getPopupContainerFunction}
@@ -180,12 +199,12 @@ export const Table = sveltify<
           }
           footer={
             slots.footer
-              ? () => (slots.footer ? <ReactSlot slot={slots.footer} /> : null)
+              ? renderParamsSlot({ slots, setSlotParams, key: 'footer' })
               : props.footer
           }
           title={
             slots.title
-              ? () => (slots.title ? <ReactSlot slot={slots.title} /> : null)
+              ? renderParamsSlot({ slots, setSlotParams, key: 'title' })
               : props.title
           }
         />

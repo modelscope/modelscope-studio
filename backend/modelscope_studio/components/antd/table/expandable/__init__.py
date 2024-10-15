@@ -21,10 +21,7 @@ class AntdTableExpandable(ModelScopeDataLayoutComponent):
     ]
 
     # supported slots
-    SLOTS = [
-        'columnTitle',
-        'expandIcon',
-    ]
+    SLOTS = ['columnTitle', 'expandIcon', 'expandedRowRender']
 
     def __init__(
             self,

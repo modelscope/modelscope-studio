@@ -30,7 +30,7 @@ class AntdTabs(ModelScopeDataLayoutComponent):
 
     # supported slots
     SLOTS = [
-        'addIcon', 'removeIcon', 'tabBarExtraContent',
+        'addIcon', 'removeIcon', 'renderTabBar', 'tabBarExtraContent',
         'tabBarExtraContent.left', 'tabBarExtraContent.right', 'more.icon',
         'items'
     ]

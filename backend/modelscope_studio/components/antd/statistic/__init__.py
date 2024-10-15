@@ -12,7 +12,7 @@ class AntdStatistic(ModelScopeLayoutComponent):
     EVENTS = []
 
     # supported slots
-    SLOTS = ['prefix', 'suffix', 'title']
+    SLOTS = ['prefix', 'suffix', 'title', 'formatter']
 
     def __init__(
             self,

@@ -39,11 +39,13 @@ class AntdTable(ModelScopeLayoutComponent):
     SLOTS = [
         'footer',
         'title',
+        'summary',
         "expandable",
         "rowSelection"
         'loading.tip',
         'loading.indicator',
         'pagination.showQuickJumper.goButton',
+        'pagination.itemRender',
         'showSorterTooltip.title',
     ]
 

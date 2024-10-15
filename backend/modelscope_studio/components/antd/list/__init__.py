@@ -22,7 +22,7 @@ class AntdList(ModelScopeLayoutComponent):
     ]
 
     # supported slots
-    SLOTS = ['footer', 'header', 'loadMore']
+    SLOTS = ['footer', 'header', 'loadMore', 'renderItem']
 
     def __init__(
             self,

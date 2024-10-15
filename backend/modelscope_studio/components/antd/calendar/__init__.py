@@ -24,6 +24,9 @@ class AntdCalendar(ModelScopeComponent):
                           bind_select_event=True))
     ]
 
+    # supported slots
+    SLOTS = ['cellRender', 'fullCellRender', 'headerRender']
+
     def __init__(
             self,
             value: int | str | float | None = None,

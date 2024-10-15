@@ -26,7 +26,13 @@ class AntdImage(ModelScopeLayoutComponent):
     ]
 
     # supported slots
-    SLOTS = ['placeholder', 'preview.mask', 'preview.closeIcon']
+    SLOTS = [
+        'placeholder',
+        'preview.mask',
+        'preview.closeIcon',
+        'preview.toolbarRender',
+        'preview.imageRender',
+    ]
 
     def __init__(
             self,

@@ -17,12 +17,7 @@ class AntdDrawer(ModelScopeLayoutComponent):
     ]
 
     # supported slots
-    SLOTS = [
-        'closeIcon',
-        'extra',
-        'footer',
-        'title',
-    ]
+    SLOTS = ['closeIcon', 'extra', 'footer', 'title', 'drawerRender']
 
     def __init__(
             self,

@@ -1,7 +1,8 @@
 import { sveltify } from '@svelte-preprocess-react';
-import { ReactSlot } from '@svelte-preprocess-react/react-slot';
+import type { SetSlotParams } from '@svelte-preprocess-react/slot';
 import React, { useMemo } from 'react';
 import { renderItems } from '@utils/renderItems';
+import { renderParamsSlot } from '@utils/renderParamsSlot';
 import { Collapse as ACollapse, type GetProps } from 'antd';
 
 import { type Item } from './context';
@@ -11,6 +12,7 @@ export const Collapse = sveltify<
   CollapseProps & {
     slotItems: Item[];
     onValueChange: CollapseProps['onChange'];
+    setSlotParams: SetSlotParams;
   },
   ['expandIcon']
 >(
@@ -21,6 +23,7 @@ export const Collapse = sveltify<
     children,
     onChange,
     onValueChange,
+    setSlotParams,
     ...props
   }) => {
     return (
@@ -34,10 +37,7 @@ export const Collapse = sveltify<
           }}
           expandIcon={
             slots.expandIcon
-              ? () =>
-                  slots.expandIcon ? (
-                    <ReactSlot slot={slots.expandIcon} />
-                  ) : null
+              ? renderParamsSlot({ slots, setSlotParams, key: 'expandIcon' })
               : props.expandIcon
           }
           items={useMemo(() => {

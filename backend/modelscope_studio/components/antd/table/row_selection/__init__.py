@@ -38,6 +38,7 @@ class AntdTableRowSelection(ModelScopeDataLayoutComponent):
     # supported slots
     SLOTS = [
         'columnTitle',
+        'renderCell',
         'selections',
     ]
 

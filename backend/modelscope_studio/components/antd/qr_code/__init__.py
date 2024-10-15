@@ -17,6 +17,9 @@ class AntdQRCode(ModelScopeComponent):
                           bind_refresh_event=True)),
     ]
 
+    # supported slots
+    SLOTS = ["statusRender"]
+
     def __init__(
             self,
             value: str | None = None,

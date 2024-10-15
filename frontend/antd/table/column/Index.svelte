@@ -11,6 +11,7 @@
   import type React from 'react';
   import type { Gradio } from '@gradio/utils';
   import { createFunction } from '@utils/createFunction';
+  import { renderSlot } from '@utils/renderSlot';
   import cls from 'classnames';
   import { writable } from 'svelte/store';
 
@@ -79,9 +80,9 @@
               filterIcon: createFunction($mergedProps.props.filterIcon),
               filterDropdown: createFunction($mergedProps.props.filterDropdown),
               showSorterTooltip:
-                $slots['showSorterTooltip.title'] ||
                 typeof showSorterTooltip === 'object'
                   ? {
+                      ...showSorterTooltip,
                       afterOpenChange: createFunction(
                         typeof showSorterTooltip === 'object'
                           ? showSorterTooltip.afterOpenChange
@@ -120,12 +121,20 @@
                 el: $slots.filterIcon,
                 callback: setSlotParams,
               },
+              filterDropdown: {
+                el: $slots.filterDropdown,
+                callback: setSlotParams,
+              },
               sortIcon: {
                 el: $slots.sortIcon,
                 callback: setSlotParams,
               },
               title: {
                 el: $slots.title,
+                callback: setSlotParams,
+              },
+              render: {
+                el: $slots.render,
                 callback: setSlotParams,
               },
             },

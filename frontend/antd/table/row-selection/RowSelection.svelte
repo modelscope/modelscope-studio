@@ -3,6 +3,7 @@
 <script lang="ts">
   import { bindEvents } from '@svelte-preprocess-react/component';
   import {
+    getSetSlotParamsFn,
     getSlotContext,
     getSlotKey,
     getSlots,
@@ -11,7 +12,6 @@
   import type { Gradio } from '@gradio/utils';
   import { createFunction } from '@utils/createFunction';
   import { renderItems } from '@utils/renderItems';
-  import { renderSlot } from '@utils/renderSlot';
   import cls from 'classnames';
   import { writable } from 'svelte/store';
 
@@ -48,6 +48,7 @@
     value,
     restProps: $$restProps,
   });
+  const setSlotParams = getSetSlotParamsFn();
   const slots = getSlots();
   $: update({
     gradio,
@@ -85,10 +86,20 @@
         },
         onCell: createFunction($mergedProps.props.onCell),
         getCheckboxProps: createFunction($mergedProps.props.getCheckboxProps),
-        columnTitle:
-          renderSlot($slots['columnTitle']) || $mergedProps.props.columnTitle,
+        renderCell: createFunction($mergedProps.props.renderCell),
+        columnTitle: $mergedProps.props.columnTitle,
       },
-      slots: {},
+      slots: {
+        ...$slots,
+        columnTitle: {
+          el: $slots.columnTitle,
+          fallback: setSlotParams,
+        },
+        renderCell: {
+          el: $slots.renderCell,
+          fallback: setSlotParams,
+        },
+      },
     });
   }
 </script>

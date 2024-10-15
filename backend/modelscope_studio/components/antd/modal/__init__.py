@@ -21,15 +21,9 @@ class AntdModal(ModelScopeLayoutComponent):
 
     # supported slots
     SLOTS = [
-        'closeIcon',
-        'cancelButtonProps.icon',
-        'cancelText',
-        'closable.closeIcon',
-        'closeIcon',
-        'footer',
-        'title',
-        'okButtonProps.icon',
-        'okText',
+        'closeIcon', 'cancelButtonProps.icon', 'cancelText',
+        'closable.closeIcon', 'closeIcon', 'footer', 'title',
+        'okButtonProps.icon', 'okText', 'modalRender'
     ]
 
     def __init__(
