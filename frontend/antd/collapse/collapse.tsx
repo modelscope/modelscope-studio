@@ -11,7 +11,6 @@ type CollapseProps = GetProps<typeof ACollapse>;
 export const Collapse = sveltify<
   CollapseProps & {
     slotItems: Item[];
-    onValueChange: CollapseProps['onChange'];
     setSlotParams: SetSlotParams;
   },
   ['expandIcon']
@@ -22,7 +21,6 @@ export const Collapse = sveltify<
     slotItems,
     children,
     onChange,
-    onValueChange,
     setSlotParams,
     ...props
   }) => {
@@ -32,7 +30,6 @@ export const Collapse = sveltify<
         <ACollapse
           {...props}
           onChange={(key) => {
-            onValueChange?.(key);
             onChange?.(key);
           }}
           expandIcon={

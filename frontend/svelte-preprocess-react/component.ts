@@ -45,6 +45,8 @@ const gradioProps = [
   'props',
   'value',
   'attached_events',
+  'loading_status',
+  'value_is_output',
 ];
 
 export function getComponentRestProps<T extends Record<string, any>>(

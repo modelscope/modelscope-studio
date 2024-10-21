@@ -28,17 +28,22 @@
   export let elem_style: React.CSSProperties = {};
 
   const slotKey = getSlotKey();
-  const [mergedProps, update] = getSlotContext({
-    gradio,
-    props: $updatedProps,
-    _internal,
-    visible,
-    elem_id,
-    elem_classes,
-    elem_style,
-    as_item,
-    restProps: $$restProps,
-  });
+  const [mergedProps, update] = getSlotContext(
+    {
+      gradio,
+      props: $updatedProps,
+      _internal,
+      visible,
+      elem_id,
+      elem_classes,
+      elem_style,
+      as_item,
+      restProps: $$restProps,
+    },
+    {
+      elem_target: 'target',
+    }
+  );
 
   const slots = getSlots();
   $: update({
@@ -61,7 +66,9 @@
       ...$mergedProps.restProps,
       ...$mergedProps.props,
       ...bindEvents($mergedProps),
-      target: createFunction($mergedProps.props.target),
+      target: createFunction(
+        $mergedProps.props.target || $mergedProps.restProps.target
+      ),
     },
     slots: $slots,
   });

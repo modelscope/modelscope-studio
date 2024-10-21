@@ -1,16 +1,16 @@
 from __future__ import annotations
 
-from typing import Any
+from typing import Literal
 
 from gradio.events import EventListener
 
-from ....utils.dev import ModelScopeDataLayoutComponent, resolve_frontend_dir
+from ....utils.dev import ModelScopeLayoutComponent, resolve_frontend_dir
 from .step import AntdTourStep
 
 
-# as inputs, outputs
-class AntdTour(ModelScopeDataLayoutComponent):
+class AntdTour(ModelScopeLayoutComponent):
     """
+    Ant Design: https://ant.design/components/tour
     """
     Step = AntdTourStep
     EVENTS = [
@@ -26,14 +26,29 @@ class AntdTour(ModelScopeDataLayoutComponent):
     ]
 
     # supported slots
-    SLOTS = ['closeIcon']
+    SLOTS = ['closeIcon', 'indicatorsRender']
 
     def __init__(
             self,
-            value: int | None = None,
             props: dict | None = None,
             *,
             open: bool | None = None,
+            current: int | None = None,
+            arrow: bool | dict | None = True,
+            close_icon: str | None = None,
+            disabled_interaction: bool | None = False,
+            gap: dict | None = None,
+            placement: Literal['center', 'left', 'leftTop', 'leftBottom',
+                               'right'
+                               'rightTop', 'rightBottom', 'top', 'topLeft',
+                               'topRight', 'bottom', 'bottomLeft',
+                               'bottomRight'] = 'bottom',
+            mask: bool | dict = True,
+            type: Literal['default', 'primary'] = 'default',
+            scroll_into_view_options: bool | dict = True,
+            indicators_render: str | None = None,
+            z_index: int | None = None,
+            get_popup_container: str | None = None,
             as_item: str | None = None,
             _internal: None = None,
             # gradio properties
@@ -43,8 +58,7 @@ class AntdTour(ModelScopeDataLayoutComponent):
             elem_style: dict | None = None,
             render: bool = True,
             **kwargs):
-        super().__init__(value=value,
-                         visible=visible,
+        super().__init__(visible=visible,
                          elem_id=elem_id,
                          elem_classes=elem_classes,
                          render=render,
@@ -53,20 +67,29 @@ class AntdTour(ModelScopeDataLayoutComponent):
                          **kwargs)
         self.props = props
         self.open = open
+        self.current = current
+        self.arrow = arrow
+        self.close_icon = close_icon
+        self.disabled_interaction = disabled_interaction
+        self.gap = gap
+        self.placement = placement
+        self.mask = mask
+        self.type = type
+        self.scroll_into_view_options = scroll_into_view_options
+        self.indicators_render = indicators_render
+        self.z_index = z_index
+        self.get_popup_container = get_popup_container
 
     FRONTEND_DIR = resolve_frontend_dir("tour")
 
     @property
     def skip_api(self):
-        return False
+        return True
 
-    def api_info(self) -> dict[str, Any]:
-        return {"type": "number"}
-
-    def preprocess(self, payload: None | int) -> None | int:
+    def preprocess(self, payload: None) -> None:
         return payload
 
-    def postprocess(self, value: None | int) -> None | int:
+    def postprocess(self, value: None) -> None:
 
         return value
 

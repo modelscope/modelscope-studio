@@ -1,8 +1,10 @@
 import { sveltify } from '@svelte-preprocess-react';
 import { ReactSlot } from '@svelte-preprocess-react/react-slot';
+import type { SetSlotParams } from '@svelte-preprocess-react/slot';
 import React, { useMemo } from 'react';
 import { useFunction } from '@utils/hooks/useFunction';
 import { renderItems } from '@utils/renderItems';
+import { renderParamsSlot } from '@utils/renderParamsSlot';
 import { type GetProps, Tour as ATour } from 'antd';
 
 import { type Item } from './context';
@@ -11,9 +13,9 @@ export const Tour = sveltify<
   GetProps<typeof ATour> & {
     slotItems: Item[];
     children?: React.ReactNode;
-    onValueChange: (options: { current: number; open: boolean }) => void;
+    setSlotParams: SetSlotParams;
   },
-  ['closeIcon']
+  ['closeIcon', 'indicatorsRender']
 >(
   ({
     slots,
@@ -22,11 +24,13 @@ export const Tour = sveltify<
     children,
     onChange,
     onClose,
-    onValueChange,
     getPopupContainer,
+    setSlotParams,
+    indicatorsRender,
     ...props
   }) => {
     const getPopupContainerFunction = useFunction(getPopupContainer);
+    const indicatorsRenderFunction = useFunction(indicatorsRender);
     return (
       <>
         <div style={{ display: 'none' }}>{children}</div>
@@ -42,10 +46,6 @@ export const Tour = sveltify<
           }, [steps, slotItems])}
           onChange={(current) => {
             onChange?.(current);
-            onValueChange({
-              open: true,
-              current: current,
-            });
           }}
           closeIcon={
             slots.closeIcon ? (
@@ -54,13 +54,18 @@ export const Tour = sveltify<
               props.closeIcon
             )
           }
+          indicatorsRender={
+            slots.indicatorsRender
+              ? renderParamsSlot({
+                  slots,
+                  setSlotParams,
+                  key: 'indicatorsRender',
+                })
+              : indicatorsRenderFunction
+          }
           getPopupContainer={getPopupContainerFunction}
           onClose={(current, ...args) => {
             onClose?.(current, ...args);
-            onValueChange({
-              current,
-              open: false,
-            });
           }}
         />
       </>

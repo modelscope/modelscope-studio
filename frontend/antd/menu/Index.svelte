@@ -26,10 +26,6 @@
   export let _internal: {
     layout?: boolean;
   } = {};
-  export let value: {
-    open_keys?: string[];
-    selected_keys?: string[];
-  } = {};
   export let as_item: string | undefined;
   // gradio properties
   export let visible = true;
@@ -46,7 +42,6 @@
     elem_classes,
     elem_style,
     as_item,
-    value,
     restProps: $$restProps,
   });
   const slots = getSlots();
@@ -59,7 +54,6 @@
     elem_classes,
     elem_style,
     as_item,
-    value,
     restProps: $$restProps,
   });
   const setSlotParams = getSetSlotParamsFn();
@@ -77,18 +71,6 @@
       {...bindEvents($mergedProps)}
       slots={$slots}
       slotItems={$items.length > 0 ? $items : $children}
-      openKeys={$mergedProps.props.openKeys ||
-        $mergedProps.value?.open_keys ||
-        undefined}
-      selectedKeys={$mergedProps.props.selectedKeys ||
-        $mergedProps.value?.selected_keys ||
-        undefined}
-      onValueChange={({ openKeys, selectedKeys }) => {
-        value = {
-          open_keys: openKeys,
-          selected_keys: selectedKeys,
-        };
-      }}
       {setSlotParams}
     >
       <slot></slot>

@@ -76,7 +76,8 @@
       ...$slots,
       icon: {
         el: $slots.icon,
-        fallback: setSlotParams,
+        callback: setSlotParams,
+        clone: true,
       },
     },
     children: $items.length > 0 ? $items : undefined,

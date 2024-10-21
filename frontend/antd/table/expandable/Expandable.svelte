@@ -26,7 +26,6 @@
   } = {};
 
   export let as_item: string | undefined;
-  export let value: string[];
 
   // gradio properties
   export let visible = true;
@@ -44,7 +43,6 @@
     elem_classes,
     elem_style,
     as_item,
-    value,
     restProps: $$restProps,
   });
   const slots = getSlots();
@@ -57,7 +55,6 @@
     elem_classes,
     elem_style,
     as_item,
-    value,
     restProps: $$restProps,
   });
   const setSlotParams = getSetSlotParamsFn();
@@ -73,31 +70,37 @@
           'ms-gr-antd-table-expandable'
         ),
         id: $mergedProps.elem_id,
-        expandedRowKeys: $mergedProps.value,
         ...$mergedProps.restProps,
         ...$mergedProps.props,
         ...events,
-        onExpandedRowsChange: (expandedKeys: string[]) => {
-          events?.onExpandedRowsChange?.(expandedKeys);
-          value = expandedKeys;
-        },
         expandedRowClassName: createFunction(
-          $mergedProps.props.expandedRowClassName
+          $mergedProps.props.expandedRowClassName ||
+            $mergedProps.restProps.expandedRowClassName
         ),
-        expandedRowRender: createFunction($mergedProps.props.expandedRowRender),
-        rowExpandable: createFunction($mergedProps.props.rowExpandable),
-        expandIcon: $mergedProps.props.expandIcon,
-        columnTitle: $mergedProps.props.columnTitle,
+        expandedRowRender: createFunction(
+          $mergedProps.props.expandedRowRender ||
+            $mergedProps.restProps.expandedRowRender
+        ),
+        rowExpandable: createFunction(
+          $mergedProps.props.rowExpandable ||
+            $mergedProps.restProps.rowExpandable
+        ),
+        expandIcon:
+          $mergedProps.props.expandIcon || $mergedProps.restProps.expandIcon,
+        columnTitle:
+          $mergedProps.props.columnTitle || $mergedProps.restProps.columnTitle,
       },
       slots: {
         ...$slots,
         expandIcon: {
           el: $slots['expandIcon'],
           callback: setSlotParams,
+          clone: true,
         },
         expandedRowRender: {
           el: $slots['expandedRowRender'],
           callback: setSlotParams,
+          clone: true,
         },
       },
     });

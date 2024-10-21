@@ -9,17 +9,28 @@ from ....utils.dev import ModelScopeLayoutComponent, resolve_frontend_dir
 
 class AntdAffix(ModelScopeLayoutComponent):
     """
+    Ant Design: https://ant.design/components/affix
+
+    Stick an element to the viewport.
+
+    When to use:
+    On longer web pages, it's helpful to stick component into the viewport. This is common for menus and actions.
+
+    Please note that Affix should not cover other content on the page, especially when the size of the viewport is small.
     """
     EVENTS = [
         EventListener("change",
                       callback=lambda block: block._internal.update(
-                          bind_change_event=True))
+                          bind_change_event=True),
+                      doc="Callback for when Affix state is changed.")
     ]
 
     def __init__(
             self,
             props: dict | None = None,
             *,
+            offset_bottom: int | float | None = None,
+            offset_top: int | float | None = 0,
             elem_target: str | None = None,
             as_item: str | None = None,
             _internal: None = None,
@@ -30,6 +41,12 @@ class AntdAffix(ModelScopeLayoutComponent):
             elem_style: dict | None = None,
             render: bool = True,
             **kwargs):
+        """
+        Parameters:
+            offset_bottom: Offset from the bottom of the viewport (in pixels).
+            offset_top: Offset from the top of the viewport (in pixels).
+            elem_target: Specifies the scrollable area DOM node.
+        """
         super().__init__(visible=visible,
                          elem_id=elem_id,
                          elem_classes=elem_classes,
@@ -38,6 +55,8 @@ class AntdAffix(ModelScopeLayoutComponent):
                          elem_style=elem_style,
                          **kwargs)
         self.props = props
+        self.offset_bottom = offset_bottom
+        self.offset_top = offset_top
         self.elem_target = elem_target
 
     FRONTEND_DIR = resolve_frontend_dir("affix")

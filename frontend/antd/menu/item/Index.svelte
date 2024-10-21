@@ -76,7 +76,13 @@
       ...$mergedProps.props,
       ...bindEvents($mergedProps),
     },
-    slots: $slots,
+    slots: {
+      ...$slots,
+      icon: {
+        el: $slots.icon,
+        clone: true,
+      },
+    },
     children: $items.length > 0 ? $items : undefined,
   });
 </script>

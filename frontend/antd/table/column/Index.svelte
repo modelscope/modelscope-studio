@@ -58,7 +58,10 @@
   const setColumnItem = getSetColumnItemFn();
   const setSlotParams = getSetSlotParamsFn();
   $: {
-    const showSorterTooltip = $mergedProps.props.showSorterTooltip;
+    const showSorterTooltip =
+      $mergedProps.props.showSorterTooltip ||
+      $mergedProps.restProps.showSorterTooltip;
+    const sorter = $mergedProps.props.sorter || $mergedProps.restProps.sorter;
     setColumnItem<Item | string>(
       $slotKey,
       $mergedProps._internal.index || 0,
@@ -75,9 +78,17 @@
               ...$mergedProps.restProps,
               ...$mergedProps.props,
               ...bindEvents($mergedProps),
-              render: createFunction($mergedProps.props.render),
-              filterIcon: createFunction($mergedProps.props.filterIcon),
-              filterDropdown: createFunction($mergedProps.props.filterDropdown),
+              render: createFunction(
+                $mergedProps.props.render || $mergedProps.restProps.render
+              ),
+              filterIcon: createFunction(
+                $mergedProps.props.filterIcon ||
+                  $mergedProps.restProps.filterIcon
+              ),
+              filterDropdown: createFunction(
+                $mergedProps.props.filterDropdown ||
+                  $mergedProps.restProps.filterDropdown
+              ),
               showSorterTooltip:
                 typeof showSorterTooltip === 'object'
                   ? {
@@ -95,46 +106,60 @@
                     }
                   : showSorterTooltip,
               sorter:
-                typeof $mergedProps.props.sorter === 'object'
+                typeof sorter === 'object'
                   ? {
-                      ...$mergedProps.props.sorter,
-                      compare:
-                        createFunction($mergedProps.props.sorter.compare) ||
-                        $mergedProps.props.sorter.compare,
+                      ...sorter,
+                      compare: createFunction(sorter.compare) || sorter.compare,
                     }
-                  : createFunction($mergedProps.props.sorter) ||
-                    $mergedProps.props.sorter,
+                  : createFunction(sorter) || $mergedProps.props.sorter,
               filterSearch:
-                createFunction($mergedProps.props.filterSearch) ||
-                $mergedProps.props.filterSearch,
+                createFunction(
+                  $mergedProps.props.filterSearch ||
+                    $mergedProps.restProps.filterSearch
+                ) ||
+                $mergedProps.props.filterSearch ||
+                $mergedProps.restProps.filterSearch,
               shouldCellUpdate: createFunction(
-                $mergedProps.props.shouldCellUpdate
+                $mergedProps.props.shouldCellUpdate ||
+                  $mergedProps.restProps.shouldCellUpdate
               ),
-              onCell: createFunction($mergedProps.props.onCell),
-              onFilter: createFunction($mergedProps.props.onFilter),
-              onHeaderCell: createFunction($mergedProps.props.onHeaderCell),
+              onCell: createFunction(
+                $mergedProps.props.onCell || $mergedProps.restProps.onCell
+              ),
+              onFilter: createFunction(
+                $mergedProps.props.onFilter || $mergedProps.restProps.onFilter
+              ),
+              onHeaderCell: createFunction(
+                $mergedProps.props.onHeaderCell ||
+                  $mergedProps.restProps.onHeaderCell
+              ),
             },
             slots: {
               ...$slots,
               filterIcon: {
                 el: $slots.filterIcon,
                 callback: setSlotParams,
+                clone: true,
               },
               filterDropdown: {
                 el: $slots.filterDropdown,
                 callback: setSlotParams,
+                clone: true,
               },
               sortIcon: {
                 el: $slots.sortIcon,
                 callback: setSlotParams,
+                clone: true,
               },
               title: {
                 el: $slots.title,
                 callback: setSlotParams,
+                clone: true,
               },
               render: {
                 el: $slots.render,
                 callback: setSlotParams,
+                clone: true,
               },
             },
           }

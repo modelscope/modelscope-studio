@@ -10,7 +10,6 @@
 
   export let gradio: Gradio;
   export let props: Record<string, any> = {};
-  export let value: string[] | number[];
   export let as_item: string | undefined;
   // gradio properties
   export let visible = true;
@@ -25,7 +24,6 @@
     {gradio}
     {props}
     {as_item}
-    bind:value
     {visible}
     {elem_id}
     {elem_classes}

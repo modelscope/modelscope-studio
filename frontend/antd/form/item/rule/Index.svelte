@@ -56,8 +56,12 @@
       ...$mergedProps.restProps,
       ...$mergedProps.props,
       ...bindEvents($mergedProps),
-      transform: createFunction($mergedProps.props.transform),
-      validator: createFunction($mergedProps.props.validator),
+      transform: createFunction(
+        $mergedProps.props.transform || $mergedProps.restProps.transform
+      ),
+      validator: createFunction(
+        $mergedProps.props.validator || $mergedProps.restProps.validator
+      ),
     },
     slots: {},
   });

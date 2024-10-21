@@ -1,21 +1,15 @@
 from __future__ import annotations
 
-from typing import Optional, Union
+from typing import Literal
 
-from gradio.data_classes import GradioModel
 from gradio.events import EventListener
 
-from ....utils.dev import ModelScopeDataLayoutComponent, resolve_frontend_dir
+from ....utils.dev import ModelScopeLayoutComponent, resolve_frontend_dir
 
 
-class PaginationData(GradioModel):
-    page: int
-    page_size: Optional[Union[int, None]] = None
-
-
-# as inputs, outputs
-class AntdPagination(ModelScopeDataLayoutComponent):
+class AntdPagination(ModelScopeLayoutComponent):
     """
+    Ant Design: https://ant.design/components/pagination
     """
     EVENTS = [
         EventListener("change",
@@ -29,13 +23,28 @@ class AntdPagination(ModelScopeDataLayoutComponent):
     # supported slots
     SLOTS = ['showQuickJumper.goButton', 'itemRender']
 
-    data_model = PaginationData
-
     def __init__(
             self,
-            value: int | dict | PaginationData | None = None,
             props: dict | None = None,
             *,
+            align: Literal['start', 'center', 'end'] | None = None,
+            current: int | None = None,
+            default_current: int | None = 1,
+            default_page_size: int | None = 10,
+            page_size: int | None = None,
+            disabled: bool | None = None,
+            hide_on_single_page: bool = False,
+            item_render: str | None = None,
+            page_size_options: list[str] | list[int] = [10, 20, 50, 100],
+            responsive: bool | None = None,
+            show_less_items: bool | None = None,
+            show_quick_jumper: bool | dict | None = None,
+            show_size_changer: bool | dict | None = None,
+            show_title: bool = True,
+            show_total: str | None = None,
+            simple: bool | dict | None = None,
+            size: Literal['small', 'default'] = 'default',
+            total: int = 0,
             as_item: str | None = None,
             _internal: None = None,
             # gradio properties
@@ -45,8 +54,7 @@ class AntdPagination(ModelScopeDataLayoutComponent):
             elem_style: dict | None = None,
             render: bool = True,
             **kwargs):
-        super().__init__(value=value,
-                         visible=visible,
+        super().__init__(visible=visible,
                          elem_id=elem_id,
                          elem_classes=elem_classes,
                          render=render,
@@ -54,27 +62,39 @@ class AntdPagination(ModelScopeDataLayoutComponent):
                          elem_style=elem_style,
                          **kwargs)
         self.props = props
+        self.align = align
+        self.current = current
+        self.page_size = page_size
+        self.total = total
+        self.default_current = default_current
+        self.default_page_size = default_page_size
+        self.disabled = disabled
+        self.hide_on_single_page = hide_on_single_page
+        self.item_render = item_render
+        self.page_size_options = page_size_options
+        self.responsive = responsive
+        self.show_less_items = show_less_items
+        self.show_quick_jumper = show_quick_jumper
+        self.show_size_changer = show_size_changer
+        self.show_title = show_title
+        self.show_total = show_total
+        self.simple = simple
+        self.size = size
 
     FRONTEND_DIR = resolve_frontend_dir("pagination")
 
     @property
     def skip_api(self):
-        return False
+        return True
 
-    def preprocess(self,
-                   payload: PaginationData | dict) -> PaginationData | dict:
+    def preprocess(self, payload: None) -> None:
         return payload
 
-    def postprocess(self,
-                    value: PaginationData | dict | int) -> PaginationData:
-        if isinstance(value, int):
-            value = dict(page=value)
-        if isinstance(value, dict):
-            value = PaginationData(**value)
+    def postprocess(self, value: None) -> None:
         return value
 
     def example_payload(self) -> None:
-        return {"page": 1, "page_size": 10}
+        return None
 
     def example_value(self) -> None:
-        return {"page": 1, "page_size": 10}
+        return None

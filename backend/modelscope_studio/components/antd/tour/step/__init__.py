@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+from typing import Literal
+
 from gradio.events import EventListener
 
 from .....utils.dev import ModelScopeLayoutComponent, resolve_frontend_dir
@@ -30,6 +32,22 @@ class AntdTourStep(ModelScopeLayoutComponent):
             self,
             props: dict | None = None,
             *,
+            elem_target: str | None = None,
+            arrow: bool | dict | None = True,
+            close_icon: str | None = None,
+            cover: str | None = None,
+            title: str | None = None,
+            description: str | None = None,
+            placement: Literal['center', 'left', 'leftTop', 'leftBottom',
+                               'right'
+                               'rightTop', 'rightBottom', 'top', 'topLeft',
+                               'topRight', 'bottom', 'bottomLeft',
+                               'bottomRight'] = 'bottom',
+            mask: bool | dict = True,
+            type: Literal['default', 'primary'] = 'default',
+            next_button_props_click: dict | None = None,
+            prev_button_props_click: dict | None = None,
+            scroll_into_view_options: bool | dict = True,
             as_item: str | None = None,
             _internal: None = None,
             # gradio properties
@@ -47,6 +65,18 @@ class AntdTourStep(ModelScopeLayoutComponent):
                          elem_style=elem_style,
                          **kwargs)
         self.props = props
+        self.elem_target = elem_target
+        self.arrow = arrow
+        self.close_icon = close_icon
+        self.cover = cover
+        self.title = title
+        self.description = description
+        self.placement = placement
+        self.mask = mask
+        self.type = type
+        self.next_button_props_click = next_button_props_click
+        self.prev_button_props_click = prev_button_props_click
+        self.scroll_into_view_options = scroll_into_view_options
 
     FRONTEND_DIR = resolve_frontend_dir("tour", "step")
 

@@ -5,7 +5,11 @@
     bindEvents,
     importComponent,
   } from '@svelte-preprocess-react/component';
-  import { getSlotContext, getSlots } from '@svelte-preprocess-react/slot';
+  import {
+    getSetSlotParamsFn,
+    getSlotContext,
+    getSlots,
+  } from '@svelte-preprocess-react/slot';
   import type React from 'react';
   import type { Gradio } from '@gradio/utils';
   import cls from 'classnames';
@@ -41,7 +45,7 @@
     open,
     restProps: $$restProps,
   });
-
+  const setSlotParams = getSetSlotParamsFn();
   const slots = getSlots();
   $: update({
     gradio,
@@ -69,14 +73,9 @@
       {...$mergedProps.restProps}
       {...$mergedProps.props}
       {...bindEvents($mergedProps)}
-      current={$mergedProps.props.current ?? $mergedProps.value}
-      open={$mergedProps.props.open ?? $mergedProps.open}
       slots={$slots}
       slotItems={$steps.length > 0 ? $steps : $children}
-      onValueChange={(options) => {
-        value = options.current;
-        open = options.open;
-      }}
+      {setSlotParams}
     >
       <slot></slot>
     </Tour>

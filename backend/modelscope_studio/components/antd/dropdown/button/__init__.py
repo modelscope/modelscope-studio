@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from typing import Any
+from typing import Any, Literal
 
 from gradio.events import EventListener
 
@@ -9,6 +9,7 @@ from .....utils.dev import ModelScopeLayoutComponent, resolve_frontend_dir
 
 class AntdDropdownButton(ModelScopeLayoutComponent):
     """
+    Ant Design: https://ant.design/components/dropdown
     """
 
     EVENTS = [
@@ -43,6 +44,28 @@ class AntdDropdownButton(ModelScopeLayoutComponent):
             value: str | None = "Run",
             props: dict | None = None,
             *,
+            arrow: dict | bool = False,
+            auto_adjust_overflow: bool = True,
+            auto_focus: bool = False,
+            disabled: bool | None = None,
+            destroy_popup_on_hide: bool = False,
+            dropdown_render: str | None = None,
+            get_popup_container: str | None = None,
+            menu: dict | None = None,
+            overlay_class_name: str | None = None,
+            overlay_style: dict | None = None,
+            placement: Literal['topLeft', 'top', 'topRight', 'bottomLeft',
+                               'bottom', 'bottomRight'] = "bottomLeft",
+            trigger: list[Literal['click', 'hover',
+                                  'contextMenu']] = ['hover'],
+            open: bool | None = None,
+            buttons_render: str | None = None,
+            loading: bool | dict = False,
+            danger: bool | None = None,
+            icon: str | None = None,
+            size: Literal["large", "middle", "small"] | None = None,
+            type: Literal["primary", "dashed", "link", "text", "default"]
+        | None = None,
             as_item: str | None = None,
             _internal: None = None,
             # gradio properties
@@ -61,6 +84,25 @@ class AntdDropdownButton(ModelScopeLayoutComponent):
                          **kwargs)
         self.props = props
         self.value = value
+        self.arrow = arrow
+        self.auto_adjust_overflow = auto_adjust_overflow
+        self.auto_focus = auto_focus
+        self.disabled = disabled
+        self.destroy_popup_on_hide = destroy_popup_on_hide
+        self.dropdown_render = dropdown_render
+        self.get_popup_container = get_popup_container
+        self.menu = menu
+        self.overlay_class_name = overlay_class_name
+        self.overlay_style = overlay_style
+        self.placement = placement
+        self.trigger = trigger
+        self.open = open
+        self.buttons_render = buttons_render
+        self.loading = loading
+        self.danger = danger
+        self.icon = icon
+        self.size = size
+        self.type = type
 
     FRONTEND_DIR = resolve_frontend_dir("dropdown", "button")
 

@@ -8,6 +8,7 @@ from .item import AntdBreadcrumbItem
 
 class AntdBreadcrumb(ModelScopeLayoutComponent):
     """
+    Ant Design: https://ant.design/components/breadcrumb
     """
     Item = AntdBreadcrumbItem
 
@@ -20,6 +21,10 @@ class AntdBreadcrumb(ModelScopeLayoutComponent):
             self,
             props: dict | None = None,
             *,
+            item_render: str | None = None,
+            params: dict | None = None,
+            items: list[dict] | None = None,
+            separator: str | None = None,
             as_item: str | None = None,
             _internal: None = None,
             # gradio properties
@@ -37,6 +42,10 @@ class AntdBreadcrumb(ModelScopeLayoutComponent):
                          elem_style=elem_style,
                          **kwargs)
         self.props = props
+        self.item_render = item_render
+        self.params = params
+        self.items = items
+        self.separator = separator
 
     FRONTEND_DIR = resolve_frontend_dir("breadcrumb")
 

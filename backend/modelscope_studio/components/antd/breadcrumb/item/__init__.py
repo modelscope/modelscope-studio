@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from typing import Any
+from typing import Any, Literal
 
 from gradio.events import EventListener
 
@@ -9,6 +9,7 @@ from .....utils.dev import ModelScopeLayoutComponent, resolve_frontend_dir
 
 class AntdBreadcrumbItem(ModelScopeLayoutComponent):
     """
+    Ant Design: https://ant.design/components/breadcrumb
     """
 
     EVENTS = [
@@ -61,6 +62,12 @@ class AntdBreadcrumbItem(ModelScopeLayoutComponent):
             title: str | None = None,
             props: dict | None = None,
             *,
+            dropdown_props: dict | None = None,
+            href: str | None = None,
+            path: str | None = None,
+            menu: dict | None = None,
+            type: Literal['separator'] | None = None,
+            separator: str | None = None,
             as_item: str | None = None,
             _internal: None = None,
             # gradio properties
@@ -79,6 +86,12 @@ class AntdBreadcrumbItem(ModelScopeLayoutComponent):
                          **kwargs)
         self.props = props
         self.title = title
+        self.dropdown_props = dropdown_props
+        self.href = href
+        self.path = path
+        self.menu = menu
+        self.type = type
+        self.separator = separator
 
     FRONTEND_DIR = resolve_frontend_dir("breadcrumb", "item")
 

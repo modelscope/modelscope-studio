@@ -29,11 +29,13 @@ export const DropdownButton = sveltify<
     menuItems,
     children,
     dropdownRender,
+    buttonsRender,
     setSlotParams,
     ...props
   }) => {
     const getPopupContainerFunction = useFunction(getPopupContainer);
     const dropdownRenderFunction = useFunction(dropdownRender);
+    const buttonsRenderFunction = useFunction(buttonsRender);
     const buttonsRenderTargets = useTargets(children, 'buttonsRender');
     return (
       <ADropdown.Button
@@ -46,7 +48,7 @@ export const DropdownButton = sveltify<
                   return <ReactSlot slot={item} key={index} />;
                 });
               }
-            : props.buttonsRender
+            : buttonsRenderFunction
         }
         menu={{
           ...props.menu,
@@ -68,14 +70,11 @@ export const DropdownButton = sveltify<
         getPopupContainer={getPopupContainerFunction}
         dropdownRender={
           slots.dropdownRender
-            ? renderParamsSlot(
-                {
-                  slots,
-                  setSlotParams,
-                  key: 'dropdownRender',
-                },
-                { clone: true }
-              )
+            ? renderParamsSlot({
+                slots,
+                setSlotParams,
+                key: 'dropdownRender',
+              })
             : dropdownRenderFunction
         }
       />

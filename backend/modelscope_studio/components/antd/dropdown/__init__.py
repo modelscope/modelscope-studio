@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from typing import Any
+from typing import Any, Literal
 
 from gradio.events import EventListener
 
@@ -10,6 +10,7 @@ from .button import AntdDropdownButton
 
 class AntdDropdown(ModelScopeLayoutComponent):
     """
+    Ant Design: https://ant.design/components/dropdown
     """
     Button = AntdDropdownButton
     EVENTS = [
@@ -39,8 +40,23 @@ class AntdDropdown(ModelScopeLayoutComponent):
     def __init__(
             self,
             props: dict | None = None,
-            inner_elem_style: dict | None = None,
             *,
+            arrow: dict | bool = False,
+            auto_adjust_overflow: bool = True,
+            auto_focus: bool = False,
+            disabled: bool | None = None,
+            destroy_popup_on_hide: bool = False,
+            dropdown_render: str | None = None,
+            get_popup_container: str | None = None,
+            menu: dict | None = None,
+            overlay_class_name: str | None = None,
+            overlay_style: dict | None = None,
+            placement: Literal['topLeft', 'top', 'topRight', 'bottomLeft',
+                               'bottom', 'bottomRight'] = "bottomLeft",
+            trigger: list[Literal['click', 'hover',
+                                  'contextMenu']] = ['hover'],
+            open: bool | None = None,
+            inner_elem_style: dict | None = None,
             as_item: str | None = None,
             _internal: None = None,
             # gradio properties
@@ -58,6 +74,19 @@ class AntdDropdown(ModelScopeLayoutComponent):
                          elem_style=elem_style,
                          **kwargs)
         self.props = props
+        self.arrow = arrow
+        self.auto_adjust_overflow = auto_adjust_overflow
+        self.auto_focus = auto_focus
+        self.disabled = disabled
+        self.destroy_popup_on_hide = destroy_popup_on_hide
+        self.dropdown_render = dropdown_render
+        self.get_popup_container = get_popup_container
+        self.menu = menu
+        self.overlay_class_name = overlay_class_name
+        self.overlay_style = overlay_style
+        self.placement = placement
+        self.trigger = trigger
+        self.open = open
         self.inner_elem_style = inner_elem_style
 
     FRONTEND_DIR = resolve_frontend_dir("dropdown")

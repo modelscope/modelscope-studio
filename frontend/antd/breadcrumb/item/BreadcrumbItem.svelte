@@ -27,7 +27,6 @@
     layout?: boolean;
     index?: number;
   } = {};
-  export let title: string = '';
   export let as_item: string | undefined;
   // gradio properties
   export let visible = true;
@@ -45,7 +44,6 @@
     elem_classes,
     elem_style,
     as_item,
-    title,
     restProps: $$restProps,
   });
   const slots = getSlots();
@@ -58,7 +56,6 @@
     elem_classes,
     elem_style,
     as_item,
-    title,
     restProps: $$restProps,
   });
   const setItem = getSetItemFn();
@@ -69,9 +66,12 @@
   } = getMenuItems(['menu.items', 'dropdownProps.menu.items']);
   $: {
     const menu = {
+      ...($mergedProps.restProps.menu || {}),
       ...($mergedProps.props.menu || {}),
       items:
-        $mergedProps.props.menu?.items || $menuItems.length > 0
+        $mergedProps.props.menu?.items ||
+        $$restProps.restProps.menu?.items ||
+        $menuItems.length > 0
           ? renderItems($menuItems)
           : undefined,
       expandIcon:
@@ -84,15 +84,20 @@
           {
             clone: true,
           }
-        ) || $mergedProps.props.menu?.expandIcon,
+        ) ||
+        $mergedProps.props.menu?.expandIcon ||
+        $mergedProps.restProps.menu?.expandIcon,
       overflowedIndicator:
         renderSlot($slots['menu.overflowedIndicator']) ||
-        $mergedProps.props.menu?.overflowedIndicator,
+        $mergedProps.props.menu?.overflowedIndicator ||
+        $mergedProps.restProps.menu?.overflowedIndicator,
     };
     const dropdownMenu = {
+      ...($mergedProps.restProps.dropdownProps?.menu || {}),
       ...($mergedProps.props.dropdownProps?.menu || {}),
       items:
         $mergedProps.props.dropdownProps?.menu?.items ||
+        $$restProps.restProps.dropdownProps?.menu?.items ||
         $dropdownMenuItems.length > 0
           ? renderItems($dropdownMenuItems)
           : undefined,
@@ -106,13 +111,17 @@
           {
             clone: true,
           }
-        ) || $mergedProps.props.dropdownProps?.menu?.expandIcon,
+        ) ||
+        $mergedProps.props.dropdownProps?.menu?.expandIcon ||
+        $mergedProps.restProps.dropdownProps?.menu?.expandIcon,
       overflowedIndicator:
         renderSlot($slots['dropdownProps.menu.overflowedIndicator']) ||
-        $mergedProps.props.dropdownProps?.menu?.overflowedIndicator,
+        $mergedProps.props.dropdownProps?.menu?.overflowedIndicator ||
+        $mergedProps.restProps.dropdownProps?.menu?.overflowedIndicator,
     };
 
     const dropdownProps = {
+      ...($mergedProps.restProps.dropdownProps || {}),
       ...($mergedProps.props.dropdownProps || {}),
       dropdownRender: $slots['dropdownProps.dropdownRender']
         ? renderParamsSlot(
@@ -125,24 +134,14 @@
               clone: true,
             }
           )
-        : createFunction($mergedProps.props.dropdownProps?.dropdownRender),
+        : createFunction(
+            $mergedProps.props.dropdownProps?.dropdownRender ||
+              $mergedProps.restProps.dropdownProps?.dropdownRender
+          ),
       menu:
         Object.values(dropdownMenu).filter(Boolean).length > 0
           ? dropdownMenu
           : undefined,
-    };
-    const currentMergedProps = {
-      ...$mergedProps,
-      props: {
-        ...$mergedProps.restProps,
-        ...$mergedProps.props,
-        title: $mergedProps.props.title || title,
-        menu: Object.values(menu).filter(Boolean).length > 0 ? menu : undefined,
-        dropdownProps:
-          Object.values(dropdownProps).filter(Boolean).length > 0
-            ? dropdownProps
-            : undefined,
-      },
     };
 
     setItem($slotKey, $mergedProps._internal.index || 0, {
@@ -150,8 +149,14 @@
         style: $mergedProps.elem_style,
         className: cls($mergedProps.elem_classes, 'ms-gr-antd-breadcrumb-item'),
         id: $mergedProps.elem_id,
-        ...currentMergedProps.props,
-        ...bindEvents(currentMergedProps),
+        ...$mergedProps.restProps,
+        ...$mergedProps.props,
+        ...bindEvents($mergedProps),
+        menu: Object.values(menu).filter(Boolean).length > 0 ? menu : undefined,
+        dropdownProps:
+          Object.values(dropdownProps).filter(Boolean).length > 0
+            ? dropdownProps
+            : undefined,
       },
       slots: {
         title: $slots.title,

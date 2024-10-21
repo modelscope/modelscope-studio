@@ -13,7 +13,6 @@ import { type Item } from './context';
 export const Tabs = sveltify<
   GetProps<typeof ATabs> & {
     slotItems: Item[];
-    onValueChange: (activeKey: string) => void;
     setSlotParams: SetSlotParams;
   },
   [
@@ -31,7 +30,6 @@ export const Tabs = sveltify<
     indicator,
     items,
     onChange,
-    onValueChange,
     slotItems,
     more,
     children,
@@ -111,7 +109,6 @@ export const Tabs = sveltify<
           }
           onChange={(activeKey) => {
             onChange?.(activeKey);
-            onValueChange(activeKey);
           }}
         />
       </>

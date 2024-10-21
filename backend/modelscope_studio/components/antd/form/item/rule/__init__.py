@@ -1,10 +1,11 @@
 from __future__ import annotations
 
-from ......utils.dev import ModelScopeDataLayoutComponent, resolve_frontend_dir
+from ......utils.dev import ModelScopeLayoutComponent, resolve_frontend_dir
 
 
-class AntdFormItemRule(ModelScopeDataLayoutComponent):
+class AntdFormItemRule(ModelScopeLayoutComponent):
     """
+    Ant Design: https://ant.design/components/dropdown
     """
     EVENTS = []
 

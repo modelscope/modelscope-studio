@@ -7,6 +7,11 @@ from .....utils.dev import ModelScopeLayoutComponent, resolve_frontend_dir
 
 class AntdAnchorItem(ModelScopeLayoutComponent):
     """
+    Ant Design: https://ant.design/components/anchor
+    Hyperlinks to scroll on one page.
+
+    When to use:
+    For displaying anchor hyperlinks on page and jumping between them.
     """
     EVENTS = []
     # supported slots
@@ -14,8 +19,13 @@ class AntdAnchorItem(ModelScopeLayoutComponent):
 
     def __init__(
             self,
+            title: str | None = None,
             props: dict | None = None,
             *,
+            key: str | None = None,
+            replace: bool = False,
+            href: str | None = None,
+            href_target: str | None = None,
             as_item: str | None = None,
             _internal: None = None,
             # gradio properties
@@ -25,6 +35,14 @@ class AntdAnchorItem(ModelScopeLayoutComponent):
             elem_style: dict | None = None,
             render: bool = True,
             **kwargs):
+        """
+        Parameters:
+            title: The content of hyperlink.
+            key: The unique identifier of the Anchor Link.
+            href: The target of hyperlink.
+            href_target: Specifies where to display the linked URL.
+            replace: Replace item href in browser history instead of pushing it.
+        """
         super().__init__(visible=visible,
                          elem_id=elem_id,
                          elem_classes=elem_classes,
@@ -33,6 +51,11 @@ class AntdAnchorItem(ModelScopeLayoutComponent):
                          elem_style=elem_style,
                          **kwargs)
         self.props = props
+        self.title = title
+        self.key = key
+        self.replace = replace
+        self.href = href
+        self.href_target = href_target
 
     FRONTEND_DIR = resolve_frontend_dir("anchor", "item")
 

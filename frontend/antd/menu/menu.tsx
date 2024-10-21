@@ -10,13 +10,11 @@ import type { ItemType } from 'antd/es/menu/interface';
 
 import { type Item } from './context';
 
+import './menu.less';
+
 export const Menu = sveltify<
   GetProps<typeof AMenu> & {
     slotItems: Item[];
-    onValueChange: (options: {
-      openKeys: string[];
-      selectedKeys: string[];
-    }) => void;
     setSlotParams: SetSlotParams;
   },
   ['expandIcon', 'overflowedIndicator']
@@ -26,7 +24,6 @@ export const Menu = sveltify<
     items,
     slotItems,
     children,
-    onValueChange,
     onOpenChange,
     onSelect,
     onDeselect,
@@ -40,24 +37,12 @@ export const Menu = sveltify<
           {...omitUndefinedProps(props)}
           onOpenChange={(openKeys) => {
             onOpenChange?.(openKeys);
-            onValueChange?.({
-              openKeys,
-              selectedKeys: props.selectedKeys || [],
-            });
           }}
           onSelect={(e) => {
             onSelect?.(e);
-            onValueChange?.({
-              openKeys: props.openKeys || [],
-              selectedKeys: e.selectedKeys,
-            });
           }}
           onDeselect={(e) => {
             onDeselect?.(e);
-            onValueChange?.({
-              openKeys: props.openKeys || [],
-              selectedKeys: e.selectedKeys,
-            });
           }}
           items={useMemo(() => {
             // ['label','icon',"title"]

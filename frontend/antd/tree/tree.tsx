@@ -16,13 +16,6 @@ export const Tree = sveltify<
   TreeProps & {
     slotItems: Item[];
     directory?: boolean;
-    onValueChange: (options: {
-      expandedKeys?: React.Key[];
-      selectedKeys?: React.Key[];
-      checkedKeys?:
-        | React.Key[]
-        | { checked: React.Key[]; halfChecked: React.Key[] };
-    }) => void;
     setSlotParams: SetSlotParams;
   },
   [
@@ -40,7 +33,6 @@ export const Tree = sveltify<
     treeData,
     draggable,
     allowDrop,
-    onValueChange,
     onCheck,
     onSelect,
     onExpand,
@@ -117,27 +109,12 @@ export const Tree = sveltify<
           allowDrop={allowDropFunction}
           onSelect={(selected, ...args) => {
             onSelect?.(selected, ...args);
-            onValueChange({
-              selectedKeys: selected,
-              expandedKeys: props.expandedKeys,
-              checkedKeys: props.checkedKeys,
-            });
           }}
           onExpand={(expanded, ...args) => {
             onExpand?.(expanded, ...args);
-            onValueChange({
-              expandedKeys: expanded,
-              selectedKeys: props.selectedKeys,
-              checkedKeys: props.checkedKeys,
-            });
           }}
           onCheck={(checked, ...args) => {
             onCheck?.(checked, ...args);
-            onValueChange({
-              checkedKeys: checked,
-              selectedKeys: props.selectedKeys,
-              expandedKeys: props.expandedKeys,
-            });
           }}
         />
       </>

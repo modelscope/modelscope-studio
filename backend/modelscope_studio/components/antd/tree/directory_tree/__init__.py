@@ -1,21 +1,14 @@
 from __future__ import annotations
 
-from typing import Any, List, Union
+from typing import Any
 
-from gradio.data_classes import GradioModel
 from gradio.events import EventListener
 
-from .....utils.dev import ModelScopeDataLayoutComponent, resolve_frontend_dir
-
-
-class TreeData(GradioModel):
-    expanded_keys: List[str] = []
-    selected_keys: List[str] = []
-    checked_keys: Union[List[str], dict] = []
+from .....utils.dev import ModelScopeLayoutComponent, resolve_frontend_dir
 
 
 # as inputs, outputs
-class AntdTreeDirectoryTree(ModelScopeDataLayoutComponent):
+class AntdTreeDirectoryTree(ModelScopeLayoutComponent):
     """
     """
 
@@ -64,11 +57,9 @@ class AntdTreeDirectoryTree(ModelScopeDataLayoutComponent):
         'treeData',
         'draggable.icon',
     ]
-    data_model = TreeData
 
     def __init__(
             self,
-            value: TreeData | dict | None = None,
             props: dict | None = None,
             *,
             as_item: str | None = None,
@@ -80,8 +71,7 @@ class AntdTreeDirectoryTree(ModelScopeDataLayoutComponent):
             elem_style: dict | None = None,
             render: bool = True,
             **kwargs):
-        super().__init__(value=value,
-                         visible=visible,
+        super().__init__(visible=visible,
                          elem_id=elem_id,
                          elem_classes=elem_classes,
                          render=render,
@@ -96,12 +86,10 @@ class AntdTreeDirectoryTree(ModelScopeDataLayoutComponent):
     def skip_api(self):
         return False
 
-    def preprocess(self, payload: dict | TreeData) -> dict | TreeData:
+    def preprocess(self, payload: None) -> None:
         return payload
 
-    def postprocess(self, value: dict | TreeData | None) -> TreeData:
-        if isinstance(value, dict):
-            value = TreeData(**value)
+    def postprocess(self, value: None) -> None:
         return value
 
     def example_payload(self) -> Any:

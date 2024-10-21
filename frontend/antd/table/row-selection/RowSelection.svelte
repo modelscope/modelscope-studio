@@ -27,7 +27,6 @@
   } = {};
 
   export let as_item: string | undefined;
-  export let value: string[] | number[];
 
   // gradio properties
   export let visible = true;
@@ -45,7 +44,6 @@
     elem_classes,
     elem_style,
     as_item,
-    value,
     restProps: $$restProps,
   });
   const setSlotParams = getSetSlotParamsFn();
@@ -59,7 +57,6 @@
     elem_classes,
     elem_style,
     as_item,
-    value,
     restProps: $$restProps,
   });
   const { selections: selectionsItems } = getSelectionItems(['selections']);
@@ -74,30 +71,37 @@
           'ms-gr-antd-table-row-selection'
         ),
         id: $mergedProps.elem_id,
-        selectedRowKeys: $mergedProps.value,
-        selections:
-          $mergedProps.props.selections || renderItems($selectionsItems),
         ...$mergedProps.restProps,
         ...$mergedProps.props,
         ...events,
-        onChange: (selectedRowKeys: string[] | number[], ...args: any[]) => {
-          value = selectedRowKeys;
-          events?.onChange?.(...args);
-        },
-        onCell: createFunction($mergedProps.props.onCell),
-        getCheckboxProps: createFunction($mergedProps.props.getCheckboxProps),
-        renderCell: createFunction($mergedProps.props.renderCell),
-        columnTitle: $mergedProps.props.columnTitle,
+        selections:
+          $mergedProps.props.selections ||
+          $mergedProps.restProps.selections ||
+          renderItems($selectionsItems),
+        onCell: createFunction(
+          $mergedProps.props.onCell || $mergedProps.restProps.onCell
+        ),
+        getCheckboxProps: createFunction(
+          $mergedProps.props.getCheckboxProps ||
+            $mergedProps.restProps.getCheckboxProps
+        ),
+        renderCell: createFunction(
+          $mergedProps.props.renderCell || $mergedProps.restProps.renderCell
+        ),
+        columnTitle:
+          $mergedProps.props.columnTitle || $mergedProps.restProps.columnTitle,
       },
       slots: {
         ...$slots,
         columnTitle: {
           el: $slots.columnTitle,
-          fallback: setSlotParams,
+          callback: setSlotParams,
+          clone: true,
         },
         renderCell: {
           el: $slots.renderCell,
-          fallback: setSlotParams,
+          callback: setSlotParams,
+          clone: true,
         },
       },
     });

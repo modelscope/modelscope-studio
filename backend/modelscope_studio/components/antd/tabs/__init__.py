@@ -4,12 +4,12 @@ from typing import Any
 
 from gradio.events import EventListener
 
-from ....utils.dev import ModelScopeDataLayoutComponent, resolve_frontend_dir
+from ....utils.dev import ModelScopeLayoutComponent, resolve_frontend_dir
 from .item import AntdTabsItem
 
 
 # as inputs, outputs
-class AntdTabs(ModelScopeDataLayoutComponent):
+class AntdTabs(ModelScopeLayoutComponent):
     """
     """
     Item = AntdTabsItem
@@ -37,9 +37,9 @@ class AntdTabs(ModelScopeDataLayoutComponent):
 
     def __init__(
             self,
-            value: str | None = None,
             props: dict | None = None,
             *,
+            active_key: str | None = None,
             as_item: str | None = None,
             _internal: None = None,
             # gradio properties
@@ -49,8 +49,7 @@ class AntdTabs(ModelScopeDataLayoutComponent):
             elem_style: dict | None = None,
             render: bool = True,
             **kwargs):
-        super().__init__(value=value,
-                         visible=visible,
+        super().__init__(visible=visible,
                          elem_id=elem_id,
                          elem_classes=elem_classes,
                          render=render,
@@ -58,15 +57,13 @@ class AntdTabs(ModelScopeDataLayoutComponent):
                          elem_style=elem_style,
                          **kwargs)
         self.props = props
+        self.active_key = active_key
 
     FRONTEND_DIR = resolve_frontend_dir("tabs")
 
     @property
     def skip_api(self):
-        return False
-
-    def api_info(self) -> dict[str, Any]:
-        return {"type": "string"}
+        return True
 
     def preprocess(self, payload: str | None) -> str | None:
         return payload

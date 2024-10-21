@@ -59,7 +59,6 @@
     className: cls($mergedProps.elem_classes, 'ms-gr-antd-divider'),
     id: $mergedProps.elem_id,
     ...$mergedProps.restProps,
-    ...$mergedProps.restProps,
     ...$mergedProps.props,
     ...bindEvents($mergedProps),
     slots: $slots,

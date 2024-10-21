@@ -1,23 +1,15 @@
 from __future__ import annotations
 
-from typing import Any, List, Union
+from typing import Any
 
-from gradio.data_classes import GradioModel
 from gradio.events import EventListener
 
-from ....utils.dev import ModelScopeDataLayoutComponent, resolve_frontend_dir
+from ....utils.dev import ModelScopeLayoutComponent, resolve_frontend_dir
 from .directory_tree import AntdTreeDirectoryTree
 from .tree_node import AntdTreeTreeNode
 
 
-class TreeData(GradioModel):
-    expanded_keys: List[str] = []
-    selected_keys: List[str] = []
-    checked_keys: Union[List[str], dict] = []
-
-
-# as inputs, outputs
-class AntdTree(ModelScopeDataLayoutComponent):
+class AntdTree(ModelScopeLayoutComponent):
     """
     """
     TreeNode = AntdTreeTreeNode
@@ -68,11 +60,9 @@ class AntdTree(ModelScopeDataLayoutComponent):
         'treeData',
         'draggable.icon',
     ]
-    data_model = TreeData
 
     def __init__(
             self,
-            value: TreeData | dict | None = None,
             props: dict | None = None,
             *,
             as_item: str | None = None,
@@ -84,8 +74,7 @@ class AntdTree(ModelScopeDataLayoutComponent):
             elem_style: dict | None = None,
             render: bool = True,
             **kwargs):
-        super().__init__(value=value,
-                         visible=visible,
+        super().__init__(visible=visible,
                          elem_id=elem_id,
                          elem_classes=elem_classes,
                          render=render,
@@ -98,14 +87,12 @@ class AntdTree(ModelScopeDataLayoutComponent):
 
     @property
     def skip_api(self):
-        return False
+        return True
 
-    def preprocess(self, payload: dict | TreeData) -> dict | TreeData:
+    def preprocess(self, payload: None) -> None:
         return payload
 
-    def postprocess(self, value: dict | TreeData | None) -> TreeData:
-        if isinstance(value, dict):
-            value = TreeData(**value)
+    def postprocess(self, value: None | None) -> None:
         return value
 
     def example_payload(self) -> Any:

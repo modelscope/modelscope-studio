@@ -21,7 +21,6 @@
     layout?: boolean;
   } = {};
 
-  export let count = 0;
   export let as_item: string | undefined;
   // gradio properties
   export let visible = true;
@@ -33,7 +32,6 @@
     gradio,
     props: $updatedProps,
     _internal,
-    count,
     visible,
     elem_id,
     elem_classes,
@@ -46,7 +44,6 @@
     gradio,
     props: $updatedProps,
     _internal,
-    count,
     visible,
     elem_id,
     elem_classes,
@@ -63,7 +60,6 @@
     ...$mergedProps.props,
     ...bindEvents($mergedProps),
     slots: $slots,
-    count: $mergedProps.props.count || $mergedProps.count,
   };
 </script>
 

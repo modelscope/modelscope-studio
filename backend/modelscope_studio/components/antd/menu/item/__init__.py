@@ -25,6 +25,15 @@ class AntdMenuItem(ModelScopeLayoutComponent):
             label: str | None = None,
             props: dict | None = None,
             *,
+            title: str | None = None,
+            danger: bool = False,
+            disabled: bool = False,
+            extra: str | None = None,
+            icon: str | None = None,
+            key: str | None = None,
+            theme: Literal['dark', 'light'] = None,
+            popup_class_name: str | None = None,
+            popup_offset: tuple[int | float, int | float] | None = None,
             as_item: str | None = None,
             _internal: None = None,
             # gradio properties
@@ -43,6 +52,15 @@ class AntdMenuItem(ModelScopeLayoutComponent):
                          **kwargs)
         self.label = label
         self.props = props
+        self.title = title
+        self.danger = danger
+        self.disabled = disabled
+        self.extra = extra
+        self.icon = icon
+        self.key = key
+        self.theme = theme
+        self.popup_class_name = popup_class_name
+        self.popup_offset = popup_offset
 
     FRONTEND_DIR = resolve_frontend_dir("menu", "item")
 

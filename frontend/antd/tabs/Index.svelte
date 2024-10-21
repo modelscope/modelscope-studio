@@ -24,7 +24,6 @@
   const updatedProps = writable(props);
   $: updatedProps.update((prev) => ({ ...prev, ...props }));
   export let _internal: Record<string, any> = {};
-  export let value: string;
   export let as_item: string | undefined;
   // gradio properties
   export let visible = true;
@@ -41,7 +40,6 @@
     elem_classes,
     elem_style,
     as_item,
-    value,
     restProps: $$restProps,
   });
 
@@ -56,7 +54,6 @@
     elem_classes,
     elem_style,
     as_item,
-    value,
     restProps: $$restProps,
   });
   const { items, default: children } = getItems(['items', 'default']);
@@ -74,10 +71,6 @@
       {...bindEvents($mergedProps)}
       slots={$slots}
       slotItems={$items.length > 0 ? $items : $children}
-      activeKey={$mergedProps.props.activeKey ?? $mergedProps.value}
-      onValueChange={(activeKey) => {
-        value = activeKey;
-      }}
       {setSlotParams}
     >
       <slot></slot>

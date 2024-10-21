@@ -73,18 +73,6 @@
       {...$mergedProps.props}
       {...bindEvents($mergedProps)}
       slots={$slots}
-      current={$mergedProps.props.current ||
-        $mergedProps.value?.page ||
-        undefined}
-      pageSize={$mergedProps.props.pageSize ||
-        $mergedProps.value?.page_size ||
-        undefined}
-      onValueChange={(page, pageSize) => {
-        value = {
-          page,
-          page_size: pageSize,
-        };
-      }}
       {setSlotParams}
     >
       <slot></slot>

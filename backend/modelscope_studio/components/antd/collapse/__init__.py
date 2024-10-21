@@ -4,12 +4,11 @@ from typing import Any
 
 from gradio.events import EventListener
 
-from ....utils.dev import ModelScopeDataLayoutComponent, resolve_frontend_dir
+from ....utils.dev import ModelScopeLayoutComponent, resolve_frontend_dir
 from .item import AntdCollapseItem
 
 
-# as inputs, outputs
-class AntdCollapse(ModelScopeDataLayoutComponent):
+class AntdCollapse(ModelScopeLayoutComponent):
     """
     """
     Item = AntdCollapseItem
@@ -37,8 +36,7 @@ class AntdCollapse(ModelScopeDataLayoutComponent):
             elem_style: dict | None = None,
             render: bool = True,
             **kwargs):
-        super().__init__(value=value,
-                         visible=visible,
+        super().__init__(visible=visible,
                          elem_id=elem_id,
                          elem_classes=elem_classes,
                          render=render,
@@ -51,34 +49,12 @@ class AntdCollapse(ModelScopeDataLayoutComponent):
 
     @property
     def skip_api(self):
-        return False
+        return True
 
-    def api_info(self) -> dict[str, Any]:
-        return {
-            "anyOf": [{
-                "type": "number"
-            }, {
-                "type": "string"
-            }, {
-                "type": "array",
-                "items": {
-                    "anyOf": [{
-                        "type": "number"
-                    }, {
-                        "type": "string"
-                    }]
-                }
-            }]
-        }
-
-    def preprocess(
-        self, payload: str | int | float | list[str | int | float]
-    ) -> str | int | float | list[str | int | float]:
+    def preprocess(self, payload: None) -> None:
         return payload
 
-    def postprocess(
-        self, value: str | int | float | list[str | int | float]
-    ) -> str | int | float | list[str | int | float]:
+    def postprocess(self, value: None) -> None:
         return value
 
     def example_payload(self) -> Any:

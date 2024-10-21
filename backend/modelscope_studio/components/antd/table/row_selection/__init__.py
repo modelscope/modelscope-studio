@@ -1,15 +1,13 @@
 from __future__ import annotations
 
-from typing import Any
-
 from gradio.events import EventListener
 
-from .....utils.dev import ModelScopeDataLayoutComponent, resolve_frontend_dir
+from .....utils.dev import ModelScopeLayoutComponent, resolve_frontend_dir
 from .selection import AntdTableRowSelectionSelection
 
 
 # as inputs, outputs
-class AntdTableRowSelection(ModelScopeDataLayoutComponent):
+class AntdTableRowSelection(ModelScopeLayoutComponent):
     """
     """
     Selection = AntdTableRowSelectionSelection
@@ -44,7 +42,6 @@ class AntdTableRowSelection(ModelScopeDataLayoutComponent):
 
     def __init__(
             self,
-            value: list[str] | list[int | float] | None = None,
             props: dict | None = None,
             *,
             as_item: str | None = None,
@@ -56,8 +53,7 @@ class AntdTableRowSelection(ModelScopeDataLayoutComponent):
             elem_style: dict | None = None,
             render: bool = True,
             **kwargs):
-        super().__init__(value=value,
-                         visible=visible,
+        super().__init__(visible=visible,
                          elem_id=elem_id,
                          elem_classes=elem_classes,
                          render=render,
@@ -70,31 +66,12 @@ class AntdTableRowSelection(ModelScopeDataLayoutComponent):
 
     @property
     def skip_api(self):
-        return False
+        return True
 
-    def api_info(self) -> dict[str, Any]:
-        return {
-            "anyOf": [{
-                "type": "array",
-                "items": {
-                    "type": "string"
-                }
-            }, {
-                "type": "array",
-                "items": {
-                    "type": "number"
-                }
-            }]
-        }
-
-    def preprocess(
-        self, payload: list[str] | list[int | float] | None
-    ) -> list[str] | list[int | float] | None:
+    def preprocess(self, payload: None) -> None:
         return payload
 
-    def postprocess(
-        self, value: list[str] | list[int | float] | None
-    ) -> list[str] | list[int | float] | None:
+    def postprocess(self, value: None) -> None:
 
         return value
 

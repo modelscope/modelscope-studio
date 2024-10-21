@@ -8,7 +8,6 @@ import { type GetProps, Pagination as APagination } from 'antd';
 
 export const Pagination = sveltify<
   GetProps<typeof APagination> & {
-    onValueChange: (page: number, pageSize: number) => void;
     children?: React.ReactNode;
     setSlotParams: SetSlotParams;
   },
@@ -16,7 +15,6 @@ export const Pagination = sveltify<
 >(
   ({
     slots,
-    onValueChange,
     showTotal,
     showQuickJumper,
     onChange,
@@ -42,7 +40,6 @@ export const Pagination = sveltify<
               : itemRenderFunction
           }
           onChange={(page, pageSize) => {
-            onValueChange(page, pageSize);
             onChange?.(page, pageSize);
           }}
           showQuickJumper={

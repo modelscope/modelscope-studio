@@ -24,11 +24,6 @@
   const updatedProps = writable(props);
   $: updatedProps.update((prev) => ({ ...prev, ...props }));
   export let _internal: Record<string, any> = {};
-  export let value: {
-    expanded_keys?: string[];
-    checked_keys?: string[] | { checked: string[]; halfChecked: string[] };
-    selected_keys?: string[];
-  } = {};
   export let as_item: string | undefined;
   // gradio properties
   export let visible = true;
@@ -45,7 +40,6 @@
     elem_classes,
     elem_style,
     as_item,
-    value,
     restProps: $$restProps,
   });
 
@@ -59,19 +53,10 @@
     elem_classes,
     elem_style,
     as_item,
-    value,
     restProps: $$restProps,
   });
   const { treeData, default: children } = getItems(['default', 'treeData']);
   const setSlotParams = getSetSlotParamsFn();
-
-  const onValueChange = (val: Record<string, any>) => {
-    value = {
-      expanded_keys: val.expandedKeys,
-      checked_keys: val.checkedKeys,
-      selected_keys: val.selectedKeys,
-    };
-  };
 </script>
 
 <!-- $$slots.default and slot fallbacks are not working in gradio -->
@@ -86,13 +71,6 @@
       {...bindEvents($mergedProps)}
       slots={$slots}
       slotItems={$treeData.length ? $treeData : $children}
-      selectedKeys={$mergedProps.props.selectedKeys ||
-        $mergedProps.value.selected_keys}
-      expandedKeys={$mergedProps.props.expandedKeys ||
-        $mergedProps.value.expanded_keys}
-      checkedKeys={$mergedProps.props.checkedKeys ||
-        $mergedProps.value.checked_keys}
-      {onValueChange}
       {setSlotParams}
     >
       <slot></slot>
