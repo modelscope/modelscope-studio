@@ -43,6 +43,7 @@ class AntdCol(ModelScopeLayoutComponent):
             lg: int | dict | None = None,
             xl: int | dict | None = None,
             xxl: int | dict | None = None,
+            root_class_name: str | None = None,
             as_item: str | None = None,
             _internal: None = None,
             # gradio properties
@@ -87,6 +88,7 @@ class AntdCol(ModelScopeLayoutComponent):
         self.lg = lg
         self.xl = xl
         self.xxl = xxl
+        self.root_class_name = root_class_name
 
     FRONTEND_DIR = resolve_frontend_dir("grid", 'col')
 

@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from typing import Any
+from typing import Any, Literal
 
 from gradio.events import EventListener
 
@@ -10,6 +10,7 @@ from .....utils.dev import ModelScopeDataLayoutComponent, resolve_frontend_dir
 # as inputs, outputs
 class AntdCascaderPanel(ModelScopeDataLayoutComponent):
     """
+    Ant Design: https://ant.design/components/cascader
     """
 
     EVENTS = [
@@ -29,6 +30,17 @@ class AntdCascaderPanel(ModelScopeDataLayoutComponent):
             value: list[str] | list[int | float] | None = None,
             props: dict | None = None,
             *,
+            change_on_select: bool = False,
+            default_value: str | None = None,
+            expand_icon: str | None = None,
+            expand_trigger: Literal['click', 'hover'] = 'click',
+            filed_names: dict | None = None,
+            not_found_content: str | None = None,
+            options: list[dict] | None = None,
+            multiple: bool | None = None,
+            show_checked_strategy: Literal['SHOW_PARENT', 'SHOW_CHILD']
+        | None = None,
+            root_class_name: str | None = None,
             as_item: str | None = None,
             _internal: None = None,
             # gradio properties
@@ -47,6 +59,16 @@ class AntdCascaderPanel(ModelScopeDataLayoutComponent):
                          elem_style=elem_style,
                          **kwargs)
         self.props = props
+        self.change_on_select = change_on_select
+        self.default_value = default_value
+        self.expand_icon = expand_icon
+        self.expand_trigger = expand_trigger
+        self.filed_names = filed_names
+        self.not_found_content = not_found_content
+        self.options = options
+        self.multiple = multiple
+        self.show_checked_strategy = show_checked_strategy
+        self.root_class_name = root_class_name
 
     FRONTEND_DIR = resolve_frontend_dir("cascader", "panel")
 

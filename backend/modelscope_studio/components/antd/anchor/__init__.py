@@ -49,6 +49,7 @@ class AntdAnchor(ModelScopeLayoutComponent):
             items: list[dict] | None = None,
             direction: Literal['vertical', 'horizontal'] = 'vertical',
             replace: bool = False,
+            root_class_name: str | None = None,
             as_item: str | None = None,
             _internal: None = None,
             # gradio properties
@@ -89,6 +90,7 @@ class AntdAnchor(ModelScopeLayoutComponent):
         self.items = items
         self.direction = direction
         self.replace = replace
+        self.root_class_name = root_class_name
 
     FRONTEND_DIR = resolve_frontend_dir("anchor")
 

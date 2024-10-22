@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from typing import Any
+from typing import Any, Literal
 
 from gradio.events import EventListener
 
@@ -11,6 +11,7 @@ from .option import AntdAutoCompleteOption
 # as inputs, outputs
 class AntdAutoComplete(ModelScopeDataLayoutComponent):
     """
+    Ant Design: https://ant.design/components/auto-complete/
     """
     Option = AntdAutoCompleteOption
 
@@ -48,6 +49,29 @@ class AntdAutoComplete(ModelScopeDataLayoutComponent):
             value: str | None = None,
             props: dict | None = None,
             *,
+            allow_clear: bool | dict = False,
+            auto_focus: bool = False,
+            backfill: bool = False,
+            default_active_first_option: bool = True,
+            default_open: bool | None = None,
+            default_value: str | None = None,
+            disabled: bool = False,
+            dropdown_render: str | None = None,
+            popup_class_name: str | None = None,
+            popup_match_select_width: bool | int | float = True,
+            filter_option: bool | str = True,
+            get_popup_container: str | None = None,
+            not_found_content: str | None = None,
+            open: bool | None = None,
+            options: list[dict] | None = None,
+            placeholder: str | None = None,
+            placement: Literal['bottomLeft', 'bottomRight', 'topLeft',
+                               'topRight'] | None = None,
+            size: Literal['small', 'middle', 'large'] | None = None,
+            status: Literal['error', 'warning'] | None = None,
+            variant: Literal['outlined', 'borderless', 'filled']
+        | None = 'outlined',
+            root_class_name: str | None = None,
             as_item: str | None = None,
             _internal: None = None,
             # gradio properties
@@ -66,6 +90,27 @@ class AntdAutoComplete(ModelScopeDataLayoutComponent):
                          elem_style=elem_style,
                          **kwargs)
         self.props = props
+        self.allow_clear = allow_clear
+        self.auto_focus = auto_focus
+        self.backfill = backfill
+        self.default_active_first_option = default_active_first_option
+        self.default_open = default_open
+        self.default_value = default_value
+        self.disabled = disabled
+        self.dropdown_render = dropdown_render
+        self.popup_class_name = popup_class_name
+        self.popup_match_select_width = popup_match_select_width
+        self.filter_option = filter_option
+        self.get_popup_container = get_popup_container
+        self.not_found_content = not_found_content
+        self.open = open
+        self.options = options
+        self.placeholder = placeholder
+        self.status = status
+        self.variant = variant
+        self.placement = placement
+        self.size = size
+        self.root_class_name = root_class_name
 
     FRONTEND_DIR = resolve_frontend_dir("auto-complete")
 

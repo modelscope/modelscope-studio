@@ -39,6 +39,7 @@ class AntdSpace(ModelScopeLayoutComponent):
         | list[Literal['small', 'middle', 'large'] | int | float] = 'small',
             split: str | None = None,
             wrap: bool = False,
+            root_class_name: str | None = None,
             as_item: str | None = None,
             _internal: None = None,
             # gradio properties
@@ -73,6 +74,7 @@ class AntdSpace(ModelScopeLayoutComponent):
         self.size = size
         self.split = split
         self.wrap = wrap
+        self.root_class_name = root_class_name
 
     FRONTEND_DIR = resolve_frontend_dir("space")
 

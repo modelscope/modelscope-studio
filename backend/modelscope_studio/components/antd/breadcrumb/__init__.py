@@ -25,6 +25,7 @@ class AntdBreadcrumb(ModelScopeLayoutComponent):
             params: dict | None = None,
             items: list[dict] | None = None,
             separator: str | None = None,
+            root_class_name: str | None = None,
             as_item: str | None = None,
             _internal: None = None,
             # gradio properties
@@ -46,6 +47,7 @@ class AntdBreadcrumb(ModelScopeLayoutComponent):
         self.params = params
         self.items = items
         self.separator = separator
+        self.root_class_name = root_class_name
 
     FRONTEND_DIR = resolve_frontend_dir("breadcrumb")
 

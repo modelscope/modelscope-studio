@@ -7,6 +7,7 @@ from .....utils.dev import ModelScopeLayoutComponent, resolve_frontend_dir
 
 class AntdCascaderOption(ModelScopeLayoutComponent):
     """
+    Ant Design: https://ant.design/components/cascader
     """
 
     EVENTS = []
@@ -22,6 +23,8 @@ class AntdCascaderOption(ModelScopeLayoutComponent):
             label: str | None = None,
             props: dict | None = None,
             *,
+            disabled: bool | None = None,
+            is_leaf: bool | None = None,
             as_item: str | None = None,
             _internal: None = None,
             # gradio properties
@@ -41,6 +44,8 @@ class AntdCascaderOption(ModelScopeLayoutComponent):
         self.props = props
         self.value = value
         self.label = label
+        self.disabled = disabled
+        self.is_leaf = is_leaf
 
     FRONTEND_DIR = resolve_frontend_dir("cascader", "option")
 

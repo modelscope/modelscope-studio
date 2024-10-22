@@ -28,6 +28,7 @@ class AntdSpaceCompact(ModelScopeLayoutComponent):
             block: bool = False,
             direction: Literal['vertical', 'horizontal'] = 'horizontal',
             size: Literal['small', 'middle', 'large'] = 'middle',
+            root_class_name: str | None = None,
             as_item: str | None = None,
             _internal: None = None,
             # gradio properties
@@ -54,6 +55,7 @@ class AntdSpaceCompact(ModelScopeLayoutComponent):
         self.block = block
         self.direction = direction
         self.size = size
+        self.root_class_name = root_class_name
 
     FRONTEND_DIR = resolve_frontend_dir("space", "compact")
 

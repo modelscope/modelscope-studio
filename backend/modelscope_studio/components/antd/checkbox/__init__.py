@@ -11,6 +11,7 @@ from .group import AntdCheckboxGroup
 # as inputs, outputs
 class AntdCheckbox(ModelScopeDataLayoutComponent):
     """
+    Ant Design: https://ant.design/components/checkbox
     """
     Group = AntdCheckboxGroup
 
@@ -22,9 +23,14 @@ class AntdCheckbox(ModelScopeDataLayoutComponent):
 
     def __init__(
             self,
-            value: bool | None = None,
+            value: bool | None = False,
             props: dict | None = None,
             *,
+            auto_focus: bool = False,
+            default_checked: bool = False,
+            disabled: bool = False,
+            indeterminate: bool = False,
+            root_class_name: str | None = None,
             as_item: str | None = None,
             _internal: None = None,
             # gradio properties
@@ -43,6 +49,11 @@ class AntdCheckbox(ModelScopeDataLayoutComponent):
                          elem_style=elem_style,
                          **kwargs)
         self.props = props
+        self.auto_focus = auto_focus
+        self.default_checked = default_checked
+        self.disabled = disabled
+        self.indeterminate = indeterminate
+        self.root_class_name = root_class_name
 
     FRONTEND_DIR = resolve_frontend_dir("checkbox")
 

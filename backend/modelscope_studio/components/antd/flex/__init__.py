@@ -35,6 +35,7 @@ class AntdFlex(ModelScopeLayoutComponent):
             gap: Literal["small", "middle", "large"] | str | int | float
         | None = None,
             component: str | None = None,
+            root_class_name: str | None = None,
             as_item: str | None = None,
             _internal: None = None,
             # gradio properties
@@ -69,6 +70,7 @@ class AntdFlex(ModelScopeLayoutComponent):
         self.flex = flex
         self.gap = gap
         self.component = component
+        self.root_class_name = root_class_name
 
     FRONTEND_DIR = resolve_frontend_dir("flex")
 

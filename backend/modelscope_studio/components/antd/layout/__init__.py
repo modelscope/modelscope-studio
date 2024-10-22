@@ -41,6 +41,7 @@ class AntdLayout(ModelScopeLayoutComponent):
             props: dict | None = None,
             *,
             has_sider: bool | None = None,
+            root_class_name: str | None = None,
             as_item: str | None = None,
             _internal: None = None,
             # gradio properties
@@ -63,6 +64,7 @@ class AntdLayout(ModelScopeLayoutComponent):
                          **kwargs)
         self.props = props
         self.has_sider = has_sider
+        self.root_class_name = root_class_name
 
     FRONTEND_DIR = resolve_frontend_dir("layout")
 

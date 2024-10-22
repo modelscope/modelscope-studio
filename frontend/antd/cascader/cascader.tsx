@@ -19,7 +19,7 @@ function getConfig<T>(value: T): Partial<T & Record<PropertyKey, any>> {
 export const Cascader = sveltify<
   CascaderProps<any> & {
     onValueChange: (value: string[] | number[]) => void;
-    onLoadData?: (...args: any[]) => void;
+    onLoadData: (...args: any[]) => void;
     optionItems: Item[];
     setSlotParams: SetSlotParams;
   },
@@ -48,11 +48,11 @@ export const Cascader = sveltify<
     maxTagPlaceholder,
     dropdownRender,
     optionRender,
-    onLoadData,
     showSearch,
     optionItems,
     options,
     setSlotParams,
+    onLoadData,
     ...props
   }) => {
     const getPopupContainerFunction = useFunction(getPopupContainer);
@@ -67,6 +67,7 @@ export const Cascader = sveltify<
     const showSearchFilterFunction = useFunction(showSearchConfig.filter);
     const showSearchRenderFunction = useFunction(showSearchConfig.render);
     const showSearchSortFunction = useFunction(showSearchConfig.sort);
+
     return (
       <>
         <div style={{ display: 'none' }}>{children}</div>

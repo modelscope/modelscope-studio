@@ -54,6 +54,7 @@ class AntdMenu(ModelScopeLayoutComponent):
             sub_menu_open_delay: int | float = 0,
             theme: Literal['light', 'dark'] | None = None,
             trigger_sub_menu_action: Literal['click', 'hover'] = 'hover',
+            root_class_name: str | None = None,
             as_item: str | None = None,
             _internal: None = None,
             # gradio properties
@@ -88,6 +89,7 @@ class AntdMenu(ModelScopeLayoutComponent):
         self.sub_menu_open_delay = sub_menu_open_delay
         self.theme = theme
         self.trigger_sub_menu_action = trigger_sub_menu_action
+        self.root_class_name = root_class_name
 
     FRONTEND_DIR = resolve_frontend_dir("menu")
 

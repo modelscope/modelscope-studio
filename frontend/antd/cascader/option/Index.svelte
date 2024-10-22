@@ -61,7 +61,7 @@
     restProps: $$restProps,
   });
   const setItem = getSetItemFn();
-  const { default: items } = getItems();
+  const { default: items } = getItems(['default']);
 
   $: setItem($slotKey, $mergedProps._internal.index || 0, {
     props: {

@@ -7,6 +7,7 @@ from .....utils.dev import ModelScopeLayoutComponent, resolve_frontend_dir
 
 class AntdAutoCompleteOption(ModelScopeLayoutComponent):
     """
+    Ant Design: https://ant.design/components/auto-complete/
     """
 
     EVENTS = []

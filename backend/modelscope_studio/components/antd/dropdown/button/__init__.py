@@ -66,6 +66,7 @@ class AntdDropdownButton(ModelScopeLayoutComponent):
             size: Literal["large", "middle", "small"] | None = None,
             type: Literal["primary", "dashed", "link", "text", "default"]
         | None = None,
+            root_class_name: str | None = None,
             as_item: str | None = None,
             _internal: None = None,
             # gradio properties
@@ -103,6 +104,7 @@ class AntdDropdownButton(ModelScopeLayoutComponent):
         self.icon = icon
         self.size = size
         self.type = type
+        self.root_class_name = root_class_name
 
     FRONTEND_DIR = resolve_frontend_dir("dropdown", "button")
 

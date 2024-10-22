@@ -27,6 +27,7 @@ class AntdSplitterPanel(ModelScopeLayoutComponent):
             size: int | str | None = None,
             collapsible: bool | dict = False,
             resizable: bool = True,
+            root_class_name: str | None = None,
             as_item: str | None = None,
             _internal: None = None,
             # gradio properties
@@ -59,6 +60,7 @@ class AntdSplitterPanel(ModelScopeLayoutComponent):
         self.size = size
         self.collapsible = collapsible
         self.resizable = resizable
+        self.root_class_name = root_class_name
 
     FRONTEND_DIR = resolve_frontend_dir("splitter", 'panel')
 

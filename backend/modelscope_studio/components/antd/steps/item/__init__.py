@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+from typing import Literal
+
 from .....utils.dev import ModelScopeLayoutComponent, resolve_frontend_dir
 
 
@@ -15,6 +17,13 @@ class AntdStepsItem(ModelScopeLayoutComponent):
             self,
             props: dict | None = None,
             *,
+            description: str | None = None,
+            disabled: bool | None = False,
+            icon: str | None = None,
+            status: Literal['wait', 'process', 'finish', 'error']
+        | None = None,
+            sub_title: str | None = None,
+            title: str | None = None,
             as_item: str | None = None,
             _internal: None = None,
             # gradio properties
@@ -32,6 +41,12 @@ class AntdStepsItem(ModelScopeLayoutComponent):
                          elem_style=elem_style,
                          **kwargs)
         self.props = props
+        self.description = description
+        self.disabled = disabled
+        self.icon = icon
+        self.status = status
+        self.sub_title = sub_title
+        self.title = title
 
     FRONTEND_DIR = resolve_frontend_dir("steps", "item")
 

@@ -39,6 +39,7 @@ class AntdRow(ModelScopeLayoutComponent):
         | dict[str, Literal["start", "end", "center", "space-between",
                             'space-around', 'space-evenly']] = "start",
             wrap: bool = True,
+            root_class_name: str | None = None,
             as_item: str | None = None,
             _internal: None = None,
             # gradio properties
@@ -67,6 +68,7 @@ class AntdRow(ModelScopeLayoutComponent):
         self.gutter = gutter
         self.justify = justify
         self.wrap = wrap
+        self.root_class_name = root_class_name
 
     FRONTEND_DIR = resolve_frontend_dir("grid", 'row')
 

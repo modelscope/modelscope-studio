@@ -69,6 +69,7 @@ class AntdButton(ModelScopeLayoutComponent):
             variant: Literal["outlined", "dashed", "solid", "filled", "text",
                              "link"] | None = None,
             color: Literal['default', 'primary', 'danger'] | None = None,
+            root_class_name: str | None = None,
             as_item: str | None = None,
             _internal: None = None,
             # gradio properties
@@ -126,6 +127,7 @@ class AntdButton(ModelScopeLayoutComponent):
         self.type = type
         self.variant = variant
         self.color = color
+        self.root_class_name = root_class_name
 
     FRONTEND_DIR = resolve_frontend_dir("button")
 

@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+from typing import Literal
+
 from .....utils.dev import ModelScopeLayoutComponent, resolve_frontend_dir
 
 
@@ -13,6 +15,7 @@ class AntdButtonGroup(ModelScopeLayoutComponent):
             self,
             props: dict | None = None,
             *,
+            size: Literal['small', 'middle', 'large'] | None = None,
             as_item: str | None = None,
             _internal: None = None,
             # gradio properties
@@ -30,6 +33,7 @@ class AntdButtonGroup(ModelScopeLayoutComponent):
                          elem_style=elem_style,
                          **kwargs)
         self.props = props
+        self.size = size
 
     FRONTEND_DIR = resolve_frontend_dir("button", 'group')
 

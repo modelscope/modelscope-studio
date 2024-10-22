@@ -46,6 +46,7 @@ class AntdFloatButtonBackTop(ModelScopeLayoutComponent):
             duration: int | float = 450,
             elem_target: str | None = None,
             visibility_height: int | float = 400,
+            root_class_name: str | None = None,
             as_item: str | None = None,
             _internal: None = None,
             # gradio properties
@@ -88,6 +89,7 @@ class AntdFloatButtonBackTop(ModelScopeLayoutComponent):
         self.duration = duration
         self.visibility_height = visibility_height
         self.elem_target = elem_target
+        self.root_class_name = root_class_name
 
     FRONTEND_DIR = resolve_frontend_dir("float-button", "back-top")
 

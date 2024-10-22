@@ -44,6 +44,7 @@ class AntdFloatButton(ModelScopeLayoutComponent):
             href_target: str | None = None,
             html_type: Literal['submit', 'reset', 'button'] | None = 'button',
             badge: dict | None = None,
+            root_class_name: str | None = None,
             as_item: str | None = None,
             _internal: None = None,
             # gradio properties
@@ -82,6 +83,7 @@ class AntdFloatButton(ModelScopeLayoutComponent):
         self.href_target = href_target
         self.html_type = html_type
         self.badge = badge
+        self.root_class_name = root_class_name
 
     FRONTEND_DIR = resolve_frontend_dir("float-button")
 

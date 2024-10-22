@@ -50,6 +50,7 @@ class AntdFloatButtonGroup(ModelScopeLayoutComponent):
             html_type: Literal['submit', 'reset', 'button'] | None = 'button',
             badge: dict | None = None,
             trigger: Literal['hover', 'click'] | None = None,
+            root_class_name: str | None = None,
             as_item: str | None = None,
             open: bool | None = None,
             close_icon: str | None = None,
@@ -100,6 +101,7 @@ class AntdFloatButtonGroup(ModelScopeLayoutComponent):
         self.open = open
         self.close_icon = close_icon
         self.placement = placement
+        self.root_class_name = root_class_name
 
     FRONTEND_DIR = resolve_frontend_dir("float-button", "group")
 

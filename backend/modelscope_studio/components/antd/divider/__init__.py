@@ -29,6 +29,7 @@ class AntdDivider(ModelScopeLayoutComponent):
             orientation_margin: str | int | None = None,
             plain: bool = False,
             type: Literal["horizontal", "horizontal"] = "horizontal",
+            root_class_name: str | None = None,
             as_item: str | None = None,
             _internal: None = None,
             # gradio properties
@@ -63,6 +64,7 @@ class AntdDivider(ModelScopeLayoutComponent):
         self.orientation_margin = orientation_margin
         self.plain = plain
         self.type = type
+        self.root_class_name = root_class_name
 
     FRONTEND_DIR = resolve_frontend_dir("divider")
 

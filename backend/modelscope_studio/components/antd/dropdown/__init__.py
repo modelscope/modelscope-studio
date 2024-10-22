@@ -57,6 +57,7 @@ class AntdDropdown(ModelScopeLayoutComponent):
                                   'contextMenu']] = ['hover'],
             open: bool | None = None,
             inner_elem_style: dict | None = None,
+            root_class_name: str | None = None,
             as_item: str | None = None,
             _internal: None = None,
             # gradio properties
@@ -88,6 +89,7 @@ class AntdDropdown(ModelScopeLayoutComponent):
         self.trigger = trigger
         self.open = open
         self.inner_elem_style = inner_elem_style
+        self.root_class_name = root_class_name
 
     FRONTEND_DIR = resolve_frontend_dir("dropdown")
 

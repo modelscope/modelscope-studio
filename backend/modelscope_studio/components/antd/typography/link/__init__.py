@@ -74,6 +74,7 @@ class AntdTypographyLink(ModelScopeLayoutComponent):
             type: Literal['secondary', 'success', 'warning', 'danger']
         | None = None,
             underline: bool = False,
+            root_class_name: str | None = None,
             as_item: str | None = None,
             _internal: None = None,
             # gradio properties
@@ -121,6 +122,7 @@ class AntdTypographyLink(ModelScopeLayoutComponent):
         self.underline = underline
         self.href = href
         self.href_target = href_target
+        self.root_class_name = root_class_name
 
     FRONTEND_DIR = resolve_frontend_dir("typography", "link")
 
