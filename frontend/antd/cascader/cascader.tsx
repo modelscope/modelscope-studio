@@ -19,7 +19,7 @@ function getConfig<T>(value: T): Partial<T & Record<PropertyKey, any>> {
 export const Cascader = sveltify<
   CascaderProps<any> & {
     onValueChange: (value: string[] | number[]) => void;
-    onLoadData: (...args: any[]) => void;
+    onLoadData?: (...args: any[]) => void;
     optionItems: Item[];
     setSlotParams: SetSlotParams;
   },
