@@ -1,7 +1,9 @@
 import { sveltify } from '@svelte-preprocess-react';
 import { ReactSlot } from '@svelte-preprocess-react/react-slot';
+import type { SetSlotParams } from '@svelte-preprocess-react/slot';
 import { useMemo } from 'react';
 import { useFunction } from '@utils/hooks/useFunction';
+import { renderParamsSlot } from '@utils/renderParamsSlot';
 import { type GetProps, Slider as ASlider } from 'antd';
 
 import { type Item } from './context';
@@ -38,7 +40,9 @@ export const Slider = sveltify<
     onValueChange: (value: number | number[]) => void;
     children?: React.ReactNode;
     markItems: Item[];
-  }
+    setSlotParams: SetSlotParams;
+  },
+  ['tooltip.formatter']
 >(
   ({
     marks,
@@ -48,6 +52,9 @@ export const Slider = sveltify<
     onChange,
     elRef,
     tooltip,
+    step,
+    slots,
+    setSlotParams,
     ...props
   }) => {
     const onSliderChange = (v: number | number[]) => {
@@ -66,11 +73,18 @@ export const Slider = sveltify<
           tooltip={{
             ...tooltip,
             getPopupContainer: tooltipGetPopupContainerFunction,
-            formatter: tooltipFormatterFunction,
+            formatter: slots['tooltip.formatter']
+              ? renderParamsSlot({
+                  key: 'tooltip.formatter',
+                  setSlotParams,
+                  slots,
+                })
+              : tooltipFormatterFunction,
           }}
           marks={useMemo(() => {
             return marks || renderMarks(markItems);
           }, [markItems, marks])}
+          step={step === undefined ? null : step}
           ref={elRef}
           onChange={onSliderChange}
         />

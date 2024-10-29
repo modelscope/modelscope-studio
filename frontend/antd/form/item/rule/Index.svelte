@@ -51,20 +51,43 @@
     restProps: $$restProps,
   });
   const setRuleItem = getSetRuleItemFn();
-  $: setRuleItem($slotKey, $mergedProps._internal.index || 0, {
-    props: {
-      ...$mergedProps.restProps,
-      ...$mergedProps.props,
-      ...bindEvents($mergedProps),
-      transform: createFunction(
-        $mergedProps.props.transform || $mergedProps.restProps.transform
-      ),
-      validator: createFunction(
-        $mergedProps.props.validator || $mergedProps.restProps.validator
-      ),
-    },
-    slots: {},
-  });
+  $: {
+    const pattern =
+      $mergedProps.props.pattern || $mergedProps.restProps.pattern;
+    setRuleItem($slotKey, $mergedProps._internal.index || 0, {
+      props: {
+        ...$mergedProps.restProps,
+        ...$mergedProps.props,
+        ...bindEvents($mergedProps),
+        pattern: (() => {
+          if (typeof pattern === 'string' && pattern.startsWith('/')) {
+            const match = pattern.match(/^\/(.+)\/([gimuy]*)$/);
+            if (match) {
+              const [, regex, flags] = match;
+              return new RegExp(regex, flags);
+            }
+          }
+          return new RegExp(pattern);
+        })()
+          ? new RegExp(pattern)
+          : undefined,
+        defaultField:
+          createFunction(
+            $mergedProps.props.defaultField ||
+              $mergedProps.restProps.defaultField
+          ) ||
+          $mergedProps.props.defaultField ||
+          $mergedProps.restProps.defaultField,
+        transform: createFunction(
+          $mergedProps.props.transform || $mergedProps.restProps.transform
+        ),
+        validator: createFunction(
+          $mergedProps.props.validator || $mergedProps.restProps.validator
+        ),
+      },
+      slots: {},
+    });
+  }
 </script>
 
 <style>

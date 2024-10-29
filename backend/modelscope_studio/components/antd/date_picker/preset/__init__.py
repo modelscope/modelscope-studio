@@ -5,6 +5,7 @@ from .....utils.dev import ModelScopeLayoutComponent, resolve_frontend_dir
 
 class AntdDatePickerPreset(ModelScopeLayoutComponent):
     """
+    Ant Design: https://ant.design/components/date-picker
     """
     EVENTS = []
 

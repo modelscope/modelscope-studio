@@ -11,6 +11,7 @@ from .mark import AntdSliderMark
 # as inputs, outputs
 class AntdSlider(ModelScopeDataLayoutComponent):
     """
+    Ant Design: https://ant.design/components/slider
     """
     Mark = AntdSliderMark
 
@@ -24,13 +25,31 @@ class AntdSlider(ModelScopeDataLayoutComponent):
     ]
 
     # supported slots
-    SLOTS = ['marks']
+    SLOTS = ['marks', 'tooltip.formatter']
 
     def __init__(
             self,
             value: int | float | tuple[int | float, int | float] | None = None,
             props: dict | None = None,
             *,
+            auto_focus: bool | None = None,
+            class_names: dict | None = None,
+            default_value: int | float | tuple[int | float, int | float]
+        | None = None,
+            disabled: bool | None = None,
+            dots: bool | None = False,
+            included: bool | None = True,
+            keyboard: bool | None = True,
+            marks: dict | None = None,
+            max: int | float | None = 100,
+            min: int | float | None = 0,
+            range: bool | dict | None = False,
+            reverse: bool | None = False,
+            step: int | float | None = 1,
+            styles: dict | None = None,
+            tooltip: dict | None = None,
+            vertical: bool | None = None,
+            root_class_name: str | None = None,
             as_item: str | None = None,
             _internal: None = None,
             # gradio properties
@@ -49,6 +68,23 @@ class AntdSlider(ModelScopeDataLayoutComponent):
                          elem_style=elem_style,
                          **kwargs)
         self.props = props
+        self.auto_focus = auto_focus
+        self.class_names = class_names
+        self.default_value = default_value
+        self.disabled = disabled
+        self.dots = dots
+        self.included = included
+        self.keyboard = keyboard
+        self.marks = marks
+        self.max = max
+        self.min = min
+        self.range = range
+        self.reverse = reverse
+        self.step = step
+        self.styles = styles
+        self.tooltip = tooltip
+        self.vertical = vertical
+        self.root_class_name = root_class_name
 
     FRONTEND_DIR = resolve_frontend_dir("slider")
 

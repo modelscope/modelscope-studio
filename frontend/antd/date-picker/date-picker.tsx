@@ -62,6 +62,7 @@ export const DatePicker = sveltify<
   ({
     slots,
     disabledDate,
+    disabledTime,
     value,
     defaultValue,
     defaultPickerValue,
@@ -83,6 +84,7 @@ export const DatePicker = sveltify<
     ...props
   }) => {
     const disabledDateFunction = useFunction(disabledDate);
+    const disabledTimeFunction = useFunction(disabledTime);
     const getPopupContainerFunction = useFunction(getPopupContainer);
     const cellRenderFunction = useFunction(cellRender);
     const panelRenderFunction = useFunction(panelRender);
@@ -129,6 +131,7 @@ export const DatePicker = sveltify<
           maxDate={validMaxDate}
           showTime={validShowTime}
           disabledDate={disabledDateFunction}
+          disabledTime={disabledTimeFunction}
           getPopupContainer={getPopupContainerFunction}
           cellRender={
             slots.cellRender

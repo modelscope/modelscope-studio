@@ -10,6 +10,7 @@ from .....utils.dev import ModelScopeDataLayoutComponent, resolve_frontend_dir
 # as inputs, outputs
 class AntdRadioButton(ModelScopeDataLayoutComponent):
     """
+    Ant Design: https://ant.design/components/radio
     """
 
     EVENTS = [
@@ -27,6 +28,7 @@ class AntdRadioButton(ModelScopeDataLayoutComponent):
             auto_focus: bool | None = None,
             default_checked: bool | None = None,
             disabled: bool | None = None,
+            root_class_name: str | None = None,
             as_item: str | None = None,
             _internal: None = None,
             # gradio properties
@@ -49,6 +51,7 @@ class AntdRadioButton(ModelScopeDataLayoutComponent):
         self.auto_focus = auto_focus
         self.default_checked = default_checked
         self.disabled = disabled
+        self.root_class_name = root_class_name
 
     FRONTEND_DIR = resolve_frontend_dir("radio", 'button')
 

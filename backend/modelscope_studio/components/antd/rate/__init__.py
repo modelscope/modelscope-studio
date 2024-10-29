@@ -10,6 +10,7 @@ from ....utils.dev import ModelScopeDataLayoutComponent, resolve_frontend_dir
 # as inputs, outputs
 class AntdRate(ModelScopeDataLayoutComponent):
     """
+    Ant Design: https://ant.design/components/rate
     """
 
     EVENTS = [
@@ -35,9 +36,19 @@ class AntdRate(ModelScopeDataLayoutComponent):
 
     def __init__(
             self,
-            value: int | None = None,
+            value: int | float | None = None,
             props: dict | None = None,
             *,
+            allow_clear: bool | None = None,
+            allow_half: bool | None = None,
+            auto_focus: bool | None = None,
+            character: str | None = None,
+            count: int | float | None = 5,
+            default_value: int | float | None = 0,
+            disabled: bool | None = None,
+            keyboard: bool | None = None,
+            tooltips: list[str] | None = None,
+            root_class_name: str | None = None,
             as_item: str | None = None,
             _internal: None = None,
             # gradio properties
@@ -56,6 +67,16 @@ class AntdRate(ModelScopeDataLayoutComponent):
                          elem_style=elem_style,
                          **kwargs)
         self.props = props
+        self.allow_clear = allow_clear
+        self.allow_half = allow_half
+        self.auto_focus = auto_focus
+        self.character = character
+        self.count = count
+        self.default_value = default_value
+        self.disabled = disabled
+        self.keyboard = keyboard
+        self.tooltips = tooltips
+        self.root_class_name = root_class_name
 
     FRONTEND_DIR = resolve_frontend_dir("rate")
 
@@ -66,10 +87,10 @@ class AntdRate(ModelScopeDataLayoutComponent):
     def api_info(self) -> dict[str, Any]:
         return {"type": "number"}
 
-    def preprocess(self, payload: None | int) -> None | int:
+    def preprocess(self, payload: None | int | float) -> None | int | float:
         return payload
 
-    def postprocess(self, value: None | int) -> None | int:
+    def postprocess(self, value: None | int | float) -> None | int | float:
 
         return value
 

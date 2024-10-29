@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from typing import Any
+from typing import Any, Literal
 
 from gradio.events import EventListener
 
@@ -10,6 +10,7 @@ from .....utils.dev import ModelScopeDataLayoutComponent, resolve_frontend_dir
 # as inputs, outputs
 class AntdInputTextarea(ModelScopeDataLayoutComponent):
     """
+    Ant Design: https://ant.design/components/input
     """
     EVENTS = [
         EventListener("change",
@@ -31,6 +32,21 @@ class AntdInputTextarea(ModelScopeDataLayoutComponent):
             value: str | None = None,
             props: dict | None = None,
             *,
+            auto_size: bool | dict | None = None,
+            allow_clear: bool | dict | None = None,
+            class_names: dict | None = None,
+            count: dict | None = None,
+            default_value: str | None = None,
+            disabled: bool = False,
+            max_length: int | None = None,
+            show_count: bool | str = False,
+            size: Literal['large', 'middle', 'small'] | None = None,
+            status: Literal['error', 'warning'] | None = None,
+            styles: dict | None = None,
+            type: str | None = 'text',
+            placeholder: str | None = None,
+            variant: Literal['outlined', 'borderless', 'filled'] = 'outlined',
+            root_class_name: str | None = None,
             as_item: str | None = None,
             _internal: None = None,
             # gradio properties
@@ -49,6 +65,21 @@ class AntdInputTextarea(ModelScopeDataLayoutComponent):
                          elem_style=elem_style,
                          **kwargs)
         self.props = props
+        self.auto_size = auto_size
+        self.allow_clear = allow_clear
+        self.class_names = class_names
+        self.count = count
+        self.default_value = default_value
+        self.disabled = disabled
+        self.max_length = max_length
+        self.show_count = show_count
+        self.size = size
+        self.status = status
+        self.styles = styles
+        self.type = type
+        self.placeholder = placeholder
+        self.variant = variant
+        self.root_class_name = root_class_name
 
     FRONTEND_DIR = resolve_frontend_dir("input", "textarea")
 

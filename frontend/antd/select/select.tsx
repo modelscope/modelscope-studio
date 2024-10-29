@@ -42,7 +42,6 @@ export const Select = sveltify<
     tagRender,
     labelRender,
     filterSort,
-    maxTagPlaceholder,
     elRef,
     setSlotParams,
     ...props
@@ -54,7 +53,7 @@ export const Select = sveltify<
     const optionRenderFunction = useFunction(optionRender);
     const tagRenderFunction = useFunction(tagRender);
     const labelRenderFunction = useFunction(labelRender);
-    const maxTagPlaceholderFunction = useFunction(maxTagPlaceholder);
+
     return (
       <>
         <div style={{ display: 'none' }}>{children}</div>
@@ -120,7 +119,7 @@ export const Select = sveltify<
                   setSlotParams,
                   key: 'maxTagPlaceholder',
                 })
-              : maxTagPlaceholderFunction
+              : props.maxTagPlaceholder
           }
           getPopupContainer={getPopupContainerFunction}
           dropdownRender={

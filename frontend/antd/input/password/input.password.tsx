@@ -11,6 +11,7 @@ export const InputPassword = sveltify<
     setSlotParams: SetSlotParams;
   },
   [
+    'iconRender',
     'addonAfter',
     'addonBefore',
     'allowClear.clearIcon',
@@ -26,6 +27,7 @@ export const InputPassword = sveltify<
     showCount,
     onValueChange,
     onChange,
+    iconRender,
     elRef,
     setSlotParams,
     ...props
@@ -36,6 +38,7 @@ export const InputPassword = sveltify<
     const showCountFunction = useFunction(
       typeof showCount === 'object' ? showCount.formatter : undefined
     );
+    const iconRenderFunction = useFunction(iconRender);
 
     return (
       <>
@@ -47,6 +50,15 @@ export const InputPassword = sveltify<
             onChange?.(e);
             onValueChange(e.target.value);
           }}
+          iconRender={
+            slots.iconRender
+              ? renderParamsSlot({
+                  slots,
+                  setSlotParams,
+                  key: 'iconRender',
+                })
+              : iconRenderFunction
+          }
           showCount={
             slots['showCount.formatter']
               ? {

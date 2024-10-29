@@ -7,6 +7,7 @@ from .....utils.dev import ModelScopeLayoutComponent, resolve_frontend_dir
 
 class AntdSelectOption(ModelScopeLayoutComponent):
     """
+    Ant Design: https://ant.design/components/select
     """
 
     EVENTS = []
@@ -22,6 +23,7 @@ class AntdSelectOption(ModelScopeLayoutComponent):
             *,
             title: str | None = None,
             disabled: bool | None = None,
+            key: str | int | float | None = None,
             as_item: str | None = None,
             _internal: None = None,
             # gradio properties
@@ -43,6 +45,7 @@ class AntdSelectOption(ModelScopeLayoutComponent):
         self.label = label
         self.disabled = disabled
         self.title = title
+        self.key = key
 
     FRONTEND_DIR = resolve_frontend_dir("select", "option")
 

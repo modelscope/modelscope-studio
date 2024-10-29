@@ -32,18 +32,23 @@
   export let elem_classes: string[] = [];
   export let elem_style: React.CSSProperties = {};
 
-  const [mergedProps, update] = getSlotContext({
-    gradio,
-    props: $updatedProps,
-    _internal,
-    value,
-    visible,
-    elem_id,
-    elem_classes,
-    elem_style,
-    as_item,
-    restProps: $$restProps,
-  });
+  const [mergedProps, update] = getSlotContext(
+    {
+      gradio,
+      props: $updatedProps,
+      _internal,
+      value,
+      visible,
+      elem_id,
+      elem_classes,
+      elem_style,
+      as_item,
+      restProps: $$restProps,
+    },
+    {
+      form_name: 'name',
+    }
+  );
   const setSlotParams = getSetSlotParamsFn();
   const slots = getSlots();
   $: update({

@@ -7,6 +7,7 @@ from .....utils.dev import ModelScopeLayoutComponent, resolve_frontend_dir
 
 class AntdSliderMark(ModelScopeLayoutComponent):
     """
+    Ant Design: https://ant.design/components/slider
     """
 
     EVENTS = []

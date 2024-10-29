@@ -21,10 +21,6 @@
     layout?: boolean;
   } = {};
   export let value: boolean;
-  export let group_value: any;
-  export let auto_focus: boolean;
-  export let default_checked: boolean;
-  export let disabled: boolean;
   export let as_item: string | undefined;
   // gradio properties
   export let visible = true;
@@ -42,10 +38,6 @@
     elem_style,
     as_item,
     value,
-    auto_focus,
-    group_value,
-    default_checked,
-    disabled,
     restProps: $$restProps,
   });
   const slots = getSlots();
@@ -59,10 +51,6 @@
     elem_style,
     as_item,
     value,
-    auto_focus,
-    group_value,
-    default_checked,
-    disabled,
     restProps: $$restProps,
   });
 </script>
@@ -74,7 +62,7 @@
       className={cls($mergedProps.elem_classes, 'ms-gr-antd-radio-button')}
       id={$mergedProps.elem_id}
       checked={$mergedProps.value}
-      value={$mergedProps.group_value}
+      value={$mergedProps.restProps.group_value}
       {...$mergedProps.restProps}
       {...$mergedProps.props}
       {...bindEvents($mergedProps)}

@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from typing import Any
+from typing import Any, Literal
 
 from gradio.events import EventListener
 
@@ -10,6 +10,7 @@ from .....utils.dev import ModelScopeDataLayoutComponent, resolve_frontend_dir
 # as inputs, outputs
 class AntdInputOTP(ModelScopeDataLayoutComponent):
     """
+    Ant Design: https://ant.design/components/input
     """
     EVENTS = [
         EventListener("change",
@@ -25,6 +26,16 @@ class AntdInputOTP(ModelScopeDataLayoutComponent):
             value: str | None = None,
             props: dict | None = None,
             *,
+            default_value: str | None = None,
+            disabled: bool = False,
+            formatter: str | None = None,
+            mask: str | bool | None = None,
+            length: int = 6,
+            placeholder: str = '口',
+            size: Literal['large', 'middle', 'small'] | None = None,
+            status: Literal['error', 'warning'] | None = None,
+            variant: Literal['outline', 'borderless', 'filled'] | None = None,
+            root_class_name: str | None = None,
             as_item: str | None = None,
             _internal: None = None,
             # gradio properties
@@ -43,6 +54,16 @@ class AntdInputOTP(ModelScopeDataLayoutComponent):
                          elem_style=elem_style,
                          **kwargs)
         self.props = props
+        self.default_value = default_value
+        self.disabled = disabled
+        self.formatter = formatter
+        self.mask = mask
+        self.length = length
+        self.placeholder = placeholder
+        self.size = size
+        self.status = status
+        self.variant = variant
+        self.root_class_name = root_class_name
 
     FRONTEND_DIR = resolve_frontend_dir("input", "otp")
 

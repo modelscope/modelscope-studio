@@ -16,6 +16,7 @@ export const TreeSelect = sveltify<
   TreeSelectProps & {
     slotItems: Item[];
     onValueChange: (options: string | string[]) => void;
+    onLoadData?: (...args: any[]) => Promise<unknown>;
     setSlotParams: SetSlotParams;
   },
   [
@@ -44,11 +45,11 @@ export const TreeSelect = sveltify<
     maxTagPlaceholder,
     elRef,
     setSlotParams,
+    onLoadData,
     ...props
   }) => {
     const filterTreeNodeFunction = useFunction(filterTreeNode);
     const getPopupContainerFunction = useFunction(getPopupContainer);
-    const maxTagPlaceholderFunction = useFunction(maxTagPlaceholder);
     const tagRenderFunction = useFunction(tagRender);
     const dropdownRenderFunction = useFunction(dropdownRender);
     const treeTitleRenderFunction = useFunction(treeTitleRender);
@@ -56,6 +57,7 @@ export const TreeSelect = sveltify<
     const componentProps: TreeSelectProps = useMemo(() => {
       return {
         ...props,
+        loadData: onLoadData,
         treeData:
           treeData ||
           renderItems<NonNullable<TreeSelectProps['treeData']>[number]>(
@@ -91,7 +93,7 @@ export const TreeSelect = sveltify<
               setSlotParams,
               key: 'maxTagPlaceholder',
             })
-          : maxTagPlaceholderFunction || maxTagPlaceholder,
+          : maxTagPlaceholder,
         notFoundContent: slots.notFoundContent ? (
           <ReactSlot slot={slots.notFoundContent} />
         ) : (
@@ -104,7 +106,7 @@ export const TreeSelect = sveltify<
       filterTreeNodeFunction,
       getPopupContainerFunction,
       maxTagPlaceholder,
-      maxTagPlaceholderFunction,
+      onLoadData,
       props,
       setSlotParams,
       slotItems,

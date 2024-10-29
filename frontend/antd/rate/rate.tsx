@@ -33,10 +33,7 @@ export const Rate = sveltify<
           }}
           character={
             slots.character
-              ? renderParamsSlot(
-                  { slots, setSlotParams, key: 'character' },
-                  { clone: true }
-                )
+              ? renderParamsSlot({ slots, setSlotParams, key: 'character' })
               : character
           }
         />

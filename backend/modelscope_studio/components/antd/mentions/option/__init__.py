@@ -7,6 +7,7 @@ from .....utils.dev import ModelScopeLayoutComponent, resolve_frontend_dir
 
 class AntdMentionsOption(ModelScopeLayoutComponent):
     """
+    Ant Design: https://ant.design/components/mentions
     """
 
     EVENTS = []
