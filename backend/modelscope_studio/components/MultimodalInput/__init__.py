@@ -208,7 +208,7 @@ class ModelScopeMultimodalInput(FormComponent):
                 value.files[i].mime_type = client_utils.get_mimetype(
                     value.files[i].path)
         # gradio fix
-        return {"files": value.files or [], "text": value.text}
+        return MultimodalInputData(text=value.text, files=value.files)
 
     def example_inputs(self) -> Any:
         return {"text": "Hello!!", "files": []}
