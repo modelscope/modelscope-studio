@@ -1,5 +1,9 @@
 # @modelscope-studio/lifecycle
 
+## 0.5.1
+
+No significant changes to this package were made in this release.
+
 ## 0.5.0
 
 No significant changes to this package were made in this release.

@@ -1,5 +1,11 @@
 # modelscope_studio
 
+## 0.5.1
+
+### Features
+
+- [#31](https://github.com/modelscope/modelscope-studio/pull/31) [`fca4451`](https://github.com/modelscope/modelscope-studio/commit/fca4451f433294e074507c62b4f5af7c1fb89be5) - migrating to Gradio 5. Thanks [@Col0ring](https://github.com/Col0ring)!
+
 ## 0.5.0
 
 ### Features
