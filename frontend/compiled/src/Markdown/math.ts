@@ -61,7 +61,7 @@ export const resolveDelimiters = function (
   text: string,
   delimiters: RenderMathInElementSpecificOptionsDelimiters[] = []
 ) {
-  if (delimiters.length === 0) {
+  if (!delimiters || (Array.isArray(delimiters) && delimiters.length === 0)) {
     return text;
   }
   let index: number;
