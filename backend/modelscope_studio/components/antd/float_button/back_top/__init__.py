@@ -13,7 +13,7 @@ class AntdFloatButtonBackTop(ModelScopeLayoutComponent):
 
     A button that floats at the top of the page.
 
-    When to use：
+    When to use:
     - For global functionality on the site.
     - Buttons that can be seen wherever you browse.
     """

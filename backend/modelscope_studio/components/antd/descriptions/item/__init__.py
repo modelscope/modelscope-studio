@@ -7,6 +7,7 @@ from .....utils.dev import ModelScopeLayoutComponent, resolve_frontend_dir
 
 class AntdDescriptionsItem(ModelScopeLayoutComponent):
     """
+    Ant Design: https://ant.design/components/descriptions
     """
 
     EVENTS = []
@@ -19,6 +20,9 @@ class AntdDescriptionsItem(ModelScopeLayoutComponent):
             label: str | None = "",
             props: dict | None = None,
             *,
+            content_style: dict | None = None,
+            label_style: dict | None = None,
+            span: int | dict | None = 1,
             as_item: str | None = None,
             _internal: None = None,
             # gradio properties
@@ -35,8 +39,11 @@ class AntdDescriptionsItem(ModelScopeLayoutComponent):
                          as_item=as_item,
                          elem_style=elem_style,
                          **kwargs)
-        self.label = label
         self.props = props
+        self.label = label
+        self.span = span
+        self.content_style = content_style
+        self.label_style = label_style
 
     FRONTEND_DIR = resolve_frontend_dir("descriptions", "item")
 

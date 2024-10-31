@@ -12,7 +12,7 @@ with gr.Blocks() as demo:
 
 </accordion>
 
-Use `::accordion-title` to support markdown：
+Use `::accordion-title` to support markdown:
 
 <accordion>
 

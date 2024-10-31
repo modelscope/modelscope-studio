@@ -73,11 +73,7 @@ export const ModelScopeStudioVitePlugin = ({ external = true } = {}) => {
     },
     renderChunk(code, chunk) {
       const id = chunk.fileName;
-      if (id.includes('@svelte-preprocess-react/inject')) {
-        throw new Error(id);
-      }
       if (
-        !id.includes('@svelte-preprocess-react/inject') &&
         ['.jsx', '.js', '.cjs', '.esm', '.tsx', '.ts'].some((ext) =>
           id.endsWith(ext)
         )

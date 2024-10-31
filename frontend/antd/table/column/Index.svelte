@@ -30,17 +30,22 @@
   export let elem_style: React.CSSProperties = {};
   const slotKey = getSlotKey();
 
-  const [mergedProps, update] = getSlotContext({
-    gradio,
-    props: $updatedProps,
-    _internal,
-    visible,
-    elem_id,
-    elem_classes,
-    elem_style,
-    as_item,
-    restProps: $$restProps,
-  });
+  const [mergedProps, update] = getSlotContext(
+    {
+      gradio,
+      props: $updatedProps,
+      _internal,
+      visible,
+      elem_id,
+      elem_classes,
+      elem_style,
+      as_item,
+      restProps: $$restProps,
+    },
+    {
+      column_render: 'render',
+    }
+  );
 
   const slots = getSlots();
   $: update({

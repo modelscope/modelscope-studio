@@ -1,8 +1,6 @@
 from __future__ import annotations
 
-from typing import Any
-
-from gradio.events import EventListener
+from typing import Any, Literal
 
 from ....utils.dev import ModelScopeLayoutComponent, resolve_frontend_dir
 from .ribbon import AntdBadgeRibbon
@@ -10,6 +8,7 @@ from .ribbon import AntdBadgeRibbon
 
 class AntdBadge(ModelScopeLayoutComponent):
     """
+    Ant Design: https://ant.design/components/badge
     """
     Ribbon = AntdBadgeRibbon
 
@@ -20,9 +19,22 @@ class AntdBadge(ModelScopeLayoutComponent):
 
     def __init__(
             self,
-            count: int | None = None,
+            count: int | float | str | None = None,
             props: dict | None = None,
             *,
+            color: str | None = None,
+            class_names: dict | None = None,
+            dot: bool = False,
+            offset: tuple[int | float, int | float] | None = None,
+            overflow_count: int = 99,
+            show_zero: bool = False,
+            size: Literal['small', 'default'] | None = None,
+            status: Literal['success', 'processing', 'default', 'error',
+                            'warning'] | None = None,
+            text: str | None = None,
+            title: str | None = None,
+            styles: dict | None = None,
+            root_class_name: str | None = None,
             as_item: str | None = None,
             _internal: None = None,
             # gradio properties
@@ -40,6 +52,18 @@ class AntdBadge(ModelScopeLayoutComponent):
                          elem_style=elem_style,
                          **kwargs)
         self.count = count
+        self.color = color
+        self.class_names = class_names
+        self.dot = dot
+        self.offset = offset
+        self.overflow_count = overflow_count
+        self.show_zero = show_zero
+        self.size = size
+        self.status = status
+        self.text = text
+        self.title = title
+        self.styles = styles
+        self.root_class_name = root_class_name
         self.props = props
 
     FRONTEND_DIR = resolve_frontend_dir("badge")

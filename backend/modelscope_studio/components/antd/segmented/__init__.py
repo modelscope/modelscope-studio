@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from typing import Any
+from typing import Any, Literal
 
 from gradio.events import EventListener
 
@@ -11,6 +11,7 @@ from .option import AntdSegmentedOption
 # as inputs, outputs
 class AntdSegmented(ModelScopeDataLayoutComponent):
     """
+    Ant Design: https://ant.design/components/segmented
     """
     Option = AntdSegmentedOption
 
@@ -25,6 +26,13 @@ class AntdSegmented(ModelScopeDataLayoutComponent):
             value: str | int | float | None = None,
             props: dict | None = None,
             *,
+            block: bool = False,
+            default_value: str | int | float | None = None,
+            disabled: bool = False,
+            options: list[str] | list[int | float] | list[dict] | None = None,
+            size: Literal['large', 'middle', 'small'] | None = None,
+            vertical: bool = False,
+            root_class_name: str | None = None,
             as_item: str | None = None,
             _internal: None = None,
             # gradio properties
@@ -43,6 +51,13 @@ class AntdSegmented(ModelScopeDataLayoutComponent):
                          elem_style=elem_style,
                          **kwargs)
         self.props = props
+        self.block = block
+        self.default_value = default_value
+        self.disabled = disabled
+        self.options = options
+        self.size = size
+        self.vertical = vertical
+        self.root_class_name = root_class_name
 
     FRONTEND_DIR = resolve_frontend_dir("segmented")
 

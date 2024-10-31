@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from typing import Any
+from typing import Any, Literal
 
 from gradio.events import EventListener
 
@@ -9,6 +9,7 @@ from .....utils.dev import ModelScopeLayoutComponent, resolve_frontend_dir
 
 class AntdCollapseItem(ModelScopeLayoutComponent):
     """
+    Ant Design: https://ant.design/components/collapse
     """
 
     EVENTS = [
@@ -23,8 +24,15 @@ class AntdCollapseItem(ModelScopeLayoutComponent):
     def __init__(
             self,
             label: str | None = None,
+            key: str | float | int | None = None,
             props: dict | None = None,
             *,
+            class_names: dict | None = None,
+            collapsible: Literal['header', 'icon', 'disabled'] | None = None,
+            extra: str | None = None,
+            force_render: bool = False,
+            show_arrow: bool = True,
+            styles: dict | None = None,
             as_item: str | None = None,
             _internal: None = None,
             # gradio properties
@@ -43,6 +51,13 @@ class AntdCollapseItem(ModelScopeLayoutComponent):
                          **kwargs)
         self.label = label
         self.props = props
+        self.key = key
+        self.class_names = class_names
+        self.collapsible = collapsible
+        self.extra = extra
+        self.force_render = force_render
+        self.show_arrow = show_arrow
+        self.styles = styles
 
     FRONTEND_DIR = resolve_frontend_dir("collapse", "item")
 

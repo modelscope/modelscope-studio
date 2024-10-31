@@ -20,11 +20,11 @@ with gr.Blocks() as demo:
     mgr.Markdown(
         f"""<select-box shape="card" options='{json.dumps(options)}' select-once equal-height></select-box>
 
-Custom Columns：
+Custom Columns:
 
 <select-box shape="card" columns="2" options='{json.dumps(options)}' select-once  equal-height></select-box>
 
-Vertical Direction：
+Vertical Direction:
 
 <select-box shape="card" direction="vertical" options='{json.dumps(options)}' select-once  equal-height></select-box>
 """)

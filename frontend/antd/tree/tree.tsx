@@ -17,6 +17,7 @@ export const Tree = sveltify<
     slotItems: Item[];
     directory?: boolean;
     setSlotParams: SetSlotParams;
+    onLoadData?: (...args: any[]) => Promise<any>;
   },
   [
     'switcherLoadingIcon',
@@ -40,6 +41,7 @@ export const Tree = sveltify<
     directory,
     slotItems,
     setSlotParams,
+    onLoadData,
     ...props
   }) => {
     const filterTreeNodeFunction = useFunction(filterTreeNode);
@@ -89,16 +91,18 @@ export const Tree = sveltify<
                 nodeDraggable: draggableNodeDraggableFunction,
               }
             : draggableFunction || draggable,
+        loadData: onLoadData,
       };
     }, [
-      draggable,
-      draggableFunction,
-      draggableNodeDraggableFunction,
       props,
+      treeData,
       slotItems,
       slots,
-      treeData,
       setSlotParams,
+      draggableNodeDraggableFunction,
+      draggable,
+      draggableFunction,
+      onLoadData,
     ]);
     return (
       <>

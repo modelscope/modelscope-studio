@@ -1,13 +1,15 @@
 from __future__ import annotations
 
+from typing import Literal
+
 from gradio.events import EventListener
 
 from .....utils.dev import ModelScopeLayoutComponent, resolve_frontend_dir
 
 
-# as inputs, outputs
 class AntdTableExpandable(ModelScopeLayoutComponent):
     """
+    Ant Design: https://ant.design/components/table
     """
     EVENTS = [
         EventListener("expand",
@@ -25,6 +27,20 @@ class AntdTableExpandable(ModelScopeLayoutComponent):
             self,
             props: dict | None = None,
             *,
+            children_column_name: str | None = None,
+            column_title: str | None = None,
+            column_width: int | float | str | None = None,
+            expanded_row_class_name: str | None = None,
+            expanded_row_keys: list[str] | None = None,
+            expanded_row_render: str | None = None,
+            expand_icon: str | None = None,
+            default_expand_all_rows: bool | None = None,
+            default_expanded_row_keys: list[str] | None = None,
+            expand_row_by_click: bool | None = None,
+            fixed: bool | Literal['left', 'right'] | None = None,
+            indent_size: int | float | None = 15,
+            row_expandable: str | None = None,
+            show_expand_column: bool | None = None,
             as_item: str | None = None,
             _internal: None = None,
             # gradio properties
@@ -42,6 +58,20 @@ class AntdTableExpandable(ModelScopeLayoutComponent):
                          elem_style=elem_style,
                          **kwargs)
         self.props = props
+        self.children_column_name = children_column_name
+        self.column_title = column_title
+        self.column_width = column_width
+        self.expanded_row_class_name = expanded_row_class_name
+        self.expanded_row_keys = expanded_row_keys
+        self.expanded_row_render = expanded_row_render
+        self.expand_icon = expand_icon
+        self.default_expand_all_rows = default_expand_all_rows
+        self.default_expanded_row_keys = default_expanded_row_keys
+        self.expand_row_by_click = expand_row_by_click
+        self.fixed = fixed
+        self.indent_size = indent_size
+        self.row_expandable = row_expandable
+        self.show_expand_column = show_expand_column
 
     FRONTEND_DIR = resolve_frontend_dir("table", "expandable")
 

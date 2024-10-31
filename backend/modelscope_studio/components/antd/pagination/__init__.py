@@ -43,7 +43,7 @@ class AntdPagination(ModelScopeLayoutComponent):
             show_title: bool = True,
             show_total: str | None = None,
             simple: bool | dict | None = None,
-            size: Literal['small', 'default'] = 'default',
+            size: Literal['small', 'default'] | None = None,
             total: int = 0,
             root_class_name: str | None = None,
             as_item: str | None = None,

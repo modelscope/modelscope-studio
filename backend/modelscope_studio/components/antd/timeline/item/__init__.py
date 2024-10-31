@@ -1,10 +1,13 @@
 from __future__ import annotations
 
+from typing import Literal
+
 from .....utils.dev import ModelScopeLayoutComponent, resolve_frontend_dir
 
 
 class AntdTimelineItem(ModelScopeLayoutComponent):
     """
+    Ant Design: https://ant.design/components/timeline
     """
     EVENTS = []
 
@@ -15,6 +18,10 @@ class AntdTimelineItem(ModelScopeLayoutComponent):
             self,
             props: dict | None = None,
             *,
+            color: str | None = None,
+            dot: str | None = None,
+            label: str | None = None,
+            position: Literal["left", "right"] | None = None,
             as_item: str | None = None,
             _internal: None = None,
             # gradio properties
@@ -32,6 +39,10 @@ class AntdTimelineItem(ModelScopeLayoutComponent):
                          elem_style=elem_style,
                          **kwargs)
         self.props = props
+        self.color = color
+        self.dot = dot
+        self.label = label
+        self.position = position
 
     FRONTEND_DIR = resolve_frontend_dir("timeline", "item")
 

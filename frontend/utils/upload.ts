@@ -69,20 +69,35 @@ function is_url(str: string): boolean {
   }
 }
 
+function get_gradio_version(): string {
+  const el = document.querySelector('.gradio-container');
+  if (!el) {
+    return '';
+  }
+  const match = el.className.match(/gradio-container-(.+)/);
+  return match ? match[1] : '';
+}
+const gradio_version = get_gradio_version();
+
 export function get_fetchable_url_or_file(
   path: string | null,
   server_url: string,
   proxy_url: string | null
 ): string {
+  const version = gradio_version[0];
+  const prefix = +version >= 5 ? 'gradio_api/' : '';
+
   if (path == null) {
-    return proxy_url ? `/proxy=${proxy_url}file=` : `${server_url}/file=`;
+    return proxy_url
+      ? `/proxy=${proxy_url}${prefix}file=`
+      : `${server_url}${prefix}file=`;
   }
   if (is_url(path)) {
     return path;
   }
   return proxy_url
-    ? `/proxy=${proxy_url}file=${path}`
-    : `${server_url}/file=${path}`;
+    ? `/proxy=${proxy_url}${prefix}file=${path}`
+    : `${server_url}/${prefix}file=${path}`;
 }
 
 // for <= gradio 4.19.1

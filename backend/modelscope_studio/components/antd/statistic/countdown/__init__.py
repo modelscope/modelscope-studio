@@ -9,6 +9,7 @@ from .....utils.dev import ModelScopeLayoutComponent, resolve_frontend_dir
 
 class AntdStatisticCountdown(ModelScopeLayoutComponent):
     """
+    Ant Design: https://ant.design/components/statistic
     """
 
     EVENTS = [
@@ -28,6 +29,12 @@ class AntdStatisticCountdown(ModelScopeLayoutComponent):
             value: int | float | None = None,
             props: dict | None = None,
             *,
+            format: str | None = None,
+            prefix: str | None = None,
+            suffix: str | None = None,
+            title: str | None = None,
+            value_style: dict | None = None,
+            root_class_name: str | None = None,
             as_item: str | None = None,
             _internal: None = None,
             # gradio properties
@@ -46,6 +53,12 @@ class AntdStatisticCountdown(ModelScopeLayoutComponent):
                          **kwargs)
         self.props = props
         self.value = value
+        self.format = format
+        self.prefix = prefix
+        self.suffix = suffix
+        self.title = title
+        self.value_style = value_style
+        self.root_class_name = root_class_name
 
     FRONTEND_DIR = resolve_frontend_dir("statistic", "countdown")
 

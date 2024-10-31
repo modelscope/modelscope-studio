@@ -7,6 +7,7 @@ from .....utils.dev import ModelScopeLayoutComponent, resolve_frontend_dir
 
 class AntdSegmentedOption(ModelScopeLayoutComponent):
     """
+    Ant Design: https://ant.design/components/segmented
     """
 
     EVENTS = []
@@ -16,9 +17,12 @@ class AntdSegmentedOption(ModelScopeLayoutComponent):
 
     def __init__(
             self,
+            label: str | None = None,
             value: str | int | float | None = None,
             props: dict | None = None,
             *,
+            icon: str | None = None,
+            disabled: bool = False,
             as_item: str | None = None,
             _internal: None = None,
             # gradio properties
@@ -35,8 +39,11 @@ class AntdSegmentedOption(ModelScopeLayoutComponent):
                          as_item=as_item,
                          elem_style=elem_style,
                          **kwargs)
+        self.label = label
         self.value = value
         self.props = props
+        self.icon = icon
+        self.disabled = disabled
 
     FRONTEND_DIR = resolve_frontend_dir("segmented", "option")
 

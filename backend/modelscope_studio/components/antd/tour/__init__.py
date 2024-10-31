@@ -49,6 +49,7 @@ class AntdTour(ModelScopeLayoutComponent):
             indicators_render: str | None = None,
             z_index: int | None = None,
             get_popup_container: str | None = None,
+            root_class_name: str | None = None,
             as_item: str | None = None,
             _internal: None = None,
             # gradio properties
@@ -79,6 +80,7 @@ class AntdTour(ModelScopeLayoutComponent):
         self.indicators_render = indicators_render
         self.z_index = z_index
         self.get_popup_container = get_popup_container
+        self.root_class_name = root_class_name
 
     FRONTEND_DIR = resolve_frontend_dir("tour")
 

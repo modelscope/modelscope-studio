@@ -85,8 +85,9 @@
           $mergedProps.props.rowExpandable ||
             $mergedProps.restProps.rowExpandable
         ),
-        expandIcon:
-          $mergedProps.props.expandIcon || $mergedProps.restProps.expandIcon,
+        expandIcon: createFunction(
+          $mergedProps.props.expandIcon || $mergedProps.restProps.expandIcon
+        ),
         columnTitle:
           $mergedProps.props.columnTitle || $mergedProps.restProps.columnTitle,
       },

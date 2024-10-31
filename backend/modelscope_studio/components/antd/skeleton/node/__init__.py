@@ -5,6 +5,7 @@ from .....utils.dev import ModelScopeLayoutComponent, resolve_frontend_dir
 
 class AntdSkeletonNode(ModelScopeLayoutComponent):
     """
+    Ant Design: https://ant.design/components/skeleton
     """
     EVENTS = []
 
@@ -12,6 +13,9 @@ class AntdSkeletonNode(ModelScopeLayoutComponent):
             self,
             props: dict | None = None,
             *,
+            active: bool | None = None,
+            full_size: bool | None = None,
+            root_class_name: str | None = None,
             as_item: str | None = None,
             _internal: None = None,
             # gradio properties
@@ -29,6 +33,9 @@ class AntdSkeletonNode(ModelScopeLayoutComponent):
                          elem_style=elem_style,
                          **kwargs)
         self.props = props
+        self.active = active
+        self.full_size = full_size
+        self.root_class_name = root_class_name
 
     FRONTEND_DIR = resolve_frontend_dir("skeleton", "node")
 

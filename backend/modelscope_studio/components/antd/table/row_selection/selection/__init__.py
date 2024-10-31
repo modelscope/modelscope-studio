@@ -9,6 +9,7 @@ from ......utils.dev import ModelScopeLayoutComponent, resolve_frontend_dir
 
 class AntdTableRowSelectionSelection(ModelScopeLayoutComponent):
     """
+    Ant Design: https://ant.design/components/table
     """
     EVENTS = [
         EventListener("select",
@@ -28,6 +29,7 @@ class AntdTableRowSelectionSelection(ModelScopeLayoutComponent):
                                         "SELECT_NONE"] | None = None,
             props: dict | None = None,
             *,
+            key: str | int | float | None = None,
             as_item: str | None = None,
             _internal: None = None,
             # gradio properties
@@ -45,6 +47,7 @@ class AntdTableRowSelectionSelection(ModelScopeLayoutComponent):
                          elem_style=elem_style,
                          **kwargs)
         self.props = props
+        self.key = key
         self.text = text
         self.built_in_selection = built_in_selection
 

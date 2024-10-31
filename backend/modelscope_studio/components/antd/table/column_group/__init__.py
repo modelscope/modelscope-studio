@@ -5,6 +5,7 @@ from .....utils.dev import ModelScopeLayoutComponent, resolve_frontend_dir
 
 class AntdTableColumnGroup(ModelScopeLayoutComponent):
     """
+    Ant Design: https://ant.design/components/table
     """
     EVENTS = []
 

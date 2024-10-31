@@ -7,6 +7,7 @@ from .....utils.dev import ModelScopeLayoutComponent, resolve_frontend_dir
 
 class AntdTreeTreeNode(ModelScopeLayoutComponent):
     """
+    Ant Design: https://ant.design/components/tree
     """
 
     EVENTS = []
@@ -19,6 +20,13 @@ class AntdTreeTreeNode(ModelScopeLayoutComponent):
             title: str | None = None,
             props: dict | None = None,
             *,
+            checkable: bool | None = None,
+            disable_checkbox: bool | None = None,
+            disabled: bool | None = None,
+            icon: str | None = None,
+            is_leaf: bool | None = None,
+            key: str | None = None,
+            selectable: bool | None = None,
             as_item: str | None = None,
             _internal: None = None,
             # gradio properties
@@ -37,6 +45,13 @@ class AntdTreeTreeNode(ModelScopeLayoutComponent):
                          **kwargs)
         self.title = title
         self.props = props
+        self.checkable = checkable
+        self.disable_checkbox = disable_checkbox
+        self.disabled = disabled
+        self.icon = icon
+        self.is_leaf = is_leaf
+        self.key = key
+        self.selectable = selectable
 
     FRONTEND_DIR = resolve_frontend_dir("tree", "tree-node")
 

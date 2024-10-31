@@ -11,9 +11,9 @@ with gr.Blocks() as demo:
     mgr.Markdown(f"""
 Single Select: <select-box options='{json.dumps(options)}' select-once></select-box>
 
-Multiple Select：<select-box type="checkbox" options='{json.dumps(options)}' select-once submit-text="Submit"></select-box>
+Multiple Select: <select-box type="checkbox" options='{json.dumps(options)}' select-once submit-text="Submit"></select-box>
 
-Vertical Direction：
+Vertical Direction:
 
 <select-box direction="vertical" type="checkbox" options='{json.dumps(options)}' select-once submit-text="Submit"></select-box>
 

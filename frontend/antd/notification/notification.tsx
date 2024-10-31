@@ -20,7 +20,6 @@ export const Notification = sveltify<
     rtl,
     stack,
     top,
-    maxCount,
     children,
     visible,
     onClose,
@@ -32,7 +31,6 @@ export const Notification = sveltify<
       rtl,
       stack,
       top,
-      maxCount,
     });
 
     useEffect(() => {

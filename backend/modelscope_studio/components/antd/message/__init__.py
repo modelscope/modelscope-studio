@@ -7,6 +7,7 @@ from ....utils.dev import ModelScopeLayoutComponent, resolve_frontend_dir
 
 class AntdMessage(ModelScopeLayoutComponent):
     """
+    Ant Design: https://ant.design/components/message
     """
     EVENTS = [
         EventListener("click",
@@ -25,6 +26,13 @@ class AntdMessage(ModelScopeLayoutComponent):
             content: str | None = "",
             props: dict | None = None,
             *,
+            duration: float | int | None = 3,
+            icon: str | None = None,
+            key: str | int | float | None = None,
+            get_container: str | None = None,
+            rtl: bool | None = None,
+            top: int | float | None = 8,
+            root_class_name: str | None = None,
             as_item: str | None = None,
             _internal: None = None,
             # gradio properties
@@ -42,6 +50,13 @@ class AntdMessage(ModelScopeLayoutComponent):
                          elem_style=elem_style,
                          **kwargs)
         self.content = content
+        self.duration = duration
+        self.icon = icon
+        self.key = key
+        self.get_container = get_container
+        self.rtl = rtl
+        self.top = top
+        self.root_class_name = root_class_name
         self.props = props
 
     FRONTEND_DIR = resolve_frontend_dir("message")

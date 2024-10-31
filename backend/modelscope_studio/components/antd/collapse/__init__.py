@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from typing import Any
+from typing import Any, Literal
 
 from gradio.events import EventListener
 
@@ -10,6 +10,7 @@ from .item import AntdCollapseItem
 
 class AntdCollapse(ModelScopeLayoutComponent):
     """
+    Ant Design: https://ant.design/components/collapse
     """
     Item = AntdCollapseItem
 
@@ -24,9 +25,22 @@ class AntdCollapse(ModelScopeLayoutComponent):
 
     def __init__(
             self,
-            value: str | int | float | list[str | int | float] | None = None,
             props: dict | None = None,
             *,
+            accordion: bool = False,
+            active_key: str | float | list[int | float] | list[str]
+        | None = None,
+            bordered: bool = True,
+            collapsible: Literal['header', 'icon', 'disabled'] | None = None,
+            default_active_key: str | float | list[int | float] | list[str]
+        | None = None,
+            destroy_inactive_panel: bool = False,
+            expand_icon: str | None = None,
+            expand_icon_position: Literal['start', 'end'] | None = None,
+            ghost: bool = False,
+            items: list[dict] | None = None,
+            size: Literal['large', 'middle', 'small'] | None = None,
+            root_class_name: str | None = None,
             as_item: str | None = None,
             _internal: None = None,
             # gradio properties
@@ -44,6 +58,18 @@ class AntdCollapse(ModelScopeLayoutComponent):
                          elem_style=elem_style,
                          **kwargs)
         self.props = props
+        self.accordion = accordion
+        self.active_key = active_key
+        self.bordered = bordered
+        self.collapsible = collapsible
+        self.default_active_key = default_active_key
+        self.destroy_inactive_panel = destroy_inactive_panel
+        self.expand_icon = expand_icon
+        self.expand_icon_position = expand_icon_position
+        self.ghost = ghost
+        self.items = items
+        self.size = size
+        self.root_class_name = root_class_name
 
     FRONTEND_DIR = resolve_frontend_dir("collapse")
 

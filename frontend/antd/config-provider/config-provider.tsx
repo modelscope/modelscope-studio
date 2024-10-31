@@ -1,8 +1,10 @@
 import { sveltify } from '@svelte-preprocess-react';
 import { ReactSlot } from '@svelte-preprocess-react/react-slot';
+import type { SetSlotParams } from '@svelte-preprocess-react/slot';
 import React, { useEffect, useState } from 'react';
 import { StyleProvider } from '@ant-design/cssinjs';
 import { useFunction } from '@utils/hooks/useFunction';
+import { renderParamsSlot } from '@utils/renderParamsSlot';
 import { ConfigProvider as AConfigProvider, type GetProps, theme } from 'antd';
 import type { Locale } from 'antd/es/locale';
 import dayjs from 'dayjs';
@@ -50,7 +52,9 @@ export const ConfigProvider = sveltify<
     className?: string;
     style?: React.CSSProperties;
     id?: string;
-  }
+    setSlotParams: SetSlotParams;
+  },
+  ['renderEmpty']
 >(
   ({
     slots,
@@ -61,6 +65,8 @@ export const ConfigProvider = sveltify<
     locale: localeProp,
     getTargetContainer,
     getPopupContainer,
+    renderEmpty,
+    setSlotParams,
     children,
     ...props
   }) => {
@@ -71,7 +77,7 @@ export const ConfigProvider = sveltify<
     };
     const getPopupContainerFunction = useFunction(getPopupContainer);
     const getTargetContainerFunction = useFunction(getTargetContainer);
-
+    const renderEmptyFunction = useFunction(renderEmpty);
     useEffect(() => {
       if (localeProp && locales[localeProp]) {
         locales[localeProp]().then((m) => {
@@ -92,6 +98,15 @@ export const ConfigProvider = sveltify<
             locale={locale}
             getPopupContainer={getPopupContainerFunction}
             getTargetContainer={getTargetContainerFunction}
+            renderEmpty={
+              slots.renderEmpty
+                ? renderParamsSlot({
+                    slots,
+                    setSlotParams,
+                    key: 'renderEmpty',
+                  })
+                : renderEmptyFunction
+            }
             theme={{
               cssVar: true,
               ...props.theme,

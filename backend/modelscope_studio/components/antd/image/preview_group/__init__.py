@@ -7,6 +7,7 @@ from .....utils.dev import ModelScopeLayoutComponent, resolve_frontend_dir
 
 class AntdImagePreviewGroup(ModelScopeLayoutComponent):
     """
+    Ant Design: https://ant.design/components/image
     """
     EVENTS = [
         EventListener("preview_transform",
@@ -27,6 +28,8 @@ class AntdImagePreviewGroup(ModelScopeLayoutComponent):
             items: list[dict | str] | None = None,
             props: dict | None = None,
             *,
+            preview: bool | dict | None = True,
+            fallback: str | None = None,
             as_item: str | None = None,
             _internal: None = None,
             # gradio properties
@@ -45,6 +48,8 @@ class AntdImagePreviewGroup(ModelScopeLayoutComponent):
                          **kwargs)
         self.props = props
         self.items = items
+        self.preview = preview
+        self.fallback = fallback
 
     FRONTEND_DIR = resolve_frontend_dir("image", 'preview-group')
 

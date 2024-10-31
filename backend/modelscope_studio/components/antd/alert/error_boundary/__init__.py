@@ -9,6 +9,7 @@ from .....utils.dev import ModelScopeLayoutComponent, resolve_frontend_dir
 
 class AntdAlertErrorBoundary(ModelScopeLayoutComponent):
     """
+    Ant Design: https://ant.design/components/alert
     """
     EVENTS = [
         EventListener("close",
@@ -23,6 +24,9 @@ class AntdAlertErrorBoundary(ModelScopeLayoutComponent):
             self,
             props: dict | None = None,
             *,
+            description: str | None = None,
+            message: str | None = None,
+            root_class_name: str | None = None,
             as_item: str | None = None,
             _internal: None = None,
             # gradio properties
@@ -40,6 +44,9 @@ class AntdAlertErrorBoundary(ModelScopeLayoutComponent):
                          elem_style=elem_style,
                          **kwargs)
         self.props = props
+        self.description = description
+        self.message = message
+        self.root_class_name = root_class_name
 
     FRONTEND_DIR = resolve_frontend_dir("alert", "error-boundary")
 

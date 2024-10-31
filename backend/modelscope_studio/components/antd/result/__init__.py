@@ -1,10 +1,13 @@
 from __future__ import annotations
 
+from typing import Literal
+
 from ....utils.dev import ModelScopeLayoutComponent, resolve_frontend_dir
 
 
 class AntdResult(ModelScopeLayoutComponent):
     """
+    Ant Design: https://ant.design/components/result
     """
     EVENTS = []
 
@@ -15,6 +18,14 @@ class AntdResult(ModelScopeLayoutComponent):
             self,
             props: dict | None = None,
             *,
+            extra: str | None = None,
+            icon: str | None = None,
+            status: Literal['success', 'error', 'info', 'warning', '404',
+                            '403', '500']
+        | None = None,
+            sub_title: str | None = None,
+            title: str | None = None,
+            root_class_name: str | None = None,
             as_item: str | None = None,
             _internal: None = None,
             # gradio properties
@@ -32,6 +43,12 @@ class AntdResult(ModelScopeLayoutComponent):
                          elem_style=elem_style,
                          **kwargs)
         self.props = props
+        self.extra = extra
+        self.icon = icon
+        self.status = status
+        self.sub_title = sub_title
+        self.title = title
+        self.root_class_name = root_class_name
 
     FRONTEND_DIR = resolve_frontend_dir("result")
 

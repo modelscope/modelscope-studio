@@ -1,10 +1,13 @@
 from __future__ import annotations
 
+from typing import Literal
+
 from .....utils.dev import ModelScopeLayoutComponent, resolve_frontend_dir
 
 
 class AntdAvatarGroup(ModelScopeLayoutComponent):
     """
+    Ant Design: https://ant.design/components/avatar
     """
     EVENTS = []
     # supported slots
@@ -14,6 +17,11 @@ class AntdAvatarGroup(ModelScopeLayoutComponent):
             self,
             props: dict | None = None,
             *,
+            max: dict | None = None,
+            size: int | Literal['large', 'small', 'default']
+        | dict = 'default',
+            shape: Literal['circle', 'square'] = 'circle',
+            root_class_name: str | None = None,
             as_item: str | None = None,
             _internal: None = None,
             # gradio properties
@@ -31,6 +39,10 @@ class AntdAvatarGroup(ModelScopeLayoutComponent):
                          elem_style=elem_style,
                          **kwargs)
         self.props = props
+        self.max = max
+        self.size = size
+        self.shape = shape
+        self.root_class_name = root_class_name
 
     FRONTEND_DIR = resolve_frontend_dir("avatar", 'group')
 

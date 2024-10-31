@@ -7,6 +7,7 @@ from ......utils.dev import ModelScopeLayoutComponent, resolve_frontend_dir
 
 class AntdListItemMeta(ModelScopeLayoutComponent):
     """
+    Ant Design: https://ant.design/components/list
     """
 
     EVENTS = []
@@ -18,6 +19,9 @@ class AntdListItemMeta(ModelScopeLayoutComponent):
             self,
             props: dict | None = None,
             *,
+            avatar: str | None = None,
+            description: str | None = None,
+            title: str | None = None,
             as_item: str | None = None,
             _internal: None = None,
             # gradio properties
@@ -35,6 +39,9 @@ class AntdListItemMeta(ModelScopeLayoutComponent):
                          elem_style=elem_style,
                          **kwargs)
         self.props = props
+        self.avatar = avatar
+        self.description = description
+        self.title = title
 
     FRONTEND_DIR = resolve_frontend_dir("list", ["item", "meta"])
 

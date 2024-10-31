@@ -70,7 +70,7 @@
       ...($mergedProps.props.menu || {}),
       items:
         $mergedProps.props.menu?.items ||
-        $$restProps.restProps.menu?.items ||
+        $mergedProps.restProps.menu?.items ||
         $menuItems.length > 0
           ? renderItems($menuItems)
           : undefined,
@@ -97,7 +97,7 @@
       ...($mergedProps.props.dropdownProps?.menu || {}),
       items:
         $mergedProps.props.dropdownProps?.menu?.items ||
-        $$restProps.restProps.dropdownProps?.menu?.items ||
+        $mergedProps.restProps.dropdownProps?.menu?.items ||
         $dropdownMenuItems.length > 0
           ? renderItems($dropdownMenuItems)
           : undefined,

@@ -1,12 +1,13 @@
 from __future__ import annotations
 
-from typing import Any
+from typing import Any, Literal
 
 from ....utils.dev import ModelScopeLayoutComponent, resolve_frontend_dir
 
 
 class AntdCarousel(ModelScopeLayoutComponent):
     """
+    Ant Design: https://ant.design/components/carousel
     """
 
     EVENTS = []
@@ -15,6 +16,22 @@ class AntdCarousel(ModelScopeLayoutComponent):
             self,
             props: dict | None = None,
             *,
+            arrows: bool = False,
+            autoplay: bool = False,
+            autoplay_speed: int | float = 3000,
+            adaptive_height: bool = False,
+            dot_position: Literal['top', 'bottom', 'left', 'right'] = 'bottom',
+            dots: bool | dict = True,
+            draggable: bool = False,
+            fade: bool = False,
+            infinite: bool = True,
+            speed: int = 500,
+            easing: str = 'linear',
+            effect: Literal['scrollx', 'fade'] = 'scrollx',
+            after_change: str | None = None,
+            before_change: str | None = None,
+            wait_for_animate: bool = False,
+            root_class_name: str | None = None,
             as_item: str | None = None,
             _internal: None = None,
             # gradio properties
@@ -32,6 +49,22 @@ class AntdCarousel(ModelScopeLayoutComponent):
                          elem_style=elem_style,
                          **kwargs)
         self.props = props
+        self.arrows = arrows
+        self.autoplay = autoplay
+        self.autoplay_speed = autoplay_speed
+        self.adaptive_height = adaptive_height
+        self.dot_position = dot_position
+        self.dots = dots
+        self.draggable = draggable
+        self.fade = fade
+        self.infinite = infinite
+        self.speed = speed
+        self.easing = easing
+        self.effect = effect
+        self.after_change = after_change
+        self.before_change = before_change
+        self.wait_for_animate = wait_for_animate
+        self.root_class_name = root_class_name
 
     FRONTEND_DIR = resolve_frontend_dir("carousel")
 

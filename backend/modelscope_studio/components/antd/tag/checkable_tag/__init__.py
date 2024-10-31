@@ -10,6 +10,7 @@ from .....utils.dev import ModelScopeDataLayoutComponent, resolve_frontend_dir
 # as inputs, outputs
 class AntdTagCheckableTag(ModelScopeDataLayoutComponent):
     """
+    Ant Design: https://ant.design/components/tag
     """
 
     EVENTS = [
@@ -24,6 +25,7 @@ class AntdTagCheckableTag(ModelScopeDataLayoutComponent):
             value: bool | None = False,
             props: dict | None = None,
             *,
+            root_class_name: str | None = None,
             as_item: str | None = None,
             _internal: None = None,
             # gradio properties
@@ -43,6 +45,7 @@ class AntdTagCheckableTag(ModelScopeDataLayoutComponent):
                          **kwargs)
         self.props = props
         self.label = label
+        self.root_class_name = root_class_name
 
     FRONTEND_DIR = resolve_frontend_dir("tag", 'checkable-tag')
 

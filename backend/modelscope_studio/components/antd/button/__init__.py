@@ -61,7 +61,7 @@ class AntdButton(ModelScopeLayoutComponent):
             icon_position: Literal["start", "end"] | None = "start",
             loading: bool = False,
             shape: Literal["default", "circle", "round"] | None = "default",
-            size: Literal["large", "middle", "small"] | None = "middle",
+            size: Literal["large", "middle", "small"] | None = None,
             styles: dict | None = None,
             href_target: str | None = None,
             type: Literal["primary", "dashed", "link", "text", "default"]

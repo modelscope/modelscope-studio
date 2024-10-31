@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from typing import Any
+from typing import Any, Literal
 
 from gradio.events import EventListener
 
@@ -9,6 +9,7 @@ from ....utils.dev import ModelScopeComponent, resolve_frontend_dir
 
 class AntdQRCode(ModelScopeComponent):
     """
+    Ant Design: https://ant.design/components/qr-code
     """
 
     EVENTS = [
@@ -25,6 +26,18 @@ class AntdQRCode(ModelScopeComponent):
             value: str | None = None,
             props: dict | None = None,
             *,
+            type: Literal['canvas', 'svg'] | None = 'canvas',
+            bordered: bool = True,
+            color: str | None = "#000",
+            bg_color: str | None = 'transparent',
+            error_level: Literal['L', 'M', 'Q', 'H'] | None = 'M',
+            icon: str | None = None,
+            icon_size: int | dict | None = 40,
+            size: int = 160,
+            status: Literal['active', 'expired', 'loading', 'scanned']
+        | None = 'active',
+            status_render: str | None = None,
+            root_class_name: str | None = None,
             as_item: str | None = None,
             _internal: None = None,
             # gradio properties
@@ -43,6 +56,17 @@ class AntdQRCode(ModelScopeComponent):
                          elem_style=elem_style,
                          **kwargs)
         self.props = props
+        self.type = type
+        self.bordered = bordered
+        self.color = color
+        self.bg_color = bg_color
+        self.error_level = error_level
+        self.icon = icon
+        self.icon_size = icon_size
+        self.size = size
+        self.status = status
+        self.status_render = status_render
+        self.root_class_name = root_class_name
 
     FRONTEND_DIR = resolve_frontend_dir("qr-code")
 

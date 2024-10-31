@@ -31,7 +31,6 @@
   export let elem_id = '';
   export let elem_classes: string[] = [];
   export let elem_style: React.CSSProperties = {};
-
   const [mergedProps, update] = getSlotContext({
     gradio,
     props: $updatedProps,

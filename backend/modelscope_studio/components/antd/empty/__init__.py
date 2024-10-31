@@ -7,6 +7,7 @@ from ....utils.dev import ModelScopeLayoutComponent, resolve_frontend_dir
 
 class AntdEmpty(ModelScopeLayoutComponent):
     """
+    Ant Design: https://ant.design/components/empty
     """
 
     EVENTS = []
@@ -18,6 +19,10 @@ class AntdEmpty(ModelScopeLayoutComponent):
             self,
             props: dict | None = None,
             *,
+            description: str | None = None,
+            image: str | None = None,
+            image_style: dict | None = None,
+            root_class_name: str | None = None,
             as_item: str | None = None,
             _internal: None = None,
             # gradio properties
@@ -35,6 +40,10 @@ class AntdEmpty(ModelScopeLayoutComponent):
                          elem_style=elem_style,
                          **kwargs)
         self.props = props
+        self.description = description
+        self.image = image
+        self.image_style = image_style
+        self.root_class_name = root_class_name
 
     FRONTEND_DIR = resolve_frontend_dir("empty")
 

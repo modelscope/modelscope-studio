@@ -10,6 +10,7 @@ from .preview_group import AntdImagePreviewGroup
 
 class AntdImage(ModelScopeLayoutComponent):
     """
+    Ant Design: https://ant.design/components/image
     """
     PreviewGroup = AntdImagePreviewGroup
 
@@ -39,6 +40,13 @@ class AntdImage(ModelScopeLayoutComponent):
             src: str | None = None,
             props: dict | None = None,
             *,
+            alt: str | None = None,
+            fallback: str | None = None,
+            height: str | int | float | None = None,
+            placeholder: bool | str | int | float | None = None,
+            preview: bool | dict | None = True,
+            width: str | int | float | None = None,
+            root_class_name: str | None = None,
             as_item: str | None = None,
             _internal: None = None,
             # gradio properties
@@ -57,6 +65,13 @@ class AntdImage(ModelScopeLayoutComponent):
                          **kwargs)
         self.src = src
         self.props = props
+        self.alt = alt
+        self.fallback = fallback
+        self.height = height
+        self.placeholder = placeholder
+        self.preview = preview
+        self.width = width
+        self.root_class_name = root_class_name
 
     FRONTEND_DIR = resolve_frontend_dir("image")
 

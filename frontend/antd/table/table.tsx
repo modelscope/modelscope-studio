@@ -45,12 +45,14 @@ export const Table = sveltify<
     pagination,
     loading,
     rowKey,
+    rowClassName,
     summary,
     rowSelection,
     rowSelectionItems,
     expandableItems,
     expandable,
     sticky,
+    footer,
     showSorterTooltip,
     onRow,
     onHeaderRow,
@@ -67,6 +69,7 @@ export const Table = sveltify<
       slots['pagination.itemRender'];
     const paginationConfig = getConfig(pagination);
     const paginationShowTotalFunction = useFunction(paginationConfig.showTotal);
+    const rowClassNameFunction = useFunction(rowClassName);
     const rowKeyFunction = useFunction(rowKey);
     const supportShowSorterTooltipConfig =
       slots['showSorterTooltip.title'] || typeof showSorterTooltip === 'object';
@@ -83,6 +86,7 @@ export const Table = sveltify<
     const onRowFunction = useFunction(onRow);
     const onHeaderRowFunction = useFunction(onHeaderRow);
     const summaryFunction = useFunction(summary);
+    const footerFunction = useFunction(footer);
     return (
       <>
         <div style={{ display: 'none' }}>{children}</div>
@@ -132,6 +136,7 @@ export const Table = sveltify<
               renderItems<TableProps['expandable']>(expandableItems)[0]
             );
           }, [expandable, expandableItems])}
+          rowClassName={rowClassNameFunction}
           rowKey={rowKeyFunction || rowKey}
           sticky={
             supportStickyConfig
@@ -200,7 +205,7 @@ export const Table = sveltify<
           footer={
             slots.footer
               ? renderParamsSlot({ slots, setSlotParams, key: 'footer' })
-              : props.footer
+              : footerFunction
           }
           title={
             slots.title

@@ -69,6 +69,7 @@ function cloneElementWithEvents(element: HTMLElement) {
       portals.push(...portalsChildren);
       clonedElement.appendChild(clonedChild);
       // clonedElement.replaceChild(clonedChild, clonedElement.children[i]);
+
       // text
     } else if (child.nodeType === 3) {
       clonedElement.appendChild(child.cloneNode());

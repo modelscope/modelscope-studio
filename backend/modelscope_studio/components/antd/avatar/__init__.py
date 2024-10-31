@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from typing import Any
+from typing import Any, Literal
 
 from gradio.events import EventListener
 
@@ -10,6 +10,7 @@ from .group import AntdAvatarGroup
 
 class AntdAvatar(ModelScopeLayoutComponent):
     """
+    Ant Design: https://ant.design/components/avatar
     """
     Group = AntdAvatarGroup
 
@@ -27,6 +28,17 @@ class AntdAvatar(ModelScopeLayoutComponent):
             src: str | None = None,
             props: dict | None = None,
             *,
+            alt: str | None = None,
+            gap: int = 4,
+            icon: str | None = None,
+            shape: Literal['circle', 'square'] = 'circle',
+            size: int | Literal['large', 'small', 'default'] | dict
+        | None = 'default',
+            src_set: str | None = None,
+            draggable: bool | Literal['true', 'false'] | None = None,
+            cross_origin: Literal['anonymous', 'use-credentials', '']
+        | None = None,
+            root_class_name: str | None = None,
             as_item: str | None = None,
             _internal: None = None,
             # gradio properties
@@ -44,6 +56,15 @@ class AntdAvatar(ModelScopeLayoutComponent):
                          elem_style=elem_style,
                          **kwargs)
         self.src = src
+        self.alt = alt
+        self.gap = gap
+        self.icon = icon
+        self.shape = shape
+        self.size = size
+        self.src_set = src_set
+        self.draggable = draggable
+        self.cross_origin = cross_origin
+        self.root_class_name = root_class_name
         self.props = props
 
     FRONTEND_DIR = resolve_frontend_dir("avatar")

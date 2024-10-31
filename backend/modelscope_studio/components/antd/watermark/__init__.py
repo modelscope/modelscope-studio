@@ -5,6 +5,7 @@ from ....utils.dev import ModelScopeLayoutComponent, resolve_frontend_dir
 
 class AntdWatermark(ModelScopeLayoutComponent):
     """
+    Ant Design: https://ant.design/components/watermark
     """
     EVENTS = []
 
@@ -13,6 +14,16 @@ class AntdWatermark(ModelScopeLayoutComponent):
             content: str | list[str] | None = "",
             props: dict | None = None,
             *,
+            width: int | float | None = None,
+            height: int | float | None = None,
+            inherit: bool | None = None,
+            rotate: int | float | None = None,
+            z_index: int | None = None,
+            image: str | None = None,
+            font: dict | None = None,
+            gap: list[int | float] | None = None,
+            offset: list[int | float] | None = None,
+            root_class_name: str | None = None,
             as_item: str | None = None,
             _internal: None = None,
             # gradio properties
@@ -31,6 +42,16 @@ class AntdWatermark(ModelScopeLayoutComponent):
                          **kwargs)
         self.props = props
         self.content = content
+        self.width = width
+        self.height = height
+        self.inherit = inherit
+        self.rotate = rotate
+        self.z_index = z_index
+        self.image = image
+        self.font = font
+        self.gap = gap
+        self.offset = offset
+        self.root_class_name = root_class_name
 
     FRONTEND_DIR = resolve_frontend_dir("watermark")
 

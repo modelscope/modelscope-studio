@@ -5,6 +5,7 @@ from .....utils.dev import ModelScopeLayoutComponent, resolve_frontend_dir
 
 class AntdTabsItem(ModelScopeLayoutComponent):
     """
+    Ant Design: https://ant.design/components/tabs
     """
     EVENTS = []
 
@@ -15,6 +16,14 @@ class AntdTabsItem(ModelScopeLayoutComponent):
             self,
             props: dict | None = None,
             *,
+            close_icon: str | None = None,
+            destroy_inactive_tab_pane: bool | None = None,
+            disabled: bool | None = None,
+            force_render: bool | None = None,
+            key: str | None = None,
+            label: str | None = None,
+            icon: str | None = None,
+            closable: bool | None = None,
             as_item: str | None = None,
             _internal: None = None,
             # gradio properties
@@ -32,6 +41,14 @@ class AntdTabsItem(ModelScopeLayoutComponent):
                          elem_style=elem_style,
                          **kwargs)
         self.props = props
+        self.close_icon = close_icon
+        self.destroy_inactive_tab_pane = destroy_inactive_tab_pane
+        self.disabled = disabled
+        self.force_render = force_render
+        self.key = key
+        self.label = label
+        self.icon = icon
+        self.closable = closable
 
     FRONTEND_DIR = resolve_frontend_dir("tabs", "item")
 

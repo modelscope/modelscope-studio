@@ -9,6 +9,7 @@ from .....utils.dev import ModelScopeLayoutComponent, resolve_frontend_dir
 
 class AntdTourStep(ModelScopeLayoutComponent):
     """
+    Ant Design: https://ant.design/components/tour
     """
     EVENTS = [
         EventListener("close",
@@ -45,8 +46,8 @@ class AntdTourStep(ModelScopeLayoutComponent):
                                'bottomRight'] = 'bottom',
             mask: bool | dict = True,
             type: Literal['default', 'primary'] = 'default',
-            next_button_props_click: dict | None = None,
-            prev_button_props_click: dict | None = None,
+            next_button_props: dict | None = None,
+            prev_button_props: dict | None = None,
             scroll_into_view_options: bool | dict = True,
             as_item: str | None = None,
             _internal: None = None,
@@ -74,8 +75,8 @@ class AntdTourStep(ModelScopeLayoutComponent):
         self.placement = placement
         self.mask = mask
         self.type = type
-        self.next_button_props_click = next_button_props_click
-        self.prev_button_props_click = prev_button_props_click
+        self.next_button_props = next_button_props
+        self.prev_button_props = prev_button_props
         self.scroll_into_view_options = scroll_into_view_options
 
     FRONTEND_DIR = resolve_frontend_dir("tour", "step")

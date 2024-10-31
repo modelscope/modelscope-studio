@@ -5,6 +5,7 @@ from .....utils.dev import ModelScopeLayoutComponent, resolve_frontend_dir
 
 class AntdSkeletonImage(ModelScopeLayoutComponent):
     """
+    Ant Design: https://ant.design/components/skeleton
     """
     EVENTS = []
 
@@ -12,6 +13,8 @@ class AntdSkeletonImage(ModelScopeLayoutComponent):
             self,
             props: dict | None = None,
             *,
+            active: bool | None = None,
+            root_class_name: str | None = None,
             as_item: str | None = None,
             _internal: None = None,
             # gradio properties
@@ -29,6 +32,8 @@ class AntdSkeletonImage(ModelScopeLayoutComponent):
                          elem_style=elem_style,
                          **kwargs)
         self.props = props
+        self.active = active
+        self.root_class_name = root_class_name
 
     FRONTEND_DIR = resolve_frontend_dir("skeleton", "image")
 

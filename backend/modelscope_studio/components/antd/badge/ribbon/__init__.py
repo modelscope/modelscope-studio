@@ -1,10 +1,13 @@
 from __future__ import annotations
 
+from typing import Literal
+
 from .....utils.dev import ModelScopeLayoutComponent, resolve_frontend_dir
 
 
 class AntdBadgeRibbon(ModelScopeLayoutComponent):
     """
+    Ant Design: https://ant.design/components/badge
     """
     EVENTS = []
 
@@ -13,6 +16,9 @@ class AntdBadgeRibbon(ModelScopeLayoutComponent):
             text: str | None = None,
             props: dict | None = None,
             *,
+            color: str | None = None,
+            placement: Literal['start', 'end'] = 'end',
+            root_class_name: str | None = None,
             as_item: str | None = None,
             _internal: None = None,
             # gradio properties
@@ -30,6 +36,9 @@ class AntdBadgeRibbon(ModelScopeLayoutComponent):
                          elem_style=elem_style,
                          **kwargs)
         self.props = props
+        self.color = color
+        self.placement = placement
+        self.root_class_name = root_class_name
         self.text = text
 
     FRONTEND_DIR = resolve_frontend_dir("badge", 'ribbon')

@@ -105,7 +105,7 @@
 {/if}
 
 <style>
-  :global(.ms-gr-antd-noop-class) {
+  :global(.ms-gr-noop-class) {
     display: none;
   }
 </style>

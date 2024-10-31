@@ -25,7 +25,6 @@
   $: updatedProps.update((prev) => ({ ...prev, ...props }));
   export let _internal: Record<string, any> = {};
   export let as_item: string | undefined;
-  export let value: number = 0;
   export let open: boolean = true;
   // gradio properties
   export let visible = true;
@@ -41,7 +40,6 @@
     elem_classes,
     elem_style,
     as_item,
-    value,
     open,
     restProps: $$restProps,
   });
@@ -56,7 +54,6 @@
     elem_classes,
     elem_style,
     as_item,
-    value,
     open,
     restProps: $$restProps,
   });

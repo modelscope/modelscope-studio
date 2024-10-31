@@ -1,10 +1,13 @@
 from __future__ import annotations
 
+from typing import Literal
+
 from .....utils.dev import ModelScopeLayoutComponent, resolve_frontend_dir
 
 
 class AntdSkeletonAvatar(ModelScopeLayoutComponent):
     """
+    Ant Design: https://ant.design/components/skeleton
     """
     EVENTS = []
 
@@ -12,6 +15,11 @@ class AntdSkeletonAvatar(ModelScopeLayoutComponent):
             self,
             props: dict | None = None,
             *,
+            active: bool | None = None,
+            shape: Literal['circle', 'square'] | None = None,
+            size: Literal['large', 'small', 'default'] | int | float
+        | None = None,
+            root_class_name: str | None = None,
             as_item: str | None = None,
             _internal: None = None,
             # gradio properties
@@ -29,6 +37,10 @@ class AntdSkeletonAvatar(ModelScopeLayoutComponent):
                          elem_style=elem_style,
                          **kwargs)
         self.props = props
+        self.active = active
+        self.shape = shape
+        self.size = size
+        self.root_class_name = root_class_name
 
     FRONTEND_DIR = resolve_frontend_dir("skeleton", "avatar")
 

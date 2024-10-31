@@ -1,14 +1,16 @@
 from __future__ import annotations
 
+from typing import Literal
+
 from gradio.events import EventListener
 
 from .....utils.dev import ModelScopeLayoutComponent, resolve_frontend_dir
 from .selection import AntdTableRowSelectionSelection
 
 
-# as inputs, outputs
 class AntdTableRowSelection(ModelScopeLayoutComponent):
     """
+    Ant Design: https://ant.design/components/table
     """
     Selection = AntdTableRowSelectionSelection
 
@@ -44,6 +46,19 @@ class AntdTableRowSelection(ModelScopeLayoutComponent):
             self,
             props: dict | None = None,
             *,
+            check_strictly: bool | None = None,
+            column_title: str | None = None,
+            column_width: int | float | str | None = None,
+            fixed: bool | None = None,
+            get_checkbox_props: str | None = None,
+            hide_select_all: bool | None = None,
+            preserve_selected_rows_keys: bool | None = None,
+            render_cell: str | None = None,
+            selected_row_keys: list[str] | list[int | float] | None = None,
+            default_selected_row_keys: list[str] | list[int | float]
+        | None = None,
+            selections: list[dict] | bool | None = None,
+            type: Literal["checkbox", "radio"] | None = None,
             as_item: str | None = None,
             _internal: None = None,
             # gradio properties
@@ -61,6 +76,18 @@ class AntdTableRowSelection(ModelScopeLayoutComponent):
                          elem_style=elem_style,
                          **kwargs)
         self.props = props
+        self.check_strictly = check_strictly
+        self.column_title = column_title
+        self.column_width = column_width
+        self.fixed = fixed
+        self.get_checkbox_props = get_checkbox_props
+        self.hide_select_all = hide_select_all
+        self.preserve_selected_rows_keys = preserve_selected_rows_keys
+        self.render_cell = render_cell
+        self.selected_row_keys = selected_row_keys
+        self.default_selected_row_keys = default_selected_row_keys
+        self.selections = selections
+        self.type = type
 
     FRONTEND_DIR = resolve_frontend_dir("table", "row-selection")
 

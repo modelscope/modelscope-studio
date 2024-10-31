@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from typing import Any
+from typing import Any, Literal
 
 from gradio.events import EventListener
 
@@ -10,6 +10,7 @@ from ....utils.dev import ModelScopeComponent, resolve_frontend_dir
 # as inputs, outputs
 class AntdCalendar(ModelScopeComponent):
     """
+    Ant Design: https://ant.design/components/calendar
     """
 
     EVENTS = [
@@ -32,6 +33,17 @@ class AntdCalendar(ModelScopeComponent):
             value: int | str | float | None = None,
             props: dict | None = None,
             *,
+            cell_render: str | None = None,
+            full_cell_render: str | None = None,
+            default_value: int | str | float | None = None,
+            disabled_date: str | None = None,
+            fullscreen: bool = True,
+            header_render: str | None = None,
+            locale: dict | None = None,
+            mode: Literal['month', 'year'] = 'month',
+            valid_range: tuple[int | str | float, int | str | float]
+        | None = None,
+            root_class_name: str | None = None,
             as_item: str | None = None,
             _internal: None = None,
             # gradio properties
@@ -50,6 +62,16 @@ class AntdCalendar(ModelScopeComponent):
                          elem_style=elem_style,
                          **kwargs)
         self.props = props
+        self.cell_render = cell_render
+        self.full_cell_render = full_cell_render
+        self.default_value = default_value
+        self.disabled_date = disabled_date
+        self.fullscreen = fullscreen
+        self.header_render = header_render
+        self.locale = locale
+        self.mode = mode
+        self.valid_range = valid_range
+        self.root_class_name = root_class_name
 
     FRONTEND_DIR = resolve_frontend_dir("calendar")
 

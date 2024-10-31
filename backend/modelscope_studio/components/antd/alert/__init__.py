@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from typing import Any
+from typing import Any, Literal
 
 from gradio.events import EventListener
 
@@ -10,6 +10,7 @@ from .error_boundary import AntdAlertErrorBoundary
 
 class AntdAlert(ModelScopeLayoutComponent):
     """
+    Ant Design: https://ant.design/components/alert
     """
     ErrorBoundary = AntdAlertErrorBoundary
     EVENTS = [
@@ -25,6 +26,16 @@ class AntdAlert(ModelScopeLayoutComponent):
             self,
             props: dict | None = None,
             *,
+            action: str | None = None,
+            after_close: str | None = None,
+            banner: bool | None = None,
+            closable: bool | dict | None = None,
+            description: str | None = None,
+            icon: str | None = None,
+            message: str | None = None,
+            show_icon: bool | None = None,
+            type: Literal['success', 'info', 'warning', 'error'] | None = None,
+            root_class_name: str | None = None,
             as_item: str | None = None,
             _internal: None = None,
             # gradio properties
@@ -42,6 +53,16 @@ class AntdAlert(ModelScopeLayoutComponent):
                          elem_style=elem_style,
                          **kwargs)
         self.props = props
+        self.action = action
+        self.after_close = after_close
+        self.banner = banner
+        self.closable = closable
+        self.description = description
+        self.icon = icon
+        self.message = message
+        self.show_icon = show_icon
+        self.type = type
+        self.root_class_name = root_class_name
 
     FRONTEND_DIR = resolve_frontend_dir("alert")
 

@@ -18,7 +18,7 @@ keywords = [
   "gradio-custom-component",
   "modelscope-studio",
   'antd',
-  "gradio-template-Chatbot",
+  'gradio-antd'
 ]
 # Add dependencies here
 dependencies = ["gradio>=4.0,<6.0"]

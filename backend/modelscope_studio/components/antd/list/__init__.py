@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from typing import Any
+from typing import Any, Literal
 
 from gradio.events import EventListener
 
@@ -10,6 +10,7 @@ from .item import AntdListItem
 
 class AntdList(ModelScopeLayoutComponent):
     """
+    Ant Design: https://ant.design/components/list
     """
     Item = AntdListItem
     EVENTS = [
@@ -28,6 +29,21 @@ class AntdList(ModelScopeLayoutComponent):
             self,
             props: dict | None = None,
             *,
+            bordered: bool = False,
+            data_source: list[Any] | None = None,
+            footer: str | None = None,
+            grid: dict | None = None,
+            header: str | None = None,
+            item_layout: str | None = None,
+            loading: bool | dict | None = False,
+            load_more: str | None = None,
+            locale: dict | None = None,
+            pagination: bool | dict | None = False,
+            render_item: str | None = None,
+            row_key: str | None = None,
+            size: Literal['small', 'default', 'large'] | None = None,
+            split: bool = True,
+            root_class_name: str | None = None,
             as_item: str | None = None,
             _internal: None = None,
             # gradio properties
@@ -45,6 +61,21 @@ class AntdList(ModelScopeLayoutComponent):
                          elem_style=elem_style,
                          **kwargs)
         self.props = props
+        self.bordered = bordered
+        self.data_source = data_source
+        self.footer = footer
+        self.grid = grid
+        self.header = header
+        self.item_layout = item_layout
+        self.loading = loading
+        self.load_more = load_more
+        self.pagination = pagination
+        self.render_item = render_item
+        self.locale = locale
+        self.row_key = row_key
+        self.size = size
+        self.split = split
+        self.root_class_name = root_class_name
 
     FRONTEND_DIR = resolve_frontend_dir("list")
 

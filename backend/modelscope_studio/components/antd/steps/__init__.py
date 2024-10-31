@@ -33,7 +33,7 @@ class AntdSteps(ModelScopeLayoutComponent):
             percent: int | None = None,
             progress_dot: bool | str = False,
             responsive: bool = True,
-            size: Literal['small', 'default'] = 'default',
+            size: Literal['small', 'default'] | None = None,
             status: Literal['wait', 'process', 'finish', 'error'] = 'process',
             type: Literal['default', 'navigation', 'inline'] = 'default',
             items: list[dict] | None = None,

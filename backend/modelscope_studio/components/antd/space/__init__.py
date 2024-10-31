@@ -36,7 +36,8 @@ class AntdSpace(ModelScopeLayoutComponent):
             styles: dict | None = None,
             direction: Literal['vertical', 'horizontal'] | None = 'horizontal',
             size: Literal['small', 'middle', 'large'] | int | float
-        | list[Literal['small', 'middle', 'large'] | int | float] = 'small',
+        | list[Literal['small', 'middle', 'large'] | int | float]
+        | None = None,
             split: str | None = None,
             wrap: bool = False,
             root_class_name: str | None = None,

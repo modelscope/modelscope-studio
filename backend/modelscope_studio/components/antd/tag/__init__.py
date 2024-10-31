@@ -10,6 +10,7 @@ from .checkable_tag import AntdTagCheckableTag
 
 class AntdTag(ModelScopeLayoutComponent):
     """
+    Ant Design: https://ant.design/components/tag
     """
     CheckableTag = AntdTagCheckableTag
 
@@ -27,6 +28,11 @@ class AntdTag(ModelScopeLayoutComponent):
             value: str | None = "",
             props: dict | None = None,
             *,
+            bordered: bool | None = None,
+            close_icon: str | bool | None = None,
+            color: str | None = None,
+            icon: str | None = None,
+            root_class_name: str | None = None,
             as_item: str | None = None,
             _internal: None = None,
             # gradio properties
@@ -45,6 +51,11 @@ class AntdTag(ModelScopeLayoutComponent):
                          **kwargs)
         self.value = value
         self.props = props
+        self.bordered = bordered
+        self.close_icon = close_icon
+        self.color = color
+        self.icon = icon
+        self.root_class_name = root_class_name
 
     FRONTEND_DIR = resolve_frontend_dir("tag")
 

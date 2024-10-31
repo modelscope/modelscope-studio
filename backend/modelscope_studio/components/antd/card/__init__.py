@@ -55,7 +55,7 @@ class AntdCard(ModelScopeLayoutComponent):
             extra: str | None = None,
             hoverable: bool = False,
             loading: bool = False,
-            size: Literal["default", "small"] = "default",
+            size: Literal["default", "small"] | None = None,
             tab_bar_extra_content: str | None = None,
             tab_list: list[str] | str | None = None,
             tab_props: str | None = None,
@@ -63,6 +63,7 @@ class AntdCard(ModelScopeLayoutComponent):
             type: str | None = None,
             class_names: dict | None = None,
             styles: dict | None = None,
+            root_class_name: str | None = None,
             as_item: str | None = None,
             _internal: None = None,
             # gradio properties
@@ -113,6 +114,7 @@ class AntdCard(ModelScopeLayoutComponent):
         self.type = type
         self.class_names = class_names
         self.styles = styles
+        self.root_class_name = root_class_name
 
     FRONTEND_DIR = resolve_frontend_dir("card")
 

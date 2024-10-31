@@ -1,21 +1,40 @@
 from __future__ import annotations
 
-from typing import Any
+from typing import Any, Literal
 
 from ....utils.dev import ModelScopeLayoutComponent, resolve_frontend_dir
 
 
 class AntdConfigProvider(ModelScopeLayoutComponent):
     """
+    Ant Design: https://ant.design/components/config-provider
     """
     EVENTS = []
 
     # see https://ant.design/components/config-provider, pass slot like 'spin.indicator'.
-    SLOTS = []
+    SLOTS = ["renderEmpty"]
 
     def __init__(self,
                  props: dict | None = None,
                  *,
+                 component_disabled: bool | None = None,
+                 component_size: Literal['small', 'middle', 'large']
+                 | None = None,
+                 csp: dict | None = None,
+                 direction: Literal['ltr', 'rtl'] | None = None,
+                 get_popup_container: str | None = None,
+                 get_target_container: str | None = None,
+                 icon_prefix_cls: str | None = None,
+                 locale: str | None = None,
+                 popup_match_select_width: bool | int | float | None = None,
+                 popup_overflow: Literal['viewport', 'scroll'] | None = None,
+                 prefix_cls: str | None = None,
+                 render_empty: str | None = None,
+                 theme: dict | None = None,
+                 variant: Literal['outlined', 'filled', 'borderless']
+                 | None = None,
+                 virtual: bool | None = None,
+                 warning: dict | None = None,
                  as_item: str | None = None,
                  _internal: None = None,
                  visible: bool = True,
@@ -32,6 +51,22 @@ class AntdConfigProvider(ModelScopeLayoutComponent):
                          elem_style=elem_style,
                          **kwargs)
         self.props = props
+        self.component_disabled = component_disabled
+        self.component_size = component_size
+        self.csp = csp
+        self.direction = direction
+        self.get_popup_container = get_popup_container
+        self.get_target_container = get_target_container
+        self.icon_prefix_cls = icon_prefix_cls
+        self.locale = locale
+        self.popup_match_select_width = popup_match_select_width
+        self.popup_overflow = popup_overflow
+        self.prefix_cls = prefix_cls
+        self.render_empty = render_empty
+        self.theme = theme
+        self.variant = variant
+        self.virtual = virtual
+        self.warning = warning
 
     FRONTEND_DIR = resolve_frontend_dir("config-provider")
 
