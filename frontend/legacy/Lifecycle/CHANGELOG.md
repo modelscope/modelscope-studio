@@ -1,5 +1,11 @@
 # @modelscope-studio/legacy-lifecycle
 
+## 1.0.0-beta.2
+
+### Features
+
+- [`9e5da52`](https://github.com/modelscope/modelscope-studio/commit/9e5da52fc739c6862225192fecf95f6bfd7923ad) - complete components params in Python. Thanks [@Col0ring](https://github.com/Col0ring)!
+
 ## 1.0.0-beta.1
 
 ### Features

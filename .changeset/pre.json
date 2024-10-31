@@ -16,5 +16,5 @@
     "@modelscope-studio/legacy-waterfall-gallery": "0.4.2",
     "@modelscope-studio/legacy-compiled": "0.4.2"
   },
-  "changesets": ["lemon-laws-cross", "tough-walls-grab"]
+  "changesets": ["five-actors-compete", "lemon-laws-cross", "tough-walls-grab"]
 }

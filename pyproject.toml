@@ -8,7 +8,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "modelscope_studio"
-version = "1.0.0-beta.1"
+version = "1.0.0-beta.2"
 description = "A set of extension component, inluding components for conversational input and display in multimodal scenarios, as well as more components for vertical scenarios."
 readme = "README.md"
 license = "Apache-2.0"
