@@ -2,6 +2,9 @@ import type { Gradio } from '@gradio/utils';
 import { mapKeys, omit } from 'lodash-es';
 
 export async function initialize() {
+  if (!window.ms_globals) {
+    window.ms_globals = {} as typeof window.ms_globals;
+  }
   if (!window.ms_globals.initializePromise) {
     window.ms_globals.initializePromise = new Promise((resolve) => {
       window.ms_globals.initialize = () => {
