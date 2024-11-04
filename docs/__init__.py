@@ -29,9 +29,9 @@ def get_docs(file_path: str):
 
 docs = get_docs(__file__)
 
-default_active_key = "button"
+default_active_tab = "antd"
 
-layout_menu_items = [{
+antd_menu_items = [{
     "label":
     "General",
     "type":
@@ -43,7 +43,9 @@ layout_menu_items = [{
         "label": "FloatButton",
         "key": "float_button"
     }]
-}, {
+}]
+
+base_menu_items = [{
     "label": "Layout",
     "type": "group",
     "children": [{
@@ -51,10 +53,21 @@ layout_menu_items = [{
         "key": "divider"
     }]
 }]
+tabs = [{
+    "label": "Base",
+    "key": "base",
+    "default_active_key": "divider",
+    "menus": base_menu_items
+}, {
+    "label": "Antd",
+    "key": "antd",
+    "default_active_key": "button",
+    "menus": antd_menu_items
+}]
 
-site = Site(menus=layout_menu_items,
+site = Site(tabs=tabs,
             docs=docs,
-            default_active_key=default_active_key,
+            default_active_tab=default_active_tab,
             logo=antd.Image(os.path.join(os.path.dirname(__file__),
                                          "./resources/modelscope.png"),
                             preview=False,
