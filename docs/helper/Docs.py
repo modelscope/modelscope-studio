@@ -89,11 +89,12 @@ class Docs:
             with antd.Row(align="stretch", wrap=False):
                 with antd.Col(span=10):
                     with antd.Flex(elem_style=dict(height='100%')):
-                        gr.Markdown(
-                            f"""{prefix + "\n" if prefix else ""}```python
+                        prefix = prefix + "\n" if prefix else ""
+                        suffix = "\n" + suffix if suffix else ""
+                        gr.Markdown(f"""{prefix}```python
 {content}
-```{"\n" + suffix if suffix else ""}""",
-                            header_links=True)
+```{suffix}""",
+                                    header_links=True)
                         antd.Divider(type="vertical",
                                      variant="dashed",
                                      elem_style=dict(height='100%'))
