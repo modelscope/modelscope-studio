@@ -31,7 +31,7 @@ class AntdAffix(ModelScopeLayoutComponent):
             *,
             offset_bottom: int | float | None = None,
             offset_top: int | float | None = 0,
-            elem_target: str | None = None,
+            get_target: str | None = None,
             as_item: str | None = None,
             _internal: None = None,
             # gradio properties
@@ -45,7 +45,7 @@ class AntdAffix(ModelScopeLayoutComponent):
         Parameters:
             offset_bottom: Offset from the bottom of the viewport (in pixels).
             offset_top: Offset from the top of the viewport (in pixels).
-            elem_target: Specifies the scrollable area DOM node.
+            get_target: Specifies the scrollable area DOM node.
         """
         super().__init__(visible=visible,
                          elem_id=elem_id,
@@ -57,7 +57,7 @@ class AntdAffix(ModelScopeLayoutComponent):
         self.props = props
         self.offset_bottom = offset_bottom
         self.offset_top = offset_top
-        self.elem_target = elem_target
+        self.get_target = get_target
 
     FRONTEND_DIR = resolve_frontend_dir("affix")
 

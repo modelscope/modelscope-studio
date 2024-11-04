@@ -30,7 +30,7 @@ class AntdFlex(ModelScopeLayoutComponent):
                              'stretch', 'safe', 'unsafe'] | None = "normal",
             align: Literal['normal', 'start', 'end', 'flex-start', 'flex-end',
                            'center', 'self-start', 'self-end', 'baseline',
-                           'unsafe'] | None = "normal",
+                           'unsafe', 'stretch'] | None = "normal",
             flex: str | None = "normal",
             gap: Literal["small", "middle", "large"] | str | int | float
         | None = None,

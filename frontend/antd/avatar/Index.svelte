@@ -7,6 +7,7 @@
   } from '@svelte-preprocess-react/component';
   import { getSlotContext, getSlots } from '@svelte-preprocess-react/slot';
   import type React from 'react';
+  import type { FileData } from '@gradio/client';
   import type { Gradio } from '@gradio/utils';
   import cls from 'classnames';
   import { writable } from 'svelte/store';
@@ -21,7 +22,7 @@
     layout?: boolean;
   } = {};
 
-  export let src = '';
+  export let value: string | FileData = '';
   export let as_item: string | undefined;
   // gradio properties
   export let visible = true;
@@ -33,7 +34,7 @@
     gradio,
     props: $updatedProps,
     _internal,
-    src,
+    value,
     visible,
     elem_id,
     elem_classes,
@@ -46,7 +47,7 @@
     gradio,
     props: $updatedProps,
     _internal,
-    src,
+    value,
     visible,
     elem_id,
     elem_classes,
@@ -54,6 +55,14 @@
     as_item,
     restProps: $$restProps,
   });
+  let src = '';
+  $: {
+    if (typeof $mergedProps.value === 'object' && $mergedProps.value) {
+      src = $mergedProps.value.url || '';
+    } else {
+      src = $mergedProps.value;
+    }
+  }
 </script>
 
 <!-- $$slots.default and slot fallbacks are not working in gradio -->
@@ -67,7 +76,7 @@
       {...$mergedProps.props}
       {...bindEvents($mergedProps)}
       slots={$slots}
-      src={$mergedProps.props.src || $mergedProps.src}
+      src={$mergedProps.props.src || src}
     >
       <slot></slot>
     </Avatar>

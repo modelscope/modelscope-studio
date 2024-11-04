@@ -11,6 +11,7 @@
     getSlots,
   } from '@svelte-preprocess-react/slot';
   import type React from 'react';
+  import type { FileData } from '@gradio/client';
   import type { Gradio } from '@gradio/utils';
   import cls from 'classnames';
   import { writable } from 'svelte/store';
@@ -21,7 +22,7 @@
   export let props: Record<string, any> = {};
   const updatedProps = writable(props);
   $: updatedProps.update((prev) => ({ ...prev, ...props }));
-  export let src = '';
+  export let value: string | FileData = '';
   export let _internal: {
     layout?: boolean;
   } = {};
@@ -42,7 +43,7 @@
     elem_classes,
     elem_style,
     as_item,
-    src,
+    value,
     restProps: $$restProps,
   });
   const setSlotParams = getSetSlotParamsFn();
@@ -56,9 +57,17 @@
     elem_classes,
     elem_style,
     as_item,
-    src,
+    value,
     restProps: $$restProps,
   });
+  let src = '';
+  $: {
+    if (typeof $mergedProps.value === 'object' && $mergedProps.value) {
+      src = $mergedProps.value.url || '';
+    } else {
+      src = $mergedProps.value;
+    }
+  }
 </script>
 
 {#if $mergedProps.visible}
@@ -71,7 +80,7 @@
       {...$mergedProps.props}
       {...bindEvents($mergedProps)}
       slots={$slots}
-      src={$mergedProps.props.src || $mergedProps.src}
+      src={$mergedProps.props.src || src}
       {setSlotParams}
     >
       <slot />

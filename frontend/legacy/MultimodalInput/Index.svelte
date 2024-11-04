@@ -3,14 +3,15 @@
 <script lang="ts">
   import { importComponent } from '@svelte-preprocess-react/component';
 
-  const awaitedMultimodalInput = importComponent(
+  const AwaitedMultimodalInput = importComponent(
     () => import('./Awaited.svelte')
   );
+  export let value: any;
   $: args = $$props as any;
 </script>
 
-{#await awaitedMultimodalInput then MultimodalInput}
-  <MultimodalInput {...args}>
+{#await AwaitedMultimodalInput then MultimodalInput}
+  <MultimodalInput {...args} {value}>
     <slot></slot>
   </MultimodalInput>
 {/await}

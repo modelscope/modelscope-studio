@@ -3,12 +3,13 @@
 <script lang="ts">
   import { importComponent } from '@svelte-preprocess-react/component';
 
-  const awaitedChatbot = importComponent(() => import('./Awaited.svelte'));
+  const AwaitedChatbot = importComponent(() => import('./Awaited.svelte'));
+  export let value: any;
   $: args = $$props as any;
 </script>
 
-{#await awaitedChatbot then Chatbot}
-  <Chatbot {...args}>
+{#await AwaitedChatbot then Chatbot}
+  <Chatbot {...args} {value}>
     <slot></slot>
   </Chatbot>
 {/await}

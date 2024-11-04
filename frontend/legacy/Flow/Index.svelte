@@ -3,12 +3,13 @@
 <script lang="ts">
   import { importComponent } from '@svelte-preprocess-react/component';
 
-  const awaitedFlow = importComponent(() => import('./Awaited.svelte'));
+  const AwaitedFlow = importComponent(() => import('./Awaited.svelte'));
+  export let value: any;
   $: args = $$props as any;
 </script>
 
-{#await awaitedFlow then Flow}
-  <Flow {...args}>
+{#await AwaitedFlow then Flow}
+  <Flow {...args} {value}>
     <slot></slot>
   </Flow>
 {/await}

@@ -41,7 +41,7 @@
       restProps: $$restProps,
     },
     {
-      elem_target: 'target',
+      get_target: 'target',
     }
   );
   const slots = getSlots();

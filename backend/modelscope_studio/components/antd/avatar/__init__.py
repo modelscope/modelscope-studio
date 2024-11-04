@@ -1,14 +1,21 @@
 from __future__ import annotations
 
-from typing import Any, Literal
+from pathlib import Path
+from typing import Any, Literal, Union
 
+from gradio import processing_utils
+from gradio.data_classes import FileData, GradioRootModel
 from gradio.events import EventListener
 
-from ....utils.dev import ModelScopeLayoutComponent, resolve_frontend_dir
+from ....utils.dev import ModelScopeDataLayoutComponent, resolve_frontend_dir
 from .group import AntdAvatarGroup
 
 
-class AntdAvatar(ModelScopeLayoutComponent):
+class AntdAvatarData(GradioRootModel):
+    root: Union[FileData, str]
+
+
+class AntdAvatar(ModelScopeDataLayoutComponent):
     """
     Ant Design: https://ant.design/components/avatar
     """
@@ -25,7 +32,7 @@ class AntdAvatar(ModelScopeLayoutComponent):
 
     def __init__(
             self,
-            src: str | None = None,
+            value: str | None = None,
             props: dict | None = None,
             *,
             alt: str | None = None,
@@ -48,14 +55,14 @@ class AntdAvatar(ModelScopeLayoutComponent):
             elem_style: dict | None = None,
             render: bool = True,
             **kwargs):
-        super().__init__(visible=visible,
+        super().__init__(value=value,
+                         visible=visible,
                          elem_id=elem_id,
                          elem_classes=elem_classes,
                          render=render,
                          as_item=as_item,
                          elem_style=elem_style,
                          **kwargs)
-        self.src = src
         self.alt = alt
         self.gap = gap
         self.icon = icon
@@ -69,16 +76,31 @@ class AntdAvatar(ModelScopeLayoutComponent):
 
     FRONTEND_DIR = resolve_frontend_dir("avatar")
 
+    data_model = AntdAvatarData
+
     @property
     def skip_api(self):
         return True
 
-    def preprocess(self, payload: str | None) -> str | None:
+    def preprocess(
+            self, payload: str | AntdAvatarData | None
+    ) -> str | AntdAvatarData | None:
+        if isinstance(payload, AntdAvatarData):
+            value = payload.root
+            if isinstance(value, FileData):
+                return value.path
+            return value
         return payload
 
     def postprocess(self, value: str | None) -> str | None:
-
-        return str(value)
+        if value is None:
+            return None
+        if value.startswith("http") or value.startswith("data"):
+            return AntdAvatarData(root=value)
+        file = processing_utils.move_resource_to_block_cache(value, self)
+        return AntdAvatarData(root=FileData(path=file,
+                                            orig_name=Path(file).name,
+                                            size=Path(file).stat().st_size))
 
     def example_payload(self) -> Any:
         return None

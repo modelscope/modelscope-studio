@@ -107,10 +107,30 @@ export function bindEvents<
             }
             return arg;
           });
+          let serializedPayload;
+          try {
+            serializedPayload = JSON.parse(JSON.stringify(payload));
+          } catch {
+            serializedPayload = payload.map((item) => {
+              if (item && typeof item === 'object') {
+                return Object.fromEntries(
+                  Object.entries(item).filter(([_, v]) => {
+                    try {
+                      JSON.stringify(v);
+                      return true;
+                    } catch {
+                      return false;
+                    }
+                  })
+                );
+              }
+              return item;
+            });
+          }
           return gradio.dispatch(
             event.replace(/[A-Z]/g, (letter) => '_' + letter.toLowerCase()),
             {
-              payload,
+              payload: serializedPayload,
               component: {
                 ...component,
                 ...omit(originalRestProps, gradioProps),

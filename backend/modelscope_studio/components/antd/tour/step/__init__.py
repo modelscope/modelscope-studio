@@ -33,7 +33,7 @@ class AntdTourStep(ModelScopeLayoutComponent):
             self,
             props: dict | None = None,
             *,
-            elem_target: str | None = None,
+            get_target: str | None = None,
             arrow: bool | dict | None = True,
             close_icon: str | None = None,
             cover: str | None = None,
@@ -66,7 +66,7 @@ class AntdTourStep(ModelScopeLayoutComponent):
                          elem_style=elem_style,
                          **kwargs)
         self.props = props
-        self.elem_target = elem_target
+        self.get_target = get_target
         self.arrow = arrow
         self.close_icon = close_icon
         self.cover = cover
