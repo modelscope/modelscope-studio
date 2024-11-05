@@ -1,5 +1,16 @@
 # @modelscope-studio/multimodal-input
 
+## 0.5.2
+
+No significant changes to this package were made in this release.
+
+## 0.5.2
+
+### Patch Changes
+
+- Updated dependencies [[`c742328`](https://github.com/modelscope/modelscope-studio/commit/c742328f04992c5461211d8153f5166d784678ee)]:
+  - @modelscope-studio/shared@0.5.2
+
 ## 0.5.1
 
 No significant changes to this package were made in this release.

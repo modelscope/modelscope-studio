@@ -1,5 +1,11 @@
 # @modelscope-studio/markdown
 
+## 0.5.2
+
+### Fixes
+
+- [`c742328`](https://github.com/modelscope/modelscope-studio/commit/c742328f04992c5461211d8153f5166d784678ee) - gradio5. Thanks [@Col0ring](https://github.com/Col0ring)!
+
 ## 0.5.1
 
 No significant changes to this package were made in this release.

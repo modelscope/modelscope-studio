@@ -1,5 +1,9 @@
 # @modelscope-studio/compiled
 
+## 0.5.2
+
+No significant changes to this package were made in this release.
+
 ## 0.5.1
 
 ### Features
