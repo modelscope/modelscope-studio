@@ -15,7 +15,8 @@
     "@gradio/atoms": "0.7.4",
     "@gradio/statustracker": "0.6.0",
     "@gradio/utils": "0.4.2",
-    "@modelscope-studio/compiled": "workspace:*"
+    "@modelscope-studio/compiled": "workspace:*",
+    "@modelscope-studio/shared": "workspace:*"
   },
   "devDependencies": {
     "@gradio/preview": "0.9.1"

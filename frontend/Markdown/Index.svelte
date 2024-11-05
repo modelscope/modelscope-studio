@@ -8,6 +8,7 @@
     MarkdownCustomData,
     MarkdownProps,
   } from '@modelscope-studio/compiled';
+  import { gradio_version } from '@modelscope-studio/shared';
 
   import Markdown from './shared/Markdown.svelte';
 
@@ -36,7 +37,7 @@
   export let preview = true;
   export let custom_components: CustomComponents = {};
   const redirect_src_url = (src: string): string => {
-    const replaceStr = `${root}${proxy_url ? `/proxy=${proxy_url.endsWith('/') ? proxy_url.slice(0, -1) : proxy_url}` : ''}/file=`;
+    const replaceStr = `${root}${proxy_url ? `/proxy=${proxy_url.endsWith('/') ? proxy_url.slice(0, -1) : proxy_url}` : ''}${gradio_version >= 5 ? '/gradio_api' : ''}/file=`;
     return src.includes(replaceStr)
       ? src
       : src.replaceAll('/file=', replaceStr);
