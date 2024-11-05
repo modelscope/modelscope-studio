@@ -77,15 +77,14 @@ function get_gradio_version(): string {
   const match = el.className.match(/gradio-container-(.+)/);
   return match ? match[1] : '';
 }
-const gradio_version = get_gradio_version();
+export const gradio_version = +get_gradio_version()[0];
 
 export function get_fetchable_url_or_file(
   path: string | null,
   server_url: string,
   proxy_url: string | null
 ): string {
-  const version = gradio_version[0];
-  const prefix = +version >= 5 ? 'gradio_api/' : '';
+  const prefix = gradio_version >= 5 ? 'gradio_api/' : '';
 
   if (path == null) {
     return proxy_url

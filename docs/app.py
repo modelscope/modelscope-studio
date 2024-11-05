@@ -1,30 +1,107 @@
-import gradio as gr
-from api.app import docs as api_docs
-from components.Chatbot.app import docs as chatbot_docs
-from components.Docs import Docs
-from components.Flow.app import docs as flow_docs
-from components.Lifecycle.app import docs as lifecycle_docs
-from components.Markdown.app import docs as markdown_docs
-from components.MultimodalInput.app import docs as multimodel_input_docs
-from components.WaterfallGallery.app import docs as waterfall_gallery_docs
+import os
+from typing import Literal
 
-readme_docs = Docs(__file__)
+from helper.Site import Site
+from legacy_app import legacy_demo
 
-docs = [
-    ["Quick Start", readme_docs],
-    ["API", api_docs],
-    ["Chatbot", chatbot_docs],
-    ["MultimodalInput", multimodel_input_docs],
-    ["Markdown", markdown_docs],
-    ["Lifecycle", lifecycle_docs],
-    ["WaterfallGallery", waterfall_gallery_docs],
-    ["Flow", flow_docs],
+import modelscope_studio.components.antd as antd
+import modelscope_studio.components.base as ms
+
+
+def get_docs(file_path: str, type: Literal["antd", "base"]):
+    import importlib.util
+
+    components = []
+    components_dir = os.path.join(os.path.dirname(file_path), "components",
+                                  type)
+    for dir in os.listdir(components_dir):
+        abs_dir = os.path.join(components_dir, dir)
+        if os.path.isdir(abs_dir):
+            app_file = os.path.join(abs_dir, "app.py")
+            if os.path.exists(app_file):
+                components.append(dir)
+
+    docs = {}
+    for component in components:
+        spec = importlib.util.spec_from_file_location(
+            "doc", os.path.join(components_dir, component, "app.py"))
+        module = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(module)
+        docs[component] = module
+    return docs
+
+
+base_docs = get_docs(__file__, "base")
+antd_docs = get_docs(__file__, "antd")
+
+default_active_tab = "antd"
+
+base_menu_items = [{"label": "Application", "key": "application"}]
+
+antd_menu_items = [{
+    "label":
+    "General",
+    "type":
+    "group",
+    "children": [{
+        "label": "Button",
+        "key": "button"
+    }, {
+        "label": "FloatButton",
+        "key": "float_button"
+    }]
+}, {
+    "label": "Layout",
+    "type": "group",
+    "children": [{
+        "label": "Divider",
+        "key": "divider"
+    }]
+}]
+
+tabs = [
+    {
+        "label": "Base",
+        "key": "base",
+        "default_active_key": "application",
+        "menus": base_menu_items
+    },
+    {
+        "label": "Antd",
+        "key": "antd",
+        "default_active_key": "button",
+        "menus": antd_menu_items
+    },
+    {
+        "label": "Legacy",
+        "key": "legacy",
+        "content": legacy_demo
+    },
 ]
 
-with gr.Blocks() as demo:
-    with gr.Tabs() as components_tabs:
-        for doc in docs:
-            with gr.TabItem(doc[0], id=doc[0]):
-                doc[1].render(components_tabs)
 
-demo.queue().launch()
+def logo():
+    with antd.Flex(align='center', gap=8):
+        antd.Image(os.path.join(os.path.dirname(__file__),
+                                "./resources/modelscope.png"),
+                   preview=False,
+                   height=32)
+        ms.Span('✖️')
+        antd.Image(os.path.join(os.path.dirname(__file__),
+                                "./resources/gradio.png"),
+                   preview=False,
+                   height=64)
+
+
+site = Site(tabs=tabs,
+            docs={
+                **antd_docs,
+                **base_docs
+            },
+            default_active_tab=default_active_tab,
+            logo=logo)
+
+demo = site.render()
+
+if __name__ == "__main__":
+    demo.launch()

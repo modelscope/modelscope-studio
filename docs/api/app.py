@@ -1,6 +1,6 @@
 import os
 
-from components.Docs import Docs
+from components.legacy.Docs import Docs
 
 
 def resolve(relative_path: str):

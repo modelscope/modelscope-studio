@@ -12,9 +12,9 @@ class AntdModal(ModelScopeLayoutComponent):
     Ant Design: https://ant.design/components/modal
     """
     EVENTS = [
-        EventListener("ok",
-                      callback=lambda block: block._internal.update(
-                          bind_cancel_event=True)),
+        EventListener(
+            "ok",
+            callback=lambda block: block._internal.update(bind_ok_event=True)),
         EventListener("cancel",
                       callback=lambda block: block._internal.update(
                           bind_cancel_event=True))

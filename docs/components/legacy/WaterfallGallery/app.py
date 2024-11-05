@@ -1,4 +1,4 @@
-from components.Docs import Docs
+from components.legacy.Docs import Docs
 
 docs = Docs(__file__)
 
