@@ -1,3 +1,5 @@
+from typing import Callable
+
 import gradio as gr
 from gradio.components.base import Component
 
@@ -11,11 +13,11 @@ class Site:
                  tabs: list,
                  docs: dict,
                  default_active_tab: str | None = None,
-                 logo: Component | None = None):
+                 logo: Component | Callable | None = None):
         self.tabs = tabs
         self.docs = docs
         self.default_active_tab = default_active_tab
-        self.default_active_menu = next(
+        self.default_active_tab_item = next(
             (item for item in self.tabs if item["key"] == default_active_tab),
             {})
         self.logo = logo
@@ -61,17 +63,20 @@ class Site:
                             "calc(100vh - var(--size-4) - var(--body-text-size) * 1.5)"
                     )):
                         with antd.Layout.Header(elem_style=dict(
-                                padding='0 16px')):
+                                padding='0 16px',
+                                backgroundColor=
+                                "var(--ms-gr-ant-color-bg-container)")):
                             with antd.Flex(align='center', gap=8):
                                 if self.logo:
-                                    with antd.Flex(justify="center",
-                                                   align='center',
-                                                   elem_style=dict(
-                                                       width=200,
-                                                       height='100%')):
-                                        self.logo.render()
+                                    with antd.Flex(
+                                            justify="center",
+                                            align='center',
+                                            elem_style=dict(height='100%')):
+                                        if callable(self.logo):
+                                            self.logo()
+                                        else:
+                                            self.logo.render()
                                 tab_menu = antd.Menu(
-                                    theme="dark",
                                     mode="horizontal",
                                     default_selected_keys=[
                                         self.default_active_tab
@@ -83,20 +88,24 @@ class Site:
                             with antd.Layout.Sider(elem_style=dict(
                                     height="calc(100vh - 64px)",
                                     overflow="auto",
-                                    position="relative")):
+                                    position="relative",
+                                    backgroundColor=
+                                    "var(--ms-gr-ant-color-bg-container)")):
 
                                 layout_menu = antd.Menu(
                                     default_selected_keys=[
-                                        self.default_active_menu["key"]
+                                        self.default_active_tab_item[
+                                            "default_active_key"]
                                     ],
                                     mode="inline",
-                                    theme="dark",
-                                    items=self.default_active_menu["menus"])
+                                    items=self.default_active_tab_item["menus"]
+                                )
                             with antd.Layout():
                                 with antd.Layout.Content(elem_style=dict(
-                                        padding=12, overflow="auto")):
+                                        padding='12px 28px', overflow="auto")):
                                     with antd.Tabs(default_active_key=self.
-                                                   default_active_menu["key"],
+                                                   default_active_tab_item[
+                                                       "default_active_key"],
                                                    render_tab_bar="() => null"
                                                    ) as rendered_tabs:
                                         for tab in self.tabs:

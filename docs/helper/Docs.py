@@ -4,7 +4,6 @@ import re
 import gradio as gr
 
 import modelscope_studio.components.antd as antd
-import modelscope_studio.components.base as ms
 import modelscope_studio.components.legacy as mgr
 
 from .parse_markdown import parse_markdown
