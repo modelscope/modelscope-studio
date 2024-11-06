@@ -4,6 +4,7 @@ import re
 import gradio as gr
 
 import modelscope_studio.components.antd as antd
+import modelscope_studio.components.base as ms
 import modelscope_studio.components.legacy as mgr
 
 from .parse_markdown import parse_markdown
@@ -76,10 +77,19 @@ class Docs:
                   "r") as f:
             return f.read()
 
-    def _render_demo(self, demo_name, prefix='', suffix='', fixed=False):
+    def _render_demo(self,
+                     demo_name,
+                     prefix='',
+                     suffix='',
+                     fixed=False,
+                     title=''):
         content = self._read_file(f"./demos/{demo_name}.py")
         module = self.demo_modules[demo_name]
-        with antd.Card(styles=dict(body=dict(padding=10))):
+        with antd.Card(styles=dict(body=dict(padding=10)),
+                       elem_style=dict(margin="8px 0")):
+            if title:
+                with ms.Slot("title"):
+                    ms.Text(title)
             with antd.Row(align="stretch", wrap=False):
                 with antd.Col(span=10):
                     with antd.Flex(elem_style=dict(height='100%')):
@@ -110,7 +120,8 @@ class Docs:
                 self._render_demo(item["name"],
                                   prefix=item["prefix"],
                                   suffix=item["suffix"],
-                                  fixed=item["fixed"])
+                                  fixed=item["fixed"],
+                                  title=item["title"])
 
     def render(self):
         with gr.Blocks() as demo:

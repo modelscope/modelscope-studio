@@ -3,7 +3,7 @@ from __future__ import annotations
 from gradio.events import EventListener
 
 from ....utils.dev import ModelScopeComponent, resolve_frontend_dir
-from .iconfont_provider import AntdIconfontProvider
+from .iconfont_provider import AntdIconIconfontProvider
 
 
 class AntdIcon(ModelScopeComponent):
@@ -13,7 +13,7 @@ class AntdIcon(ModelScopeComponent):
     Semantic vector graphics.
     """
 
-    IconfontProvider = AntdIconfontProvider
+    IconfontProvider = AntdIconIconfontProvider
 
     EVENTS = [
         EventListener("click",

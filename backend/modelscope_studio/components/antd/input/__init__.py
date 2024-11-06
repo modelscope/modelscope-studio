@@ -54,7 +54,7 @@ class AntdInput(ModelScopeDataLayoutComponent):
             disabled: bool = False,
             max_length: int | None = None,
             prefix: str | None = None,
-            show_count: bool | str = False,
+            show_count: bool | dict = False,
             size: Literal['large', 'middle', 'small'] | None = None,
             status: Literal['error', 'warning'] | None = None,
             styles: dict | None = None,

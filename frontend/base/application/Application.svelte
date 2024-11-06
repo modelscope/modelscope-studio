@@ -87,11 +87,10 @@
       gradio.dispatch('unmount', get_data());
     }
   });
-
+  window.ms_globals.dispatch = (...args) => {
+    gradio.dispatch('custom', args);
+  };
   onMount(() => {
-    window.ms_globals.dispatch = (...args) => {
-      gradio.dispatch('custom', args);
-    };
     requestAnimationFrame(() => {
       on_mount();
     });

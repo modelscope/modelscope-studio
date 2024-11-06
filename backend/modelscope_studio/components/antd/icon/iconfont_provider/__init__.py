@@ -3,7 +3,7 @@ from __future__ import annotations
 from .....utils.dev import ModelScopeLayoutComponent, resolve_frontend_dir
 
 
-class AntdIconfontProvider(ModelScopeLayoutComponent):
+class AntdIconIconfontProvider(ModelScopeLayoutComponent):
     """
     Ant Design: https://ant.design/components/icon
 

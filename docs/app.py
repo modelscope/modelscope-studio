@@ -2,10 +2,11 @@ import os
 from typing import Literal
 
 from helper.Site import Site
-from legacy_app import legacy_demo
 
 import modelscope_studio.components.antd as antd
 import modelscope_studio.components.base as ms
+
+# from legacy_app import legacy_demo
 
 
 def get_docs(file_path: str, type: Literal["antd", "base"]):
@@ -39,6 +40,9 @@ default_active_tab = "antd"
 base_menu_items = [{"label": "Application", "key": "application"}]
 
 antd_menu_items = [{
+    "label": "Overview",
+    "key": "overview"
+}, {
     "label":
     "General",
     "type":
@@ -49,6 +53,9 @@ antd_menu_items = [{
     }, {
         "label": "FloatButton",
         "key": "float_button"
+    }, {
+        "label": "Icon",
+        "key": "icon"
     }]
 }, {
     "label": "Layout",
@@ -69,14 +76,14 @@ tabs = [
     {
         "label": "Antd",
         "key": "antd",
-        "default_active_key": "button",
+        "default_active_key": "overview",
         "menus": antd_menu_items
     },
-    {
-        "label": "Legacy",
-        "key": "legacy",
-        "content": legacy_demo
-    },
+    # {
+    #     "label": "Legacy",
+    #     "key": "legacy",
+    #     "content": legacy_demo
+    # },
 ]
 
 
@@ -85,12 +92,12 @@ def logo():
         antd.Image(os.path.join(os.path.dirname(__file__),
                                 "./resources/modelscope.png"),
                    preview=False,
-                   height=32)
+                   height=20)
         ms.Span('✖️')
         antd.Image(os.path.join(os.path.dirname(__file__),
                                 "./resources/gradio.png"),
                    preview=False,
-                   height=64)
+                   height=40)
 
 
 site = Site(tabs=tabs,

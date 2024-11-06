@@ -1,7 +1,9 @@
 import { sveltify } from '@svelte-preprocess-react';
 import { ReactSlot } from '@svelte-preprocess-react/react-slot';
 import type { SetSlotParams } from '@svelte-preprocess-react/slot';
+import { useMemo } from 'react';
 import { useFunction } from '@utils/hooks/useFunction';
+import { omitUndefinedProps } from '@utils/omitUndefinedProps';
 import { renderParamsSlot } from '@utils/renderParamsSlot';
 import { type GetProps, Input as AInput } from 'antd';
 
@@ -51,16 +53,26 @@ export const InputTextarea = sveltify<
                 }
               : typeof showCount === 'object' && showCountFunction
                 ? {
+                    ...showCount,
                     formatter: showCountFunction,
                   }
                 : showCount
           }
-          count={{
-            ...count,
-            exceedFormatter: countExceedFormatterFunction,
-            strategy: countStrategyFunction,
-            show: countShowFunction || count?.show,
-          }}
+          count={useMemo(
+            () =>
+              omitUndefinedProps({
+                ...count,
+                exceedFormatter: countExceedFormatterFunction,
+                strategy: countStrategyFunction,
+                show: countShowFunction || count?.show,
+              }),
+            [
+              count,
+              countExceedFormatterFunction,
+              countStrategyFunction,
+              countShowFunction,
+            ]
+          )}
           allowClear={
             slots['allowClear.clearIcon']
               ? {

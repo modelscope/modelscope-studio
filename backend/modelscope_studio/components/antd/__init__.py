@@ -51,7 +51,8 @@ from .form.item.rule import AntdFormItemRule as FormItemRule
 from .grid.col import AntdCol as Col
 from .grid.row import AntdRow as Row
 from .icon import AntdIcon as Icon
-from .icon.iconfont_provider import AntdIconfontProvider as IconfontProvider
+from .icon.iconfont_provider import \
+  AntdIconIconfontProvider as IconIconfontProvider
 from .image import AntdImage as Image
 from .image.preview_group import AntdImagePreviewGroup as ImagePreviewGroup
 from .input import AntdInput as Input

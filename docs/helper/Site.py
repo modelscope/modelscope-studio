@@ -22,15 +22,21 @@ class Site:
             {})
         self.logo = logo
 
-    def _render_docs(self, items: list):
+    def _render_docs(self, items: list, tab: dict):
+        docs_tabs = []
         for item in items:
             if "children" in item:
-                self._render_docs(item["children"])
+                docs_tabs.extend(self._render_docs(item["children"], tab))
             elif "key" in item:
                 key = item["key"].replace("-", "_")
                 if key in self.docs:
-                    with antd.Tabs.Item(key=key):
+                    with antd.Tabs.Item(
+                            key=key,
+                            visible=True if tab.get("default_active_key")
+                            == key else False) as docs_tab:
+                        docs_tabs.append(docs_tab)
                         self.docs[key].docs.render()
+        return docs_tabs
 
     def render(self):
 
@@ -133,26 +139,39 @@ class Site:
                                                             render_tab_bar=
                                                             "() => null"
                                                     ) as layout_content_tabs:
-                                                        self._render_docs(
+                                                        docs_tabs = self._render_docs(
                                                             tab.get(
-                                                                "menus", []))
+                                                                "menus", []),
+                                                            tab)
 
                                             def on_layout_menu_select(
                                                     e: gr.EventData):
                                                 selected_menu = e._data[
                                                     "payload"][0]["key"]
-                                                return gr.update(
-                                                    selected_keys=[
+                                                item = next(
+                                                    (item for item in docs_tabs
+                                                     if item.key ==
+                                                     selected_menu),
+                                                    docs_tabs[0])
+                                                return {
+                                                    sider_menu:
+                                                    gr.update(selected_keys=[
                                                         selected_menu
-                                                    ]
-                                                ), gr.update(
-                                                    active_key=selected_menu)
+                                                    ]),
+                                                    layout_content_tabs:
+                                                    gr.update(
+                                                        active_key=selected_menu
+                                                    ),
+                                                    item:
+                                                    gr.update(visible=True)
+                                                }
 
                                             sider_menu.select(
                                                 fn=on_layout_menu_select,
                                                 outputs=[
                                                     sider_menu,
-                                                    layout_content_tabs
+                                                    layout_content_tabs,
+                                                    *docs_tabs
                                                 ])
                         tab_menu.select(
                             fn=on_tab_menu_select,

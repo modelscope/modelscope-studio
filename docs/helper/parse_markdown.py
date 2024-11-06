@@ -46,7 +46,8 @@ class MarkdownParser(HTMLParser):
                 "name": dict(attrs)["name"],
                 "fixed": "fixed" in dict(attrs),
                 "prefix": "",
-                "suffix": ""
+                "suffix": "",
+                "title": dict(attrs).get("title", "")
             })
         elif tag == "file":
             content = self.read_file(dict(attrs)["src"])

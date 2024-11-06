@@ -49,7 +49,7 @@ from .form.item.rule import AntdFormItemRule
 from .grid.col import AntdCol
 from .grid.row import AntdRow
 from .icon import AntdIcon
-from .icon.iconfont_provider import AntdIconfontProvider
+from .icon.iconfont_provider import AntdIconIconfontProvider
 from .image import AntdImage
 from .image.preview_group import AntdImagePreviewGroup
 from .input import AntdInput
