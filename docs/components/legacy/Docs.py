@@ -153,7 +153,7 @@ class Docs:
     def render(self, components_tabs=None):
 
         def tab_link_click(data: gr.EventData):
-            tab: str = data._data["value"].get("tab", '')
+            tab: str = data._data.get("value", {}).get("tab", '')
             component_tab: str = data._data["value"].get("component_tab", '')
             if tab and tabs:
                 return {tabs: gr.update(selected=tab)}

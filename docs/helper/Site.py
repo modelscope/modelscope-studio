@@ -37,33 +37,14 @@ class Site:
         def on_tab_menu_select(e: gr.EventData):
             selected_tab = e._data["payload"][0]["key"]
             item = next(
-                (item for item in self.tabs if item["key"] == selected_tab),
-                {})
-            if "content" in item:
-                return {
-                    tab_menu: gr.update(selected_keys=[selected_tab]),
-                    layout_content: gr.update(visible=False),
-                    render_tabs: gr.update(active_key=selected_tab)
-                }
+                (item for item in tab_components if item.key == selected_tab),
+                tab_components[0])
 
             return {
-                tab_menu:
-                gr.update(selected_keys=[selected_tab]),
-                sider_menu:
-                gr.update(selected_keys=[item.get("default_active_key", None)],
-                          items=item.get("menus", [])),
-                layout_content_tabs:
-                gr.update(active_key=item.get("default_active_key", None)),
-                layout_content:
-                gr.update(visible=True),
-                render_tabs:
-                gr.update(active_key=selected_tab)
+                tab_menu: gr.update(selected_keys=[selected_tab]),
+                tabs: gr.update(active_key=selected_tab),
+                item: gr.update(visible=True)
             }
-
-        def on_layout_menu_select(e: gr.EventData):
-            selected_menu = e._data["payload"][0]["key"]
-            return gr.update(selected_keys=[selected_menu]), gr.update(
-                active_key=selected_menu)
 
         with gr.Blocks(css="""
 .gradio-container {
@@ -96,54 +77,84 @@ class Site:
                                     selected_keys=[self.default_active_tab],
                                     items=self.tabs,
                                     elem_style=dict(flex=1, minWidth=0))
-                        # custom render
-                        with antd.Tabs(active_key=self.default_active_tab,
-                                       render_tab_bar="() => null",
-                                       elem_style=dict(
-                                           maxHeight="100%",
-                                           overflow="auto")) as render_tabs:
+
+                        with antd.Tabs(
+                                active_key=self.default_active_tab,
+                                render_tab_bar="() => null",
+                        ) as tabs:
+                            tab_components = []
                             for tab in self.tabs:
-                                if "content" in tab:
-                                    with antd.Tabs.Item(key=tab["key"]):
-                                        tab["content"].render()
-                        # menus render
-                        with antd.Layout(elem_style=dict(
-                                height="calc(100% - 64px)")) as layout_content:
-                            with antd.Layout.Sider(elem_style=dict(
-                                    height="calc(100vh - 64px)",
-                                    overflow="auto",
-                                    position="relative",
-                                    backgroundColor=
-                                    "var(--ms-gr-ant-color-bg-container)")):
+                                with antd.Tabs.Item(
+                                        key=tab["key"],
+                                        elem_style=dict(
+                                            height=
+                                            "calc(100vh - var(--size-4) - var(--body-text-size) * 1.5 - 64px)"
+                                        ),
+                                        visible=True if self.default_active_tab
+                                        == tab["key"] else False) as tab_item:
+                                    tab_components.append(tab_item)
+                                    if "content" in tab:
+                                        # custom render
+                                        with ms.Div(elem_style=dict(
+                                                maxHeight="100%",
+                                                overflow="auto")):
+                                            tab["content"].render()
+                                    elif "menus" in tab:
+                                        # menus render
+                                        with antd.Layout(elem_style=dict(
+                                                height='100%')):
+                                            with antd.Layout.Sider(
+                                                    elem_style=dict(
+                                                        height=
+                                                        "calc(100vh - 64px)",
+                                                        overflow="auto",
+                                                        position="relative",
+                                                        backgroundColor=
+                                                        "var(--ms-gr-ant-color-bg-container)"
+                                                    )):
 
-                                sider_menu = antd.Menu(
-                                    selected_keys=[
-                                        self.default_active_tab_item.get(
-                                            "default_active_key", None)
-                                    ],
-                                    mode="inline",
-                                    items=self.default_active_tab_item.get(
-                                        "menus", []))
-                            with antd.Layout():
-                                with antd.Layout.Content(elem_style=dict(
-                                        padding='12px 28px', overflow="auto")):
-                                    with antd.Tabs(active_key=self.
-                                                   default_active_tab_item.get(
-                                                       "default_active_key",
-                                                       None),
-                                                   render_tab_bar="() => null"
-                                                   ) as layout_content_tabs:
-                                        for tab in self.tabs:
-                                            self._render_docs(
-                                                tab.get("menus", []))
+                                                sider_menu = antd.Menu(
+                                                    selected_keys=[
+                                                        tab.get(
+                                                            "default_active_key",
+                                                            None)
+                                                    ],
+                                                    mode="inline",
+                                                    items=tab.get("menus", []))
+                                            with antd.Layout():
+                                                with antd.Layout.Content(
+                                                        elem_style=dict(
+                                                            padding='12px 28px',
+                                                            overflow="auto")):
+                                                    with antd.Tabs(
+                                                            active_key=tab.get(
+                                                                "default_active_key",
+                                                                None),
+                                                            render_tab_bar=
+                                                            "() => null"
+                                                    ) as layout_content_tabs:
+                                                        self._render_docs(
+                                                            tab.get(
+                                                                "menus", []))
 
-                            sider_menu.select(
-                                fn=on_layout_menu_select,
-                                outputs=[sider_menu, layout_content_tabs])
-                        tab_menu.select(fn=on_tab_menu_select,
-                                        outputs=[
-                                            tab_menu, sider_menu,
-                                            layout_content_tabs,
-                                            layout_content, render_tabs
-                                        ])
+                                            def on_layout_menu_select(
+                                                    e: gr.EventData):
+                                                selected_menu = e._data[
+                                                    "payload"][0]["key"]
+                                                return gr.update(
+                                                    selected_keys=[
+                                                        selected_menu
+                                                    ]
+                                                ), gr.update(
+                                                    active_key=selected_menu)
+
+                                            sider_menu.select(
+                                                fn=on_layout_menu_select,
+                                                outputs=[
+                                                    sider_menu,
+                                                    layout_content_tabs
+                                                ])
+                        tab_menu.select(
+                            fn=on_tab_menu_select,
+                            outputs=[tab_menu, tabs, *tab_components])
         return demo
