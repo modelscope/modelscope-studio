@@ -1,6 +1,6 @@
-# Button
+# FloatButton
 
-See [Ant Design](https://ant.design/components/float-button/) for more information.
+A button that floats at the top of the page. See [Ant Design](https://ant.design/components/float-button/) for more information.
 
 ## Examples
 

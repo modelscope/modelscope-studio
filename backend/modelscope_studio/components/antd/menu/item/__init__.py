@@ -32,6 +32,7 @@ class AntdMenuItem(ModelScopeLayoutComponent):
             icon: str | None = None,
             key: str | None = None,
             theme: Literal['dark', 'light'] = None,
+            type: Literal['group'] | None = None,
             popup_class_name: str | None = None,
             popup_offset: tuple[int | float, int | float] | None = None,
             as_item: str | None = None,
@@ -59,6 +60,7 @@ class AntdMenuItem(ModelScopeLayoutComponent):
         self.icon = icon
         self.key = key
         self.theme = theme
+        self.type = type
         self.popup_class_name = popup_class_name
         self.popup_offset = popup_offset
 

@@ -3,6 +3,7 @@ import { ReactSlot } from '@svelte-preprocess-react/react-slot';
 import type { SetSlotParams } from '@svelte-preprocess-react/slot';
 import React, { useMemo } from 'react';
 import { useSlotsChildren } from '@utils/hooks/useSlotsChildren';
+import { omitUndefinedProps } from '@utils/omitUndefinedProps';
 import { renderParamsSlot } from '@utils/renderParamsSlot';
 import { type GetProps, Typography } from 'antd';
 import type { EllipsisConfig } from 'antd/es/typography/Base';
@@ -24,6 +25,7 @@ export const TypographyBase = sveltify<
     GetProps<typeof Typography.Link> & {
       component: 'title' | 'paragraph' | 'text' | 'link';
       setSlotParams: SetSlotParams;
+      value?: string;
     },
   [
     // list
@@ -47,6 +49,7 @@ export const TypographyBase = sveltify<
     editable,
     ellipsis,
     setSlotParams,
+    value,
     ...props
   }) => {
     const copyableTooltipsTargets = useTargets(children, 'copyable.tooltips');
@@ -88,7 +91,8 @@ export const TypographyBase = sveltify<
           className={cls(className, `ms-gr-antd-typography-${component}`)}
           copyable={
             supportCopy
-              ? {
+              ? omitUndefinedProps({
+                  text: value,
                   ...getConfig(copyable),
                   tooltips:
                     copyableTooltipsTargets.length > 0
@@ -102,7 +106,7 @@ export const TypographyBase = sveltify<
                           return <ReactSlot key={index} slot={slot} />;
                         })
                       : copyableConfig.icon,
-                }
+                })
               : undefined
           }
           editable={

@@ -35,9 +35,19 @@ def get_docs(file_path: str, type: Literal["antd", "base"]):
 base_docs = get_docs(__file__, "base")
 antd_docs = get_docs(__file__, "antd")
 
-default_active_tab = "antd"
+default_active_tab = "base"
 
-base_menu_items = [{"label": "Application", "key": "application"}]
+base_menu_items = [{
+    "label": "Overview",
+    "key": "overview"
+}, {
+    "label": "Core",
+    "type": "group",
+    "children": [{
+        "label": "Application",
+        "key": "application"
+    }]
+}]
 
 antd_menu_items = [{
     "label": "Overview",
@@ -56,6 +66,9 @@ antd_menu_items = [{
     }, {
         "label": "Icon",
         "key": "icon"
+    }, {
+        "label": "Typography",
+        "key": "typography"
     }]
 }, {
     "label": "Layout",
@@ -65,26 +78,6 @@ antd_menu_items = [{
         "key": "divider"
     }]
 }]
-
-tabs = [
-    {
-        "label": "Base",
-        "key": "base",
-        "default_active_key": "application",
-        "menus": base_menu_items
-    },
-    {
-        "label": "Antd",
-        "key": "antd",
-        "default_active_key": "overview",
-        "menus": antd_menu_items
-    },
-    # {
-    #     "label": "Legacy",
-    #     "key": "legacy",
-    #     "content": legacy_demo
-    # },
-]
 
 
 def logo():
@@ -100,13 +93,46 @@ def logo():
                    height=40)
 
 
-site = Site(tabs=tabs,
-            docs={
-                **antd_docs,
-                **base_docs
-            },
-            default_active_tab=default_active_tab,
-            logo=logo)
+def more_components():
+    with antd.Button(type="link",
+                     href="https://ant.design/components/overview/",
+                     href_target="_blank"):
+        ms.Text("More Components")
+
+        with ms.Slot("icon"):
+            antd.Icon("ExportOutlined")
+
+
+tabs = [
+    {
+        "label": "Base",
+        "key": "base",
+        "default_active_key": "overview",
+        "menus": base_menu_items
+    },
+    {
+        "label": "Antd",
+        "key": "antd",
+        "default_active_key": "overview",
+        "menus": antd_menu_items,
+        "extra_menu_footer": more_components
+    },
+    # {
+    #     "label": "Legacy",
+    #     "key": "legacy",
+    #     "content": legacy_demo
+    # },
+]
+
+site = Site(
+    tabs=tabs,
+    docs={
+        # match the key of tabs
+        "antd": antd_docs,
+        "base": base_docs
+    },
+    default_active_tab=default_active_tab,
+    logo=logo)
 
 demo = site.render()
 

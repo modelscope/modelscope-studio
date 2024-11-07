@@ -1,6 +1,6 @@
-# FloatButton
+# Typography
 
-A button that floats at the top of the page. See [Ant Design](https://ant.design/components/float-button/) for more information.
+Basic text writing, including headings, body text, lists, and more. See [Ant Design](https://ant.design/components/typography/) for more information.
 
 ## Examples
 

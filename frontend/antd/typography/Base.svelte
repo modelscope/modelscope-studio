@@ -80,6 +80,7 @@
       {...$mergedProps.props}
       {...bindEvents($mergedProps)}
       slots={$slots}
+      value={$mergedProps.value}
       {setSlotParams}
     >
       {#if $mergedProps._internal.layout}

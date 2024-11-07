@@ -29,13 +29,14 @@ class Site:
                 docs_tabs.extend(self._render_docs(item["children"], tab))
             elif "key" in item:
                 key = item["key"].replace("-", "_")
-                if key in self.docs:
+                tab_docs = self.docs.get(tab["key"], {})
+                if key in tab_docs:
                     with antd.Tabs.Item(
                             key=key,
                             visible=True if tab.get("default_active_key")
                             == key else False) as docs_tab:
                         docs_tabs.append(docs_tab)
-                        self.docs[key].docs.render()
+                        tab_docs[key].docs.render()
         return docs_tabs
 
     def render(self):
@@ -118,7 +119,6 @@ class Site:
                                                         backgroundColor=
                                                         "var(--ms-gr-ant-color-bg-container)"
                                                     )):
-
                                                 sider_menu = antd.Menu(
                                                     selected_keys=[
                                                         tab.get(
@@ -127,6 +127,16 @@ class Site:
                                                     ],
                                                     mode="inline",
                                                     items=tab.get("menus", []))
+                                                if "extra_menu_footer" in tab:
+                                                    if callable(tab[
+                                                            "extra_menu_footer"]
+                                                                ):
+                                                        tab["extra_menu_footer"](
+                                                        )
+                                                    else:
+                                                        tab["extra_menu_footer"].render(
+                                                        )
+
                                             with antd.Layout():
                                                 with antd.Layout.Content(
                                                         elem_style=dict(
@@ -144,35 +154,42 @@ class Site:
                                                                 "menus", []),
                                                             tab)
 
-                                            def on_layout_menu_select(
-                                                    e: gr.EventData):
-                                                selected_menu = e._data[
-                                                    "payload"][0]["key"]
-                                                item = next(
-                                                    (item for item in docs_tabs
-                                                     if item.key ==
-                                                     selected_menu),
-                                                    docs_tabs[0])
-                                                return {
-                                                    sider_menu:
-                                                    gr.update(selected_keys=[
-                                                        selected_menu
-                                                    ]),
-                                                    layout_content_tabs:
-                                                    gr.update(
-                                                        active_key=selected_menu
-                                                    ),
-                                                    item:
-                                                    gr.update(visible=True)
-                                                }
+                                    def on_layout_menu_select_wrapper(
+                                            tabs, sider_menu,
+                                            layout_content_tabs):
 
-                                            sider_menu.select(
-                                                fn=on_layout_menu_select,
-                                                outputs=[
-                                                    sider_menu,
-                                                    layout_content_tabs,
-                                                    *docs_tabs
-                                                ])
+                                        def on_layout_menu_select(
+                                                e: gr.EventData):
+                                            selected_menu = e._data["payload"][
+                                                0]["key"]
+
+                                            item = next(
+                                                (item for item in tabs
+                                                 if item.key == selected_menu),
+                                                tabs[0])
+
+                                            return {
+                                                sider_menu:
+                                                gr.update(selected_keys=[
+                                                    selected_menu
+                                                ]),
+                                                layout_content_tabs:
+                                                gr.update(
+                                                    active_key=selected_menu),
+                                                item:
+                                                gr.update(visible=True)
+                                            }
+
+                                        return on_layout_menu_select
+
+                                    sider_menu.select(
+                                        fn=on_layout_menu_select_wrapper(
+                                            docs_tabs, sider_menu,
+                                            layout_content_tabs),
+                                        outputs=[
+                                            sider_menu, layout_content_tabs,
+                                            *docs_tabs
+                                        ])
                         tab_menu.select(
                             fn=on_tab_menu_select,
                             outputs=[tab_menu, tabs, *tab_components])
