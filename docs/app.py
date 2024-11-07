@@ -41,11 +41,46 @@ base_menu_items = [{
     "label": "Overview",
     "key": "overview"
 }, {
-    "label": "Core",
-    "type": "group",
+    "label":
+    "Core",
+    "type":
+    "group",
     "children": [{
         "label": "Application",
         "key": "application"
+    }, {
+        "label": "Slot",
+        "key": "slot"
+    }, {
+        "label": "Fragment",
+        "key": "fragment"
+    }]
+}, {
+    "label":
+    "Layout",
+    "type":
+    "group",
+    "children": [{
+        "label": "Div",
+        "key": "div"
+    }, {
+        "label": "Span",
+        "key": "span"
+    }, {
+        "label": "Text",
+        "key": "text"
+    }]
+}, {
+    "label":
+    "Flow-Control",
+    "type":
+    "group",
+    "children": [{
+        "label": "Each",
+        "key": "each"
+    }, {
+        "label": "Filter",
+        "key": "filter"
     }]
 }]
 

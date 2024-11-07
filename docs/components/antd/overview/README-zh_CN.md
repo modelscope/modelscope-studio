@@ -1,6 +1,6 @@
 # 概览
 
-`modelscope_studio`集成了 [Ant Design](https://ant.design/components/icon/) 的组件，并支持大部分的组件属性，您只需要引入`antd`模块即可直接使用。
+`modelscope_studio`集成了 [Ant Design](https://ant.design/) 的组件，并支持大部分的组件属性，您只需要引入`antd`模块即可直接使用。
 
 ```python
 import modelscope_studio.components.antd as antd

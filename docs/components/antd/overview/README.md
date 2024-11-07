@@ -1,40 +1,40 @@
-# 概览
+# Overview
 
-`modelscope_studio`集成了 [Ant Design](https://ant.design/components/icon/) 的组件，并支持大部分的组件属性，您只需要引入`antd`模块即可直接使用。
+`modelscope_studio` integrates [Ant Design](https://ant.design/) components and supports most component properties. You can use them directly by importing the `antd` module.
 
 ```python
 import modelscope_studio.components.antd as antd
 ```
 
-## 快速开始
+## Quick Start
 
 <demo name="quick_start"></demo>
 
-注意：其中`ms.Application`与`antd.ConfigProvider`是必须的。
+Note: Both `ms.Application` and `antd.ConfigProvider` are required.
 
-- `Application` 包含了`modelscope_studio`中所有的组件依赖，请确保`modelscope_studio`所有导出的组件都被其包裹，否则页面将会无法成功预览。
-- `ConfigProvider` 与 Ant Design 中的功能一致，除此之外，我们还加了一些额外的适配来兼容 Gradio 的样式。因此，为了保证页面样式正常，所有的`antd`组件需要包裹在该组件下。
+- `Application` contains all component dependencies in `modelscope_studio`. Please ensure that all components exported from `modelscope_studio` are wrapped by it, otherwise the page will not be successfully previewed.
+- `ConfigProvider` functions the same as in Ant Design. Additionally, we have added some extra adaptations to be compatible with Gradio's styles. Therefore, to ensure normal page styling, all `antd` components need to be wrapped within this component.
 
-## 属性限制
+## Property Limitations
 
-由于 Python 的类型限制，一些组件属性的支持形式有所不同。
+Due to Python's type restrictions, the support for some component properties differs.
 
-### 事件
+### Events
 
-在`antd`中，所有以`onXxx`形式绑定的事件，均改为了`gradio`的事件绑定形式，如`onClick`、`onChange`等。如果您想要获取事件参数，也需要绑定`gr.EventData`，所有的事件参数都通过数组的形式保存在`e._data["payload"]`中。
+In `antd`, all events bound in the form of `onXxx` have been changed to Gradio's event binding form, such as `onClick`, `onChange`, etc. If you want to get event parameters, you also need to bind `gr.EventData`. All event parameters are stored in the form of an array in `e._data["payload"]`.
 
 <demo name="limit_event"></demo>
 
 ### ReactNode
 
-在 Python 中无法直接将某个组件作为参数，因此我们提供了插槽机制，您可以使用`ms.Slot`来包裹需要被渲染的模块。
+In Python, it's not possible to directly pass a component as a parameter, so we provide a slot mechanism. You can use `ms.Slot` to wrap the module that needs to be rendered.
 
 <demo name="limit_react_node"></demo>
 
-**注：**
+**Note:**
 
-- 您可以通过查看组件的`SLOTS`属性获取所有支持的插槽。
-- 如果您只想渲染一段字符串或数字，您依然可以直接将其作为组件的属性传入，无需使用`ms.Slot`。下面两种写法效果是一样的，并且更推荐直接作为组件属性传入：
+- You can view the `SLOTS` property of the component to get all supported slots.
+- If you only want to render a string or number, you can still pass it directly as a component property without using `ms.Slot`. The following two ways of writing have the same effect, and it's more recommended to pass it directly as a component property:
 
   ```python
   antd.Card(title="Card Title")
@@ -44,30 +44,30 @@ import modelscope_studio.components.antd as antd
       ms.Text("Card Title")
   ```
 
-### 普通函数（(...args) => {}）
+### Regular Functions ((...args) => {})
 
-为了支持在 Python 直接传入 Javascript 函数，我们将其改为了`str`类型。因此，您只需要传递普通的函数字符串即可，它会在前端被自动编译为 Javascript 函数。
+To support passing JavaScript functions directly in Python, we have changed them to `str` type. Therefore, you only need to pass a regular function string, and it will be automatically compiled into a JavaScript function on the frontend.
 
 <demo name="limit_function"></demo>
 
-我们在全局注入了事件通知对象，您可以通过在函数中调用`window.ms_globals.dispatch`来主动向 Python 端发送事件，在 Python 端可以通过`ms.Application.custom`事件接收。
+We have injected a global event notification object. You can actively send events to the Python side by calling `window.ms_globals.dispatch` in the function, which can be received on the Python side through the `ms.Application.custom` event.
 
 <demo name="limit_function_with_event"></demo>
 
-### 返回 ReactNode 的函数 ((...args) => ReactNode)
+### Functions Returning ReactNode ((...args) => ReactNode)
 
-当您的 Javascript 函数返回值为 ReactNode 时，我们提供了两种处理方式：
+When your JavaScript function returns a ReactNode, we provide two handling methods:
 
-1. 将其当做普通的 ReactNode 值，继续使用`ms.Slot`来渲染模块，在此基础上，`ms.Slot`还支持传入`params_mapping`参数，该参数同样接收一个 Javascript 函数字符串，它可以将函数的参数映射为当前`slot`环境的上下文（具体请参考`ms.Each`）。
+1. Treat it as a regular ReactNode value and continue using `ms.Slot` to render the module. Additionally, `ms.Slot` supports passing a `params_mapping` parameter, which also accepts a JavaScript function string. It can map the function's parameters to the context of the current `slot` environment (refer to `ms.Each` for details).
 
 <demo name="limit_react_node_function_by_slot"></demo>
 
-2. 将其当做普通函数，通过`window.ms_globals.React`与`window.ms_globals.antd`等全局变量在前端生成 ReactNode（注意此时不能使用 jsx，需要使用 `React.createElement`）。
+2. Treat it as a regular function and generate ReactNode on the frontend using global variables like `window.ms_globals.React` and `window.ms_globals.antd` (note that JSX cannot be used here, you need to use `React.createElement`).
 
 <demo name="limit_react_node_function_by_function"></demo>
 
-## 集成其他 Gradio 组件
+## Integrating Other Gradio Components
 
-某些组件的插槽可能只支持`modelscope_studio`中的组件，如果您想要支持其他的 Gradio 组件，您需要使用`Fragment`来将其包裹。
+Some component slots may only support components from `modelscope_studio`. If you want to support other Gradio components, you need to wrap them with `Fragment`.
 
 <demo name="integrate_other_components"></demo>
