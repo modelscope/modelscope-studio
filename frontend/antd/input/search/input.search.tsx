@@ -3,6 +3,7 @@ import { ReactSlot } from '@svelte-preprocess-react/react-slot';
 import type { SetSlotParams } from '@svelte-preprocess-react/slot';
 import { useMemo } from 'react';
 import { useFunction } from '@utils/hooks/useFunction';
+import { useValueChange } from '@utils/hooks/useValueChange';
 import { omitUndefinedProps } from '@utils/omitUndefinedProps';
 import { renderParamsSlot } from '@utils/renderParamsSlot';
 import { type GetProps, Input as AInput } from 'antd';
@@ -39,16 +40,20 @@ export const InputSearch = sveltify<
     const showCountFunction = useFunction(
       typeof showCount === 'object' ? showCount.formatter : undefined
     );
-
+    const [value, setValue] = useValueChange({
+      onValueChange,
+      value: props.value,
+    });
     return (
       <>
         <div style={{ display: 'none' }}>{children}</div>
         <AInput.Search
           {...props}
+          value={value}
           ref={elRef}
           onChange={(e) => {
             onChange?.(e);
-            onValueChange(e.target.value);
+            setValue(e.target.value);
           }}
           showCount={
             slots['showCount.formatter']

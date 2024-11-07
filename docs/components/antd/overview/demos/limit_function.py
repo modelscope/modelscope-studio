@@ -7,7 +7,8 @@ with gr.Blocks() as demo:
     with ms.Application():
         with antd.ConfigProvider():
             antd.Input(show_count=dict(formatter="""({ count }) => {
-                    return `${count} characters`;
-                }"""))
+                  return `${count} characters`;
+              }"""))
+
 if __name__ == "__main__":
     demo.queue().launch()

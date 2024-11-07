@@ -1,6 +1,7 @@
 import { sveltify } from '@svelte-preprocess-react';
 import { ReactSlot } from '@svelte-preprocess-react/react-slot';
 import { useMemo } from 'react';
+import { useValueChange } from '@utils/hooks/useValueChange';
 import { renderItems } from '@utils/renderItems';
 import { Cascader as ACascader, type CascaderPanelProps } from 'antd';
 
@@ -25,11 +26,16 @@ export const CascaderPanel = sveltify<
     options,
     ...props
   }) => {
+    const [value, setValue] = useValueChange({
+      onValueChange,
+      value: props.value,
+    });
     return (
       <>
         <div style={{ display: 'none' }}>{children}</div>
         <ACascader.Panel
           {...props}
+          value={value}
           options={useMemo(() => {
             return (
               options ||
@@ -41,7 +47,7 @@ export const CascaderPanel = sveltify<
           loadData={onLoadData}
           onChange={(v, ...args) => {
             onChange?.(v, ...args);
-            onValueChange(v);
+            setValue(v);
           }}
           expandIcon={
             slots.expandIcon ? (

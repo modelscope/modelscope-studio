@@ -3,6 +3,7 @@ import { ReactSlot } from '@svelte-preprocess-react/react-slot';
 import type { SetSlotParams } from '@svelte-preprocess-react/slot';
 import { useMemo } from 'react';
 import { useFunction } from '@utils/hooks/useFunction';
+import { useValueChange } from '@utils/hooks/useValueChange';
 import { omitUndefinedProps } from '@utils/omitUndefinedProps';
 import { renderParamsSlot } from '@utils/renderParamsSlot';
 import { type GetProps, Input as AInput } from 'antd';
@@ -41,16 +42,20 @@ export const InputPassword = sveltify<
       typeof showCount === 'object' ? showCount.formatter : undefined
     );
     const iconRenderFunction = useFunction(iconRender);
-
+    const [value, setValue] = useValueChange({
+      onValueChange,
+      value: props.value,
+    });
     return (
       <>
         <div style={{ display: 'none' }}>{children}</div>
         <AInput.Password
           {...props}
+          value={value}
           ref={elRef}
           onChange={(e) => {
             onChange?.(e);
-            onValueChange(e.target.value);
+            setValue(e.target.value);
           }}
           iconRender={
             slots.iconRender

@@ -1,6 +1,7 @@
 import { sveltify } from '@svelte-preprocess-react';
 import { ReactSlot } from '@svelte-preprocess-react/react-slot';
 import { useFunction } from '@utils/hooks/useFunction';
+import { useValueChange } from '@utils/hooks/useValueChange';
 import { type GetProps, InputNumber as AInputNumber } from 'antd';
 
 export const InputNumber = sveltify<
@@ -28,15 +29,20 @@ export const InputNumber = sveltify<
   }) => {
     const formatterFunction = useFunction(formatter);
     const parserFunction = useFunction(parser);
+    const [value, setValue] = useValueChange({
+      onValueChange,
+      value: props.value,
+    });
     return (
       <>
         <div style={{ display: 'none' }}>{children}</div>
         <AInputNumber
           {...props}
           ref={elRef}
+          value={value}
           onChange={(v) => {
             onChange?.(v);
-            onValueChange(v);
+            setValue(v);
           }}
           parser={parserFunction}
           formatter={formatterFunction}

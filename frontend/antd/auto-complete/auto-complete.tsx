@@ -4,6 +4,7 @@ import { ReactSlot } from '@svelte-preprocess-react/react-slot';
 import type { SetSlotParams } from '@svelte-preprocess-react/slot';
 import { forwardRef, useMemo } from 'react';
 import { useFunction } from '@utils/hooks/useFunction';
+import { useValueChange } from '@utils/hooks/useValueChange';
 import { renderItems } from '@utils/renderItems';
 import { renderParamsSlot } from '@utils/renderParamsSlot';
 import { AutoComplete as AAutoComplete, type GetProps } from 'antd';
@@ -54,6 +55,10 @@ export const AutoComplete = sveltify<
     const getPopupContainerFunction = useFunction(getPopupContainer);
     const filterOptionFunction = useFunction(filterOption);
     const dropdownRenderFunction = useFunction(dropdownRender);
+    const [value, setValue] = useValueChange({
+      onValueChange,
+      value: props.value,
+    });
     return (
       <>
         {slots.children ? null : (
@@ -62,6 +67,7 @@ export const AutoComplete = sveltify<
 
         <AAutoComplete
           {...props}
+          value={value}
           ref={elRef}
           allowClear={
             slots['allowClear.clearIcon']
@@ -82,7 +88,7 @@ export const AutoComplete = sveltify<
           }, [optionItems, options])}
           onChange={(v, ...args) => {
             onChange?.(v, ...args);
-            onValueChange(v as string);
+            setValue(v as string);
           }}
           notFoundContent={
             slots.notFoundContent ? (

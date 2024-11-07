@@ -58,8 +58,13 @@ import modelscope_studio.components.antd as antd
 
 当您的 Javascript 函数返回值为 ReactNode 时，我们提供了两种处理方式：
 
-- 将它当做普通的 ReactNode 值，继续使用`ms.Slot`来渲染模块。
-- 将其当做普通函数，通过`window.ms_globals.React`与`window.ms_globals.antd`等全局变量在前端生成 ReactNode（注意此时不能使用 jsx，需要使用 `React.createElement`）。
+1. 将其当做普通的 ReactNode 值，继续使用`ms.Slot`来渲染模块，在此基础上，`ms.Slot`还支持传入`params_mapping`参数，该参数同样接收一个 Javascript 函数字符串，它可以将函数的参数映射为当前`slot`环境的上下文（具体请参考`ms.Each`）。
+
+<demo name="limit_react_node_function_by_slot"></demo>
+
+2. 将其当做普通函数，通过`window.ms_globals.React`与`window.ms_globals.antd`等全局变量在前端生成 ReactNode（注意此时不能使用 jsx，需要使用 `React.createElement`）。
+
+<demo name="limit_react_node_function_by_function"></demo>
 
 ## 集成其他 Gradio 组件
 

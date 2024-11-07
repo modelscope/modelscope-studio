@@ -13,12 +13,10 @@
   setSlotContext({
     ...context_value,
     ...value,
-    restProps: $$restProps,
   });
   $: setSlotContext({
     ...context_value,
     ...value,
-    restProps: $$restProps,
   });
 </script>
 

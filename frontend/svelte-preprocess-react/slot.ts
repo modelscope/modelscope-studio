@@ -118,8 +118,8 @@ export function getSlotContext<
   const as_item = get(ctx)?.as_item || props.as_item;
   const initialCtxValue: Record<string, any> = ctx
     ? as_item
-      ? (get(ctx)[as_item as keyof T] as Record<string, any>)
-      : get(ctx)
+      ? (get(ctx)?.[as_item as keyof T] as Record<string, any>) || {}
+      : get(ctx) || {}
     : {};
   const mergeRestProps = (
     restProps?: Record<string, any>,
@@ -156,11 +156,11 @@ export function getSlotContext<
   ctx.subscribe((ctxValue) => {
     const { as_item: merged_as_item } = get(mergedProps);
     if (merged_as_item) {
-      ctxValue = (ctxValue as Record<string, any>)[merged_as_item];
+      ctxValue = (ctxValue as Record<string, any>)?.[merged_as_item];
     }
     mergedProps.update((prev) => ({
       ...prev,
-      ...ctxValue,
+      ...(ctxValue || {}),
       restProps: mergeRestProps(prev.restProps, ctxValue),
     }));
   });
@@ -169,8 +169,8 @@ export function getSlotContext<
     mergedProps,
     (v) => {
       const ctxValue: Record<string, any> = v.as_item
-        ? (get(ctx)[v.as_item as keyof T] as Record<string, any>)
-        : get(ctx);
+        ? (get(ctx)?.[v.as_item as keyof T] as Record<string, any>) || {}
+        : get(ctx) || {};
       return mergedProps.set({
         ...v,
         ...ctxValue,

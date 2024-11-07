@@ -3,6 +3,7 @@ import { ReactSlot } from '@svelte-preprocess-react/react-slot';
 import type { SetSlotParams } from '@svelte-preprocess-react/slot';
 import { useMemo } from 'react';
 import { useFunction } from '@utils/hooks/useFunction';
+import { useValueChange } from '@utils/hooks/useValueChange';
 import { renderItems } from '@utils/renderItems';
 import { renderParamsSlot } from '@utils/renderParamsSlot';
 import { Cascader as ACascader, type CascaderProps } from 'antd';
@@ -67,13 +68,17 @@ export const Cascader = sveltify<
     const showSearchFilterFunction = useFunction(showSearchConfig.filter);
     const showSearchRenderFunction = useFunction(showSearchConfig.render);
     const showSearchSortFunction = useFunction(showSearchConfig.sort);
-
+    const [value, setValue] = useValueChange({
+      onValueChange,
+      value: props.value,
+    });
     return (
       <>
         <div style={{ display: 'none' }}>{children}</div>
         <ACascader
           {...props}
           ref={elRef}
+          value={value}
           options={useMemo(() => {
             return (
               options ||
@@ -130,7 +135,7 @@ export const Cascader = sveltify<
           }
           onChange={(v, ...args) => {
             onChange?.(v, ...args);
-            onValueChange(v);
+            setValue(v);
           }}
           suffixIcon={
             slots.suffixIcon ? (
