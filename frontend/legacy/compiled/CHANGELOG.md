@@ -1,5 +1,11 @@
 # @modelscope-studio/legacy-compiled
 
+## 1.0.0-beta.3
+
+### Features
+
+- [`9f3c59c`](https://github.com/modelscope/modelscope-studio/commit/9f3c59c9c5a0bf8af3980588cb07a467323b1d17) - add new features. Thanks [@Col0ring](https://github.com/Col0ring)!
+
 ## 1.0.0-beta.2
 
 ### Features
