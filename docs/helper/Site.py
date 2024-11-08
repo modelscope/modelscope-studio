@@ -137,7 +137,8 @@ class Site:
                                                         tab["extra_menu_footer"].render(
                                                         )
 
-                                            with antd.Layout():
+                                            with antd.Layout(elem_style=dict(
+                                                    width=0)):
                                                 with antd.Layout.Content(
                                                         elem_style=dict(
                                                             padding='12px 28px',

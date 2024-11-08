@@ -7,9 +7,8 @@ import modelscope_studio.components.antd as antd
 import modelscope_studio.components.base as ms
 import modelscope_studio.components.legacy as mgr
 
+from .env import is_modelscope_studio
 from .parse_markdown import parse_markdown
-
-is_modelscope_studio = os.getenv('MODELSCOPE_ENVIRONMENT') == 'studio'
 
 
 class Docs:

@@ -9,7 +9,7 @@
 
 另外，该组件还提供了`custom`事件，您可以通过在任意 Javascript 函数中调用`window.ms_globals.dispatch`主动向 Python 端发送事件，在 Python 端可以通过`ms.Application.custom`事件接收。
 
-## Examples
+## 示例
 
 <demo name="basic"></demo>
 

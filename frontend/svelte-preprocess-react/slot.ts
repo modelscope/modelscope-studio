@@ -1,3 +1,4 @@
+import { isUndefined } from 'lodash-es';
 import { getContext, setContext } from 'svelte';
 import { get, type Writable, writable } from 'svelte/store';
 
@@ -71,6 +72,16 @@ export function getSetSlotContextFn() {
   };
 }
 
+function ensureObjectCtxValue(ctxValue: any) {
+  if (isUndefined(ctxValue)) {
+    return {};
+  }
+
+  return typeof ctxValue === 'object' && !Array.isArray(ctxValue)
+    ? ctxValue
+    : { value: ctxValue };
+}
+
 /**
  *
  * will run `resetSlotKey` inside
@@ -116,11 +127,14 @@ export function getSlotContext<
   }
   const ctx = getContext(slotContextKey) as Writable<T>;
   const as_item = get(ctx)?.as_item || props.as_item;
-  const initialCtxValue: Record<string, any> = ctx
-    ? as_item
-      ? (get(ctx)?.[as_item as keyof T] as Record<string, any>) || {}
-      : get(ctx) || {}
-    : {};
+  const initialCtxValue: Record<string, any> = ensureObjectCtxValue(
+    ctx
+      ? as_item
+        ? (get(ctx)?.[as_item as keyof T] as Record<string, any>) || {}
+        : get(ctx) || {}
+      : {}
+  );
+
   const mergeRestProps = (
     restProps?: Record<string, any>,
     ctxValue?: Record<string, any>
@@ -158,6 +172,7 @@ export function getSlotContext<
     if (merged_as_item) {
       ctxValue = (ctxValue as Record<string, any>)?.[merged_as_item];
     }
+    ctxValue = ensureObjectCtxValue(ctxValue);
     mergedProps.update((prev) => ({
       ...prev,
       ...(ctxValue || {}),
@@ -168,9 +183,11 @@ export function getSlotContext<
   return [
     mergedProps,
     (v) => {
-      const ctxValue: Record<string, any> = v.as_item
-        ? (get(ctx)?.[v.as_item as keyof T] as Record<string, any>) || {}
-        : get(ctx) || {};
+      const ctxValue: Record<string, any> = ensureObjectCtxValue(
+        v.as_item
+          ? (get(ctx)?.[v.as_item as keyof T] as Record<string, any>) || {}
+          : get(ctx) || {}
+      );
       return mergedProps.set({
         ...v,
         ...ctxValue,

@@ -11,8 +11,8 @@ class ModelScopeFilter(ModelScopeLayoutComponent):
     EVENTS = []
 
     def __init__(self,
-                 *,
                  params_mapping: str | None = None,
+                 *,
                  as_item: str | None = None,
                  _internal: None = None,
                  visible: bool = True,

@@ -1,16 +1,16 @@
-# Application
+# Slot
 
-The root component of the application, this component contains all the component dependencies of `modelscope_studio`. It is necessary to ensure that all components exported from `modelscope_studio` are wrapped by it, otherwise the page will not be successfully previewed.
+插槽组件，需要与`modelscope_studio`中的其他组件一起使用，可以传入指定插槽名称，从而将该组件插入到目标组件的指定位置。
 
-In addition, this component can also listen to the lifecycle of the user's page and obtain the current user's environment information.
+`modelscope_studio`中组件的插槽可以通过获取`SLOTS`属性查看。
 
-- Obtain the current user's language, page theme, user agent, and screen status.
-- Listen to page behaviors and trigger corresponding events (page loading, size changes, page closing, etc.).
-
-## Examples
+## 示例
 
 <demo name="basic"></demo>
 
-<demo name="language_adaptation" title="Automatically adapt to user language environment"></demo>
+### API
 
-<demo name="theme_adaptation" title="Return different weighted content based on user interface theme"></demo>
+| 属性           | 类型 | 默认值 | 描述                                                                                                                       |
+| -------------- | ---- | ------ | -------------------------------------------------------------------------------------------------------------------------- |
+| value          | str  | None   | 插槽名称                                                                                                                   |
+| params_mapping | str  | None   | 该值为一个 Javascript 的函数字符串，当对应插槽可以接受参数时，通过此参数可以将参数映射为插槽的上下文，具体请参考`Each`组件 |

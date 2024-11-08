@@ -3,6 +3,7 @@ import re
 from typing import Callable
 
 import gradio as gr
+from helper.env import is_modelscope_studio
 
 import modelscope_studio as mgr
 
@@ -60,9 +61,6 @@ def get_demo_modules(file_path: str):
         spec.loader.exec_module(module)
         demo_modules[demo_name] = module
     return demo_modules
-
-
-is_modelscope_studio = os.getenv('MODELSCOPE_ENVIRONMENT') == 'studio'
 
 
 class Docs:

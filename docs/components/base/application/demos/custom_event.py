@@ -5,7 +5,7 @@ import modelscope_studio.components.base as ms
 
 
 def on_custom(e: gr.EventData):
-    print(e)
+    print(e._data)
 
 
 with gr.Blocks() as demo:
