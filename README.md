@@ -36,7 +36,7 @@ Compared to Gradio's own components, `modelscope_studio` focuses more on page la
 pip install modelscope_studio~=1.0.0b
 ```
 
-## Example
+## Quick Start
 
 ```python
 import gradio as gr
@@ -51,6 +51,11 @@ with gr.Blocks() as demo:
 
 demo.queue().launch()
 ```
+
+## Documentation and Examples
+
+- [ModelScope](https://modelscope.cn/studios/modelscope/modelscope-studio)
+- [Hugging Face](https://huggingface.co/spaces/modelscope/modelscope-studio)
 
 ## Migration to 1.0
 

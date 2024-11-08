@@ -20,7 +20,7 @@
 pip install modelscope_studio~=1.0.0b
 ```
 
-## 示例
+## 快速开始
 
 ```python
 import gradio as gr
@@ -35,6 +35,11 @@ with gr.Blocks() as demo:
 
 demo.queue().launch()
 ```
+
+## 文档与示例
+
+- [ModelScope](https://modelscope.cn/studios/modelscope/modelscope-studio)
+- [Hugging Face](https://huggingface.co/spaces/modelscope/modelscope-studio)
 
 ## 迁移到 1.0
 
