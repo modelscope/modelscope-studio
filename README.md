@@ -1,4 +1,4 @@
-<h1>ModelScope Studio</h1>
+# ModelScope Studio
 
 <p align="center">
     <img src="https://modelscope.oss-cn-beijing.aliyuncs.com/modelscope.gif" height="60" style="vertical-align: middle;"/>
@@ -11,89 +11,59 @@
 <p align="center">
 <a href="https://github.com/modelscope/modelscope-studio">GitHub</a> | 🤖 <a href="https://modelscope.cn/studios/modelscope/modelscope-studio/summary">ModelScope Studio</a> ｜ 🤗 <a href="https://huggingface.co/spaces/modelscope/modelscope-studio">Hugging Face Space</a>
 <br>
-  <a href="README-zh_CN.md">中文</a>&nbsp ｜ &nbspEnglish&nbsp ｜ &nbsp<a href="README-ja_JP.md">日本語</a>
+    <a href="README-zh_CN.md">中文</a>&nbsp ｜ &nbspEnglish&nbsp ｜ &nbsp<a href="README-ja_JP.md">日本語</a>
 </p>
 
-`modelscope_studio` is a set of extension component libraries based on gradio 4.x, dedicated to serving the various extension needs of gradio applications within the ModelScope Studio. It mainly focuses on enhancing conversational scenarios, supporting multimodal contexts, and providing assistance for various other specialized scenarios.
+`modelscope_studio` is a third-party component library based on Gradio, extending more components and usage forms on top of the original Gradio components.
 
-## Install
+Currently supported UI libraries:
+
+- [Ant Design](https://ant.design/)
+
+## When to Use
+
+Compared to Gradio's own components, `modelscope_studio` focuses more on page layout and component flexibility. If you want to build a more beautiful user interface, we highly recommend using `modelscope_studio`. However, when your application needs Gradio to handle more built-in data on the Python side, `modelscope_studio` may not be the best choice, but you can still use `modelscope_studio`'s layout and display components to help you build pages.
+
+## Dependencies
+
+- Gradio >= 4.0
+
+## Installation
+
+> Currently, `modelscope_studio` version 1.0 is still under development. You can use the `beta` version in advance.
 
 ```sh
-pip install modelscope_studio
+pip install modelscope_studio~=1.0.0b
 ```
 
-## Quickstart
+## Example
 
 ```python
-import time
 import gradio as gr
-import modelscope_studio as mgr
 
-def submit(_input, _chatbot):
-    print('text：', _input.text)
-    print('files: ', _input.files)
-    _chatbot.append([_input, None])
-    yield _chatbot
-    time.sleep(1)
-    _chatbot[-1][1] = [{
-        "flushing": False,
-        "text": 'bot1: ' + _input.text + '!'
-    }, {
-        "text": 'bot2: ' + _input.text + '!'
-    }]
-    yield {
-        chatbot: _chatbot,
-    }
+import modelscope_studio.components.antd as antd
+import modelscope_studio.components.base as ms
 
 with gr.Blocks() as demo:
-    chatbot = mgr.Chatbot(height=400)
-
-    input = mgr.MultimodalInput()
-    input.submit(fn=submit, inputs=[input, chatbot], outputs=[chatbot])
+    with ms.Application():
+        with antd.ConfigProvider():
+            antd.DatePicker()
 
 demo.queue().launch()
 ```
 
-![quickstart](./resources/quickstart.png)
+## Migration to 1.0
 
-## Component Docs
+If you have previously used `modelscope_studio` components and want to continue using them in the new version, no modifications to the original components are needed. You just need to introduce `ms.Application` in the outer layer.
 
-The currently supported components include:
+```python
+import gradio as gr
+import modelscope_studio.components.base as ms
+import modelscope_studio.components.legacy as mgr
 
-- Chatbot: Gradio Chatbot extension component, supports multi-modal content output, multi-bot scenarios, and custom rendering components and event interactions within the conversation content.
-- MultimodalInput: A multi-modal input box, supporting functions such as file upload, recording, and photography.
-- Markdown: Gradio Markdown extension component, supports the output of multi-modal content (audio, video, voice, files, text).
-- Lifecycle: A Lifecycle component for getting the current user's environment information.
-- WaterfallGallery: Gradio Gallery extension component, supports waterfall-style image display.
-- Flow: A Flow component implemented based on [reactflow](https://reactflow.dev/), supports customization of node rendering through a schema.
-- More components...
+with gr.Blocks() as demo:
+    with ms.Application():
+        mgr.Chatbot()
 
-For detailed usage, see [Documentation and Examples](https://modelscope.cn/studios/modelscope/modelscope-studio/summary)
-
-## Development
-
-Clone this repo locally:
-
-```sh
-git clone git@github.com:modelscope/modelscope-studio.git
-cd modelscope-studio
-# for backend
-pip install -e '.'
-# for frontend
-npm install pnpm -g
-
-pnpm install
-pnpm build
-```
-
-Run demo!
-
-```sh
-gradio docs/app.py
-```
-
-or run a single demo like this:
-
-```sh
-gradio docs/components/Chatbot/demos/basic.py
+demo.launch()
 ```
