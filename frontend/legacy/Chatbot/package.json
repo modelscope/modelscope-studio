@@ -1,0 +1,24 @@
+{
+  "name": "@modelscope-studio/legacy-chatbot",
+  "version": "1.0.0-beta.3",
+  "private": false,
+  "description": "ModelScope Gradio Components",
+  "repository": "git@github.com:modelscope/modelscope-studio.git",
+  "license": "Apache-2.0",
+  "type": "module",
+  "exports": {
+    ".": {
+      "default": "./Index.svelte",
+      "gradio": "./Index.svelte"
+    },
+    "./package.json": {
+      "default": "./package.json",
+      "gradio": "./package.json"
+    }
+  },
+  "dependencies": {
+    "@modelscope-studio/legacy-compiled": "workspace:*"
+  },
+  "devDependencies": {},
+  "main_changeset": true
+}

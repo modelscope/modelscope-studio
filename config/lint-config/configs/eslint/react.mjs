@@ -4,7 +4,7 @@ import reactRefresh from 'eslint-plugin-react-refresh';
 import { fixupPluginRules } from '@eslint/compat';
 import jsxA11y from 'eslint-plugin-jsx-a11y';
 /**
- * @type {import('eslint').Linter.FlatConfig[]}
+ * @type {import('eslint').Linter.Config[]}
  */
 export const react = [
   eslintPluginReactRecommendedConfig,

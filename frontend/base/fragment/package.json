@@ -1,0 +1,15 @@
+{
+  "name": "@modelscope-studio/antd-fragment",
+  "type": "module",
+  "exports": {
+    ".": {
+      "default": "./Index.svelte",
+      "gradio": "./Index.svelte"
+    },
+    "./package.json": {
+      "default": "./package.json",
+      "gradio": "./package.json"
+    },
+    "./ShowFragment": "./ShowFragment.svelte"
+  }
+}

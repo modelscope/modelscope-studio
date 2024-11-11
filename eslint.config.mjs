@@ -1,7 +1,7 @@
 import baseConfig from '@modelscope-studio/lint-config/eslint';
 
 /**
- * @type {import('eslint').Linter.FlatConfig[]}
+ * @type {import('eslint').Linter.Config[]}
  */
 const config = [];
 

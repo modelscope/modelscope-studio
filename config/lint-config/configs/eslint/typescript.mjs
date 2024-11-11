@@ -1,7 +1,7 @@
 import eslintPluginImport from 'eslint-plugin-import';
 import tseslint from 'typescript-eslint';
 /**
- * @type {import('eslint').Linter.FlatConfig[]}
+ * @type {import('eslint').Linter.Config[]}
  */
 export const typescript = [
   ...tseslint.configs.recommended.map((config) => ({
@@ -43,15 +43,11 @@ export const typescript = [
         'warn',
         { vars: 'all', varsIgnorePattern: '^_' },
       ],
-      '@typescript-eslint/ban-types': [
-        'error',
-        {
-          types: {
-            '{}': false,
-          },
-          extendDefaults: true,
-        },
-      ],
+      '@typescript-eslint/no-unused-expressions': 'off',
+      '@typescript-eslint/ban-types': 'off',
+      '@typescript-eslint/no-empty-object-type': 'off',
+      '@typescript-eslint/no-wrapper-object-types': 'error',
+      '@typescript-eslint/no-unsafe-function-type': 'error',
       // import type
       '@typescript-eslint/consistent-type-imports': [
         'error',

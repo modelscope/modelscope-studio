@@ -8,12 +8,29 @@
     "importHelpers": true,
     "moduleResolution": "Node",
     "jsx": "preserve",
+    "noImplicitAny": false,
     "skipLibCheck": true,
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
     "resolveJsonModule": true,
-    "noImplicitOverride": true
+    "noImplicitOverride": true,
+    "baseUrl": "./frontend",
+    "paths": {
+      "@svelte-preprocess-react": ["svelte-preprocess-react/index.ts"],
+      "@svelte-preprocess-react/inject": ["svelte-preprocess-react/inject.ts"],
+      "@svelte-preprocess-react/component": [
+        "svelte-preprocess-react/component.ts"
+      ],
+      "@svelte-preprocess-react/slot": ["svelte-preprocess-react/slot.ts"],
+      "@svelte-preprocess-react/react-slot": [
+        "svelte-preprocess-react/react-slot.tsx"
+      ],
+      "@svelte-preprocess-react/context": [
+        "svelte-preprocess-react/context.ts"
+      ],
+      "@utils/*": ["utils/*"]
+    }
   },
-  "include": ["frontend", "config", "scripts", "fixtures.d.ts"],
+  "include": ["frontend", "config"],
   "exclude": ["node_modules"]
 }

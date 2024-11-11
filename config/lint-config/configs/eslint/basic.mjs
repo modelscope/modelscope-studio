@@ -5,11 +5,12 @@ import eslintPluginPrettierRecommended from 'eslint-plugin-prettier/recommended'
 import simpleImportSort from 'eslint-plugin-simple-import-sort';
 import globals from 'globals';
 /**
- * @type {import('eslint').Linter.FlatConfig[]}
+ * @type {import('eslint').Linter.Config[]}
  */
 export const basic = [
   {
     ignores: [
+      '**/backend/**',
       '**/.git/**',
       '**/node_modules/**',
       '**/*.min.*',

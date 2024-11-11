@@ -29,7 +29,5 @@ jobs:
         run: npm i pnpm@latest -g
       - name: Install Node Dependencies
         run: pnpm install
-      - name: Build Dependencies
-        run: pnpm run build:compiled
       - name: Run Lint
         run: pnpm run lint

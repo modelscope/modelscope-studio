@@ -5,6 +5,6 @@ import { svelte } from './configs/eslint/svelte.mjs';
 import { typescript } from './configs/eslint/typescript.mjs';
 
 /**
- * @type {import('eslint').Linter.FlatConfig[]}
+ * @type {import('eslint').Linter.Config[]}
  */
 export default [].concat(basic, react, typescript, svelte);

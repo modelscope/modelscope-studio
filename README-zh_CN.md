@@ -1,4 +1,6 @@
-<h1>ModelScope Studio</h1>
+> 当前文档版本为 `1.0 beta`，如果您正在使用以前的`modelscope_studio`版本，请跳转至 [legacy](https://github.com/modelscope/modelscope-studio/tree/legacy) 分支查看。
+
+# ModelScope Studio
 
 <p align="center">
     <img src="https://modelscope.oss-cn-beijing.aliyuncs.com/modelscope.gif" height="60" style="vertical-align: middle;"/>
@@ -9,66 +11,67 @@
 <p>
 
 <p align="center">
-<a href="https://github.com/modelscope/modelscope-studio">GitHub</a> | 🤖 <a href="https://modelscope.cn/studios/modelscope/modelscope-studio/summary">ModelScope Studio</a> ｜ 🤗 <a href="https://huggingface.co/spaces/modelscope/modelscope-studio">Hugging Face Space</a>
+<a href="https://github.com/modelscope/modelscope-studio">GitHub</a> | 🤖 <a href="https://modelscope.cn/studios/modelscope/modelscope-studio-beta">ModelScope Studio</a> ｜ 🤗 <a href="https://huggingface.co/spaces/modelscope/modelscope-studio-beta">Hugging Face Space</a>
 <br>
     中文&nbsp ｜ &nbsp<a href="README.md">English</a>&nbsp ｜ &nbsp<a href="README-ja_JP.md">日本語</a>
 </p>
 
-`modelscope_studio` 是一套基于 gradio 4.x 的扩展组件库，致力于服务于 ModelScope 创空间中对于 gradio 应用的各类扩展需求，目前主要聚集在对话场景增强、多模态场景以及一些其他垂直场景支持。
+`modelscope_studio`是一个基于 Gradio 的三方组件库，在原有 Gradio 组件的基础上延伸了更多的组件和使用形式。
+
+目前支持的 UI 库：
+
+- [Ant Design](https://ant.design/)
+
+## 何时使用
+
+比起 Gradio 自身的组件，`modelscope_studio`更加注重页面布局和组件的灵活性，如果您想要构建更漂亮的用户界面，我们非常推荐您使用`modelscope_studio`。然而，当您的应用需要 Gradio 在 Python 端更多地处理内置数据时，`modelscope_studio`可能不是最好的选择，但仍然可以使用`modelscope_studio`的布局和展示组件来帮助您构建页面。
+
+## 依赖
+
+- Gradio >= 4.0
 
 ## 安装
 
 ```sh
-pip install modelscope_studio
+pip install modelscope_studio~=1.0.0b
 ```
 
 ## 快速开始
 
 ```python
-import time
 import gradio as gr
-import modelscope_studio as mgr
 
-def submit(_input, _chatbot):
-    print('text：', _input.text)
-    print('files: ', _input.files)
-    _chatbot.append([_input, None])
-    yield _chatbot
-    time.sleep(1)
-    _chatbot[-1][1] = [{
-        "flushing": False,
-        "text": 'bot1: ' + _input.text + '!'
-    }, {
-        "text": 'bot2: ' + _input.text + '!'
-    }]
-    yield {
-        chatbot: _chatbot,
-    }
+import modelscope_studio.components.antd as antd
+import modelscope_studio.components.base as ms
 
 with gr.Blocks() as demo:
-    chatbot = mgr.Chatbot(height=400)
-
-    input = mgr.MultimodalInput()
-    input.submit(fn=submit, inputs=[input, chatbot], outputs=[chatbot])
+    with ms.Application():
+        with antd.ConfigProvider():
+            antd.DatePicker()
 
 demo.queue().launch()
 ```
 
-![quickstart](./resources/quickstart.png)
+## 文档与示例
 
-## 组件文档
+- ModelScope: [中文](https://modelscope.cn/studios/modelscope/modelscope-studio-beta)
+- Hugging Face: [English](<(https://huggingface.co/spaces/modelscope/modelscope-studio-beta)>)
 
-目前已支持的组件包括：
+## 迁移到 1.0
 
-- Chatbot: gradio Chatbot 扩展组件，支持输出多模态内容、支持多 bot 场景、支持对话内容内的自定义渲染组件及事件交互。
-- MultimodalInput: 多模态输入框，支持上传文件、录音、照相等功能。
-- Markdown: gradio Markdown 扩展组件，支持输出多模态内容（音频、视频、语音、文件、文本）。
-- Lifecycle: 生命周期组件，用于获取当前用户的环境信息。
-- WaterfallGallery: gradio Gallery 扩展组件，支持瀑布流的图像展示。
-- Flow: 基于 [reactflow](https://reactflow.dev/) 的 Flow 组件，支持通过 schema 定制节点渲染。
-- 更多组件...
+如果您在之前使用了`modelscope_studio`的组件，并且想要在新版本中继续使用。不需要对原有组件做任何修改，只需要在外层引入`ms.Application`即可。
 
-详细使用参见 [文档与示例](https://modelscope.cn/studios/modelscope/modelscope-studio/summary)
+```python
+import gradio as gr
+import modelscope_studio.components.base as ms
+import modelscope_studio.components.legacy as mgr
+
+with gr.Blocks() as demo:
+    with ms.Application():
+        mgr.Chatbot()
+
+demo.launch()
+```
 
 ## 开发
 
@@ -86,14 +89,8 @@ pnpm install
 pnpm build
 ```
 
-运行 Demo!
+运行 `gradio cc dev` 启动 demo：
 
 ```sh
-gradio docs/app.py
-```
-
-或者像下面这样运行单个 Demo:
-
-```sh
-gradio docs/components/Chatbot/demos/basic.py
+gradio cc dev docs/app.py
 ```

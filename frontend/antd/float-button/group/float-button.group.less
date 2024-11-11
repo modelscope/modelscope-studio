@@ -1,0 +1,30 @@
+.ms-gr-antd-container {
+  .ms-gr-antd-float-button-group {
+    &.ms-gr-antd-float-button-group-square {
+      react-portal-target {
+        .ms-gr-antd-float-button {
+          border-start-start-radius: 0 !important;
+          border-start-end-radius: 0 !important;
+        }
+
+        &:first-child {
+          .ms-gr-antd-float-button {
+            border-start-start-radius: var(
+              --ms-gr-antd-border-radius-lg
+            ) !important;
+            border-start-end-radius: var(
+              --ms-gr-antd-border-radius-lg
+            ) !important;
+          }
+        }
+
+        &:last-child {
+          .ms-gr-antd-float-button {
+            border-end-start-radius: var(--ms-gr-antd-border-radius-lg);
+            border-end-end-radius: var(--ms-gr-antd-border-radius-lg);
+          }
+        }
+      }
+    }
+  }
+}

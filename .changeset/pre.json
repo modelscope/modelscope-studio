@@ -1,0 +1,25 @@
+{
+  "mode": "pre",
+  "tag": "beta",
+  "initialVersions": {
+    "modelscope_studio": "0.4.2",
+    "@modelscope-studio/changelog": "0.4.2",
+    "@modelscope-studio/lint-config": "0.4.2",
+    "@modelscope-studio/frontend": "0.4.2",
+    "@modelscope-studio/antd": "0.0.0",
+    "@modelscope-studio/base": "0.0.0",
+    "@modelscope-studio/legacy-chatbot": "0.4.2",
+    "@modelscope-studio/legacy-flow": "0.4.2",
+    "@modelscope-studio/legacy-lifecycle": "0.4.2",
+    "@modelscope-studio/legacy-markdown": "0.4.2",
+    "@modelscope-studio/legacy-multimodal-input": "0.4.2",
+    "@modelscope-studio/legacy-waterfall-gallery": "0.4.2",
+    "@modelscope-studio/legacy-compiled": "0.4.2"
+  },
+  "changesets": [
+    "five-actors-compete",
+    "fuzzy-goats-retire",
+    "lemon-laws-cross",
+    "tough-walls-grab"
+  ]
+}

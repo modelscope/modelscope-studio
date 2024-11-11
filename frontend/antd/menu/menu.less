@@ -1,0 +1,44 @@
+.ms-gr-antd-container {
+  .ms-gr-ant-menu
+    .ms-gr-ant-menu-item
+    react-child:has(.ms-gr-ant-menu-item-icon)
+    + span,
+  .ms-gr-ant-menu
+    .ms-gr-ant-menu-submenu-title
+    react-child:has(.ms-gr-ant-menu-item-icon)
+    + span {
+    margin-inline-start: var(--ms-gr-ant-menu-icon-margin-inline-end);
+    opacity: 1;
+    transition:
+      opacity var(--ms-gr-ant-motion-duration-slow)
+        var(--ms-gr-ant-motion-ease-in-out),
+      margin var(--ms-gr-ant-motion-duration-slow),
+      color var(--ms-gr-ant-motion-duration-slow);
+  }
+
+  .ms-gr-ant-menu-inline-collapsed
+    > .ms-gr-ant-menu-item
+    react-child:has(.ms-gr-ant-menu-item-icon)
+    + span,
+  .ms-gr-ant-menu-inline-collapsed
+    > .ms-gr-ant-menu-item-group
+    > .ms-gr-ant-menu-item-group-list
+    > .ms-gr-ant-menu-item
+    react-child:has(.ms-gr-ant-menu-item-icon)
+    + span,
+  .ms-gr-ant-menu-inline-collapsed
+    > .ms-gr-ant-menu-item-group
+    > .ms-gr-ant-menu-item-group-list
+    > .ms-gr-ant-menu-submenu
+    > .ms-gr-ant-menu-submenu-title
+    react-child:has(.ms-gr-ant-menu-item-icon)
+    + span,
+  .ms-gr-ant-menu-inline-collapsed
+    > .ms-gr-ant-menu-submenu
+    > .ms-gr-ant-menu-submenu-title
+    react-child:has(.ms-gr-ant-menu-item-icon)
+    + span {
+    display: inline-block;
+    opacity: 0;
+  }
+}

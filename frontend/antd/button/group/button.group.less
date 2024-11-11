@@ -1,0 +1,20 @@
+.ms-gr-antd-container {
+  .ms-gr-antd-button-group {
+    react-portal-target {
+      &:not(:first-child) {
+        .ms-gr-antd-button {
+          border-start-start-radius: 0;
+          border-end-start-radius: 0;
+          margin-inline-start: calc(var(--ms-gr-antd-line-width) * -1);
+        }
+      }
+
+      &:not(:last-child) {
+        .ms-gr-antd-button {
+          border-start-end-radius: 0;
+          border-end-end-radius: 0;
+        }
+      }
+    }
+  }
+}
