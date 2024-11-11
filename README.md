@@ -57,7 +57,7 @@ demo.queue().launch()
 ## Documentation and Examples
 
 - ModelScope: [中文](https://modelscope.cn/studios/modelscope/modelscope-studio-beta)
-- Hugging Face: [English](<(https://huggingface.co/spaces/modelscope/modelscope-studio-beta)>)
+- Hugging Face: [English](https://huggingface.co/spaces/modelscope/modelscope-studio-beta)
 
 ## Migration to 1.0
 
