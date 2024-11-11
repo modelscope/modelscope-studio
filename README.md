@@ -94,5 +94,5 @@ pnpm build
 Run `gradio cc dev` to start demo:
 
 ```sh
-gradio docs/app.py
+gradio cc dev docs/app.py
 ```
