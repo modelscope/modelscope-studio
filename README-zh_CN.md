@@ -72,3 +72,25 @@ with gr.Blocks() as demo:
 
 demo.launch()
 ```
+
+## 开发
+
+将仓库克隆到本地：
+
+```sh
+git clone git@github.com:modelscope/modelscope-studio.git
+cd modelscope-studio
+# for backend
+pip install -e '.'
+# for frontend
+npm install pnpm -g
+
+pnpm install
+pnpm build
+```
+
+运行 `gradio cc dev` 启动 demo：
+
+```sh
+gradio cc dev docs/app.py
+```
