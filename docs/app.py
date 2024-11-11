@@ -105,7 +105,7 @@ antd_menu_items = [{
         "label": get_text("FloatButton", "FloatButton 悬浮按钮"),
         "key": "float_button"
     }, {
-        "label": get_text("Icon", "图标"),
+        "label": get_text("Icon", "Icon 图标"),
         "key": "icon"
     }, {
         "label": get_text("Typography", "Typography 排版"),
