@@ -24,7 +24,9 @@
 
 ## 何时使用
 
-比起 Gradio 自身的组件，`modelscope_studio`更加注重页面布局和组件的灵活性，如果您想要构建更漂亮的用户界面，我们非常推荐您使用`modelscope_studio`。然而，当您的应用需要 Gradio 在 Python 端更多地处理内置数据时，`modelscope_studio`可能不是最好的选择，但仍然可以使用`modelscope_studio`的布局和展示组件来帮助您构建页面。
+比起 Gradio 自身的组件，`modelscope_studio`更加注重页面布局和组件的灵活性，如果您想要构建更漂亮的用户界面，我们非常推荐您使用`modelscope_studio`。
+
+然而，当您的应用需要 Gradio 在 Python 端更多地处理内置数据时，`modelscope_studio`可能不是最好的选择，但仍然可以使用`modelscope_studio`的布局和展示组件来帮助您构建应用。
 
 ## 依赖
 

@@ -36,7 +36,9 @@ Currently supported UI libraries:
 
 ## When to Use
 
-Compared to Gradio's own components, `modelscope_studio` focuses more on page layout and component flexibility. If you want to build a more beautiful user interface, we highly recommend using `modelscope_studio`. However, when your application needs Gradio to handle more built-in data on the Python side, `modelscope_studio` may not be the best choice, but you can still use `modelscope_studio`'s layout and display components to help you build pages.
+Compared to Gradio's own components, `modelscope_studio` focuses more on page layout and component flexibility. If you want to build a more beautiful user interface, we highly recommend using `modelscope_studio`.
+
+However, when your application needs Gradio to handle more built-in data on the Python side, `modelscope_studio` may not be the best choice, but you can still use `modelscope_studio`'s layout and display components to help build your app.
 
 ## Dependencies
 
