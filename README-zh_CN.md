@@ -1,3 +1,5 @@
+> 当前文档版本为 `1.0 beta`，如果您正在使用以前的`modelscope_studio`版本，请跳转至 [legacy](https://github.com/modelscope/modelscope-studio/tree/legacy) 分支查看。
+
 # ModelScope Studio
 
 <p align="center">
@@ -9,10 +11,24 @@
 <p>
 
 <p align="center">
-<a href="https://github.com/modelscope/modelscope-studio">GitHub</a> | 🤖 <a href="https://modelscope.cn/studios/modelscope/modelscope-studio/summary">ModelScope Studio</a> ｜ 🤗 <a href="https://huggingface.co/spaces/modelscope/modelscope-studio">Hugging Face Space</a>
+<a href="https://github.com/modelscope/modelscope-studio">GitHub</a> | 🤖 <a href="https://modelscope.cn/studios/modelscope/modelscope-studio-beta">ModelScope Studio</a> ｜ 🤗 <a href="https://huggingface.co/spaces/modelscope/modelscope-studio-beta">Hugging Face Space</a>
 <br>
     中文&nbsp ｜ &nbsp<a href="README.md">English</a>&nbsp ｜ &nbsp<a href="README-ja_JP.md">日本語</a>
 </p>
+
+`modelscope_studio`是一个基于 Gradio 的三方组件库，在原有 Gradio 组件的基础上延伸了更多的组件和使用形式。
+
+目前支持的 UI 库：
+
+- [Ant Design](https://ant.design/)
+
+## 何时使用
+
+比起 Gradio 自身的组件，`modelscope_studio`更加注重页面布局和组件的灵活性，如果您想要构建更漂亮的用户界面，我们非常推荐您使用`modelscope_studio`。然而，当您的应用需要 Gradio 在 Python 端更多地处理内置数据时，`modelscope_studio`可能不是最好的选择，但仍然可以使用`modelscope_studio`的布局和展示组件来帮助您构建页面。
+
+## 依赖
+
+- Gradio >= 4.0
 
 ## 安装
 
@@ -38,8 +54,8 @@ demo.queue().launch()
 
 ## 文档与示例
 
-- [ModelScope](https://modelscope.cn/studios/modelscope/modelscope-studio)
-- [Hugging Face](https://huggingface.co/spaces/modelscope/modelscope-studio)
+- ModelScope: [中文](https://modelscope.cn/studios/modelscope/modelscope-studio-beta)
+- Hugging Face: [English](<(https://huggingface.co/spaces/modelscope/modelscope-studio-beta)>)
 
 ## 迁移到 1.0
 

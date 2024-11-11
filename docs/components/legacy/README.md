@@ -1,19 +1,3 @@
----
-tags:
-  - gradio-custom-component
-  - Chatbot
-  - MutilmodalInput
-  - Markdown
-  - gradio-template-Chatbot
-  - gradio-template-Markdown
-title: modelscope-studio
-colorFrom: blue
-colorTo: gray
-sdk: docker
-pinned: false
-license: apache-2.0
----
-
 <h1>ModelScope Studio</h1>
 
 <p align="center">
@@ -25,7 +9,7 @@ license: apache-2.0
 <p>
 
 <p align="center">
-<a href="https://github.com/modelscope/modelscope-studio">GitHub</a> | 🤖 <a href="https://modelscope.cn/studios/modelscope/modelscope-studio/summary">ModelScope Studio</a> ｜ 🤗 <a href="https://huggingface.co/spaces/modelscope/modelscope-studio">Hugging Face Space</a>
+<a href="https://github.com/modelscope/modelscope-studio">GitHub</a> | 🤖 <a href="https://modelscope.cn/studios/modelscope/modelscope-studio">ModelScope Studio</a> ｜ 🤗 <a href="https://huggingface.co/spaces/modelscope/modelscope-studio">Hugging Face Space</a>
 
 `modelscope_studio` is a set of extension component libraries based on gradio 4.x, dedicated to serving the various extension needs of gradio applications within the ModelScope Studio. It mainly focuses on enhancing conversational scenarios, supporting multimodal contexts, and providing assistance for various other specialized scenarios.
 

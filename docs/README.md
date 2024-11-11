@@ -1,3 +1,20 @@
+---
+tags:
+  - gradio-custom-component
+  - component library
+  - Ant Design
+  - modelscope-studio
+title: modelscope-studio
+colorFrom: blue
+colorTo: gray
+short_description: A third-party component library based on Gradio.
+sdk: gradio
+pinned: false
+header: mini
+app_file: app.py
+license: apache-2.0
+---
+
 # ModelScope Studio
 
 <p align="center">
@@ -9,7 +26,7 @@
 <p>
 
 <p align="center">
-<a href="https://github.com/modelscope/modelscope-studio">GitHub</a> | 🤖 <a href="https://modelscope.cn/studios/modelscope/modelscope-studio/summary">ModelScope Studio</a> ｜ 🤗 <a href="https://huggingface.co/spaces/modelscope/modelscope-studio">Hugging Face Space</a>
+<a href="https://github.com/modelscope/modelscope-studio">GitHub</a> | 🤖 <a href="https://modelscope.cn/studios/modelscope/modelscope-studio-beta">ModelScope Studio</a> ｜ 🤗 <a href="https://huggingface.co/spaces/modelscope/modelscope-studio-beta">Hugging Face Space</a>
 
 `modelscope_studio` is a third-party component library based on Gradio, extending more components and usage forms on top of the original Gradio components.
 

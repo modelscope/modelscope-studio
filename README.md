@@ -1,3 +1,5 @@
+> The current document version is `1.0 beta`. If you are using a previous version of `modelscope_studio`, please switch to the [legacy](https://github.com/modelscope/modelscope-studio/tree/legacy) branch for reference.
+
 # ModelScope Studio
 
 <p align="center">
@@ -9,7 +11,7 @@
 <p>
 
 <p align="center">
-<a href="https://github.com/modelscope/modelscope-studio">GitHub</a> | 🤖 <a href="https://modelscope.cn/studios/modelscope/modelscope-studio/summary">ModelScope Studio</a> ｜ 🤗 <a href="https://huggingface.co/spaces/modelscope/modelscope-studio">Hugging Face Space</a>
+<a href="https://github.com/modelscope/modelscope-studio">GitHub</a> | 🤖 <a href="https://modelscope.cn/studios/modelscope/modelscope-studio-beta">ModelScope Studio</a> ｜ 🤗 <a href="https://huggingface.co/spaces/modelscope/modelscope-studio-beta">Hugging Face Space</a>
 <br>
     <a href="README-zh_CN.md">中文</a>&nbsp ｜ &nbspEnglish&nbsp ｜ &nbsp<a href="README-ja_JP.md">日本語</a>
 </p>
@@ -54,8 +56,8 @@ demo.queue().launch()
 
 ## Documentation and Examples
 
-- [ModelScope](https://modelscope.cn/studios/modelscope/modelscope-studio)
-- [Hugging Face](https://huggingface.co/spaces/modelscope/modelscope-studio)
+- ModelScope: [中文](https://modelscope.cn/studios/modelscope/modelscope-studio-beta)
+- Hugging Face: [English](<(https://huggingface.co/spaces/modelscope/modelscope-studio-beta)>)
 
 ## Migration to 1.0
 

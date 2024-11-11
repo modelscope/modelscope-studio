@@ -36,7 +36,7 @@ class Site:
                             visible=True if tab.get("default_active_key")
                             == key else False) as docs_tab:
                         docs_tabs.append(docs_tab)
-                        tab_docs[key].docs.render()
+                        tab_docs[key].render()
         return docs_tabs
 
     def render(self):
@@ -183,14 +183,14 @@ class Site:
 
                                         return on_layout_menu_select
 
-                                    sider_menu.select(
-                                        fn=on_layout_menu_select_wrapper(
-                                            docs_tabs, sider_menu,
-                                            layout_content_tabs),
-                                        outputs=[
-                                            sider_menu, layout_content_tabs,
-                                            *docs_tabs
-                                        ])
+                                sider_menu.select(
+                                    fn=on_layout_menu_select_wrapper(
+                                        docs_tabs, sider_menu,
+                                        layout_content_tabs),
+                                    outputs=[
+                                        sider_menu, layout_content_tabs,
+                                        *docs_tabs
+                                    ])
                         tab_menu.select(
                             fn=on_tab_menu_select,
                             outputs=[tab_menu, tabs, *tab_components])

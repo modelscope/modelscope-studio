@@ -1,6 +1,7 @@
 import os
 from typing import Literal
 
+from helper.Docs import Docs
 from helper.env import is_modelscope_studio
 from helper.Site import Site
 from legacy_app import legacy_demo
@@ -34,19 +35,23 @@ def get_docs(file_path: str, type: Literal["antd", "base"]):
             "doc", os.path.join(components_dir, component, "app.py"))
         module = importlib.util.module_from_spec(spec)
         spec.loader.exec_module(module)
-        docs[component] = module
+        docs[component] = module.docs
     return docs
 
+
+index_docs = {"modelscope_studio": Docs(__file__)}
 
 base_docs = get_docs(__file__, "base")
 antd_docs = get_docs(__file__, "antd")
 
-default_active_tab = "base"
+default_active_tab = "index"
+
+index_menu_items = [{
+    "label": get_text("ModelScope-Studio", "ModelScope-Studio"),
+    "key": "modelscope_studio"
+}]
 
 base_menu_items = [{
-    "label": get_text("Overview", "概览"),
-    "key": "overview"
-}, {
     "label":
     get_text("Core", "核心"),
     "type":
@@ -148,9 +153,15 @@ def more_components():
 
 tabs = [
     {
+        "label": get_text("Overview", "预览"),
+        "key": "index",
+        "default_active_key": "modelscope_studio",
+        "menus": index_menu_items
+    },
+    {
         "label": get_text("Base Components", "基础组件"),
         "key": "base",
-        "default_active_key": "overview",
+        "default_active_key": "application",
         "menus": base_menu_items
     },
     {
@@ -171,6 +182,7 @@ site = Site(
     tabs=tabs,
     docs={
         # match the key of tabs
+        "index": index_docs,
         "antd": antd_docs,
         "base": base_docs
     },
@@ -180,4 +192,4 @@ site = Site(
 demo = site.render()
 
 if __name__ == "__main__":
-    demo.launch()
+    demo.queue().launch(ssr_mode=False)
