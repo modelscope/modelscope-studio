@@ -128,8 +128,17 @@ antd_menu_items = [{
         "label": get_text("Flex", "Flex 弹性布局"),
         "key": "flex"
     }, {
-        "label": get_text("Grid", "Grid 栅格布局"),
+        "label": get_text("Grid", "Grid 栅格"),
         "key": "grid"
+    }, {
+        "label": get_text("Layout", "Layout 布局"),
+        "key": "layout"
+    }, {
+        "label": get_text("Space", "Space 间距"),
+        "key": "space"
+    }, {
+        "label": get_text("Splitter", "Splitter 分割面板"),
+        "key": "splitter"
     }]
 }]
 
