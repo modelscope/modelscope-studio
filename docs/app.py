@@ -124,6 +124,12 @@ antd_menu_items = [{
     "children": [{
         "label": get_text("Divider", "Divider 分割线"),
         "key": "divider"
+    }, {
+        "label": get_text("Flex", "Flex 弹性布局"),
+        "key": "flex"
+    }, {
+        "label": get_text("Grid", "Grid 栅格布局"),
+        "key": "grid"
     }]
 }]
 
@@ -143,17 +149,23 @@ def logo():
 
 def more_components():
     with antd.Button(type="link",
+                     block=True,
                      href="https://ant.design/components/overview/",
-                     href_target="_blank"):
+                     href_target="_blank",
+                     elem_style=dict(display="block",
+                                     textAlign="left",
+                                     whiteSpace="nowrap",
+                                     textOverflow="ellipsis",
+                                     overflow="hidden")):
         ms.Text(get_text("More Components", "更多组件"))
 
         with ms.Slot("icon"):
-            antd.Icon("ExportOutlined")
+            antd.Icon("ExportOutlined", elem_style=dict(marginRight=4))
 
 
 tabs = [
     {
-        "label": get_text("Overview", "预览"),
+        "label": get_text("Overview", "概览"),
         "key": "index",
         "default_active_key": "modelscope_studio",
         "menus": index_menu_items

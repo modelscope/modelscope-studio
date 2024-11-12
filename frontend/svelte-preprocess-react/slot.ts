@@ -82,6 +82,16 @@ function ensureObjectCtxValue(ctxValue: any) {
     : { value: ctxValue };
 }
 
+// for ms.Each
+const subIndexKey = '$$ms-gr-sub-index-context-key';
+function getSubIndexContext() {
+  return (getContext(subIndexKey) as number) || null;
+}
+
+function setSubIndexContext(index?: number) {
+  return setContext(subIndexKey, index);
+}
+
 /**
  *
  * will run `resetSlotKey` inside
@@ -116,6 +126,15 @@ export function getSlotContext<
     index: props._internal.index,
     subIndex: props._internal.subIndex,
   });
+  // for ms.Each
+  const subIndex = getSubIndexContext();
+  if (typeof subIndex === 'number') {
+    setSubIndexContext(undefined);
+  }
+
+  if (typeof props._internal.subIndex === 'number') {
+    setSubIndexContext(props._internal.subIndex);
+  }
   if (slotKey) {
     slotKey.subscribe((v) => {
       componentSlotContext.slotKey.set(v as string);
@@ -149,8 +168,13 @@ export function getSlotContext<
         )
       : undefined;
   };
+
   const mergedProps = writable<T>({
     ...props,
+    _internal: {
+      ...props._internal,
+      index: subIndex ?? props._internal.index,
+    },
     ...initialCtxValue,
     restProps: mergeRestProps(props.restProps, initialCtxValue),
     originalRestProps: props.restProps,
@@ -161,6 +185,10 @@ export function getSlotContext<
       (v) => {
         mergedProps.set({
           ...v,
+          _internal: {
+            ...v._internal,
+            index: subIndex ?? v._internal.index,
+          },
           restProps: mergeRestProps(v.restProps),
           originalRestProps: v.restProps,
         });
@@ -190,6 +218,10 @@ export function getSlotContext<
       );
       return mergedProps.set({
         ...v,
+        _internal: {
+          ...v._internal,
+          index: subIndex ?? v._internal.index,
+        },
         ...ctxValue,
         restProps: mergeRestProps(v.restProps, ctxValue),
         originalRestProps: v.restProps,

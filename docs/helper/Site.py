@@ -59,7 +59,7 @@ class Site:
   padding: 0 !important;
 }
 """) as demo:
-            with ms.Application():
+            with ms.Application() as app:
                 with antd.ConfigProvider():
                     with antd.Layout(elem_style=dict(
                             height=
@@ -107,10 +107,14 @@ class Site:
                                                 overflow="auto")):
                                             tab["content"].render()
                                     elif "menus" in tab:
+
                                         # menus render
                                         with antd.Layout(elem_style=dict(
                                                 height='100%')):
                                             with antd.Layout.Sider(
+                                                    collapsed=False,
+                                                    collapsible=True,
+                                                    trigger=None,
                                                     elem_style=dict(
                                                         height=
                                                         "calc(100vh - 64px)",
@@ -118,7 +122,7 @@ class Site:
                                                         position="relative",
                                                         backgroundColor=
                                                         "var(--ms-gr-ant-color-bg-container)"
-                                                    )):
+                                                    )) as layout_sider:
                                                 sider_menu = antd.Menu(
                                                     selected_keys=[
                                                         tab.get(
@@ -191,6 +195,14 @@ class Site:
                                         sider_menu, layout_content_tabs,
                                         *docs_tabs
                                     ])
+
+                                def on_app_mount(e: gr.EventData):
+                                    screen_width = e._data["screen"]["width"]
+                                    return gr.update(
+                                        collapsed=screen_width < 576)
+
+                                app.mount(on_app_mount, outputs=[layout_sider])
+
                         tab_menu.select(
                             fn=on_tab_menu_select,
                             outputs=[tab_menu, tabs, *tab_components])
