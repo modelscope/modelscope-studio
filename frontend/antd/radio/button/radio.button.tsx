@@ -1,6 +1,8 @@
 import { sveltify } from '@svelte-preprocess-react';
 import { type GetProps, Radio as ARadio, theme } from 'antd';
 
+import './radio.button.less';
+
 export const Radio = sveltify<
   GetProps<typeof ARadio.Button> & {
     onValueChange: (value: boolean) => void;

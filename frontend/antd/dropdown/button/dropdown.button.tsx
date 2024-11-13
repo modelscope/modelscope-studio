@@ -53,7 +53,10 @@ export const DropdownButton = sveltify<
         menu={{
           ...props.menu,
           items: useMemo(() => {
-            return props.menu?.items || renderItems<ItemType>(menuItems);
+            return (
+              props.menu?.items ||
+              renderItems<ItemType>(menuItems, { clone: true })
+            );
           }, [menuItems, props.menu?.items]),
           expandIcon: slots['menu.expandIcon']
             ? renderParamsSlot(
@@ -77,7 +80,9 @@ export const DropdownButton = sveltify<
               })
             : dropdownRenderFunction
         }
-      />
+      >
+        {children}
+      </ADropdown.Button>
     );
   }
 );

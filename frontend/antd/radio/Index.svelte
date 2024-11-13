@@ -67,7 +67,6 @@
       className={cls($mergedProps.elem_classes, 'ms-gr-antd-radio')}
       id={$mergedProps.elem_id}
       checked={$mergedProps.value}
-      value={$mergedProps.restProps.group_value}
       {...$mergedProps.restProps}
       {...$mergedProps.props}
       {...bindEvents($mergedProps)}

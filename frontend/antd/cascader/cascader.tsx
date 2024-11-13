@@ -83,7 +83,8 @@ export const Cascader = sveltify<
             return (
               options ||
               renderItems<NonNullable<CascaderProps['options']>[number]>(
-                optionItems
+                optionItems,
+                { clone: true }
               )
             );
           }, [options, optionItems])}

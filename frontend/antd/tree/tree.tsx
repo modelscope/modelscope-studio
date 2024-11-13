@@ -56,7 +56,9 @@ export const Tree = sveltify<
         ...props,
         treeData:
           treeData ||
-          renderItems<NonNullable<TreeProps['treeData']>[number]>(slotItems),
+          renderItems<NonNullable<TreeProps['treeData']>[number]>(slotItems, {
+            clone: true,
+          }),
         showLine: slots['showLine.showLeafIcon']
           ? {
               showLeafIcon: renderParamsSlot({

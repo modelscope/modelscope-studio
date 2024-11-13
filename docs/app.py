@@ -140,6 +140,30 @@ antd_menu_items = [{
         "label": get_text("Splitter", "Splitter 分割面板"),
         "key": "splitter"
     }]
+}, {
+    "label":
+    get_text("Navigation", "导航"),
+    "type":
+    "group",
+    "children": [{
+        "label": get_text("Anchor", "Anchor 锚点"),
+        "key": "anchor"
+    }, {
+        "label": get_text("Breadcrumb", "Breadcrumb 面包屑"),
+        "key": "breadcrumb"
+    }, {
+        "label": get_text("Dropdown", "Dropdown 下拉菜单"),
+        "key": "dropdown"
+    }]
+}, {
+    "label":
+    get_text("Other", "其他"),
+    "type":
+    "group",
+    "children": [{
+        "label": get_text("ConfigProvider", "ConfigProvider 全局化配置"),
+        "key": "config_provider"
+    }]
 }]
 
 

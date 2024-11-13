@@ -43,23 +43,23 @@ export function renderItems<R>(
 
       let el: HTMLElement | undefined;
       let callback: ((key: string, params: any[]) => void) | undefined;
-      let clone = false;
+      let clone = options?.clone ?? false;
       if (elOrObject instanceof Element) {
         el = elOrObject;
       } else {
         el = elOrObject.el;
         callback = elOrObject.callback;
-        clone = elOrObject.clone || false;
+        clone = elOrObject.clone ?? false;
       }
 
       current[splits[splits.length - 1]] = el ? (
         callback ? (
           (...args: any[]) => {
             callback(splits[splits.length - 1], args);
-            return <ReactSlot slot={el} clone={clone || options?.clone} />;
+            return <ReactSlot slot={el} clone={clone} />;
           }
         ) : (
-          <ReactSlot slot={el} clone={clone || options?.clone} />
+          <ReactSlot slot={el} clone={clone} />
         )
       ) : (
         current[splits[splits.length - 1]]

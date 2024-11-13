@@ -31,7 +31,12 @@ export const Anchor = sveltify<
             // ["title"]
             return (
               items ||
-              renderItems<NonNullable<AnchorProps['items']>[number]>(slotItems)
+              renderItems<NonNullable<AnchorProps['items']>[number]>(
+                slotItems,
+                {
+                  clone: true,
+                }
+              )
             );
           }, [items, slotItems])}
           getContainer={getContainerFunction}

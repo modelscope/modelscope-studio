@@ -47,7 +47,9 @@ export const Mentions = sveltify<
               options ||
               renderItems<
                 NonNullable<GetProps<typeof AMentions>['options']>[number]
-              >(optionItems)
+              >(optionItems, {
+                clone: true,
+              })
             );
           }, [optionItems, options])}
           onChange={(v, ...args) => {

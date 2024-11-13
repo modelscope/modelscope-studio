@@ -46,7 +46,12 @@ export const Menu = sveltify<
           }}
           items={useMemo(() => {
             // ['label','icon',"title"]
-            return items || renderItems<ItemType>(slotItems);
+            return (
+              items ||
+              renderItems<ItemType>(slotItems, {
+                clone: true,
+              })
+            );
           }, [items, slotItems])}
           expandIcon={
             slots.expandIcon

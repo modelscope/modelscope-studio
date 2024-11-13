@@ -10,8 +10,6 @@ import type { Locale } from 'antd/es/locale';
 import dayjs from 'dayjs';
 import { produce } from 'immer';
 
-import 'dayjs/locale/zh-cn';
-
 import { locales } from './locales';
 
 const combinePropsAndSlots = (
@@ -80,12 +78,12 @@ export const ConfigProvider = sveltify<
     const renderEmptyFunction = useFunction(renderEmpty);
     useEffect(() => {
       if (localeProp && locales[localeProp]) {
-        locales[localeProp]().then((m) => {
-          setLocale(m.default);
-          if (localeProp === 'zh_CN') {
-            dayjs.locale('zh-cn');
+        locales[localeProp]().then(
+          ({ antd: antdLocale, dayjs: dayjsLocale }) => {
+            setLocale(antdLocale);
+            dayjs.locale(dayjsLocale);
           }
-        });
+        );
       }
     }, [localeProp]);
 
