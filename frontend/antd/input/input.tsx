@@ -1,7 +1,7 @@
 import { sveltify } from '@svelte-preprocess-react';
 import { ReactSlot } from '@svelte-preprocess-react/react-slot';
 import type { SetSlotParams } from '@svelte-preprocess-react/slot';
-import { useEffect, useMemo, useState } from 'react';
+import { useMemo } from 'react';
 import { useFunction } from '@utils/hooks/useFunction';
 import { useValueChange } from '@utils/hooks/useValueChange';
 import { omitUndefinedProps } from '@utils/omitUndefinedProps';
@@ -62,7 +62,7 @@ export const Input = sveltify<
                     slots,
                     setSlotParams,
                     key: 'showCount.formatter',
-                  }),
+                  })!,
                 }
               : typeof showCount === 'object' && showCountFunction
                 ? {
