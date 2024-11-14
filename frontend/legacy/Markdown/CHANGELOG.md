@@ -1,5 +1,11 @@
 # @modelscope-studio/legacy-markdown
 
+## 1.0.0-beta.4
+
+### Fixes
+
+- [`107d733`](https://github.com/modelscope/modelscope-studio/commit/107d733cb4ee01f346d165cbe192c514b38ac905) - known component issues. Thanks [@Col0ring](https://github.com/Col0ring)!
+
 ## 1.0.0-beta.3
 
 ### Features
