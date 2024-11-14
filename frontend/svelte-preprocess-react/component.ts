@@ -114,7 +114,7 @@ export function bindEvents<
             serializedPayload = payload.map((item) => {
               if (item && typeof item === 'object') {
                 return Object.fromEntries(
-                  Object.entries(item).filter(([_, v]) => {
+                  Object.entries(item).filter(([, v]) => {
                     try {
                       JSON.stringify(v);
                       return true;

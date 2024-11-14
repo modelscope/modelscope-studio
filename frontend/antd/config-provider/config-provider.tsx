@@ -73,6 +73,7 @@ export const ConfigProvider = sveltify<
       dark: themeMode === 'dark' ? true : false,
       ...(props.theme?.algorithm || {}),
     };
+
     const getPopupContainerFunction = useFunction(getPopupContainer);
     const getTargetContainerFunction = useFunction(getTargetContainer);
     const renderEmptyFunction = useFunction(renderEmpty);
@@ -105,6 +106,8 @@ export const ConfigProvider = sveltify<
                   })
                 : renderEmptyFunction
             }
+            // switch bug
+            // key={`${algorithm.dark}`}
             theme={{
               cssVar: true,
               ...props.theme,
@@ -112,9 +115,7 @@ export const ConfigProvider = sveltify<
                 .map((algo) => {
                   switch (algo) {
                     case 'dark':
-                      return algorithm[algo]
-                        ? theme.darkAlgorithm
-                        : theme.defaultAlgorithm;
+                      return algorithm[algo] ? theme.darkAlgorithm : null;
                     case 'compact':
                       return algorithm[algo] ? theme.compactAlgorithm : null;
                     default:

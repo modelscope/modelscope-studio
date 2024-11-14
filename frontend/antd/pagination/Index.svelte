@@ -23,10 +23,6 @@
   $: updatedProps.update((prev) => ({ ...prev, ...props }));
   export let _internal: Record<string, any> = {};
 
-  export let value: {
-    page?: number;
-    page_size?: number;
-  } = {};
   export let as_item: string | undefined;
   // gradio properties
   export let visible = true;
@@ -43,7 +39,6 @@
     elem_classes,
     elem_style,
     as_item,
-    value,
     restProps: $$restProps,
   });
   const setSlotParams = getSetSlotParamsFn();
@@ -57,7 +52,6 @@
     elem_classes,
     elem_style,
     as_item,
-    value,
     restProps: $$restProps,
   });
 </script>

@@ -154,6 +154,15 @@ antd_menu_items = [{
     }, {
         "label": get_text("Dropdown", "Dropdown 下拉菜单"),
         "key": "dropdown"
+    }, {
+        "label": get_text("Menu", "Menu 导航菜单"),
+        "key": "menu"
+    }, {
+        "label": get_text("Pagination", "Pagination 分页"),
+        "key": "pagination"
+    }, {
+        "label": get_text("Steps", "Steps 步骤条"),
+        "key": "steps"
     }]
 }, {
     "label":
