@@ -47,6 +47,7 @@ const gradioProps = [
   '_internal',
   'props',
   'value',
+  '_selectable',
   'attached_events',
   'loading_status',
   'value_is_output',

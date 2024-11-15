@@ -22,6 +22,9 @@
         "svelte-preprocess-react/component.ts"
       ],
       "@svelte-preprocess-react/slot": ["svelte-preprocess-react/slot.ts"],
+      "@svelte-preprocess-react/provider": [
+        "svelte-preprocess-react/provider.ts"
+      ],
       "@svelte-preprocess-react/react-slot": [
         "svelte-preprocess-react/react-slot.tsx"
       ],

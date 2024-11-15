@@ -1,3 +1,4 @@
+import { getSetLoadingStatusFn } from '@svelte-preprocess-react/provider';
 import { isUndefined } from 'lodash-es';
 import { getContext, setContext } from 'svelte';
 import { get, type Writable, writable } from 'svelte/store';
@@ -106,6 +107,7 @@ export function getSlotContext<
   props: T,
   restPropsMapping?: Record<keyof T['restProps'], string>,
   options?: {
+    shouldSetLoadingStatus?: boolean;
     shouldRestSlotKey?: boolean;
   }
 ): [
@@ -117,6 +119,7 @@ export function getSlotContext<
   (props: T) => void,
 ] {
   const shouldRestSlotKey = options?.shouldRestSlotKey ?? true;
+  const shouldSetLoadingStatus = options?.shouldSetLoadingStatus ?? true;
   if (!Reflect.has(props, 'as_item') || !Reflect.has(props, '_internal')) {
     throw new Error('`as_item` and `_internal` is required');
   }
@@ -131,6 +134,10 @@ export function getSlotContext<
   if (typeof subIndex === 'number') {
     setSubIndexContext(undefined);
   }
+  // for loading_status
+  const setLoadingStatus = shouldSetLoadingStatus
+    ? getSetLoadingStatusFn()
+    : () => {};
 
   if (typeof props._internal.subIndex === 'number') {
     setSubIndexContext(props._internal.subIndex);
@@ -183,6 +190,7 @@ export function getSlotContext<
     return [
       mergedProps,
       (v) => {
+        setLoadingStatus(v.restProps?.loading_status);
         mergedProps.set({
           ...v,
           _internal: {
@@ -216,6 +224,7 @@ export function getSlotContext<
           ? (get(ctx)?.[v.as_item as keyof T] as Record<string, any>) || {}
           : get(ctx) || {}
       );
+      setLoadingStatus(v.restProps?.loading_status);
       return mergedProps.set({
         ...v,
         _internal: {

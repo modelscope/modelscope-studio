@@ -1,5 +1,5 @@
 {
-  "name": "@modelscope-studio/antd-filter",
+  "name": "@modelscope-studio/filter",
   "type": "module",
   "exports": {
     ".": {

@@ -33,6 +33,7 @@ declare global {
       target: Writable<HTMLElement>;
       tree: TreeNode;
       autokey: number;
+      loadingKey: number;
       rerender: (props: BridgeProps) => void;
     };
   }
@@ -65,6 +66,7 @@ window.ms_globals = {
   dayjs,
   internalContext,
   autokey: 0,
+  loadingKey: 0,
   target,
   tree: {
     key: 0,

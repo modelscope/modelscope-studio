@@ -1,0 +1,22 @@
+.ms-gr-auto-loading {
+  position: relative;
+
+  & .ms-gr-auto-loading-default-antd {
+    position: absolute !important;
+    z-index: 1000;
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+    inset: 0;
+  }
+
+  & .ms-gr-auto-loading-error-default-antd {
+    position: fixed !important;
+    top: 50%;
+    left: 50%;
+    z-index: 1000;
+    width: 80%;
+    max-height: 100%;
+    transform: translate(-50%, -50%);
+  }
+}

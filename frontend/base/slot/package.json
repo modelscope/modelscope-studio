@@ -1,5 +1,5 @@
 {
-  "name": "@modelscope-studio/antd-slot",
+  "name": "@modelscope-studio/slot",
   "type": "module",
   "exports": {
     ".": {

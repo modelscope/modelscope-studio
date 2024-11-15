@@ -1,5 +1,5 @@
 {
-  "name": "@modelscope-studio/div",
+  "name": "@modelscope-studio/auto-loading",
   "type": "module",
   "exports": {
     ".": {
