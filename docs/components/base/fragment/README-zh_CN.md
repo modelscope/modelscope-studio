@@ -1,4 +1,4 @@
-# Fragment
+# Fragment 片段
 
 分段组件，该组件本身不会参与页面布局，它的主要作用是组合多个子组件，并将它们共同包装为`modelscope_studio`组件。
 

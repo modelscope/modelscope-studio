@@ -45,7 +45,6 @@ base_docs = get_docs(__file__, "base")
 antd_docs = get_docs(__file__, "antd")
 
 default_active_tab = "index"
-
 index_menu_items = [{
     "label": get_text("ModelScope-Studio", "ModelScope-Studio"),
     "key": "modelscope_studio"
@@ -60,10 +59,13 @@ base_menu_items = [{
         "label": "Application",
         "key": "application"
     }, {
-        "label": "Slot",
+        "label": get_text("AutoLoading", "AutoLoading 自动加载"),
+        "key": "auto_loading"
+    }, {
+        "label": get_text("Slot", "Slot 插槽"),
         "key": "slot"
     }, {
-        "label": "Fragment",
+        "label": get_text("Fragment", "Fragment 片段"),
         "key": "fragment"
     }]
 }, {

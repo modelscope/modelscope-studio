@@ -12,13 +12,16 @@ class ModelScopeAutoLoading(ModelScopeLayoutComponent):
     EVENTS = []
 
     # supported slots
-    SLOTS = ["render", "errorRender"]
+    SLOTS = ["render", "errorRender", "loadingText"]
 
     def __init__(
             self,
             *,
-            generating=False,
-            show_error=False,
+            generating: bool = False,
+            show_error: bool = False,
+            show_mask: bool = False,
+            show_timer: bool = True,
+            loading_text: str | None = None,
             as_item: str | None = None,
             _internal: None = None,
             # gradio properties
@@ -37,6 +40,9 @@ class ModelScopeAutoLoading(ModelScopeLayoutComponent):
                          **kwargs)
         self.generating = generating
         self.show_error = show_error
+        self.show_mask = show_mask
+        self.show_timer = show_timer
+        self.loading_text = loading_text
 
     FRONTEND_DIR = resolve_frontend_dir("auto-loading", type="base")
 
