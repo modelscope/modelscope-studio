@@ -1,6 +1,6 @@
 {
   "name": "@modelscope-studio/legacy-chatbot",
-  "version": "1.0.0-beta.4",
+  "version": "1.0.0-beta.5",
   "private": false,
   "description": "ModelScope Gradio Components",
   "repository": "git@github.com:modelscope/modelscope-studio.git",

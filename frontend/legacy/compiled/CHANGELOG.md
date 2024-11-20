@@ -1,5 +1,11 @@
 # @modelscope-studio/legacy-compiled
 
+## 1.0.0-beta.5
+
+### Features
+
+- [`af9aa4f`](https://github.com/modelscope/modelscope-studio/commit/af9aa4fe598ae23dbe88163202aab2d44d5a133d) - add AutoLoading. Thanks [@Col0ring](https://github.com/Col0ring)!
+
 ## 1.0.0-beta.4
 
 ### Fixes
