@@ -1,31 +1,35 @@
-# AutoLoading 自动加载
+# AutoLoading
 
-在`Gradio`前端发送请求时自动为被包裹的内容添加加载动画。该组件会自动收集子组件的加载状态，建议至少在全局使用一次此组件，以显示兜底的加载反馈。
+Automatically adds loading animations to the wrapped content when requests are sent from the `Gradio` frontend. This component will automatically collect the loading states of child components, it's recommended to use this component at least once globally to provide fallback loading feedback.
 
-在`Gradio`中，前端到服务端的请求一共有 4 种状态：
+> **Note:** If there are multiple nested `AutoLoading` components, only the innermost `AutoLoading` can collect the loading states of child components and display the loading animation.
 
-- `pending`：此时前端发出的请求还没有收到服务端的响应。
-- `generating`：此时前端发出的请求已经收到了响应，但是服务端还没有完成所有内容返回（该状态并不是必定发生的，只有当服务端的处理函数使用`yield`返回值时才会存在）。
-- `completed`：服务端返回了所有内容，本次请求结束。
-- `error`：本次请求发生错误。
+In `Gradio`, there are 4 states for requests from the frontend to the backend:
 
-默认情况下，`AutoLoading`组件会：
+- `pending`: The frontend has sent a request but has not yet received a response from the backend.
+- `generating`: The frontend has received a response, but the backend has not completed sending all content (this state does not necessarily occur and only exists when the backend's processing function uses `yield` to return values).
+- `completed`: The backend has returned all content, and the request has ended.
+- `error`: An error occurred during the request.
 
-- 在请求状态为`pending`时添加加载动画。
-- 在请求状态为`generating`时结束加载动画，此时用户可以手动控制应用的加载效果，您也可以通过设置`generating=True`来继续展示动画。
-- 在请求状态为`completed`时结束加载动画。
-- 在请求状态为`error`时结束加载动画，您可以通过设置`show_error=True`来为用户展示错误信息（该信息会在页面居中显示）。
+By default, the `AutoLoading` component will:
 
-## 示例
+- Add a loading animation when the request status is `pending`.
+- End the loading animation when the request status is `generating`. At this point, users can manually control the application's loading effect, or you can set `generating=True` to continue displaying the animation.
+- End the loading animation when the request status is `completed`.
+- End the loading animation when the request status is `error`. You can set `show_error=True` to display error information to the user (this information will be centered on the page).
+
+## Examples
 
 <demo name="basic"></demo>
 
+<demo name="nested" title="Nested AutoLoading"></demo>
+
 ## API
 
-| 属性         | 类型 | 默认值 | 描述                                                                                     |
-| ------------ | ---- | ------ | ---------------------------------------------------------------------------------------- |
-| generating   | bool | False  | 是否包含对`generating`状态的处理                                                         |
-| show_error   | bool | True   | 是否显示错误信息                                                                         |
-| show_mask    | bool | True   | 是否显示遮罩                                                                             |
-| show_timer   | bool | True   | 是否显示计时器                                                                           |
-| loading_text | str  | None   | 加载中文案，默认不填写使用 `Gradio` 的加载文案显示（包括加载时间、当前用户的排队队列等） |
+| Attribute    | Type | Default Value | Description                                                                                                                                  |
+| ------------ | ---- | ------------- | -------------------------------------------------------------------------------------------------------------------------------------------- |
+| generating   | bool | False         | Whether to include handling of the `generating` state                                                                                        |
+| show_error   | bool | True          | Whether to display error information                                                                                                         |
+| show_mask    | bool | True          | Whether to display the mask                                                                                                                  |
+| show_timer   | bool | True          | Whether to display the timer                                                                                                                 |
+| loading_text | str  | None          | Loading text, if not filled, it will use the loading text provided by `Gradio` (including loading time, current user's queue position, etc.) |
