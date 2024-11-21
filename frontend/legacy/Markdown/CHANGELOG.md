@@ -1,5 +1,11 @@
 # @modelscope-studio/legacy-markdown
 
+## 1.0.0-beta.6
+
+### Fixes
+
+- [`6a38225`](https://github.com/modelscope/modelscope-studio/commit/6a38225363c7db871c9593e524fe73ebebff1016) - auto_loading & cloned node. Thanks [@Col0ring](https://github.com/Col0ring)!
+
 ## 1.0.0-beta.5
 
 ### Features

@@ -1,6 +1,6 @@
 {
   "name": "@modelscope-studio/legacy-compiled",
-  "version": "1.0.0-beta.5",
+  "version": "1.0.0-beta.6",
   "private": false,
   "description": "ModelScope Gradio Components",
   "repository": "git@github.com:modelscope/modelscope-studio.git",
