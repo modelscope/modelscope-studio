@@ -13,9 +13,7 @@ class AntdAutoCompleteOption(ModelScopeLayoutComponent):
     EVENTS = []
 
     # supported slots
-    SLOTS = [
-        'label',
-    ]
+    SLOTS = ['label', 'options']
 
     def __init__(
             self,

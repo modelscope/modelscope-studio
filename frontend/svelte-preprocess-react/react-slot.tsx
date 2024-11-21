@@ -13,7 +13,6 @@ function cloneElementWithEvents(element: HTMLElement) {
   const portals: React.ReactPortal[] = [];
 
   const clonedElement = element.cloneNode(false) as HTMLElement;
-
   if (element._reactElement) {
     portals.push(
       createPortal(
@@ -28,6 +27,7 @@ function cloneElementWithEvents(element: HTMLElement) {
                 portals: childPortals,
                 clonedElement: childClonedElement,
               } = cloneElementWithEvents(child.props.el);
+
               // Child Component
               return React.cloneElement(child, {
                 ...child.props,
@@ -44,6 +44,7 @@ function cloneElementWithEvents(element: HTMLElement) {
         clonedElement
       )
     );
+
     return {
       clonedElement,
       portals,
@@ -59,7 +60,6 @@ function cloneElementWithEvents(element: HTMLElement) {
     });
   });
   const elementsChildrenArray = Array.from(element.childNodes);
-
   for (let i = 0; i < elementsChildrenArray.length; i++) {
     const child = elementsChildrenArray[i];
     // element
@@ -135,25 +135,35 @@ export const ReactSlot = forwardRef<HTMLElement, ReactSlotProps>(
       let observer: MutationObserver | null = null;
       if (clone && window.MutationObserver) {
         function render() {
+          if (ref.current?.contains(cloned)) {
+            ref.current?.removeChild(cloned);
+          }
           const { portals, clonedElement } = cloneElementWithEvents(slot);
           cloned = clonedElement;
           setChildren(portals);
           cloned.style.display = 'contents';
           mountElementProps();
           ref.current?.appendChild(cloned);
+          return portals.length > 0;
         }
-        render();
-        observer = new window.MutationObserver(() => {
-          if (ref.current?.contains(cloned)) {
-            ref.current?.removeChild(cloned);
-          }
-          render();
-        });
-        observer.observe(slot, {
-          attributes: true,
-          childList: true,
-          subtree: true,
-        });
+        const hasPortal = render();
+        if (!hasPortal) {
+          observer = new window.MutationObserver(() => {
+            const _hasPortal = render();
+            if (_hasPortal) {
+              observer?.disconnect();
+              // observer?.observe(slot, {
+              //   childList: true,
+              //   subtree: true,
+              // });
+            }
+          });
+          observer.observe(slot, {
+            attributes: true,
+            childList: true,
+            subtree: true,
+          });
+        }
       } else {
         cloned.style.display = 'contents';
         mountElementProps();
@@ -162,7 +172,6 @@ export const ReactSlot = forwardRef<HTMLElement, ReactSlotProps>(
 
       return () => {
         cloned.style.display = '';
-
         if (ref.current?.contains(cloned)) {
           // eslint-disable-next-line react-hooks/exhaustive-deps
           ref.current?.removeChild(cloned);

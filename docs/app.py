@@ -168,6 +168,18 @@ antd_menu_items = [{
     }]
 }, {
     "label":
+    get_text("Data Entry", "数据录入"),
+    "type":
+    "group",
+    "children": [{
+        "label": get_text("AutoComplete", "AutoComplete 自动完成"),
+        "key": "auto_complete"
+    }, {
+        "label": get_text("Select", "Select 选择器"),
+        "key": "select"
+    }]
+}, {
+    "label":
     get_text("Other", "其他"),
     "type":
     "group",

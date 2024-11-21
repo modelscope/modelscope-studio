@@ -19,9 +19,9 @@ with gr.Blocks() as demo:
                             ms.Text("English")
                         with antd.Radio("zh_CN"):
                             ms.Text("中文")
-                        with antd.Radio("jp_JP"):
+                        with antd.Radio("ja_JP"):
                             ms.Text("日本語")
-                        with antd.Radio("kr_KR"):
+                        with antd.Radio("ko_KR"):
                             ms.Text("한국어")
                     with antd.Space(wrap=True):
                         antd.DatePicker()

@@ -9,9 +9,10 @@ export function renderItems<R>(
     children?: string;
     fallback?: (item: any) => R;
     clone?: boolean;
-  }
+  },
+  key?: React.Key
 ): R[] {
-  return items.filter(Boolean).map((item) => {
+  return items.filter(Boolean).map((item, i) => {
     if (typeof item !== 'object') {
       if (options?.fallback) {
         return options.fallback(item);
@@ -20,7 +21,9 @@ export function renderItems<R>(
     }
     const result = {
       ...item.props,
+      key: item.props?.key ?? (key ? `${key}-${i}` : `${i}`),
     };
+
     let current = result;
     Object.keys(item.slots).forEach((slotKey) => {
       if (
@@ -71,7 +74,8 @@ export function renderItems<R>(
     if (item[childrenKey as keyof typeof item]) {
       result[childrenKey] = renderItems(
         item[childrenKey as keyof typeof item] as Item[],
-        options
+        options,
+        `${i}`
       );
     }
     return result as R;

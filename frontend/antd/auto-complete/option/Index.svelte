@@ -63,24 +63,26 @@
   const setItem = getSetItemFn();
   const { default: items, options } = getItems(['default', 'options']);
 
-  $: setItem($slotKey, $mergedProps._internal.index || 0, {
-    props: {
-      style: $mergedProps.elem_style,
-      className: cls(
-        $mergedProps.elem_classes,
-        'ms-gr-antd-auto-complete-option'
-      ),
-      id: $mergedProps.elem_id,
-      value: $mergedProps.value,
-      label: $mergedProps.label,
-      ...$mergedProps.restProps,
-      ...$mergedProps.props,
-      ...bindEvents($mergedProps),
-    },
-    slots: $slots,
-    options:
-      $options.length > 0 ? $options : $items.length > 0 ? $items : undefined,
-  });
+  $: {
+    setItem($slotKey, $mergedProps._internal.index || 0, {
+      props: {
+        style: $mergedProps.elem_style,
+        className: cls(
+          $mergedProps.elem_classes,
+          'ms-gr-antd-auto-complete-option'
+        ),
+        id: $mergedProps.elem_id,
+        value: $mergedProps.value ?? undefined,
+        label: $mergedProps.label,
+        ...$mergedProps.restProps,
+        ...$mergedProps.props,
+        ...bindEvents($mergedProps),
+      },
+      slots: $slots,
+      options:
+        $options.length > 0 ? $options : $items.length > 0 ? $items : undefined,
+    });
+  }
 </script>
 
 {#if $mergedProps.visible}

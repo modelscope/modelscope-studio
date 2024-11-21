@@ -55,7 +55,7 @@ export function getSetLoadingStatusFn() {
     | undefined;
 
   return (loadingStatus: LoadingStatus | null) => {
-    if (!ctx) {
+    if (!ctx || !loadingStatus) {
       return;
     }
     const { loadingStatusMap, options } = ctx;
