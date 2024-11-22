@@ -56,7 +56,7 @@
   const slotKey = setSlotKey(currentValue);
   $: slotKey.set(currentValue);
 
-  const setSlotContext = getSetSlotContextFn();
+  const setSlotContext = getSetSlotContextFn({ inherit: true });
   $: {
     if ($slotParams && $slotParams[currentValue]) {
       if (paramsMappingFn) {

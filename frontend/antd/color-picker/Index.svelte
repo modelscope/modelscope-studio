@@ -73,7 +73,7 @@
       {...$mergedProps.restProps}
       {...$mergedProps.props}
       {...bindEvents($mergedProps)}
-      value={$mergedProps.props.value ?? $mergedProps.value}
+      value={$mergedProps.props.value ?? $mergedProps.value ?? undefined}
       slots={$slots}
       presetItems={$presets}
       {value_format}

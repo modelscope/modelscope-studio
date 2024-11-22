@@ -65,10 +65,22 @@ export function getSlotParams() {
 }
 
 const slotContextKey = '$$ms-gr-context-key';
-export function getSetSlotContextFn() {
+export function getSetSlotContextFn({ inherit }: { inherit?: boolean } = {}) {
   const value = writable();
+  let unsubscribe: (() => void) | undefined;
+  if (inherit) {
+    const ctxValue = getContext(slotContextKey) as Writable<any>;
+    unsubscribe = ctxValue?.subscribe((v) => {
+      value?.set(v);
+    });
+  }
+  let hasSetValue = !inherit;
   setContext(slotContextKey, value);
   return (v: any) => {
+    if (!hasSetValue) {
+      hasSetValue = true;
+      unsubscribe?.();
+    }
     value.set(v);
   };
 }

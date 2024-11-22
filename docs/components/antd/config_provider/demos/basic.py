@@ -5,11 +5,14 @@ import modelscope_studio.components.base as ms
 
 default_locale = "en_US"
 default_direction = 'ltr'
+default_color = "#816DF8"
 with gr.Blocks() as demo:
     with ms.Application():
         with antd.ConfigProvider(
                 locale=default_locale,
-                direction=default_direction) as config_provider:
+                direction=default_direction,
+                theme=dict(token=dict(
+                    colorPrimary=default_color))) as config_provider:
             with antd.Card():
                 with ms.Div(elem_style=dict(marginBottom=16)):
                     ms.Span("change locale of components:",
@@ -47,7 +50,7 @@ with gr.Blocks() as demo:
                             antd.Checkbox.Group.Option("compact",
                                                        label="compact")
                         ms.Text("Primary Color: ")
-                        color = antd.ColorPicker()
+                        color = antd.ColorPicker(value=default_color)
 
                     antd.Button("Primary Button", type="primary", block=True)
 
@@ -57,15 +60,16 @@ with gr.Blocks() as demo:
         direction.change(fn=lambda _direction: gr.update(direction=_direction),
                          inputs=[direction],
                          outputs=[config_provider])
-        gr.on([theme.change, color.change],
-              fn=lambda _theme, _color: gr.update(theme=dict(
-                  token=dict(colorPrimary=_color),
-                  algorithm=dict(dark=True
-                                 if _theme and 'dark' in _theme else False,
-                                 compact=True
-                                 if _theme and 'compact' or [] else False))),
-              inputs=[theme, color],
-              outputs=[config_provider])
+        gr.on(
+            [theme.change, color.change],
+            fn=lambda _theme, _color: gr.update(theme=dict(
+                token=dict(colorPrimary=_color) if _color else None,
+                algorithm=dict(dark=True
+                               if _theme and 'dark' in _theme else False,
+                               compact=True
+                               if _theme and 'compact' in _theme else False))),
+            inputs=[theme, color],
+            outputs=[config_provider])
 
 if __name__ == "__main__":
     demo.queue().launch()
