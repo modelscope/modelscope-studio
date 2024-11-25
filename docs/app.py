@@ -175,8 +175,20 @@ antd_menu_items = [{
         "label": get_text("AutoComplete", "AutoComplete 自动完成"),
         "key": "auto_complete"
     }, {
+        "label": get_text("Cascader", "Cascader 级联选择"),
+        "key": "cascader"
+    }, {
         "label": get_text("Select", "Select 选择器"),
         "key": "select"
+    }]
+}, {
+    "label":
+    get_text("Data Display", "数据展示"),
+    "type":
+    "group",
+    "children": [{
+        "label": get_text("Tour", "Tour 漫游式引导"),
+        "key": "tour"
     }]
 }, {
     "label":

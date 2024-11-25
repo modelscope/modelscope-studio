@@ -50,14 +50,20 @@ export function useLoadingStatus(loadingStatus?: LoadingStatus | null) {
   }, [startTimer, status, stopTimer]);
 
   useEffect(() => {
-    if (eta === null) {
-      setEta(oldEta);
+    setEta(loadingStatus?.eta ?? null);
+  }, [loadingStatus?.eta]);
+
+  useEffect(() => {
+    let _eta = eta;
+    if (_eta === null) {
+      _eta = oldEta;
+      setEta(_eta);
     }
-    if (eta !== null && oldEta !== eta) {
+    if (_eta !== null && oldEta !== _eta) {
       setFormattedEta(
-        ((performance.now() - timerStart) / 1000 + eta).toFixed(1)
+        ((performance.now() - timerStart) / 1000 + _eta).toFixed(1)
       );
-      setOldEta(eta);
+      setOldEta(_eta);
     }
   }, [eta, oldEta, timerStart]);
 

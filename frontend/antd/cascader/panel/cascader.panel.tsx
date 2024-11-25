@@ -30,6 +30,7 @@ export const CascaderPanel = sveltify<
       onValueChange,
       value: props.value,
     });
+
     return (
       <>
         <div style={{ display: 'none' }}>{children}</div>
