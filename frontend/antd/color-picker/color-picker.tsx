@@ -11,8 +11,13 @@ import { type Item } from './context';
 
 export const ColorPicker = sveltify<
   GetProps<typeof AColorPicker> & {
-    onValueChange: (value: string) => void;
-    onChange?: (value: string, ...args: any[]) => void;
+    onValueChange: (
+      value: string | { color: string; percent: number }[]
+    ) => void;
+    onChange?: (
+      value: string | { color: string; percent: number }[],
+      ...args: any[]
+    ) => void;
     value_format: 'rgb' | 'hex' | 'hsb';
     presetItems: Item[];
     setSlotParams: SetSlotParams;
@@ -65,13 +70,29 @@ export const ColorPicker = sveltify<
               : panelRenderFunction
           }
           onChange={(v, ...args) => {
-            const color = {
+            if (v.isGradient()) {
+              const gradientColors = v.getColors().map((color) => {
+                const colors = {
+                  rgb: color.color.toRgbString(),
+                  hex: color.color.toHexString(),
+                  hsb: color.color.toHsbString(),
+                };
+                return {
+                  ...color,
+                  color: colors[value_format],
+                };
+              });
+              onChange?.(gradientColors, ...args);
+              onValueChange(gradientColors);
+              return;
+            }
+            const colors = {
               rgb: v.toRgbString(),
               hex: v.toHexString(),
               hsb: v.toHsbString(),
             };
-            onChange?.(color[value_format], ...args);
-            onValueChange(color[value_format]);
+            onChange?.(colors[value_format], ...args);
+            onValueChange(colors[value_format]);
           }}
         >
           {targets.length === 0 ? null : children}

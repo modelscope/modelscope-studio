@@ -178,6 +178,15 @@ antd_menu_items = [{
         "label": get_text("Cascader", "Cascader 级联选择"),
         "key": "cascader"
     }, {
+        "label": get_text("Checkbox", "Checkbox 多选框"),
+        "key": "checkbox"
+    }, {
+        "label": get_text("ColorPicker", "ColorPicker 颜色选择器"),
+        "key": "color_picker"
+    }, {
+        "label": get_text("DatePicker", "DatePicker 日期选择框"),
+        "key": "date_picker"
+    }, {
         "label": get_text("Select", "Select 选择器"),
         "key": "select"
     }]

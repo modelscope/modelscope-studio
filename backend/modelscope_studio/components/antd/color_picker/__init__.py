@@ -38,14 +38,13 @@ class AntdColorPicker(ModelScopeDataLayoutComponent):
 
     def __init__(
             self,
-            value: str | None = None,
+            value: str | list[dict] | None = None,
             props: dict | None = None,
             *,
             value_format: Literal['hex', 'rgb', 'hsb'] = 'hex',
             allow_clear: bool = False,
             arrow: bool | dict = True,
             presets: list[dict] | None = None,
-            preset_items: list[dict] | None = None,
             disabled: bool | None = None,
             disabled_alpha: bool | None = None,
             destroy_tooltip_on_hide: bool | None = None,
@@ -53,7 +52,7 @@ class AntdColorPicker(ModelScopeDataLayoutComponent):
             mode: Literal['single', 'gradient']
         | list[Literal['single', 'gradient']] | None = 'single',
             open: bool | None = None,
-            default_value: str | None = None,
+            default_value: str | list[dict] | None = None,
             default_format: Literal['hex', 'rgb', 'hsb'] | None = None,
             show_text: bool | str | None = None,
             placement: Literal['bottomLeft', 'bottomRight', 'topLeft',
@@ -84,7 +83,6 @@ class AntdColorPicker(ModelScopeDataLayoutComponent):
         self.allow_clear = allow_clear
         self.arrow = arrow
         self.presets = presets
-        self.preset_items = preset_items
         self.disabled = disabled
         self.disabled_alpha = disabled_alpha
         self.destroy_tooltip_on_hide = destroy_tooltip_on_hide
@@ -107,13 +105,30 @@ class AntdColorPicker(ModelScopeDataLayoutComponent):
         return False
 
     def api_info(self) -> dict[str, Any]:
-        return {"type": "string"}
+        return {
+            "anyOf": [{
+                "type": "string"
+            }, {
+                "type": "array",
+                "items": {
+                    "type": "object",
+                    "properties": {
+                        "color": {
+                            "type": "string"
+                        },
+                        "percent": {
+                            "type": "number"
+                        }
+                    },
+                }
+            }]
+        }
 
-    def preprocess(self, payload: str) -> str:
+    def preprocess(self, payload: str | list[dict]) -> str | list[dict]:
 
         return payload
 
-    def postprocess(self, value: str) -> str:
+    def postprocess(self, value: str | list[dict]) -> str | list[dict]:
 
         return value
 

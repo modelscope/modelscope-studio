@@ -22,9 +22,6 @@
     layout?: boolean;
     index?: number;
   } = {};
-  export let colors: string[] | undefined;
-  export let label: string | undefined;
-  export let default_open: boolean | undefined;
   export let as_item: string | undefined;
 
   // gradio properties
@@ -43,9 +40,6 @@
     elem_classes,
     elem_style,
     as_item,
-    colors,
-    default_open,
-    label,
     restProps: $$restProps,
   });
   const slots = getSlots();
@@ -58,9 +52,6 @@
     elem_classes,
     elem_style,
     as_item,
-    colors,
-    default_open,
-    label,
     restProps: $$restProps,
   });
   const setItem = getSetItemFn();
@@ -73,9 +64,6 @@
         'ms-gr-antd-color-picker-preset'
       ),
       id: $mergedProps.elem_id,
-      label: $mergedProps.label,
-      colors: $mergedProps.colors,
-      defaultOpen: $mergedProps.default_open,
       ...$mergedProps.restProps,
       ...$mergedProps.props,
       ...bindEvents($mergedProps),
