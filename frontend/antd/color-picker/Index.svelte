@@ -26,7 +26,7 @@
   export let _internal: {
     layout?: boolean;
   } = {};
-  export let value: string | { color: string; percent: number };
+  export let value: string | { color: string; percent: number }[];
   export let value_format: 'rgb' | 'hex' | 'hsb' = 'hex';
   export let as_item: string | undefined;
   // gradio properties
