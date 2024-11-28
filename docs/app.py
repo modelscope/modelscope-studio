@@ -187,6 +187,12 @@ antd_menu_items = [{
         "label": get_text("DatePicker", "DatePicker 日期选择框"),
         "key": "date_picker"
     }, {
+        "label": get_text("Form", "Form 表单"),
+        "key": "form"
+    }, {
+        "label": get_text("Input", "Input 输入框"),
+        "key": "input"
+    }, {
         "label": get_text("Select", "Select 选择器"),
         "key": "select"
     }]

@@ -14,7 +14,8 @@ class AntdFormItem(ModelScopeLayoutComponent):
 
     # supported slots
     SLOTS = [
-        'extra', 'help', 'label', 'tooltip', 'tooltip.title', 'tooltip.icon'
+        'extra', 'help', 'label', 'tooltip', 'tooltip.title', 'tooltip.icon',
+        'rules'
     ]
 
     def __init__(
@@ -32,16 +33,16 @@ class AntdFormItem(ModelScopeLayoutComponent):
             get_value_props: str | None = None,
             has_feedback: bool | dict = False,
             help: str | None = None,
-            hidden: bool = False,
+            hidden: bool | None = None,
             html_for: str | None = None,
             initial_value: str | int | float | list | dict | None = None,
             label_align: str | None = None,
             label_col: dict | None = None,
             message_variants: dict | None = None,
             normalize: str | None = None,
-            no_style: bool = False,
+            no_style: bool | None = None,
             preserve: bool = True,
-            required: bool = False,
+            required: bool | None = None,
             rules: list[dict] | None = None,
             should_update: str | None = None,
             tooltip: str | dict | None = None,

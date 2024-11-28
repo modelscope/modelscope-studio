@@ -22,7 +22,7 @@ class AntdSegmentedOption(ModelScopeLayoutComponent):
             props: dict | None = None,
             *,
             icon: str | None = None,
-            disabled: bool = False,
+            disabled: bool | None = None,
             as_item: str | None = None,
             _internal: None = None,
             # gradio properties

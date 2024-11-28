@@ -30,7 +30,7 @@ class AntdCascaderPanel(ModelScopeDataLayoutComponent):
             value: list[str] | list[int | float] | None = None,
             props: dict | None = None,
             *,
-            change_on_select: bool = False,
+            change_on_select: bool | None = None,
             default_value: str | None = None,
             expand_icon: str | None = None,
             expand_trigger: Literal['click', 'hover'] = 'click',

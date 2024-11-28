@@ -61,7 +61,7 @@ class AntdSelect(ModelScopeDataLayoutComponent):
             default_open: bool | None = None,
             default_value: str | int | float | list[float | int | str]
         | None = None,
-            disabled: bool | None = False,
+            disabled: bool | None = None,
             popup_class_name: str | None = None,
             popup_match_select_width: bool | int | float | None = True,
             dropdown_render: str | None = None,
@@ -70,7 +70,7 @@ class AntdSelect(ModelScopeDataLayoutComponent):
             filter_option: bool | str | None = None,
             filter_sort: bool | None = None,
             get_popup_container: str | None = None,
-            label_in_value: bool | None = False,
+            label_in_value: bool | None = None,
             list_height: int | None = None,
             loading: bool | None = None,
             max_count: int | None = None,
@@ -98,7 +98,7 @@ class AntdSelect(ModelScopeDataLayoutComponent):
             label_render: str | None = None,
             token_separators: list[str] | None = None,
             variant: Literal['outlined', 'borderless', 'filled']
-        | None = 'outlined',
+        | None = None,
             virtual: bool | None = True,
             root_class_name: str | None = None,
             as_item: str | None = None,

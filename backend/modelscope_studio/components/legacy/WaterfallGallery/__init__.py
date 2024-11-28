@@ -84,7 +84,7 @@ class ModelScopeWaterfallGallery(Component):
                  interactive: bool | None = None,
                  type: Literal["numpy", "pil", "filepath"] = "filepath",
                  action_label: str | None = "Click",
-                 has_more: bool = False,
+                 has_more: bool | None = None,
                  load_more_button_props: dict | None = None,
                  gap: int | tuple[int, int] | None = 8,
                  clickable: bool | None = None,

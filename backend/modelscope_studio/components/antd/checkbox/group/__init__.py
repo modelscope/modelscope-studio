@@ -32,7 +32,7 @@ class AntdCheckboxGroup(ModelScopeDataLayoutComponent):
             props: dict | None = None,
             *,
             default_value: list[str | int | float | bool] | None = None,
-            disabled: bool = False,
+            disabled: bool | None = None,
             options: list[str] | list[int | float] | list[dict] | None = None,
             root_class_name: str | None = None,
             as_item: str | None = None,

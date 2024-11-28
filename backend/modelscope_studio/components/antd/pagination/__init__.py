@@ -33,7 +33,7 @@ class AntdPagination(ModelScopeLayoutComponent):
             default_page_size: int | None = 10,
             page_size: int | None = None,
             disabled: bool | None = None,
-            hide_on_single_page: bool = False,
+            hide_on_single_page: bool | None = None,
             item_render: str | None = None,
             page_size_options: list[str] | list[int] = [10, 20, 50, 100],
             responsive: bool | None = None,

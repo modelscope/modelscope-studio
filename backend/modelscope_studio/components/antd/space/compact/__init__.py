@@ -25,7 +25,7 @@ class AntdSpaceCompact(ModelScopeLayoutComponent):
             self,
             props: dict | None = None,
             *,
-            block: bool = False,
+            block: bool | None = None,
             direction: Literal['vertical', 'horizontal'] = 'horizontal',
             size: Literal['small', 'middle', 'large'] | None = None,
             root_class_name: str | None = None,

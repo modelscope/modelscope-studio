@@ -17,9 +17,9 @@ class ModelScopeAutoLoading(ModelScopeLayoutComponent):
     def __init__(
             self,
             *,
-            generating: bool = False,
-            show_error: bool = False,
-            show_mask: bool = False,
+            generating: bool | None = None,
+            show_error: bool | None = None,
+            show_mask: bool | None = None,
             show_timer: bool = True,
             loading_text: str | None = None,
             as_item: str | None = None,

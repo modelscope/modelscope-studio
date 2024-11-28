@@ -22,7 +22,7 @@ class AntdTagCheckableTag(ModelScopeDataLayoutComponent):
     def __init__(
             self,
             label: str | None = None,
-            value: bool | None = False,
+            value: bool | None = None,
             props: dict | None = None,
             *,
             root_class_name: str | None = None,

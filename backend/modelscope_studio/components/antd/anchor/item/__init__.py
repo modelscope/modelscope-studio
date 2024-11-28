@@ -23,7 +23,7 @@ class AntdAnchorItem(ModelScopeLayoutComponent):
             props: dict | None = None,
             *,
             key: str | None = None,
-            replace: bool = False,
+            replace: bool | None = None,
             href: str | None = None,
             href_target: str | None = None,
             as_item: str | None = None,

@@ -42,7 +42,7 @@ class AntdColorPicker(ModelScopeDataLayoutComponent):
             props: dict | None = None,
             *,
             value_format: Literal['hex', 'rgb', 'hsb'] = 'hex',
-            allow_clear: bool = False,
+            allow_clear: bool | None = None,
             arrow: bool | dict = True,
             presets: list[dict] | None = None,
             disabled: bool | None = None,

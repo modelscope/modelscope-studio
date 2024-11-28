@@ -36,7 +36,7 @@ class AntdMessage(ModelScopeLayoutComponent):
             as_item: str | None = None,
             _internal: None = None,
             # gradio properties
-            visible: bool = False,
+            visible: bool | None = None,
             elem_id: str | None = None,
             elem_classes: list[str] | str | None = None,
             elem_style: dict | None = None,
