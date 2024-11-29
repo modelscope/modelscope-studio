@@ -36,7 +36,6 @@ export const InputTextarea = sveltify<
       onValueChange,
       value: props.value,
     });
-
     return (
       <>
         <div style={{ display: 'none' }}>{children}</div>
@@ -55,7 +54,7 @@ export const InputTextarea = sveltify<
                     slots,
                     setSlotParams,
                     key: 'showCount.formatter',
-                  }),
+                  })!,
                 }
               : typeof showCount === 'object' && showCountFunction
                 ? {

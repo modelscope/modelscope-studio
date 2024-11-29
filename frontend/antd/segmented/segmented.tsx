@@ -24,7 +24,10 @@ export const Segmented = sveltify<
         options={useMemo(() => {
           // ['label','icon']
           return (
-            options || renderItems<SegmentedProps['options'][number]>(slotItems)
+            options ||
+            renderItems<SegmentedProps['options'][number]>(slotItems, {
+              clone: true,
+            })
           );
         }, [options, slotItems])}
       />

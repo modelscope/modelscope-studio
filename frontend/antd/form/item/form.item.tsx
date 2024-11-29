@@ -8,6 +8,8 @@ import { Form as AForm, type GetProps } from 'antd';
 
 import { type Item } from '../context';
 
+import { createRule } from './utils';
+
 function getConfig<T>(value: T): Partial<T & Record<PropertyKey, any>> {
   if (typeof value === 'object' && value !== null) {
     return value as any;
@@ -67,6 +69,7 @@ export const FormItem = sveltify<
     const tooltipGetPopupContainerFunction = useFunction(
       tooltipConfig.getPopupContainer
     );
+
     return (
       <AForm.Item
         {...props}
@@ -88,7 +91,7 @@ export const FormItem = sveltify<
             renderItems<
               NonNullable<GetProps<typeof AForm.Item>['rules']>[number]
             >(ruleItems)
-          );
+          )?.map((rule) => createRule(rule));
         }, [ruleItems, rules])}
         tooltip={
           slots['tooltip'] ? (

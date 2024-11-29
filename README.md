@@ -63,7 +63,7 @@ demo.queue().launch()
 
 ## Migration to 1.0
 
-If you have previously used `modelscope_studio` components and want to continue using them in the new version, no modifications to the original components are needed. You just need to introduce `ms.Application` in the outer layer.
+If you have used the `modelscope_studio` component before and want to continue using it in the new version, you do not need to make any changes to the original component, just import `ms.Application` in the outer layer.
 
 ```python
 import gradio as gr

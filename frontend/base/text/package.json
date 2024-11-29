@@ -1,5 +1,5 @@
 {
-  "name": "@modelscope-studio/antd-text",
+  "name": "@modelscope-studio/text",
   "type": "module",
   "exports": {
     ".": {

@@ -45,7 +45,6 @@ base_docs = get_docs(__file__, "base")
 antd_docs = get_docs(__file__, "antd")
 
 default_active_tab = "index"
-
 index_menu_items = [{
     "label": get_text("ModelScope-Studio", "ModelScope-Studio"),
     "key": "modelscope_studio"
@@ -60,10 +59,13 @@ base_menu_items = [{
         "label": "Application",
         "key": "application"
     }, {
-        "label": "Slot",
+        "label": get_text("AutoLoading", "AutoLoading 自动加载"),
+        "key": "auto_loading"
+    }, {
+        "label": get_text("Slot", "Slot 插槽"),
         "key": "slot"
     }, {
-        "label": "Fragment",
+        "label": get_text("Fragment", "Fragment 片段"),
         "key": "fragment"
     }]
 }, {
@@ -124,6 +126,105 @@ antd_menu_items = [{
     "children": [{
         "label": get_text("Divider", "Divider 分割线"),
         "key": "divider"
+    }, {
+        "label": get_text("Flex", "Flex 弹性布局"),
+        "key": "flex"
+    }, {
+        "label": get_text("Grid", "Grid 栅格"),
+        "key": "grid"
+    }, {
+        "label": get_text("Layout", "Layout 布局"),
+        "key": "layout"
+    }, {
+        "label": get_text("Space", "Space 间距"),
+        "key": "space"
+    }, {
+        "label": get_text("Splitter", "Splitter 分割面板"),
+        "key": "splitter"
+    }]
+}, {
+    "label":
+    get_text("Navigation", "导航"),
+    "type":
+    "group",
+    "children": [{
+        "label": get_text("Anchor", "Anchor 锚点"),
+        "key": "anchor"
+    }, {
+        "label": get_text("Breadcrumb", "Breadcrumb 面包屑"),
+        "key": "breadcrumb"
+    }, {
+        "label": get_text("Dropdown", "Dropdown 下拉菜单"),
+        "key": "dropdown"
+    }, {
+        "label": get_text("Menu", "Menu 导航菜单"),
+        "key": "menu"
+    }, {
+        "label": get_text("Pagination", "Pagination 分页"),
+        "key": "pagination"
+    }, {
+        "label": get_text("Steps", "Steps 步骤条"),
+        "key": "steps"
+    }]
+}, {
+    "label":
+    get_text("Data Entry", "数据录入"),
+    "type":
+    "group",
+    "children": [{
+        "label": get_text("AutoComplete", "AutoComplete 自动完成"),
+        "key": "auto_complete"
+    }, {
+        "label": get_text("Cascader", "Cascader 级联选择"),
+        "key": "cascader"
+    }, {
+        "label": get_text("Checkbox", "Checkbox 多选框"),
+        "key": "checkbox"
+    }, {
+        "label": get_text("ColorPicker", "ColorPicker 颜色选择器"),
+        "key": "color_picker"
+    }, {
+        "label": get_text("DatePicker", "DatePicker 日期选择框"),
+        "key": "date_picker"
+    }, {
+        "label": get_text("Form", "Form 表单"),
+        "key": "form"
+    }, {
+        "label": get_text("Input", "Input 输入框"),
+        "key": "input"
+    }, {
+        "label": get_text("InputNumber", "InputNumber 数字输入框"),
+        "key": "input_number"
+    }, {
+        "label": get_text("Mentions", "Mentions 提及"),
+        "key": "mentions"
+    }, {
+        "label": get_text("Radio", "Radio 单选框"),
+        "key": "radio"
+    }, {
+        "label": get_text("Rate", "Rate 评分"),
+        "key": "rate"
+    }, {
+        "label": get_text("Select", "Select 选择器"),
+        "key": "select"
+    }]
+}, {
+    "label":
+    get_text("Data Display", "数据展示"),
+    "type":
+    "group",
+    "children": [{
+        "label": get_text("Tour", "Tour 漫游式引导"),
+        "key": "tour"
+    }]
+}, {
+    "label":
+    get_text("Other", "其他"),
+    "type":
+    "group",
+    "children": [{
+        "label": get_text("ConfigProvider", "ConfigProvider 全局化配置"),
+        "key": "config_provider"
     }]
 }]
 
@@ -143,17 +244,23 @@ def logo():
 
 def more_components():
     with antd.Button(type="link",
+                     block=True,
                      href="https://ant.design/components/overview/",
-                     href_target="_blank"):
+                     href_target="_blank",
+                     elem_style=dict(display="block",
+                                     textAlign="left",
+                                     whiteSpace="nowrap",
+                                     textOverflow="ellipsis",
+                                     overflow="hidden")):
         ms.Text(get_text("More Components", "更多组件"))
 
         with ms.Slot("icon"):
-            antd.Icon("ExportOutlined")
+            antd.Icon("ExportOutlined", elem_style=dict(marginRight=4))
 
 
 tabs = [
     {
-        "label": get_text("Overview", "预览"),
+        "label": get_text("Overview", "概览"),
         "key": "index",
         "default_active_key": "modelscope_studio",
         "menus": index_menu_items

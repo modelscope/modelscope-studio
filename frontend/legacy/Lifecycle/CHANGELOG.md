@@ -1,5 +1,23 @@
 # @modelscope-studio/legacy-lifecycle
 
+## 1.0.0-beta.6
+
+### Fixes
+
+- [`6a38225`](https://github.com/modelscope/modelscope-studio/commit/6a38225363c7db871c9593e524fe73ebebff1016) - auto_loading & cloned node. Thanks [@Col0ring](https://github.com/Col0ring)!
+
+## 1.0.0-beta.5
+
+### Features
+
+- [`af9aa4f`](https://github.com/modelscope/modelscope-studio/commit/af9aa4fe598ae23dbe88163202aab2d44d5a133d) - add AutoLoading. Thanks [@Col0ring](https://github.com/Col0ring)!
+
+## 1.0.0-beta.4
+
+### Fixes
+
+- [`107d733`](https://github.com/modelscope/modelscope-studio/commit/107d733cb4ee01f346d165cbe192c514b38ac905) - known component issues. Thanks [@Col0ring](https://github.com/Col0ring)!
+
 ## 1.0.0-beta.3
 
 ### Features

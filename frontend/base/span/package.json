@@ -1,5 +1,5 @@
 {
-  "name": "@modelscope-studio/antd-span",
+  "name": "@modelscope-studio/span",
   "type": "module",
   "exports": {
     ".": {

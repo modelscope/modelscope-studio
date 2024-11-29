@@ -6,8 +6,6 @@ import { type GetProps, Radio as ARadio } from 'antd';
 
 import { type Item } from '../context';
 
-import './radio.group.less';
-
 export const RadioGroup = sveltify<
   GetProps<typeof ARadio.Group> & {
     onValueChange: (value: any) => void;

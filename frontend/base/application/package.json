@@ -1,5 +1,5 @@
 {
-  "name": "@modelscope-studio/antd-application",
+  "name": "@modelscope-studio/application",
   "type": "module",
   "exports": {
     ".": {

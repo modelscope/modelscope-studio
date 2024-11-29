@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
+import { isEqual } from 'lodash-es';
 
 export interface UseValueChangeProps<T, P> {
   value: T;
@@ -19,7 +20,7 @@ export function useValueChange<T, P>({
   }, [mergedValue]);
 
   useEffect(() => {
-    if (value !== mergedValueRef.current) {
+    if (!isEqual(value, mergedValueRef.current)) {
       setMergedValue(value);
     }
   }, [value]);

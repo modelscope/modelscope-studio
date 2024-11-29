@@ -1,5 +1,5 @@
 {
-  "name": "@modelscope-studio/antd-div",
+  "name": "@modelscope-studio/div",
   "type": "module",
   "exports": {
     ".": {

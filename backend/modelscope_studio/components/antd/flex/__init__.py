@@ -22,7 +22,7 @@ class AntdFlex(ModelScopeLayoutComponent):
             self,
             props: dict | None = None,
             *,
-            vertical: bool = False,
+            vertical: bool | None = None,
             wrap: Literal['nowrap', 'wrap', 'wrap-reverse'] | bool = "nowrap",
             justify: Literal['normal', 'start', 'end', 'flex-start',
                              'flex-end', 'center', 'left', 'right',

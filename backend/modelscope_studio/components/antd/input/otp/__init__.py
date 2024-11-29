@@ -27,7 +27,7 @@ class AntdInputOTP(ModelScopeDataLayoutComponent):
             props: dict | None = None,
             *,
             default_value: str | None = None,
-            disabled: bool = False,
+            disabled: bool | None = None,
             formatter: str | None = None,
             mask: str | bool | None = None,
             length: int = 6,

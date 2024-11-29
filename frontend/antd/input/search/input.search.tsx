@@ -62,7 +62,7 @@ export const InputSearch = sveltify<
                     slots,
                     setSlotParams,
                     key: 'showCount.formatter',
-                  }),
+                  })!,
                 }
               : typeof showCount === 'object' && showCountFunction
                 ? {

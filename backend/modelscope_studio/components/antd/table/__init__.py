@@ -58,7 +58,7 @@ class AntdTable(ModelScopeLayoutComponent):
             columns: list[dict] | None = None,
             props: dict | None = None,
             *,
-            bordered: bool = False,
+            bordered: bool | None = None,
             components: dict | None = None,
             expandable: dict | None = None,
             footer: str | None = None,

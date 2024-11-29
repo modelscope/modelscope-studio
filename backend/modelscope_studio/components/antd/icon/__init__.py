@@ -29,7 +29,7 @@ class AntdIcon(ModelScopeComponent):
             value: str | None = "GithubOutlined",
             props: dict | None = None,
             *,
-            spin: bool = False,
+            spin: bool | None = None,
             rotate: int | float | None = None,
             two_tone_color: str | None = None,
             component: str | None = None,

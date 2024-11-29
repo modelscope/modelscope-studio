@@ -44,7 +44,7 @@ class AntdRate(ModelScopeDataLayoutComponent):
             auto_focus: bool | None = None,
             character: str | None = None,
             count: int | float | None = 5,
-            default_value: int | float | None = 0,
+            default_value: int | float | None = None,
             disabled: bool | None = None,
             keyboard: bool | None = None,
             tooltips: list[str] | None = None,

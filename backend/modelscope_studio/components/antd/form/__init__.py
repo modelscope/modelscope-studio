@@ -7,6 +7,7 @@ from gradio.events import EventListener
 
 from ....utils.dev import ModelScopeDataLayoutComponent, resolve_frontend_dir
 from .item import AntdFormItem
+from .provider import AntdFormProvider
 
 
 class AntdFormData(GradioRootModel):
@@ -18,6 +19,8 @@ class AntdForm(ModelScopeDataLayoutComponent):
     Ant Design: https://ant.design/components/form
     """
     Item = AntdFormItem
+    Provider = AntdFormProvider
+
     EVENTS = [
         EventListener("fields_change",
                       callback=lambda block: block._internal.update(
@@ -44,13 +47,13 @@ class AntdForm(ModelScopeDataLayoutComponent):
             props: dict | None = None,
             *,
             colon: bool = True,
-            disabled: bool = False,
+            disabled: bool | None = None,
             component: str | False | None = None,
             feedback_icons: str | None = None,
             initial_values: dict | None = None,
             label_align: Literal['left', 'right'] = 'right',
             label_col: dict | None = None,
-            label_wrap: bool = False,
+            label_wrap: bool | None = None,
             layout: Literal['horizontal', 'vertical', 'inline'] = 'horizontal',
             form_name: str | None = None,
             preserve: bool = True,
@@ -59,9 +62,9 @@ class AntdForm(ModelScopeDataLayoutComponent):
             size: Literal['small', 'middle', 'large'] | None = None,
             validate_messages: dict | None = None,
             validate_trigger: str | list[str] = 'onChange',
-            variant: Literal['outlined', 'borderless', 'filled'] = 'outlined',
+            variant: Literal['outlined', 'borderless', 'filled'] | None = None,
             wrapper_col: dict | None = None,
-            clear_on_destroy: bool = False,
+            clear_on_destroy: bool | None = None,
             root_class_name: str | None = None,
             as_item: str | None = None,
             _internal: None = None,

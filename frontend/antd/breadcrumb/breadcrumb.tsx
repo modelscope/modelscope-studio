@@ -34,7 +34,12 @@ export const Breadcrumb = sveltify<
             : props.itemRender
         }
         items={useMemo(() => {
-          return items || renderItems<ItemType>(slotItems);
+          return (
+            items ||
+            renderItems<ItemType>(slotItems, {
+              clone: true,
+            })
+          );
         }, [items, slotItems])}
         separator={
           slots.separator ? (

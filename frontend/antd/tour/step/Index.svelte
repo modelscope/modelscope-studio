@@ -66,9 +66,12 @@
       ...$mergedProps.restProps,
       ...$mergedProps.props,
       ...bindEvents($mergedProps),
-      target: createFunction(
-        $mergedProps.props.target || $mergedProps.restProps.target
-      ),
+      target:
+        createFunction(
+          $mergedProps.props.target || $mergedProps.restProps.target
+        ) ||
+        $mergedProps.props.target ||
+        $mergedProps.restProps.target,
     },
     slots: $slots,
   });

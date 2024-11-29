@@ -30,6 +30,7 @@ export const CascaderPanel = sveltify<
       onValueChange,
       value: props.value,
     });
+
     return (
       <>
         <div style={{ display: 'none' }}>{children}</div>
@@ -40,7 +41,8 @@ export const CascaderPanel = sveltify<
             return (
               options ||
               renderItems<NonNullable<CascaderPanelProps['options']>[number]>(
-                optionItems
+                optionItems,
+                { clone: true }
               )
             );
           }, [options, optionItems])}

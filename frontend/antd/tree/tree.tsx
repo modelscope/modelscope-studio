@@ -42,10 +42,12 @@ export const Tree = sveltify<
     slotItems,
     setSlotParams,
     onLoadData,
+    titleRender,
     ...props
   }) => {
     const filterTreeNodeFunction = useFunction(filterTreeNode);
     const draggableFunction = useFunction(draggable);
+    const titleRenderFunction = useFunction(titleRender);
     const draggableNodeDraggableFunction = useFunction(
       typeof draggable === 'object' ? draggable.nodeDraggable : undefined
     );
@@ -56,7 +58,9 @@ export const Tree = sveltify<
         ...props,
         treeData:
           treeData ||
-          renderItems<NonNullable<TreeProps['treeData']>[number]>(slotItems),
+          renderItems<NonNullable<TreeProps['treeData']>[number]>(slotItems, {
+            clone: true,
+          }),
         showLine: slots['showLine.showLeafIcon']
           ? {
               showLeafIcon: renderParamsSlot({
@@ -79,7 +83,7 @@ export const Tree = sveltify<
           : props.switcherIcon,
         titleRender: slots.titleRender
           ? renderParamsSlot({ slots, setSlotParams, key: 'titleRender' })
-          : props.titleRender,
+          : titleRenderFunction,
         draggable:
           slots['draggable.icon'] || draggableNodeDraggableFunction
             ? {
@@ -101,6 +105,7 @@ export const Tree = sveltify<
       setSlotParams,
       draggableNodeDraggableFunction,
       draggable,
+      titleRenderFunction,
       draggableFunction,
       onLoadData,
     ]);

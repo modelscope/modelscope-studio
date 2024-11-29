@@ -23,13 +23,13 @@ class AntdCheckbox(ModelScopeDataLayoutComponent):
 
     def __init__(
             self,
-            value: bool | None = False,
+            value: bool | None = None,
             props: dict | None = None,
             *,
-            auto_focus: bool = False,
-            default_checked: bool = False,
-            disabled: bool = False,
-            indeterminate: bool = False,
+            auto_focus: bool | None = None,
+            default_checked: bool | None = None,
+            disabled: bool | None = None,
+            indeterminate: bool | None = None,
             root_class_name: str | None = None,
             as_item: str | None = None,
             _internal: None = None,

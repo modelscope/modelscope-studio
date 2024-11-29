@@ -69,9 +69,8 @@
       {...$mergedProps.restProps}
       {...$mergedProps.props}
       {...bindEvents($mergedProps)}
-      value={$mergedProps.props.value ?? $mergedProps.value}
       slots={$slots}
-      options={$mergedProps.props.options}
+      options={$mergedProps.props.options ?? $mergedProps.restProps.options}
       slotItems={$options.length > 0 ? $options : $children}
       onValueChange={(v) => {
         value = v;

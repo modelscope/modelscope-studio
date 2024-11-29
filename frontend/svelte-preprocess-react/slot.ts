@@ -1,3 +1,4 @@
+import { getSetLoadingStatusFn } from '@svelte-preprocess-react/provider';
 import { isUndefined } from 'lodash-es';
 import { getContext, setContext } from 'svelte';
 import { get, type Writable, writable } from 'svelte/store';
@@ -64,10 +65,22 @@ export function getSlotParams() {
 }
 
 const slotContextKey = '$$ms-gr-context-key';
-export function getSetSlotContextFn() {
+export function getSetSlotContextFn({ inherit }: { inherit?: boolean } = {}) {
   const value = writable();
+  let unsubscribe: (() => void) | undefined;
+  if (inherit) {
+    const ctxValue = getContext(slotContextKey) as Writable<any>;
+    unsubscribe = ctxValue?.subscribe((v) => {
+      value?.set(v);
+    });
+  }
+  let hasSetValue = !inherit;
   setContext(slotContextKey, value);
   return (v: any) => {
+    if (!hasSetValue) {
+      hasSetValue = true;
+      unsubscribe?.();
+    }
     value.set(v);
   };
 }
@@ -80,6 +93,16 @@ function ensureObjectCtxValue(ctxValue: any) {
   return typeof ctxValue === 'object' && !Array.isArray(ctxValue)
     ? ctxValue
     : { value: ctxValue };
+}
+
+// for ms.Each
+const subIndexKey = '$$ms-gr-sub-index-context-key';
+function getSubIndexContext() {
+  return (getContext(subIndexKey) as number) || null;
+}
+
+function setSubIndexContext(index?: number) {
+  return setContext(subIndexKey, index);
 }
 
 /**
@@ -96,6 +119,7 @@ export function getSlotContext<
   props: T,
   restPropsMapping?: Record<keyof T['restProps'], string>,
   options?: {
+    shouldSetLoadingStatus?: boolean;
     shouldRestSlotKey?: boolean;
   }
 ): [
@@ -107,6 +131,7 @@ export function getSlotContext<
   (props: T) => void,
 ] {
   const shouldRestSlotKey = options?.shouldRestSlotKey ?? true;
+  const shouldSetLoadingStatus = options?.shouldSetLoadingStatus ?? true;
   if (!Reflect.has(props, 'as_item') || !Reflect.has(props, '_internal')) {
     throw new Error('`as_item` and `_internal` is required');
   }
@@ -116,6 +141,19 @@ export function getSlotContext<
     index: props._internal.index,
     subIndex: props._internal.subIndex,
   });
+  // for ms.Each
+  const subIndex = getSubIndexContext();
+  if (typeof subIndex === 'number') {
+    setSubIndexContext(undefined);
+  }
+  // for loading_status
+  const setLoadingStatus = shouldSetLoadingStatus
+    ? getSetLoadingStatusFn()
+    : () => {};
+
+  if (typeof props._internal.subIndex === 'number') {
+    setSubIndexContext(props._internal.subIndex);
+  }
   if (slotKey) {
     slotKey.subscribe((v) => {
       componentSlotContext.slotKey.set(v as string);
@@ -149,8 +187,13 @@ export function getSlotContext<
         )
       : undefined;
   };
+
   const mergedProps = writable<T>({
     ...props,
+    _internal: {
+      ...props._internal,
+      index: subIndex ?? props._internal.index,
+    },
     ...initialCtxValue,
     restProps: mergeRestProps(props.restProps, initialCtxValue),
     originalRestProps: props.restProps,
@@ -159,8 +202,13 @@ export function getSlotContext<
     return [
       mergedProps,
       (v) => {
+        setLoadingStatus(v.restProps?.loading_status);
         mergedProps.set({
           ...v,
+          _internal: {
+            ...v._internal,
+            index: subIndex ?? v._internal.index,
+          },
           restProps: mergeRestProps(v.restProps),
           originalRestProps: v.restProps,
         });
@@ -188,8 +236,13 @@ export function getSlotContext<
           ? (get(ctx)?.[v.as_item as keyof T] as Record<string, any>) || {}
           : get(ctx) || {}
       );
+      setLoadingStatus(v.restProps?.loading_status);
       return mergedProps.set({
         ...v,
+        _internal: {
+          ...v._internal,
+          index: subIndex ?? v._internal.index,
+        },
         ...ctxValue,
         restProps: mergeRestProps(v.restProps, ctxValue),
         originalRestProps: v.restProps,

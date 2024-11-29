@@ -61,7 +61,8 @@ export const TreeSelect = sveltify<
         treeData:
           treeData ||
           renderItems<NonNullable<TreeSelectProps['treeData']>[number]>(
-            slotItems
+            slotItems,
+            { clone: true }
           ),
         dropdownRender: slots.dropdownRender
           ? renderParamsSlot({ slots, setSlotParams, key: 'dropdownRender' })

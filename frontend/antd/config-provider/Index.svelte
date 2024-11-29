@@ -2,6 +2,7 @@
 
 <script lang="ts">
   import { importComponent } from '@svelte-preprocess-react/component';
+  import { setConfigType } from '@svelte-preprocess-react/provider';
   import {
     getSetSlotParamsFn,
     getSlotContext,
@@ -26,6 +27,7 @@
   export let elem_classes: string[] = [];
   export let elem_style: React.CSSProperties = {};
   export let _internal = {};
+
   const [mergedProps, update] = getSlotContext({
     gradio,
     props: $updatedProps,
@@ -50,6 +52,8 @@
     as_item,
     restProps: $$restProps,
   });
+
+  setConfigType('antd');
 </script>
 
 {#if $mergedProps.visible}

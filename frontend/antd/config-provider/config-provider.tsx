@@ -10,8 +10,6 @@ import type { Locale } from 'antd/es/locale';
 import dayjs from 'dayjs';
 import { produce } from 'immer';
 
-import 'dayjs/locale/zh-cn';
-
 import { locales } from './locales';
 
 const combinePropsAndSlots = (
@@ -75,17 +73,18 @@ export const ConfigProvider = sveltify<
       dark: themeMode === 'dark' ? true : false,
       ...(props.theme?.algorithm || {}),
     };
+
     const getPopupContainerFunction = useFunction(getPopupContainer);
     const getTargetContainerFunction = useFunction(getTargetContainer);
     const renderEmptyFunction = useFunction(renderEmpty);
     useEffect(() => {
       if (localeProp && locales[localeProp]) {
-        locales[localeProp]().then((m) => {
-          setLocale(m.default);
-          if (localeProp === 'zh_CN') {
-            dayjs.locale('zh-cn');
+        locales[localeProp]().then(
+          ({ antd: antdLocale, dayjs: dayjsLocale }) => {
+            setLocale(antdLocale);
+            dayjs.locale(dayjsLocale);
           }
-        });
+        );
       }
     }, [localeProp]);
 
@@ -107,6 +106,8 @@ export const ConfigProvider = sveltify<
                   })
                 : renderEmptyFunction
             }
+            // switch bug
+            // key={`${algorithm.dark}`}
             theme={{
               cssVar: true,
               ...props.theme,
@@ -114,9 +115,7 @@ export const ConfigProvider = sveltify<
                 .map((algo) => {
                   switch (algo) {
                     case 'dark':
-                      return algorithm[algo]
-                        ? theme.darkAlgorithm
-                        : theme.defaultAlgorithm;
+                      return algorithm[algo] ? theme.darkAlgorithm : null;
                     case 'compact':
                       return algorithm[algo] ? theme.compactAlgorithm : null;
                     default:

@@ -21,7 +21,7 @@ class AntdDescriptions(ModelScopeLayoutComponent):
             self,
             props: dict | None = None,
             *,
-            bordered: bool = False,
+            bordered: bool | None = None,
             colon: bool = True,
             column: int | dict | None = 3,
             content_style: dict | None = None,

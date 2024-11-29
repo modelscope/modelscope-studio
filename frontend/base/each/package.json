@@ -1,5 +1,5 @@
 {
-  "name": "@modelscope-studio/antd-each",
+  "name": "@modelscope-studio/each",
   "type": "module",
   "exports": {
     ".": {

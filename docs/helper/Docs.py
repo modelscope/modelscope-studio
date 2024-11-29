@@ -89,20 +89,39 @@ class Docs:
             if title:
                 with ms.Slot("title"):
                     ms.Text(title)
-            with antd.Row(align="stretch", wrap=False):
-                with antd.Col(span=10):
-                    with antd.Flex(elem_style=dict(height='100%')):
-                        prefix = prefix + "\n" if prefix else ""
-                        suffix = "\n" + suffix if suffix else ""
-                        gr.Markdown(f"""{prefix}```python
+            with antd.Row(align="stretch", wrap=True, gutter=8):
+                with antd.Col(sm=dict(span=10, order=1),
+                              xs=dict(span=24, order=2)):
+                    with antd.Row(elem_style=dict(height='100%'),
+                                  gutter=[8, 8]):
+                        with antd.Col(sm=0, xs=24):
+                            antd.Divider(type="horizontal",
+                                         variant="dashed",
+                                         elem_style=dict(width='100%',
+                                                         margin='8px 0 0'))
+                        with antd.Col(sm=23, xs=24):
+                            prefix = prefix + "\n" if prefix else ""
+                            suffix = "\n" + suffix if suffix else ""
+                            gr.Markdown(f"""{prefix}```python
 {content}
 ```{suffix}""",
-                                    header_links=True)
-                        antd.Divider(type="vertical",
-                                     variant="dashed",
-                                     elem_style=dict(height='100%'))
+                                        header_links=True)
+
+                        with antd.Col(sm=1,
+                                      xs=0,
+                                      elem_style=dict(height="100%")):
+                            with ms.Div(
+                                    elem_style=dict(display="flex",
+                                                    justifyContent="center",
+                                                    width="100%",
+                                                    height="100%")):
+                                antd.Divider(type="vertical",
+                                             variant="dashed",
+                                             elem_style=dict(height='100%',
+                                                             margin=0))
                 with antd.Col(
-                        span=14,
+                        sm=dict(span=14, order=2),
+                        xs=dict(span=24, order=1),
                         elem_style=dict(
                             width='100%',
                             transform="translate(0, 0)" if fixed else None)):

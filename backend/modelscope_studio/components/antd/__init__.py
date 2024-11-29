@@ -48,6 +48,7 @@ from .float_button.group import AntdFloatButtonGroup as FloatButtonGroup
 from .form import AntdForm as Form
 from .form.item import AntdFormItem as FormItem
 from .form.item.rule import AntdFormItemRule as FormItemRule
+from .form.provider import AntdFormProvider as FormProvider
 from .grid.col import AntdCol as Col
 from .grid.row import AntdRow as Row
 from .icon import AntdIcon as Icon

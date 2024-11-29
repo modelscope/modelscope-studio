@@ -26,7 +26,7 @@
   export let _internal: {
     layout?: boolean;
   } = {};
-  export let value: string;
+  export let value: string | { color: string; percent: number }[];
   export let value_format: 'rgb' | 'hex' | 'hsb' = 'hex';
   export let as_item: string | undefined;
   // gradio properties
@@ -73,7 +73,7 @@
       {...$mergedProps.restProps}
       {...$mergedProps.props}
       {...bindEvents($mergedProps)}
-      value={$mergedProps.props.value ?? $mergedProps.value}
+      value={$mergedProps.props.value ?? $mergedProps.value ?? undefined}
       slots={$slots}
       presetItems={$presets}
       {value_format}

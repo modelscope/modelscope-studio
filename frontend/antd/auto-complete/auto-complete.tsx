@@ -83,6 +83,7 @@ export const AutoComplete = sveltify<
                 NonNullable<GetProps<typeof AAutoComplete>['options']>[number]
               >(optionItems, {
                 children: 'options',
+                clone: true,
               })
             );
           }, [optionItems, options])}

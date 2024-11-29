@@ -45,7 +45,8 @@ export const Collapse = sveltify<
             return (
               items ||
               renderItems<NonNullable<CollapseProps['items']>[number]>(
-                slotItems
+                slotItems,
+                { clone: true }
               )
             );
           }, [items, slotItems])}

@@ -18,7 +18,7 @@ class AntdStepsItem(ModelScopeLayoutComponent):
             props: dict | None = None,
             *,
             description: str | None = None,
-            disabled: bool | None = False,
+            disabled: bool | None = None,
             icon: str | None = None,
             status: Literal['wait', 'process', 'finish', 'error']
         | None = None,

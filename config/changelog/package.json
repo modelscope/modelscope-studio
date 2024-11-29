@@ -1,6 +1,6 @@
 {
   "name": "@modelscope-studio/changelog",
-  "version": "1.0.0-beta.3",
+  "version": "1.0.0-beta.6",
   "private": false,
   "description": "ModelScope Studio Changelog",
   "repository": "git@github.com:modelscope/modelscope-studio.git",

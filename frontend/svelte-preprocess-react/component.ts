@@ -47,6 +47,7 @@ const gradioProps = [
   '_internal',
   'props',
   'value',
+  '_selectable',
   'attached_events',
   'loading_status',
   'value_is_output',
@@ -114,7 +115,7 @@ export function bindEvents<
             serializedPayload = payload.map((item) => {
               if (item && typeof item === 'object') {
                 return Object.fromEntries(
-                  Object.entries(item).filter(([_, v]) => {
+                  Object.entries(item).filter(([, v]) => {
                     try {
                       JSON.stringify(v);
                       return true;

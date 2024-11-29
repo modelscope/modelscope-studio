@@ -1,4 +1,5 @@
 from .application import ModelScopeApplication as Application
+from .auto_loading import ModelScopeAutoLoading as AutoLoading
 from .div import ModelScopeDiv as Div
 from .each import ModelScopeEach as Each
 from .filter import ModelScopeFilter as Filter

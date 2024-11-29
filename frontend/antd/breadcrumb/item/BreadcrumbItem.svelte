@@ -72,7 +72,7 @@
         $mergedProps.props.menu?.items ||
         $mergedProps.restProps.menu?.items ||
         $menuItems.length > 0
-          ? renderItems($menuItems)
+          ? renderItems($menuItems, { clone: true })
           : undefined,
       expandIcon:
         renderParamsSlot(
@@ -99,7 +99,7 @@
         $mergedProps.props.dropdownProps?.menu?.items ||
         $mergedProps.restProps.dropdownProps?.menu?.items ||
         $dropdownMenuItems.length > 0
-          ? renderItems($dropdownMenuItems)
+          ? renderItems($dropdownMenuItems, { clone: true })
           : undefined,
       expandIcon:
         renderParamsSlot(

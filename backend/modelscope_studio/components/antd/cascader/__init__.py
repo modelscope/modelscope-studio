@@ -53,10 +53,10 @@ class AntdCascader(ModelScopeDataLayoutComponent):
             *,
             allow_clear: bool | dict = False,
             auto_clear_search_value: bool = True,
-            auto_focus: bool = False,
-            change_on_select: bool = False,
+            auto_focus: bool | None = None,
+            change_on_select: bool | None = None,
             default_value: str | None = None,
-            disabled: bool = False,
+            disabled: bool | None = None,
             display_render: str | None = None,
             tag_render: str | None = None,
             popup_class_name: str | None = None,
@@ -79,7 +79,7 @@ class AntdCascader(ModelScopeDataLayoutComponent):
             status: Literal['error', 'warning'] | None = None,
             suffix_icon: str | None = None,
             variant: Literal['outlined', 'borderless', 'filled']
-        | None = 'outlined',
+        | None = None,
             multiple: bool | None = None,
             show_checked_strategy: Literal['SHOW_PARENT', 'SHOW_CHILD']
         | None = None,

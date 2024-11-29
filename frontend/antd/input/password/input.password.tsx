@@ -73,7 +73,7 @@ export const InputPassword = sveltify<
                     slots,
                     setSlotParams,
                     key: 'showCount.formatter',
-                  }),
+                  })!,
                 }
               : typeof showCount === 'object' && showCountFunction
                 ? {

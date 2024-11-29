@@ -45,6 +45,10 @@ export const ModelScopeStudioVitePlugin = ({ external = true } = {}) => {
           dirname,
           'svelte-preprocess-react/inject.ts'
         ),
+        '@svelte-preprocess-react/provider': path.resolve(
+          dirname,
+          'svelte-preprocess-react/provider.ts'
+        ),
         '@svelte-preprocess-react/component': path.resolve(
           dirname,
           'svelte-preprocess-react/component.ts'

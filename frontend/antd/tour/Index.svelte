@@ -25,7 +25,6 @@
   $: updatedProps.update((prev) => ({ ...prev, ...props }));
   export let _internal: Record<string, any> = {};
   export let as_item: string | undefined;
-  export let open: boolean = true;
   // gradio properties
   export let visible = true;
   export let elem_id = '';
@@ -40,7 +39,6 @@
     elem_classes,
     elem_style,
     as_item,
-    open,
     restProps: $$restProps,
   });
   const setSlotParams = getSetSlotParamsFn();
@@ -54,7 +52,6 @@
     elem_classes,
     elem_style,
     as_item,
-    open,
     restProps: $$restProps,
   });
   const { steps, default: children } = getItems(['steps', 'default']);

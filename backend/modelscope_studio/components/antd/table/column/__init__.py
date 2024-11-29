@@ -33,7 +33,7 @@ class AntdTableColumn(ModelScopeLayoutComponent):
             col_span: int | None = None,
             data_index: str | list[str] | None = None,
             default_filtered_value: list[str] | None = None,
-            filter_reset_to_default_filtered_value: bool | None = False,
+            filter_reset_to_default_filtered_value: bool | None = None,
             default_sort_order: Literal['ascend', 'descend'] | None = None,
             ellipsis: bool | dict | None = None,
             filter_dropdown: str | None = None,

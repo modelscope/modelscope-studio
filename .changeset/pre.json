@@ -17,9 +17,12 @@
     "@modelscope-studio/legacy-compiled": "0.4.2"
   },
   "changesets": [
+    "chilly-lemons-pretend",
     "five-actors-compete",
     "fuzzy-goats-retire",
     "lemon-laws-cross",
+    "slimy-feet-nail",
+    "spotty-seals-poke",
     "tough-walls-grab"
   ]
 }

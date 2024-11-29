@@ -36,7 +36,7 @@ class AntdTour(ModelScopeLayoutComponent):
             current: int | None = None,
             arrow: bool | dict | None = True,
             close_icon: str | None = None,
-            disabled_interaction: bool | None = False,
+            disabled_interaction: bool | None = None,
             gap: dict | None = None,
             placement: Literal['center', 'left', 'leftTop', 'leftBottom',
                                'right'

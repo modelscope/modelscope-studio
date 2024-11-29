@@ -27,7 +27,7 @@ class AntdSwitch(ModelScopeDataLayoutComponent):
 
     def __init__(
             self,
-            value: bool | None = False,
+            value: bool | None = None,
             props: dict | None = None,
             *,
             auto_focus: bool | None = None,

@@ -8,8 +8,8 @@ build-backend = "hatchling.build"
 
 [project]
 name = "modelscope_studio"
-version = "1.0.0-beta.3"
-description = "A set of extension component, inluding components for conversational input and display in multimodal scenarios, as well as more components for vertical scenarios."
+version = "1.0.0-beta.6"
+description = "A third-party component library based on Gradio."
 readme = "README.md"
 license = "Apache-2.0"
 requires-python = ">=3.8"
@@ -93,6 +93,7 @@ artifacts = [
   "/backend/modelscope_studio/components/antd/space/templates",
   "/backend/modelscope_studio/components/antd/space/compact/templates",
   "/backend/modelscope_studio/components/base/div/templates",
+  "/backend/modelscope_studio/components/base/auto_loading/templates",
   "/backend/modelscope_studio/components/antd/pagination/templates",
   "/backend/modelscope_studio/components/base/span/templates",
   "/backend/modelscope_studio/components/base/text/templates",

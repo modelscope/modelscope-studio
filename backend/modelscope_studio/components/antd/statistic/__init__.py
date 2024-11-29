@@ -23,7 +23,7 @@ class AntdStatistic(ModelScopeLayoutComponent):
             decimal_separator: str | None = None,
             formatter: str | None = None,
             group_separator: str | None = None,
-            loading: bool = False,
+            loading: bool | None = None,
             precision: int | float | None = None,
             prefix: str | None = None,
             suffix: str | None = None,

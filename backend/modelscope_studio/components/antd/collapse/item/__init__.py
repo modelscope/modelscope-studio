@@ -30,7 +30,7 @@ class AntdCollapseItem(ModelScopeLayoutComponent):
             class_names: dict | None = None,
             collapsible: Literal['header', 'icon', 'disabled'] | None = None,
             extra: str | None = None,
-            force_render: bool = False,
+            force_render: bool | None = None,
             show_arrow: bool = True,
             styles: dict | None = None,
             as_item: str | None = None,

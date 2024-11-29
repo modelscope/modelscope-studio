@@ -19,7 +19,7 @@ class AntdCheckboxGroupOption(ModelScopeLayoutComponent):
 
     def __init__(
             self,
-            value: str | None = None,
+            value: str | int | float | bool | None = None,
             props: dict | None = None,
             *,
             label: str | None = None,

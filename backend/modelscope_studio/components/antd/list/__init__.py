@@ -29,7 +29,7 @@ class AntdList(ModelScopeLayoutComponent):
             self,
             props: dict | None = None,
             *,
-            bordered: bool = False,
+            bordered: bool | None = None,
             data_source: list[Any] | None = None,
             footer: str | None = None,
             grid: dict | None = None,
