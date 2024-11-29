@@ -1,5 +1,6 @@
 import { sveltify } from '@svelte-preprocess-react';
 import type { SetSlotParams } from '@svelte-preprocess-react/slot';
+import { useFunction } from '@utils/hooks/useFunction';
 import { renderParamsSlot } from '@utils/renderParamsSlot';
 import { type GetProps, Rate as ARate } from 'antd';
 
@@ -21,6 +22,7 @@ export const Rate = sveltify<
     elRef,
     ...props
   }) => {
+    const characterFunction = useFunction(character, true);
     return (
       <>
         <div style={{ display: 'none' }}>{children}</div>
@@ -34,7 +36,7 @@ export const Rate = sveltify<
           character={
             slots.character
               ? renderParamsSlot({ slots, setSlotParams, key: 'character' })
-              : character
+              : characterFunction || character
           }
         />
       </>

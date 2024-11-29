@@ -193,6 +193,18 @@ antd_menu_items = [{
         "label": get_text("Input", "Input 输入框"),
         "key": "input"
     }, {
+        "label": get_text("InputNumber", "InputNumber 数字输入框"),
+        "key": "input_number"
+    }, {
+        "label": get_text("Mentions", "Mentions 提及"),
+        "key": "mentions"
+    }, {
+        "label": get_text("Radio", "Radio 单选框"),
+        "key": "radio"
+    }, {
+        "label": get_text("Rate", "Rate 评分"),
+        "key": "rate"
+    }, {
         "label": get_text("Select", "Select 选择器"),
         "key": "select"
     }]
