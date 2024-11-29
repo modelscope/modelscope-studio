@@ -14,4 +14,4 @@
 'modelscope_studio': patch
 ---
 
-fix: component paramters in Python
+fix: component parameters in Python

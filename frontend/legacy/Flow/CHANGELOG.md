@@ -1,5 +1,11 @@
 # @modelscope-studio/legacy-flow
 
+## 1.0.0-beta.7
+
+### Fixes
+
+- [#35](https://github.com/modelscope/modelscope-studio/pull/35) [`5875180`](https://github.com/modelscope/modelscope-studio/commit/5875180feb7c07720108e30d01ec606209d36e59) - component parameters in Python. Thanks [@Col0ring](https://github.com/Col0ring)!
+
 ## 1.0.0-beta.6
 
 ### Fixes
