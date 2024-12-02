@@ -41,14 +41,9 @@ class AntdTreeSelect(ModelScopeDataLayoutComponent):
 
     # supported slots
     SLOTS = [
-        'allowClear.clearIcon',
-        'maxTagPlaceholder',
-        'notFoundContent',
-        'suffixIcon',
-        'switcherIcon',
-        'dropdownRender',
-        'tagRender',
-        'treeTitleRender',
+        'allowClear.clearIcon', 'maxTagPlaceholder', 'notFoundContent',
+        'suffixIcon', 'switcherIcon', 'dropdownRender', 'tagRender',
+        'treeTitleRender', 'treeData'
     ]
 
     def __init__(
@@ -78,7 +73,7 @@ class AntdTreeSelect(ModelScopeDataLayoutComponent):
             not_found_content: str | None = None,
             placeholder: str | None = None,
             placement: Literal['bottomLeft', 'bottomRight', 'topLeft',
-                               'topRight'] | None = 'bottomLeft',
+                               'topRight'] | None = None,
             search_value: str | None = None,
             show_checked_strategy: Literal['SHOW_ALL', 'SHOW_PARENT',
                                            'SHOW_CHILD'] | None = None,
@@ -102,8 +97,8 @@ class AntdTreeSelect(ModelScopeDataLayoutComponent):
             tree_loaded_keys: list[str] | None = None,
             tree_node_filter_prop: str | None = None,
             tree_node_label_prop: str | None = None,
-            variant: Literal['outline', 'borderless', 'solid']
-        | None = 'outline',
+            variant: Literal['outlined', 'borderless', 'solid']
+        | None = None,
             virtual: bool | None = True,
             root_class_name: str | None = None,
             as_item: str | None = None,

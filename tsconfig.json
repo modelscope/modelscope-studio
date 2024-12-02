@@ -3,6 +3,7 @@
     "target": "ESNEXT",
     "module": "CommonJS",
     "lib": ["DOM", "DOM.Iterable", "ESNext"],
+    "verbatimModuleSyntax": true,
     "strict": true,
     "noEmit": true,
     "importHelpers": true,

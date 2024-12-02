@@ -207,6 +207,24 @@ antd_menu_items = [{
     }, {
         "label": get_text("Select", "Select 选择器"),
         "key": "select"
+    }, {
+        "label": get_text("Slider", "Slider 滑动输入条"),
+        "key": "slider"
+    }, {
+        "label": get_text("Switch", "Switch 开关"),
+        "key": "switch"
+    }, {
+        "label": get_text("TimePicker", "Time Picker 时间选择器"),
+        "key": "time_picker"
+    }, {
+        "label": get_text("Transfer", "Transfer 穿梭框"),
+        "key": "transfer"
+    }, {
+        "label": get_text("TreeSelect", "TreeSelect 树选择"),
+        "key": "tree_select"
+    }, {
+        "label": get_text("Upload", "Upload 上传"),
+        "key": "upload"
     }]
 }, {
     "label":

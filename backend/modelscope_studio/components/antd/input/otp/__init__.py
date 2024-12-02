@@ -34,7 +34,7 @@ class AntdInputOTP(ModelScopeDataLayoutComponent):
             placeholder: str = '口',
             size: Literal['large', 'middle', 'small'] | None = None,
             status: Literal['error', 'warning'] | None = None,
-            variant: Literal['outline', 'borderless', 'filled'] | None = None,
+            variant: Literal['outlined', 'borderless', 'filled'] | None = None,
             root_class_name: str | None = None,
             as_item: str | None = None,
             _internal: None = None,

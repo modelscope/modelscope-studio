@@ -25,7 +25,7 @@ class AntdUploadDragger(ModelScopeDataLayoutComponent):
     EVENTS = [
         EventListener("change",
                       callback=lambda block: block._internal.update(
-                          bind_click_event=True)),
+                          bind_change_event=True)),
         EventListener("drop",
                       callback=lambda block: block._internal.update(
                           bind_drop_event=True)),

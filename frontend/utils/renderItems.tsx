@@ -52,7 +52,7 @@ export function renderItems<R>(
       } else {
         el = elOrObject.el;
         callback = elOrObject.callback;
-        clone = elOrObject.clone ?? false;
+        clone = elOrObject.clone ?? clone;
       }
 
       current[splits[splits.length - 1]] = el ? (

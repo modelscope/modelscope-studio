@@ -19,7 +19,7 @@ class AntdTree(ModelScopeLayoutComponent):
     EVENTS = [
         EventListener("check",
                       callback=lambda block: block._internal.update(
-                          bind_click_event=True)),
+                          bind_check_event=True)),
         EventListener("drag_end",
                       callback=lambda block: block._internal.update(
                           bind_dragEnd_event=True)),
