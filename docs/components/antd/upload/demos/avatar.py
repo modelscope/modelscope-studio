@@ -7,6 +7,8 @@ with gr.Blocks() as demo:
     with ms.Application():
         with antd.ConfigProvider():
             with antd.Upload(list_type="picture-card",
+                             max_count=1,
+                             show_upload_list=False,
                              accept="image/*") as upload:
                 image = antd.Image(elem_style=dict(width="100%"),
                                    preview=False,

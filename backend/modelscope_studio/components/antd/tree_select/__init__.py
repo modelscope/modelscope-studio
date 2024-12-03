@@ -42,7 +42,7 @@ class AntdTreeSelect(ModelScopeDataLayoutComponent):
     # supported slots
     SLOTS = [
         'allowClear.clearIcon', 'maxTagPlaceholder', 'notFoundContent',
-        'suffixIcon', 'switcherIcon', 'dropdownRender', 'tagRender',
+        'prefix', 'suffixIcon', 'switcherIcon', 'dropdownRender', 'tagRender',
         'treeTitleRender', 'treeData'
     ]
 
@@ -71,6 +71,7 @@ class AntdTreeSelect(ModelScopeDataLayoutComponent):
             max_tag_text_length: int | None = None,
             multiple: bool | None = None,
             not_found_content: str | None = None,
+            prefix: str | None = None,
             placeholder: str | None = None,
             placement: Literal['bottomLeft', 'bottomRight', 'topLeft',
                                'topRight'] | None = None,
@@ -128,6 +129,7 @@ class AntdTreeSelect(ModelScopeDataLayoutComponent):
         self.popup_match_select_width = popup_match_select_width
         self.dropdown_render = dropdown_render
         self.dropdown_style = dropdown_style
+        self.prefix = prefix
         self.field_names = field_names
         self.filter_tree_node = filter_tree_node
         self.get_popup_container = get_popup_container

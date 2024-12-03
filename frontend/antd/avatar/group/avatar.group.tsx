@@ -4,6 +4,8 @@ import React from 'react';
 import { useTargets } from '@utils/hooks/useTargets';
 import { Avatar as AAvatar, type GetProps } from 'antd';
 
+import './avatar.group.less';
+
 export const AvatarGroup = sveltify<
   GetProps<typeof AAvatar.Group>,
   ['max.popover.title', 'max.popover.content']
@@ -11,11 +13,15 @@ export const AvatarGroup = sveltify<
   const targets = useTargets(children);
   return (
     <>
-      <div style={{ display: 'none' }}>{children}</div>
       <AAvatar.Group
         {...props}
         max={{
           ...props.max,
+          count:
+            typeof props.max?.count === 'number'
+              ? // children render
+                props.max.count + 1
+              : props.max?.count,
           popover: !(slots['max.popover.title'] || slots['max.popover.content'])
             ? props.max?.popover
             : {
@@ -33,6 +39,7 @@ export const AvatarGroup = sveltify<
               },
         }}
       >
+        <div style={{ display: 'none' }}>{children}</div>
         {targets.map((target, index) => {
           return <ReactSlot slot={target} key={index} />;
         })}

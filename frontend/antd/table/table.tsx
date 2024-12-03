@@ -127,13 +127,13 @@ export const Table = sveltify<
           rowSelection={useMemo(() => {
             return (
               rowSelection ||
-              renderItems<TableProps['rowSelection']>(rowSelectionItems)[0]
+              renderItems<TableProps['rowSelection']>(rowSelectionItems)?.[0]
             );
           }, [rowSelection, rowSelectionItems])}
           expandable={useMemo(() => {
             return (
               expandable ||
-              renderItems<TableProps['expandable']>(expandableItems)[0]
+              renderItems<TableProps['expandable']>(expandableItems)?.[0]
             );
           }, [expandable, expandableItems])}
           rowClassName={rowClassNameFunction}

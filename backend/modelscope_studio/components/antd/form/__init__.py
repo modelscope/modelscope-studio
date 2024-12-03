@@ -20,7 +20,6 @@ class AntdForm(ModelScopeDataLayoutComponent):
     """
     Item = AntdFormItem
     Provider = AntdFormProvider
-
     EVENTS = [
         EventListener("fields_change",
                       callback=lambda block: block._internal.update(

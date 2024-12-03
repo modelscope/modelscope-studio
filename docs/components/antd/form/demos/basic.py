@@ -67,12 +67,14 @@ with gr.Blocks() as demo:
                     antd.Input.Password()
                 with antd.Form.Item(form_name="files", label="Upload"):
                     with antd.Upload.Dragger():
-                        with ms.Div(elem_classes="ant-upload-drag-icon"):
+                        with ms.Div(
+                                elem_style=dict(fontSize=40, color="#1677ff")):
                             antd.Icon("InboxOutlined")
-                        ms.Div("Click or drag file to this area to upload",
-                               elem_classes="ant-upload-text")
-                        ms.Div("Support for a single or bulk upload.",
-                               elem_classes="ant-upload-hint")
+                        antd.Typography.Paragraph(
+                            "Click or drag file to this area to upload")
+                        antd.Typography.Paragraph(
+                            "Support for a single or bulk upload.",
+                            type="secondary")
 
                 with antd.Form.Item(
                         wrapper_col=dict(offset=8, span=16),

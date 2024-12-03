@@ -135,7 +135,7 @@
   }
 </script>
 
-<div style="display: none;" bind:this={microphoneContainer} />
+<div style="display: none;" bind:this={microphoneContainer}></div>
 <button
   style={open ? 'display: none;' : ''}
   class="icon-button"

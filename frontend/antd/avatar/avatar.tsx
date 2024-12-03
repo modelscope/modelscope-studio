@@ -7,13 +7,17 @@ export const Avatar = sveltify<GetProps<typeof AAvatar>, ['icon', 'src']>(
   ({ slots, children, ...props }) => {
     return (
       <>
-        {slots.icon ? children : null}
+        <div style={{ display: 'none' }}>
+          {slots.icon || slots.src ? children : null}
+        </div>
         <AAvatar
           {...props}
           icon={slots.icon ? <ReactSlot slot={slots.icon} /> : props.icon}
-          src={slots.src ? <ReactSlot slot={slots.src} /> : props.src}
+          src={
+            slots.src ? <ReactSlot slot={slots.src} /> : props.src || undefined
+          }
         >
-          {slots.icon ? null : children}
+          {slots.icon || slots.src ? null : children}
         </AAvatar>
       </>
     );

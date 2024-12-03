@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from typing import Any
+from typing import Any, Literal
 
 from .....utils.dev import ModelScopeLayoutComponent, resolve_frontend_dir
 
@@ -17,12 +17,12 @@ class AntdDescriptionsItem(ModelScopeLayoutComponent):
 
     def __init__(
             self,
-            label: str | None = "",
+            label: str | None = None,
             props: dict | None = None,
             *,
             content_style: dict | None = None,
             label_style: dict | None = None,
-            span: int | dict | None = 1,
+            span: int | dict | Literal['filled'] | None = 1,
             as_item: str | None = None,
             _internal: None = None,
             # gradio properties

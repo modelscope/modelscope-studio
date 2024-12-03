@@ -19,8 +19,11 @@ class AntdTableColumn(ModelScopeLayoutComponent):
 
     # supported slots
     SLOTS = [
-        'filterDropdown', 'filterIcon', 'render', 'title', 'sortIcon',
-        'showSorterTooltip.title'
+        'filterDropdown', "filterDropdownProps.dropdownRender",
+        "filterDropdownProps.menu.expandIcon",
+        'filterDropdownProps.menu.overflowedIndicator',
+        "filterDropdownProps.menu.items", 'filterIcon', 'render', 'title',
+        'sortIcon', 'showSorterTooltip.title'
     ]
 
     def __init__(
@@ -46,6 +49,7 @@ class AntdTableColumn(ModelScopeLayoutComponent):
             filter_mode: Literal['menu', 'tree'] | None = None,
             filter_search: bool | str | None = None,
             filters: list[dict] | None = None,
+            filter_dropdown_props: dict | None = None,
             fixed: str | bool | None = None,
             key: str | None = None,
             column_render: str | None = None,
@@ -96,6 +100,7 @@ class AntdTableColumn(ModelScopeLayoutComponent):
         self.filter_mode = filter_mode
         self.filter_search = filter_search
         self.filters = filters
+        self.filter_dropdown_props = filter_dropdown_props
         self.fixed = fixed
         self.key = key
         self.column_render = column_render

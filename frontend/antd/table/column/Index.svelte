@@ -11,9 +11,13 @@
   import type React from 'react';
   import type { Gradio } from '@gradio/utils';
   import { createFunction } from '@utils/createFunction';
+  import { renderItems } from '@utils/renderItems';
+  import { renderParamsSlot } from '@utils/renderParamsSlot';
+  import { renderSlot } from '@utils/renderSlot';
   import cls from 'classnames';
   import { writable } from 'svelte/store';
 
+  import { getItems as getMenuItems } from '../../menu/context';
   import { getSetColumnItemFn, type Item } from '../context';
 
   export let gradio: Gradio;
@@ -59,7 +63,9 @@
     as_item,
     restProps: $$restProps,
   });
-
+  const { 'filterDropdownProps.menu.items': dropdownMenuItems } = getMenuItems([
+    'filterDropdownProps.menu.items',
+  ]);
   const setColumnItem = getSetColumnItemFn();
   const setSlotParams = getSetSlotParamsFn();
   $: {
@@ -67,6 +73,59 @@
       $mergedProps.props.showSorterTooltip ||
       $mergedProps.restProps.showSorterTooltip;
     const sorter = $mergedProps.props.sorter || $mergedProps.restProps.sorter;
+
+    const filterDropdownMenu = {
+      ...($mergedProps.restProps.filterDropdownProps?.menu || {}),
+      ...($mergedProps.props.filterDropdownProps?.menu || {}),
+      items:
+        $mergedProps.props.filterDropdownProps?.menu?.items ||
+        $mergedProps.restProps.filterDropdownProps?.menu?.items ||
+        $dropdownMenuItems.length > 0
+          ? renderItems($dropdownMenuItems, { clone: true })
+          : undefined,
+      expandIcon:
+        renderParamsSlot(
+          {
+            setSlotParams,
+            slots: $slots,
+            key: 'filterDropdownProps.menu.expandIcon',
+          },
+          {
+            clone: true,
+          }
+        ) ||
+        $mergedProps.props.filterDropdownProps?.menu?.expandIcon ||
+        $mergedProps.restProps.filterDropdownProps?.menu?.expandIcon,
+      overflowedIndicator:
+        renderSlot($slots['filterDropdownProps.menu.overflowedIndicator']) ||
+        $mergedProps.props.filterDropdownProps?.menu?.overflowedIndicator ||
+        $mergedProps.restProps.filterDropdownProps?.menu?.overflowedIndicator,
+    };
+
+    const filterDropdownProps = {
+      ...($mergedProps.restProps.filterDropdownProps || {}),
+      ...($mergedProps.props.filterDropdownProps || {}),
+      dropdownRender: $slots['filterDropdownProps.dropdownRender']
+        ? renderParamsSlot(
+            {
+              setSlotParams,
+              slots: $slots,
+              key: 'filterDropdownProps.dropdownRender',
+            },
+            {
+              clone: true,
+            }
+          )
+        : createFunction(
+            $mergedProps.props.filterDropdownProps?.dropdownRender ||
+              $mergedProps.restProps.filterDropdownProps?.dropdownRender
+          ),
+      menu:
+        Object.values(filterDropdownMenu).filter(Boolean).length > 0
+          ? filterDropdownMenu
+          : undefined,
+    };
+
     setColumnItem<Item | string>(
       $slotKey,
       $mergedProps._internal.index || 0,
@@ -86,6 +145,10 @@
               render: createFunction(
                 $mergedProps.props.render || $mergedProps.restProps.render
               ),
+              filterDropdownProps:
+                Object.values(filterDropdownProps).filter(Boolean).length > 0
+                  ? filterDropdownProps
+                  : undefined,
               filterIcon: createFunction(
                 $mergedProps.props.filterIcon ||
                   $mergedProps.restProps.filterIcon

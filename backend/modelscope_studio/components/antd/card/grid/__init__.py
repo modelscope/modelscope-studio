@@ -26,7 +26,7 @@ class AntdCardGrid(ModelScopeLayoutComponent):
             self,
             props: dict | None = None,
             *,
-            hoverable: bool = True,
+            hoverable: bool | None = None,
             as_item: str | None = None,
             _internal: None = None,
             # gradio properties

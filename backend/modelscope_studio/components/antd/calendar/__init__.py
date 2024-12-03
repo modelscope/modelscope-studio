@@ -40,7 +40,7 @@ class AntdCalendar(ModelScopeComponent):
             fullscreen: bool = True,
             header_render: str | None = None,
             locale: dict | None = None,
-            mode: Literal['month', 'year'] = 'month',
+            mode: Literal['month', 'year'] | None = None,
             valid_range: tuple[int | str | float, int | str | float]
         | None = None,
             root_class_name: str | None = None,

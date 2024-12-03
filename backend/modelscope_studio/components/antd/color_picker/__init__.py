@@ -47,6 +47,7 @@ class AntdColorPicker(ModelScopeDataLayoutComponent):
             presets: list[dict] | None = None,
             disabled: bool | None = None,
             disabled_alpha: bool | None = None,
+            disabled_format: bool | None = None,
             destroy_tooltip_on_hide: bool | None = None,
             format: Literal['hex', 'rgb', 'hsb'] | None = 'hex',
             mode: Literal['single', 'gradient']
@@ -85,6 +86,7 @@ class AntdColorPicker(ModelScopeDataLayoutComponent):
         self.presets = presets
         self.disabled = disabled
         self.disabled_alpha = disabled_alpha
+        self.disabled_format = disabled_format
         self.destroy_tooltip_on_hide = destroy_tooltip_on_hide
         self.format = format
         self.mode = mode

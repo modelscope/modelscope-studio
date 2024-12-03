@@ -232,8 +232,32 @@ antd_menu_items = [{
     "type":
     "group",
     "children": [{
+        "label": get_text("Avatar", "Avatar 头像"),
+        "key": "avatar"
+    }, {
+        "label": get_text("Badge", "Badge 徽标数"),
+        "key": "badge"
+    }, {
+        "label": get_text("Calendar", "Calendar 日历"),
+        "key": "calendar"
+    }, {
+        "label": get_text("Card", "Card 卡片"),
+        "key": "card"
+    }, {
+        "label": get_text("Carousel", "Carousel 走马灯"),
+        "key": "carousel"
+    }, {
         "label": get_text("Tour", "Tour 漫游式引导"),
         "key": "tour"
+    }]
+}, {
+    "label":
+    get_text("Feedback", "反馈"),
+    "type":
+    "group",
+    "children": [{
+        "label": get_text("Alert", "Alert 警告提示"),
+        "key": "alert"
     }]
 }, {
     "label":

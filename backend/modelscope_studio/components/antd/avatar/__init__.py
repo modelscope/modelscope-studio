@@ -36,11 +36,11 @@ class AntdAvatar(ModelScopeDataLayoutComponent):
             props: dict | None = None,
             *,
             alt: str | None = None,
-            gap: int = 4,
+            gap: int | None = None,
             icon: str | None = None,
-            shape: Literal['circle', 'square'] = 'circle',
+            shape: Literal['circle', 'square'] | None = None,
             size: int | Literal['large', 'small', 'default'] | dict
-        | None = 'default',
+        | None = None,
             src_set: str | None = None,
             draggable: bool | Literal['true', 'false'] | None = None,
             cross_origin: Literal['anonymous', 'use-credentials', '']

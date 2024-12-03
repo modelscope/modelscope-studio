@@ -16,6 +16,9 @@ class AntdInputOTP(ModelScopeDataLayoutComponent):
         EventListener("change",
                       callback=lambda block: block._internal.update(
                           bind_change_event=True)),
+        EventListener("input",
+                      callback=lambda block: block._internal.update(
+                          bind_input_event=True)),
     ]
 
     # supported slots

@@ -40,6 +40,7 @@ class AntdCascader(ModelScopeDataLayoutComponent):
         'notFoundContent',
         'expandIcon',
         'removeIcon',
+        'prefix',
         'displayRender',
         'tagRender',
         'dropdownRender',
@@ -62,6 +63,7 @@ class AntdCascader(ModelScopeDataLayoutComponent):
             popup_class_name: str | None = None,
             dropdown_render: str | None = None,
             expand_icon: str | None = None,
+            prefix: str | None = None,
             expand_trigger: Literal['click', 'hover'] = 'click',
             filed_names: dict | None = None,
             get_popup_container: str | None = None,
@@ -114,6 +116,7 @@ class AntdCascader(ModelScopeDataLayoutComponent):
         self.disabled = disabled
         self.display_render = display_render
         self.tag_render = tag_render
+        self.prefix = prefix
         self.popup_class_name = popup_class_name
         self.dropdown_render = dropdown_render
         self.expand_icon = expand_icon

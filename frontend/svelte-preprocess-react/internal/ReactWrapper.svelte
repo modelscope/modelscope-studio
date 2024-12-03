@@ -43,7 +43,7 @@
   }
 </script>
 
-<react-portal-target bind:this={$target} />
+<react-portal-target bind:this={$target}></react-portal-target>
 
 {#if $$slots.default}
   <svelte-slot bind:this={$slot}><slot /></svelte-slot>

@@ -5,11 +5,17 @@
     bindEvents,
     importComponent,
   } from '@svelte-preprocess-react/component';
-  import { getSlotContext, getSlots } from '@svelte-preprocess-react/slot';
+  import {
+    getSetSlotParamsFn,
+    getSlotContext,
+    getSlots,
+  } from '@svelte-preprocess-react/slot';
   import type React from 'react';
   import type { Gradio } from '@gradio/utils';
   import cls from 'classnames';
   import { type Writable, writable } from 'svelte/store';
+
+  import { getItems } from '../tabs/context';
 
   const AwaitedCard = importComponent(() => import('./card'));
   export let gradio: Gradio;
@@ -22,6 +28,8 @@
   export let elem_classes: string[] = [];
   export let elem_style: React.CSSProperties = {};
   export let visible = true;
+  const setSlotParams = getSetSlotParamsFn();
+
   const slots = getSlots();
   const [mergedProps, update] = getSlotContext({
     gradio,
@@ -45,6 +53,8 @@
     elem_style,
     restProps: $$restProps,
   });
+
+  const { tabList } = getItems(['tabList']);
 </script>
 
 {#if $mergedProps.visible}
@@ -58,6 +68,8 @@
       {...bindEvents($mergedProps)}
       containsGrid={$mergedProps._internal.contains_grid}
       slots={$slots}
+      tabListItems={$tabList}
+      {setSlotParams}
     >
       <slot></slot>
     </Card>
