@@ -1,5 +1,9 @@
 # @modelscope-studio/legacy-waterfall-gallery
 
+## 1.0.0-beta.8
+
+No significant changes to this package were made in this release.
+
 ## 1.0.0-beta.7
 
 ### Fixes

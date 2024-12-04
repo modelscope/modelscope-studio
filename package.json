@@ -1,6 +1,6 @@
 {
   "name": "modelscope_studio",
-  "version": "1.0.0-beta.7",
+  "version": "1.0.0-beta.8",
   "private": true,
   "description": "ModelScope Gradio Components",
   "repository": "git@github.com:modelscope/modelscope-studio.git",
@@ -13,7 +13,8 @@
     "format": "prettier --cache --write '**/*.{js,jsx,tsx,ts,svelte,less,md,yaml,yml,json}' --no-error-on-unmatched-pattern",
     "lint:js": "eslint . --fix  --cache",
     "lint:ts": "tsc && svelte-check --tsconfig ./tsconfig.json",
-    "lint:py": "flake8 . && isort . && yapf --in-place --recursive --exclude=node_modules/ .",
+    "check-encoding": "python ./scripts/check_encoding.py",
+    "lint:py": "pnpm run check-encoding && flake8 . && isort . && yapf --in-place --recursive --exclude=node_modules/ .",
     "lint:style": "stylelint --allow-empty-input --cache --fix \"**/*.{less,css}\" ",
     "changeset": "changeset",
     "fix-changelog": "node ./config/changelog/dist/fix-changelog.mjs",

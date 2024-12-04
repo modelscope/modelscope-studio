@@ -1,5 +1,16 @@
 # @modelscope-studio/legacy-markdown
 
+## 1.0.0-beta.8
+
+No significant changes to this package were made in this release.
+
+## 1.0.0-beta.8
+
+### Patch Changes
+
+- Updated dependencies [[`a692793`](https://github.com/modelscope/modelscope-studio/commit/a6927930fa0cbb62b8e91d98fbfda7434586e758)]:
+  - @modelscope-studio/legacy-compiled@1.0.0-beta.8
+
 ## 1.0.0-beta.7
 
 ### Fixes

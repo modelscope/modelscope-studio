@@ -62,11 +62,11 @@ class AntdCol(ModelScopeLayoutComponent):
             push:  The number of cells that raster is moved to the right.
             span:  Raster number of cells to occupy, 0 corresponds to display: none.
             xs:  screen < 576px and also default setting, could be a span value or an object containing above props.
-            sm:  screen ≥ 576px, could be a span value or an object containing above props.
-            md:  screen ≥ 768px, could be a span value or an object containing above props.
-            lg:  screen ≥ 992px, could be a span value or an object containing above props.
-            xl:  screen ≥ 1200px, could be a span value or an object containing above props.
-            xxl:  screen ≥ 1600px, could be a span value or an object containing above props.
+            sm:  screen >= 576px, could be a span value or an object containing above props.
+            md:  screen >= 768px, could be a span value or an object containing above props.
+            lg:  screen >= 992px, could be a span value or an object containing above props.
+            xl:  screen >= 1200px, could be a span value or an object containing above props.
+            xxl:  screen >= 1600px, could be a span value or an object containing above props.
         """
         super().__init__(visible=visible,
                          elem_id=elem_id,
