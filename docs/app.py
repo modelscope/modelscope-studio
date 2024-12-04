@@ -56,7 +56,7 @@ base_menu_items = [{
     "type":
     "group",
     "children": [{
-        "label": "Application",
+        "label": get_text("Application", "Application 应用"),
         "key": "application"
     }, {
         "label": get_text("AutoLoading", "AutoLoading 自动加载"),
@@ -89,10 +89,10 @@ base_menu_items = [{
     "type":
     "group",
     "children": [{
-        "label": "Each",
+        "label": get_text("Each", "Each 循环"),
         "key": "each"
     }, {
-        "label": "Filter",
+        "label": get_text("Filter", "Filter 过滤"),
         "key": "filter"
     }]
 }]
@@ -247,6 +247,15 @@ antd_menu_items = [{
         "label": get_text("Carousel", "Carousel 走马灯"),
         "key": "carousel"
     }, {
+        "label": get_text("Collapse", "Collapse 折叠面板"),
+        "key": "collapse"
+    }, {
+        "label": get_text("Descriptions", "Descriptions 描述列表"),
+        "key": "descriptions"
+    }, {
+        "label": get_text("Empty", "Empty 空状态"),
+        "key": "empty"
+    }, {
         "label": get_text("Tour", "Tour 漫游式引导"),
         "key": "tour"
     }]
@@ -265,6 +274,9 @@ antd_menu_items = [{
     "type":
     "group",
     "children": [{
+        "label": get_text("Affix", "Affix 固钉"),
+        "key": "affix"
+    }, {
         "label": get_text("ConfigProvider", "ConfigProvider 全局化配置"),
         "key": "config_provider"
     }]
