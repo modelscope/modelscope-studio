@@ -103,7 +103,7 @@ class AntdTypographyText(ModelScopeLayoutComponent):
             delete: Deleted line style.
             disabled: Disabled content.
             editable: If editable. Can control edit state when is object.
-            ellipsis: Display ellipsis when text overflows, can't configure expandable、rows and onExpand by using object. Diff with Typography.Paragraph, Text do not have 100% width style which means it will fix width on the first ellipsis. If you want to have responsive ellipsis, please set width manually.
+            ellipsis: Display ellipsis when text overflows, can't configure expandable, rows and onExpand by using object. Diff with Typography.Paragraph, Text do not have 100% width style which means it will fix width on the first ellipsis. If you want to have responsive ellipsis, please set width manually.
             keyboard: Keyboard style.
             mark: Marked style.
             strong: Bold style.

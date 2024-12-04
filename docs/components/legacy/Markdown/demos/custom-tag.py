@@ -12,7 +12,7 @@ custom tag:<custom-tag value="aaa"></custom-tag>
             "custom-tag": {
                 # The tag props.
                 "props": ["value"],
-                # The tag template, use `{prop}` as placeholder。
+                # The tag template, use `{prop}` as placeholder.
                 "template": "<div>{value}</div>"
             }
         })

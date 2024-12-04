@@ -66,7 +66,7 @@ class AntdFloatButtonBackTop(ModelScopeLayoutComponent):
             target: Specifies where to display the linked URL	string.
             htmlType: Set the original html type of button.
             badge: Attach Badge to FloatButton. status and other props related are not supported.
-            duration: Time to return to top（ms）.
+            duration: Time to return to top(ms).
             get_target: Specifies the scrollable area dom node.
             visibility_height: The BackTop button will not show until the scroll height reaches this value.
         """
