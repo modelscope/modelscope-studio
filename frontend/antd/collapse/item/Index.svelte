@@ -24,7 +24,6 @@
   } = {};
 
   export let as_item: string | undefined;
-  export let label: string;
 
   // gradio properties
   export let visible = true;
@@ -43,7 +42,6 @@
     elem_classes,
     elem_style,
     as_item,
-    label,
     restProps: $$restProps,
   });
   const slots = getSlots();
@@ -56,7 +54,6 @@
     elem_classes,
     elem_style,
     as_item,
-    label,
     restProps: $$restProps,
   });
   const setItem = getSetItemFn();
@@ -65,7 +62,6 @@
       style: $mergedProps.elem_style,
       className: cls($mergedProps.elem_classes, 'ms-gr-antd-collapse-item'),
       id: $mergedProps.elem_id,
-      label: $mergedProps.label,
       ...$mergedProps.restProps,
       ...$mergedProps.props,
       ...bindEvents($mergedProps),

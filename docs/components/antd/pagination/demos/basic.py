@@ -9,7 +9,7 @@ with gr.Blocks() as demo:
             antd.Pagination(total=85,
                             show_quick_jumper=True,
                             show_size_changer=True,
-                            show_total="(total) => `Total ${total} items``")
+                            show_total="(total) => `Total ${total} items`")
 
 if __name__ == "__main__":
     demo.queue().launch()

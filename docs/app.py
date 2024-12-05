@@ -256,8 +256,44 @@ antd_menu_items = [{
         "label": get_text("Empty", "Empty 空状态"),
         "key": "empty"
     }, {
+        "label": get_text("Image", "Image 图片"),
+        "key": "image"
+    }, {
+        "label": get_text("List", "List 列表"),
+        "key": "list"
+    }, {
+        "label": get_text("Popover", "Popover 气泡卡片"),
+        "key": "popover"
+    }, {
+        "label": get_text("QRCode", "QRCode 二维码"),
+        "key": "qr_code"
+    }, {
+        "label": get_text("Segmented", "Segmented 分段控制器"),
+        "key": "segmented"
+    }, {
+        "label": get_text("Statistic", "Statistic 统计数值"),
+        "key": "statistic"
+    }, {
+        "label": get_text("Table", "Table 表格"),
+        "key": "table"
+    }, {
+        "label": get_text("Tabs", "Tabs 标签页"),
+        "key": "tabs"
+    }, {
+        "label": get_text("Tag", "Tag 标签"),
+        "key": "tag"
+    }, {
+        "label": get_text("Timeline", "Timeline 时间轴"),
+        "key": "timeline"
+    }, {
+        "label": get_text("Tooltip", "Tooltip 文字提示"),
+        "key": "tooltip"
+    }, {
         "label": get_text("Tour", "Tour 漫游式引导"),
         "key": "tour"
+    }, {
+        "label": get_text("Tree", "Tree 树形控件"),
+        "key": "tree"
     }]
 }, {
     "label":

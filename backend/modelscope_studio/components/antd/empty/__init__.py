@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from typing import Any
+from typing import Any, Literal
 
 from ....utils.dev import ModelScopeLayoutComponent, resolve_frontend_dir
 
@@ -19,8 +19,10 @@ class AntdEmpty(ModelScopeLayoutComponent):
             self,
             props: dict | None = None,
             *,
-            description: str | None = None,
-            image: str | None = None,
+            description: str | bool | None = None,
+            image: str
+        | Literal['PRESENTED_IMAGE_DEFAULT', 'PRESENTED_IMAGE_SIMPLE']
+        | None = None,
             image_style: dict | None = None,
             root_class_name: str | None = None,
             as_item: str | None = None,

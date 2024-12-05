@@ -118,7 +118,7 @@ class Site:
                                                     height='100%')):
                                                 with antd.Splitter():
                                                     with antd.Splitter.Panel(
-                                                            default_size=200,
+                                                            default_size=213,
                                                             max="50%",
                                                             min=82,
                                                             elem_style=dict(
@@ -232,7 +232,7 @@ class Site:
                                             "width"]
                                         return gr.update(
                                             default_size=82 if screen_width <
-                                            576 else 200)
+                                            576 else 213)
 
                                     app.mount(on_app_mount,
                                               outputs=[sider_panel])

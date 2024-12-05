@@ -28,7 +28,7 @@ class AntdImagePreviewGroup(ModelScopeLayoutComponent):
             items: list[dict | str] | None = None,
             props: dict | None = None,
             *,
-            preview: bool | dict | None = True,
+            preview: bool | dict | None = None,
             fallback: str | None = None,
             as_item: str | None = None,
             _internal: None = None,

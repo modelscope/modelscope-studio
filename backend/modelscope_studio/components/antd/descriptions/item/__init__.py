@@ -22,7 +22,7 @@ class AntdDescriptionsItem(ModelScopeLayoutComponent):
             *,
             content_style: dict | None = None,
             label_style: dict | None = None,
-            span: int | dict | Literal['filled'] | None = 1,
+            span: int | dict | Literal['filled'] | None = None,
             as_item: str | None = None,
             _internal: None = None,
             # gradio properties
