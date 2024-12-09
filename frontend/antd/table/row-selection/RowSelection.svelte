@@ -93,6 +93,7 @@
       },
       slots: {
         ...$slots,
+        selections: undefined,
         columnTitle: {
           el: $slots.columnTitle,
           callback: setSlotParams,

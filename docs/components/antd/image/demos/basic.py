@@ -5,8 +5,6 @@ import gradio as gr
 import modelscope_studio.components.antd as antd
 import modelscope_studio.components.base as ms
 
-default_bordered = False
-
 with gr.Blocks() as demo:
     with ms.Application():
         with antd.ConfigProvider():

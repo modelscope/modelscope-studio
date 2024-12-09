@@ -152,10 +152,10 @@ export const ReactSlot = forwardRef<HTMLElement, ReactSlotProps>(
             const _hasPortal = render();
             if (_hasPortal) {
               observer?.disconnect();
-              // observer?.observe(slot, {
-              //   childList: true,
-              //   subtree: true,
-              // });
+              observer?.observe(slot, {
+                childList: true,
+                subtree: true,
+              });
             }
           });
           observer.observe(slot, {

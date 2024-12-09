@@ -1,10 +1,12 @@
 from __future__ import annotations
 
-from ....utils.dev import ModelScopeLayoutComponent, resolve_frontend_dir
+from typing import Callable
+
+from ....utils.dev import ModelScopeDataLayoutComponent, resolve_frontend_dir
 from .countdown import AntdStatisticCountdown
 
 
-class AntdStatistic(ModelScopeLayoutComponent):
+class AntdStatistic(ModelScopeDataLayoutComponent):
     """
     Ant Design: https://ant.design/components/statistic
     """
@@ -17,7 +19,7 @@ class AntdStatistic(ModelScopeLayoutComponent):
 
     def __init__(
             self,
-            value: int | float | str | None = None,
+            value: Callable | int | float | str | None = None,
             props: dict | None = None,
             *,
             decimal_separator: str | None = None,
@@ -39,14 +41,14 @@ class AntdStatistic(ModelScopeLayoutComponent):
             elem_style: dict | None = None,
             render: bool = True,
             **kwargs):
-        super().__init__(visible=visible,
+        super().__init__(value=value,
+                         visible=visible,
                          elem_id=elem_id,
                          elem_classes=elem_classes,
                          render=render,
                          as_item=as_item,
                          elem_style=elem_style,
                          **kwargs)
-        self.value = value
         self.props = props
         self.decimal_separator = decimal_separator
         self.formatter = formatter
@@ -65,10 +67,10 @@ class AntdStatistic(ModelScopeLayoutComponent):
     def skip_api(self):
         return True
 
-    def preprocess(self, payload: None) -> None:
+    def preprocess(self, payload: int | float | str | None) -> None:
         return payload
 
-    def postprocess(self, value: None) -> None:
+    def postprocess(self, value: int | float | str | None) -> None:
 
         return value
 

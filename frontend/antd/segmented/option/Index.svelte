@@ -69,7 +69,9 @@
       ...$mergedProps.props,
       ...bindEvents($mergedProps),
     },
-    slots: $slots,
+    slots: {
+      ...$slots,
+    },
   });
 </script>
 

@@ -89,7 +89,7 @@ from .radio.group.option import AntdRadioGroupOption as RadioGroupOption
 from .rate import AntdRate as Rate
 from .result import AntdResult as Result
 from .segmented import AntdSegmented as Segmented
-from .segmented.option import AntdSegmentedOption as SegmentedOptions
+from .segmented.option import AntdSegmentedOption as SegmentedOption
 from .select import AntdSelect as Select
 from .select.option import AntdSelectOption as SelectOption
 from .skeleton import AntdSkeleton as Skeleton
