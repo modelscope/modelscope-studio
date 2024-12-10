@@ -60,7 +60,7 @@ export const ConfigProvider = sveltify<
     id,
     className,
     style,
-    locale: localeProp,
+    locale: localeProp = 'en_US',
     getTargetContainer,
     getPopupContainer,
     renderEmpty,

@@ -5,13 +5,17 @@
     bindEvents,
     importComponent,
   } from '@svelte-preprocess-react/component';
-  import { getSlotContext, getSlots } from '@svelte-preprocess-react/slot';
+  import {
+    getSetSlotParamsFn,
+    getSlotContext,
+    getSlots,
+  } from '@svelte-preprocess-react/slot';
   import type React from 'react';
   import type { Gradio } from '@gradio/utils';
   import cls from 'classnames';
   import { writable } from 'svelte/store';
 
-  const AwaitedNotification = importComponent(() => import('./notification'));
+  const AwaitedModalStatic = importComponent(() => import('./modal.static'));
 
   export let gradio: Gradio;
   export let props: Record<string, any> = {};
@@ -21,7 +25,6 @@
     layout?: boolean;
   } = {};
 
-  export let message = '';
   export let as_item: string | undefined;
   // gradio properties
   export let visible = false;
@@ -33,7 +36,6 @@
     gradio,
     props: $updatedProps,
     _internal,
-    message,
     visible,
     elem_id,
     elem_classes,
@@ -41,13 +43,12 @@
     as_item,
     restProps: $$restProps,
   });
-
+  const setSlotParams = getSetSlotParamsFn();
   const slots = getSlots();
   $: update({
     gradio,
     props: $updatedProps,
     _internal,
-    message,
     visible,
     elem_id,
     elem_classes,
@@ -57,24 +58,23 @@
   });
 </script>
 
-{#await AwaitedNotification then Notification}
-  <Notification
+{#await AwaitedModalStatic then ModalStatic}
+  <ModalStatic
     style={$mergedProps.elem_style}
-    className={cls($mergedProps.elem_classes, 'ms-gr-antd-notification')}
+    className={cls($mergedProps.elem_classes, 'ms-gr-antd-modal-static')}
     id={$mergedProps.elem_id}
     {...$mergedProps.restProps}
     {...$mergedProps.props}
     {...bindEvents($mergedProps)}
-    message={$mergedProps.props.message || $mergedProps.message}
-    notificationKey={$mergedProps.props.key || $mergedProps.restProps.key}
     slots={$slots}
+    {setSlotParams}
     visible={$mergedProps.visible}
     onVisible={(v) => {
       visible = v;
     }}
   >
     <slot></slot>
-  </Notification>
+  </ModalStatic>
 {/await}
 
 <style>

@@ -303,6 +303,36 @@ antd_menu_items = [{
     "children": [{
         "label": get_text("Alert", "Alert 警告提示"),
         "key": "alert"
+    }, {
+        "label": get_text("Drawer", "Drawer 抽屉"),
+        "key": "drawer"
+    }, {
+        "label": get_text("Message", "Message 全局提示"),
+        "key": "message"
+    }, {
+        "label": get_text("Modal", "Modal 对话框"),
+        "key": "modal"
+    }, {
+        "label": get_text("Notification", "Notification 通知提醒框"),
+        "key": "notification"
+    }, {
+        "label": get_text("Popconfirm", "Popconfirm 气泡确认框"),
+        "key": "popconfirm"
+    }, {
+        "label": get_text("Progress", "Progress 进度条"),
+        "key": "progress"
+    }, {
+        "label": get_text("Result", "Result 结果"),
+        "key": "result"
+    }, {
+        "label": get_text("Skeleton", "Skeleton 骨架屏"),
+        "key": "skeleton"
+    }, {
+        "label": get_text("Spin", "Spin 加载中"),
+        "key": "spin"
+    }, {
+        "label": get_text("Watermark", "Watermark 水印"),
+        "key": "watermark"
     }]
 }, {
     "label":

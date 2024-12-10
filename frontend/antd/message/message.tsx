@@ -11,6 +11,7 @@ export const Message = sveltify<
     ConfigOptions & {
       children?: React.ReactNode;
       visible?: boolean;
+      messageKey?: string | number;
       onVisible?: (visible: boolean) => void;
     },
   ['content', 'icon']
@@ -22,6 +23,7 @@ export const Message = sveltify<
     onVisible,
     onClose,
     getContainer,
+    messageKey,
     ...props
   }) => {
     const getContainerFunction = useFunction(getContainer);
@@ -34,6 +36,7 @@ export const Message = sveltify<
       if (visible) {
         messageApi.open({
           ...props,
+          key: messageKey,
           icon: slots.icon ? <ReactSlot slot={slots.icon} /> : props.icon,
           content: slots.content ? (
             <ReactSlot slot={slots.content} />
@@ -46,14 +49,23 @@ export const Message = sveltify<
           },
         });
       } else {
-        messageApi.destroy(props.key);
+        messageApi.destroy(messageKey);
       }
 
       return () => {
-        messageApi.destroy(props.key);
+        messageApi.destroy(messageKey);
       };
       // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [visible]);
+    }, [
+      visible,
+      messageKey,
+      props.content,
+      props.className,
+      props.duration,
+      props.icon,
+      props.style,
+      props.type,
+    ]);
     return (
       <>
         <div style={{ display: 'none' }}>{children}</div>

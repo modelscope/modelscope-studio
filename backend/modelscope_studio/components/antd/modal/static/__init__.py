@@ -1,20 +1,16 @@
 from __future__ import annotations
 
-from typing import Any
+from typing import Any, Literal
 
 from gradio.events import EventListener
 
-from ....utils.dev import ModelScopeLayoutComponent, resolve_frontend_dir
-from .static import AntdModalStatic
+from .....utils.dev import ModelScopeLayoutComponent, resolve_frontend_dir
 
 
-class AntdModal(ModelScopeLayoutComponent):
+class AntdModalStatic(ModelScopeLayoutComponent):
     """
     Ant Design: https://ant.design/components/modal
     """
-
-    Static = AntdModalStatic
-
     EVENTS = [
         EventListener(
             "ok",
@@ -27,7 +23,7 @@ class AntdModal(ModelScopeLayoutComponent):
     # supported slots
     SLOTS = [
         'closeIcon', 'cancelButtonProps.icon', 'cancelText',
-        'closable.closeIcon', 'closeIcon', 'footer', 'title',
+        'closable.closeIcon', 'closeIcon', 'footer', 'title', 'content',
         'okButtonProps.icon', 'okText', 'modalRender'
     ]
 
@@ -36,6 +32,9 @@ class AntdModal(ModelScopeLayoutComponent):
             props: dict | None = None,
             *,
             after_close: str | None = None,
+            auto_focus_button: Literal['ok', 'cancel'] | None = 'ok',
+            type: Literal['info', 'success', 'error', 'warning', 'confirm']
+        | None = None,
             class_names: dict | None = None,
             styles: dict | None = None,
             cancel_button_props: dict | None = None,
@@ -46,6 +45,7 @@ class AntdModal(ModelScopeLayoutComponent):
             confirm_loading: bool | None = None,
             destroy_on_close: bool | None = None,
             focus_trigger_after_close: bool | None = None,
+            content: str | None = None,
             footer: str | None = None,
             force_render: bool | None = None,
             get_container: str | None = None,
@@ -58,7 +58,6 @@ class AntdModal(ModelScopeLayoutComponent):
             ok_button_props: dict | None = None,
             loading: bool | None = None,
             title: str | None = None,
-            open: bool | None = None,
             width: int | float | str | None = None,
             wrap_class_name: str | None = None,
             z_index: int | None = None,
@@ -82,8 +81,10 @@ class AntdModal(ModelScopeLayoutComponent):
                          **kwargs)
         self.props = props
         self.after_close = after_close
+        self.auto_focus_button = auto_focus_button
         self.class_names = class_names
         self.styles = styles
+        self.type = type
         self.cancel_button_props = cancel_button_props
         self.cancel_text = cancel_text
         self.centered = centered
@@ -92,6 +93,7 @@ class AntdModal(ModelScopeLayoutComponent):
         self.confirm_loading = confirm_loading
         self.destroy_on_close = destroy_on_close
         self.focus_trigger_after_close = focus_trigger_after_close
+        self.content = content
         self.footer = footer
         self.force_render = force_render
         self.get_container = get_container
@@ -104,14 +106,13 @@ class AntdModal(ModelScopeLayoutComponent):
         self.ok_button_props = ok_button_props
         self.loading = loading
         self.title = title
-        self.open = open
         self.width = width
         self.wrap_class_name = wrap_class_name
         self.z_index = z_index
         self.after_open_change = after_open_change
         self.root_class_name = root_class_name
 
-    FRONTEND_DIR = resolve_frontend_dir("modal")
+    FRONTEND_DIR = resolve_frontend_dir("modal", "static")
 
     @property
     def skip_api(self):

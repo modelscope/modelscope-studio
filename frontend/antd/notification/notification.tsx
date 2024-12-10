@@ -9,6 +9,7 @@ export const Notification = sveltify<
   ArgsProps &
     NotificationConfig & {
       children?: React.ReactNode;
+      notificationKey?: string | number;
       visible?: boolean;
       onVisible?: (visible: boolean) => void;
     },
@@ -22,6 +23,7 @@ export const Notification = sveltify<
     top,
     children,
     visible,
+    notificationKey,
     onClose,
     onVisible,
     ...props
@@ -37,6 +39,7 @@ export const Notification = sveltify<
       if (visible) {
         notificationApi.open({
           ...props,
+          key: notificationKey,
           btn: slots.btn ? <ReactSlot slot={slots.btn} /> : props.btn,
           closeIcon: slots['closeIcon'] ? (
             <ReactSlot slot={slots['closeIcon']} />
@@ -60,14 +63,30 @@ export const Notification = sveltify<
           },
         });
       } else {
-        notificationApi.destroy(props.key);
+        notificationApi.destroy(notificationKey);
       }
 
       return () => {
-        notificationApi.destroy(props.key);
+        notificationApi.destroy(notificationKey);
       };
       // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [visible]);
+    }, [
+      visible,
+      notificationKey,
+      props.btn,
+      props.closeIcon,
+      props.className,
+      props.description,
+      props.duration,
+      props.showProgress,
+      props.pauseOnHover,
+      props.icon,
+      props.message,
+      props.placement,
+      props.style,
+      props.role,
+      props.props,
+    ]);
     return (
       <>
         {children}

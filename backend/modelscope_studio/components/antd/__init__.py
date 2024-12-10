@@ -76,6 +76,7 @@ from .menu import AntdMenu as Menu
 from .menu.item import AntdMenuItem as MenuItem
 from .message import AntdMessage as Message
 from .modal import AntdModal as Modal
+from .modal.static import AntdModalStatic as ModalStatic
 from .notification import AntdNotification as Notification
 from .pagination import AntdPagination as Pagination
 from .popconfirm import AntdPopconfirm as Popconfirm
