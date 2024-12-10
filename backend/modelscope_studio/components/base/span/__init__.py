@@ -7,6 +7,7 @@ from gradio.events import EventListener
 from ....utils.dev import ModelScopeLayoutComponent, resolve_frontend_dir
 from ...antd.carousel import AntdCarousel
 from ...antd.space import AntdSpace
+from ...antd.tooltip import AntdTooltip
 from ..slot import ModelScopeSlot
 
 
@@ -66,8 +67,12 @@ class ModelScopeSpan(ModelScopeLayoutComponent):
                          elem_style=elem_style,
                          **kwargs)
         if self.parent and self._internal and (any(
-                isinstance(self.parent, component)
-                for component in [AntdCarousel, AntdSpace, ModelScopeSlot])):
+                isinstance(self.parent, component) for component in [
+                    AntdCarousel,
+                    AntdSpace,
+                    AntdTooltip,
+                    ModelScopeSlot,
+                ])):
             self._internal.update(fragment=True)
         self.value = value
         self.props = props

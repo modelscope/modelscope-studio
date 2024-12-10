@@ -3,26 +3,12 @@ import gradio as gr
 import modelscope_studio.components.antd as antd
 import modelscope_studio.components.base as ms
 
-data = [
-    {
-        "key": '1',
-        "name": 'Mike',
-        "age": 32,
-        "address": '10 Downing Street',
-    },
-    {
-        "key": '2',
-        "name": 'John',
-        "age": 42,
-        "address": '10 Downing Street',
-    },
-    {
-        "key": '3',
-        "name": 'Joe',
-        "age": 32,
-        "address": '10 Downing Street',
-    },
-] * 10
+data = [{
+    "key": f"{i}",
+    "name": f'Item {i}',
+    "age": 32,
+    "address": '10 Downing Street',
+} for i in range(20)]
 
 
 def on_change(e: gr.EventData):
