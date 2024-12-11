@@ -8,7 +8,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "modelscope_studio"
-version = "1.0.0-beta.8"
+version = "1.0.0-beta.9"
 description = "A third-party component library based on Gradio."
 readme = "README.md"
 license = "Apache-2.0"
@@ -201,6 +201,8 @@ artifacts = [
   "/backend/modelscope_studio/components/legacy/Markdown/templates",
   "/backend/modelscope_studio/components/legacy/MultimodalInput/templates",
   "/backend/modelscope_studio/components/legacy/WaterfallGallery/templates",
+  "/backend/modelscope_studio/components/antd/form/provider/templates",
+  "/backend/modelscope_studio/components/antd/modal/static/templates",
 ]
 
 [tool.hatch.build.targets.sdist]
