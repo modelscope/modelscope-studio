@@ -16,7 +16,10 @@ class AntdTagCheckableTag(ModelScopeDataLayoutComponent):
     EVENTS = [
         EventListener("change",
                       callback=lambda block: block._internal.update(
-                          bind_change_event=True))
+                          bind_change_event=True)),
+        EventListener("click",
+                      callback=lambda block: block._internal.update(
+                          bind_click_event=True))
     ]
 
     def __init__(

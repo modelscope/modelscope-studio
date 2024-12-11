@@ -5,12 +5,16 @@ from typing import Any
 from gradio.events import EventListener
 
 from ....utils.dev import ModelScopeLayoutComponent, resolve_frontend_dir
+from .static import AntdModalStatic
 
 
 class AntdModal(ModelScopeLayoutComponent):
     """
     Ant Design: https://ant.design/components/modal
     """
+
+    Static = AntdModalStatic
+
     EVENTS = [
         EventListener(
             "ok",

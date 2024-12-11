@@ -19,8 +19,8 @@ class AntdAvatarGroup(ModelScopeLayoutComponent):
             *,
             max: dict | None = None,
             size: int | Literal['large', 'small', 'default']
-        | dict = 'default',
-            shape: Literal['circle', 'square'] = 'circle',
+        | dict | None = None,
+            shape: Literal['circle', 'square'] | None = None,
             root_class_name: str | None = None,
             as_item: str | None = None,
             _internal: None = None,

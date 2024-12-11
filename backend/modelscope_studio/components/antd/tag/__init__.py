@@ -25,7 +25,7 @@ class AntdTag(ModelScopeLayoutComponent):
 
     def __init__(
             self,
-            value: str | None = "",
+            value: str | None = None,
             props: dict | None = None,
             *,
             bordered: bool | None = None,

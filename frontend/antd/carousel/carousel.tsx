@@ -10,6 +10,7 @@ export const Carousel = sveltify<GetProps<typeof ACarousel>>(
     const afterChangeFunction = useFunction(afterChange);
     const beforeChangeFunction = useFunction(beforeChange);
     const targets = useTargets(children);
+
     return (
       <>
         <div style={{ display: 'none' }}>{children}</div>

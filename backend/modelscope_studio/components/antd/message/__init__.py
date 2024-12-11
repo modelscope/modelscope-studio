@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+from typing import Literal
+
 from gradio.events import EventListener
 
 from ....utils.dev import ModelScopeLayoutComponent, resolve_frontend_dir
@@ -23,15 +25,17 @@ class AntdMessage(ModelScopeLayoutComponent):
 
     def __init__(
             self,
-            content: str | None = "",
+            content: str | None = None,
             props: dict | None = None,
             *,
-            duration: float | int | None = 3,
+            type: Literal['success', 'info', 'warning', 'error', 'loading']
+        | None = None,
+            duration: float | int | None = None,
             icon: str | None = None,
             key: str | int | float | None = None,
             get_container: str | None = None,
             rtl: bool | None = None,
-            top: int | float | None = 8,
+            top: int | float | None = None,
             root_class_name: str | None = None,
             as_item: str | None = None,
             _internal: None = None,
@@ -52,6 +56,7 @@ class AntdMessage(ModelScopeLayoutComponent):
         self.content = content
         self.duration = duration
         self.icon = icon
+        self.type = type
         self.key = key
         self.get_container = get_container
         self.rtl = rtl

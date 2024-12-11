@@ -58,6 +58,10 @@ class Site:
   max-width: 100% !important;
   padding: 0 !important;
 }
+.docs-layout-sider {
+  width: 100% !important;
+  max-width: 100% !important;
+}
 """) as demo:
             with ms.Application() as app:
                 with antd.ConfigProvider():
@@ -109,62 +113,81 @@ class Site:
                                                     overflow="auto")):
                                                 tab["content"].render()
                                         elif "menus" in tab:
-
                                             # menus render
                                             with antd.Layout(elem_style=dict(
                                                     height='100%')):
-                                                with antd.Layout.Sider(
-                                                        collapsed=False,
-                                                        collapsible=True,
-                                                        trigger=None,
-                                                        elem_style=dict(
-                                                            height=
-                                                            "calc(100vh - 64px)",
-                                                            overflow="auto",
-                                                            position="relative",
-                                                            backgroundColor=
-                                                            "var(--ms-gr-ant-color-bg-container)"
-                                                        )) as layout_sider:
-                                                    sider_menu = antd.Menu(
-                                                        selected_keys=[
-                                                            tab.get(
-                                                                "default_active_key",
-                                                                None)
-                                                        ],
-                                                        mode="inline",
-                                                        items=tab.get(
-                                                            "menus", []))
-                                                    if "extra_menu_footer" in tab:
-                                                        if callable(tab[
-                                                                "extra_menu_footer"]
-                                                                    ):
-                                                            tab["extra_menu_footer"](
-                                                            )
-                                                        else:
-                                                            tab["extra_menu_footer"].render(
-                                                            )
-
-                                                with antd.Layout(
-                                                        elem_style=dict(
-                                                            width=0)):
-                                                    with antd.Layout.Content(
+                                                with antd.Splitter():
+                                                    with antd.Splitter.Panel(
+                                                            default_size=213,
+                                                            max="50%",
+                                                            min=82,
                                                             elem_style=dict(
-                                                                padding=
-                                                                '12px 28px',
-                                                                overflow="auto"
-                                                            )):
-                                                        with antd.Tabs(
-                                                                active_key=tab.
-                                                                get(
-                                                                    "default_active_key",
-                                                                    None),
-                                                                render_tab_bar=
-                                                                "() => null"
-                                                        ) as layout_content_tabs:
-                                                            docs_tabs = self._render_docs(
-                                                                tab.get(
+                                                                backgroundColor=
+                                                                "var(--ms-gr-ant-color-bg-container)"
+                                                            )) as sider_panel:
+                                                        with antd.Layout.Sider(
+                                                                breakpoint="sm",
+                                                                trigger=None,
+                                                                elem_classes=
+                                                                "docs-layout-sider",
+                                                                elem_style=dict(
+                                                                    # height=
+                                                                    # "calc(100vh - 64px)",
+                                                                    # overflow=
+                                                                    # "auto",
+                                                                    position=
+                                                                    "relative",
+                                                                    backgroundColor
+                                                                    ="var(--ms-gr-ant-color-bg-container)"
+                                                                )):
+                                                            sider_menu = antd.Menu(
+                                                                selected_keys=[
+                                                                    tab.get(
+                                                                        "default_active_key",
+                                                                        None)
+                                                                ],
+                                                                mode="inline",
+                                                                items=tab.get(
                                                                     "menus",
-                                                                    []), tab)
+                                                                    []))
+                                                            if "extra_menu_footer" in tab:
+                                                                if callable(tab[
+                                                                        "extra_menu_footer"]
+                                                                            ):
+                                                                    tab["extra_menu_footer"](
+                                                                    )
+                                                                else:
+                                                                    tab["extra_menu_footer"].render(
+                                                                    )
+                                                    with antd.Splitter.Panel():
+                                                        with antd.Layout(
+                                                                elem_style=dict(
+                                                                    width="100%"
+                                                                )):
+                                                            with antd.Layout.Content(
+                                                                    elem_style=
+                                                                    dict(
+                                                                        padding=
+                                                                        '12px 28px',
+                                                                        overflow
+                                                                        ="auto"
+                                                                    )):
+                                                                with antd.Tabs(
+                                                                        active_key
+                                                                        =tab.
+                                                                        get(
+                                                                            "default_active_key",
+                                                                            None
+                                                                        ),
+                                                                        render_tab_bar
+                                                                        ="() => null"
+                                                                ) as layout_content_tabs:
+                                                                    docs_tabs = self._render_docs(
+                                                                        tab.
+                                                                        get(
+                                                                            "menus",
+                                                                            []
+                                                                        ), tab)
 
                                         def on_layout_menu_select_wrapper(
                                                 tabs, sider_menu,
@@ -208,10 +231,11 @@ class Site:
                                         screen_width = e._data["screen"][
                                             "width"]
                                         return gr.update(
-                                            collapsed=screen_width < 576)
+                                            default_size=82 if screen_width <
+                                            576 else 213)
 
                                     app.mount(on_app_mount,
-                                              outputs=[layout_sider])
+                                              outputs=[sider_panel])
 
                         tab_menu.select(
                             fn=on_tab_menu_select,

@@ -26,7 +26,6 @@
   export let _internal: Record<string, any> = {};
   export let as_item: string | undefined;
   export let props: Record<string, any> = {};
-  export let data_source: Record<PropertyKey, any>[];
   const updatedProps: Writable<typeof props> = writable(props);
   $: updatedProps.update((prev) => ({ ...prev, ...props }));
   export let elem_id = '';
@@ -43,7 +42,6 @@
     elem_id,
     elem_classes,
     elem_style,
-    data_source,
     restProps: $$restProps,
   });
   $: update({
@@ -55,7 +53,6 @@
     elem_id,
     elem_classes,
     elem_style,
-    data_source,
     restProps: $$restProps,
   });
   const setSlotParams = getSetSlotParamsFn();
@@ -77,7 +74,6 @@
       {...$mergedProps.props}
       {...bindEvents($mergedProps)}
       slots={$slots}
-      dataSource={$mergedProps.props.dataSource ?? $mergedProps.data_source}
       rowSelectionItems={$rowSelectionItems}
       expandableItems={$expandableItems}
       columnItems={$columnItems}

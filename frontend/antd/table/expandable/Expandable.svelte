@@ -75,7 +75,8 @@
         ...events,
         expandedRowClassName: createFunction(
           $mergedProps.props.expandedRowClassName ||
-            $mergedProps.restProps.expandedRowClassName
+            $mergedProps.restProps.expandedRowClassName,
+          true
         ),
         expandedRowRender: createFunction(
           $mergedProps.props.expandedRowRender ||

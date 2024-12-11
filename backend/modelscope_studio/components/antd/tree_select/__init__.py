@@ -41,14 +41,9 @@ class AntdTreeSelect(ModelScopeDataLayoutComponent):
 
     # supported slots
     SLOTS = [
-        'allowClear.clearIcon',
-        'maxTagPlaceholder',
-        'notFoundContent',
-        'suffixIcon',
-        'switcherIcon',
-        'dropdownRender',
-        'tagRender',
-        'treeTitleRender',
+        'allowClear.clearIcon', 'maxTagPlaceholder', 'notFoundContent',
+        'prefix', 'suffixIcon', 'switcherIcon', 'dropdownRender', 'tagRender',
+        'treeTitleRender', 'treeData'
     ]
 
     def __init__(
@@ -76,9 +71,10 @@ class AntdTreeSelect(ModelScopeDataLayoutComponent):
             max_tag_text_length: int | None = None,
             multiple: bool | None = None,
             not_found_content: str | None = None,
+            prefix: str | None = None,
             placeholder: str | None = None,
             placement: Literal['bottomLeft', 'bottomRight', 'topLeft',
-                               'topRight'] | None = 'bottomLeft',
+                               'topRight'] | None = None,
             search_value: str | None = None,
             show_checked_strategy: Literal['SHOW_ALL', 'SHOW_PARENT',
                                            'SHOW_CHILD'] | None = None,
@@ -102,8 +98,8 @@ class AntdTreeSelect(ModelScopeDataLayoutComponent):
             tree_loaded_keys: list[str] | None = None,
             tree_node_filter_prop: str | None = None,
             tree_node_label_prop: str | None = None,
-            variant: Literal['outline', 'borderless', 'solid']
-        | None = 'outline',
+            variant: Literal['outlined', 'borderless', 'solid']
+        | None = None,
             virtual: bool | None = True,
             root_class_name: str | None = None,
             as_item: str | None = None,
@@ -133,6 +129,7 @@ class AntdTreeSelect(ModelScopeDataLayoutComponent):
         self.popup_match_select_width = popup_match_select_width
         self.dropdown_render = dropdown_render
         self.dropdown_style = dropdown_style
+        self.prefix = prefix
         self.field_names = field_names
         self.filter_tree_node = filter_tree_node
         self.get_popup_container = get_popup_container

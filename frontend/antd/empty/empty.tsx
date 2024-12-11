@@ -6,6 +6,19 @@ export const Empty = sveltify<
   GetProps<typeof AEmpty>,
   ['description', 'image']
 >(({ slots, imageStyle, ...props }) => {
+  const getImage = () => {
+    if (slots.image) {
+      return <ReactSlot slot={slots.image} />;
+    }
+    switch (props.image) {
+      case 'PRESENTED_IMAGE_DEFAULT':
+        return AEmpty.PRESENTED_IMAGE_DEFAULT;
+      case 'PRESENTED_IMAGE_SIMPLE':
+        return AEmpty.PRESENTED_IMAGE_SIMPLE;
+      default:
+        return props.image;
+    }
+  };
   return (
     <AEmpty
       {...props}
@@ -20,7 +33,7 @@ export const Empty = sveltify<
         display: 'inline-block',
         ...imageStyle,
       }}
-      image={slots.image ? <ReactSlot slot={slots.image} /> : props.image}
+      image={getImage()}
     />
   );
 });

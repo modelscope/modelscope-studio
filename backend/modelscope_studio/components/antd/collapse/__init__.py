@@ -30,7 +30,7 @@ class AntdCollapse(ModelScopeLayoutComponent):
             accordion: bool | None = None,
             active_key: str | float | list[int | float] | list[str]
         | None = None,
-            bordered: bool = True,
+            bordered: bool | None = None,
             collapsible: Literal['header', 'icon', 'disabled'] | None = None,
             default_active_key: str | float | list[int | float] | list[str]
         | None = None,

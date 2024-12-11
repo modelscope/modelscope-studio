@@ -30,6 +30,7 @@ export const Cascader = sveltify<
     'maxTagPlaceholder',
     'notFoundContent',
     'expandIcon',
+    'prefix',
     'removeIcon',
     'displayRender',
     'tagRender',
@@ -107,6 +108,9 @@ export const Cascader = sveltify<
           loadData={onLoadData}
           optionRender={optionRenderFunction}
           getPopupContainer={getPopupContainerFunction}
+          prefix={
+            slots.prefix ? <ReactSlot slot={slots.prefix} /> : props.prefix
+          }
           dropdownRender={
             slots.dropdownRender
               ? renderParamsSlot({

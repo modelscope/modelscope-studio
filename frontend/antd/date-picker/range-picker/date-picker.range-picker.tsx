@@ -44,6 +44,7 @@ export const DateRangePicker = sveltify<
   },
   [
     'allowClear.clearIcon',
+    'prefix',
     'prevIcon',
     'nextIcon',
     'suffixIcon',
@@ -154,7 +155,7 @@ export const DateRangePicker = sveltify<
               renderItems<NonNullable<RangePickerProps['presets']>[number]>(
                 presetItems
               )
-            ).map((preset) => {
+            )?.map((preset) => {
               return {
                 ...preset,
                 value: formatDates(preset.value as any),
@@ -182,6 +183,9 @@ export const DateRangePicker = sveltify<
                   key: 'renderExtraFooter',
                 })
               : props.renderExtraFooter
+          }
+          prefix={
+            slots.prefix ? <ReactSlot slot={slots.prefix} /> : props.prefix
           }
           prevIcon={
             slots.prevIcon ? (

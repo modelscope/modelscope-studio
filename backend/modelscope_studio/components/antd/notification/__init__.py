@@ -29,6 +29,7 @@ class AntdNotification(ModelScopeLayoutComponent):
             description: str | None = "",
             props: dict | None = None,
             *,
+            type: Literal['success', 'info', 'warning', 'error'] | None = None,
             btn: str | None = None,
             close_icon: str | bool | None = None,
             duration: int | float | None = 4.5,
@@ -63,6 +64,7 @@ class AntdNotification(ModelScopeLayoutComponent):
                          **kwargs)
         self.props = props
         self.message = message
+        self.type = type
         self.description = description
         self.btn = btn
         self.close_icon = close_icon

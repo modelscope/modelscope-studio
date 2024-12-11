@@ -1,8 +1,9 @@
 {
   "compilerOptions": {
     "target": "ESNEXT",
-    "module": "CommonJS",
+    "module": "ESNext",
     "lib": ["DOM", "DOM.Iterable", "ESNext"],
+    "verbatimModuleSyntax": true,
     "strict": true,
     "noEmit": true,
     "importHelpers": true,

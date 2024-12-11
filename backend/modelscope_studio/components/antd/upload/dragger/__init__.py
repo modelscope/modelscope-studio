@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import tempfile
 from pathlib import Path
-from typing import TYPE_CHECKING, Any, Callable
+from typing import TYPE_CHECKING, Any, Callable, Literal
 
 import gradio_client.utils as client_utils
 from gradio import processing_utils
@@ -25,7 +25,7 @@ class AntdUploadDragger(ModelScopeDataLayoutComponent):
     EVENTS = [
         EventListener("change",
                       callback=lambda block: block._internal.update(
-                          bind_click_event=True)),
+                          bind_change_event=True)),
         EventListener("drop",
                       callback=lambda block: block._internal.update(
                           bind_drop_event=True)),
@@ -57,6 +57,31 @@ class AntdUploadDragger(ModelScopeDataLayoutComponent):
             value: list[str] | Callable | None = None,
             props: dict | None = None,
             *,
+            accept: str | None = None,
+            action: str | None = None,
+            before_upload: str | None = None,
+            custom_request: str | None = None,
+            data: dict | str | None = None,
+            default_file_list: list[dict] | None = None,
+            directory: bool | None = None,
+            disabled: bool | None = None,
+            file_list: list[dict] | None = None,
+            headers: dict | None = None,
+            icon_render: str | None = None,
+            is_image_url: str | None = None,
+            item_render: str | None = None,
+            list_type: Literal['text', 'picture', 'picture-card',
+                               'picture-circle'] | None = None,
+            max_count: int | None = None,
+            method: str | None = None,
+            multiple: bool | None = None,
+            form_name: str | None = None,
+            open_file_dialog_on_click: bool | None = True,
+            preview_file: str | None = None,
+            progress: dict | None = None,
+            show_upload_list: bool | dict | None = True,
+            with_credentials: bool | None = None,
+            root_class_name: str | None = None,
             as_item: str | None = None,
             _internal: None = None,
             # gradio properties
@@ -83,6 +108,30 @@ class AntdUploadDragger(ModelScopeDataLayoutComponent):
                          **kwargs)
 
         self.props = props
+        self.accept = accept
+        self.action = action
+        self.before_upload = before_upload
+        self.custom_request = custom_request
+        self.data = data
+        self.default_file_list = default_file_list
+        self.directory = directory
+        self.disabled = disabled
+        self.file_list = file_list
+        self.headers = headers
+        self.icon_render = icon_render
+        self.is_image_url = is_image_url
+        self.item_render = item_render
+        self.list_type = list_type
+        self.max_count = max_count
+        self.method = method
+        self.multiple = multiple
+        self.form_name = form_name
+        self.open_file_dialog_on_click = open_file_dialog_on_click
+        self.preview_file = preview_file
+        self.progress = progress
+        self.show_upload_list = show_upload_list
+        self.with_credentials = with_credentials
+        self.root_class_name = root_class_name
 
     FRONTEND_DIR = resolve_frontend_dir("upload", "dragger")
 

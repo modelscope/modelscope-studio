@@ -1,5 +1,17 @@
 # @modelscope-studio/antd
 
+## 1.0.0-beta.9
+
+### Fixes
+
+- [`e7fa278`](https://github.com/modelscope/modelscope-studio/commit/e7fa2782af83a7e78cddb700cd8d5e63ad62342f) - bugfix of remaining components.  Thanks [@Col0ring](https://github.com/Col0ring)!
+
+## 1.0.0-beta.8
+
+### Fixes
+
+- [`a692793`](https://github.com/modelscope/modelscope-studio/commit/a6927930fa0cbb62b8e91d98fbfda7434586e758) - gbk error. Thanks [@Col0ring](https://github.com/Col0ring)!
+
 ## 1.0.0-beta.7
 
 ### Fixes

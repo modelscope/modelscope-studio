@@ -72,6 +72,3 @@
     />
   {/await}
 {/if}
-
-<style>
-</style>

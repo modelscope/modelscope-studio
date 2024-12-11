@@ -21,6 +21,9 @@ class AntdSegmented(ModelScopeDataLayoutComponent):
                           bind_change_event=True)),
     ]
 
+    # supported slots
+    SLOTS = ["options"]
+
     def __init__(
             self,
             value: str | int | float | None = None,

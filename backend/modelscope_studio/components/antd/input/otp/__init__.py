@@ -16,6 +16,9 @@ class AntdInputOTP(ModelScopeDataLayoutComponent):
         EventListener("change",
                       callback=lambda block: block._internal.update(
                           bind_change_event=True)),
+        EventListener("input",
+                      callback=lambda block: block._internal.update(
+                          bind_input_event=True)),
     ]
 
     # supported slots
@@ -31,10 +34,10 @@ class AntdInputOTP(ModelScopeDataLayoutComponent):
             formatter: str | None = None,
             mask: str | bool | None = None,
             length: int = 6,
-            placeholder: str = '口',
+            placeholder: str | None = None,
             size: Literal['large', 'middle', 'small'] | None = None,
             status: Literal['error', 'warning'] | None = None,
-            variant: Literal['outline', 'borderless', 'filled'] | None = None,
+            variant: Literal['outlined', 'borderless', 'filled'] | None = None,
             root_class_name: str | None = None,
             as_item: str | None = None,
             _internal: None = None,

@@ -66,6 +66,7 @@
     {...$mergedProps.props}
     {...bindEvents($mergedProps)}
     message={$mergedProps.props.message || $mergedProps.message}
+    notificationKey={$mergedProps.props.key || $mergedProps.restProps.key}
     slots={$slots}
     visible={$mergedProps.visible}
     onVisible={(v) => {

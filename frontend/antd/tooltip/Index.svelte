@@ -19,7 +19,6 @@
   export let _internal: {
     layout?: boolean;
   } = {};
-  export let title = '';
   export let as_item: string | undefined;
   // gradio properties
   export let visible = true;
@@ -36,7 +35,6 @@
     elem_classes,
     elem_style,
     as_item,
-    title,
     restProps: $$restProps,
   });
   const slots = getSlots();
@@ -49,7 +47,6 @@
     elem_classes,
     elem_style,
     as_item,
-    title,
     restProps: $$restProps,
   });
 </script>
@@ -64,7 +61,6 @@
       {...$mergedProps.props}
       {...bindEvents($mergedProps)}
       slots={$slots}
-      title={$mergedProps.props.title || $mergedProps.title}
     >
       <slot></slot>
     </Tooltip>

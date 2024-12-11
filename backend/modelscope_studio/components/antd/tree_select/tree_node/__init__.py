@@ -13,7 +13,7 @@ class AntdTreeSelectTreeNode(ModelScopeLayoutComponent):
     EVENTS = []
 
     # supported slots
-    SLOTS = ["title"]
+    SLOTS = ["title", "icon"]
 
     def __init__(
             self,

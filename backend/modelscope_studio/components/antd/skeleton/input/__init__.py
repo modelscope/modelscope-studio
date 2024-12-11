@@ -17,6 +17,7 @@ class AntdSkeletonInput(ModelScopeLayoutComponent):
             *,
             active: bool | None = None,
             size: Literal['large', 'small', 'default'] | None = None,
+            block: bool | None = None,
             root_class_name: str | None = None,
             as_item: str | None = None,
             _internal: None = None,
@@ -37,6 +38,7 @@ class AntdSkeletonInput(ModelScopeLayoutComponent):
         self.props = props
         self.active = active
         self.size = size
+        self.block = block
         self.root_class_name = root_class_name
 
     FRONTEND_DIR = resolve_frontend_dir("skeleton", "input")

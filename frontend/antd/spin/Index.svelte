@@ -17,7 +17,9 @@
   export let props: Record<string, any> = {};
   const updatedProps = writable(props);
   $: updatedProps.update((prev) => ({ ...prev, ...props }));
-  export let _internal: Record<string, any> = {};
+  export let _internal: {
+    layout?: boolean;
+  } = {};
 
   export let as_item: string | undefined;
   // gradio properties

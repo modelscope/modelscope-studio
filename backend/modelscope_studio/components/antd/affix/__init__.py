@@ -30,7 +30,7 @@ class AntdAffix(ModelScopeLayoutComponent):
             props: dict | None = None,
             *,
             offset_bottom: int | float | None = None,
-            offset_top: int | float | None = 0,
+            offset_top: int | float | None = None,
             get_target: str | None = None,
             as_item: str | None = None,
             _internal: None = None,

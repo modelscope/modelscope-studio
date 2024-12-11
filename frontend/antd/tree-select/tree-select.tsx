@@ -24,6 +24,7 @@ export const TreeSelect = sveltify<
     'maxTagPlaceholder',
     'notFoundContent',
     'suffixIcon',
+    'prefix',
     'switcherIcon',
     'dropdownRender',
     'tagRender',
@@ -77,6 +78,7 @@ export const TreeSelect = sveltify<
         ) : (
           props.suffixIcon
         ),
+        prefix: slots.prefix ? <ReactSlot slot={slots.prefix} /> : props.prefix,
         switcherIcon: slots.switcherIcon
           ? renderParamsSlot({ slots, setSlotParams, key: 'switcherIcon' })
           : props.switcherIcon,

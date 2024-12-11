@@ -35,6 +35,7 @@ class AntdDatePicker(ModelScopeDataLayoutComponent):
     # supported slots
     SLOTS = [
         'allowClear.clearIcon',
+        'prefix',
         'prevIcon',
         'nextIcon',
         'suffixIcon',
@@ -77,6 +78,7 @@ class AntdDatePicker(ModelScopeDataLayoutComponent):
             get_popup_container: str | None = None,
             min_date: str | int | float | None = None,
             max_date: str | int | float | None = None,
+            prefix: str | None = None,
             prev_icon: str | None = None,
             size: Literal['large', 'middle', 'small'] | None = None,
             presets: list[dict] | None = None,
@@ -137,6 +139,7 @@ class AntdDatePicker(ModelScopeDataLayoutComponent):
         self.get_popup_container = get_popup_container
         self.min_date = min_date
         self.max_date = max_date
+        self.prefix = prefix
         self.prev_icon = prev_icon
         self.size = size
         self.presets = presets

@@ -26,6 +26,7 @@ export const Select = sveltify<
     'optionRender',
     'tagRender',
     'labelRender',
+    'prefix',
   ]
 >(
   ({
@@ -82,6 +83,9 @@ export const Select = sveltify<
                   clearIcon: <ReactSlot slot={slots['allowClear.clearIcon']} />,
                 }
               : props.allowClear
+          }
+          prefix={
+            slots.prefix ? <ReactSlot slot={slots.prefix} /> : props.prefix
           }
           removeIcon={
             slots.removeIcon ? (

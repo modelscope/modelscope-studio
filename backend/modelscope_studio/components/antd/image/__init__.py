@@ -51,7 +51,7 @@ class AntdImage(ModelScopeDataLayoutComponent):
             fallback: str | None = None,
             height: str | int | float | None = None,
             placeholder: bool | str | int | float | None = None,
-            preview: bool | dict | None = True,
+            preview: bool | dict | None = None,
             width: str | int | float | None = None,
             root_class_name: str | None = None,
             as_item: str | None = None,

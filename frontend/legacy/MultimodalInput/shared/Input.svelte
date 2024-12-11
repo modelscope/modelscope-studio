@@ -264,7 +264,7 @@
       on:focus={handle_focus}
       on:scroll={handle_scroll}
       style={text_align ? 'text-align: ' + text_align : ''}
-    />
+    ></textarea>
   {/if}
 </label>
 

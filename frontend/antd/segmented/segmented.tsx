@@ -26,7 +26,7 @@ export const Segmented = sveltify<
           return (
             options ||
             renderItems<SegmentedProps['options'][number]>(slotItems, {
-              clone: true,
+              clone: false,
             })
           );
         }, [options, slotItems])}

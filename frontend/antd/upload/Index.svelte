@@ -83,7 +83,15 @@
       upload={async (files) => {
         return (
           (await gradio.client.upload(await prepare_files(files), root)) || []
-        );
+        ).map((file, i) => {
+          if (!file) {
+            return file;
+          }
+          return {
+            ...file,
+            uid: files[i].uid,
+          };
+        });
       }}
       {setSlotParams}
     >

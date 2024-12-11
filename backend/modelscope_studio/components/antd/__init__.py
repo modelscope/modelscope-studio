@@ -76,6 +76,7 @@ from .menu import AntdMenu as Menu
 from .menu.item import AntdMenuItem as MenuItem
 from .message import AntdMessage as Message
 from .modal import AntdModal as Modal
+from .modal.static import AntdModalStatic as ModalStatic
 from .notification import AntdNotification as Notification
 from .pagination import AntdPagination as Pagination
 from .popconfirm import AntdPopconfirm as Popconfirm
@@ -89,7 +90,7 @@ from .radio.group.option import AntdRadioGroupOption as RadioGroupOption
 from .rate import AntdRate as Rate
 from .result import AntdResult as Result
 from .segmented import AntdSegmented as Segmented
-from .segmented.option import AntdSegmentedOption as SegmentedOptions
+from .segmented.option import AntdSegmentedOption as SegmentedOption
 from .select import AntdSelect as Select
 from .select.option import AntdSelectOption as SelectOption
 from .skeleton import AntdSkeleton as Skeleton

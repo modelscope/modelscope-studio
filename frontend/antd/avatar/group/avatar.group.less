@@ -1,0 +1,11 @@
+.ms-gr-container {
+  .ms-gr-antd-avatar-group {
+    > *:not(:first-child) {
+      react-portal-target {
+        .ms-gr-ant-avatar {
+          margin-inline-start: var(--ms-gr-ant-avatar-group-overlapping);
+        }
+      }
+    }
+  }
+}

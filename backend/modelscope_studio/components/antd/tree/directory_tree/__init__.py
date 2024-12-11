@@ -150,7 +150,7 @@ class AntdTreeDirectoryTree(ModelScopeLayoutComponent):
 
     @property
     def skip_api(self):
-        return False
+        return True
 
     def preprocess(self, payload: None) -> None:
         return payload

@@ -36,6 +36,7 @@ export const Modal = sveltify<
     const afterCloseFunction = useFunction(afterClose);
     const getContainerFunction = useFunction(getContainer);
     const modalRenderFunction = useFunction(modalRender);
+
     return (
       <AModal
         {...props}

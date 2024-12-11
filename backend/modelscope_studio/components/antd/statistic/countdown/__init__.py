@@ -1,13 +1,13 @@
 from __future__ import annotations
 
-from typing import Any
+from typing import Any, Callable
 
 from gradio.events import EventListener
 
-from .....utils.dev import ModelScopeLayoutComponent, resolve_frontend_dir
+from .....utils.dev import ModelScopeDataLayoutComponent, resolve_frontend_dir
 
 
-class AntdStatisticCountdown(ModelScopeLayoutComponent):
+class AntdStatisticCountdown(ModelScopeDataLayoutComponent):
     """
     Ant Design: https://ant.design/components/statistic
     """
@@ -26,7 +26,7 @@ class AntdStatisticCountdown(ModelScopeLayoutComponent):
 
     def __init__(
             self,
-            value: int | float | None = None,
+            value: Callable | int | float | None = None,
             props: dict | None = None,
             *,
             format: str | None = None,
@@ -44,7 +44,8 @@ class AntdStatisticCountdown(ModelScopeLayoutComponent):
             elem_style: dict | None = None,
             render: bool = True,
             **kwargs):
-        super().__init__(visible=visible,
+        super().__init__(value=value,
+                         visible=visible,
                          elem_id=elem_id,
                          elem_classes=elem_classes,
                          render=render,
@@ -52,7 +53,6 @@ class AntdStatisticCountdown(ModelScopeLayoutComponent):
                          elem_style=elem_style,
                          **kwargs)
         self.props = props
-        self.value = value
         self.format = format
         self.prefix = prefix
         self.suffix = suffix
@@ -66,10 +66,10 @@ class AntdStatisticCountdown(ModelScopeLayoutComponent):
     def skip_api(self):
         return True
 
-    def preprocess(self, payload: str) -> str:
+    def preprocess(self, payload: int | float | None) -> int | float | None:
         return payload
 
-    def postprocess(self, value: str) -> str:
+    def postprocess(self, value: int | float | None) -> int | float | None:
         return value
 
     def example_payload(self) -> Any:

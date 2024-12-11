@@ -92,7 +92,7 @@ class ModelScopeDataLayoutComponent(Component,
     # supported slots
     SLOTS = []
 
-    # fix gradio’s bug
+    # fix gradio's bug
     @property
     def component_class_id(self):
         return self.get_component_class_id()

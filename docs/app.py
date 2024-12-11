@@ -56,7 +56,7 @@ base_menu_items = [{
     "type":
     "group",
     "children": [{
-        "label": "Application",
+        "label": get_text("Application", "Application 应用"),
         "key": "application"
     }, {
         "label": get_text("AutoLoading", "AutoLoading 自动加载"),
@@ -89,10 +89,10 @@ base_menu_items = [{
     "type":
     "group",
     "children": [{
-        "label": "Each",
+        "label": get_text("Each", "Each 循环"),
         "key": "each"
     }, {
-        "label": "Filter",
+        "label": get_text("Filter", "Filter 过滤"),
         "key": "filter"
     }]
 }]
@@ -207,6 +207,24 @@ antd_menu_items = [{
     }, {
         "label": get_text("Select", "Select 选择器"),
         "key": "select"
+    }, {
+        "label": get_text("Slider", "Slider 滑动输入条"),
+        "key": "slider"
+    }, {
+        "label": get_text("Switch", "Switch 开关"),
+        "key": "switch"
+    }, {
+        "label": get_text("TimePicker", "TimePicker 时间选择器"),
+        "key": "time_picker"
+    }, {
+        "label": get_text("Transfer", "Transfer 穿梭框"),
+        "key": "transfer"
+    }, {
+        "label": get_text("TreeSelect", "TreeSelect 树选择"),
+        "key": "tree_select"
+    }, {
+        "label": get_text("Upload", "Upload 上传"),
+        "key": "upload"
     }]
 }, {
     "label":
@@ -214,8 +232,107 @@ antd_menu_items = [{
     "type":
     "group",
     "children": [{
+        "label": get_text("Avatar", "Avatar 头像"),
+        "key": "avatar"
+    }, {
+        "label": get_text("Badge", "Badge 徽标数"),
+        "key": "badge"
+    }, {
+        "label": get_text("Calendar", "Calendar 日历"),
+        "key": "calendar"
+    }, {
+        "label": get_text("Card", "Card 卡片"),
+        "key": "card"
+    }, {
+        "label": get_text("Carousel", "Carousel 走马灯"),
+        "key": "carousel"
+    }, {
+        "label": get_text("Collapse", "Collapse 折叠面板"),
+        "key": "collapse"
+    }, {
+        "label": get_text("Descriptions", "Descriptions 描述列表"),
+        "key": "descriptions"
+    }, {
+        "label": get_text("Empty", "Empty 空状态"),
+        "key": "empty"
+    }, {
+        "label": get_text("Image", "Image 图片"),
+        "key": "image"
+    }, {
+        "label": get_text("List", "List 列表"),
+        "key": "list"
+    }, {
+        "label": get_text("Popover", "Popover 气泡卡片"),
+        "key": "popover"
+    }, {
+        "label": get_text("QRCode", "QRCode 二维码"),
+        "key": "qr_code"
+    }, {
+        "label": get_text("Segmented", "Segmented 分段控制器"),
+        "key": "segmented"
+    }, {
+        "label": get_text("Statistic", "Statistic 统计数值"),
+        "key": "statistic"
+    }, {
+        "label": get_text("Table", "Table 表格"),
+        "key": "table"
+    }, {
+        "label": get_text("Tabs", "Tabs 标签页"),
+        "key": "tabs"
+    }, {
+        "label": get_text("Tag", "Tag 标签"),
+        "key": "tag"
+    }, {
+        "label": get_text("Timeline", "Timeline 时间轴"),
+        "key": "timeline"
+    }, {
+        "label": get_text("Tooltip", "Tooltip 文字提示"),
+        "key": "tooltip"
+    }, {
         "label": get_text("Tour", "Tour 漫游式引导"),
         "key": "tour"
+    }, {
+        "label": get_text("Tree", "Tree 树形控件"),
+        "key": "tree"
+    }]
+}, {
+    "label":
+    get_text("Feedback", "反馈"),
+    "type":
+    "group",
+    "children": [{
+        "label": get_text("Alert", "Alert 警告提示"),
+        "key": "alert"
+    }, {
+        "label": get_text("Drawer", "Drawer 抽屉"),
+        "key": "drawer"
+    }, {
+        "label": get_text("Message", "Message 全局提示"),
+        "key": "message"
+    }, {
+        "label": get_text("Modal", "Modal 对话框"),
+        "key": "modal"
+    }, {
+        "label": get_text("Notification", "Notification 通知提醒框"),
+        "key": "notification"
+    }, {
+        "label": get_text("Popconfirm", "Popconfirm 气泡确认框"),
+        "key": "popconfirm"
+    }, {
+        "label": get_text("Progress", "Progress 进度条"),
+        "key": "progress"
+    }, {
+        "label": get_text("Result", "Result 结果"),
+        "key": "result"
+    }, {
+        "label": get_text("Skeleton", "Skeleton 骨架屏"),
+        "key": "skeleton"
+    }, {
+        "label": get_text("Spin", "Spin 加载中"),
+        "key": "spin"
+    }, {
+        "label": get_text("Watermark", "Watermark 水印"),
+        "key": "watermark"
     }]
 }, {
     "label":
@@ -223,6 +340,9 @@ antd_menu_items = [{
     "type":
     "group",
     "children": [{
+        "label": get_text("Affix", "Affix 固钉"),
+        "key": "affix"
+    }, {
         "label": get_text("ConfigProvider", "ConfigProvider 全局化配置"),
         "key": "config_provider"
     }]

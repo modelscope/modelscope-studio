@@ -10,11 +10,11 @@
   style:border-radius={layout === 'bubble' ? 'var(--radius-xxl)' : 'none'}
 >
   <span class="sr-only">Loading content</span>
-  <div class="dot-flashing" />
+  <div class="dot-flashing"></div>
   &nbsp;
-  <div class="dot-flashing" />
+  <div class="dot-flashing"></div>
   &nbsp;
-  <div class="dot-flashing" />
+  <div class="dot-flashing"></div>
 </div>
 
 <style>

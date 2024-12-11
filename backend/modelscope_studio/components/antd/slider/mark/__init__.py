@@ -23,8 +23,6 @@ class AntdSliderMark(ModelScopeLayoutComponent):
             label: str | None = None,
             props: dict | None = None,
             *,
-            title: str | None = None,
-            disabled: bool | None = None,
             as_item: str | None = None,
             _internal: None = None,
             # gradio properties
@@ -44,8 +42,6 @@ class AntdSliderMark(ModelScopeLayoutComponent):
         self.props = props
         self.number = number
         self.label = label
-        self.disabled = disabled
-        self.title = title
 
     FRONTEND_DIR = resolve_frontend_dir("slider", "mark")
 

@@ -5,6 +5,7 @@ from typing import Any
 from ....utils.dev import ModelScopeComponent, resolve_frontend_dir
 from ...antd.carousel import AntdCarousel
 from ...antd.space import AntdSpace
+from ...antd.tooltip import AntdTooltip
 
 
 class ModelScopeText(ModelScopeComponent):
@@ -38,7 +39,7 @@ class ModelScopeText(ModelScopeComponent):
                          **kwargs)
         if self.parent and self._internal and (any(
                 isinstance(self.parent, component)
-                for component in [AntdCarousel, AntdSpace])):
+                for component in [AntdCarousel, AntdTooltip, AntdSpace])):
             self._internal.update(fragment=True)
         self.value = value
 

@@ -46,7 +46,7 @@ class AntdSelect(ModelScopeDataLayoutComponent):
     SLOTS = [
         'allowClear.clearIcon', 'maxTagPlaceholder', 'menuItemSelectedIcon',
         'dropdownRender', 'optionRender', 'tagRender', 'labelRender',
-        'notFoundContent', 'removeIcon', 'suffixIcon', 'options'
+        'notFoundContent', 'removeIcon', 'suffixIcon', 'prefix', 'options'
     ]
 
     def __init__(
@@ -94,6 +94,7 @@ class AntdSelect(ModelScopeDataLayoutComponent):
             size: Literal['large', 'middle', 'small'] | None = None,
             status: Literal['error', 'warning'] | None = None,
             suffix_icon: str | None = None,
+            prefix: str | None = None,
             tag_render: str | None = None,
             label_render: str | None = None,
             token_separators: list[str] | None = None,
@@ -128,6 +129,7 @@ class AntdSelect(ModelScopeDataLayoutComponent):
         self.default_open = default_open
         self.default_value = default_value
         self.disabled = disabled
+        self.prefix = prefix
         self.popup_class_name = popup_class_name
         self.popup_match_select_width = popup_match_select_width
         self.get_popup_container = get_popup_container

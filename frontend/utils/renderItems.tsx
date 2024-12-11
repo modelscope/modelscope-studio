@@ -11,8 +11,12 @@ export function renderItems<R>(
     clone?: boolean;
   },
   key?: React.Key
-): R[] {
-  return items.filter(Boolean).map((item, i) => {
+): undefined | R[] {
+  const filterItems = items.filter(Boolean);
+  if (filterItems.length === 0) {
+    return undefined;
+  }
+  return filterItems.map((item, i) => {
     if (typeof item !== 'object') {
       if (options?.fallback) {
         return options.fallback(item);
@@ -52,7 +56,7 @@ export function renderItems<R>(
       } else {
         el = elOrObject.el;
         callback = elOrObject.callback;
-        clone = elOrObject.clone ?? false;
+        clone = elOrObject.clone ?? clone;
       }
 
       current[splits[splits.length - 1]] = el ? (

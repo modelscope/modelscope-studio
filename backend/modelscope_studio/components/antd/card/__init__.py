@@ -36,6 +36,7 @@ class AntdCard(ModelScopeLayoutComponent):
         'extra',
         'tabBarExtraContent',
         'title',
+        'tabList',
     ]
 
     def __exit__(self, *args, **kwargs):
@@ -49,7 +50,7 @@ class AntdCard(ModelScopeLayoutComponent):
             *,
             actions: str | None = None,
             active_tab_key: str | None = None,
-            bordered: bool = True,
+            bordered: bool | None = None,
             cover: str | None = None,
             default_active_tab_key: str | None = None,
             extra: str | None = None,
@@ -58,7 +59,7 @@ class AntdCard(ModelScopeLayoutComponent):
             size: Literal["default", "small"] | None = None,
             tab_bar_extra_content: str | None = None,
             tab_list: list[str] | str | None = None,
-            tab_props: str | None = None,
+            tab_props: dict | None = None,
             title: str | None = None,
             type: str | None = None,
             class_names: dict | None = None,

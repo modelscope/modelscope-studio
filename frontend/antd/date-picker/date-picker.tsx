@@ -49,6 +49,7 @@ export const DatePicker = sveltify<
   },
   [
     'allowClear.clearIcon',
+    'prefix',
     'prevIcon',
     'nextIcon',
     'suffixIcon',
@@ -149,7 +150,7 @@ export const DatePicker = sveltify<
               renderItems<NonNullable<DatePickerProps['presets']>[number]>(
                 presetItems
               )
-            ).map((preset) => {
+            )?.map((preset) => {
               return {
                 ...preset,
                 value: formatDayjs(preset.value),
@@ -180,6 +181,9 @@ export const DatePicker = sveltify<
             ) : (
               props.prevIcon
             )
+          }
+          prefix={
+            slots.prefix ? <ReactSlot slot={slots.prefix} /> : props.prefix
           }
           nextIcon={
             slots.nextIcon ? (

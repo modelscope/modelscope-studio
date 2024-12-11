@@ -1,10 +1,22 @@
 # modelscope_studio
 
+## 1.0.0-beta.9
+
+### Fixes
+
+- [`e7fa278`](https://github.com/modelscope/modelscope-studio/commit/e7fa2782af83a7e78cddb700cd8d5e63ad62342f) - bugfix of remaining components.  Thanks [@Col0ring](https://github.com/Col0ring)!
+
+## 1.0.0-beta.8
+
+### Fixes
+
+- [`a692793`](https://github.com/modelscope/modelscope-studio/commit/a6927930fa0cbb62b8e91d98fbfda7434586e758) - gbk error. Thanks [@Col0ring](https://github.com/Col0ring)!
+
 ## 1.0.0-beta.7
 
 ### Fixes
 
-- [#35](https://github.com/modelscope/modelscope-studio/pull/35) [`5875180`](https://github.com/modelscope/modelscope-studio/commit/5875180feb7c07720108e30d01ec606209d36e59) - component paramters in Python. Thanks [@Col0ring](https://github.com/Col0ring)!
+- [#35](https://github.com/modelscope/modelscope-studio/pull/35) [`5875180`](https://github.com/modelscope/modelscope-studio/commit/5875180feb7c07720108e30d01ec606209d36e59) - component parameters in Python. Thanks [@Col0ring](https://github.com/Col0ring)!
 
 ## 1.0.0-beta.6
 

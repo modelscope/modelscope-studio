@@ -34,7 +34,7 @@ class AntdList(ModelScopeLayoutComponent):
             footer: str | None = None,
             grid: dict | None = None,
             header: str | None = None,
-            item_layout: str | None = None,
+            item_layout: Literal['horizontal', 'vertical'] | None = None,
             loading: bool | dict | None = False,
             load_more: str | None = None,
             locale: dict | None = None,
