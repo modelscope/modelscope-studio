@@ -214,7 +214,7 @@ antd_menu_items = [{
         "label": get_text("Switch", "Switch 开关"),
         "key": "switch"
     }, {
-        "label": get_text("TimePicker", "Time Picker 时间选择器"),
+        "label": get_text("TimePicker", "TimePicker 时间选择器"),
         "key": "time_picker"
     }, {
         "label": get_text("Transfer", "Transfer 穿梭框"),
