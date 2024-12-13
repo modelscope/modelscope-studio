@@ -16,7 +16,7 @@
     <a href="README-zh_CN.md">中文</a>&nbsp ｜ &nbspEnglish&nbsp ｜ &nbsp<a href="README-ja_JP.md">日本語</a>
 </p>
 
-`modelscope_studio` is a third-party component library based on Gradio, extending more components and usage forms on top of the original Gradio components.
+`modelscope_studio` is a third-party component library based on Gradio, offers developers more customized interface building capabilities and a richer variety of component usage forms.
 
 Currently supported UI libraries:
 
@@ -26,7 +26,7 @@ Currently supported UI libraries:
 
 Compared to Gradio's own components, `modelscope_studio` focuses more on page layout and component flexibility. If you want to build a more beautiful user interface, we highly recommend using `modelscope_studio`.
 
-However, when your application needs Gradio to handle more built-in data on the Python side, `modelscope_studio` may not be the best choice, but you can still use `modelscope_studio`'s layout and display components to help build your app.
+However, when your application needs Gradio to handle more built-in data on the Python side, the components of `modelscope_studio` may not be the best choice, but don't worry, it integrates well with existing Gradio components, you can still use `modelscope_studio` to optimize your application.
 
 ## Dependencies
 

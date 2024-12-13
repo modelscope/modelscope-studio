@@ -11,7 +11,7 @@
 <p align="center">
 <a href="https://github.com/modelscope/modelscope-studio">GitHub</a> | 🤖 <a href="https://modelscope.cn/studios/modelscope/modelscope-studio-beta">ModelScope Studio</a> ｜ 🤗 <a href="https://huggingface.co/spaces/modelscope/modelscope-studio-beta">Hugging Face Space</a>
 
-`modelscope_studio`是一个基于 Gradio 的三方组件库，在原有 Gradio 组件的基础上延伸了更多的组件和使用形式。
+`modelscope_studio`是一个基于 Gradio 的三方组件库，为开发者提供搭建更定制化的界面搭建能力和更丰富的组件使用形式。
 
 目前支持的 UI 库：
 
@@ -21,7 +21,7 @@
 
 比起 Gradio 自身的组件，`modelscope_studio`更加注重页面布局和组件的灵活性，如果您想要构建更漂亮的用户界面，我们非常推荐您使用`modelscope_studio`。
 
-然而，当您的应用需要 Gradio 在 Python 端更多地处理内置数据时，`modelscope_studio`可能不是最好的选择，但仍然可以使用`modelscope_studio`的布局和展示组件来帮助您构建页面。
+然而，当您的应用需要 Gradio 在 Python 端更多地处理内置数据时，`modelscope_studio`的组件可能不是最好的选择，但是不用担心，它可以很好地与已有的 Gradio 组件相结合，您仍然可以使用`modelscope_studio`来优化您的应用。
 
 ## 依赖
 
