@@ -68,7 +68,15 @@
       id={$mergedProps.elem_id}
       {...$mergedProps.restProps}
       {...$mergedProps.props}
-      {...bindEvents($mergedProps)}
+      {...bindEvents($mergedProps, {
+        drag_end: 'dragEnd',
+        drag_enter: 'dragEnter',
+        drag_leave: 'dragLeave',
+        drag_over: 'dragOver',
+        drag_start: 'dragStart',
+        right_click: 'rightClick',
+        load_data: 'loadData',
+      })}
       slots={$slots}
       slotItems={$treeData.length ? $treeData : $children}
       {setSlotParams}

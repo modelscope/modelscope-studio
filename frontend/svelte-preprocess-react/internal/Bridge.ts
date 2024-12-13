@@ -17,10 +17,21 @@ export type BridgeProps = {
   node: TreeNode;
   nodeSlotKey?: string;
 };
+
+function omitNodeProps(props: Record<string, any>) {
+  if (Reflect.has(props, 'attachedEvents')) {
+    const newProps = { ...props };
+    Reflect.deleteProperty(newProps, 'attachedEvents');
+    return newProps;
+  }
+  return props;
+}
+
 const Bridge: React.FC<BridgeProps> = ({ createPortal, node }) => {
   // rerender when target or slot changed
   const target = useStore(node.target);
-  const nodeProps = useStore(node.props);
+  let nodeProps = useStore(node.props);
+  nodeProps = omitNodeProps(nodeProps);
   const slot = useStore(node.slot);
   const subSlotKeys = useStores<string | undefined>(
     useMemo(

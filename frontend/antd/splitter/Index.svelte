@@ -63,7 +63,10 @@
       className={cls($mergedProps.elem_classes, 'ms-gr-antd-splitter')}
       {...$mergedProps.restProps}
       {...$mergedProps.props}
-      {...bindEvents($mergedProps)}
+      {...bindEvents($mergedProps, {
+        resize_start: 'resizeStart',
+        resize_end: 'resizeEnd',
+      })}
       slots={$slots}
       items={$items}
     >

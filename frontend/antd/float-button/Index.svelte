@@ -66,7 +66,9 @@
       id={$mergedProps.elem_id}
       {...$mergedProps.restProps}
       {...$mergedProps.props}
-      {...bindEvents($mergedProps)}
+      {...bindEvents($mergedProps, {
+        open_change: 'openChange',
+      })}
       slots={$slots}
     >
       <slot></slot>

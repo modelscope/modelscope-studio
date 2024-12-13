@@ -17,12 +17,12 @@ class AntdDatePickerRangePicker(ModelScopeDataLayoutComponent):
         EventListener("change",
                       callback=lambda block: block._internal.update(
                           bind_change_event=True)),
-        EventListener(
-            "calendar_change",
-            callback=lambda block: block._internal.update(bind_ok_event=True)),
-        EventListener("focus",
+        EventListener("calendar_change",
                       callback=lambda block: block._internal.update(
                           bind_calendarChange_event=True)),
+        EventListener("focus",
+                      callback=lambda block: block._internal.update(
+                          bind_focus_event=True)),
         EventListener("blur",
                       callback=lambda block: block._internal.update(
                           bind_blur_event=True)),

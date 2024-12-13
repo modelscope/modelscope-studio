@@ -67,7 +67,9 @@
       id={$mergedProps.elem_id}
       {...$mergedProps.restProps}
       {...$mergedProps.props}
-      {...bindEvents($mergedProps)}
+      {...bindEvents($mergedProps, {
+        press_enter: 'pressEnter',
+      })}
       value={$mergedProps.props.value ?? $mergedProps.value}
       slots={$slots}
       onValueChange={(v) => {

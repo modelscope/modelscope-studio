@@ -64,7 +64,9 @@
       id: $mergedProps.elem_id,
       ...$mergedProps.restProps,
       ...$mergedProps.props,
-      ...bindEvents($mergedProps),
+      ...bindEvents($mergedProps, {
+        item_click: 'itemClick',
+      }),
     },
     slots: {
       children: $slot,

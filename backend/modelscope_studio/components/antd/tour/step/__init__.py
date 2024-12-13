@@ -15,10 +15,10 @@ class AntdTourStep(ModelScopeLayoutComponent):
         EventListener("close",
                       callback=lambda block: block._internal.update(
                           bind_close_event=True)),
-        EventListener("next_button_props_click",
+        EventListener("next_button_click",
                       callback=lambda block: block._internal.update(
                           bind_nextButtonProps_click_event=True)),
-        EventListener("prev_button_props_click",
+        EventListener("prev_button_click",
                       callback=lambda block: block._internal.update(
                           bind_prevButtonProps_click_event=True)),
     ]

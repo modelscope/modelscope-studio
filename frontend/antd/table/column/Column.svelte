@@ -141,7 +141,9 @@
               id: $mergedProps.elem_id,
               ...$mergedProps.restProps,
               ...$mergedProps.props,
-              ...bindEvents($mergedProps),
+              ...bindEvents($mergedProps, {
+                filter_dropdown_open_change: 'filterDropdownOpenChange',
+              }),
               render: createFunction(
                 $mergedProps.props.render || $mergedProps.restProps.render
               ),

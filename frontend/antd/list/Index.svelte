@@ -65,7 +65,9 @@
       id={$mergedProps.elem_id}
       {...$mergedProps.restProps}
       {...$mergedProps.props}
-      {...bindEvents($mergedProps)}
+      {...bindEvents($mergedProps, {
+        pagination_show_size_change: 'pagination_showSizeChange',
+      })}
       slots={$slots}
       {setSlotParams}
     >

@@ -2,6 +2,8 @@
 
 A helper rendering component that supports passing a list as a parameter and will traverse the wrapped components on the front end, injecting each item of the list into the current traversal context. The attributes of the wrapped components will be replaced by corresponding context properties on the front end (only supports components exported from `modelscope_studio`).
 
+> Note: In most cases, you do not need to use the `Each` component. If you need to render components dynamically, we recommend using the [render](https://www.gradio.app/docs/gradio/render) function provided by Gradio.
+
 ## When to Use
 
 - When all components being traversed are `modelscope_studio` components or non-`modelscope_studio` components whose values do not bind to the traversed values.

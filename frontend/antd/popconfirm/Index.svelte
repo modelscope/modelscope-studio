@@ -63,7 +63,10 @@
       id={$mergedProps.elem_id}
       {...$mergedProps.restProps}
       {...$mergedProps.props}
-      {...bindEvents($mergedProps)}
+      {...bindEvents($mergedProps, {
+        open_change: 'openChange',
+        popup_click: 'popupClick',
+      })}
       slots={$slots}
       title={$mergedProps.props.title || $mergedProps.title}
     >

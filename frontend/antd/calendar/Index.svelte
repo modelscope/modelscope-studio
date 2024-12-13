@@ -69,7 +69,9 @@
       id={$mergedProps.elem_id}
       {...$mergedProps.restProps}
       {...$mergedProps.props}
-      {...bindEvents($mergedProps)}
+      {...bindEvents($mergedProps, {
+        panel_change: 'panelChange',
+      })}
       slots={$slots}
       value={$mergedProps.props.value || $mergedProps.value}
       onValueChange={(val) => {

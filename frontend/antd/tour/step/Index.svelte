@@ -65,7 +65,10 @@
       id: $mergedProps.elem_id,
       ...$mergedProps.restProps,
       ...$mergedProps.props,
-      ...bindEvents($mergedProps),
+      ...bindEvents($mergedProps, {
+        next_button_click: 'nextButtonProps_click',
+        prev_button_click: 'prevButtonProps_click',
+      }),
       target:
         createFunction(
           $mergedProps.props.target || $mergedProps.restProps.target

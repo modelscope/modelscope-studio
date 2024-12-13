@@ -74,7 +74,9 @@
       label: $mergedProps.label,
       ...$mergedProps.restProps,
       ...$mergedProps.props,
-      ...bindEvents($mergedProps),
+      ...bindEvents($mergedProps, {
+        title_click: 'titleClick',
+      }),
     },
     slots: {
       ...$slots,

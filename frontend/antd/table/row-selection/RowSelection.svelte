@@ -62,7 +62,12 @@
   const { selections: selectionsItems } = getSelectionItems(['selections']);
   const setRowSelectionItem = getSetRowSelectionItemFn();
   $: {
-    const events = bindEvents($mergedProps);
+    const events = bindEvents($mergedProps, {
+      select_all: 'selectAll',
+      select_invert: 'selectInvert',
+      select_none: 'selectNone',
+      select_multiple: 'selectMultiple',
+    });
     setRowSelectionItem($slotKey, $mergedProps._internal.index || 0, {
       props: {
         style: $mergedProps.elem_style,
