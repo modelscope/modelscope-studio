@@ -11,7 +11,7 @@
 <p align="center">
 <a href="https://github.com/modelscope/modelscope-studio">GitHub</a> | 🤖 <a href="https://modelscope.cn/studios/modelscope/modelscope-studio-beta">ModelScope Studio</a> ｜ 🤗 <a href="https://huggingface.co/spaces/modelscope/modelscope-studio-beta">Hugging Face Space</a>
 
-`modelscope_studio`是一个基于 Gradio 的三方组件库，为开发者提供搭建更定制化的界面搭建能力和更丰富的组件使用形式。
+`modelscope_studio`是一个基于 Gradio 的三方组件库，为开发者提供更定制化的界面搭建能力和更丰富的组件使用形式。
 
 目前支持的 UI 库：
 

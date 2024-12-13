@@ -148,7 +148,7 @@ const changelogFunctions: ChangelogFunctions = {
       .join(' ')
       .trim();
 
-    const suffix = users === null ? '' : ` Thanks ${users}!`;
+    const suffix = users === null ? '' : `Thanks ${users}!`;
 
     let lines: ChangesetMetaCollection = {
       _handled: [],
