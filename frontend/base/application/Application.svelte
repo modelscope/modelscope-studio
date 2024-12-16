@@ -22,6 +22,7 @@
     bind_mount_event?: boolean;
     bind_resize_event?: boolean;
     bind_unmount_event?: boolean;
+    bind_custom_event?: boolean;
   } = {};
   export let gradio: Gradio<{
     custom: any;
@@ -29,8 +30,9 @@
     resize: ApplicationPageData;
     unmount: ApplicationPageData;
   }>;
+  export let attached_events: string[] = [];
   export let visible = true;
-
+  let container: HTMLDivElement;
   function get_data(): ApplicationPageData {
     return {
       theme: gradio.theme,
@@ -69,31 +71,33 @@
 
   function on_mount() {
     value = get_data();
-    if (_internal.bind_mount_event) {
+    if (_internal.bind_mount_event || attached_events.includes('mount')) {
       gradio.dispatch('mount', get_data());
     }
   }
 
   const on_resize = wrap_event(() => {
     value = get_data();
-    if (_internal.bind_resize_event) {
+    if (_internal.bind_resize_event || attached_events.includes('resize')) {
       gradio.dispatch('resize', get_data());
     }
   }, 500);
 
   const on_before_unload = wrap_event(() => {
     value = get_data();
-    if (_internal.bind_unmount_event) {
+    if (_internal.bind_unmount_event || attached_events.includes('unmount')) {
       gradio.dispatch('unmount', get_data());
     }
   });
   window.ms_globals.dispatch = (...args) => {
     gradio.dispatch('custom', args);
   };
+
   onMount(() => {
     requestAnimationFrame(() => {
       on_mount();
     });
+
     window.addEventListener('resize', on_resize);
     window.addEventListener('beforeunload', on_before_unload);
   });
@@ -105,7 +109,7 @@
 </script>
 
 {#if visible}
-  <div class="ms-gr-container">
+  <div class="ms-gr-container" bind:this={container}>
     <slot />
   </div>
 {/if}
