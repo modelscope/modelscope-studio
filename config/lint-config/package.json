@@ -1,6 +1,6 @@
 {
   "name": "@modelscope-studio/lint-config",
-  "version": "1.0.0-beta.9",
+  "version": "1.0.0-beta.10",
   "private": false,
   "description": "ModelScope Studio Lint Config",
   "repository": "git@github.com:modelscope/modelscope-studio.git",

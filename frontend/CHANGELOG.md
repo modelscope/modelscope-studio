@@ -1,5 +1,11 @@
 # @modelscope-studio/frontend
 
+## 1.0.0-beta.10
+
+### Fixes
+
+- [#37](https://github.com/modelscope/modelscope-studio/pull/37) [`ae6f594`](https://github.com/modelscope/modelscope-studio/commit/ae6f5941f269ab5ad8a7ce2c59a6342954bf31b9) - make sure bind correct events when use gr.render triggers. Thanks [@Col0ring](https://github.com/Col0ring)!
+
 ## 1.0.0-beta.9
 
 ### Fixes
