@@ -73,7 +73,9 @@
       targetKeys={$mergedProps.value}
       {...$mergedProps.restProps}
       {...$mergedProps.props}
-      {...bindEvents($mergedProps)}
+      {...bindEvents($mergedProps, {
+        select_change: 'selectChange',
+      })}
       slots={$slots}
       onValueChange={(v) => {
         value = v;

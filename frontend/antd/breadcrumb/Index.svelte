@@ -69,7 +69,14 @@
       id={$mergedProps.elem_id}
       {...$mergedProps.restProps}
       {...$mergedProps.props}
-      {...bindEvents($mergedProps)}
+      {...bindEvents($mergedProps, {
+        menu_open_change: 'menu_openChange',
+        dropdown_open_change: 'dropdownProps_openChange',
+        dropdown_menu_click: 'dropdownProps_menu_click',
+        dropdown_menu_deselect: 'dropdownProps_menu_deselect',
+        dropdown_menu_open_change: 'dropdownProps_menu_openChange',
+        dropdown_menu_select: 'dropdownProps_menu_select',
+      })}
       slots={$slots}
       slotItems={$items.length > 0 ? $items : $children}
       {setSlotParams}

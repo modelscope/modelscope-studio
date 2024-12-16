@@ -33,7 +33,7 @@ class AntdTreeDirectoryTree(ModelScopeLayoutComponent):
                           bind_dragStart_event=True)),
         EventListener("drop",
                       callback=lambda block: block._internal.update(
-                          bind_dragDrop_event=True)),
+                          bind_drop_event=True)),
         EventListener("expand",
                       callback=lambda block: block._internal.update(
                           bind_expand_event=True)),

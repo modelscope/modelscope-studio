@@ -65,7 +65,9 @@
       id={$mergedProps.elem_id}
       {...$mergedProps.restProps}
       {...$mergedProps.props}
-      {...bindEvents($mergedProps)}
+      {...bindEvents($mergedProps, {
+        tab_change: 'tabChange',
+      })}
       containsGrid={$mergedProps._internal.contains_grid}
       slots={$slots}
       tabListItems={$tabList}

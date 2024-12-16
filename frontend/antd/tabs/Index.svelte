@@ -68,7 +68,10 @@
       id={$mergedProps.elem_id}
       {...$mergedProps.restProps}
       {...$mergedProps.props}
-      {...bindEvents($mergedProps)}
+      {...bindEvents($mergedProps, {
+        tab_click: 'tabClick',
+        tab_scroll: 'tabScroll',
+      })}
       slots={$slots}
       slotItems={$items.length > 0 ? $items : $children}
       {setSlotParams}

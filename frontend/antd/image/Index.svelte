@@ -78,7 +78,9 @@
       id={$mergedProps.elem_id}
       {...$mergedProps.restProps}
       {...$mergedProps.props}
-      {...bindEvents($mergedProps)}
+      {...bindEvents($mergedProps, {
+        preview_visible_change: 'preview_visibleChange',
+      })}
       slots={$slots}
       src={$mergedProps.props.src || src}
       {setSlotParams}

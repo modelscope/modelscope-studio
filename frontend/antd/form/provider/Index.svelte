@@ -54,7 +54,10 @@
       id={$mergedProps.elem_id}
       {...$mergedProps.restProps}
       {...$mergedProps.props}
-      {...bindEvents($mergedProps)}
+      {...bindEvents($mergedProps, {
+        form_change: 'formChange',
+        form_finish: 'formFinish',
+      })}
       slots={{}}
     >
       <slot></slot>

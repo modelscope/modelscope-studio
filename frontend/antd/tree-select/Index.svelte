@@ -71,7 +71,12 @@
       id={$mergedProps.elem_id}
       {...$mergedProps.restProps}
       {...$mergedProps.props}
-      {...bindEvents($mergedProps)}
+      {...bindEvents($mergedProps, {
+        tree_expand: 'treeExpand',
+        popup_scroll: 'popupScroll',
+        dropdown_visible_change: 'dropdownVisibleChange',
+        load_data: 'loadData',
+      })}
       slots={$slots}
       slotItems={$treeData.length ? $treeData : $children}
       onValueChange={(val) => {

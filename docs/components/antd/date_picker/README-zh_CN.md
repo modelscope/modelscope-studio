@@ -5,4 +5,4 @@ To select or input a date. See [Ant Design](https://ant.design/components/date-p
 ## Examples
 
 <demo name="basic"></demo>
-<demo name="ranger_picker" title="Ranger Picker"></demo>
+<demo name="range_picker" title="Range Picker"></demo>

@@ -69,7 +69,10 @@
       value={$mergedProps.value}
       {...$mergedProps.restProps}
       {...$mergedProps.props}
-      {...bindEvents($mergedProps)}
+      {...bindEvents($mergedProps, {
+        hover_change: 'hoverChange',
+        key_down: 'keyDown',
+      })}
       slots={$slots}
       onValueChange={(v) => {
         value = v;

@@ -78,7 +78,9 @@
       id={$mergedProps.elem_id}
       {...$mergedProps.restProps}
       {...$mergedProps.props}
-      {...bindEvents($mergedProps)}
+      {...bindEvents($mergedProps, {
+        ellipsis_tooltip_open_change: 'ellipsis_tooltip_openChange',
+      })}
       slots={$slots}
       value={$mergedProps.value}
       {setSlotParams}

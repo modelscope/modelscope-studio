@@ -60,7 +60,9 @@
   const setSlotParams = getSetSlotParamsFn();
   const setExpandableItem = getSetExpandableItemFn();
   $: {
-    const events = bindEvents($mergedProps);
+    const events = bindEvents($mergedProps, {
+      expanded_rows_change: 'expandedRowsChange',
+    });
 
     setExpandableItem($slotKey, $mergedProps._internal.index || 0, {
       props: {

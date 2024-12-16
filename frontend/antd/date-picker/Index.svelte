@@ -73,7 +73,10 @@
       id={$mergedProps.elem_id}
       {...$mergedProps.restProps}
       {...$mergedProps.props}
-      {...bindEvents($mergedProps)}
+      {...bindEvents($mergedProps, {
+        panel_change: 'panelChange',
+        open_change: 'openChange',
+      })}
       slots={$slots}
       value={$mergedProps.props.value || $mergedProps.value}
       presetItems={$presets}
