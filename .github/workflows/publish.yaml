@@ -16,32 +16,35 @@ jobs:
     timeout-minutes: 15
     runs-on: ubuntu-latest
     steps:
-      - name: Get the Last Commit Message
-        run: |
-          echo "COMMIT_MESSAGE=$(git log --format=%s -n 1)" >> $GITHUB_ENV
       - name: Checkout Code Repository
-        if: env.COMMIT_MESSAGE == 'chore: update versions'
+        if: |
+          github.event.head_commit.message == 'chore: update versions'
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
       - name: Set up Python 3.12
-        if: env.COMMIT_MESSAGE == 'chore: update versions'
+        if: |
+          github.event.head_commit.message == 'chore: update versions'
         uses: actions/setup-python@v5
         with:
           python-version: '3.12'
       - name: Install Python Dependencies
-        if: env.COMMIT_MESSAGE == 'chore: update versions'
+        if: |
+          github.event.head_commit.message == 'chore: update versions'
         run: pip install gradio twine build
       - name: Setup Node.js
-        if: env.COMMIT_MESSAGE == 'chore: update versions'
+        if: |
+          github.event.head_commit.message == 'chore: update versions'
         uses: actions/setup-node@v3
         with:
           node-version: 20
       - name: Install Pnpm
-        if: env.COMMIT_MESSAGE == 'chore: update versions'
+        if: |
+          github.event.head_commit.message == 'chore: update versions'
         run: npm i pnpm@latest -g
       - name: Install Node Dependencies
-        if: env.COMMIT_MESSAGE == 'chore: update versions'
+        if: |
+          github.event.head_commit.message == 'chore: update versions'
         run: pnpm install
       # - name: Create Release Pull Request to Update Versions
       #   id: changesets
@@ -54,7 +57,8 @@ jobs:
       #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Build Packages and Publish to PyPI
         # if: steps.changesets.outputs.hasChangesets != 'true'
-        if: env.COMMIT_MESSAGE == 'chore: update versions'
+        if: |
+          github.event.head_commit.message == 'chore: update versions'
         id: publish
         run: pnpm run ci:publish
         env:
