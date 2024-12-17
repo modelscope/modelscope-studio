@@ -17,6 +17,7 @@
     "@modelscope-studio/legacy-compiled": "0.4.2"
   },
   "changesets": [
+    "chilled-snails-matter",
     "chilly-lemons-pretend",
     "cuddly-eels-occur",
     "five-actors-compete",

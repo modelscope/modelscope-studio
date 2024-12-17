@@ -1,5 +1,9 @@
 # @modelscope-studio/lint-config
 
+## 1.0.0-beta.11
+
+No significant changes to this package were made in this release.
+
 ## 1.0.0-beta.10
 
 No significant changes to this package were made in this release.

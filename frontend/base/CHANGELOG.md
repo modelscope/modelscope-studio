@@ -1,5 +1,11 @@
 # @modelscope-studio/base
 
+## 1.0.0-beta.11
+
+### Fixes
+
+- [`310ccb8`](https://github.com/modelscope/modelscope-studio/commit/310ccb8e8ec433b3709cf0ed10ac4a52de3e6ec0) - bugfix. Thanks [@Col0ring](https://github.com/Col0ring)!
+
 ## 1.0.0-beta.10
 
 No significant changes to this package were made in this release.
