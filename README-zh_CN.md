@@ -20,6 +20,8 @@
 
 - [Ant Design](https://ant.design/)
 
+![site](./resources/site.png)
+
 ## 何时使用
 
 比起 Gradio 自身的组件，`modelscope_studio`更加注重页面布局和组件的灵活性，如果您想要构建更漂亮的用户界面，我们非常推荐您使用`modelscope_studio`。

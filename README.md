@@ -20,6 +20,8 @@ Currently supported UI libraries:
 
 - [Ant Design](https://ant.design/)
 
+![site](./resources/site.png)
+
 ## When to Use
 
 Compared to the original components of Gradio, `modelscope_studio` focuses more on page layout and component flexibility. If you want to build a more beautiful user interface, we highly recommend using `modelscope_studio`.
