@@ -1,2 +1,1 @@
-modelscope_studio
-modelscope_studio-1.0.0-py3-none-any.whl
+modelscope_studio==1.0.0

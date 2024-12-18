@@ -72,7 +72,13 @@ ${changelogEntry}`;
   return changelog;
 };
 
+const configureGitUser = async () => {
+  await exec('git', ['config', 'user.name', 'GitHub Actions']);
+  await exec('git', ['config', 'user.email', 'actions@github.com']);
+};
+
 const createTag = async (version: string) => {
+  await configureGitUser();
   const tag = `v${version}`;
   await exec('git', ['tag', '-a', tag, '-m', tag]);
   await exec('git', ['push', 'origin', tag]);

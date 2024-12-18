@@ -18,10 +18,6 @@ Image
 
 <img src="{resolve_assets("user.jpeg")}" />
 
-Video
-
-<video src="{resolve_assets("dog.mp4")}"></video>
-
 Audio
 
 <audio src="{resolve_assets("audio.wav")}"></audio>
