@@ -1,5 +1,3 @@
-> The current document version is `1.0 beta`. If you are using a previous version of `modelscope_studio`, please switch to the [legacy](https://github.com/modelscope/modelscope-studio/tree/legacy) branch for reference.
-
 # ModelScope Studio
 
 <p align="center">
@@ -11,7 +9,7 @@
 <p>
 
 <p align="center">
-<a href="https://github.com/modelscope/modelscope-studio">GitHub</a> | 🤖 <a href="https://modelscope.cn/studios/modelscope/modelscope-studio-beta">ModelScope Studio</a> ｜ 🤗 <a href="https://huggingface.co/spaces/modelscope/modelscope-studio-beta">Hugging Face Space</a>
+<a href="https://github.com/modelscope/modelscope-studio">GitHub</a> | 🤖 <a href="https://modelscope.cn/studios/modelscope/modelscope-studio">ModelScope Studio</a> ｜ 🤗 <a href="https://huggingface.co/spaces/modelscope/modelscope-studio">Hugging Face Space</a>
 <br>
     <a href="README-zh_CN.md">中文</a>&nbsp ｜ &nbspEnglish&nbsp ｜ &nbsp<a href="README-ja_JP.md">日本語</a>
 </p>
@@ -34,10 +32,8 @@ However, when your application needs Gradio to handle more built-in data on the 
 
 ## Installation
 
-> Currently, `modelscope_studio` version 1.0 is still under development. You can use the `beta` version in advance.
-
 ```sh
-pip install modelscope_studio~=1.0.0b
+pip install modelscope_studio
 ```
 
 ## Quick Start
@@ -58,8 +54,8 @@ demo.queue().launch()
 
 ## Documentation and Examples
 
-- ModelScope: [中文](https://modelscope.cn/studios/modelscope/modelscope-studio-beta)
-- Hugging Face: [English](https://huggingface.co/spaces/modelscope/modelscope-studio-beta)
+- ModelScope: [中文](https://modelscope.cn/studios/modelscope/modelscope-studio)
+- Hugging Face: [English](https://huggingface.co/spaces/modelscope/modelscope-studio)
 
 ## Migration to 1.0
 

@@ -26,7 +26,7 @@ license: apache-2.0
 <p>
 
 <p align="center">
-<a href="https://github.com/modelscope/modelscope-studio">GitHub</a> | 🤖 <a href="https://modelscope.cn/studios/modelscope/modelscope-studio-beta">ModelScope Studio</a> ｜ 🤗 <a href="https://huggingface.co/spaces/modelscope/modelscope-studio-beta">Hugging Face Space</a>
+<a href="https://github.com/modelscope/modelscope-studio">GitHub</a> | 🤖 <a href="https://modelscope.cn/studios/modelscope/modelscope-studio">ModelScope Studio</a> ｜ 🤗 <a href="https://huggingface.co/spaces/modelscope/modelscope-studio">Hugging Face Space</a>
 
 `modelscope_studio` is a third-party component library based on Gradio, offers developers more customized interface building capabilities and a richer variety of component usage forms.
 
@@ -46,10 +46,8 @@ However, when your application needs Gradio to handle more built-in data on the 
 
 ## Installation
 
-> Currently, `modelscope_studio` version 1.0 is still under development. You can use the `beta` version in advance.
-
 ```sh
-pip install modelscope_studio~=1.0.0b
+pip install modelscope_studio
 ```
 
 ## Examples

@@ -1,5 +1,3 @@
-> 当前文档版本为 `1.0 beta`，如果您正在使用以前的`modelscope_studio`版本，请跳转至 [legacy](https://github.com/modelscope/modelscope-studio/tree/legacy) 分支查看。
-
 # ModelScope Studio
 
 <p align="center">
@@ -11,7 +9,7 @@
 <p>
 
 <p align="center">
-<a href="https://github.com/modelscope/modelscope-studio">GitHub</a> | 🤖 <a href="https://modelscope.cn/studios/modelscope/modelscope-studio-beta">ModelScope Studio</a> ｜ 🤗 <a href="https://huggingface.co/spaces/modelscope/modelscope-studio-beta">Hugging Face Space</a>
+<a href="https://github.com/modelscope/modelscope-studio">GitHub</a> | 🤖 <a href="https://modelscope.cn/studios/modelscope/modelscope-studio">ModelScope Studio</a> ｜ 🤗 <a href="https://huggingface.co/spaces/modelscope/modelscope-studio">Hugging Face Space</a>
 <br>
     中文&nbsp ｜ &nbsp<a href="README.md">English</a>&nbsp ｜ &nbsp<a href="README-ja_JP.md">日本語</a>
 </p>
@@ -35,7 +33,7 @@
 ## 安装
 
 ```sh
-pip install modelscope_studio~=1.0.0b
+pip install modelscope_studio
 ```
 
 ## 快速开始
@@ -56,8 +54,8 @@ demo.queue().launch()
 
 ## 文档与示例
 
-- ModelScope: [中文](https://modelscope.cn/studios/modelscope/modelscope-studio-beta)
-- Hugging Face: [English](https://huggingface.co/spaces/modelscope/modelscope-studio-beta)
+- ModelScope: [中文](https://modelscope.cn/studios/modelscope/modelscope-studio)
+- Hugging Face: [English](https://huggingface.co/spaces/modelscope/modelscope-studio)
 
 ## 迁移到 1.0
 

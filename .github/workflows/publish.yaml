@@ -13,7 +13,7 @@ concurrency:
 
 jobs:
   build-n-publish:
-    timeout-minutes: 15
+    timeout-minutes: 60
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Code Repository

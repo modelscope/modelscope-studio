@@ -1,5 +1,25 @@
 # @modelscope-studio/antd
 
+## 1.0.0
+
+### Features
+
+- [#35](https://github.com/modelscope/modelscope-studio/pull/35) [`5875180`](https://github.com/modelscope/modelscope-studio/commit/5875180feb7c07720108e30d01ec606209d36e59) - add AutoLoading. Thanks [@Col0ring](https://github.com/Col0ring)!
+- [#32](https://github.com/modelscope/modelscope-studio/pull/32) [`5332229`](https://github.com/modelscope/modelscope-studio/commit/5332229f20c0ec1ad7ec598f3b30808502b9cd70) - complete components params in Python. Thanks [@Col0ring](https://github.com/Col0ring)!
+- [#32](https://github.com/modelscope/modelscope-studio/pull/32) [`5332229`](https://github.com/modelscope/modelscope-studio/commit/5332229f20c0ec1ad7ec598f3b30808502b9cd70) - add new features. Thanks [@Col0ring](https://github.com/Col0ring)!
+- [#32](https://github.com/modelscope/modelscope-studio/pull/32) [`5332229`](https://github.com/modelscope/modelscope-studio/commit/5332229f20c0ec1ad7ec598f3b30808502b9cd70) - migrate to gradio 5. Thanks [@Col0ring](https://github.com/Col0ring)!
+- [#32](https://github.com/modelscope/modelscope-studio/pull/32) [`5332229`](https://github.com/modelscope/modelscope-studio/commit/5332229f20c0ec1ad7ec598f3b30808502b9cd70) - integrate ant design. Thanks [@Col0ring](https://github.com/Col0ring)!
+
+### Fixes
+
+- [`310ccb8`](https://github.com/modelscope/modelscope-studio/commit/310ccb8e8ec433b3709cf0ed10ac4a52de3e6ec0) - bugfix. Thanks [@Col0ring](https://github.com/Col0ring)!
+- [#36](https://github.com/modelscope/modelscope-studio/pull/36) [`3944960`](https://github.com/modelscope/modelscope-studio/commit/394496074b842cb20103d7967b4ec4f9422f6229) - bugfix of remaining components. Thanks [@Col0ring](https://github.com/Col0ring)!
+- [#37](https://github.com/modelscope/modelscope-studio/pull/37) [`ae6f594`](https://github.com/modelscope/modelscope-studio/commit/ae6f5941f269ab5ad8a7ce2c59a6342954bf31b9) - make sure bind correct events when use gr.render triggers. Thanks [@Col0ring](https://github.com/Col0ring)!
+- [#35](https://github.com/modelscope/modelscope-studio/pull/35) [`5875180`](https://github.com/modelscope/modelscope-studio/commit/5875180feb7c07720108e30d01ec606209d36e59) - component parameters in Python. Thanks [@Col0ring](https://github.com/Col0ring)!
+- [#36](https://github.com/modelscope/modelscope-studio/pull/36) [`3944960`](https://github.com/modelscope/modelscope-studio/commit/394496074b842cb20103d7967b4ec4f9422f6229) - gbk error. Thanks [@Col0ring](https://github.com/Col0ring)!
+- [#35](https://github.com/modelscope/modelscope-studio/pull/35) [`5875180`](https://github.com/modelscope/modelscope-studio/commit/5875180feb7c07720108e30d01ec606209d36e59) - known component issues. Thanks [@Col0ring](https://github.com/Col0ring)!
+- [#35](https://github.com/modelscope/modelscope-studio/pull/35) [`5875180`](https://github.com/modelscope/modelscope-studio/commit/5875180feb7c07720108e30d01ec606209d36e59) - auto_loading & cloned node. Thanks [@Col0ring](https://github.com/Col0ring)!
+
 ## 1.0.0-beta.11
 
 ### Fixes

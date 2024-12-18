@@ -9,7 +9,7 @@
 <p>
 
 <p align="center">
-<a href="https://github.com/modelscope/modelscope-studio">GitHub</a> | 🤖 <a href="https://modelscope.cn/studios/modelscope/modelscope-studio-beta">ModelScope Studio</a> ｜ 🤗 <a href="https://huggingface.co/spaces/modelscope/modelscope-studio-beta">Hugging Face Space</a>
+<a href="https://github.com/modelscope/modelscope-studio">GitHub</a> | 🤖 <a href="https://modelscope.cn/studios/modelscope/modelscope-studio">ModelScope Studio</a> ｜ 🤗 <a href="https://huggingface.co/spaces/modelscope/modelscope-studio">Hugging Face Space</a>
 
 `modelscope_studio`是一个基于 Gradio 的三方组件库，为开发者提供更定制化的界面搭建能力和更丰富的组件使用形式。
 
@@ -29,10 +29,8 @@
 
 ## 安装
 
-> 目前`modelscope_studio` 1.0 版本仍在开发中，您可以通过安装`beta`版本提前使用。
-
 ```sh
-pip install modelscope_studio~=1.0.0b
+pip install modelscope_studio
 ```
 
 ## 示例
