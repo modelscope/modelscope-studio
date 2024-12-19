@@ -9,7 +9,7 @@ from gradio.data_classes import GradioModel
 from gradio.events import Events
 from gradio_client.documentation import document
 
-from ....utils.dev import CustomComponentDict, resolve_frontend_dir
+from ....utils.dev import AppContext, CustomComponentDict, resolve_frontend_dir
 from .edge import *
 from .edge import Edge
 from .node import *
@@ -88,6 +88,7 @@ class ModelScopeFlow(Component):
             max_zoom: The maximum zoom level.
             custom_components: Define the custom node types for the flow schema.
         """
+        AppContext.assert_app()
         self.height = height
         self.custom_components = custom_components
         self.show_sidebar = show_sidebar
