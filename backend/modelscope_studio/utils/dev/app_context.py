@@ -13,7 +13,7 @@ class AppContext:
     def assert_app(cls):
         if cls._app is None:
             raise ImportError(
-                """<modelscope-studio>: Cannot find the `Application` component, did you forget to import it from `modelscope_studio.components.base`."""
+                """<modelscope-studio>: Cannot find the `Application` component, did you forget to import it from `modelscope_studio.components.base`?"""
             )
 
     @classmethod
