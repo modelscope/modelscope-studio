@@ -14,7 +14,7 @@ from gradio_client.documentation import document, set_documentation_group
 from gradio_client.utils import is_http_url_like
 from PIL import Image as _Image  # using _ to minimize namespace pollution
 
-from ....utils.dev import resolve_frontend_dir
+from ....utils.dev import AppContext, resolve_frontend_dir
 
 set_documentation_group("component")
 
@@ -119,6 +119,7 @@ class ModelScopeWaterfallGallery(Component):
             likeable: Whether the gallery image display a like or dislike button. Set automatically by the .like method but has to be present in the signature for it to show up in the config.
             clickable: Whether the gallery image display an action button. Set automatically by the .click method but has to be present in the signature for it to show up in the config.
         """
+        AppContext.assert_app()
         self.columns = columns
         self.height = height
         self.gap = gap

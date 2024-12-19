@@ -4,6 +4,8 @@ from typing import Any, Callable, List, Set, Union
 from gradio.component_meta import ComponentMeta
 from gradio.components.base import BlockContext, Component
 
+from .app_context import AppContext
+
 
 class ModelScopeLayoutComponent(BlockContext, metaclass=ComponentMeta):
     """
@@ -32,6 +34,7 @@ class ModelScopeLayoutComponent(BlockContext, metaclass=ComponentMeta):
                          elem_id=elem_id,
                          elem_classes=elem_classes,
                          render=render)
+        AppContext.assert_app()
         self.as_item = as_item
         if self.parent:
             self._internal = dict(index=len(self.parent.children) - 1)
@@ -75,6 +78,8 @@ class ModelScopeComponent(Component):
                          inputs=inputs,
                          load_fn=load_fn,
                          render=render)
+        AppContext.assert_app()
+
         if self.parent:
             self._internal = dict(index=len(self.parent.children) - 1)
         else:
@@ -142,6 +147,8 @@ class ModelScopeDataLayoutComponent(Component,
                               elem_id=elem_id,
                               elem_classes=elem_classes,
                               render=render)
+        AppContext.assert_app()
+
         if self.parent:
             self._internal = dict(index=len(self.parent.children) - 1)
         else:

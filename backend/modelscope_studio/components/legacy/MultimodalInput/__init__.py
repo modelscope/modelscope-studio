@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 from pathlib import Path
-from typing import Any, Callable, List, Literal, Optional, Union
+from typing import Any, Callable, List, Literal, Union
 
 from gradio.components.base import FormComponent
 from gradio.data_classes import FileData, GradioModel
@@ -9,7 +9,7 @@ from gradio.events import Events
 from gradio_client import utils as client_utils
 from gradio_client.documentation import document, set_documentation_group
 
-from ....utils.dev import resolve_frontend_dir
+from ....utils.dev import AppContext, resolve_frontend_dir
 
 set_documentation_group("component")
 
@@ -113,6 +113,7 @@ class ModelScopeMultimodalInput(FormComponent):
             file_preview_props: FilePreview will render if `value.files` is not empty, accepting the following props: height(int).
             webcam_props: Webcam will render if `sources` contains "webcam", accepting the following props: mirror_webcam(bool), include_audio(bool).
         """
+        AppContext.assert_app()
         if type not in ["text", "password", "email"]:
             raise ValueError(
                 '`type` must be one of "text", "password", or "email".')

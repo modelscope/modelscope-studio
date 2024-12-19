@@ -11,7 +11,7 @@ from gradio.events import Events
 from gradio_client import utils as client_utils
 from gradio_client.documentation import document, set_documentation_group
 
-from ....utils.dev import (CustomComponentDict, process_links,
+from ....utils.dev import (AppContext, CustomComponentDict, process_links,
                            resolve_frontend_dir)
 from ..MultimodalInput import MultimodalInputData
 
@@ -147,6 +147,7 @@ class ModelScopeChatbot(Component):
             preview: If True (default), will enable image preview.
             custom_components: Define custom tags for markdown rendering.
         """
+        AppContext.assert_app()
         self.likeable = likeable
         self.height = height
         self.rtl = rtl

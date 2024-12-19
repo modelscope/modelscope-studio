@@ -7,7 +7,7 @@ from gradio.components.base import Component
 from gradio.events import Events
 from gradio_client.documentation import document, set_documentation_group
 
-from ....utils.dev import (CustomComponentDict, process_links,
+from ....utils.dev import (AppContext, CustomComponentDict, process_links,
                            resolve_frontend_dir)
 
 set_documentation_group("component")
@@ -78,6 +78,7 @@ class ModelScopeMarkdown(Component):
             header_links: If True, will automatically create anchors for headings, displaying a link icon on hover.
             custom_components: Define custom tags for markdown rendering.
         """
+        AppContext.assert_app()
         self.rtl = rtl
         self.enable_latex = enable_latex
         self.latex_single_dollar_delimiter = latex_single_dollar_delimiter

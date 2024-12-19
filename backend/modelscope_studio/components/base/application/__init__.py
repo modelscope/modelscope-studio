@@ -5,7 +5,8 @@ from typing import Any
 from gradio.data_classes import GradioModel
 from gradio.events import EventListener
 
-from ....utils.dev import ModelScopeDataLayoutComponent, resolve_frontend_dir
+from ....utils.dev import (AppContext, ModelScopeDataLayoutComponent,
+                           resolve_frontend_dir)
 
 
 class ApplicationPageScreenData(GradioModel):
@@ -65,6 +66,7 @@ class ModelScopeApplication(ModelScopeDataLayoutComponent):
             key: int | str | None = None,
             render: bool = True,
             **kwargs):
+        AppContext.set_app(self)
         super().__init__(value=value,
                          visible=visible,
                          render=render,

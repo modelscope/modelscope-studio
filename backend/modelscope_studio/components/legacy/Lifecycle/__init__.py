@@ -7,7 +7,7 @@ from gradio.data_classes import GradioModel
 from gradio.events import EventListener
 from gradio_client.documentation import document, set_documentation_group
 
-from ....utils.dev import resolve_frontend_dir
+from ....utils.dev import AppContext, resolve_frontend_dir
 
 set_documentation_group("component")
 
@@ -67,6 +67,7 @@ class ModelScopeLifecycle(Component):
         Parameters:
             every: If `value` is a callable, run the function 'every' number of seconds while the client connection is open. Has no effect otherwise. Queue must be enabled. The event can be accessed (e.g. to cancel it) via this component's .load_event attribute.
         """
+        AppContext.assert_app()
         self._bind_mount_event = _bind_mount_event
         self._bind_resize_event = _bind_resize_event
         self._bind_unmount_event = _bind_unmount_event
