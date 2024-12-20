@@ -4,6 +4,7 @@ import time
 import gradio as gr
 
 import modelscope_studio as mgr
+import modelscope_studio.components.base as ms
 
 
 def resolve_assets(relative_path):
@@ -58,7 +59,7 @@ def flushed():
     return gr.update(interactive=True)
 
 
-with gr.Blocks() as demo:
+with gr.Blocks() as demo, ms.Application():
     chatbot = mgr.Chatbot(
         value=conversation,
         avatar_image_width=40,

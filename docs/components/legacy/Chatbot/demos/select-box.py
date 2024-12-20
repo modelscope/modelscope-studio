@@ -3,6 +3,7 @@ import json
 import gradio as gr
 
 import modelscope_studio as mgr
+import modelscope_studio.components.base as ms
 
 # `label` will display on the page, and `value` is the actual selected value.
 options = [{"label": "A", "value": "a"}, "b", "c"]
@@ -35,7 +36,7 @@ def fn(data: gr.EventData):
     print(data._data)
 
 
-with gr.Blocks() as demo:
+with gr.Blocks() as demo, ms.Application():
     chatbot = mgr.Chatbot(
         value=conversation,
         flushing=False,

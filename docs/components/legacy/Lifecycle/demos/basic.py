@@ -1,6 +1,7 @@
 import gradio as gr
 
 import modelscope_studio as mgr
+import modelscope_studio.components.base as ms
 
 
 def mount(e: gr.EventData):
@@ -16,7 +17,7 @@ def onUnmount(e: gr.EventData):
     print("onUnmount", e._data)
 
 
-with gr.Blocks() as demo:
+with gr.Blocks() as demo, ms.Application():
     gr.Markdown("The Lifecycle component will not be rendered on the page.")
     lifecycle = mgr.Lifecycle()
     # listen to the page lifecycle

@@ -3,6 +3,7 @@ import json
 import gradio as gr
 
 import modelscope_studio as mgr
+import modelscope_studio.components.base as ms
 
 # echarts options, see: https://echarts.apache.org/en/index.html
 option1 = {
@@ -32,7 +33,7 @@ Chart:
     ],
 ]
 
-with gr.Blocks() as demo:
+with gr.Blocks() as demo, ms.Application():
     mgr.Chatbot(
         value=conversation,
         flushing=False,

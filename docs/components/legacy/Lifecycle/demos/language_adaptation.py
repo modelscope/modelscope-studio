@@ -3,6 +3,7 @@ import time
 import gradio as gr
 
 import modelscope_studio as mgr
+import modelscope_studio.components.base as ms
 
 messages = {
     'en': {
@@ -28,7 +29,7 @@ def mount(_lifecycle, _state):
     yield messages[lang]["hello"], _state
 
 
-with gr.Blocks() as demo:
+with gr.Blocks() as demo, ms.Application():
     lifecycle = mgr.Lifecycle()
     state = gr.State({"current_lang": default_lang})
     markdown = gr.Markdown(value=messages[default_lang]["hello"])

@@ -4,6 +4,7 @@ import os
 import gradio as gr
 
 import modelscope_studio as mgr
+import modelscope_studio.components.base as ms
 
 # Card shape supports setting `imgSrc` as the cover.
 options = [{
@@ -16,7 +17,7 @@ options = [{
     "a"
 }, "b", "c", "d"]
 
-with gr.Blocks() as demo:
+with gr.Blocks() as demo, ms.Application():
     mgr.Markdown(
         # item-width="auto"
         f"""

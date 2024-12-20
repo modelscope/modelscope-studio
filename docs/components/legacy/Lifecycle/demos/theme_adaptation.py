@@ -1,6 +1,7 @@
 import gradio as gr
 
 import modelscope_studio as mgr
+import modelscope_studio.components.base as ms
 
 
 def mount(_lifecycle, _state):
@@ -15,7 +16,7 @@ def fn(_state):
         value=f"https://dummyimage.com/200x100/{color}.png&text={theme}")
 
 
-with gr.Blocks() as demo:
+with gr.Blocks() as demo, ms.Application():
     lifecycle = mgr.Lifecycle()
     state = gr.State({"theme": "light"})
     btn = gr.Button()

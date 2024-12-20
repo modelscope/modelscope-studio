@@ -1,6 +1,7 @@
 import gradio as gr
 
 import modelscope_studio as mgr
+import modelscope_studio.components.base as ms
 from modelscope_studio.components.legacy.Flow import (FlowSchemaDict, Node,
                                                       NodeSchemaAttributeDict,
                                                       NodeSchemaDict)
@@ -56,7 +57,7 @@ data = {
     ]
 }
 
-with gr.Blocks() as demo:
+with gr.Blocks() as demo, ms.Application():
     flow = mgr.Flow(value=data,
                     schema=schema,
                     custom_components=custom_components,

@@ -3,6 +3,7 @@ import os
 import gradio as gr
 
 import modelscope_studio as mgr
+import modelscope_studio.components.base as ms
 from modelscope_studio.components.legacy.Chatbot.llm_thinking_presets import \
   qwen
 
@@ -40,7 +41,7 @@ Observation: <result>「Any md content will be displayed in the drop-down box wh
     ],
 ]
 
-with gr.Blocks() as demo:
+with gr.Blocks() as demo, ms.Application():
     mgr.Chatbot(
         value=conversation,
         llm_thinking_presets=[qwen()],

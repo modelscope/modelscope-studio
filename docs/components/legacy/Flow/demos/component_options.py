@@ -4,6 +4,7 @@ import os
 import gradio as gr
 
 import modelscope_studio as mgr
+import modelscope_studio.components.base as ms
 from modelscope_studio.components.legacy.Flow import (BackgroundPropsDict,
                                                       Edge, Node)
 
@@ -51,7 +52,7 @@ def on_change(_flow_config, _bgc_variant, _bgc_color, _bgc_bg_color, _bgc_gap,
     return gr.update(**new_props, background_props=new_background_props)
 
 
-with gr.Blocks() as demo:
+with gr.Blocks() as demo, ms.Application():
     with gr.Accordion(label="Flow Options"):
         flow_config = gr.CheckboxGroup(
             container=False,
