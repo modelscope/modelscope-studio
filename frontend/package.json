@@ -8,6 +8,7 @@
   "dependencies": {
     "@ant-design/cssinjs": "^1.22.1",
     "@ant-design/icons": "^5.5.2",
+    "@ant-design/x": "^1.0.3",
     "@gradio/atoms": "0.7.4",
     "@gradio/button": "^0.2.43",
     "@gradio/client": "^1.10.0",
