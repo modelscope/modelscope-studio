@@ -3,13 +3,12 @@ import { ReactSlot } from '@svelte-preprocess-react/react-slot';
 import type { SetSlotParams } from '@svelte-preprocess-react/slot';
 import React, { useMemo } from 'react';
 import { useSlotsChildren } from '@utils/hooks/useSlotsChildren';
+import { useTargets } from '@utils/hooks/useTargets';
 import { omitUndefinedProps } from '@utils/omitUndefinedProps';
 import { renderParamsSlot } from '@utils/renderParamsSlot';
 import { type GetProps, Typography } from 'antd';
 import type { EllipsisConfig } from 'antd/es/typography/Base';
 import cls from 'classnames';
-
-import { useTargets } from '../../utils/hooks/useTargets';
 
 function getConfig<T>(value: T): Partial<T & Record<PropertyKey, any>> {
   if (typeof value === 'object' && value !== null) {
@@ -83,6 +82,7 @@ export const TypographyBase = sveltify<
       }
     }, [component]);
     const [slotsChildren, restChildren] = useSlotsChildren(children);
+    const targets = useTargets(children);
     return (
       <>
         <div style={{ display: 'none' }}>{slotsChildren}</div>
@@ -103,7 +103,7 @@ export const TypographyBase = sveltify<
                   icon:
                     copyableIconTargets.length > 0
                       ? copyableIconTargets.map((slot, index) => {
-                          return <ReactSlot key={index} slot={slot} />;
+                          return <ReactSlot key={index} slot={slot} clone />;
                         })
                       : copyableConfig.icon,
                 })
@@ -114,7 +114,7 @@ export const TypographyBase = sveltify<
               ? {
                   ...editableConfig,
                   icon: slots['editable.icon'] ? (
-                    <ReactSlot slot={slots['editable.icon']} />
+                    <ReactSlot slot={slots['editable.icon']} clone />
                   ) : (
                     editableConfig.icon
                   ),
@@ -163,7 +163,7 @@ export const TypographyBase = sveltify<
                 : undefined) as boolean
           }
         >
-          {restChildren}
+          {targets.length > 0 ? restChildren : <>{value}</>}
         </TypographyComponent>
       </>
     );
