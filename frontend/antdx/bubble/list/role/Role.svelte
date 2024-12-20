@@ -1,0 +1,116 @@
+<svelte:options accessors={true} />
+
+<script lang="ts">
+  import { bindEvents } from '@svelte-preprocess-react/component';
+  import {
+    getSetSlotParamsFn,
+    getSlotContext,
+    getSlotKey,
+    getSlots,
+  } from '@svelte-preprocess-react/slot';
+  import type React from 'react';
+  import type { Gradio } from '@gradio/utils';
+  import { createFunction } from '@utils/createFunction';
+  import { renderSlot } from '@utils/renderSlot';
+  import cls from 'classnames';
+  import { writable } from 'svelte/store';
+
+  import { getSetRoleItemFn } from '../context';
+
+  export let gradio: Gradio;
+  export let props: Record<string, any> = {};
+  const updatedProps = writable(props);
+  $: updatedProps.update((prev) => ({ ...prev, ...props }));
+  export let _internal: Record<string, any> = {};
+  export let as_item: string | undefined;
+  // gradio properties
+  export let visible = true;
+  export let elem_id = '';
+  export let elem_classes: string[] = [];
+  export let elem_style: React.CSSProperties = {};
+
+  const slotKey = getSlotKey();
+  const [mergedProps, update] = getSlotContext({
+    gradio,
+    props: $updatedProps,
+    _internal,
+    visible,
+    elem_id,
+    elem_classes,
+    elem_style,
+    as_item,
+    restProps: $$restProps,
+  });
+  const setSlotParams = getSetSlotParamsFn();
+  const slots = getSlots();
+  $: update({
+    gradio,
+    props: $updatedProps,
+    _internal,
+    visible,
+    elem_id,
+    elem_classes,
+    elem_style,
+    as_item,
+    restProps: $$restProps,
+  });
+  const setItem = getSetRoleItemFn();
+  $: {
+    let avatar = $mergedProps.props.avatar || $mergedProps.restProps.avatar;
+    if ($slots.avatar) {
+      avatar = renderSlot($slots.avatar, { clone: true });
+    } else if ($slots['avatar.icon'] || $slots['avatar.src']) {
+      avatar = {
+        ...(avatar || {}),
+        icon: $slots['avatar.icon']
+          ? renderSlot($slots['avatar.icon'], { clone: true })
+          : avatar?.icon,
+        src: $slots['avatar.src']
+          ? renderSlot($slots['avatar.src'], { clone: true })
+          : avatar?.src,
+      };
+    }
+    setItem($slotKey, $mergedProps._internal.index || 0, {
+      props: {
+        style: $mergedProps.elem_style,
+        className: cls(
+          $mergedProps.elem_classes,
+          'ms-gr-antdx-bubble-list-role'
+        ),
+        id: $mergedProps.elem_id,
+        ...$mergedProps.restProps,
+        ...$mergedProps.props,
+        ...bindEvents($mergedProps, {
+          typing_complete: 'typingComplete',
+        }),
+        avatar,
+        loadingRender: createFunction(
+          $mergedProps.props.loadingRender ||
+            $mergedProps.restProps.loadingRender
+        ),
+        messageRender: createFunction(
+          $mergedProps.props.messageRender ||
+            $mergedProps.restProps.messageRender
+        ),
+      },
+      slots: {
+        ...$slots,
+        avatar: undefined,
+        loadingRender: {
+          el: $slots.loadingRender,
+          clone: true,
+          callback: setSlotParams,
+        },
+        messageRender: {
+          el: $slots.messageRender,
+          clone: true,
+          callback: setSlotParams,
+        },
+      },
+    });
+  }
+</script>
+
+{#if $mergedProps.visible}
+  <slot></slot>
+{/if}

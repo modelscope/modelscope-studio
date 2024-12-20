@@ -7,6 +7,7 @@ const globals = {
   'react-dom': 'window.ms_globals.ReactDOM',
   'react-dom/client': 'window.ms_globals.ReactDOMClient',
   antd: 'window.ms_globals.antd',
+  antdx: 'window.ms_globals.antdx',
   '@ant-design/cssinjs': 'window.ms_globals.antdCssinjs',
   '@ant-design/icons': 'window.ms_globals.antdIcons',
   '@svelte-preprocess-react/context': 'window.ms_globals.internalContext',

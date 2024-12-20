@@ -3,7 +3,7 @@ from typing import Literal, Union
 
 def resolve_frontend_dir(component: str,
                          sub_component: Union[str, list, tuple] = None,
-                         type: Literal['antd', 'base'] = 'antd'):
+                         type: Literal['antd', 'antdx', 'base'] = 'antd'):
     if isinstance(sub_component, list) or isinstance(sub_component, tuple):
         dir = ''
         for c in sub_component:
