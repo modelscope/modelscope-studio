@@ -1,3 +1,4 @@
+import { RenderParamsProvider } from '@svelte-preprocess-react/context';
 import { ReactSlot } from '@svelte-preprocess-react/react-slot';
 import React from 'react';
 
@@ -63,7 +64,11 @@ export function renderItems<R>(
         callback ? (
           (...args: any[]) => {
             callback(splits[splits.length - 1], args);
-            return <ReactSlot slot={el} clone={clone} />;
+            return (
+              <RenderParamsProvider value={args}>
+                <ReactSlot slot={el} clone={clone} />
+              </RenderParamsProvider>
+            );
           }
         ) : (
           <ReactSlot slot={el} clone={clone} />

@@ -4,6 +4,7 @@
   import {
     getSetSlotContextFn,
     getSetSlotFn,
+    getSetSlotParamsMappingFnFn,
     getSlotContext,
     getSlotParams,
     setSlotKey,
@@ -55,6 +56,9 @@
 
   const slotKey = setSlotKey(currentValue);
   $: slotKey.set(currentValue);
+
+  const slotParamsMappingFn = getSetSlotParamsMappingFnFn(paramsMappingFn);
+  $: slotParamsMappingFn.set(paramsMappingFn);
 
   const setSlotContext = getSetSlotContextFn({ inherit: true });
   $: {
