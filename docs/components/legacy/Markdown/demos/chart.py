@@ -3,6 +3,7 @@ import json
 import gradio as gr
 
 import modelscope_studio as mgr
+import modelscope_studio.components.base as ms
 
 # echarts options, see: https://echarts.apache.org/en/index.html
 option1 = {
@@ -21,7 +22,7 @@ option1 = {
     ],
 }
 
-with gr.Blocks() as demo:
+with gr.Blocks() as demo, ms.Application():
     mgr.Markdown(f"""
 Chart:
 <chart options='{json.dumps(option1)}'></chart>

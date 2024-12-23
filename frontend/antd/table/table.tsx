@@ -70,7 +70,7 @@ export const Table = sveltify<
     const paginationConfig = getConfig(pagination);
     const paginationShowTotalFunction = useFunction(paginationConfig.showTotal);
     const rowClassNameFunction = useFunction(rowClassName);
-    const rowKeyFunction = useFunction(rowKey);
+    const rowKeyFunction = useFunction(rowKey, true);
     const supportShowSorterTooltipConfig =
       slots['showSorterTooltip.title'] || typeof showSorterTooltip === 'object';
     const showSorterTooltipConfig = getConfig(showSorterTooltip);

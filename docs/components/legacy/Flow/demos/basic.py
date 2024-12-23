@@ -4,6 +4,7 @@ import os
 import gradio as gr
 
 import modelscope_studio as mgr
+import modelscope_studio.components.base as ms
 from modelscope_studio.components.legacy.Flow import Edge, Node
 
 with open((os.path.join(os.path.dirname(__file__),
@@ -27,7 +28,7 @@ def on_data_change(_flow):
     print(_flow)
 
 
-with gr.Blocks() as demo:
+with gr.Blocks() as demo, ms.Application():
     flow = mgr.Flow(value=data, schema=schema, sync_on_data_change=True)
     flow.data_change(fn=on_data_change, inputs=[flow])
 

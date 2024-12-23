@@ -72,12 +72,9 @@
       {...$mergedProps.props}
       {...bindEvents($mergedProps)}
       slots={$slots}
+      value={$mergedProps.value}
     >
-      {#if $mergedProps._internal.layout}
-        <slot></slot>
-      {:else}
-        {$mergedProps.value}
-      {/if}
+      <slot></slot>
     </Button>
   {/await}
 {/if}

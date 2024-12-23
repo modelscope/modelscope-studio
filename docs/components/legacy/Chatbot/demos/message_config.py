@@ -3,6 +3,7 @@ import time
 import gradio as gr
 
 import modelscope_studio as mgr
+import modelscope_studio.components.base as ms
 
 
 def submit(_chatbot):
@@ -26,7 +27,7 @@ def submit(_chatbot):
     yield _chatbot
 
 
-with gr.Blocks() as demo:
+with gr.Blocks() as demo, ms.Application():
     chatbot = mgr.Chatbot(height=600, )
     button = gr.Button("Submit")
     button.click(fn=submit, inputs=[chatbot], outputs=[chatbot])

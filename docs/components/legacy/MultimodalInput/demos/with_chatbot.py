@@ -3,6 +3,7 @@ import time
 import gradio as gr
 
 import modelscope_studio as mgr
+import modelscope_studio.components.base as ms
 
 
 def fn(input, chatbot):
@@ -24,7 +25,7 @@ def flushed():
     return mgr.MultimodalInput(interactive=True)
 
 
-with gr.Blocks() as demo:
+with gr.Blocks() as demo, ms.Application():
     user_chatbot = mgr.Chatbot()
     user_input = mgr.MultimodalInput()
     user_input.submit(fn=fn,

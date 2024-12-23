@@ -3,6 +3,7 @@ import os
 import gradio as gr
 
 import modelscope_studio as mgr
+import modelscope_studio.components.base as ms
 
 
 def resolve_assets(relative_path):
@@ -10,7 +11,7 @@ def resolve_assets(relative_path):
                         relative_path)
 
 
-with gr.Blocks() as demo:
+with gr.Blocks() as demo, ms.Application():
     mgr.WaterfallGallery(
         value=[
             resolve_assets('modelscope.svg'),

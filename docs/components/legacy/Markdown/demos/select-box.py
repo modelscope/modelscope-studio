@@ -3,11 +3,12 @@ import json
 import gradio as gr
 
 import modelscope_studio as mgr
+import modelscope_studio.components.base as ms
 
 # `label` will display on the page, and `value` is the actual selected value.
 options = [{"label": "A", "value": "a"}, "b", "c"]
 
-with gr.Blocks() as demo:
+with gr.Blocks() as demo, ms.Application():
     mgr.Markdown(f"""
 Single Select: <select-box options='{json.dumps(options)}' select-once></select-box>
 

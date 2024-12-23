@@ -81,12 +81,9 @@
       slots={$slots}
       menuItems={$items}
       {setSlotParams}
+      value={$mergedProps.value}
     >
-      {#if $mergedProps._internal.layout}
-        <slot></slot>
-      {:else}
-        {$mergedProps.value}
-      {/if}
+      <slot></slot>
     </DropdownButton>
   {/await}
 {/if}

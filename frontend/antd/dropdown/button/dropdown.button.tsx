@@ -14,6 +14,7 @@ export const DropdownButton = sveltify<
   GetProps<typeof ADropdown.Button> & {
     menuItems: Item[];
     setSlotParams: SetSlotParams;
+    value?: string;
   },
   [
     'icon',
@@ -31,12 +32,15 @@ export const DropdownButton = sveltify<
     dropdownRender,
     buttonsRender,
     setSlotParams,
+    value,
     ...props
   }) => {
     const getPopupContainerFunction = useFunction(getPopupContainer);
     const dropdownRenderFunction = useFunction(dropdownRender);
     const buttonsRenderFunction = useFunction(buttonsRender);
     const buttonsRenderTargets = useTargets(children, 'buttonsRender');
+    const targets = useTargets(children);
+
     return (
       <ADropdown.Button
         {...props}
@@ -81,7 +85,14 @@ export const DropdownButton = sveltify<
             : dropdownRenderFunction
         }
       >
-        {children}
+        {targets.length > 0 ? (
+          children
+        ) : (
+          <>
+            {children}
+            {value}
+          </>
+        )}
       </ADropdown.Button>
     );
   }

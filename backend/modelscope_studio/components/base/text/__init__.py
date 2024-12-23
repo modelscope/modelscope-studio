@@ -3,9 +3,6 @@ from __future__ import annotations
 from typing import Any
 
 from ....utils.dev import ModelScopeComponent, resolve_frontend_dir
-from ...antd.carousel import AntdCarousel
-from ...antd.space import AntdSpace
-from ...antd.tooltip import AntdTooltip
 
 
 class ModelScopeText(ModelScopeComponent):
@@ -37,10 +34,7 @@ class ModelScopeText(ModelScopeComponent):
                          as_item=as_item,
                          elem_style=elem_style,
                          **kwargs)
-        if self.parent and self._internal and (any(
-                isinstance(self.parent, component)
-                for component in [AntdCarousel, AntdTooltip, AntdSpace])):
-            self._internal.update(fragment=True)
+        self._internal.update(fragment=True)
         self.value = value
 
     FRONTEND_DIR = resolve_frontend_dir("text", type="base")

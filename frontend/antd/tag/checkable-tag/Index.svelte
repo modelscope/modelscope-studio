@@ -74,16 +74,13 @@
       {...$mergedProps.props}
       {...bindEvents($mergedProps)}
       slots={$slots}
+      label={$mergedProps.label}
       checked={$mergedProps.props.checked ?? $mergedProps.value}
       onValueChange={(checked) => {
         value = checked;
       }}
     >
-      {#if $mergedProps._internal.layout}
-        <slot></slot>
-      {:else}
-        {$mergedProps.label}
-      {/if}
+      <slot></slot>
     </CheckableTag>
   {/await}
 {/if}

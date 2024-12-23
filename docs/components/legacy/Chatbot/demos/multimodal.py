@@ -3,6 +3,7 @@ import os
 import gradio as gr
 
 import modelscope_studio as mgr
+import modelscope_studio.components.base as ms
 
 
 def resolve_assets(relative_path):
@@ -29,7 +30,7 @@ Audio
     ],
 ]
 
-with gr.Blocks() as demo:
+with gr.Blocks() as demo, ms.Application():
     mgr.Chatbot(
         value=conversation,
         height=600,
