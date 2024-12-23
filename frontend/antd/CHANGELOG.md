@@ -1,5 +1,11 @@
 # @modelscope-studio/antd
 
+## 1.0.1
+
+### Fixes
+
+- [#40](https://github.com/modelscope/modelscope-studio/pull/40) [`ec664eb`](https://github.com/modelscope/modelscope-studio/commit/ec664eb9659f43cdd016622f025b8240db446a20) - layout compatibility. Thanks [@Col0ring](https://github.com/Col0ring)!
+
 ## 1.0.0
 
 ### Features

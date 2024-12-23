@@ -1,5 +1,9 @@
 # @modelscope-studio/legacy-flow
 
+## 1.0.1
+
+No significant changes to this package were made in this release.
+
 ## 1.0.0
 
 ### Features

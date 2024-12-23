@@ -1,5 +1,15 @@
 # modelscope_studio
 
+## 1.0.1
+
+### Features
+
+- [#39](https://github.com/modelscope/modelscope-studio/pull/39) [`caa6270`](https://github.com/modelscope/modelscope-studio/commit/caa6270834574eff71568f757a26b9c35eb3b9d7) - add assertions to the Application component. Thanks [@Col0ring](https://github.com/Col0ring)!
+
+### Fixes
+
+- [#40](https://github.com/modelscope/modelscope-studio/pull/40) [`ec664eb`](https://github.com/modelscope/modelscope-studio/commit/ec664eb9659f43cdd016622f025b8240db446a20) - layout compatibility. Thanks [@Col0ring](https://github.com/Col0ring)!
+
 ## 1.0.0
 
 ### Features

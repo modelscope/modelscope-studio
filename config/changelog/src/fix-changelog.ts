@@ -105,21 +105,39 @@ ${current_changelog.replace(`# ${pkg_name}`, '').trim()}
     `.trim();
       writeFileSync(join(dir, 'CHANGELOG.md'), new_changelog);
     }
-    const version_path = join(
-      pkg_meta.rootDir,
-      'backend/modelscope_studio/version.py'
-    );
-    const versionPy = readFileSync(version_path, 'utf-8');
-    writeFileSync(
-      version_path,
-      versionPy.replace(/__version__ = ".+"/, `__version__ = "${newVersion}"`)
-    );
-    const pyproject_path = join(pkg_meta.rootDir, 'pyproject.toml');
-    const pyproject = readFileSync(pyproject_path, 'utf-8');
-    writeFileSync(
-      pyproject_path,
-      pyproject.replace(/version = ".+"/, `version = "${newVersion}"`)
-    );
+    const version_paths = [
+      {
+        path: join(pkg_meta.rootDir, 'backend/modelscope_studio/version.py'),
+        replacer: (content: string) =>
+          content.replace(
+            /__version__ = ".+"/,
+            `__version__ = "${newVersion}"`
+          ),
+      },
+      {
+        path: join(pkg_meta.rootDir, 'pyproject.toml'),
+        replacer: (content: string) =>
+          content.replace(/version = ".+"/, `version = "${newVersion}"`),
+      },
+      {
+        path: join(pkg_meta.rootDir, 'docs/src/pyproject.toml'),
+        replacer: (content: string) =>
+          content.replace(/version = ".+"/, `version = "${newVersion}"`),
+      },
+      {
+        path: join(pkg_meta.rootDir, 'docs/requirements.txt'),
+        replacer: (content: string) =>
+          content.replace(
+            /modelscope_studio==.+/,
+            `modelscope_studio==${newVersion}`
+          ),
+      },
+    ];
+
+    version_paths.forEach(({ path, replacer }) => {
+      const content = readFileSync(path, 'utf-8');
+      writeFileSync(path, replacer(content));
+    });
   }
 }
 
