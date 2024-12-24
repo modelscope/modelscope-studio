@@ -42,58 +42,58 @@ export const DropdownButton = sveltify<
     const targets = useTargets(children);
 
     return (
-      <ADropdown.Button
-        {...props}
-        buttonsRender={
-          buttonsRenderTargets.length
-            ? (...args) => {
-                setSlotParams('buttonsRender', args);
-                return buttonsRenderTargets.map((item, index) => {
-                  return <ReactSlot slot={item} key={index} />;
-                });
-              }
-            : buttonsRenderFunction
-        }
-        menu={{
-          ...props.menu,
-          items: useMemo(() => {
-            return (
-              props.menu?.items ||
-              renderItems<ItemType>(menuItems, { clone: true })
-            );
-          }, [menuItems, props.menu?.items]),
-          expandIcon: slots['menu.expandIcon']
-            ? renderParamsSlot(
-                { slots, setSlotParams, key: 'menu.expandIcon' },
-                { clone: true }
-              )
-            : props.menu?.expandIcon,
-          overflowedIndicator: slots['menu.overflowedIndicator'] ? (
-            <ReactSlot slot={slots['menu.overflowedIndicator']} />
-          ) : (
-            props.menu?.overflowedIndicator
-          ),
-        }}
-        getPopupContainer={getPopupContainerFunction}
-        dropdownRender={
-          slots.dropdownRender
-            ? renderParamsSlot({
-                slots,
-                setSlotParams,
-                key: 'dropdownRender',
-              })
-            : dropdownRenderFunction
-        }
-      >
-        {targets.length > 0 ? (
-          children
-        ) : (
-          <>
-            {children}
-            {value}
-          </>
-        )}
-      </ADropdown.Button>
+      <>
+        <div style={{ display: 'none' }}>
+          {targets.length > 0 ? null : children}
+        </div>
+        <ADropdown.Button
+          {...props}
+          buttonsRender={
+            buttonsRenderTargets.length
+              ? (...args) => {
+                  setSlotParams('buttonsRender', args);
+                  return buttonsRenderTargets.map((item, index) => {
+                    return <ReactSlot slot={item} key={index} />;
+                  });
+                }
+              : buttonsRenderFunction
+          }
+          menu={{
+            ...props.menu,
+            items: useMemo(() => {
+              return (
+                props.menu?.items ||
+                renderItems<ItemType>(menuItems, { clone: true }) ||
+                []
+              );
+            }, [menuItems, props.menu?.items]),
+            expandIcon: slots['menu.expandIcon']
+              ? renderParamsSlot(
+                  { slots, setSlotParams, key: 'menu.expandIcon' },
+                  { clone: true }
+                )
+              : props.menu?.expandIcon,
+            overflowedIndicator: slots['menu.overflowedIndicator'] ? (
+              <ReactSlot slot={slots['menu.overflowedIndicator']} />
+            ) : (
+              props.menu?.overflowedIndicator
+            ),
+          }}
+          getPopupContainer={getPopupContainerFunction}
+          dropdownRender={
+            slots.dropdownRender
+              ? renderParamsSlot({
+                  slots,
+                  setSlotParams,
+                  key: 'dropdownRender',
+                })
+              : dropdownRenderFunction
+          }
+          icon={slots.icon ? <ReactSlot slot={slots.icon} /> : props.icon}
+        >
+          {targets.length > 0 ? children : value}
+        </ADropdown.Button>
+      </>
     );
   }
 );

@@ -20,7 +20,7 @@
   export let _internal: {
     layout?: boolean;
   } = {};
-  export let value = '';
+  export let value: string | undefined;
 
   export let as_item: string | undefined;
   // gradio properties

@@ -22,7 +22,7 @@
   } = {};
 
   export let as_item: string | undefined;
-  export let value = '';
+  export let value: string | undefined;
   // gradio properties
 
   export let visible = true;

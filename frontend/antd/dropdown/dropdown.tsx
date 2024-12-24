@@ -38,7 +38,8 @@ export const Dropdown = sveltify<
             items: useMemo(() => {
               return (
                 props.menu?.items ||
-                renderItems<ItemType>(menuItems, { clone: true })
+                renderItems<ItemType>(menuItems, { clone: true }) ||
+                []
               );
             }, [menuItems, props.menu?.items]),
             expandIcon: slots['menu.expandIcon']

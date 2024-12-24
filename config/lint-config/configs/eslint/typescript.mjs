@@ -41,7 +41,14 @@ export const typescript = [
       '@typescript-eslint/no-explicit-any': 'off',
       '@typescript-eslint/no-unused-vars': [
         'warn',
-        { vars: 'all', varsIgnorePattern: '^_' },
+        {
+          args: 'all',
+          argsIgnorePattern: '^_',
+          caughtErrors: 'all',
+          caughtErrorsIgnorePattern: '^_',
+          destructuredArrayIgnorePattern: '^_',
+          varsIgnorePattern: '^_',
+        },
       ],
       '@typescript-eslint/no-unused-expressions': 'off',
       '@typescript-eslint/ban-types': 'off',
