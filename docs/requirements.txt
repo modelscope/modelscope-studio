@@ -1,1 +1,1 @@
-modelscope_studio==1.0.1
+modelscope_studio==1.0.2
