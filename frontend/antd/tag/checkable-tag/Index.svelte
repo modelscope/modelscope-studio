@@ -25,7 +25,7 @@
 
   export let as_item: string | undefined;
   export let value: boolean = false;
-  export let label = '';
+  export let label: string | undefined;
   // gradio properties
 
   export let visible = true;

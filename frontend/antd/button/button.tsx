@@ -8,19 +8,17 @@ export const Button = sveltify<GetProps<typeof AButton>, ['icon']>(
   ({ slots, value, children, ...props }) => {
     const targets = useTargets(children);
     return (
-      <AButton
-        {...props}
-        icon={slots.icon ? <ReactSlot slot={slots.icon} /> : props.icon}
-      >
-        {targets.length > 0 ? (
-          children
-        ) : (
-          <>
-            {children}
-            {value}
-          </>
-        )}
-      </AButton>
+      <>
+        <div style={{ display: 'none' }}>
+          {targets.length > 0 ? null : children}
+        </div>
+        <AButton
+          {...props}
+          icon={slots.icon ? <ReactSlot slot={slots.icon} /> : props.icon}
+        >
+          {targets.length > 0 ? children : value}
+        </AButton>
+      </>
     );
   }
 );
