@@ -163,7 +163,7 @@ export const TypographyBase = sveltify<
                 : undefined) as boolean
           }
         >
-          {targets.length > 0 ? restChildren : <>{value}</>}
+          {targets.length > 0 ? restChildren : value}
         </TypographyComponent>
       </>
     );

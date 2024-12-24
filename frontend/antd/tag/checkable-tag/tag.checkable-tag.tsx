@@ -18,14 +18,7 @@ export const CheckableTag = sveltify<
         onValueChange(v);
       }}
     >
-      {targets.length > 0 ? (
-        children
-      ) : (
-        <>
-          {children}
-          {label}
-        </>
-      )}
+      {targets.length > 0 ? children : label}
     </ATag.CheckableTag>
   );
 });

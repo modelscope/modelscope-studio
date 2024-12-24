@@ -23,7 +23,7 @@
 
   export let gradio: Gradio;
   export let props: Record<string, any> = {};
-  export let value = '';
+  export let value: string | undefined;
   const updatedProps = writable(props);
   $: updatedProps.update((prev) => ({ ...prev, ...props }));
   export let _internal: {
