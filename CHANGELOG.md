@@ -1,5 +1,11 @@
 # modelscope_studio
 
+## 1.0.2
+
+### Fixes
+
+- [#41](https://github.com/modelscope/modelscope-studio/pull/41) [`ba8a4dc`](https://github.com/modelscope/modelscope-studio/commit/ba8a4dc6641680aa7b28b7183a3ea181898d2f72) - layout. Thanks [@Col0ring](https://github.com/Col0ring)!
+
 ## 1.0.1
 
 ### Features
