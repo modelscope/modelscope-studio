@@ -38,7 +38,7 @@ const ContextBridge: React.FC<{
   props: Record<string, any>;
   children?: React.ReactNode[];
 }> = ({ reactComponent, props, children = [] }) => {
-  const args = useRenderParamsContext();
+  const { value: args, initial } = useRenderParamsContext();
   const {
     __render_slotParamsMappingFn: slotParamsMappingFn,
     __render_as_item: as_item,
@@ -48,15 +48,19 @@ const ContextBridge: React.FC<{
   } = props || {};
   // for render slot like this: (...args) => React.ReactNode
   const ctxProps = useMemo(() => {
-    if (!slotParamsMappingFn) {
+    if (!initial || !slotParamsMappingFn) {
       return {};
     }
+
     let value = slotParamsMappingFn(...args);
     if (as_item) {
       value = value?.[as_item] || {};
     }
     value = ensureObjectCtxValue(value);
     const restProps = mapProps(value, restPropsMapping, true);
+    if (!eventProps) {
+      return restProps;
+    }
     const { __render_eventProps, ...events } = bindEvents(
       {
         ...eventProps.props,
@@ -71,7 +75,14 @@ const ContextBridge: React.FC<{
       ...restProps,
       ...events,
     };
-  }, [slotParamsMappingFn, as_item, args, restPropsMapping, eventProps]);
+  }, [
+    slotParamsMappingFn,
+    as_item,
+    args,
+    initial,
+    restPropsMapping,
+    eventProps,
+  ]);
 
   return React.createElement(
     reactComponent,

@@ -34,7 +34,6 @@ class ModelScopeText(ModelScopeComponent):
                          as_item=as_item,
                          elem_style=elem_style,
                          **kwargs)
-        self._internal.update(fragment=True)
         self.value = value
 
     FRONTEND_DIR = resolve_frontend_dir("text", type="base")

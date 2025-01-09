@@ -16,23 +16,52 @@ export const AutoCompleteContext = createContext<{
 
 export const useAutoCompleteContext = () => useContext(AutoCompleteContext);
 
-export const RenderParamsContext = createContext<any[]>([]);
+export const RenderParamsContext = createContext<{
+  value: any[];
+  initial: boolean;
+  ctx: Record<PropertyKey, any>;
+}>({
+  initial: false,
+  value: [],
+  ctx: {},
+});
 
 export const RenderParamsProvider: React.FC<{
-  value: any[];
+  value?: any[];
+  ctx?: Record<PropertyKey, any>;
   children: React.ReactNode;
-}> = ({ value, children }) => {
-  const prevValueRef = useRef<typeof value>(value);
+}> = ({ value = [], ctx = {}, children }) => {
+  const prevCtxValueRef = useRef<{
+    value: any[];
+    ctx: Record<PropertyKey, any>;
+    initial: boolean;
+  }>({
+    initial: true,
+    value,
+    ctx,
+  });
   return React.createElement(
     RenderParamsContext.Provider,
     {
       value: useMemo(() => {
-        if (isEqual(prevValueRef.current, value)) {
-          return prevValueRef.current;
+        let hasChanged = false;
+
+        if (!isEqual(prevCtxValueRef.current.value, value)) {
+          hasChanged = true;
         }
-        prevValueRef.current = value;
-        return prevValueRef.current;
-      }, [value]),
+        if (!isEqual(prevCtxValueRef.current.ctx, ctx)) {
+          hasChanged = true;
+        }
+        if (hasChanged) {
+          prevCtxValueRef.current = {
+            value,
+            ctx,
+            initial: true,
+          };
+          return prevCtxValueRef.current;
+        }
+        return prevCtxValueRef.current;
+      }, [ctx, value]),
     },
     children
   );

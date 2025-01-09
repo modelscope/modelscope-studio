@@ -12,7 +12,6 @@
   export let value: Record<PropertyKey, any>;
   const setSlotContext = getSetSlotContextFn();
 
-  // 如果是 array 呢
   $: resolved_value =
     typeof value !== 'object' || Array.isArray(value) ? { value } : value;
 

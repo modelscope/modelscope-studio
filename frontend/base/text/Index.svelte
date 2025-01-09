@@ -1,36 +1,35 @@
 <svelte:options accessors={true} />
 
 <script lang="ts">
+  import { importComponent } from '@svelte-preprocess-react/component';
   import { getSlotContext } from '@svelte-preprocess-react/slot';
 
-  import ShowFragment from '../fragment/ShowFragment.svelte';
-
-  import './global.css';
+  const AwaitedText = importComponent(() => import('./text'));
 
   export let value: string = '';
   export let as_item: string | undefined;
   // gradio properties
   export let visible = true;
-  export let _internal: {
-    fragment?: boolean;
-  } = {};
+  export let _internal: {} = {};
 
   const [mergedProps, update] = getSlotContext({
     _internal,
     value,
     as_item,
     visible,
+    restProps: $$restProps,
   });
   $: update({
     _internal,
     value,
     as_item,
     visible,
+    restProps: $$restProps,
   });
 </script>
 
 {#if $mergedProps.visible}
-  <ShowFragment {...$$props} show={$mergedProps._internal.fragment}>
-    {$mergedProps.value}
-  </ShowFragment>
+  {#await AwaitedText then Text}
+    <Text value={$mergedProps.value} {...$mergedProps.restProps} slots={{}} />
+  {/await}
 {/if}

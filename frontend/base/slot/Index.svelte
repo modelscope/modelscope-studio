@@ -2,11 +2,11 @@
 
 <script lang="ts">
   import {
-    getSetSlotContextFn,
+    // getSetSlotContextFn,
     getSetSlotFn,
     getSetSlotParamsMappingFnFn,
     getSlotContext,
-    getSlotParams,
+    // getSlotParams,
     setSlotKey,
   } from '@svelte-preprocess-react/slot';
   import { createFunction } from '@utils/createFunction';
@@ -19,7 +19,7 @@
   export let _internal = {};
   export let skip_context_value = true;
 
-  const slotParams = getSlotParams();
+  // const slotParams = getSlotParams();
 
   const [mergedProps, update] = getSlotContext({
     _internal,
@@ -60,14 +60,14 @@
   const slotParamsMappingFn = getSetSlotParamsMappingFnFn(paramsMappingFn);
   $: slotParamsMappingFn.set(paramsMappingFn);
 
-  const setSlotContext = getSetSlotContextFn({ inherit: true });
-  $: {
-    if ($slotParams && $slotParams[currentValue]) {
-      if (paramsMappingFn) {
-        setSlotContext(paramsMappingFn(...$slotParams[currentValue]));
-      }
-    }
-  }
+  // const setSlotContext = getSetSlotContextFn({ inherit: true });
+  // $: {
+  //   if ($slotParams && $slotParams[currentValue]) {
+  //     if (paramsMappingFn) {
+  //       setSlotContext(paramsMappingFn(...$slotParams[currentValue]));
+  //     }
+  //   }
+  // }
 </script>
 
 {#if $mergedProps.visible}
