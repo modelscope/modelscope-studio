@@ -42,13 +42,12 @@ const Bridge: React.FC<BridgeProps> = ({ createPortal, node }) => {
     )
   );
   const formItemContext = useFormItemContext();
-
   const autoCompleteContext = useAutoCompleteContext();
   let props: typeof nodeProps = useMemo(() => {
     return {
       ...omitUndefinedProps(nodeProps),
       ...(formItemContext || {}),
-      ...autoCompleteContext,
+      ...(autoCompleteContext || {}),
       onChange:
         autoCompleteContext?.onChange ||
         formItemContext?.onChange ||
@@ -61,6 +60,7 @@ const Bridge: React.FC<BridgeProps> = ({ createPortal, node }) => {
           : nodeProps.onChange,
     };
   }, [autoCompleteContext, nodeProps, formItemContext]);
+
   if (!target) {
     return null;
   }

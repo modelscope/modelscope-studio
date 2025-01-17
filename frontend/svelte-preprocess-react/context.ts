@@ -12,7 +12,7 @@ export const useFormItemContext = () => useContext(FormItemContext);
 export const AutoCompleteContext = createContext<{
   elRef?: React.ForwardedRef<HTMLElement>;
   [key: PropertyKey]: any;
-}>({});
+} | null>(null);
 
 export const useAutoCompleteContext = () => useContext(AutoCompleteContext);
 

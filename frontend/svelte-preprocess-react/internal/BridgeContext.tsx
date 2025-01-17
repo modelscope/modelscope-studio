@@ -2,7 +2,12 @@ import { bindEvents, mapProps } from '@svelte-preprocess-react/component';
 import { ensureObjectCtxValue } from '@svelte-preprocess-react/slot';
 import React, { useMemo } from 'react';
 
-import { ContextPropsProvider, useContextPropsContext } from '../context';
+import {
+  AutoCompleteContext,
+  ContextPropsProvider,
+  FormItemContext,
+  useContextPropsContext,
+} from '../context';
 
 export interface BridgeContextProps {
   reactComponent: React.ComponentType<any>;
@@ -87,15 +92,20 @@ export const BridgeContext: React.FC<BridgeContextProps> = ({
     restPropsMapping,
     eventProps,
   ]);
+
   return (
     <ContextPropsProvider {...propsContext} ctx={ctxProps.originalRestProps}>
-      {/* eslint-disable-next-line react/no-children-prop */}
-      {React.createElement(reactComponent, {
-        ...rest,
-        ...ctxProps.restProps,
-        ...ctxProps.events,
-        children: Array.isArray(children) ? children : [children],
-      })}
+      <FormItemContext.Provider value={null}>
+        <AutoCompleteContext.Provider value={null}>
+          {/* eslint-disable-next-line react/no-children-prop */}
+          {React.createElement(reactComponent, {
+            ...rest,
+            ...ctxProps.restProps,
+            ...ctxProps.events,
+            children: Array.isArray(children) ? children : [children],
+          })}
+        </AutoCompleteContext.Provider>
+      </FormItemContext.Provider>
     </ContextPropsProvider>
   );
 };
