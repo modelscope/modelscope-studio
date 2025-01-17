@@ -36,7 +36,7 @@ export const BridgeContext: React.FC<BridgeContextProps> = ({
     let ctxValue = ctx;
 
     const merged_as_item = ctx?.as_item ?? as_item;
-
+    // The first element in the context will be computed once for slotParamsMapping.
     const originalRestProps = {
       ...ensureObjectCtxValue(ctxValue),
       ...ensureObjectCtxValue(value),

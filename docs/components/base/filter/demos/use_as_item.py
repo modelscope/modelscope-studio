@@ -16,11 +16,12 @@ data = [{
 
 with gr.Blocks() as demo:
     with ms.Application():
-        with antd.Space(direction="vertical"):
-            with ms.Each(value=data):
-                with antd.Card():
-                    with ms.Filter(as_item="btn"):
-                        antd.Button()
+        with antd.ConfigProvider():
+            with antd.Space(direction="vertical"):
+                with ms.Each(value=data):
+                    with antd.Card():
+                        with ms.Filter(as_item="btn"):
+                            antd.Button()
 
 if __name__ == "__main__":
     demo.queue().launch()

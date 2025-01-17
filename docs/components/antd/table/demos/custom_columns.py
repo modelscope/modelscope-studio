@@ -29,22 +29,23 @@ def on_custom(e: gr.EventData):
 
 with gr.Blocks() as demo:
     with ms.Application() as app:
-        with antd.Table(data_source=data):
-            antd.Table.Column(title="Name",
-                              data_index="name",
-                              key="name",
-                              column_render="""(text) => {
+        with antd.ConfigProvider():
+            with antd.Table(data_source=data):
+                antd.Table.Column(title="Name",
+                                  data_index="name",
+                                  key="name",
+                                  column_render="""(text) => {
   const React = window.ms_globals.React;
   return React.createElement('a', null, text);
 }""")
-            antd.Table.Column(title="Age", data_index="age", key="age")
-            antd.Table.Column(title="Address",
-                              data_index="address",
-                              key="address")
-            antd.Table.Column(title="Tags",
-                              data_index="tags",
-                              key="tags",
-                              column_render="""(_, { tags }) => {
+                antd.Table.Column(title="Age", data_index="age", key="age")
+                antd.Table.Column(title="Address",
+                                  data_index="address",
+                                  key="address")
+                antd.Table.Column(title="Tags",
+                                  data_index="tags",
+                                  key="tags",
+                                  column_render="""(_, { tags }) => {
   const React = window.ms_globals.React;
   const antd = window.ms_globals.antd;
   return tags.map((tag) => {
@@ -55,9 +56,9 @@ with gr.Blocks() as demo:
     return React.createElement(antd.Tag, { color, key: tag }, tag.toUpperCase());
   });
 }""")
-            antd.Table.Column(title="Action",
-                              key="action",
-                              column_render="""(_, record) => {
+                antd.Table.Column(title="Action",
+                                  key="action",
+                                  column_render="""(_, record) => {
   const React = window.ms_globals.React;
   const antd = window.ms_globals.antd;
   const dispatch = window.ms_globals.dispatch;

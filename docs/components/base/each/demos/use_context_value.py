@@ -58,11 +58,15 @@ data = [{
 
 with gr.Blocks() as demo:
     with ms.Application():
-        with ms.Each(value=data, context_value={"card": {"hoverable": True}}):
-            with antd.Card(as_item="card"):
-                # Inner loop
-                with ms.Each(as_item="each"):
-                    antd.Typography.Paragraph()
+        with antd.ConfigProvider():
+            with ms.Each(value=data,
+                         context_value={"card": {
+                             "hoverable": True
+                         }}):
+                with antd.Card(as_item="card"):
+                    # Inner loop
+                    with ms.Each(as_item="each"):
+                        antd.Typography.Paragraph()
 
 if __name__ == "__main__":
     demo.queue().launch()

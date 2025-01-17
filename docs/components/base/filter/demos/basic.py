@@ -6,14 +6,15 @@ data = [{"value": "Hello"}, {"value": "World"}]
 
 with gr.Blocks() as demo:
     with ms.Application():
-        with antd.Space(direction="vertical"):
-            antd.Divider("Without Filter")
-            with ms.Each(value=data):
-                antd.Button()
-            antd.Divider("With Filter")
-            with ms.Each(value=data):
-                with ms.Filter():
-                    antd.Button("Run")
+        with antd.ConfigProvider():
+            with antd.Space(direction="vertical"):
+                antd.Divider("Without Filter")
+                with ms.Each(value=data):
+                    antd.Button()
+                antd.Divider("With Filter")
+                with ms.Each(value=data):
+                    with ms.Filter():
+                        antd.Button("Run")
 
 if __name__ == "__main__":
     demo.queue().launch()

@@ -19,11 +19,12 @@ data = [
 
 with gr.Blocks() as demo:
     with ms.Application():
-        with antd.Table(data_source=data):
-            antd.Table.Column(title="Name", data_index="name", key="name")
-            antd.Table.Column(title="Age", data_index="age", key="age")
-            antd.Table.Column(title="Address",
-                              data_index="address",
-                              key="address")
+        with antd.ConfigProvider():
+            with antd.Table(data_source=data):
+                antd.Table.Column(title="Name", data_index="name", key="name")
+                antd.Table.Column(title="Age", data_index="age", key="age")
+                antd.Table.Column(title="Address",
+                                  data_index="address",
+                                  key="address")
 if __name__ == "__main__":
     demo.queue().launch()

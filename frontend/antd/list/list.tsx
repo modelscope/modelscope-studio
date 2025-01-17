@@ -23,7 +23,12 @@ export const List = sveltify<
       }
       renderItem={
         slots.renderItem
-          ? renderParamsSlot({ slots, setSlotParams, key: 'renderItem' })
+          ? renderParamsSlot(
+              { slots, setSlotParams, key: 'renderItem' },
+              {
+                forceClone: true,
+              }
+            )
           : renderItemFunction
       }
     />

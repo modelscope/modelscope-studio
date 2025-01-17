@@ -21,8 +21,9 @@ export const Filter = sveltify<FilterProps>(
       if (paramsMappingFn) {
         setFilteredContext(paramsMappingFn(ctx));
       } else if (asItem) {
-        setFilteredContext(ctx);
+        setFilteredContext(ctx?.[asItem]);
       }
+      // else undefined
     }, [asItem, ctx, paramsMappingFn]);
     return (
       <ContextPropsProvider forceClone={forceClone} ctx={filteredContext}>

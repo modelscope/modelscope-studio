@@ -153,7 +153,7 @@ export const ReactSlot = forwardRef<HTMLElement, ReactSlotProps>(
           return portals.length > 0;
         }
         const hasPortal = render();
-        if (!hasPortal) {
+        if (!hasPortal || forceClone) {
           observer = new window.MutationObserver(() => {
             const _hasPortal = render();
             if (_hasPortal) {

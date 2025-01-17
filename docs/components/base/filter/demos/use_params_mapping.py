@@ -12,14 +12,15 @@ data = [{
 
 with gr.Blocks() as demo:
     with ms.Application():
-        with antd.Space(direction="vertical"):
-            with ms.Each(value=data):
-                with antd.Card():
-                    with ms.Filter(
-                            params_mapping=
-                            """(props) => ({ value: props.desc, type: props.desc === 'World' ? 'primary' : 'default' })"""
-                    ):
-                        antd.Button()
+        with antd.ConfigProvider():
+            with antd.Space(direction="vertical"):
+                with ms.Each(value=data):
+                    with antd.Card():
+                        with ms.Filter(
+                                params_mapping=
+                                """(props) => ({ value: props.desc, type: props.desc === 'World' ? 'primary' : 'default' })"""
+                        ):
+                            antd.Button()
 
 if __name__ == "__main__":
     demo.queue().launch()

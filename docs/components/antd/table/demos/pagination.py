@@ -16,13 +16,14 @@ def on_change(e: gr.EventData):
 
 with gr.Blocks() as demo:
     with ms.Application():
-        with antd.Table(data_source=data,
-                        pagination=dict(pageSize=4)) as table:
-            antd.Table.Column(title="Name", data_index="name", key="name")
-            antd.Table.Column(title="Age", data_index="age", key="age")
-            antd.Table.Column(title="Address",
-                              data_index="address",
-                              key="address")
-        table.change(fn=on_change)
+        with antd.ConfigProvider():
+            with antd.Table(data_source=data,
+                            pagination=dict(pageSize=4)) as table:
+                antd.Table.Column(title="Name", data_index="name", key="name")
+                antd.Table.Column(title="Age", data_index="age", key="age")
+                antd.Table.Column(title="Address",
+                                  data_index="address",
+                                  key="address")
+            table.change(fn=on_change)
 if __name__ == "__main__":
     demo.queue().launch()
