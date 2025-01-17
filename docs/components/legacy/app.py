@@ -1,4 +1,5 @@
 import gradio as gr
+import modelscope_studio.components.base as ms
 from api.app import docs as api_docs
 from components.legacy.Chatbot.app import docs as chatbot_docs
 from components.legacy.Docs import Docs
@@ -8,8 +9,6 @@ from components.legacy.Markdown.app import docs as markdown_docs
 from components.legacy.MultimodalInput.app import docs as multimodel_input_docs
 from components.legacy.WaterfallGallery.app import \
   docs as waterfall_gallery_docs
-
-import modelscope_studio.components.base as ms
 
 readme_docs = Docs(__file__)
 

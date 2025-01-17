@@ -1,7 +1,6 @@
 import os
 
 import gradio as gr
-
 import modelscope_studio as mgr
 import modelscope_studio.components.base as ms
 

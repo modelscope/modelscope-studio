@@ -52,6 +52,7 @@ export type TreeNode = Omit<SvelteInit, 'onDestroy'> & {
   svelteInstance: Readable<any>;
   reactComponent: FunctionComponent<any> | ComponentClass<any>;
   key: number;
+  ignore?: boolean;
   nodes: TreeNode[];
 };
 

@@ -1,4 +1,5 @@
 import type { Gradio } from '@gradio/utils';
+import { convertToCamelCase } from '@utils/convertToCamelCase';
 import { mapKeys, omit } from 'lodash-es';
 
 export async function initialize() {
@@ -22,16 +23,6 @@ export async function importComponent<T extends { default: any }>(
   return importer().then((m) => m.default);
 }
 
-function convertToCamelCase(str: string) {
-  return str.replace(/(^|_)(\w)/g, (_match, _separator, char, index) => {
-    if (index === 0) {
-      return char.toLowerCase();
-    } else {
-      return char.toUpperCase();
-    }
-  });
-}
-
 const skippedGradioProps = [
   'interactive',
   'gradio',
@@ -40,13 +31,13 @@ const skippedGradioProps = [
   'theme_mode',
   'root',
   'name',
-  'visible',
-  'elem_id',
-  'elem_classes',
-  'elem_style',
+  // 'visible',
+  // 'elem_id',
+  // 'elem_classes',
+  // 'elem_style',
   '_internal',
   'props',
-  'value',
+  // 'value',
   '_selectable',
   'loading_status',
   'value_is_output',

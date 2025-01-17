@@ -52,6 +52,10 @@ export type SetSlotParams = (
   params: any[] | ((prevValue: any[]) => any[])
 ) => void;
 
+/**
+ *
+ * @deprecated
+ */
 export function getSetSlotParamsFn(): SetSlotParams {
   const slotParams = setContext(
     slotParamsKey,
@@ -72,6 +76,7 @@ export function getSetSlotParamsFn(): SetSlotParams {
     });
   };
 }
+
 export function getSlotParams() {
   const slotParams = getContext(slotParamsKey) as
     | Writable<Record<string, any[]>>
@@ -121,10 +126,6 @@ function setSubIndexContext(index?: number) {
   return setContext(subIndexKey, index);
 }
 
-/**
- *
- * will run `resetSlotKey` inside
- */
 export function getSlotContext<
   T extends {
     as_item?: string;
@@ -153,7 +154,11 @@ export function getSlotContext<
     throw new Error('`as_item` and `_internal` is required');
   }
   const slotKey = getSlotKey();
+  // get slotParamsMappingFn for slot
   const slotParamsMappingFn = getSlotParamsMappingFn();
+  // cleanup
+  const setSlotParamsMappingFn = getSetSlotParamsMappingFnFn();
+  setSlotParamsMappingFn.set(undefined);
   const componentSlotContext = setComponentSlotContext({
     slot: undefined,
     index: props._internal.index,
@@ -182,19 +187,10 @@ export function getSlotContext<
   if (shouldRestSlotKey) {
     resetSlotKey();
   }
-  const ctx = getContext(slotContextKey) as Writable<T>;
-  const as_item = get(ctx)?.as_item || props.as_item;
-  const initialCtxValue: Record<string, any> = ensureObjectCtxValue(
-    ctx
-      ? as_item
-        ? (get(ctx)?.[as_item as keyof T] as Record<string, any>) || {}
-        : get(ctx) || {}
-      : {}
-  );
 
+  const as_item = props.as_item;
   const mergeRestProps = (
     restProps?: Record<string, any>,
-    ctxValue?: Record<string, any>,
     __render_as_item?: string
   ) => {
     return restProps
@@ -202,7 +198,6 @@ export function getSlotContext<
           ...mapProps(
             {
               ...restProps,
-              ...(ctxValue || {}),
             },
             restPropsMapping
           ),
@@ -221,8 +216,7 @@ export function getSlotContext<
       ...props._internal,
       index: subIndex ?? props._internal.index,
     },
-    ...initialCtxValue,
-    restProps: mergeRestProps(props.restProps, initialCtxValue, as_item),
+    restProps: mergeRestProps(props.restProps, as_item),
     originalRestProps: props.restProps,
   });
 
@@ -239,53 +233,17 @@ export function getSlotContext<
     });
   }
 
-  if (!ctx) {
-    return [
-      mergedProps,
-      (v) => {
-        setLoadingStatus(v.restProps?.loading_status);
-        mergedProps.set({
-          ...v,
-          _internal: {
-            ...v._internal,
-            index: subIndex ?? v._internal.index,
-          },
-          restProps: mergeRestProps(v.restProps, undefined, v.as_item),
-          originalRestProps: v.restProps,
-        });
-      },
-    ];
-  }
-  ctx.subscribe((ctxValue) => {
-    const { as_item: merged_as_item } = get(mergedProps);
-    if (merged_as_item) {
-      ctxValue = (ctxValue as Record<string, any>)?.[merged_as_item];
-    }
-    ctxValue = ensureObjectCtxValue(ctxValue);
-    mergedProps.update((prev) => ({
-      ...prev,
-      ...(ctxValue || {}),
-      restProps: mergeRestProps(prev.restProps, ctxValue, merged_as_item),
-    }));
-  });
-
   return [
     mergedProps,
     (v) => {
-      const ctxValue: Record<string, any> = ensureObjectCtxValue(
-        v.as_item
-          ? (get(ctx)?.[v.as_item as keyof T] as Record<string, any>) || {}
-          : get(ctx) || {}
-      );
       setLoadingStatus(v.restProps?.loading_status);
-      return mergedProps.set({
+      mergedProps.set({
         ...v,
         _internal: {
           ...v._internal,
           index: subIndex ?? v._internal.index,
         },
-        ...ctxValue,
-        restProps: mergeRestProps(v.restProps, ctxValue, v.as_item),
+        restProps: mergeRestProps(v.restProps, v.as_item),
         originalRestProps: v.restProps,
       });
     },

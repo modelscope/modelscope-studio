@@ -1,10 +1,9 @@
 from typing import Callable
 
 import gradio as gr
-from gradio.components.base import Component
-
 import modelscope_studio.components.antd as antd
 import modelscope_studio.components.base as ms
+from gradio.components.base import Component
 
 
 class Site:

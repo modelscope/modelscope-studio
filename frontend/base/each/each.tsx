@@ -1,45 +1,57 @@
 import { sveltify } from '@svelte-preprocess-react';
-import { RenderParamsProvider } from '@svelte-preprocess-react/context';
-import type React from 'react';
-import { useMemo } from 'react';
+import { ContextPropsProvider } from '@svelte-preprocess-react/context';
+import { ReactSlot } from '@svelte-preprocess-react/react-slot';
+import React, { useMemo } from 'react';
+import { useTargets } from '@utils/hooks/useTargets';
 import { merge } from 'lodash-es';
 
 export interface EachProps {
   value?: any[];
-  context_value?: Record<PropertyKey, any>;
+  contextValue?: Record<PropertyKey, any>;
   children?: React.ReactNode;
 }
 // 在使用时需要判断是否是 each 组件，然后执行这个方法，不需要 subSlotIndex 了
 
 const Item: React.FC<{
   value?: any;
-  context_value?: Record<PropertyKey, any>;
+  contextValue?: Record<PropertyKey, any>;
   children?: React.ReactNode;
-}> = ({ value, children, context_value }) => {
+}> = ({ value, children, contextValue }) => {
   const resolvedValue = useMemo(() => {
     return typeof value !== 'object' || Array.isArray(value)
       ? { value }
       : value;
   }, [value]);
   const ctx = useMemo(() => {
-    return merge(context_value, resolvedValue);
-  }, [context_value, resolvedValue]);
-  return <RenderParamsProvider ctx={ctx}>{children}</RenderParamsProvider>;
+    return merge({}, contextValue, resolvedValue);
+  }, [contextValue, resolvedValue]);
+  return (
+    <ContextPropsProvider forceClone ctx={ctx}>
+      {children}
+    </ContextPropsProvider>
+  );
 };
 
-export function getEachChildren({ value, children, context_value }: EachProps) {
-  return value?.map((item, i) => {
+export const Each = sveltify<EachProps, ['children']>(
+  ({ value, contextValue, children }) => {
+    const targets = useTargets(children);
     return (
-      <Item key={i} value={item} context_value={context_value}>
-        {children}
-      </Item>
+      <>
+        <div style={{ display: 'none' }}>
+          {/* Isolate the outer Context of Each */}
+          <ContextPropsProvider>{children}</ContextPropsProvider>
+        </div>
+        {value?.map((item, i) => {
+          return (
+            <Item value={item} contextValue={contextValue} key={i}>
+              {targets.map((target, j) => {
+                return <ReactSlot clone slot={target} key={j} />;
+              })}
+            </Item>
+          );
+        })}
+      </>
     );
-  });
-}
-
-export const Each = sveltify<EachProps>(
-  ({ value, context_value, children }) => {
-    return getEachChildren({ value, children, context_value });
   }
 );
 

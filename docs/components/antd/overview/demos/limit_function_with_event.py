@@ -1,5 +1,4 @@
 import gradio as gr
-
 import modelscope_studio.components.antd as antd
 import modelscope_studio.components.base as ms
 

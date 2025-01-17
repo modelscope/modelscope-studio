@@ -13,3 +13,11 @@ interface Window {
 interface Element {
   _reactElement: React.ReactElement;
 }
+
+declare module '*.svelte' {
+  import type { ComponentType } from 'svelte';
+
+  const component: ComponentType;
+
+  export default component;
+}

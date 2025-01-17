@@ -1,16 +1,11 @@
-import { bindEvents, mapProps } from '@svelte-preprocess-react/component';
-import { ensureObjectCtxValue } from '@svelte-preprocess-react/slot';
 import React, { useMemo } from 'react';
 import { omitUndefinedProps } from '@utils/omitUndefinedProps';
 import { writable } from 'svelte/store';
 
-import {
-  useAutoCompleteContext,
-  useFormItemContext,
-  useRenderParamsContext,
-} from '../context';
+import { useAutoCompleteContext, useFormItemContext } from '../context';
 import useStore, { useStores } from '../useStore';
 
+import { BridgeContext } from './BridgeContext';
 import Child from './Child';
 import type { TreeNode } from './types';
 
@@ -24,6 +19,7 @@ export type BridgeProps = {
   nodeSlotKey?: string;
 };
 
+// omit attached_events
 function omitNodeProps(props: Record<string, any>) {
   if (Reflect.has(props, 'attachedEvents')) {
     const newProps = { ...props };
@@ -32,67 +28,6 @@ function omitNodeProps(props: Record<string, any>) {
   }
   return props;
 }
-
-const ContextBridge: React.FC<{
-  reactComponent: React.ComponentType<any>;
-  props: Record<string, any>;
-  children?: React.ReactNode[];
-}> = ({ reactComponent, props, children = [] }) => {
-  const { value: args, initial } = useRenderParamsContext();
-  const {
-    __render_slotParamsMappingFn: slotParamsMappingFn,
-    __render_as_item: as_item,
-    __render_restPropsMapping: restPropsMapping,
-    __render_eventProps: eventProps,
-    ...rest
-  } = props || {};
-  // for render slot like this: (...args) => React.ReactNode
-  const ctxProps = useMemo(() => {
-    if (!initial || !slotParamsMappingFn) {
-      return {};
-    }
-
-    let value = slotParamsMappingFn(...args);
-    if (as_item) {
-      value = value?.[as_item] || {};
-    }
-    value = ensureObjectCtxValue(value);
-    const restProps = mapProps(value, restPropsMapping, true);
-    if (!eventProps) {
-      return restProps;
-    }
-    const { __render_eventProps, ...events } = bindEvents(
-      {
-        ...eventProps.props,
-        originalRestProps: {
-          ...eventProps.props.originalRestProps,
-          ...restProps,
-        },
-      },
-      eventProps.eventsMapping
-    );
-    return {
-      ...restProps,
-      ...events,
-    };
-  }, [
-    slotParamsMappingFn,
-    as_item,
-    args,
-    initial,
-    restPropsMapping,
-    eventProps,
-  ]);
-
-  return React.createElement(
-    reactComponent,
-    {
-      ...rest,
-      ...ctxProps,
-    },
-    ...children
-  );
-};
 
 const Bridge: React.FC<BridgeProps> = ({ createPortal, node }) => {
   // rerender when target or slot changed
@@ -126,7 +61,6 @@ const Bridge: React.FC<BridgeProps> = ({ createPortal, node }) => {
           : nodeProps.onChange,
     };
   }, [autoCompleteContext, nodeProps, formItemContext]);
-
   if (!target) {
     return null;
   }
@@ -166,13 +100,12 @@ const Bridge: React.FC<BridgeProps> = ({ createPortal, node }) => {
 
   // render in different container
   // eslint-disable-next-line react/no-children-prop
-  const element = React.createElement(ContextBridge, {
+  const element = React.createElement(BridgeContext, {
     props,
     reactComponent: node.reactComponent,
     children,
   });
   target._reactElement = element;
-
   return createPortal(element, target);
 };
 export default Bridge;

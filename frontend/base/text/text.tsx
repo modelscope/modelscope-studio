@@ -4,7 +4,7 @@ import React from 'react';
 export const Text = sveltify<{
   value?: string;
 }>(({ value }) => {
-  return <>{value}</>;
+  return <>{value || <span />}</>;
 });
 
 export default Text;

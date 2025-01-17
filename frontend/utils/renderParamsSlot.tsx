@@ -1,4 +1,4 @@
-import { RenderParamsProvider } from '@svelte-preprocess-react/context';
+import { ContextPropsProvider } from '@svelte-preprocess-react/context';
 import type { SetSlotParams } from '@svelte-preprocess-react/slot';
 
 import { renderSlot, type RenderSlotOptions } from './renderSlot';
@@ -6,22 +6,26 @@ import { renderSlot, type RenderSlotOptions } from './renderSlot';
 export function renderParamsSlot(
   {
     key,
-    setSlotParams,
     slots,
   }: {
     key: string;
-    setSlotParams: SetSlotParams;
+    /**
+     * @deprecated
+     */
+    setSlotParams?: SetSlotParams;
     slots: Record<string, HTMLElement>;
   },
-  options?: RenderSlotOptions
+  options?: RenderSlotOptions & {
+    forceClone?: boolean;
+  }
 ) {
   return slots[key]
     ? (...args: any[]) => {
-        setSlotParams(key, args);
+        // setSlotParams(key, args);
         return (
-          <RenderParamsProvider value={args}>
+          <ContextPropsProvider params={args} forceClone={options?.forceClone}>
             {renderSlot(slots[key], { clone: true, ...options })}
-          </RenderParamsProvider>
+          </ContextPropsProvider>
         );
       }
     : undefined;

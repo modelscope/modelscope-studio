@@ -11,6 +11,7 @@ export const Span = sveltify<
   }
 >(({ slots: _slots, value, children, ...props }) => {
   const targets = useTargets(children);
+
   return <span {...props}>{targets.length > 0 ? children : value}</span>;
 });
 

@@ -1,4 +1,4 @@
-import { RenderParamsProvider } from '@svelte-preprocess-react/context';
+import { ContextPropsProvider } from '@svelte-preprocess-react/context';
 import { ReactSlot } from '@svelte-preprocess-react/react-slot';
 import React from 'react';
 
@@ -10,6 +10,7 @@ export function renderItems<R>(
     children?: string;
     fallback?: (item: any) => R;
     clone?: boolean;
+    forceClone?: boolean;
   },
   key?: React.Key
 ): undefined | R[] {
@@ -52,22 +53,25 @@ export function renderItems<R>(
       let el: HTMLElement | undefined;
       let callback: ((key: string, params: any[]) => void) | undefined;
       let clone = options?.clone ?? false;
+      let forceClone = options?.forceClone ?? false;
       if (elOrObject instanceof Element) {
         el = elOrObject;
       } else {
         el = elOrObject.el;
         callback = elOrObject.callback;
         clone = elOrObject.clone ?? clone;
+        forceClone = elOrObject.forceClone ?? forceClone;
       }
 
       current[splits[splits.length - 1]] = el ? (
         callback ? (
           (...args: any[]) => {
             callback(splits[splits.length - 1], args);
+
             return (
-              <RenderParamsProvider value={args}>
+              <ContextPropsProvider params={args} forceClone={forceClone}>
                 <ReactSlot slot={el} clone={clone} />
-              </RenderParamsProvider>
+              </ContextPropsProvider>
             );
           }
         ) : (

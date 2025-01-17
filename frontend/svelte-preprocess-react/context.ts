@@ -16,37 +16,38 @@ export const AutoCompleteContext = createContext<{
 
 export const useAutoCompleteContext = () => useContext(AutoCompleteContext);
 
-export const RenderParamsContext = createContext<{
-  value: any[];
+export interface ContextPropsContextValue {
+  params: any[];
   initial: boolean;
-  ctx: Record<PropertyKey, any>;
-}>({
+  ctx: Record<PropertyKey, any> | null;
+  forceClone: boolean;
+}
+
+export const ContextPropsContext = createContext<ContextPropsContextValue>({
   initial: false,
-  value: [],
-  ctx: {},
+  params: [],
+  ctx: null,
+  forceClone: false,
 });
 
-export const RenderParamsProvider: React.FC<{
-  value?: any[];
+export const ContextPropsProvider: React.FC<{
+  params?: any[];
   ctx?: Record<PropertyKey, any>;
-  children: React.ReactNode;
-}> = ({ value = [], ctx = {}, children }) => {
-  const prevCtxValueRef = useRef<{
-    value: any[];
-    ctx: Record<PropertyKey, any>;
-    initial: boolean;
-  }>({
+  children?: React.ReactNode;
+  forceClone?: boolean;
+}> = ({ params, ctx, forceClone, children }) => {
+  const prevCtxValueRef = useRef<ContextPropsContextValue>({
+    params: params || [],
+    ctx: ctx || null,
     initial: true,
-    value,
-    ctx,
+    forceClone: forceClone || false,
   });
   return React.createElement(
-    RenderParamsContext.Provider,
+    ContextPropsContext.Provider,
     {
       value: useMemo(() => {
         let hasChanged = false;
-
-        if (!isEqual(prevCtxValueRef.current.value, value)) {
+        if (!isEqual(prevCtxValueRef.current.params, params)) {
           hasChanged = true;
         }
         if (!isEqual(prevCtxValueRef.current.ctx, ctx)) {
@@ -54,17 +55,18 @@ export const RenderParamsProvider: React.FC<{
         }
         if (hasChanged) {
           prevCtxValueRef.current = {
-            value,
-            ctx,
+            params: params || [],
+            ctx: ctx || null,
             initial: true,
+            forceClone: forceClone || false,
           };
           return prevCtxValueRef.current;
         }
         return prevCtxValueRef.current;
-      }, [ctx, value]),
+      }, [ctx, forceClone, params]),
     },
     children
   );
 };
 
-export const useRenderParamsContext = () => useContext(RenderParamsContext);
+export const useContextPropsContext = () => useContext(ContextPropsContext);
