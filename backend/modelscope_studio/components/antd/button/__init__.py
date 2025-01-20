@@ -7,6 +7,10 @@ from gradio.events import EventListener
 from ....utils.dev import ModelScopeLayoutComponent, resolve_frontend_dir
 from .group import AntdButtonGroup
 
+PresetColors = Literal['blue', 'purple', 'cyan', 'green', 'magenta', 'pink',
+                       'red', 'orange', 'yellow', 'volcano', 'geekblue',
+                       'lime', 'gold']
+
 
 class AntdButton(ModelScopeLayoutComponent):
     """
@@ -42,7 +46,7 @@ class AntdButton(ModelScopeLayoutComponent):
     ]
 
     # supported slots
-    SLOTS = ['icon']
+    SLOTS = ['icon', 'loading.icon']
 
     def __init__(
             self,
@@ -59,7 +63,7 @@ class AntdButton(ModelScopeLayoutComponent):
             html_type: Literal["button", "submit", "reset"] | None = None,
             icon: str | None = None,
             icon_position: Literal["start", "end"] | None = None,
-            loading: bool | None = None,
+            loading: bool | dict | None = None,
             shape: Literal["default", "circle", "round"] | None = None,
             size: Literal["large", "middle", "small"] | None = None,
             styles: dict | None = None,
@@ -68,7 +72,8 @@ class AntdButton(ModelScopeLayoutComponent):
         | None = None,
             variant: Literal["outlined", "dashed", "solid", "filled", "text",
                              "link"] | None = None,
-            color: Literal['default', 'primary', 'danger'] | None = None,
+            color: Literal['default', 'primary', 'danger', PresetColors]
+        | None = None,
             root_class_name: str | None = None,
             as_item: str | None = None,
             _internal: None = None,

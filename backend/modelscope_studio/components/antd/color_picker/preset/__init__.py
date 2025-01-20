@@ -18,8 +18,9 @@ class AntdColorPickerPreset(ModelScopeLayoutComponent):
             props: dict | None = None,
             *,
             label: str | None = None,
-            colors: list[str] = None,
-            default_open: bool = None,
+            colors: list[str] | None = None,
+            default_open: bool | None = None,
+            key: str | None = None,
             as_item: str | None = None,
             _internal: None = None,
             # gradio properties
@@ -38,6 +39,7 @@ class AntdColorPickerPreset(ModelScopeLayoutComponent):
                          **kwargs)
         self.props = props
         self.label = label
+        self.key = key
         self.colors = colors
         self.default_open = default_open
 

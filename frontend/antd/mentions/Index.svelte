@@ -66,7 +66,9 @@
       id={$mergedProps.elem_id}
       {...$mergedProps.restProps}
       {...$mergedProps.props}
-      {...bindEvents($mergedProps)}
+      {...bindEvents($mergedProps, {
+        popup_scroll: 'popupScroll',
+      })}
       value={$mergedProps.props.value ?? $mergedProps.value}
       slots={$slots}
       optionItems={$options.length > 0 ? $options : $children}

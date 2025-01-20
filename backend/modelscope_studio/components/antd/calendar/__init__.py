@@ -37,7 +37,8 @@ class AntdCalendar(ModelScopeComponent):
             full_cell_render: str | None = None,
             default_value: int | str | float | None = None,
             disabled_date: str | None = None,
-            fullscreen: bool = True,
+            fullscreen: bool | None = None,
+            show_week: bool | None = None,
             header_render: str | None = None,
             locale: dict | None = None,
             mode: Literal['month', 'year'] | None = None,
@@ -66,6 +67,7 @@ class AntdCalendar(ModelScopeComponent):
         self.full_cell_render = full_cell_render
         self.default_value = default_value
         self.disabled_date = disabled_date
+        self.show_week = show_week
         self.fullscreen = fullscreen
         self.header_render = header_render
         self.locale = locale
