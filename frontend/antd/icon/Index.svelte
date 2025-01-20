@@ -11,8 +11,6 @@
   import cls from 'classnames';
   import { writable } from 'svelte/store';
 
-  import { getIconfontContext } from './iconfont-provider/context';
-
   const AwaitedIcon = importComponent(() => import('./icon'));
 
   export let gradio: Gradio;
@@ -30,7 +28,6 @@
   export let elem_id = '';
   export let elem_classes: string[] = [];
   export let elem_style: React.CSSProperties = {};
-  const Iconfont = getIconfontContext();
 
   const [mergedProps, update] = getSlotContext({
     gradio,
@@ -70,8 +67,7 @@
       {...$mergedProps.props}
       {...bindEvents($mergedProps)}
       slots={$slots}
-      name={$mergedProps.value}
-      Iconfont={$Iconfont}
+      value={$mergedProps.value}
     />
   {/await}
 {/if}

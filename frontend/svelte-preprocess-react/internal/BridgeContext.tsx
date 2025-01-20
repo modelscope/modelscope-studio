@@ -18,7 +18,7 @@ export interface BridgeContextProps {
 export const BridgeContext: React.FC<BridgeContextProps> = ({
   reactComponent,
   props,
-  children = [],
+  children,
 }) => {
   const propsContext = useContextPropsContext();
   const { params, ctx, initial } = propsContext;
@@ -102,7 +102,7 @@ export const BridgeContext: React.FC<BridgeContextProps> = ({
             ...rest,
             ...ctxProps.restProps,
             ...ctxProps.events,
-            children: Array.isArray(children) ? children : [children],
+            children,
           })}
         </AutoCompleteContext.Provider>
       </FormItemContext.Provider>

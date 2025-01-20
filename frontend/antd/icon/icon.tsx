@@ -3,21 +3,23 @@ import React from 'react';
 import * as icons from '@ant-design/icons';
 import type { GetProps } from 'antd';
 
+import { useIconFontContext } from './iconfont-provider/context';
+
 export const Icon = sveltify<
   GetProps<typeof icons.default> & {
-    name: string;
-    Iconfont?: ReturnType<typeof icons.createFromIconfontCN>;
+    value: string;
   }
->(({ name, Iconfont, ...props }) => {
-  const icon = icons[name as keyof typeof icons] as React.ComponentType<
+>(({ value, ...props }) => {
+  const IconFont = useIconFontContext();
+  const icon = icons[value as keyof typeof icons] as React.ComponentType<
     GetProps<typeof icons.default>
   >;
   return (
     <>
       {icon ? (
         React.createElement(icon, props)
-      ) : Iconfont ? (
-        <Iconfont type={name} {...props} />
+      ) : IconFont ? (
+        <IconFont type={value} {...props} />
       ) : null}
     </>
   );
