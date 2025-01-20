@@ -2,10 +2,10 @@ import { sveltify } from '@svelte-preprocess-react';
 import { ReactSlot } from '@svelte-preprocess-react/react-slot';
 import { Col as ACol, type GetProps, Row as ARow } from 'antd';
 
-import { useItems, withItemsContext } from '../context';
+import { useItems, withItemsContextProvider } from '../context';
 
 export const Row = sveltify<GetProps<typeof ARow>>(
-  withItemsContext(['default'], ({ children, ...props }) => {
+  withItemsContextProvider(['default'], ({ children, ...props }) => {
     const {
       items: { default: cols },
     } = useItems<['default']>();

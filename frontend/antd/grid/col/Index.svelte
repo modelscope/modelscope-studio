@@ -68,11 +68,12 @@
       itemSlotKey={$slotKey}
       itemElement={$slot}
       slots={{}}
-    />
+    >
+      <svelte-slot bind:this={$slot}>
+        <slot></slot>
+      </svelte-slot>
+    </Col>
   {/await}
-  <svelte-slot bind:this={$slot}>
-    <slot></slot>
-  </svelte-slot>
 {/if}
 
 <style>

@@ -1,7 +1,10 @@
 <svelte:options accessors={true} />
 
 <script lang="ts">
-  import { bindEvents } from '@svelte-preprocess-react/component';
+  import {
+    bindEvents,
+    importComponent,
+  } from '@svelte-preprocess-react/component';
   import {
     getSlotContext,
     getSlotKey,
@@ -12,7 +15,7 @@
   import cls from 'classnames';
   import { writable } from 'svelte/store';
 
-  import { getItems, getSetItemFn } from '../context';
+  const AwaitedAnchorItem = importComponent(() => import('./anchor.item'));
 
   export let gradio: Gradio;
   export let props: Record<string, any> = {};
@@ -59,28 +62,22 @@
     as_item,
     restProps: $$restProps,
   });
-  const setItem = getSetItemFn();
-  const { default: items } = getItems();
-  $: setItem($slotKey, $mergedProps._internal.index || 0, {
-    props: {
-      style: $mergedProps.elem_style,
-      className: cls($mergedProps.elem_classes, 'ms-gr-antd-anchor-item'),
-      id: $mergedProps.elem_id,
-      ...$mergedProps.restProps,
-      ...$mergedProps.props,
-      ...bindEvents($mergedProps),
-    },
-    slots: $slots,
-    children: $items.length > 0 ? $items : undefined,
-  });
 </script>
 
 {#if $mergedProps.visible}
-  <slot></slot>
+  {#await AwaitedAnchorItem then AnchorItem}
+    <AnchorItem
+      style={$mergedProps.elem_style}
+      className={cls($mergedProps.elem_classes, 'ms-gr-antd-anchor-item')}
+      id={$mergedProps.elem_id}
+      {...$mergedProps.restProps}
+      {...$mergedProps.props}
+      {...bindEvents($mergedProps)}
+      slots={$slots}
+      itemIndex={$mergedProps._internal.index || 0}
+      itemSlotKey={$slotKey}
+    >
+      <slot></slot>
+    </AnchorItem>
+  {/await}
 {/if}
-
-<style>
-  :global(.ms-gr-antd-noop-class) {
-    display: none;
-  }
-</style>

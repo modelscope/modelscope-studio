@@ -11,8 +11,6 @@
   import cls from 'classnames';
   import { writable } from 'svelte/store';
 
-  import { getItems } from './context';
-
   const AwaitedAnchor = importComponent(() => import('./anchor'));
 
   export let gradio: Gradio;
@@ -53,7 +51,6 @@
     as_item,
     restProps: $$restProps,
   });
-  const { items, default: children } = getItems(['items', 'default']);
 </script>
 
 {#if $mergedProps.visible}
@@ -66,7 +63,6 @@
       {...$mergedProps.props}
       {...bindEvents($mergedProps)}
       slots={$slots}
-      slotItems={$items.length > 0 ? $items : $children}
     >
       <slot></slot>
     </Anchor>
