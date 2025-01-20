@@ -53,7 +53,7 @@ export function renderItems<R>(
       let el: HTMLElement | undefined;
       let callback: ((key: string, params: any[]) => void) | undefined;
       let clone = options?.clone ?? false;
-      let forceClone = options?.forceClone ?? false;
+      let forceClone = options?.forceClone ?? true;
       if (elOrObject instanceof Element) {
         el = elOrObject;
       } else {

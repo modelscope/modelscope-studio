@@ -230,7 +230,7 @@
                 el: $slots.render,
                 callback: setSlotParams,
                 clone: true,
-                forceClone: true,
+                // forceClone: true,
               },
             },
           }

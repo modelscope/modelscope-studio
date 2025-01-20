@@ -2,7 +2,10 @@
 
 <script lang="ts">
   import { importComponent } from '@svelte-preprocess-react/component';
-  import { getSlotContext } from '@svelte-preprocess-react/slot';
+  import {
+    getSlotContext,
+    getSubIndexContext,
+  } from '@svelte-preprocess-react/slot';
 
   import EachItem from './EachItem.svelte';
 
@@ -18,6 +21,8 @@
   export let _internal: {
     index?: number;
   } = {};
+  // if ms.Each inside ms.Each
+  const subIndex = getSubIndexContext();
 
   const [mergedProps, update] = getSlotContext({
     _internal,
@@ -69,8 +74,8 @@
         <EachItem
           context_value={merged_context_value}
           value={item}
-          index={$mergedProps._internal.index || 0}
-          subIndex={i}
+          index={($mergedProps._internal.index || 0) + (subIndex || 0)}
+          subIndex={(subIndex || 0) + i}
         >
           <slot />
         </EachItem>

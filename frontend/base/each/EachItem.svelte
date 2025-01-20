@@ -22,7 +22,7 @@
   // $: setSlotContext(merged_value);
 </script>
 
-<Fragment _internal={{ index, subIndex }}>
+<Fragment _internal={{ index, subIndex: index + subIndex }}>
   {#await AwaitedEachItem then EachItem}
     <EachItem __internal_value={merged_value} slots={{}}>
       <slot />

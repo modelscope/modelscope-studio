@@ -34,7 +34,7 @@ export interface ItemsContextValue<T extends string[] = []> {
   setItem: (slotKey: string | undefined, index: number, item: Item) => void;
 }
 
-const createItemsContext = () => {
+export const createItemsContext = () => {
   const ItemsContext = createContext<ItemsContextValue>({
     items: {},
     setItem: noop,
@@ -107,5 +107,3 @@ const createItemsContext = () => {
     useItems,
   };
 };
-
-export const { withItemsContext, useItems } = createItemsContext();

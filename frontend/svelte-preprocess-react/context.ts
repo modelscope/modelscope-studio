@@ -17,7 +17,7 @@ export const AutoCompleteContext = createContext<{
 export const useAutoCompleteContext = () => useContext(AutoCompleteContext);
 
 export interface ContextPropsContextValue {
-  params: any[];
+  params?: any[];
   initial: boolean;
   ctx: Record<PropertyKey, any> | null;
   forceClone: boolean;
@@ -25,19 +25,17 @@ export interface ContextPropsContextValue {
 
 export const ContextPropsContext = createContext<ContextPropsContextValue>({
   initial: false,
-  params: [],
   ctx: null,
   forceClone: false,
 });
 
-export const ContextPropsProvider: React.FC<{
-  params?: any[];
-  ctx?: Record<PropertyKey, any>;
-  children?: React.ReactNode;
-  forceClone?: boolean;
-}> = ({ params, ctx, forceClone, children }) => {
+export const ContextPropsProvider: React.FC<
+  Partial<ContextPropsContextValue> & {
+    children?: React.ReactNode;
+  }
+> = ({ params, ctx, forceClone, children }) => {
   const prevCtxValueRef = useRef<ContextPropsContextValue>({
-    params: params || [],
+    params,
     ctx: ctx || null,
     initial: true,
     forceClone: forceClone || false,
@@ -55,7 +53,7 @@ export const ContextPropsProvider: React.FC<{
         }
         if (hasChanged) {
           prevCtxValueRef.current = {
-            params: params || [],
+            params,
             ctx: ctx || null,
             initial: true,
             forceClone: forceClone || false,

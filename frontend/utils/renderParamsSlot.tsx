@@ -23,7 +23,10 @@ export function renderParamsSlot(
     ? (...args: any[]) => {
         // setSlotParams(key, args);
         return (
-          <ContextPropsProvider params={args} forceClone={options?.forceClone}>
+          <ContextPropsProvider
+            params={args}
+            forceClone={options?.forceClone ?? true}
+          >
             {renderSlot(slots[key], { clone: true, ...options })}
           </ContextPropsProvider>
         );

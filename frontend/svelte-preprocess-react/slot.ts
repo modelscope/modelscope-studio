@@ -118,7 +118,7 @@ export function ensureObjectCtxValue(ctxValue: any) {
 
 // for ms.Each
 const subIndexKey = '$$ms-gr-sub-index-context-key';
-function getSubIndexContext() {
+export function getSubIndexContext() {
   return (getContext(subIndexKey) as number) || null;
 }
 

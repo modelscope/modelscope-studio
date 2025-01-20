@@ -10,7 +10,6 @@ export interface EachProps {
   contextValue?: Record<PropertyKey, any>;
   children?: React.ReactNode;
 }
-// 在使用时需要判断是否是 each 组件，然后执行这个方法，不需要 subSlotIndex 了
 
 const Item: React.FC<{
   value?: any;

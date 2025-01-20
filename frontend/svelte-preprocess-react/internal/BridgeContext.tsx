@@ -36,8 +36,7 @@ export const BridgeContext: React.FC<BridgeContextProps> = ({
     if (!initial || (!slotParamsMappingFn && !ctx)) {
       return {};
     }
-
-    let value = slotParamsMappingFn?.(...params);
+    let value = params ? slotParamsMappingFn?.(...params) : undefined;
     let ctxValue = ctx;
 
     const merged_as_item = ctx?.as_item ?? as_item;
@@ -92,11 +91,13 @@ export const BridgeContext: React.FC<BridgeContextProps> = ({
     restPropsMapping,
     eventProps,
   ]);
-
   return (
-    <ContextPropsProvider {...propsContext} ctx={ctxProps.originalRestProps}>
-      <FormItemContext.Provider value={null}>
-        <AutoCompleteContext.Provider value={null}>
+    <FormItemContext.Provider value={null}>
+      <AutoCompleteContext.Provider value={null}>
+        <ContextPropsProvider
+          {...propsContext}
+          ctx={ctxProps.originalRestProps}
+        >
           {/* eslint-disable-next-line react/no-children-prop */}
           {React.createElement(reactComponent, {
             ...rest,
@@ -104,8 +105,8 @@ export const BridgeContext: React.FC<BridgeContextProps> = ({
             ...ctxProps.events,
             children,
           })}
-        </AutoCompleteContext.Provider>
-      </FormItemContext.Provider>
-    </ContextPropsProvider>
+        </ContextPropsProvider>
+      </AutoCompleteContext.Provider>
+    </FormItemContext.Provider>
   );
 };
