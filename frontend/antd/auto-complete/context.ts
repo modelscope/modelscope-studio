@@ -1,6 +1,6 @@
-import { createItemsContext } from '@utils/createItemsContext';
+import { createItemsContext } from '@utils/createItemsContext2';
 
-const { getItems, getSetItemFn } = createItemsContext('auto-complete');
+export const { useItems, withItemsContextProvider, ItemHandler } =
+  createItemsContext();
 
-export { getItems, getSetItemFn };
-export * from '@utils/createItemsContext';
+export * from '@utils/createItemsContext2';

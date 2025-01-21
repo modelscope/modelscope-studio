@@ -4,6 +4,7 @@
   import { importComponent } from '@svelte-preprocess-react/component';
   import {
     getSlotContext,
+    getSlotKey,
     getSubIndexContext,
   } from '@svelte-preprocess-react/slot';
 
@@ -23,15 +24,21 @@
   } = {};
   // if ms.Each inside ms.Each
   const subIndex = getSubIndexContext();
-
-  const [mergedProps, update] = getSlotContext({
-    _internal,
-    value,
-    as_item,
-    visible,
-    restProps: $$restProps,
-    context_value,
-  });
+  const slotKey = getSlotKey();
+  const [mergedProps, update] = getSlotContext(
+    {
+      _internal,
+      value,
+      as_item,
+      visible,
+      restProps: $$restProps,
+      context_value,
+    },
+    undefined,
+    {
+      shouldRestSlotKey: false,
+    }
+  );
   $: update({
     _internal,
     value,
@@ -64,6 +71,7 @@
           {...$mergedProps.restProps}
           contextValue={$mergedProps.context_value}
           value={$mergedProps.value}
+          __internal_slot_key={$slotKey}
           slots={{}}
         >
           <slot />

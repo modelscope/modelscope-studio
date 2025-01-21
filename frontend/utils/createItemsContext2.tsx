@@ -47,6 +47,7 @@ export interface ItemHandlerProps<
 > {
   itemIndex: number;
   itemSlotKey?: string;
+  itemChildrenKey?: string;
   itemElement?: HTMLElement;
   slots: Record<string, HTMLElement>;
   children?: React.ReactNode;
@@ -74,38 +75,42 @@ export const createItemsContext = () => {
   }: ItemsContextProviderProps<S>) => {
     const allowedSlots = useMemoizedEqualValue(allowedSlotsProp);
     const onChangeMemoized = useMemoizedFn(onChange);
+    const itemsRef = useRef(
+      allowedSlots.reduce((acc, slotKey) => {
+        acc[slotKey] = [];
+        return acc;
+      }, {}) as ItemsContextValue<S>['items']
+    );
     const [items, setItems] = useState<ItemsContextValue<S>['items']>(
-      () =>
-        allowedSlots.reduce((acc, slotKey) => {
-          acc[slotKey] = [];
-          return acc;
-        }, {}) as ItemsContextValue<S>['items']
+      itemsRef.current
     );
     const setItem: ItemsContextValue['setItem'] = useCallback(
       (slotKey, index, value) => {
         if (slotKey) {
-          setItems((prev) => {
-            const newValue = [...prev[slotKey]];
-            if (allowedSlots.includes(slotKey)) {
-              newValue[index] = value;
-            } else {
-              newValue[index] = undefined;
-            }
-            return {
-              ...prev,
-              [slotKey]: newValue,
-            };
-          });
+          const prev = itemsRef.current;
+          // console.log(prev, slotKey, allowedSlots);
+          const newValue = [...prev[slotKey]];
+          if (allowedSlots.includes(slotKey)) {
+            newValue[index] = value;
+          } else {
+            newValue[index] = undefined;
+          }
+          itemsRef.current = {
+            ...prev,
+            [slotKey]: newValue,
+          };
+          setItems(itemsRef.current);
         } else {
           if (allowedSlots.includes('default')) {
-            setItems((prev) => {
-              const newValue = [...prev['default']];
-              newValue[index] = value;
-              return {
-                ...prev,
-                default: newValue,
-              };
-            });
+            const prev = itemsRef.current;
+            // console.log(prev, slotKey, allowedSlots);
+            const newValue = [...prev['default']];
+            newValue[index] = value;
+            itemsRef.current = {
+              ...prev,
+              default: newValue,
+            };
+            setItems(itemsRef.current);
           }
         }
       },
@@ -152,18 +157,19 @@ export const createItemsContext = () => {
     itemSlotKey,
     itemElement,
     itemChildren,
+    itemChildrenKey = 'children',
     slots,
     allowedSlots,
     children,
     ...props
   }: ItemHandlerProps<S>) => {
+    const itemChildrenMemoized = useMemoizedFn(itemChildren);
     const prevValueRef = useRef<Item>();
-    const [subItems, setSubItems] = useState<ItemsContextValue<S>['items']>(
-      () =>
-        (allowedSlots || []).reduce((acc, slotKey) => {
-          acc[slotKey] = [];
-          return acc;
-        }, {}) as ItemsContextValue<S>['items']
+    const subItemsRef = useRef(
+      (allowedSlots || []).reduce((acc, slotKey) => {
+        acc[slotKey] = [];
+        return acc;
+      }, {}) as ItemsContextValue<S>['items']
     );
     const { setItem } = useItems();
     useEffect(() => {
@@ -171,25 +177,31 @@ export const createItemsContext = () => {
         el: itemElement,
         props,
         slots,
-        children: itemChildren ? itemChildren(subItems) : undefined,
+        [itemChildrenKey]: itemChildrenMemoized
+          ? itemChildrenMemoized(subItemsRef.current)
+          : undefined,
       };
-
       if (!isEqual(prevValueRef.current, value)) {
         prevValueRef.current = value;
         setItem(itemSlotKey, itemIndex, value);
       }
     }, [
-      itemChildren,
+      itemChildrenMemoized,
+      itemChildrenKey,
       itemElement,
       itemIndex,
       itemSlotKey,
       props,
       setItem,
       slots,
-      subItems,
     ]);
     return (
-      <ItemsContextProvider allowedSlots={allowedSlots} onChange={setSubItems}>
+      <ItemsContextProvider
+        allowedSlots={allowedSlots}
+        onChange={(items) => {
+          subItemsRef.current = items;
+        }}
+      >
         {children || <span />}
       </ItemsContextProvider>
     );

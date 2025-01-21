@@ -9,6 +9,7 @@ export interface EachProps {
   value?: any[];
   contextValue?: Record<PropertyKey, any>;
   children?: React.ReactNode;
+  __internal_slot_key?: string;
 }
 
 const Item: React.FC<{
@@ -32,8 +33,8 @@ const Item: React.FC<{
 };
 
 export const Each = sveltify<EachProps, ['children']>(
-  ({ value, contextValue, children }) => {
-    const targets = useTargets(children);
+  ({ value, contextValue, children, __internal_slot_key }) => {
+    const targets = useTargets(children, __internal_slot_key);
     return (
       <>
         <div style={{ display: 'none' }}>

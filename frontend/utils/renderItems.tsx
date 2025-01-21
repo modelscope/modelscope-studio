@@ -90,6 +90,11 @@ export function renderItems<R>(
         options,
         `${i}`
       );
+    } else {
+      if (options?.children) {
+        result[childrenKey] = undefined;
+        Reflect.deleteProperty(result, childrenKey);
+      }
     }
     return result as R;
   }) as R[];

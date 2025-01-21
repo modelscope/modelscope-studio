@@ -41,25 +41,29 @@ const Bridge: React.FC<BridgeProps> = ({ createPortal, node }) => {
       [node.nodes]
     )
   );
+
   const formItemContext = useFormItemContext();
   const autoCompleteContext = useAutoCompleteContext();
   let props: typeof nodeProps = useMemo(() => {
     return {
       ...omitUndefinedProps(nodeProps),
-      ...(formItemContext || {}),
-      ...(autoCompleteContext || {}),
+      // If the component is ignore, then its value should ignore the influence of the context.
+      ...(node.ignore ? {} : formItemContext || {}),
+      ...(node.ignore ? {} : autoCompleteContext || {}),
       onChange:
-        autoCompleteContext?.onChange ||
-        formItemContext?.onChange ||
+        (!node.ignore &&
+          (autoCompleteContext?.onChange || formItemContext?.onChange)) ||
         nodeProps.onChange
           ? (...args: any[]) => {
-              autoCompleteContext?.onChange?.(...args);
-              formItemContext?.onChange?.(...args);
+              if (!node.ignore) {
+                autoCompleteContext?.onChange?.(...args);
+                formItemContext?.onChange?.(...args);
+              }
               return nodeProps?.onChange?.(...args);
             }
           : nodeProps.onChange,
     };
-  }, [autoCompleteContext, nodeProps, formItemContext]);
+  }, [autoCompleteContext, nodeProps, formItemContext, node.ignore]);
 
   if (!target) {
     return null;

@@ -15,13 +15,19 @@
   export let visible = true;
   export let _internal = {};
 
-  const [mergedProps, update] = getSlotContext({
-    _internal,
-    as_item,
-    visible,
-    params_mapping,
-    restProps: $$restProps,
-  });
+  const [mergedProps, update] = getSlotContext(
+    {
+      _internal,
+      as_item,
+      visible,
+      params_mapping,
+      restProps: $$restProps,
+    },
+    undefined,
+    {
+      shouldRestSlotKey: false,
+    }
+  );
   $: update({
     _internal,
     as_item,

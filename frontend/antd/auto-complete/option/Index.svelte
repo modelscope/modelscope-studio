@@ -1,7 +1,10 @@
 <svelte:options accessors={true} />
 
 <script lang="ts">
-  import { bindEvents } from '@svelte-preprocess-react/component';
+  import {
+    bindEvents,
+    importComponent,
+  } from '@svelte-preprocess-react/component';
   import {
     getSlotContext,
     getSlotKey,
@@ -12,8 +15,9 @@
   import cls from 'classnames';
   import { writable } from 'svelte/store';
 
-  import { getItems, getSetItemFn } from '../context';
-
+  const AwaitedAutoCompleteOption = importComponent(
+    () => import('./auto-complete.option')
+  );
   export let gradio: Gradio;
   export let props: Record<string, any> = {};
   const updatedProps = writable(props);
@@ -60,37 +64,27 @@
     label,
     restProps: $$restProps,
   });
-  const setItem = getSetItemFn();
-  const { default: items, options } = getItems(['default', 'options']);
-
-  $: {
-    setItem($slotKey, $mergedProps._internal.index || 0, {
-      props: {
-        style: $mergedProps.elem_style,
-        className: cls(
-          $mergedProps.elem_classes,
-          'ms-gr-antd-auto-complete-option'
-        ),
-        id: $mergedProps.elem_id,
-        value: $mergedProps.value ?? undefined,
-        label: $mergedProps.label,
-        ...$mergedProps.restProps,
-        ...$mergedProps.props,
-        ...bindEvents($mergedProps),
-      },
-      slots: $slots,
-      options:
-        $options.length > 0 ? $options : $items.length > 0 ? $items : undefined,
-    });
-  }
 </script>
 
 {#if $mergedProps.visible}
-  <slot></slot>
+  {#await AwaitedAutoCompleteOption then AutoCompleteOption}
+    <AutoCompleteOption
+      style={$mergedProps.elem_style}
+      className={cls(
+        $mergedProps.elem_classes,
+        'ms-gr-antd-auto-complete-option'
+      )}
+      id={$mergedProps.elem_id}
+      value={$mergedProps.value ?? undefined}
+      label={$mergedProps.label}
+      {...$mergedProps.restProps}
+      {...$mergedProps.props}
+      {...bindEvents($mergedProps)}
+      slots={$slots}
+      itemIndex={$mergedProps._internal.index || 0}
+      itemSlotKey={$slotKey}
+    >
+      <slot></slot>
+    </AutoCompleteOption>
+  {/await}
 {/if}
-
-<style>
-  :global(.ms-gr-antd-noop-class) {
-    display: none;
-  }
-</style>
