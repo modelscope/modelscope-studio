@@ -29,7 +29,7 @@ export const Anchor = sveltify<AnchorProps>(
                   resolvedSlotItems,
                   {
                     // clone???
-                    // clone: true,
+                    clone: true,
                   }
                 )
               );

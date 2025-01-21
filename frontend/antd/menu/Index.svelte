@@ -15,8 +15,6 @@
   import cls from 'classnames';
   import { writable } from 'svelte/store';
 
-  import { getItems } from './context';
-
   const AwaitedMenu = importComponent(() => import('./menu'));
 
   export let gradio: Gradio;
@@ -57,7 +55,6 @@
     restProps: $$restProps,
   });
   const setSlotParams = getSetSlotParamsFn();
-  const { items, default: children } = getItems(['default', 'items']);
 </script>
 
 {#if $mergedProps.visible}
@@ -72,7 +69,6 @@
         open_change: 'openChange',
       })}
       slots={$slots}
-      slotItems={$items.length > 0 ? $items : $children}
       {setSlotParams}
     >
       <slot></slot>

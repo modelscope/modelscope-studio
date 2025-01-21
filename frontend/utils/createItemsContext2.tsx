@@ -47,12 +47,26 @@ export interface ItemHandlerProps<
 > {
   itemIndex: number;
   itemSlotKey?: string;
-  itemChildrenKey?: string;
   itemElement?: HTMLElement;
-  slots: Record<string, HTMLElement>;
+  itemProps?: (
+    props: Record<string, any>,
+    items: { [key in S[number]]: Item[] }
+  ) => Record<string, any>;
+  slots: Record<
+    string,
+    | HTMLElement
+    | {
+        el?: HTMLElement;
+        // slot key, render args
+        callback?: (key: string, params: any[]) => void;
+        clone?: boolean;
+        forceClone?: boolean;
+      }
+  >;
   children?: React.ReactNode;
   // subItem
   itemChildren?: (items: { [key in S[number]]: Item[] }) => Item[] | undefined;
+  itemChildrenKey?: string;
   allowedSlots?: S;
 }
 export interface ItemsContextProviderProps<
@@ -117,7 +131,7 @@ export const createItemsContext = () => {
       [allowedSlots]
     );
     useEffect(() => {
-      onChangeMemoized?.(items);
+      onChangeMemoized(items);
     }, [onChangeMemoized, items]);
     return (
       <ItemsContext.Provider
@@ -157,6 +171,7 @@ export const createItemsContext = () => {
     itemSlotKey,
     itemElement,
     itemChildren,
+    itemProps,
     itemChildrenKey = 'children',
     slots,
     allowedSlots,
@@ -164,21 +179,25 @@ export const createItemsContext = () => {
     ...props
   }: ItemHandlerProps<S>) => {
     const itemChildrenMemoized = useMemoizedFn(itemChildren);
+    const itemPropsMemoized = useMemoizedFn(itemProps);
+    const hasItemProps = !!itemProps;
+    const hasItemChildren = !!itemChildren;
     const prevValueRef = useRef<Item>();
-    const subItemsRef = useRef(
-      (allowedSlots || []).reduce((acc, slotKey) => {
-        acc[slotKey] = [];
-        return acc;
-      }, {}) as ItemsContextValue<S>['items']
+    const [subItems, setSubItems] = useState(
+      () =>
+        (allowedSlots || []).reduce((acc, slotKey) => {
+          acc[slotKey] = [];
+          return acc;
+        }, {}) as ItemsContextValue<S>['items']
     );
     const { setItem } = useItems();
     useEffect(() => {
       const value: Item = {
         el: itemElement,
-        props,
+        props: hasItemProps ? itemPropsMemoized(props, subItems) : props,
         slots,
-        [itemChildrenKey]: itemChildrenMemoized
-          ? itemChildrenMemoized(subItemsRef.current)
+        [itemChildrenKey]: hasItemChildren
+          ? itemChildrenMemoized(subItems)
           : undefined,
       };
       if (!isEqual(prevValueRef.current, value)) {
@@ -187,21 +206,21 @@ export const createItemsContext = () => {
       }
     }, [
       itemChildrenMemoized,
+      itemPropsMemoized,
       itemChildrenKey,
       itemElement,
       itemIndex,
       itemSlotKey,
       props,
       setItem,
+      subItems,
       slots,
+      hasItemProps,
+      hasItemChildren,
     ]);
+
     return (
-      <ItemsContextProvider
-        allowedSlots={allowedSlots}
-        onChange={(items) => {
-          subItemsRef.current = items;
-        }}
-      >
+      <ItemsContextProvider allowedSlots={allowedSlots} onChange={setSubItems}>
         {children || <span />}
       </ItemsContextProvider>
     );

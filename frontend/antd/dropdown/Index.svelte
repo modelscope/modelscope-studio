@@ -15,8 +15,6 @@
   import cls from 'classnames';
   import { writable } from 'svelte/store';
 
-  import { getItems } from '../menu/context';
-
   const AwaitedDropdown = importComponent(() => import('./dropdown'));
 
   export let gradio: Gradio;
@@ -57,7 +55,6 @@
     restProps: $$restProps,
   });
   const setSlotParams = getSetSlotParamsFn();
-  const { 'menu.items': items } = getItems(['menu.items']);
 </script>
 
 {#if $mergedProps.visible}
@@ -73,7 +70,6 @@
         menu_open_change: 'menu_openChange',
       })}
       slots={$slots}
-      menuItems={$items}
       {setSlotParams}
     >
       <slot />
