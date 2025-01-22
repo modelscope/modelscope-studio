@@ -1,27 +1,28 @@
-import { createItemsContext } from '@utils/createItemsContext';
+import { createItemsContext } from '@utils/createItemsContext2';
 
-const { getItems: getColumnItems, getSetItemFn: getSetColumnItemFn } =
-  createItemsContext('table-column');
+export const {
+  useItems: useColumnItems,
+  withItemsContextProvider: withColumnItemsContextProvider,
+  ItemHandler: ColumnItemHandler,
+} = createItemsContext();
 
-const { getItems: getSelectionItems, getSetItemFn: getSetSelectionItemFn } =
-  createItemsContext('table-row-selection-selection');
+// row selection selection
+export const {
+  useItems: useSelectionItems,
+  withItemsContextProvider: withSelectionItemsContextProvider,
+  ItemHandler: SelectionItemHandler,
+} = createItemsContext();
 
-const {
-  getItems: getRowSelectionItems,
-  getSetItemFn: getSetRowSelectionItemFn,
-} = createItemsContext('table-row-selection');
+export const {
+  useItems: useRowSelectionItems,
+  withItemsContextProvider: withRowSelectionItemsContextProvider,
+  ItemHandler: RowSelectionItemHandler,
+} = createItemsContext();
 
-const { getItems: getExpandableItems, getSetItemFn: getSetExpandableItemFn } =
-  createItemsContext('table-expandable');
+export const {
+  useItems: useExpandableItems,
+  withItemsContextProvider: withExpandableItemsContextProvider,
+  ItemHandler: ExpandableItemHandler,
+} = createItemsContext();
 
-export {
-  getColumnItems,
-  getExpandableItems,
-  getRowSelectionItems,
-  getSelectionItems,
-  getSetColumnItemFn,
-  getSetExpandableItemFn,
-  getSetRowSelectionItemFn,
-  getSetSelectionItemFn,
-};
-export * from '@utils/createItemsContext';
+export * from '@utils/createItemsContext2';

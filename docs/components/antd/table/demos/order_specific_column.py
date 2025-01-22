@@ -50,11 +50,16 @@ with gr.Blocks() as demo:
                 with ms.Slot("rowSelection"):
                     selection = antd.Table.RowSelection()
                 with ms.Slot("expandable"):
-                    antd.Table.Expandable(
-                        expanded_row_render=
-                        """(record) => record.description""",
-                        row_expandable=
-                        """(record) => record.name !== 'Not Expandable'""")
+                    with antd.Table.Expandable(
+                            row_expandable=
+                            """(record) => record.name !== 'Not Expandable'"""
+                    ):
+                        with ms.Slot(
+                                "expandedRowRender",
+                                """(record) => ({ value: record.description })"""
+                        ):
+                            antd.Typography.Text(type="success")
+
                 antd.Table.Column(title="Name", data_index="name", key="name")
                 antd.Table.Column(built_in_column="EXPAND_COLUMN")
                 antd.Table.Column(title="Age", data_index="age", key="age")

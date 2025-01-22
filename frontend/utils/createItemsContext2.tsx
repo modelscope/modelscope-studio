@@ -48,6 +48,7 @@ export interface ItemHandlerProps<
   itemIndex: number;
   itemSlotKey?: string;
   itemElement?: HTMLElement;
+  itemBuiltIn?: any;
   itemProps?: (
     props: Record<string, any>,
     items: { [key in S[number]]: Item[] }
@@ -55,6 +56,7 @@ export interface ItemHandlerProps<
   slots: Record<
     string,
     | HTMLElement
+    | undefined
     | {
         el?: HTMLElement;
         // slot key, render args
@@ -176,6 +178,7 @@ export const createItemsContext = () => {
     slots,
     allowedSlots,
     children,
+    itemBuiltIn,
     ...props
   }: ItemHandlerProps<S>) => {
     const itemChildrenMemoized = useMemoizedFn(itemChildren);
@@ -192,20 +195,23 @@ export const createItemsContext = () => {
     );
     const { setItem } = useItems();
     useEffect(() => {
-      const value: Item = {
-        el: itemElement,
-        props: hasItemProps ? itemPropsMemoized(props, subItems) : props,
-        slots,
-        [itemChildrenKey]: hasItemChildren
-          ? itemChildrenMemoized(subItems)
-          : undefined,
-      };
+      const value: Item = itemBuiltIn
+        ? itemBuiltIn
+        : {
+            el: itemElement,
+            props: hasItemProps ? itemPropsMemoized(props, subItems) : props,
+            slots,
+            [itemChildrenKey]: hasItemChildren
+              ? itemChildrenMemoized(subItems)
+              : undefined,
+          };
       if (!isEqual(prevValueRef.current, value)) {
         prevValueRef.current = value;
         setItem(itemSlotKey, itemIndex, value);
       }
     }, [
       itemChildrenMemoized,
+      itemBuiltIn,
       itemPropsMemoized,
       itemChildrenKey,
       itemElement,
