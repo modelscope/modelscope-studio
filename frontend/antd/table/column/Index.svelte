@@ -169,18 +169,18 @@
   }
 </script>
 
-{#if $mergedProps.visible}
-  {#await AwaitedTableColumn then TableColumn}
-    <TableColumn
-      {...itemProps.props}
-      slots={itemProps.slots}
-      {setSlotParams}
-      itemSlotKey={$slotKey}
-      itemIndex={$mergedProps._internal.index || 0}
-      itemSlots={$slots}
-      itemBuiltIn={built_in_column}
-    >
+{#await AwaitedTableColumn then TableColumn}
+  <TableColumn
+    {...itemProps.props}
+    slots={itemProps.slots}
+    {setSlotParams}
+    itemSlotKey={$slotKey}
+    itemIndex={$mergedProps._internal.index || 0}
+    itemSlots={$slots}
+    itemBuiltIn={built_in_column}
+  >
+    {#if $mergedProps.visible}
       <slot></slot>
-    </TableColumn>
-  {/await}
-{/if}
+    {/if}
+  </TableColumn>
+{/await}

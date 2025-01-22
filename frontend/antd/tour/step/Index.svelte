@@ -1,7 +1,10 @@
 <svelte:options accessors={true} />
 
 <script lang="ts">
-  import { bindEvents } from '@svelte-preprocess-react/component';
+  import {
+    bindEvents,
+    importComponent,
+  } from '@svelte-preprocess-react/component';
   import {
     getSlotContext,
     getSlotKey,
@@ -13,8 +16,7 @@
   import cls from 'classnames';
   import { writable } from 'svelte/store';
 
-  import { getSetItemFn } from '../context';
-
+  const AwaitedTourStep = importComponent(() => import('./tour.step'));
   export let gradio: Gradio;
   export let props: Record<string, any> = {};
   const updatedProps = writable(props);
@@ -57,8 +59,8 @@
     as_item,
     restProps: $$restProps,
   });
-  const setItem = getSetItemFn();
-  $: setItem($slotKey, $mergedProps._internal.index || 0, {
+
+  $: itemProps = {
     props: {
       style: $mergedProps.elem_style,
       className: cls($mergedProps.elem_classes, 'ms-gr-antd-tour-step'),
@@ -77,15 +79,18 @@
         $mergedProps.restProps.target,
     },
     slots: $slots,
-  });
+  };
 </script>
 
-{#if $mergedProps.visible}
-  <slot></slot>
-{/if}
-
-<style>
-  :global(.ms-gr-antd-noop-class) {
-    display: none;
-  }
-</style>
+{#await AwaitedTourStep then TourStep}
+  <TourStep
+    {...itemProps.props}
+    slots={itemProps.slots}
+    itemIndex={$mergedProps._internal.index || 0}
+    itemSlotKey={$slotKey}
+  >
+    {#if $mergedProps.visible}
+      <slot></slot>
+    {/if}
+  </TourStep>
+{/await}

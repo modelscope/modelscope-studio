@@ -1,7 +1,10 @@
 <svelte:options accessors={true} />
 
 <script lang="ts">
-  import { bindEvents } from '@svelte-preprocess-react/component';
+  import {
+    bindEvents,
+    importComponent,
+  } from '@svelte-preprocess-react/component';
   import {
     getSlotContext,
     getSlotKey,
@@ -12,8 +15,9 @@
   import cls from 'classnames';
   import { writable } from 'svelte/store';
 
-  import { getSetItemFn } from '../context';
-
+  const AwaitedSegmentedOption = importComponent(
+    () => import('./segmented.option')
+  );
   export let gradio: Gradio;
   export let props: Record<string, any> = {};
   const updatedProps = writable(props);
@@ -58,8 +62,7 @@
     value,
     restProps: $$restProps,
   });
-  const setItem = getSetItemFn();
-  $: setItem($slotKey, $mergedProps._internal.index || 0, {
+  $: itemProps = {
     props: {
       style: $mergedProps.elem_style,
       className: cls($mergedProps.elem_classes, 'ms-gr-antd-segmented-option'),
@@ -69,18 +72,19 @@
       ...$mergedProps.props,
       ...bindEvents($mergedProps),
     },
-    slots: {
-      ...$slots,
-    },
-  });
+    slots: $slots,
+  };
 </script>
 
-{#if $mergedProps.visible}
-  <slot></slot>
-{/if}
-
-<style>
-  :global(.ms-gr-antd-noop-class) {
-    display: none;
-  }
-</style>
+{#await AwaitedSegmentedOption then SegmentedOption}
+  <SegmentedOption
+    {...itemProps.props}
+    slots={itemProps.slots}
+    itemIndex={$mergedProps._internal.index || 0}
+    itemSlotKey={$slotKey}
+  >
+    {#if $mergedProps.visible}
+      <slot></slot>
+    {/if}
+  </SegmentedOption>
+{/await}

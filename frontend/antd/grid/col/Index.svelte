@@ -55,26 +55,26 @@
   const slot = writable<HTMLElement>();
 </script>
 
-{#if $mergedProps.visible}
-  {#await AwaitedCol then Col}
-    <Col
-      style={$mergedProps.elem_style}
-      className={cls($mergedProps.elem_classes, 'ms-gr-antd-col')}
-      id={$mergedProps.elem_id}
-      {...$mergedProps.restProps}
-      {...$mergedProps.props}
-      {...bindEvents($mergedProps)}
-      itemIndex={$mergedProps._internal.index || 0}
-      itemSlotKey={$slotKey}
-      itemElement={$slot}
-      slots={{}}
-    >
+{#await AwaitedCol then Col}
+  <Col
+    style={$mergedProps.elem_style}
+    className={cls($mergedProps.elem_classes, 'ms-gr-antd-col')}
+    id={$mergedProps.elem_id}
+    {...$mergedProps.restProps}
+    {...$mergedProps.props}
+    {...bindEvents($mergedProps)}
+    itemIndex={$mergedProps._internal.index || 0}
+    itemSlotKey={$slotKey}
+    itemElement={$slot}
+    slots={{}}
+  >
+    {#if $mergedProps.visible}
       <svelte-slot bind:this={$slot}>
         <slot></slot>
       </svelte-slot>
-    </Col>
-  {/await}
-{/if}
+    {/if}
+  </Col>
+{/await}
 
 <style>
   svelte-slot {

@@ -11,6 +11,7 @@ import { isEqual, noop } from 'lodash-es';
 
 import { useMemoizedEqualValue } from './hooks/useMemoizedEqualValue';
 import { useMemoizedFn } from './hooks/useMemoizedFn';
+import { applyPatchToProps } from './patchProps';
 
 export type Item<T extends string = 'children'> =
   | ({
@@ -78,6 +79,7 @@ export interface ItemsContextProviderProps<
   allowedSlots?: S;
   onChange?: (items: { [key in S[number]]: Item[] }) => void;
 }
+
 export const createItemsContext = () => {
   const ItemsContext = createContext<ItemsContextValue>({
     items: {},
@@ -199,7 +201,9 @@ export const createItemsContext = () => {
         ? itemBuiltIn
         : {
             el: itemElement,
-            props: hasItemProps ? itemPropsMemoized(props, subItems) : props,
+            props: applyPatchToProps(
+              hasItemProps ? itemPropsMemoized(props, subItems) : props
+            ),
             slots,
             [itemChildrenKey]: hasItemChildren
               ? itemChildrenMemoized(subItems)

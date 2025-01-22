@@ -77,17 +77,17 @@
   };
 </script>
 
-{#if $mergedProps.visible}
-  {#await AwaitedBreadcrumbItem then BreadcrumbItem}
-    <BreadcrumbItem
-      {...itemProps.props}
-      slots={itemProps.slots}
-      {setSlotParams}
-      itemSlotKey={$slotKey}
-      itemIndex={$mergedProps._internal.index || 0}
-      itemSlots={$slots}
-    >
+{#await AwaitedBreadcrumbItem then BreadcrumbItem}
+  <BreadcrumbItem
+    {...itemProps.props}
+    slots={itemProps.slots}
+    {setSlotParams}
+    itemSlotKey={$slotKey}
+    itemIndex={$mergedProps._internal.index || 0}
+    itemSlots={$slots}
+  >
+    {#if $mergedProps.visible}
       <slot></slot>
-    </BreadcrumbItem>
-  {/await}
-{/if}
+    {/if}
+  </BreadcrumbItem>
+{/await}

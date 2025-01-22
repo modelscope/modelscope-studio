@@ -76,15 +76,15 @@
   };
 </script>
 
-{#if $mergedProps.visible}
-  {#await AwaitedTableColumnGroup then TableColumnGroup}
-    <TableColumnGroup
-      {...itemProps.props}
-      slots={itemProps.slots}
-      itemSlotKey={$slotKey}
-      itemIndex={$mergedProps._internal.index || 0}
-    >
+{#await AwaitedTableColumnGroup then TableColumnGroup}
+  <TableColumnGroup
+    {...itemProps.props}
+    slots={itemProps.slots}
+    itemSlotKey={$slotKey}
+    itemIndex={$mergedProps._internal.index || 0}
+  >
+    {#if $mergedProps.visible}
       <slot></slot>
-    </TableColumnGroup>
-  {/await}
-{/if}
+    {/if}
+  </TableColumnGroup>
+{/await}

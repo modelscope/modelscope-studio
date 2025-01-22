@@ -15,8 +15,6 @@
   import cls from 'classnames';
   import { writable } from 'svelte/store';
 
-  import { getItems } from './context';
-
   const AwaitedTreeSelect = importComponent(() => import('./tree-select'));
 
   export let gradio: Gradio;
@@ -59,7 +57,6 @@
     restProps: $$restProps,
   });
   const setSlotParams = getSetSlotParamsFn();
-  const { treeData, default: children } = getItems(['default', 'treeData']);
 </script>
 
 <!-- $$slots.default and slot fallbacks are not working in gradio -->
@@ -78,7 +75,6 @@
         load_data: 'loadData',
       })}
       slots={$slots}
-      slotItems={$treeData.length ? $treeData : $children}
       onValueChange={(val) => {
         value = val;
       }}

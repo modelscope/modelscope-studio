@@ -59,34 +59,28 @@
   });
 </script>
 
-{#if $mergedProps.visible}
-  {#await AwaitedMenuItem then MenuItem}
-    <MenuItem
-      style={$mergedProps.elem_style}
-      className={cls($mergedProps.elem_classes)}
-      id={$mergedProps.elem_id}
-      {...$mergedProps.restProps}
-      {...$mergedProps.props}
-      {...bindEvents($mergedProps, {
-        title_click: 'titleClick',
-      })}
-      slots={{
-        ...$slots,
-        icon: {
-          el: $slots.icon,
-          clone: true,
-        },
-      }}
-      itemIndex={$mergedProps._internal.index || 0}
-      itemSlotKey={$slotKey}
-    >
+{#await AwaitedMenuItem then MenuItem}
+  <MenuItem
+    style={$mergedProps.elem_style}
+    className={cls($mergedProps.elem_classes)}
+    id={$mergedProps.elem_id}
+    {...$mergedProps.restProps}
+    {...$mergedProps.props}
+    {...bindEvents($mergedProps, {
+      title_click: 'titleClick',
+    })}
+    slots={{
+      ...$slots,
+      icon: {
+        el: $slots.icon,
+        clone: true,
+      },
+    }}
+    itemIndex={$mergedProps._internal.index || 0}
+    itemSlotKey={$slotKey}
+  >
+    {#if $mergedProps.visible}
       <slot></slot>
-    </MenuItem>
-  {/await}
-{/if}
-
-<style>
-  :global(.ms-gr-antd-noop-class) {
-    display: none;
-  }
-</style>
+    {/if}
+  </MenuItem>
+{/await}

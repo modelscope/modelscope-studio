@@ -36,7 +36,6 @@ export const TableColumn = sveltify<
                 itemProps.filterDropdownProps?.menu?.items ||
                 dropdownMenuItems.length > 0
                   ? renderItems(dropdownMenuItems, {
-                      // clone???
                       clone: true,
                     })
                   : undefined,

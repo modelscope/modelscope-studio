@@ -1,7 +1,10 @@
 <svelte:options accessors={true} />
 
 <script lang="ts">
-  import { bindEvents } from '@svelte-preprocess-react/component';
+  import {
+    bindEvents,
+    importComponent,
+  } from '@svelte-preprocess-react/component';
   import {
     getSlotContext,
     getSlotKey,
@@ -12,8 +15,7 @@
   import cls from 'classnames';
   import { writable } from 'svelte/store';
 
-  import { getItems, getSetItemFn } from '../context';
-
+  const AwaitedSelectOption = importComponent(() => import('./select.option'));
   export let gradio: Gradio;
   export let props: Record<string, any> = {};
   const updatedProps = writable(props);
@@ -69,10 +71,8 @@
     key,
     restProps: $$restProps,
   });
-  const setItem = getSetItemFn();
-  const { default: items, options } = getItems(['default', 'options']);
 
-  $: setItem($slotKey, $mergedProps._internal.index || 0, {
+  $: itemProps = {
     props: {
       style: $mergedProps.elem_style,
       className: cls($mergedProps.elem_classes, 'ms-gr-antd-select-option'),
@@ -87,17 +87,18 @@
       ...bindEvents($mergedProps),
     },
     slots: $slots,
-    options:
-      $options.length > 0 ? $options : $items.length > 0 ? $items : undefined,
-  });
+  };
 </script>
 
 {#if $mergedProps.visible}
-  <slot></slot>
+  {#await AwaitedSelectOption then SelectOption}
+    <SelectOption
+      {...itemProps.props}
+      slots={itemProps.slots}
+      itemIndex={$mergedProps._internal.index || 0}
+      itemSlotKey={$slotKey}
+    >
+      <slot></slot>
+    </SelectOption>
+  {/await}
 {/if}
-
-<style>
-  :global(.ms-gr-antd-noop-class) {
-    display: none;
-  }
-</style>

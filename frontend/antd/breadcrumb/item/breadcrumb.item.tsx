@@ -38,7 +38,6 @@ export const BreadcrumbItem = sveltify<
               items:
                 itemProps.menu?.items || menuItems.length > 0
                   ? renderItems(menuItems, {
-                      // clone???
                       clone: true,
                     })
                   : undefined,
@@ -63,7 +62,6 @@ export const BreadcrumbItem = sveltify<
                 itemProps.dropdownProps?.menu?.items ||
                 dropdownMenuItems.length > 0
                   ? renderItems(dropdownMenuItems, {
-                      // clone???
                       clone: true,
                     })
                   : undefined,

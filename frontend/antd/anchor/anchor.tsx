@@ -28,7 +28,6 @@ export const Anchor = sveltify<AnchorProps>(
                 renderItems<NonNullable<AnchorProps['items']>[number]>(
                   resolvedSlotItems,
                   {
-                    // clone???
                     clone: true,
                   }
                 )

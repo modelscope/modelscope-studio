@@ -15,8 +15,6 @@
   import cls from 'classnames';
   import { writable } from 'svelte/store';
 
-  import { getItems } from '../context';
-
   const AwaitedDirectoryTree = importComponent(() => import('../tree'));
 
   export let gradio: Gradio;
@@ -55,7 +53,6 @@
     as_item,
     restProps: $$restProps,
   });
-  const { treeData, default: children } = getItems(['default', 'treeData']);
 
   const setSlotParams = getSetSlotParamsFn();
 </script>
@@ -80,7 +77,6 @@
       })}
       slots={$slots}
       directory
-      slotItems={$treeData.length ? $treeData : $children}
       {setSlotParams}
     >
       <slot></slot>

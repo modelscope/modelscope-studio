@@ -15,8 +15,6 @@
   import cls from 'classnames';
   import { writable } from 'svelte/store';
 
-  import { getItems } from './context';
-
   const AwaitedColorPicker = importComponent(() => import('./color-picker'));
 
   export let gradio: Gradio;
@@ -61,7 +59,6 @@
     restProps: $$restProps,
   });
   const setSlotParams = getSetSlotParamsFn();
-  const { presets } = getItems(['presets']);
 </script>
 
 {#if $mergedProps.visible}
@@ -79,7 +76,6 @@
       })}
       value={$mergedProps.props.value ?? $mergedProps.value ?? undefined}
       slots={$slots}
-      presetItems={$presets}
       {value_format}
       onValueChange={(v) => {
         value = v;

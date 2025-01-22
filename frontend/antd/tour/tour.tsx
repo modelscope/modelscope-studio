@@ -7,70 +7,74 @@ import { renderItems } from '@utils/renderItems';
 import { renderParamsSlot } from '@utils/renderParamsSlot';
 import { type GetProps, Tour as ATour } from 'antd';
 
-import { type Item } from './context';
+import { useItems, withItemsContextProvider } from './context';
 
 export const Tour = sveltify<
   GetProps<typeof ATour> & {
-    slotItems: Item[];
     children?: React.ReactNode;
     setSlotParams: SetSlotParams;
   },
   ['closeIcon', 'indicatorsRender']
 >(
-  ({
-    slots,
-    steps,
-    slotItems,
-    children,
-    onChange,
-    onClose,
-    getPopupContainer,
-    setSlotParams,
-    indicatorsRender,
-    ...props
-  }) => {
-    const getPopupContainerFunction = useFunction(getPopupContainer);
-    const indicatorsRenderFunction = useFunction(indicatorsRender);
-    return (
-      <>
-        <div style={{ display: 'none' }}>{children}</div>
-        <ATour
-          {...props}
-          steps={useMemo(() => {
-            return (
-              steps ||
-              renderItems<NonNullable<GetProps<typeof ATour>['steps']>[number]>(
-                slotItems
+  withItemsContextProvider(
+    ['steps', 'default'],
+    ({
+      slots,
+      steps,
+      children,
+      onChange,
+      onClose,
+      getPopupContainer,
+      setSlotParams,
+      indicatorsRender,
+      ...props
+    }) => {
+      const getPopupContainerFunction = useFunction(getPopupContainer);
+      const indicatorsRenderFunction = useFunction(indicatorsRender);
+      const { items: slotItems } = useItems<['steps', 'default']>();
+      const resolvedSlotItems =
+        slotItems.steps.length > 0 ? slotItems.steps : slotItems.default;
+      return (
+        <>
+          <div style={{ display: 'none' }}>{children}</div>
+          <ATour
+            {...props}
+            steps={useMemo(() => {
+              return (
+                steps ||
+                renderItems<
+                  NonNullable<GetProps<typeof ATour>['steps']>[number]
+                >(resolvedSlotItems)
+              );
+            }, [steps, resolvedSlotItems])}
+            onChange={(current) => {
+              onChange?.(current);
+            }}
+            closeIcon={
+              slots.closeIcon ? (
+                <ReactSlot slot={slots.closeIcon} />
+              ) : (
+                props.closeIcon
               )
-            );
-          }, [steps, slotItems])}
-          onChange={(current) => {
-            onChange?.(current);
-          }}
-          closeIcon={
-            slots.closeIcon ? (
-              <ReactSlot slot={slots.closeIcon} />
-            ) : (
-              props.closeIcon
-            )
-          }
-          indicatorsRender={
-            slots.indicatorsRender
-              ? renderParamsSlot({
-                  slots,
-                  setSlotParams,
-                  key: 'indicatorsRender',
-                })
-              : indicatorsRenderFunction
-          }
-          getPopupContainer={getPopupContainerFunction}
-          onClose={(current, ...args) => {
-            onClose?.(current, ...args);
-          }}
-        />
-      </>
-    );
-  }
+            }
+            indicatorsRender={
+              slots.indicatorsRender
+                ? renderParamsSlot({
+                    slots,
+                    setSlotParams,
+                    key: 'indicatorsRender',
+                  })
+                : indicatorsRenderFunction
+            }
+            getPopupContainer={getPopupContainerFunction}
+            onClose={(current, ...args) => {
+              onClose?.(current, ...args);
+            }}
+          />
+        </>
+      );
+    }
+  )
 );
 
 export default Tour;

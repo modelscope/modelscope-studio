@@ -64,20 +64,20 @@
   });
 </script>
 
-{#if $mergedProps.visible}
-  {#await AwaitedAnchorItem then AnchorItem}
-    <AnchorItem
-      style={$mergedProps.elem_style}
-      className={cls($mergedProps.elem_classes, 'ms-gr-antd-anchor-item')}
-      id={$mergedProps.elem_id}
-      {...$mergedProps.restProps}
-      {...$mergedProps.props}
-      {...bindEvents($mergedProps)}
-      slots={$slots}
-      itemIndex={$mergedProps._internal.index || 0}
-      itemSlotKey={$slotKey}
-    >
+{#await AwaitedAnchorItem then AnchorItem}
+  <AnchorItem
+    style={$mergedProps.elem_style}
+    className={cls($mergedProps.elem_classes, 'ms-gr-antd-anchor-item')}
+    id={$mergedProps.elem_id}
+    {...$mergedProps.restProps}
+    {...$mergedProps.props}
+    {...bindEvents($mergedProps)}
+    slots={$slots}
+    itemIndex={$mergedProps._internal.index || 0}
+    itemSlotKey={$slotKey}
+  >
+    {#if $mergedProps.visible}
       <slot></slot>
-    </AnchorItem>
-  {/await}
-{/if}
+    {/if}
+  </AnchorItem>
+{/await}

@@ -106,15 +106,15 @@
   };
 </script>
 
-{#if $mergedProps.visible}
-  {#await AwaitedTableExpandable then TableExpandable}
-    <TableExpandable
-      {...itemProps.props}
-      slots={itemProps.slots}
-      itemSlotKey={$slotKey}
-      itemIndex={$mergedProps._internal.index || 0}
-    >
+{#await AwaitedTableExpandable then TableExpandable}
+  <TableExpandable
+    {...itemProps.props}
+    slots={itemProps.slots}
+    itemSlotKey={$slotKey}
+    itemIndex={$mergedProps._internal.index || 0}
+  >
+    {#if $mergedProps.visible}
       <slot></slot>
-    </TableExpandable>
-  {/await}
-{/if}
+    {/if}
+  </TableExpandable>
+{/await}

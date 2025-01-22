@@ -52,7 +52,6 @@ export const Menu = sveltify<
               return (
                 items ||
                 renderItems<ItemType>(resolvedSlotItems, {
-                  // clone???
                   clone: true,
                 })
               );

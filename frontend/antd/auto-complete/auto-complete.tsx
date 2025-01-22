@@ -88,7 +88,7 @@ export const AutoComplete = sveltify<
                   NonNullable<GetProps<typeof AAutoComplete>['options']>[number]
                 >(resolvedSlotItems, {
                   children: 'options',
-                  // clone???
+
                   // clone: true,
                 })
               );

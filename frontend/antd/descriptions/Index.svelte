@@ -11,8 +11,6 @@
   import cls from 'classnames';
   import { writable } from 'svelte/store';
 
-  import { getItems } from './context';
-
   const AwaitedDescriptions = importComponent(() => import('./descriptions'));
 
   export let gradio: Gradio;
@@ -55,8 +53,6 @@
     title,
     restProps: $$restProps,
   });
-
-  const { items, default: children } = getItems(['default', 'items']);
 </script>
 
 {#if $mergedProps.visible}
@@ -70,7 +66,6 @@
       {...bindEvents($mergedProps)}
       slots={$slots}
       title={$mergedProps.props.title || $mergedProps.title}
-      slotItems={$items.length > 0 ? $items : $children}
     >
       <slot></slot>
     </Descriptions>

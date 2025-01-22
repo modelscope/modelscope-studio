@@ -1,6 +1,6 @@
-import { createItemsContext } from '@utils/createItemsContext';
+import { createItemsContext } from '@utils/createItemsContext2';
 
-const { getItems, getSetItemFn } = createItemsContext('steps');
+export const { withItemsContextProvider, useItems, ItemHandler } =
+  createItemsContext();
 
-export { getItems, getSetItemFn };
-export * from '@utils/createItemsContext';
+export * from '@utils/createItemsContext2';

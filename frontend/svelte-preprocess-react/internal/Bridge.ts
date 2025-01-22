@@ -1,5 +1,6 @@
 import React, { useMemo } from 'react';
 import { omitUndefinedProps } from '@utils/omitUndefinedProps';
+import { patchProps } from '@utils/patchProps';
 import { writable } from 'svelte/store';
 
 import { useAutoCompleteContext, useFormItemContext } from '../context';
@@ -33,7 +34,9 @@ const Bridge: React.FC<BridgeProps> = ({ createPortal, node }) => {
   // rerender when target or slot changed
   const target = useStore(node.target);
   let nodeProps = useStore(node.props);
-  nodeProps = omitNodeProps(nodeProps);
+  nodeProps = useMemo(() => {
+    return patchProps(omitNodeProps(nodeProps));
+  }, [nodeProps]);
   const slot = useStore(node.slot);
   const subSlotKeys = useStores<string | undefined>(
     useMemo(

@@ -11,8 +11,6 @@
   import cls from 'classnames';
   import { writable } from 'svelte/store';
 
-  import { getItems } from './context';
-
   const AwaitedTimeline = importComponent(() => import('./timeline'));
 
   export let gradio: Gradio;
@@ -51,7 +49,6 @@
     as_item,
     restProps: $$restProps,
   });
-  const { items, default: children } = getItems(['items', 'default']);
 </script>
 
 <!-- $$slots.default and slot fallbacks are not working in gradio -->
@@ -65,7 +62,6 @@
       {...$mergedProps.props}
       {...bindEvents($mergedProps)}
       slots={$slots}
-      slotItems={$items.length > 0 ? $items : $children}
     >
       <slot></slot>
     </Timeline>

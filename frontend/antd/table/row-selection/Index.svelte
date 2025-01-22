@@ -109,15 +109,15 @@
   };
 </script>
 
-{#if $mergedProps.visible}
-  {#await AwaitedTableRowSelection then TableRowSelection}
-    <TableRowSelection
-      {...itemProps.props}
-      slots={itemProps.slots}
-      itemSlotKey={$slotKey}
-      itemIndex={$mergedProps._internal.index || 0}
-    >
+{#await AwaitedTableRowSelection then TableRowSelection}
+  <TableRowSelection
+    {...itemProps.props}
+    slots={itemProps.slots}
+    itemSlotKey={$slotKey}
+    itemIndex={$mergedProps._internal.index || 0}
+  >
+    {#if $mergedProps.visible}
       <slot></slot>
-    </TableRowSelection>
-  {/await}
-{/if}
+    {/if}
+  </TableRowSelection>
+{/await}

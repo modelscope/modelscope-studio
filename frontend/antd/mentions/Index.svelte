@@ -11,8 +11,6 @@
   import cls from 'classnames';
   import { writable } from 'svelte/store';
 
-  import { getItems } from './context';
-
   const AwaitedMentions = importComponent(() => import('./mentions'));
 
   export let gradio: Gradio;
@@ -55,7 +53,6 @@
     value,
     restProps: $$restProps,
   });
-  const { options, default: children } = getItems(['options', 'default']);
 </script>
 
 {#if $mergedProps.visible}
@@ -71,7 +68,6 @@
       })}
       value={$mergedProps.props.value ?? $mergedProps.value}
       slots={$slots}
-      optionItems={$options.length > 0 ? $options : $children}
       onValueChange={(v) => {
         value = v;
       }}
@@ -80,6 +76,3 @@
     </Mentions>
   {/await}
 {/if}
-
-<style>
-</style>

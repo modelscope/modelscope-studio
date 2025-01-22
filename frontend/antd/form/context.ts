@@ -1,7 +1,9 @@
-import { createItemsContext } from '@utils/createItemsContext';
+import { createItemsContext } from '@utils/createItemsContext2';
 
-const { getItems: getRuleItems, getSetItemFn: getSetRuleItemFn } =
-  createItemsContext('form-item-rule');
+export const {
+  withItemsContextProvider: withRuleItemsContextProvider,
+  useItems: useRuleItems,
+  ItemHandler: RuleItemHandler,
+} = createItemsContext();
 
-export { getRuleItems, getSetRuleItemFn };
-export * from '@utils/createItemsContext';
+export * from '@utils/createItemsContext2';

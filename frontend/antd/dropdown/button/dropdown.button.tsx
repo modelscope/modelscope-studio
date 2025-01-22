@@ -70,7 +70,6 @@ export const DropdownButton = sveltify<
                 return (
                   props.menu?.items ||
                   renderItems<ItemType>(menuItems, {
-                    // clone???
                     clone: true,
                   }) ||
                   []
