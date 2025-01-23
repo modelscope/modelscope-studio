@@ -72,9 +72,3 @@
     </Span>
   {/await}
 {/if}
-
-<style>
-  :global(.ms-gr-noop-class) {
-    display: none;
-  }
-</style>

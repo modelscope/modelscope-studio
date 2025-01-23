@@ -1,6 +1,7 @@
 import { bindEvents, mapProps } from '@svelte-preprocess-react/component';
 import { ensureObjectCtxValue } from '@svelte-preprocess-react/slot';
 import React, { useMemo } from 'react';
+import { patchProps } from '@utils/patchProps';
 
 import {
   AutoCompleteContext,
@@ -53,13 +54,15 @@ export const BridgeContext: React.FC<BridgeContextProps> = ({
     ctxValue = ensureObjectCtxValue(ctxValue);
     value = ensureObjectCtxValue(value);
 
-    const restProps = mapProps(
-      {
-        ...ctxValue,
-        ...value,
-      },
-      restPropsMapping,
-      true
+    const restProps = patchProps(
+      mapProps(
+        {
+          ...ctxValue,
+          ...value,
+        },
+        restPropsMapping,
+        true
+      )
     );
     if (!eventProps) {
       return {
@@ -91,6 +94,7 @@ export const BridgeContext: React.FC<BridgeContextProps> = ({
     restPropsMapping,
     eventProps,
   ]);
+
   return (
     <FormItemContext.Provider value={null}>
       <AutoCompleteContext.Provider value={null}>
