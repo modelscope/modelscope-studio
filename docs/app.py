@@ -81,6 +81,9 @@ base_menu_items = [{
     }, {
         "label": "Text",
         "key": "text"
+    }, {
+        "label": "Markdown",
+        "key": "markdown"
     }]
 }, {
     "label":

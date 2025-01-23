@@ -29,7 +29,7 @@
 同时为了适配大模型的工具调用链路，额外对某些大模型的格式做了预设配置，支持下述格式的预设处理（会将下面的格式转换成上方`accordion`标签包裹形式）
 
 ```python
-import modelscope_studio as mgr
+import modelscope_studio.components.legacy as mgr
 from modelscope_studio.components.legacy.Chatbot.llm_thinking_presets import qwen
 
 # 添加 qwen 解析预设

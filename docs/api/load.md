@@ -7,7 +7,7 @@ This feature is similar to [gr.load](https://www.gradio.app/docs/gradio/load). A
 ### Basic Usage
 
 ```python
-import modelscope_studio as mgr
+import modelscope_studio.components.legacy as mgr
 demo = mgr.load("modelscope/modelscope-studio")
 demo.launch()
 ```
@@ -17,7 +17,7 @@ demo.launch()
 Use the access token to load a private ModelScope Studio repo. Find your sdk token here: https://modelscope.cn/my/myaccesstoken.
 
 ```python
-import modelscope_studio as mgr
+import modelscope_studio.components.legacy as mgr
 demo = mgr.load("modelscope/modelscope-studio", token="YOUR_ACCESS_TOKEN")
 demo.launch()
 ```

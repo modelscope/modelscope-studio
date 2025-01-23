@@ -1,3 +1,5 @@
+> This document is still for version 0.x, please refer to the [English Version](./README.md) for the latest updates.
+
 <h1>ModelScope Studio</h1>
 
 <p align="center">
@@ -27,7 +29,7 @@ pip install modelscope_studio
 ```python
 import time
 import gradio as gr
-import modelscope_studio as mgr
+import modelscope_studio.components.legacy as mgr
 
 def submit(_input, _chatbot):
     print('text：', _input.text)

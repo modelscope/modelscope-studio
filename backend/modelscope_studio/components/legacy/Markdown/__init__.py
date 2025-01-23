@@ -14,7 +14,7 @@ set_documentation_group("component")
 
 
 @document()
-class ModelScopeMarkdown(Component):
+class ModelScopeLegacyMarkdown(Component):
     """
     Used to render arbitrary Markdown output. Can also render latex enclosed by dollar signs.
     Preprocessing: this component does *not* accept input.

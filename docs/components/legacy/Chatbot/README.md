@@ -28,7 +28,7 @@ Include the `accordion` tag in the returned content to add an accordion within t
 Additionally, to adapt to the toolchain usage of large models, some preset configurations for certain large models have been made. Support for the following preset formats (which will be converted into the form wrapped by the above `accordion` tag).
 
 ```python
-import modelscope_studio as mgr
+import modelscope_studio.components.legacy as mgr
 from modelscope_studio.components.legacy.Chatbot.llm_thinking_presets import qwen
 
 # Add qwen preset

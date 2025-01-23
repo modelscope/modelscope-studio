@@ -4,7 +4,6 @@ import re
 import gradio as gr
 import modelscope_studio.components.antd as antd
 import modelscope_studio.components.base as ms
-import modelscope_studio.components.legacy as mgr
 
 from .env import is_modelscope_studio
 from .parse_markdown import parse_markdown
@@ -101,7 +100,7 @@ class Docs:
                         with antd.Col(sm=23, xs=24):
                             prefix = prefix + "\n" if prefix else ""
                             suffix = "\n" + suffix if suffix else ""
-                            gr.Markdown(f"""{prefix}```python
+                            ms.Markdown(f"""{prefix}```python
 {content}
 ```{suffix}""",
                                         header_links=True)
@@ -132,7 +131,7 @@ class Docs:
                                read_file=self._read_file)
         for item in items:
             if item["type"] == "text":
-                mgr.Markdown(item["value"], header_links=True, preview=False)
+                ms.Markdown(item["value"], header_links=True)
             elif item["type"] == "demo":
                 self._render_demo(item["name"],
                                   prefix=item["prefix"],

@@ -3,7 +3,7 @@ import re
 from typing import Callable
 
 import gradio as gr
-import modelscope_studio as mgr
+import modelscope_studio.components.legacy as mgr
 from helper.env import is_modelscope_studio
 
 from .parse_markdown import parse_markdown
