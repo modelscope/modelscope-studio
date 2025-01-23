@@ -1,8 +1,8 @@
 import json
 
 import gradio as gr
-import modelscope_studio as mgr
 import modelscope_studio.components.base as ms
+import modelscope_studio.components.legacy as mgr
 
 # `label` will display on the page, and `value` is the actual selected value.
 options = [{"label": "A", "value": "a"}, "b", "c"]

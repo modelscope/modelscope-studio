@@ -35,7 +35,7 @@ class GalleryData(GradioRootModel):
 
 
 @document()
-class ModelScopeWaterfallGallery(Component):
+class ModelScopeLegacyWaterfallGallery(Component):
     """
     Used to display a list of images as a gallery that can be scrolled through.
     Preprocessing: this component does *not* accept input.

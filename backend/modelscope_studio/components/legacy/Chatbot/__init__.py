@@ -49,7 +49,7 @@ set_documentation_group("component")
 
 
 @document()
-class ModelScopeChatbot(Component):
+class ModelScopeLegacyChatbot(Component):
     """
     Displays a chatbot output showing both user submitted messages and responses. Supports a subset of Markdown including bold, italics, code, tables. Also supports audio/video/image files, which are displayed in the MultimodalChatbot, and other kinds of files which are displayed as links.
     Preprocessing: passes the messages in the MultimodalChatbot as a {List[List[str | None | Tuple]]}, i.e. a list of lists. The inner list has 2 elements: the user message and the response message. See `Postprocessing` for the format of these messages.

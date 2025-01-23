@@ -1,8 +1,8 @@
 import time
 
 import gradio as gr
-import modelscope_studio as mgr
 import modelscope_studio.components.base as ms
+import modelscope_studio.components.legacy as mgr
 
 
 def fn(input, chatbot):

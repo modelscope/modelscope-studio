@@ -27,7 +27,7 @@ class LifecycleData(GradioModel):
 
 
 @document()
-class ModelScopeLifecycle(Component):
+class ModelScopeLegacyLifecycle(Component):
     FRONTEND_DIR = resolve_frontend_dir("Lifecycle", type='legacy')
 
     EVENTS = [

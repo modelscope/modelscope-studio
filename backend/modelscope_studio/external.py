@@ -208,7 +208,7 @@ def load(
     Returns:
         a Gradio Blocks object for the given model
     Example:
-        import modelscope_studio as mgr
+        import modelscope_studio.components.legacy as mgr
         demo = gr.load("modelscope/modelscope-studio")
         demo.launch()
     """

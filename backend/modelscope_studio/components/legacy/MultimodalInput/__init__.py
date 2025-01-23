@@ -20,7 +20,7 @@ class MultimodalInputData(GradioModel):
 
 
 @document()
-class ModelScopeMultimodalInput(FormComponent):
+class ModelScopeLegacyMultimodalInput(FormComponent):
     """
     Creates a textarea for user to enter string input or display string output.
     Preprocessing: passes textarea value as a {dict(text=str, files=List[str])} into the function.
@@ -193,8 +193,9 @@ class ModelScopeMultimodalInput(FormComponent):
                 value.files[i].path)
         return value
 
-    def as_example(self,
-                   input_data: str | dict | ModelScopeMultimodalInput) -> dict:
+    def as_example(
+            self,
+            input_data: str | dict | ModelScopeLegacyMultimodalInput) -> dict:
         value = input_data
         if isinstance(input_data, str):
             value = MultimodalInputData(text=input_data, files=[])

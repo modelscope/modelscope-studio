@@ -41,7 +41,7 @@ class BackgroundPropsDict(TypedDict):
 
 
 @document()
-class ModelScopeFlow(Component):
+class ModelScopeLegacyFlow(Component):
     data_model = FlowData
     FRONTEND_DIR = resolve_frontend_dir("Flow", type='legacy')
     EVENTS = [Events.change, 'data_change', 'custom']
