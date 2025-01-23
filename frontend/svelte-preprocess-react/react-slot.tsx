@@ -1,6 +1,6 @@
 import React, { forwardRef, useEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
-import { styleObject2HtmlStyle } from '@utils/styleObject2String';
+import { styleObject2HtmlStyle } from '@utils/style';
 
 import { useContextPropsContext } from './context';
 
