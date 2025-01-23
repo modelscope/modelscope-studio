@@ -15,12 +15,6 @@
   import cls from 'classnames';
   import { type Writable, writable } from 'svelte/store';
 
-  import {
-    getColumnItems,
-    getExpandableItems,
-    getRowSelectionItems,
-  } from './context';
-
   const AwaitedTable = importComponent(() => import('./table'));
   export let gradio: Gradio;
   export let _internal: Record<string, any> = {};
@@ -56,12 +50,6 @@
     restProps: $$restProps,
   });
   const setSlotParams = getSetSlotParamsFn();
-  const { rowSelection: rowSelectionItems } = getRowSelectionItems([
-    'rowSelection',
-  ]);
-  const { expandable: expandableItems } = getExpandableItems(['expandable']);
-
-  const { default: columnItems } = getColumnItems();
 </script>
 
 {#if $mergedProps.visible}
@@ -74,9 +62,6 @@
       {...$mergedProps.props}
       {...bindEvents($mergedProps)}
       slots={$slots}
-      rowSelectionItems={$rowSelectionItems}
-      expandableItems={$expandableItems}
-      columnItems={$columnItems}
       {setSlotParams}
     >
       <slot></slot>

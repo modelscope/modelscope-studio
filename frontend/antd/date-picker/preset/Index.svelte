@@ -1,7 +1,10 @@
 <svelte:options accessors={true} />
 
 <script lang="ts">
-  import { bindEvents } from '@svelte-preprocess-react/component';
+  import {
+    bindEvents,
+    importComponent,
+  } from '@svelte-preprocess-react/component';
   import {
     getSlotContext,
     getSlotKey,
@@ -12,8 +15,9 @@
   import cls from 'classnames';
   import { writable } from 'svelte/store';
 
-  import { getSetItemFn } from '../context';
-
+  const AwaitedDatePickerPreset = importComponent(
+    () => import('./date-picker.preset')
+  );
   export let gradio: Gradio;
   export let props: Record<string, any> = {};
   const updatedProps = writable(props);
@@ -60,9 +64,8 @@
     label,
     restProps: $$restProps,
   });
-  const setItem = getSetItemFn();
 
-  $: setItem($slotKey, $mergedProps._internal.index || 0, {
+  $: itemProps = {
     props: {
       style: $mergedProps.elem_style,
       className: cls(
@@ -71,21 +74,24 @@
       ),
       id: $mergedProps.elem_id,
       label: $mergedProps.label,
-      value: $mergedProps.value,
+      value: $mergedProps.value as any,
       ...$mergedProps.restProps,
       ...$mergedProps.props,
       ...bindEvents($mergedProps),
     },
     slots: $slots,
-  });
+  };
 </script>
 
-{#if $mergedProps.visible}
-  <slot></slot>
-{/if}
-
-<style>
-  :global(.ms-gr-antd-noop-class) {
-    display: none;
-  }
-</style>
+{#await AwaitedDatePickerPreset then DatePickerPreset}
+  <DatePickerPreset
+    {...itemProps.props}
+    slots={itemProps.slots}
+    itemIndex={$mergedProps._internal.index || 0}
+    itemSlotKey={$slotKey}
+  >
+    {#if $mergedProps.visible}
+      <slot></slot>
+    {/if}
+  </DatePickerPreset>
+{/await}

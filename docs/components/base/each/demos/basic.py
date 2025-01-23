@@ -1,5 +1,4 @@
 import gradio as gr
-
 import modelscope_studio.components.antd as antd
 import modelscope_studio.components.base as ms
 
@@ -27,9 +26,10 @@ data = [{
 
 with gr.Blocks() as demo:
     with ms.Application():
-        with antd.Space(direction="vertical"):
-            with ms.Each(value=data):
-                antd.Alert()
+        with antd.ConfigProvider():
+            with antd.Space(direction="vertical"):
+                with ms.Each(value=data):
+                    antd.Alert()
 
 if __name__ == "__main__":
     demo.queue().launch()

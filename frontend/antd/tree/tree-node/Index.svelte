@@ -1,7 +1,10 @@
 <svelte:options accessors={true} />
 
 <script lang="ts">
-  import { bindEvents } from '@svelte-preprocess-react/component';
+  import {
+    bindEvents,
+    importComponent,
+  } from '@svelte-preprocess-react/component';
   import {
     getSetSlotParamsFn,
     getSlotContext,
@@ -13,8 +16,7 @@
   import cls from 'classnames';
   import { writable } from 'svelte/store';
 
-  import { getItems, getSetItemFn } from '../context';
-
+  const AwaitedTreeTreeNode = importComponent(() => import('./tree.tree-node'));
   export let gradio: Gradio;
   export let props: Record<string, any> = {};
   const updatedProps = writable(props);
@@ -60,9 +62,7 @@
     restProps: $$restProps,
   });
   const setSlotParams = getSetSlotParamsFn();
-  const setItem = getSetItemFn();
-  const { default: items } = getItems();
-  $: setItem($slotKey, $mergedProps._internal.index || 0, {
+  $: itemProps = {
     props: {
       style: $mergedProps.elem_style,
       className: cls($mergedProps.elem_classes, 'ms-gr-antd-tree-node'),
@@ -80,16 +80,18 @@
         clone: true,
       },
     },
-    children: $items.length > 0 ? $items : undefined,
-  });
+  };
 </script>
 
-{#if $mergedProps.visible}
-  <slot></slot>
-{/if}
-
-<style>
-  :global(.ms-gr-antd-noop-class) {
-    display: none;
-  }
-</style>
+{#await AwaitedTreeTreeNode then TreeTreeNode}
+  <TreeTreeNode
+    {...itemProps.props}
+    slots={itemProps.slots}
+    itemIndex={$mergedProps._internal.index || 0}
+    itemSlotKey={$slotKey}
+  >
+    {#if $mergedProps.visible}
+      <slot></slot>
+    {/if}
+  </TreeTreeNode>
+{/await}

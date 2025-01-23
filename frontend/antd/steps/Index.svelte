@@ -15,8 +15,6 @@
   import cls from 'classnames';
   import { writable } from 'svelte/store';
 
-  import { getItems } from './context';
-
   const AwaitedSteps = importComponent(() => import('./steps'));
 
   export let gradio: Gradio;
@@ -57,7 +55,6 @@
     restProps: $$restProps,
   });
   const setSlotParams = getSetSlotParamsFn();
-  const { items, default: children } = getItems(['items', 'default']);
 </script>
 
 <!-- $$slots.default and slot fallbacks are not working in gradio -->
@@ -71,7 +68,6 @@
       {...$mergedProps.props}
       {...bindEvents($mergedProps)}
       slots={$slots}
-      slotItems={$items.length > 0 ? $items : $children}
       {setSlotParams}
     >
       <slot></slot>

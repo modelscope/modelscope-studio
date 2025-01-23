@@ -1,3 +1,5 @@
+import { isFunction } from 'lodash-es';
+
 function isFunctionString(str: string): boolean {
   const funcRegex =
     /^(?:async\s+)?(?:function\s*(?:\w*\s*)?\(|\([\w\s,=]*\)\s*=>|\(\{[\w\s,=]*\}\)\s*=>|function\s*\*\s*\w*\s*\()/i;
@@ -10,6 +12,9 @@ export function createFunction<T extends (...args: any[]) => any>(
   plainText = false
 ): T | undefined {
   try {
+    if (isFunction(target)) {
+      return target as T;
+    }
     if (plainText && !isFunctionString(target)) {
       return undefined;
     }

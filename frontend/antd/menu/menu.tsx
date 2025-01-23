@@ -8,74 +8,80 @@ import { renderParamsSlot } from '@utils/renderParamsSlot';
 import { type GetProps, Menu as AMenu } from 'antd';
 import type { ItemType } from 'antd/es/menu/interface';
 
-import { type Item } from './context';
+import { useItems, withItemsContextProvider } from './context';
 
 import './menu.less';
 
 export const Menu = sveltify<
   GetProps<typeof AMenu> & {
-    slotItems: Item[];
     setSlotParams: SetSlotParams;
   },
   ['expandIcon', 'overflowedIndicator']
 >(
-  ({
-    slots,
-    items,
-    slotItems,
-    children,
-    onOpenChange,
-    onSelect,
-    onDeselect,
-    setSlotParams,
-    ...props
-  }) => {
-    return (
-      <>
-        {children}
-        <AMenu
-          {...omitUndefinedProps(props)}
-          onOpenChange={(openKeys) => {
-            onOpenChange?.(openKeys);
-          }}
-          onSelect={(e) => {
-            onSelect?.(e);
-          }}
-          onDeselect={(e) => {
-            onDeselect?.(e);
-          }}
-          items={useMemo(() => {
-            // ['label','icon',"title"]
-            return (
-              items ||
-              renderItems<ItemType>(slotItems, {
-                clone: true,
-              })
-            );
-          }, [items, slotItems])}
-          expandIcon={
-            slots.expandIcon
-              ? renderParamsSlot(
-                  {
-                    key: 'expandIcon',
-                    slots,
-                    setSlotParams,
-                  },
-                  { clone: true }
-                )
-              : props.expandIcon
-          }
-          overflowedIndicator={
-            slots.overflowedIndicator ? (
-              <ReactSlot slot={slots.overflowedIndicator} />
-            ) : (
-              props.overflowedIndicator
-            )
-          }
-        />
-      </>
-    );
-  }
+  withItemsContextProvider(
+    ['default', 'items'],
+    ({
+      slots,
+      items,
+      children,
+      onOpenChange,
+      onSelect,
+      onDeselect,
+      setSlotParams,
+      ...props
+    }) => {
+      const { items: slotItems } = useItems<['default', 'items']>();
+      const resolvedSlotItems =
+        slotItems.items.length > 0 ? slotItems.items : slotItems.default;
+      return (
+        <>
+          <div style={{ display: 'none' }}>{children}</div>
+          <AMenu
+            {...omitUndefinedProps(props)}
+            onOpenChange={(openKeys) => {
+              onOpenChange?.(openKeys);
+            }}
+            onSelect={(e) => {
+              onSelect?.(e);
+            }}
+            onDeselect={(e) => {
+              onDeselect?.(e);
+            }}
+            items={useMemo(() => {
+              // ['label','icon',"title"]
+              return (
+                items ||
+                renderItems<ItemType>(resolvedSlotItems, {
+                  clone: true,
+                })
+              );
+            }, [items, resolvedSlotItems])}
+            expandIcon={
+              slots.expandIcon
+                ? renderParamsSlot(
+                    {
+                      key: 'expandIcon',
+                      slots,
+                      setSlotParams,
+                    },
+                    {
+                      clone: true,
+                    }
+                  )
+                : props.expandIcon
+            }
+            overflowedIndicator={
+              slots.overflowedIndicator ? (
+                <ReactSlot slot={slots.overflowedIndicator} />
+              ) : (
+                props.overflowedIndicator
+              )
+            }
+          />
+        </>
+      );
+    }
+  )
 );
 
 export default Menu;

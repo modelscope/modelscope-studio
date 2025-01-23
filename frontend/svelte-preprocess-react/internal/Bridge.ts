@@ -1,10 +1,12 @@
 import React, { useMemo } from 'react';
 import { omitUndefinedProps } from '@utils/omitUndefinedProps';
+import { patchProps } from '@utils/patchProps';
 import { writable } from 'svelte/store';
 
 import { useAutoCompleteContext, useFormItemContext } from '../context';
 import useStore, { useStores } from '../useStore';
 
+import { BridgeContext } from './BridgeContext';
 import Child from './Child';
 import type { TreeNode } from './types';
 
@@ -18,6 +20,7 @@ export type BridgeProps = {
   nodeSlotKey?: string;
 };
 
+// omit attached_events
 function omitNodeProps(props: Record<string, any>) {
   if (Reflect.has(props, 'attachedEvents')) {
     const newProps = { ...props };
@@ -31,7 +34,9 @@ const Bridge: React.FC<BridgeProps> = ({ createPortal, node }) => {
   // rerender when target or slot changed
   const target = useStore(node.target);
   let nodeProps = useStore(node.props);
-  nodeProps = omitNodeProps(nodeProps);
+  nodeProps = useMemo(() => {
+    return patchProps(omitNodeProps(nodeProps));
+  }, [nodeProps]);
   const slot = useStore(node.slot);
   const subSlotKeys = useStores<string | undefined>(
     useMemo(
@@ -39,26 +44,29 @@ const Bridge: React.FC<BridgeProps> = ({ createPortal, node }) => {
       [node.nodes]
     )
   );
-  const formItemContext = useFormItemContext();
 
+  const formItemContext = useFormItemContext();
   const autoCompleteContext = useAutoCompleteContext();
   let props: typeof nodeProps = useMemo(() => {
     return {
       ...omitUndefinedProps(nodeProps),
-      ...(formItemContext || {}),
-      ...autoCompleteContext,
+      // If the component is ignore, then its value should ignore the influence of the context.
+      ...(node.ignore ? {} : formItemContext || {}),
+      ...(node.ignore ? {} : autoCompleteContext || {}),
       onChange:
-        autoCompleteContext?.onChange ||
-        formItemContext?.onChange ||
+        (!node.ignore &&
+          (autoCompleteContext?.onChange || formItemContext?.onChange)) ||
         nodeProps.onChange
           ? (...args: any[]) => {
-              autoCompleteContext?.onChange?.(...args);
-              formItemContext?.onChange?.(...args);
+              if (!node.ignore) {
+                autoCompleteContext?.onChange?.(...args);
+                formItemContext?.onChange?.(...args);
+              }
               return nodeProps?.onChange?.(...args);
             }
           : nodeProps.onChange,
     };
-  }, [autoCompleteContext, nodeProps, formItemContext]);
+  }, [autoCompleteContext, nodeProps, formItemContext, node.ignore]);
 
   if (!target) {
     return null;
@@ -98,12 +106,13 @@ const Bridge: React.FC<BridgeProps> = ({ createPortal, node }) => {
   }
 
   // render in different container
-  const element =
-    children === undefined
-      ? React.createElement(node.reactComponent, props)
-      : React.createElement(node.reactComponent, props, ...children);
+  // eslint-disable-next-line react/no-children-prop
+  const element = React.createElement(BridgeContext, {
+    props,
+    reactComponent: node.reactComponent,
+    children,
+  });
   target._reactElement = element;
-
   return createPortal(element, target);
 };
 export default Bridge;

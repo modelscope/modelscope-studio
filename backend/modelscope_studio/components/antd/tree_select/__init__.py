@@ -66,6 +66,7 @@ class AntdTreeSelect(ModelScopeDataLayoutComponent):
             label_in_value: bool | None = None,
             list_height: int | None = 256,
             loading: bool | None = None,
+            max_count: int | None = None,
             max_tag_count: int | None = None,
             max_tag_placeholder: str | None = None,
             max_tag_text_length: int | None = None,
@@ -136,6 +137,7 @@ class AntdTreeSelect(ModelScopeDataLayoutComponent):
         self.label_in_value = label_in_value
         self.list_height = list_height
         self.loading = loading
+        self.max_count = max_count
         self.max_tag_count = max_tag_count
         self.max_tag_placeholder = max_tag_placeholder
         self.max_tag_text_length = max_tag_text_length

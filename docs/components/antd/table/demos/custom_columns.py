@@ -1,5 +1,4 @@
 import gradio as gr
-
 import modelscope_studio.components.antd as antd
 import modelscope_studio.components.base as ms
 
@@ -24,28 +23,35 @@ data = [{
 }]
 
 
-def on_custom(e: gr.EventData):
+def on_invite(e: gr.EventData):
+    print(e._data)
+
+
+def on_delete(e: gr.EventData):
     print(e._data)
 
 
 with gr.Blocks() as demo:
-    with ms.Application() as app:
-        with antd.Table(data_source=data):
-            antd.Table.Column(title="Name",
-                              data_index="name",
-                              key="name",
-                              column_render="""(text) => {
-  const React = window.ms_globals.React;
-  return React.createElement('a', null, text);
-}""")
-            antd.Table.Column(title="Age", data_index="age", key="age")
-            antd.Table.Column(title="Address",
-                              data_index="address",
-                              key="address")
-            antd.Table.Column(title="Tags",
-                              data_index="tags",
-                              key="tags",
-                              column_render="""(_, { tags }) => {
+    with ms.Application():
+        with antd.ConfigProvider():
+            with antd.Table(data_source=data):
+                with antd.Table.Column(
+                        title="Name",
+                        data_index="name",
+                        key="name",
+                ):
+                    with ms.Slot("render",
+                                 params_mapping="(text) => ({ value: text })"):
+                        antd.Typography.Link(href="#")
+                antd.Table.Column(title="Age", data_index="age", key="age")
+                antd.Table.Column(title="Age", data_index="age", key="age")
+                antd.Table.Column(title="Address",
+                                  data_index="address",
+                                  key="address")
+                antd.Table.Column(title="Tags",
+                                  data_index="tags",
+                                  key="tags",
+                                  column_render="""(_, { tags }) => {
   const React = window.ms_globals.React;
   const antd = window.ms_globals.antd;
   return tags.map((tag) => {
@@ -56,49 +62,22 @@ with gr.Blocks() as demo:
     return React.createElement(antd.Tag, { color, key: tag }, tag.toUpperCase());
   });
 }""")
-            antd.Table.Column(title="Action",
-                              key="action",
-                              column_render="""(_, record) => {
-  const React = window.ms_globals.React;
-  const antd = window.ms_globals.antd;
-  const dispatch = window.ms_globals.dispatch;
-  return React.createElement(
-    antd.Space,
-    { size: 'middle' },
-    React.createElement(
-      antd.Button,
-      {
-        type: 'primary',
-        onClick: () => {
-          dispatch({
-            type: 'custom_table',
-            action: 'invite',
-            payload: record,
-          });
-        },
-      },
-      'Invite ',
-      record.name
-    ),
-    React.createElement(
-      antd.Button,
-      {
-        type: 'primary',
-        danger: true,
-        onClick: () => {
-          dispatch({
-            type: 'custom_table',
-            action: 'delete',
-            payload: record,
-          });
-        },
-      },
-      'Delete'
-    )
-  );
-}""")
 
-    app.custom(fn=on_custom)
+                with antd.Table.Column(
+                        title="Action",
+                        key="action",
+                ):
+                    with ms.Slot(
+                            "render",
+                            "(_, record, index) => ({ invite: { value: 'Invite ' + record.name, index }, delete: { index }})"
+                    ):
+                        with antd.Space(size="middle"):
+                            antd.Button(type="primary",
+                                        as_item="invite").click(fn=on_invite)
+                            antd.Button('Delete',
+                                        type="primary",
+                                        danger=True,
+                                        as_item="delete").click(fn=on_delete)
 
 if __name__ == "__main__":
     demo.queue().launch()

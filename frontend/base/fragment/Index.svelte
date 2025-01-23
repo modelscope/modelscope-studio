@@ -14,12 +14,18 @@
   // gradio properties
   export let visible = true;
 
-  const [mergedProps, update] = getSlotContext({
-    _internal,
-    visible,
-    as_item,
-    restProps: $$restProps,
-  });
+  const [mergedProps, update] = getSlotContext(
+    {
+      _internal,
+      visible,
+      as_item,
+      restProps: $$restProps,
+    },
+    undefined,
+    {
+      shouldRestSlotKey: false,
+    }
+  );
   $: update({
     _internal,
     visible,

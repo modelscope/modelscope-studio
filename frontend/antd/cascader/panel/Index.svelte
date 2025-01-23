@@ -11,8 +11,6 @@
   import cls from 'classnames';
   import { writable } from 'svelte/store';
 
-  import { getItems } from '../context';
-
   const AwaitedCascaderPanel = importComponent(
     () => import('./cascader.panel')
   );
@@ -57,7 +55,6 @@
     value,
     restProps: $$restProps,
   });
-  const { default: children, options } = getItems(['default', 'options']);
 </script>
 
 {#if $mergedProps.visible}
@@ -73,7 +70,6 @@
       })}
       value={$mergedProps.props.value ?? $mergedProps.value}
       slots={$slots}
-      optionItems={$options.length > 0 ? $options : $children}
       onValueChange={(v) => {
         value = v;
       }}
@@ -82,6 +78,3 @@
     </CascaderPanel>
   {/await}
 {/if}
-
-<style>
-</style>

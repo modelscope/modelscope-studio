@@ -63,7 +63,6 @@ class ModelScopeSpan(ModelScopeLayoutComponent):
                          elem_style=elem_style,
                          **kwargs)
 
-        self._internal.update(fragment=True)
         self.value = value
         self.props = props
 

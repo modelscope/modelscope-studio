@@ -71,7 +71,7 @@ const changelogFunctions: ChangelogFunctions = {
 
     return [changesetLink, ...updatedDepenenciesList].join('\n');
   },
-  getReleaseLine: async (changeset, type, options) => {
+  getReleaseLine: async (changeset, _type, options) => {
     if (!options || !options.repo) {
       throw new Error(
         'Please provide a repo to this changelog generator like this:\n"changelog": ["@changesets/changelog-github", { "repo": "org/repo" }]'
@@ -189,7 +189,7 @@ const changelogFunctions: ChangelogFunctions = {
           .trim();
       }
 
-      const [, _type, , summary] = changeset.summary
+      const [, type, , summary] = changeset.summary
         .trim()
         .match(/^(\w+)(\(.*\))?:\s*(.*)$/im) || [
         null,
@@ -200,8 +200,7 @@ const changelogFunctions: ChangelogFunctions = {
 
       const formatted_summary = handle_line(summary, prefix, suffix);
 
-      const convertedType =
-        _type === 'feat' || _type === 'fix' ? _type : 'chore';
+      const convertedType = type === 'feat' || type === 'fix' ? type : 'chore';
 
       (lines[release.name] as ChangesetMeta)[convertedType].push({
         summary: formatted_summary,

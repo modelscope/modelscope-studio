@@ -1,13 +1,12 @@
 import os
 from typing import Literal
 
+import modelscope_studio.components.antd as antd
+import modelscope_studio.components.base as ms
 from helper.Docs import Docs
 from helper.env import is_modelscope_studio
 from helper.Site import Site
 from legacy_app import legacy_demo
-
-import modelscope_studio.components.antd as antd
-import modelscope_studio.components.base as ms
 
 
 def get_text(text: str, cn_text: str):

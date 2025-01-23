@@ -15,8 +15,6 @@
   import cls from 'classnames';
   import { writable } from 'svelte/store';
 
-  import { getItems } from './context';
-
   const AwaitedBreadcrumb = importComponent(() => import('./breadcrumb'));
 
   export let gradio: Gradio;
@@ -58,7 +56,6 @@
     restProps: $$restProps,
   });
   const setSlotParams = getSetSlotParamsFn();
-  const { items, default: children } = getItems(['items', 'default']);
 </script>
 
 {#if $mergedProps.visible}
@@ -78,7 +75,6 @@
         dropdown_menu_select: 'dropdownProps_menu_select',
       })}
       slots={$slots}
-      slotItems={$items.length > 0 ? $items : $children}
       {setSlotParams}
     >
       <slot></slot>

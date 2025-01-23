@@ -1,7 +1,10 @@
 <svelte:options accessors={true} />
 
 <script lang="ts">
-  import { bindEvents } from '@svelte-preprocess-react/component';
+  import {
+    bindEvents,
+    importComponent,
+  } from '@svelte-preprocess-react/component';
   import {
     getSlotContext,
     getSlotKey,
@@ -12,8 +15,7 @@
   import cls from 'classnames';
   import { type Writable, writable } from 'svelte/store';
 
-  import { getSetItemFn } from '../context';
-
+  const AwaitedTabsItem = importComponent(() => import('./tabs.item'));
   export let gradio: Gradio;
   export let props: Record<string, any> = {};
   const updatedProps = writable(props);
@@ -52,8 +54,7 @@
     as_item,
     restProps: $$restProps,
   });
-  const setItem = getSetItemFn();
-  $: setItem($slotKey, $mergedProps._internal.index || 0, {
+  $: itemProps = {
     props: {
       style: $mergedProps.elem_style,
       className: cls($mergedProps.elem_classes, 'ms-gr-antd-tabs-item'),
@@ -65,20 +66,34 @@
     slots: {
       children: $slot,
       ...$slots,
+      icon: {
+        el: $slots.icon,
+        clone: true,
+      },
+      label: {
+        el: $slots.label,
+        clone: true,
+      },
     },
-  });
+  };
 </script>
 
-{#if $mergedProps.visible}
-  <svelte-slot bind:this={$slot}>
-    <slot></slot>
-  </svelte-slot>
-{/if}
+{#await AwaitedTabsItem then TabsItem}
+  <TabsItem
+    {...itemProps.props}
+    slots={itemProps.slots}
+    itemIndex={$mergedProps._internal.index || 0}
+    itemSlotKey={$slotKey}
+  >
+    {#if $mergedProps.visible}
+      <svelte-slot bind:this={$slot}>
+        <slot></slot>
+      </svelte-slot>
+    {/if}
+  </TabsItem>
+{/await}
 
 <style>
-  :global(.ms-gr-antd-noop-class) {
-    display: none;
-  }
   svelte-slot {
     display: none;
   }

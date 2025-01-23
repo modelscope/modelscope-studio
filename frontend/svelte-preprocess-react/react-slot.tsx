@@ -1,6 +1,8 @@
 import React, { forwardRef, useEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
-import { styleObject2HtmlStyle } from '@utils/styleObject2String';
+import { styleObject2HtmlStyle } from '@utils/style';
+
+import { useContextPropsContext } from './context';
 
 export interface ReactSlotProps {
   slot: HTMLElement;
@@ -14,32 +16,34 @@ function cloneElementWithEvents(element: HTMLElement) {
 
   const clonedElement = element.cloneNode(false) as HTMLElement;
   if (element._reactElement) {
+    const resolvedChildren: Array<React.ReactNode> & {
+      originalChildren: React.ReactNode;
+    } = React.Children.toArray(element._reactElement.props.children).map(
+      (child) => {
+        // get svelte-slot
+        if (React.isValidElement(child) && child.props.__slot__) {
+          const { portals: childPortals, clonedElement: childClonedElement } =
+            cloneElementWithEvents(child.props.el);
+
+          // Child Component
+          return React.cloneElement(child, {
+            ...child.props,
+            el: childClonedElement,
+            children: [
+              ...React.Children.toArray(child.props.children),
+              ...childPortals,
+            ],
+          });
+        }
+        return null;
+      }
+    ) as typeof resolvedChildren;
+    resolvedChildren.originalChildren = element._reactElement.props.children;
     portals.push(
       createPortal(
         React.cloneElement(element._reactElement, {
           ...element._reactElement.props,
-          children: React.Children.toArray(
-            element._reactElement.props.children
-          ).map((child) => {
-            // get svelte-slot
-            if (React.isValidElement(child) && child.props.__slot__) {
-              const {
-                portals: childPortals,
-                clonedElement: childClonedElement,
-              } = cloneElementWithEvents(child.props.el);
-
-              // Child Component
-              return React.cloneElement(child, {
-                ...child.props,
-                el: childClonedElement,
-                children: [
-                  ...React.Children.toArray(child.props.children),
-                  ...childPortals,
-                ],
-              });
-            }
-            return null;
-          }),
+          children: resolvedChildren,
         }),
         clonedElement
       )
@@ -94,9 +98,11 @@ function mountElRef(elRef: React.ForwardedRef<HTMLElement>, el: HTMLElement) {
 
 // eslint-disable-next-line react/display-name
 export const ReactSlot = forwardRef<HTMLElement, ReactSlotProps>(
-  ({ slot, clone, className, style }, elRef) => {
+  ({ slot, clone: cloneProp, className, style }, elRef) => {
     const ref = useRef<HTMLElement>();
     const [children, setChildren] = useState<React.ReactElement[]>([]);
+    const { forceClone } = useContextPropsContext();
+    const clone = forceClone ? true : cloneProp;
     useEffect(() => {
       if (!ref.current || !slot) {
         return;
@@ -147,15 +153,18 @@ export const ReactSlot = forwardRef<HTMLElement, ReactSlotProps>(
           return portals.length > 0;
         }
         const hasPortal = render();
-        if (!hasPortal) {
+        if (!hasPortal || forceClone) {
           observer = new window.MutationObserver(() => {
             const _hasPortal = render();
             if (_hasPortal) {
               observer?.disconnect();
-              // observer?.observe(slot, {
-              //   childList: true,
-              //   subtree: true,
-              // });
+              // for custom render like Table render
+              if (forceClone) {
+                observer?.observe(slot, {
+                  childList: true,
+                  subtree: true,
+                });
+              }
             }
           });
           observer.observe(slot, {
@@ -178,7 +187,7 @@ export const ReactSlot = forwardRef<HTMLElement, ReactSlotProps>(
         }
         observer?.disconnect();
       };
-    }, [slot, clone, className, style, elRef]);
+    }, [slot, clone, className, style, elRef, forceClone]);
 
     return React.createElement(
       'react-child',

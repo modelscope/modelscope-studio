@@ -11,8 +11,6 @@
   import cls from 'classnames';
   import { writable } from 'svelte/store';
 
-  import { getRuleItems } from '../context';
-
   const AwaitedFormItem = importComponent(() => import('./form.item'));
   export let gradio: Gradio;
   export let props: Record<string, any> = {};
@@ -56,7 +54,6 @@
     as_item,
     restProps: $$restProps,
   });
-  const { rules: ruleItems } = getRuleItems(['rules']);
 </script>
 
 {#if $mergedProps.visible}
@@ -69,7 +66,6 @@
       {...$mergedProps.props}
       {...bindEvents($mergedProps)}
       slots={$slots}
-      ruleItems={$ruleItems}
     >
       <slot />
     </FormItem>

@@ -15,8 +15,6 @@
   import cls from 'classnames';
   import { type Writable, writable } from 'svelte/store';
 
-  import { getItems } from '../tabs/context';
-
   const AwaitedCard = importComponent(() => import('./card'));
   export let gradio: Gradio;
   export let _internal: Record<string, any> = {};
@@ -53,8 +51,6 @@
     elem_style,
     restProps: $$restProps,
   });
-
-  const { tabList } = getItems(['tabList']);
 </script>
 
 {#if $mergedProps.visible}
@@ -70,7 +66,6 @@
       })}
       containsGrid={$mergedProps._internal.contains_grid}
       slots={$slots}
-      tabListItems={$tabList}
       {setSlotParams}
     >
       <slot></slot>

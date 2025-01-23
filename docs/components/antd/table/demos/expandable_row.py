@@ -1,5 +1,4 @@
 import gradio as gr
-
 import modelscope_studio.components.antd as antd
 import modelscope_studio.components.base as ms
 
@@ -46,16 +45,23 @@ data = [{
 
 with gr.Blocks() as demo:
     with ms.Application():
-        with antd.Table(data_source=data):
-            with ms.Slot("expandable"):
-                antd.Table.Expandable(
-                    expanded_row_render="""(record) => record.description""",
-                    row_expandable=
-                    """(record) => record.name !== 'Not Expandable'""")
-            antd.Table.Column(title="Name", data_index="name", key="name")
-            antd.Table.Column(title="Age", data_index="age", key="age")
-            antd.Table.Column(title="Address",
-                              data_index="address",
-                              key="address")
+        with antd.ConfigProvider():
+            with antd.Table(data_source=data):
+                with ms.Slot("expandable"):
+                    with antd.Table.Expandable(
+                            row_expandable=
+                            """(record) => record.name !== 'Not Expandable'"""
+                    ):
+                        with ms.Slot(
+                                "expandedRowRender",
+                                """(record) => ({ value: record.description })"""
+                        ):
+                            antd.Typography.Text(type="success")
+
+                antd.Table.Column(title="Name", data_index="name", key="name")
+                antd.Table.Column(title="Age", data_index="age", key="age")
+                antd.Table.Column(title="Address",
+                                  data_index="address",
+                                  key="address")
 if __name__ == "__main__":
     demo.queue().launch()

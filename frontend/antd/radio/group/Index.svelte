@@ -11,8 +11,6 @@
   import cls from 'classnames';
   import { writable } from 'svelte/store';
 
-  import { getItems } from '../context';
-
   const AwaitedRadioGroup = importComponent(() => import('./radio.group'));
 
   export let gradio: Gradio;
@@ -60,7 +58,6 @@
     value,
     restProps: $$restProps,
   });
-  const { options } = getItems(['options']);
 </script>
 
 {#if $mergedProps.visible}
@@ -74,7 +71,6 @@
       {...bindEvents($mergedProps)}
       value={$mergedProps.props.value ?? $mergedProps.value}
       slots={$slots}
-      optionItems={$options}
       onValueChange={(v) => {
         value = v;
       }}

@@ -4,7 +4,10 @@ import { get, type Writable } from 'svelte/store';
 
 export function useTargets(children: React.ReactNode, slotKey?: string) {
   const $targets = useMemo(() => {
-    const array = React.Children.toArray(children);
+    const array = React.Children.toArray(
+      (children as Array<any> & { originalChildren: React.ReactNode })
+        .originalChildren || children
+    );
     return (
       array as React.ReactElement<{
         node: TreeNode;
@@ -14,6 +17,7 @@ export function useTargets(children: React.ReactNode, slotKey?: string) {
       .filter((child) => {
         return (
           child.props.node &&
+          !child.props.node.ignore &&
           ((!slotKey && !child.props.nodeSlotKey) ||
             (slotKey && slotKey === child.props.nodeSlotKey))
         );
@@ -36,7 +40,9 @@ export function useTargets(children: React.ReactNode, slotKey?: string) {
         }
         return 0;
       })
-      .map((child) => child.props.node.target) as Writable<HTMLElement>[];
+      .map((child) => {
+        return child.props.node.target;
+      }) as Writable<HTMLElement>[];
   }, [children, slotKey]);
   const targets = useStores($targets);
   return targets;

@@ -1,7 +1,10 @@
 <svelte:options accessors={true} />
 
 <script lang="ts">
-  import { bindEvents } from '@svelte-preprocess-react/component';
+  import {
+    bindEvents,
+    importComponent,
+  } from '@svelte-preprocess-react/component';
   import {
     getSlotContext,
     getSlotKey,
@@ -12,8 +15,7 @@
   import cls from 'classnames';
   import { writable } from 'svelte/store';
 
-  import { getItems, getSetItemFn } from '../context';
-
+  const AwaitedMenuItem = importComponent(() => import('./menu.item'));
   export let gradio: Gradio;
   export let props: Record<string, any> = {};
   const updatedProps = writable(props);
@@ -24,7 +26,6 @@
   } = {};
 
   export let as_item: string | undefined;
-  export let label: string;
 
   // gradio properties
   export let visible = true;
@@ -42,7 +43,6 @@
     elem_classes,
     elem_style,
     as_item,
-    label,
     restProps: $$restProps,
   });
   const slots = getSlots();
@@ -55,46 +55,32 @@
     elem_classes,
     elem_style,
     as_item,
-    label,
     restProps: $$restProps,
   });
-  const setItem = getSetItemFn();
-  const { default: items } = getItems();
-  $: setItem($slotKey, $mergedProps._internal.index || 0, {
-    props: {
-      style: $mergedProps.elem_style,
-      className: cls(
-        $mergedProps.elem_classes,
-        $mergedProps.props.type
-          ? `ms-gr-antd-menu-item-${$mergedProps.props.type}`
-          : 'ms-gr-antd-menu-item',
-        $items.length > 0 ? 'ms-gr-antd-menu-item-submenu' : ''
-      ),
-      id: $mergedProps.elem_id,
-      label: $mergedProps.label,
-      ...$mergedProps.restProps,
-      ...$mergedProps.props,
-      ...bindEvents($mergedProps, {
-        title_click: 'titleClick',
-      }),
-    },
-    slots: {
+</script>
+
+{#await AwaitedMenuItem then MenuItem}
+  <MenuItem
+    style={$mergedProps.elem_style}
+    className={cls($mergedProps.elem_classes)}
+    id={$mergedProps.elem_id}
+    {...$mergedProps.restProps}
+    {...$mergedProps.props}
+    {...bindEvents($mergedProps, {
+      title_click: 'titleClick',
+    })}
+    slots={{
       ...$slots,
       icon: {
         el: $slots.icon,
         clone: true,
       },
-    },
-    children: $items.length > 0 ? $items : undefined,
-  });
-</script>
-
-{#if $mergedProps.visible}
-  <slot></slot>
-{/if}
-
-<style>
-  :global(.ms-gr-antd-noop-class) {
-    display: none;
-  }
-</style>
+    }}
+    itemIndex={$mergedProps._internal.index || 0}
+    itemSlotKey={$slotKey}
+  >
+    {#if $mergedProps.visible}
+      <slot></slot>
+    {/if}
+  </MenuItem>
+{/await}

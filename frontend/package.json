@@ -6,17 +6,17 @@
   "license": "Apache-2.0",
   "type": "module",
   "dependencies": {
-    "@ant-design/cssinjs": "^1.22.0",
+    "@ant-design/cssinjs": "^1.22.1",
     "@ant-design/icons": "^5.5.2",
     "@gradio/atoms": "0.7.4",
     "@gradio/button": "^0.2.43",
-    "@gradio/client": "^1.8.0",
+    "@gradio/client": "^1.10.0",
     "@gradio/icons": "0.4.1",
     "@gradio/preview": "0.13.0",
     "@gradio/statustracker": "^0.7.6",
     "@gradio/upload": "0.11.2",
     "@gradio/utils": "0.9.0",
-    "antd": "^5.22.2",
+    "antd": "^5.23.1",
     "classnames": "^2.5.1",
     "dayjs": "^1.11.12",
     "dequal": "^2.0.2",
@@ -26,7 +26,7 @@
     "react-dom": "^18.3.1",
     "svelte": "^4.2.19",
     "svelte-i18n": "^4.0.1",
-    "wavesurfer.js": "^7.8.9"
+    "wavesurfer.js": "^7.8.16"
   },
   "devDependencies": {
     "@babel/core": "^7.26.0",
@@ -35,9 +35,9 @@
     "@types/react": "^18.3.12",
     "@types/react-dom": "^18.3.1",
     "@vitejs/plugin-react-swc": "^3.7.2",
-    "less": "^4.2.1",
+    "less": "^4.2.2",
     "typescript-json-schema": "^0.65.1",
-    "vite": "^6.0.1"
+    "vite": "^6.0.7"
   },
   "main_changeset": true
 }

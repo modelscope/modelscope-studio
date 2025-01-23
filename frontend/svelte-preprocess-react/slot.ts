@@ -1,9 +1,9 @@
-import { getSetLoadingStatusFn } from '@svelte-preprocess-react/provider';
 import { isUndefined } from 'lodash-es';
 import { getContext, setContext } from 'svelte';
 import { get, type Writable, writable } from 'svelte/store';
 
-import { getComponentRestProps } from './component';
+import { mapProps } from './component';
+import { getSetLoadingStatusFn } from './provider';
 
 const slotsKey = '$$ms-gr-slots-key';
 
@@ -29,13 +29,33 @@ export function getSetSlotFn() {
   };
 }
 
-const slotParamsKey = '$$ms-gr-render-slot-context-key';
+const slotParamsMappingFnKey = '$$ms-gr-slot-params-mapping-fn-key';
+
+export function getSlotParamsMappingFn() {
+  const slotParamsMappingFn = getContext(slotParamsMappingFnKey) as
+    | Writable<((...args: any[]) => any) | undefined>
+    | undefined;
+  return slotParamsMappingFn;
+}
+
+export function getSetSlotParamsMappingFnFn(fn?: (...args: any[]) => any) {
+  return setContext(
+    slotParamsMappingFnKey,
+    writable<((...args: any[]) => any) | undefined>(fn)
+  );
+}
+
+const slotParamsKey = '$$ms-gr-slot-params-key';
 
 export type SetSlotParams = (
   key: string,
   params: any[] | ((prevValue: any[]) => any[])
 ) => void;
 
+/**
+ *
+ * @deprecated
+ */
 export function getSetSlotParamsFn(): SetSlotParams {
   const slotParams = setContext(
     slotParamsKey,
@@ -56,6 +76,7 @@ export function getSetSlotParamsFn(): SetSlotParams {
     });
   };
 }
+
 export function getSlotParams() {
   const slotParams = getContext(slotParamsKey) as
     | Writable<Record<string, any[]>>
@@ -64,7 +85,7 @@ export function getSlotParams() {
   return slotParams;
 }
 
-const slotContextKey = '$$ms-gr-context-key';
+const slotContextKey = '$$ms-gr-slot-context-key';
 export function getSetSlotContextFn({ inherit }: { inherit?: boolean } = {}) {
   const value = writable();
   let unsubscribe: (() => void) | undefined;
@@ -85,7 +106,7 @@ export function getSetSlotContextFn({ inherit }: { inherit?: boolean } = {}) {
   };
 }
 
-function ensureObjectCtxValue(ctxValue: any) {
+export function ensureObjectCtxValue(ctxValue: any) {
   if (isUndefined(ctxValue)) {
     return {};
   }
@@ -97,7 +118,7 @@ function ensureObjectCtxValue(ctxValue: any) {
 
 // for ms.Each
 const subIndexKey = '$$ms-gr-sub-index-context-key';
-function getSubIndexContext() {
+export function getSubIndexContext() {
   return (getContext(subIndexKey) as number) || null;
 }
 
@@ -105,15 +126,12 @@ function setSubIndexContext(index?: number) {
   return setContext(subIndexKey, index);
 }
 
-/**
- *
- * will run `resetSlotKey` inside
- */
 export function getSlotContext<
   T extends {
     as_item?: string;
     _internal: Record<string, any>;
     restProps?: Record<string, any>;
+    props?: Record<string, any>;
   },
 >(
   props: T,
@@ -136,6 +154,11 @@ export function getSlotContext<
     throw new Error('`as_item` and `_internal` is required');
   }
   const slotKey = getSlotKey();
+  // get slotParamsMappingFn for slot
+  const slotParamsMappingFn = getSlotParamsMappingFn();
+  // cleanup
+  const setSlotParamsMappingFn = getSetSlotParamsMappingFnFn();
+  setSlotParamsMappingFn.set(undefined);
   const componentSlotContext = setComponentSlotContext({
     slot: undefined,
     index: props._internal.index,
@@ -154,6 +177,7 @@ export function getSlotContext<
   if (typeof props._internal.subIndex === 'number') {
     setSubIndexContext(props._internal.subIndex);
   }
+
   if (slotKey) {
     slotKey.subscribe((v) => {
       componentSlotContext.slotKey.set(v as string);
@@ -163,28 +187,26 @@ export function getSlotContext<
   if (shouldRestSlotKey) {
     resetSlotKey();
   }
-  const ctx = getContext(slotContextKey) as Writable<T>;
-  const as_item = get(ctx)?.as_item || props.as_item;
-  const initialCtxValue: Record<string, any> = ensureObjectCtxValue(
-    ctx
-      ? as_item
-        ? (get(ctx)?.[as_item as keyof T] as Record<string, any>) || {}
-        : get(ctx) || {}
-      : {}
-  );
 
+  const as_item = props.as_item;
   const mergeRestProps = (
     restProps?: Record<string, any>,
-    ctxValue?: Record<string, any>
+    __render_as_item?: string
   ) => {
     return restProps
-      ? getComponentRestProps(
-          {
-            ...restProps,
-            ...(ctxValue || {}),
-          },
-          restPropsMapping
-        )
+      ? {
+          ...mapProps(
+            {
+              ...restProps,
+            },
+            restPropsMapping
+          ),
+          __render_slotParamsMappingFn: slotParamsMappingFn
+            ? get(slotParamsMappingFn)
+            : undefined,
+          __render_as_item,
+          __render_restPropsMapping: restPropsMapping,
+        }
       : undefined;
   };
 
@@ -194,57 +216,34 @@ export function getSlotContext<
       ...props._internal,
       index: subIndex ?? props._internal.index,
     },
-    ...initialCtxValue,
-    restProps: mergeRestProps(props.restProps, initialCtxValue),
+    restProps: mergeRestProps(props.restProps, as_item),
     originalRestProps: props.restProps,
   });
-  if (!ctx) {
-    return [
-      mergedProps,
-      (v) => {
-        setLoadingStatus(v.restProps?.loading_status);
-        mergedProps.set({
-          ...v,
-          _internal: {
-            ...v._internal,
-            index: subIndex ?? v._internal.index,
-          },
-          restProps: mergeRestProps(v.restProps),
-          originalRestProps: v.restProps,
-        });
-      },
-    ];
+
+  // for paramsMapping of Slot
+  if (slotParamsMappingFn) {
+    slotParamsMappingFn.subscribe((v) => {
+      mergedProps.update((prev) => ({
+        ...prev,
+        restProps: {
+          ...prev.restProps,
+          __slotParamsMappingFn: v,
+        },
+      }));
+    });
   }
-  ctx.subscribe((ctxValue) => {
-    const { as_item: merged_as_item } = get(mergedProps);
-    if (merged_as_item) {
-      ctxValue = (ctxValue as Record<string, any>)?.[merged_as_item];
-    }
-    ctxValue = ensureObjectCtxValue(ctxValue);
-    mergedProps.update((prev) => ({
-      ...prev,
-      ...(ctxValue || {}),
-      restProps: mergeRestProps(prev.restProps, ctxValue),
-    }));
-  });
 
   return [
     mergedProps,
     (v) => {
-      const ctxValue: Record<string, any> = ensureObjectCtxValue(
-        v.as_item
-          ? (get(ctx)?.[v.as_item as keyof T] as Record<string, any>) || {}
-          : get(ctx) || {}
-      );
       setLoadingStatus(v.restProps?.loading_status);
-      return mergedProps.set({
+      mergedProps.set({
         ...v,
         _internal: {
           ...v._internal,
           index: subIndex ?? v._internal.index,
         },
-        ...ctxValue,
-        restProps: mergeRestProps(v.restProps, ctxValue),
+        restProps: mergeRestProps(v.restProps, v.as_item),
         originalRestProps: v.restProps,
       });
     },

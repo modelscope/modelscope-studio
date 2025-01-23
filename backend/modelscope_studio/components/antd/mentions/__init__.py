@@ -37,6 +37,9 @@ class AntdMentions(ModelScopeDataLayoutComponent):
         EventListener("resize",
                       callback=lambda block: block._internal.update(
                           bind_resize_event=True)),
+        EventListener("popup_scroll",
+                      callback=lambda block: block._internal.update(
+                          bind_popupScroll_event=True)),
     ]
 
     # supported slots

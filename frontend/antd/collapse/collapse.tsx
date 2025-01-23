@@ -6,54 +6,61 @@ import { renderItems } from '@utils/renderItems';
 import { renderParamsSlot } from '@utils/renderParamsSlot';
 import { Collapse as ACollapse, type GetProps } from 'antd';
 
-import { type Item } from './context';
+import { useItems, withItemsContextProvider } from './context';
 
 type CollapseProps = GetProps<typeof ACollapse>;
 export const Collapse = sveltify<
   CollapseProps & {
-    slotItems: Item[];
     setSlotParams: SetSlotParams;
   },
   ['expandIcon']
 >(
-  ({
-    slots,
-    items,
-    slotItems,
-    children,
-    onChange,
-    setSlotParams,
-    expandIcon,
-    ...props
-  }) => {
-    const expandIconFunction = useFunction(expandIcon);
-    return (
-      <>
-        {children}
-        <ACollapse
-          {...props}
-          onChange={(key) => {
-            onChange?.(key);
-          }}
-          expandIcon={
-            slots.expandIcon
-              ? renderParamsSlot({ slots, setSlotParams, key: 'expandIcon' })
-              : expandIconFunction
-          }
-          items={useMemo(() => {
-            // ['label','extra', 'children']
-            return (
-              items ||
-              renderItems<NonNullable<CollapseProps['items']>[number]>(
-                slotItems,
-                { clone: true }
-              )
-            );
-          }, [items, slotItems])}
-        />
-      </>
-    );
-  }
+  withItemsContextProvider(
+    ['default', 'items'],
+    ({
+      slots,
+      items,
+      children,
+      onChange,
+      setSlotParams,
+      expandIcon,
+      ...props
+    }) => {
+      const { items: slotItems } = useItems<['default', 'items']>();
+      const resolvedSlotItems =
+        slotItems.items.length > 0 ? slotItems.items : slotItems.default;
+      const expandIconFunction = useFunction(expandIcon);
+      return (
+        <>
+          <div style={{ display: 'none' }}>{children}</div>
+          <ACollapse
+            {...props}
+            onChange={(key) => {
+              onChange?.(key);
+            }}
+            expandIcon={
+              slots.expandIcon
+                ? renderParamsSlot({ slots, setSlotParams, key: 'expandIcon' })
+                : expandIconFunction
+            }
+            items={useMemo(() => {
+              // ['label','extra', 'children']
+              return (
+                items ||
+                renderItems<NonNullable<CollapseProps['items']>[number]>(
+                  resolvedSlotItems,
+                  {
+                    // for the children slot
+                    // clone: true,
+                  }
+                )
+              );
+            }, [items, resolvedSlotItems])}
+          />
+        </>
+      );
+    }
+  )
 );
 
 export default Collapse;

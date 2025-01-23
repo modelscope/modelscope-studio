@@ -9,7 +9,7 @@ import { renderItems } from '@utils/renderItems';
 import { renderParamsSlot } from '@utils/renderParamsSlot';
 import { AutoComplete as AAutoComplete, type GetProps } from 'antd';
 
-import { type Item } from './context';
+import { useItems, withItemsContextProvider } from './context';
 
 // eslint-disable-next-line react/display-name
 const AutoCompleteChildrenWrapper = forwardRef<
@@ -32,97 +32,104 @@ const AutoCompleteChildrenWrapper = forwardRef<
 
 export const AutoComplete = sveltify<
   GetProps<typeof AAutoComplete> & {
-    optionItems: Item[];
     onValueChange: (value: string) => void;
     setSlotParams: SetSlotParams;
   },
   ['allowClear.clearIcon', 'children', 'dropdownRender', 'notFoundContent']
 >(
-  ({
-    slots,
-    children,
-    onValueChange,
-    filterOption,
-    onChange,
-    options,
-    optionItems,
-    getPopupContainer,
-    dropdownRender,
-    elRef,
-    setSlotParams,
-    ...props
-  }) => {
-    const getPopupContainerFunction = useFunction(getPopupContainer);
-    const filterOptionFunction = useFunction(filterOption);
-    const dropdownRenderFunction = useFunction(dropdownRender);
-    const [value, setValue] = useValueChange({
+  withItemsContextProvider(
+    ['options', 'default'],
+    ({
+      slots,
+      children,
       onValueChange,
-      value: props.value,
-    });
-    return (
-      <>
-        {slots.children ? null : (
-          <div style={{ display: 'none' }}>{children}</div>
-        )}
+      filterOption,
+      onChange,
+      options,
+      getPopupContainer,
+      dropdownRender,
+      elRef,
+      setSlotParams,
+      ...props
+    }) => {
+      const getPopupContainerFunction = useFunction(getPopupContainer);
+      const filterOptionFunction = useFunction(filterOption);
+      const dropdownRenderFunction = useFunction(dropdownRender);
+      const [value, setValue] = useValueChange({
+        onValueChange,
+        value: props.value,
+      });
+      const { items: slotItems } = useItems<['options', 'default']>();
+      const resolvedSlotItems =
+        slotItems.options.length > 0 ? slotItems.options : slotItems.default;
+      return (
+        <>
+          {slots.children ? null : (
+            <div style={{ display: 'none' }}>{children}</div>
+          )}
 
-        <AAutoComplete
-          {...props}
-          value={value}
-          ref={elRef}
-          allowClear={
-            slots['allowClear.clearIcon']
-              ? {
-                  clearIcon: <ReactSlot slot={slots['allowClear.clearIcon']} />,
-                }
-              : props.allowClear
-          }
-          options={useMemo(() => {
-            return (
-              options ||
-              renderItems<
-                NonNullable<GetProps<typeof AAutoComplete>['options']>[number]
-              >(optionItems, {
-                children: 'options',
-                clone: true,
-              })
-            );
-          }, [optionItems, options])}
-          onChange={(v, ...args) => {
-            onChange?.(v, ...args);
-            setValue(v as string);
-          }}
-          notFoundContent={
-            slots.notFoundContent ? (
-              <ReactSlot slot={slots.notFoundContent} />
-            ) : (
-              props.notFoundContent
-            )
-          }
-          filterOption={filterOptionFunction || filterOption}
-          getPopupContainer={getPopupContainerFunction}
-          dropdownRender={
-            slots.dropdownRender
-              ? renderParamsSlot(
-                  {
-                    slots,
-                    setSlotParams,
-                    key: 'dropdownRender',
-                  },
-                  { clone: true }
-                )
-              : dropdownRenderFunction
-          }
-        >
-          {slots.children ? (
-            <AutoCompleteChildrenWrapper>
-              <div style={{ display: 'none' }}>{children}</div>
-              <ReactSlot slot={slots.children} />
-            </AutoCompleteChildrenWrapper>
-          ) : null}
-        </AAutoComplete>
-      </>
-    );
-  }
+          <AAutoComplete
+            {...props}
+            value={value}
+            ref={elRef}
+            allowClear={
+              slots['allowClear.clearIcon']
+                ? {
+                    clearIcon: (
+                      <ReactSlot slot={slots['allowClear.clearIcon']} />
+                    ),
+                  }
+                : props.allowClear
+            }
+            options={useMemo(() => {
+              return (
+                options ||
+                renderItems<
+                  NonNullable<GetProps<typeof AAutoComplete>['options']>[number]
+                >(resolvedSlotItems, {
+                  children: 'options',
+
+                  // clone: true,
+                })
+              );
+            }, [resolvedSlotItems, options])}
+            onChange={(v, ...args) => {
+              onChange?.(v, ...args);
+              setValue(v as string);
+            }}
+            notFoundContent={
+              slots.notFoundContent ? (
+                <ReactSlot slot={slots.notFoundContent} />
+              ) : (
+                props.notFoundContent
+              )
+            }
+            filterOption={filterOptionFunction || filterOption}
+            getPopupContainer={getPopupContainerFunction}
+            dropdownRender={
+              slots.dropdownRender
+                ? renderParamsSlot(
+                    {
+                      slots,
+                      setSlotParams,
+                      key: 'dropdownRender',
+                    },
+                    { clone: true }
+                  )
+                : dropdownRenderFunction
+            }
+          >
+            {slots.children ? (
+              <AutoCompleteChildrenWrapper>
+                <div style={{ display: 'none' }}>{children}</div>
+                <ReactSlot slot={slots.children} />
+              </AutoCompleteChildrenWrapper>
+            ) : null}
+          </AAutoComplete>
+        </>
+      );
+    }
+  )
 );
 
 export default AutoComplete;

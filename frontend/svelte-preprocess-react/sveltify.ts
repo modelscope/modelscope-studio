@@ -36,7 +36,10 @@ type CommonProps<S extends readonly string[] = []> = S extends []
  * Convert a React component into a Svelte component.
  */
 export function sveltify<P, const S extends readonly string[] = []>(
-  reactComponent: React.ComponentType<P & CommonProps<S>>
+  reactComponent: React.ComponentType<P & CommonProps<S>>,
+  sveltifyOptions: {
+    ignore?: boolean;
+  } = {}
 ):
   | Promise<Sveltified<Omit<P & CommonProps<S>, 'children'>>>
   | Sveltified<Omit<P & CommonProps<S>, 'children'>> {
@@ -57,6 +60,7 @@ export function sveltify<P, const S extends readonly string[] = []>(
             target: init.target,
             slotIndex: init.slotIndex,
             subSlotIndex: init.subSlotIndex,
+            ignore: sveltifyOptions.ignore,
             slotKey: init.slotKey,
             nodes: [],
           };

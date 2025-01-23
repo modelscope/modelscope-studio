@@ -53,7 +53,7 @@ class AntdTransfer(ModelScopeDataLayoutComponent):
             item_render: str | None = None,
             select_all_labels: list[str] | None = None,
             selected_keys: list[str] | list[int | float] | None = None,
-            show_search: bool | None = None,
+            show_search: bool | dict | None = None,
             show_select_all: bool | None = True,
             status: Literal['error', 'warning'] | None = None,
             target_keys: list[str] | list[int | float] | None = None,

@@ -1,15 +1,17 @@
 <svelte:options accessors={true} />
 
 <script lang="ts">
-  import { bindEvents } from '@svelte-preprocess-react/component';
+  import {
+    bindEvents,
+    importComponent,
+  } from '@svelte-preprocess-react/component';
   import { getSlotContext, getSlotKey } from '@svelte-preprocess-react/slot';
   import type React from 'react';
   import type { Gradio } from '@gradio/utils';
   import cls from 'classnames';
-  import { type Writable, writable } from 'svelte/store';
+  import { writable } from 'svelte/store';
 
-  import { getSetItemFn } from '../context';
-
+  const AwaitedCol = importComponent(() => import('./col'));
   export let gradio: Gradio;
   export let props: Record<string, any> = {};
   const updatedProps = writable(props);
@@ -50,31 +52,29 @@
     restProps: $$restProps,
   });
 
-  const slot: Writable<HTMLElement> = writable();
-  const setCol = getSetItemFn();
-  $: {
-    if ($slot) {
-      setCol($slotKey, $mergedProps._internal.index || 0, {
-        el: $slot,
-        props: {
-          style: $mergedProps.elem_style,
-          className: cls($mergedProps.elem_classes, 'ms-gr-antd-col'),
-          id: $mergedProps.elem_id,
-          ...$mergedProps.restProps,
-          ...$mergedProps.props,
-          ...bindEvents($mergedProps),
-        },
-        slots: {},
-      });
-    }
-  }
+  const slot = writable<HTMLElement>();
 </script>
 
-{#if $mergedProps.visible}
-  <svelte-slot bind:this={$slot}>
-    <slot></slot>
-  </svelte-slot>
-{/if}
+{#await AwaitedCol then Col}
+  <Col
+    style={$mergedProps.elem_style}
+    className={cls($mergedProps.elem_classes, 'ms-gr-antd-col')}
+    id={$mergedProps.elem_id}
+    {...$mergedProps.restProps}
+    {...$mergedProps.props}
+    {...bindEvents($mergedProps)}
+    itemIndex={$mergedProps._internal.index || 0}
+    itemSlotKey={$slotKey}
+    itemElement={$slot}
+    slots={{}}
+  >
+    {#if $mergedProps.visible}
+      <svelte-slot bind:this={$slot}>
+        <slot></slot>
+      </svelte-slot>
+    {/if}
+  </Col>
+{/await}
 
 <style>
   svelte-slot {

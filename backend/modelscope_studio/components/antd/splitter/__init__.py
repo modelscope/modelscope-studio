@@ -39,6 +39,7 @@ class AntdSplitter(ModelScopeLayoutComponent):
             props: dict | None = None,
             *,
             layout: Literal['horizontal', 'vertical'] | None = 'horizontal',
+            lazy: bool | None = None,
             root_class_name: str | None = None,
             as_item: str | None = None,
             _internal: None = None,
@@ -62,6 +63,7 @@ class AntdSplitter(ModelScopeLayoutComponent):
                          **kwargs)
         self.props = props
         self.layout = layout
+        self.lazy = lazy
         self.root_class_name = root_class_name
 
     FRONTEND_DIR = resolve_frontend_dir("splitter")

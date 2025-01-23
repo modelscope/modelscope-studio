@@ -12,6 +12,7 @@ export type Item<T extends string = 'children'> =
             // slot key, render args
             callback?: (key: string, params: any[]) => void;
             clone?: boolean;
+            forceClone?: boolean;
           }
       >;
       el?: HTMLElement;

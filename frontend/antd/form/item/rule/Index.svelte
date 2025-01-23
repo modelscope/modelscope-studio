@@ -1,16 +1,16 @@
 <svelte:options accessors={true} />
 
 <script lang="ts">
-  import { bindEvents } from '@svelte-preprocess-react/component';
+  import {
+    bindEvents,
+    importComponent,
+  } from '@svelte-preprocess-react/component';
   import { getSlotContext, getSlotKey } from '@svelte-preprocess-react/slot';
   import type React from 'react';
   import type { Gradio } from '@gradio/utils';
   import { writable } from 'svelte/store';
 
-  import { getSetRuleItemFn } from '../../context';
-
-  import './global.css';
-
+  const AwaitedFormItemRule = importComponent(() => import('./form.item.rule'));
   export let gradio: Gradio;
   export let props: Record<string, any> = {};
   const updatedProps = writable(props);
@@ -49,18 +49,25 @@
     as_item,
     restProps: $$restProps,
   });
-  const setRuleItem = getSetRuleItemFn();
-  $: {
-    setRuleItem($slotKey, $mergedProps._internal.index || 0, {
-      props: {
-        ...$mergedProps.restProps,
-        ...$mergedProps.props,
-        ...bindEvents($mergedProps),
-      },
-      slots: {},
-    });
-  }
+  $: itemProps = {
+    props: {
+      ...$mergedProps.restProps,
+      ...$mergedProps.props,
+      ...bindEvents($mergedProps),
+    },
+    slots: {},
+  };
 </script>
 
-<style>
-</style>
+{#await AwaitedFormItemRule then FormItemRule}
+  <FormItemRule
+    {...itemProps.props}
+    slots={itemProps.slots}
+    itemIndex={$mergedProps._internal.index || 0}
+    itemSlotKey={$slotKey}
+  >
+    {#if $mergedProps.visible}
+      <slot></slot>
+    {/if}
+  </FormItemRule>
+{/await}

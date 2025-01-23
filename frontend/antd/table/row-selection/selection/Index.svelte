@@ -1,7 +1,10 @@
 <svelte:options accessors={true} />
 
 <script lang="ts">
-  import { bindEvents } from '@svelte-preprocess-react/component';
+  import {
+    bindEvents,
+    importComponent,
+  } from '@svelte-preprocess-react/component';
   import {
     getSlotContext,
     getSlotKey,
@@ -12,8 +15,9 @@
   import cls from 'classnames';
   import { writable } from 'svelte/store';
 
-  import { getSetSelectionItemFn, type Item } from '../../context';
-
+  const AwaitedTableRowSelectionSelection = importComponent(
+    () => import('./table.row-selection.selection')
+  );
   export let gradio: Gradio;
   export let props: Record<string, any> = {};
   const updatedProps = writable(props);
@@ -61,36 +65,30 @@
     built_in_selection,
     restProps: $$restProps,
   });
-  const setSelectionItem = getSetSelectionItemFn();
-  $: setSelectionItem<Item | string>(
-    $slotKey,
-    $mergedProps._internal.index || 0,
-    $mergedProps.built_in_selection
-      ? $mergedProps.built_in_selection
-      : {
-          props: {
-            style: $mergedProps.elem_style,
-            className: cls(
-              $mergedProps.elem_classes,
-              'ms-gr-antd-table-selection'
-            ),
-            id: $mergedProps.elem_id,
-            text: $mergedProps.text,
-            ...$mergedProps.restProps,
-            ...$mergedProps.props,
-            ...bindEvents($mergedProps),
-          },
-          slots: $slots,
-        }
-  );
+  $: itemProps = {
+    props: {
+      style: $mergedProps.elem_style,
+      className: cls($mergedProps.elem_classes, 'ms-gr-antd-table-selection'),
+      id: $mergedProps.elem_id,
+      text: $mergedProps.text,
+      ...$mergedProps.restProps,
+      ...$mergedProps.props,
+      ...bindEvents($mergedProps),
+    },
+    slots: $slots,
+  };
 </script>
 
-{#if $mergedProps.visible}
-  <slot></slot>
-{/if}
-
-<style>
-  :global(.ms-gr-antd-noop-class) {
-    display: none;
-  }
-</style>
+{#await AwaitedTableRowSelectionSelection then TableRowSelectionSelection}
+  <TableRowSelectionSelection
+    {...itemProps.props}
+    slots={itemProps.slots}
+    itemSlotKey={$slotKey}
+    itemBuiltIn={$mergedProps.built_in_selection}
+    itemIndex={$mergedProps._internal.index || 0}
+  >
+    {#if $mergedProps.visible}
+      <slot></slot>
+    {/if}
+  </TableRowSelectionSelection>
+{/await}

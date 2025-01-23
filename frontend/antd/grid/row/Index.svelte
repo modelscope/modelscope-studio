@@ -11,8 +11,6 @@
   import cls from 'classnames';
   import { writable } from 'svelte/store';
 
-  import { getItems } from '../context';
-
   const AwaitedRow = importComponent(() => import('./row'));
 
   export let gradio: Gradio;
@@ -53,7 +51,6 @@
     as_item,
     restProps: $$restProps,
   });
-  const { default: cols } = getItems();
 </script>
 
 {#if $mergedProps.visible}
@@ -66,7 +63,6 @@
       {...$mergedProps.props}
       {...bindEvents($mergedProps)}
       slots={$slots}
-      cols={$cols}
     >
       <slot />
     </Row>

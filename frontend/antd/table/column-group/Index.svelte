@@ -1,7 +1,10 @@
 <svelte:options accessors={true} />
 
 <script lang="ts">
-  import { bindEvents } from '@svelte-preprocess-react/component';
+  import {
+    bindEvents,
+    importComponent,
+  } from '@svelte-preprocess-react/component';
   import {
     getSlotContext,
     getSlotKey,
@@ -12,8 +15,9 @@
   import cls from 'classnames';
   import { writable } from 'svelte/store';
 
-  import { getColumnItems, getSetColumnItemFn } from '../context';
-
+  const AwaitedTableColumnGroup = importComponent(
+    () => import('./table.column-group')
+  );
   export let gradio: Gradio;
   export let props: Record<string, any> = {};
   const updatedProps = writable(props);
@@ -55,9 +59,7 @@
     restProps: $$restProps,
   });
 
-  const setColumnItem = getSetColumnItemFn();
-  const { default: columnItems } = getColumnItems();
-  $: setColumnItem($slotKey, $mergedProps._internal.index || 0, {
+  $: itemProps = {
     props: {
       style: $mergedProps.elem_style,
       className: cls(
@@ -71,16 +73,18 @@
       ...bindEvents($mergedProps),
     },
     slots: $slots,
-    children: $columnItems || [],
-  });
+  };
 </script>
 
-{#if $mergedProps.visible}
-  <slot></slot>
-{/if}
-
-<style>
-  :global(.ms-gr-antd-noop-class) {
-    display: none;
-  }
-</style>
+{#await AwaitedTableColumnGroup then TableColumnGroup}
+  <TableColumnGroup
+    {...itemProps.props}
+    slots={itemProps.slots}
+    itemSlotKey={$slotKey}
+    itemIndex={$mergedProps._internal.index || 0}
+  >
+    {#if $mergedProps.visible}
+      <slot></slot>
+    {/if}
+  </TableColumnGroup>
+{/await}
