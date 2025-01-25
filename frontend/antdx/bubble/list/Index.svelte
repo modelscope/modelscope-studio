@@ -11,8 +11,6 @@
   import cls from 'classnames';
   import { writable } from 'svelte/store';
 
-  import { getItems, getRoleItems } from './context';
-
   const AwaitedBubbleList = importComponent(() => import('./bubble.list'));
 
   export let gradio: Gradio;
@@ -53,8 +51,6 @@
     as_item,
     restProps: $$restProps,
   });
-  const { items, default: children } = getItems(['items', 'default']);
-  const { roles } = getRoleItems(['roles']);
 </script>
 
 {#if $mergedProps.visible}
@@ -67,8 +63,6 @@
       {...$mergedProps.props}
       {...bindEvents($mergedProps)}
       slots={$slots}
-      slotItems={$items.length > 0 ? $items : $children}
-      roleItems={$roles}
     >
       <slot></slot>
     </BubbleList>

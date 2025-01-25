@@ -106,13 +106,11 @@ export const createItemsContext = () => {
       (slotKey, index, value) => {
         if (slotKey) {
           const prev = itemsRef.current;
-          // console.log(prev, slotKey, allowedSlots);
-          const newValue = [...prev[slotKey]];
-          if (allowedSlots.includes(slotKey)) {
-            newValue[index] = value;
-          } else {
-            newValue[index] = undefined;
+          if (!allowedSlots.includes(slotKey)) {
+            return;
           }
+          const newValue = [...prev[slotKey]];
+          newValue[index] = value;
           itemsRef.current = {
             ...prev,
             [slotKey]: newValue,

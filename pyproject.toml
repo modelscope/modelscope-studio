@@ -203,6 +203,11 @@ artifacts = [
   "/backend/modelscope_studio/components/legacy/WaterfallGallery/templates",
   "/backend/modelscope_studio/components/antd/form/provider/templates",
   "/backend/modelscope_studio/components/antd/modal/static/templates",
+  "/backend/modelscope_studio/components/antdx/bubble/templates",
+  "/backend/modelscope_studio/components/antdx/bubble/list/templates",
+  "/backend/modelscope_studio/components/antdx/bubble/list/item/templates",
+  "/backend/modelscope_studio/components/antdx/bubble/list/role/templates",
+  "/backend/modelscope_studio/components/base/markdown/templates",
 ]
 
 [tool.hatch.build.targets.sdist]

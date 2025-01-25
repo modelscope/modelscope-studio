@@ -1,7 +1,10 @@
 <svelte:options accessors={true} />
 
 <script lang="ts">
-  import { bindEvents } from '@svelte-preprocess-react/component';
+  import {
+    bindEvents,
+    importComponent,
+  } from '@svelte-preprocess-react/component';
   import {
     getSetSlotParamsFn,
     getSlotContext,
@@ -15,8 +18,9 @@
   import cls from 'classnames';
   import { writable } from 'svelte/store';
 
-  import { getSetItemFn } from '../context';
-
+  const AwaitedBubbleListItem = importComponent(
+    () => import('./bubble.list.item')
+  );
   export let gradio: Gradio;
   export let props: Record<string, any> = {};
   const updatedProps = writable(props);
@@ -54,7 +58,12 @@
     as_item,
     restProps: $$restProps,
   });
-  const setItem = getSetItemFn();
+
+  let itemProps = {
+    props: {},
+    slots: {},
+  };
+
   $: {
     let avatar = $mergedProps.props.avatar || $mergedProps.restProps.avatar;
     if ($slots.avatar) {
@@ -70,7 +79,8 @@
           : avatar?.src,
       };
     }
-    setItem($slotKey, $mergedProps._internal.index || 0, {
+
+    itemProps = {
       props: {
         style: $mergedProps.elem_style,
         className: cls(
@@ -96,6 +106,8 @@
       slots: {
         ...$slots,
         avatar: undefined,
+        'avatar.icon': undefined,
+        'avatar.src': undefined,
         loadingRender: {
           el: $slots.loadingRender,
           callback: setSlotParams,
@@ -105,10 +117,19 @@
           callback: setSlotParams,
         },
       },
-    });
+    };
   }
 </script>
 
-{#if $mergedProps.visible}
-  <slot></slot>
-{/if}
+{#await AwaitedBubbleListItem then BubbleListItem}
+  <BubbleListItem
+    {...itemProps.props}
+    slots={itemProps.slots}
+    itemIndex={$mergedProps._internal.index || 0}
+    itemSlotKey={$slotKey}
+  >
+    {#if $mergedProps.visible}
+      <slot></slot>
+    {/if}
+  </BubbleListItem>
+{/await}

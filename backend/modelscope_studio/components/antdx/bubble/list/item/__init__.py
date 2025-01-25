@@ -88,7 +88,7 @@ class AntdXBubbleListItem(ModelScopeLayoutComponent):
         self.message_render = message_render
         self.root_class_name = root_class_name
 
-    FRONTEND_DIR = resolve_frontend_dir("bubble", ["list", "role"],
+    FRONTEND_DIR = resolve_frontend_dir("bubble", ["list", "item"],
                                         type="antdx")
 
     @property

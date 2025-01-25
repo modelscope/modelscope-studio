@@ -1,9 +1,11 @@
-import { createItemsContext } from '@utils/createItemsContext';
+import { createItemsContext } from '@utils/createItemsContext2';
 
-const { getItems: getRoleItems, getSetItemFn: getSetRoleItemFn } =
-  createItemsContext('antdx-bubble-role');
+export const { useItems, withItemsContextProvider, ItemHandler } =
+  createItemsContext();
 
-const { getItems, getSetItemFn } = createItemsContext('antdx-bubble');
-
-export { getItems, getRoleItems, getSetItemFn, getSetRoleItemFn };
-export * from '@utils/createItemsContext';
+export const {
+  useItems: useRoleItems,
+  withItemsContextProvider: withRoleItemsContextProvider,
+  ItemHandler: RoleItemHandler,
+} = createItemsContext();
+export * from '@utils/createItemsContext2';

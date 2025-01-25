@@ -30,9 +30,3 @@
     <slot></slot>
   </BubbleListRole>
 {/await}
-
-<style>
-  :global(.ms-gr-antd-noop-class) {
-    display: none;
-  }
-</style>

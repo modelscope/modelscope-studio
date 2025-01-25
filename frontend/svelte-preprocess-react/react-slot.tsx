@@ -1,6 +1,7 @@
 import React, { forwardRef, useEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { styleObject2HtmlStyle } from '@utils/style';
+import { debounce } from 'lodash-es';
 
 import { useContextPropsContext } from './context';
 
@@ -13,7 +14,6 @@ export interface ReactSlotProps {
 
 function cloneElementWithEvents(element: HTMLElement) {
   const portals: React.ReactPortal[] = [];
-
   const clonedElement = element.cloneNode(false) as HTMLElement;
   if (element._reactElement) {
     const resolvedChildren: Array<React.ReactNode> & {
@@ -48,7 +48,6 @@ function cloneElementWithEvents(element: HTMLElement) {
         clonedElement
       )
     );
-
     return {
       clonedElement,
       portals,
@@ -73,7 +72,6 @@ function cloneElementWithEvents(element: HTMLElement) {
       portals.push(...portalsChildren);
       clonedElement.appendChild(clonedChild);
       // clonedElement.replaceChild(clonedChild, clonedElement.children[i]);
-
       // text
     } else if (child.nodeType === 3) {
       clonedElement.appendChild(child.cloneNode());
@@ -150,29 +148,23 @@ export const ReactSlot = forwardRef<HTMLElement, ReactSlotProps>(
           cloned.style.display = 'contents';
           mountElementProps();
           ref.current?.appendChild(cloned);
-          return portals.length > 0;
         }
-        const hasPortal = render();
-        if (!hasPortal || forceClone) {
-          observer = new window.MutationObserver(() => {
-            const _hasPortal = render();
-            if (_hasPortal) {
-              observer?.disconnect();
-              // for custom render like Table render
-              if (forceClone) {
-                observer?.observe(slot, {
-                  childList: true,
-                  subtree: true,
-                });
-              }
-            }
-          });
-          observer.observe(slot, {
-            attributes: true,
+        render();
+        const handleObserve = debounce(() => {
+          render();
+          observer?.disconnect();
+          // for custom render like Table render
+          observer?.observe(slot, {
             childList: true,
             subtree: true,
           });
-        }
+        }, 50);
+        observer = new window.MutationObserver(handleObserve);
+        observer.observe(slot, {
+          attributes: true,
+          childList: true,
+          subtree: true,
+        });
       } else {
         cloned.style.display = 'contents';
         mountElementProps();
@@ -187,7 +179,7 @@ export const ReactSlot = forwardRef<HTMLElement, ReactSlotProps>(
         }
         observer?.disconnect();
       };
-    }, [slot, clone, className, style, elRef, forceClone]);
+    }, [slot, clone, className, style, elRef]);
 
     return React.createElement(
       'react-child',
