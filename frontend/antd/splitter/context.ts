@@ -1,6 +1,6 @@
 import { createItemsContext } from '@utils/createItemsContext';
 
-const { getItems, getSetItemFn } = createItemsContext('splitter');
+export const { withItemsContextProvider, useItems, ItemHandler } =
+  createItemsContext('splitter.panels');
 
-export { getItems, getSetItemFn };
 export * from '@utils/createItemsContext';

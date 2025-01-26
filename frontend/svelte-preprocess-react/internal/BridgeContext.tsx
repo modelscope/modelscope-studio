@@ -1,14 +1,13 @@
 import { bindEvents, mapProps } from '@svelte-preprocess-react/component';
-import { ensureObjectCtxValue } from '@svelte-preprocess-react/slot';
-import React, { useMemo } from 'react';
-import { patchProps } from '@utils/patchProps';
-
 import {
   AutoCompleteContext,
   ContextPropsProvider,
   FormItemContext,
   useContextPropsContext,
-} from '../context';
+} from '@svelte-preprocess-react/context';
+import { ensureObjectCtxValue } from '@svelte-preprocess-react/slot';
+import React, { useMemo } from 'react';
+import { patchProps } from '@utils/patchProps';
 
 export interface BridgeContextProps {
   reactComponent: React.ComponentType<any>;

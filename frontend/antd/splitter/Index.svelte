@@ -11,8 +11,6 @@
   import cls from 'classnames';
   import { writable } from 'svelte/store';
 
-  import { getItems } from './context';
-
   const AwaitedSplitter = importComponent(() => import('./splitter'));
 
   export let gradio: Gradio;
@@ -53,7 +51,6 @@
     as_item,
     restProps: $$restProps,
   });
-  const { default: items } = getItems();
 </script>
 
 {#if $mergedProps.visible}
@@ -68,7 +65,6 @@
         resize_end: 'resizeEnd',
       })}
       slots={$slots}
-      items={$items}
     >
       <slot />
     </Splitter>

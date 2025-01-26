@@ -13,9 +13,11 @@
   import type React from 'react';
   import type { Gradio } from '@gradio/utils';
   import cls from 'classnames';
-  import { type Writable, writable } from 'svelte/store';
+  import { writable } from 'svelte/store';
 
-  const AwaitedSliderMark = importComponent(() => import('./slider.mark'));
+  const AwaitedConversationsItem = importComponent(
+    () => import('./conversations.item')
+  );
   export let gradio: Gradio;
   export let props: Record<string, any> = {};
   const updatedProps = writable(props);
@@ -24,8 +26,6 @@
     layout?: boolean;
     index?: number;
   } = {};
-  export let label: string | undefined;
-  export let number: number | undefined;
   export let as_item: string | undefined;
 
   // gradio properties
@@ -44,8 +44,6 @@
     elem_classes,
     elem_style,
     as_item,
-    label,
-    number,
     restProps: $$restProps,
   });
   const slots = getSlots();
@@ -58,47 +56,34 @@
     elem_classes,
     elem_style,
     as_item,
-    label,
-    number,
     restProps: $$restProps,
   });
-  const slot: Writable<HTMLElement> = writable();
 
   $: itemProps = {
     props: {
       style: $mergedProps.elem_style,
-      className: cls($mergedProps.elem_classes, 'ms-gr-antd-slider-mark'),
+      className: cls(
+        $mergedProps.elem_classes,
+        'ms-gr-antd-conversations-item'
+      ),
       id: $mergedProps.elem_id,
-      number: $mergedProps.number,
-      label: $mergedProps.label,
       ...$mergedProps.restProps,
       ...$mergedProps.props,
       ...bindEvents($mergedProps),
     },
-    slots: {
-      ...$slots,
-      children: $mergedProps._internal.layout ? $slot : undefined,
-    },
+    slots: $slots,
   };
 </script>
 
-{#await AwaitedSliderMark then SliderMark}
-  <SliderMark
-    {...itemProps.props}
-    slots={itemProps.slots}
-    itemIndex={$mergedProps._internal.index || 0}
-    itemSlotKey={$slotKey}
-  >
-    {#if $mergedProps.visible}
-      <svelte-slot bind:this={$slot}>
-        <slot></slot>
-      </svelte-slot>
-    {/if}
-  </SliderMark>
-{/await}
-
-<style>
-  svelte-slot {
-    display: none;
-  }
-</style>
+{#if $mergedProps.visible}
+  {#await AwaitedConversationsItem then ConversationsItem}
+    <ConversationsItem
+      {...itemProps.props}
+      slots={itemProps.slots}
+      itemIndex={$mergedProps._internal.index || 0}
+      itemSlotKey={$slotKey}
+    >
+      <slot></slot>
+    </ConversationsItem>
+  {/await}
+{/if}

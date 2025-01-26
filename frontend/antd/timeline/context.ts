@@ -1,6 +1,6 @@
-import { createItemsContext } from '@utils/createItemsContext2';
+import { createItemsContext } from '@utils/createItemsContext';
 
 export const { withItemsContextProvider, useItems, ItemHandler } =
-  createItemsContext();
+  createItemsContext('antd-timeline-items');
 
-export * from '@utils/createItemsContext2';
+export * from '@utils/createItemsContext';

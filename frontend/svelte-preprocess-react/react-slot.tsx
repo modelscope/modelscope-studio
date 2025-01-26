@@ -1,9 +1,8 @@
+import { useContextPropsContext } from '@svelte-preprocess-react/context';
 import React, { forwardRef, useEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { styleObject2HtmlStyle } from '@utils/style';
 import { debounce } from 'lodash-es';
-
-import { useContextPropsContext } from './context';
 
 export interface ReactSlotProps {
   slot: HTMLElement;

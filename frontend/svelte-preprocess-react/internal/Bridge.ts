@@ -1,9 +1,12 @@
+import {
+  useAutoCompleteContext,
+  useFormItemContext,
+} from '@svelte-preprocess-react/context';
 import React, { useMemo } from 'react';
 import { omitUndefinedProps } from '@utils/omitUndefinedProps';
 import { patchProps } from '@utils/patchProps';
 import { writable } from 'svelte/store';
 
-import { useAutoCompleteContext, useFormItemContext } from '../context';
 import useStore, { useStores } from '../useStore';
 
 import { BridgeContext } from './BridgeContext';

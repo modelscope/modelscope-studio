@@ -4,6 +4,7 @@ import ReactDOMClient from 'react-dom/client';
 import * as antdCssinjs from '@ant-design/cssinjs';
 import * as antdIcons from '@ant-design/icons';
 import * as antdx from '@ant-design/x';
+import * as createItemsContext from '@utils/createItemsContext';
 import * as antd from 'antd';
 import dayjs from 'dayjs';
 import { type Readable, type Writable, writable } from 'svelte/store';
@@ -37,6 +38,12 @@ declare global {
       autokey: number;
       loadingKey: number;
       rerender: (props: BridgeProps) => void;
+      // render items
+      createItemsContext: typeof createItemsContext;
+      itemsContexts: Record<
+        string,
+        ReturnType<typeof createItemsContext.createItemsContext>
+      >;
     };
   }
 }
@@ -84,6 +91,9 @@ window.ms_globals = {
     nodes: [],
   },
   rerender,
+  // render items
+  createItemsContext,
+  itemsContexts: {},
 };
 // register custom elements
 customElements.define('react-portal-target', class extends HTMLElement {});

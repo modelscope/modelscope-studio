@@ -1,9 +1,9 @@
-import { createItemsContext } from '@utils/createItemsContext2';
+import { createItemsContext } from '@utils/createItemsContext';
 
 export const {
   withItemsContextProvider: withRuleItemsContextProvider,
   useItems: useRuleItems,
   ItemHandler: RuleItemHandler,
-} = createItemsContext();
+} = createItemsContext('antd-form-item-rules');
 
-export * from '@utils/createItemsContext2';
+export * from '@utils/createItemsContext';
