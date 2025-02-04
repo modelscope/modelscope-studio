@@ -4,3 +4,6 @@ from .bubble.list.item import AntdXBubbleListItem
 from .bubble.list.role import AntdXBubbleListRole
 from .conversations import AntdXConversations
 from .conversations.item import AntdXConversationsItem
+from .prompts import AntdXPrompts
+from .prompts.item import AntdXPromptsItem
+from .welcome import AntdXWelcome

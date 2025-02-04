@@ -12,6 +12,7 @@ import { renderItems } from '@utils/renderItems';
 import { renderParamsSlot } from '@utils/renderParamsSlot';
 import type { MenuProps } from 'antd';
 import type { ItemType } from 'antd/es/menu/interface';
+import { isFunction } from 'lodash-es';
 
 import {
   useItems as useMenuItems,
@@ -29,7 +30,7 @@ function getConfig<T>(value: T): Partial<T & Record<PropertyKey, any>> {
 
 function patchMenuEvents(menuProps: MenuProps, conversation: Conversation) {
   return Object.keys(menuProps).reduce((acc, key) => {
-    if (key.startsWith('on')) {
+    if (key.startsWith('on') && isFunction(menuProps[key])) {
       const originalEvent = menuProps[key];
       acc[key] = (...args: any[]) => {
         originalEvent?.(conversation, ...args);

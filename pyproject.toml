@@ -208,6 +208,8 @@ artifacts = [
   "/backend/modelscope_studio/components/antdx/bubble/list/item/templates",
   "/backend/modelscope_studio/components/antdx/bubble/list/role/templates",
   "/backend/modelscope_studio/components/base/markdown/templates",
+  "/backend/modelscope_studio/components/antdx/conversations/templates",
+  "/backend/modelscope_studio/components/antdx/conversations/item/templates",
 ]
 
 [tool.hatch.build.targets.sdist]
