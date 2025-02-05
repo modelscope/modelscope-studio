@@ -6,4 +6,6 @@ from .conversations import AntdXConversations
 from .conversations.item import AntdXConversationsItem
 from .prompts import AntdXPrompts
 from .prompts.item import AntdXPromptsItem
+from .thought_chain import AntdXThoughtChain
+from .thought_chain.item import AntdXThoughtChainItem
 from .welcome import AntdXWelcome

@@ -1,42 +1,32 @@
 from __future__ import annotations
 
-from typing import Any
+from typing import Any, Literal
 
-from gradio.events import EventListener
-
-from ....utils.dev import ModelScopeLayoutComponent, resolve_frontend_dir
-from .item import AntdXPromptsItem
+from .....utils.dev import ModelScopeLayoutComponent, resolve_frontend_dir
 
 
-class AntdXPrompts(ModelScopeLayoutComponent):
+class AntdXThoughtChainItem(ModelScopeLayoutComponent):
     """
-    Ant Design X: https://x.ant.design/components/prompts
+    Ant Design X: https://x.ant.design/components/thought-chain
     """
 
-    Item = AntdXPromptsItem
-
-    EVENTS = [
-        EventListener("item_click",
-                      callback=lambda block: block._internal.update(
-                          bind_itemClick_event=True),
-                      doc="Callback function when a prompt item is clicked."),
-    ]
+    EVENTS = []
 
     # supported slots
-    SLOTS = ['title', 'items']
+    SLOTS = ['content', 'description', 'extra', 'footer', 'icon', 'title']
 
     def __init__(
             self,
             props: dict | None = None,
             *,
-            items: list[dict] | None = None,
-            prefix_cls: str | None = None,
+            key: str | None = None,
+            content: str | None = None,
+            description: str | None = None,
+            extra: str | None = None,
+            footer: str | None = None,
+            icon: str | None = None,
             title: str | None = None,
-            vertical: bool | None = None,
-            wrap: bool | None = None,
-            styles: dict | None = None,
-            class_names: dict | None = None,
-            root_class_name: str | None = None,
+            status: Literal['pending', 'success', 'error'] | None = None,
             as_item: str | None = None,
             _internal: None = None,
             # gradio properties
@@ -54,16 +44,16 @@ class AntdXPrompts(ModelScopeLayoutComponent):
                          elem_style=elem_style,
                          **kwargs)
         self.props = props
-        self.items = items
-        self.prefix_cls = prefix_cls
+        self.content = content
+        self.description = description
+        self.extra = extra
+        self.footer = footer
+        self.icon = icon
         self.title = title
-        self.vertical = vertical
-        self.wrap = wrap
-        self.styles = styles
-        self.class_names = class_names
-        self.root_class_name = root_class_name
+        self.status = status
+        self.key = key
 
-    FRONTEND_DIR = resolve_frontend_dir("prompts", type="antdx")
+    FRONTEND_DIR = resolve_frontend_dir("thought-chain", "item", type="antdx")
 
     @property
     def skip_api(self):

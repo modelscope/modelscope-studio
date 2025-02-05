@@ -1,39 +1,38 @@
 from __future__ import annotations
 
-from typing import Any
+from typing import Any, Literal
 
 from gradio.events import EventListener
 
 from ....utils.dev import ModelScopeLayoutComponent, resolve_frontend_dir
-from .item import AntdXPromptsItem
+from .item import AntdXThoughtChainItem
 
 
-class AntdXPrompts(ModelScopeLayoutComponent):
+class AntdXThoughtChain(ModelScopeLayoutComponent):
     """
-    Ant Design X: https://x.ant.design/components/prompts
+    Ant Design X: https://x.ant.design/components/thought-chain
     """
 
-    Item = AntdXPromptsItem
+    Item = AntdXThoughtChainItem
 
     EVENTS = [
-        EventListener("item_click",
+        EventListener("collapsible_expand",
                       callback=lambda block: block._internal.update(
-                          bind_itemClick_event=True),
-                      doc="Callback function when a prompt item is clicked."),
+                          bind_collapsible_expand_event=True),
+                      doc="Callback function when expanded keys change."),
     ]
 
     # supported slots
-    SLOTS = ['title', 'items']
+    SLOTS = ['items']
 
     def __init__(
             self,
             props: dict | None = None,
             *,
+            collapsible: bool | dict | None = None,
             items: list[dict] | None = None,
+            size: Literal['small', 'middle', 'large'] | None = None,
             prefix_cls: str | None = None,
-            title: str | None = None,
-            vertical: bool | None = None,
-            wrap: bool | None = None,
             styles: dict | None = None,
             class_names: dict | None = None,
             root_class_name: str | None = None,
@@ -54,16 +53,15 @@ class AntdXPrompts(ModelScopeLayoutComponent):
                          elem_style=elem_style,
                          **kwargs)
         self.props = props
+        self.collapsible = collapsible
         self.items = items
+        self.size = size
         self.prefix_cls = prefix_cls
-        self.title = title
-        self.vertical = vertical
-        self.wrap = wrap
         self.styles = styles
         self.class_names = class_names
         self.root_class_name = root_class_name
 
-    FRONTEND_DIR = resolve_frontend_dir("prompts", type="antdx")
+    FRONTEND_DIR = resolve_frontend_dir("conversations", type="antdx")
 
     @property
     def skip_api(self):
