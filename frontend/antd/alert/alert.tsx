@@ -5,35 +5,40 @@ import { useFunction } from '@utils/hooks/useFunction';
 import { Alert as AAlert, type GetProps } from 'antd';
 
 export const Alert = sveltify<
-  GetProps<typeof AAlert>,
+  GetProps<typeof AAlert> & {
+    children?: React.ReactNode;
+  },
   ['action', 'closable.closeIcon', 'description', 'icon', 'message']
->(({ slots, afterClose, ...props }) => {
+>(({ slots, afterClose, children, ...props }) => {
   const afterCloseFunction = useFunction(afterClose);
   return (
-    <AAlert
-      {...props}
-      afterClose={afterCloseFunction}
-      action={slots.action ? <ReactSlot slot={slots.action} /> : props.action}
-      closable={
-        slots['closable.closeIcon']
-          ? {
-              ...(typeof props.closable === 'object' ? props.closable : {}),
-              closeIcon: <ReactSlot slot={slots['closable.closeIcon']} />,
-            }
-          : props.closable
-      }
-      description={
-        slots.description ? (
-          <ReactSlot slot={slots.description} />
-        ) : (
-          props.description
-        )
-      }
-      icon={slots.icon ? <ReactSlot slot={slots.icon} /> : props.icon}
-      message={
-        slots.message ? <ReactSlot slot={slots.message} /> : props.message
-      }
-    />
+    <>
+      <div style={{ display: 'none' }}>{children}</div>
+      <AAlert
+        {...props}
+        afterClose={afterCloseFunction}
+        action={slots.action ? <ReactSlot slot={slots.action} /> : props.action}
+        closable={
+          slots['closable.closeIcon']
+            ? {
+                ...(typeof props.closable === 'object' ? props.closable : {}),
+                closeIcon: <ReactSlot slot={slots['closable.closeIcon']} />,
+              }
+            : props.closable
+        }
+        description={
+          slots.description ? (
+            <ReactSlot slot={slots.description} />
+          ) : (
+            props.description
+          )
+        }
+        icon={slots.icon ? <ReactSlot slot={slots.icon} /> : props.icon}
+        message={
+          slots.message ? <ReactSlot slot={slots.message} /> : props.message
+        }
+      />
+    </>
   );
 });
 

@@ -22,6 +22,7 @@ export const Calendar = sveltify<
     onSelect?: (date: number, ...args: any[]) => void;
     onValueChange: (date: number) => void;
     setSlotParams: SetSlotParams;
+    children?: React.ReactNode;
   },
   ['cellRender', 'fullCellRender', 'headerRender']
 >(
@@ -38,6 +39,7 @@ export const Calendar = sveltify<
     cellRender,
     fullCellRender,
     headerRender,
+    children,
     slots,
     ...props
   }) => {
@@ -57,38 +59,45 @@ export const Calendar = sveltify<
         : undefined;
     }, [validRange]);
     return (
-      <ACalendar
-        {...props}
-        value={validValue}
-        defaultValue={validDefaultValue}
-        validRange={validValidRange}
-        disabledDate={disabledDateFunction}
-        cellRender={
-          slots.cellRender
-            ? renderParamsSlot({ slots, setSlotParams, key: 'cellRender' })
-            : cellRenderFunction
-        }
-        fullCellRender={
-          slots.fullCellRender
-            ? renderParamsSlot({ slots, setSlotParams, key: 'fullCellRender' })
-            : fullCellRenderFunction
-        }
-        headerRender={
-          slots.headerRender
-            ? renderParamsSlot({ slots, setSlotParams, key: 'headerRender' })
-            : headerRenderFunction
-        }
-        onChange={(date, ...args) => {
-          onValueChange(date.valueOf() / 1000);
-          onChange?.(date.valueOf() / 1000, ...args);
-        }}
-        onPanelChange={(date, ...args) => {
-          onPanelChange?.(date.valueOf() / 1000, ...args);
-        }}
-        onSelect={(date, ...args) => {
-          onSelect?.(date.valueOf() / 1000, ...args);
-        }}
-      />
+      <>
+        <div style={{ display: 'none' }}>{children}</div>
+        <ACalendar
+          {...props}
+          value={validValue}
+          defaultValue={validDefaultValue}
+          validRange={validValidRange}
+          disabledDate={disabledDateFunction}
+          cellRender={
+            slots.cellRender
+              ? renderParamsSlot({ slots, setSlotParams, key: 'cellRender' })
+              : cellRenderFunction
+          }
+          fullCellRender={
+            slots.fullCellRender
+              ? renderParamsSlot({
+                  slots,
+                  setSlotParams,
+                  key: 'fullCellRender',
+                })
+              : fullCellRenderFunction
+          }
+          headerRender={
+            slots.headerRender
+              ? renderParamsSlot({ slots, setSlotParams, key: 'headerRender' })
+              : headerRenderFunction
+          }
+          onChange={(date, ...args) => {
+            onValueChange(date.valueOf() / 1000);
+            onChange?.(date.valueOf() / 1000, ...args);
+          }}
+          onPanelChange={(date, ...args) => {
+            onPanelChange?.(date.valueOf() / 1000, ...args);
+          }}
+          onSelect={(date, ...args) => {
+            onSelect?.(date.valueOf() / 1000, ...args);
+          }}
+        />
+      </>
     );
   }
 );

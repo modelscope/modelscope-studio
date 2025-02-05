@@ -7,18 +7,28 @@ export const AlertErrorBoundary = sveltify<
   {
     message?: React.ReactNode;
     description?: React.ReactNode;
+    children?: React.ReactNode;
   },
   ['description', 'message']
->(({ slots, ...props }) => {
-  return React.createElement(AAlert.ErrorBoundary as any, {
-    ...props,
-    description: slots.description ? (
-      <ReactSlot slot={slots.description} />
-    ) : (
-      props.description
-    ),
-    message: slots.message ? <ReactSlot slot={slots.message} /> : props.message,
-  });
+>(({ slots, children, ...props }) => {
+  return (
+    <>
+      <div style={{ display: 'none' }}>{children}</div>
+      {React.createElement(AAlert.ErrorBoundary as any, {
+        ...props,
+        description: slots.description ? (
+          <ReactSlot slot={slots.description} />
+        ) : (
+          props.description
+        ),
+        message: slots.message ? (
+          <ReactSlot slot={slots.message} />
+        ) : (
+          props.message
+        ),
+      })}
+    </>
+  );
 });
 
 export default AlertErrorBoundary;
