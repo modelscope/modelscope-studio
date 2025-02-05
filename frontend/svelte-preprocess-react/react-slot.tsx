@@ -8,6 +8,7 @@ export interface ReactSlotProps {
   slot: HTMLElement;
   clone?: boolean;
   style?: React.CSSProperties;
+  observeAttributes?: boolean;
   className?: string;
 }
 
@@ -95,7 +96,7 @@ function mountElRef(elRef: React.ForwardedRef<HTMLElement>, el: HTMLElement) {
 
 // eslint-disable-next-line react/display-name
 export const ReactSlot = forwardRef<HTMLElement, ReactSlotProps>(
-  ({ slot, clone: cloneProp, className, style }, elRef) => {
+  ({ slot, clone: cloneProp, className, style, observeAttributes }, elRef) => {
     const ref = useRef<HTMLElement>();
     const [children, setChildren] = useState<React.ReactElement[]>([]);
     const { forceClone } = useContextPropsContext();
@@ -152,12 +153,15 @@ export const ReactSlot = forwardRef<HTMLElement, ReactSlotProps>(
         const handleObserve = debounce(() => {
           render();
           observer?.disconnect();
+
           // for custom render like Table render
           observer?.observe(slot, {
             childList: true,
             subtree: true,
+            attributes: observeAttributes,
           });
         }, 50);
+
         observer = new window.MutationObserver(handleObserve);
         observer.observe(slot, {
           attributes: true,
@@ -178,7 +182,7 @@ export const ReactSlot = forwardRef<HTMLElement, ReactSlotProps>(
         }
         observer?.disconnect();
       };
-    }, [slot, clone, className, style, elRef]);
+    }, [slot, clone, className, style, elRef, observeAttributes]);
 
     return React.createElement(
       'react-child',

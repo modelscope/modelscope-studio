@@ -1,40 +1,42 @@
 from __future__ import annotations
 
-from typing import Any, Literal
+from typing import Any
 
 from gradio.events import EventListener
 
 from ....utils.dev import ModelScopeLayoutComponent, resolve_frontend_dir
-from .item import AntdXThoughtChainItem
+from .item import AntdXSuggestionItem
 
 
-class AntdXThoughtChain(ModelScopeLayoutComponent):
+class AntdXSuggestion(ModelScopeLayoutComponent):
     """
-    Ant Design X: https://x.ant.design/components/thought-chain
+    Ant Design X: https://x.ant.design/components/suggestion
     """
 
-    Item = AntdXThoughtChainItem
+    Item = AntdXSuggestionItem
 
     EVENTS = [
-        EventListener("collapsible_expand",
+        EventListener("select",
                       callback=lambda block: block._internal.update(
-                          bind_collapsible_expand_event=True),
-                      doc="Callback function when expanded keys change."),
+                          bind_select_event=True),
+                      doc="Callback when the suggestion item is selected."),
+        EventListener("open_change",
+                      callback=lambda block: block._internal.update(
+                          bind_openChange_event=True),
+                      doc="Callback when the panel open state changes."),
     ]
 
     # supported slots
-    SLOTS = ['items']
+    SLOTS = ['items', 'children']
 
     def __init__(
             self,
             props: dict | None = None,
             *,
-            collapsible: bool | dict | None = None,
             items: list[dict] | None = None,
-            size: Literal['small', 'middle', 'large'] | None = None,
-            prefix_cls: str | None = None,
-            styles: dict | None = None,
-            class_names: dict | None = None,
+            block: bool | None = None,
+            open: bool | None = None,
+            should_trigger: str | None = None,
             root_class_name: str | None = None,
             as_item: str | None = None,
             _internal: None = None,
@@ -53,15 +55,13 @@ class AntdXThoughtChain(ModelScopeLayoutComponent):
                          elem_style=elem_style,
                          **kwargs)
         self.props = props
-        self.collapsible = collapsible
         self.items = items
-        self.size = size
-        self.prefix_cls = prefix_cls
-        self.styles = styles
-        self.class_names = class_names
+        self.block = block
+        self.open = open
+        self.should_trigger = should_trigger
         self.root_class_name = root_class_name
 
-    FRONTEND_DIR = resolve_frontend_dir("thought-chain", type="antdx")
+    FRONTEND_DIR = resolve_frontend_dir("suggestion", type="antdx")
 
     @property
     def skip_api(self):

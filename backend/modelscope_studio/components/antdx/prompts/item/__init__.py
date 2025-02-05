@@ -17,10 +17,10 @@ class AntdXPromptsItem(ModelScopeLayoutComponent):
 
     def __init__(
             self,
+            label: str | None = None,
             props: dict | None = None,
             *,
             key: str | None = None,
-            label: str | None = None,
             description: str | None = None,
             icon: str | None = None,
             disabled: bool | None = None,

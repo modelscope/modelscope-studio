@@ -1,32 +1,32 @@
 from __future__ import annotations
 
-from typing import Any, Literal
+from gradio.events import EventListener
 
 from .....utils.dev import ModelScopeLayoutComponent, resolve_frontend_dir
 
 
-class AntdXThoughtChainItem(ModelScopeLayoutComponent):
+class AntdXSenderHeader(ModelScopeLayoutComponent):
     """
-    Ant Design X: https://x.ant.design/components/thought-chain
+    Ant Design X: https://x.ant.design/components/sender
     """
-
-    EVENTS = []
+    EVENTS = [
+        EventListener("open_change",
+                      callback=lambda block: block._internal.update(
+                          bind_openChange_event=True),
+                      doc="Callback when the expansion state changes."),
+    ]
 
     # supported slots
-    SLOTS = ['content', 'description', 'extra', 'footer', 'icon', 'title']
+    SLOTS = ['title']
 
     def __init__(
             self,
-            content: str | None = None,
             props: dict | None = None,
             *,
-            key: str | None = None,
-            description: str | None = None,
-            extra: str | None = None,
-            footer: str | None = None,
-            icon: str | None = None,
+            closable: bool | None = None,
+            force_render: bool | None = None,
+            open: bool | None = None,
             title: str | None = None,
-            status: Literal['pending', 'success', 'error'] | None = None,
             as_item: str | None = None,
             _internal: None = None,
             # gradio properties
@@ -44,16 +44,12 @@ class AntdXThoughtChainItem(ModelScopeLayoutComponent):
                          elem_style=elem_style,
                          **kwargs)
         self.props = props
-        self.content = content
-        self.description = description
-        self.extra = extra
-        self.footer = footer
-        self.icon = icon
+        self.closable = closable
+        self.force_render = force_render
+        self.open = open
         self.title = title
-        self.status = status
-        self.key = key
 
-    FRONTEND_DIR = resolve_frontend_dir("thought-chain", "item", type="antdx")
+    FRONTEND_DIR = resolve_frontend_dir("sender", 'header', type="antdx")
 
     @property
     def skip_api(self):
@@ -66,8 +62,8 @@ class AntdXThoughtChainItem(ModelScopeLayoutComponent):
 
         return value
 
-    def example_payload(self) -> Any:
+    def example_payload(self) -> None:
         return None
 
-    def example_value(self) -> Any:
+    def example_value(self) -> None:
         return None

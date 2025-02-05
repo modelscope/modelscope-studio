@@ -1,32 +1,28 @@
 from __future__ import annotations
 
-from typing import Any, Literal
+from gradio.events import EventListener
 
 from .....utils.dev import ModelScopeLayoutComponent, resolve_frontend_dir
 
 
-class AntdXThoughtChainItem(ModelScopeLayoutComponent):
+class AntdXAttachmentsFileCard(ModelScopeLayoutComponent):
     """
-    Ant Design X: https://x.ant.design/components/thought-chain
+    Ant Design X: https://x.ant.design/components/attachments
     """
-
-    EVENTS = []
+    EVENTS = [
+        EventListener("remove",
+                      callback=lambda block: block._internal.update(
+                          bind_remove_event=True))
+    ]
 
     # supported slots
-    SLOTS = ['content', 'description', 'extra', 'footer', 'icon', 'title']
+    SLOTS = []
 
     def __init__(
             self,
-            content: str | None = None,
             props: dict | None = None,
             *,
-            key: str | None = None,
-            description: str | None = None,
-            extra: str | None = None,
-            footer: str | None = None,
-            icon: str | None = None,
-            title: str | None = None,
-            status: Literal['pending', 'success', 'error'] | None = None,
+            item: dict | None = None,
             as_item: str | None = None,
             _internal: None = None,
             # gradio properties
@@ -44,16 +40,11 @@ class AntdXThoughtChainItem(ModelScopeLayoutComponent):
                          elem_style=elem_style,
                          **kwargs)
         self.props = props
-        self.content = content
-        self.description = description
-        self.extra = extra
-        self.footer = footer
-        self.icon = icon
-        self.title = title
-        self.status = status
-        self.key = key
+        self.item = item
 
-    FRONTEND_DIR = resolve_frontend_dir("thought-chain", "item", type="antdx")
+    FRONTEND_DIR = resolve_frontend_dir("attachments",
+                                        'file-card',
+                                        type="antdx")
 
     @property
     def skip_api(self):
@@ -66,8 +57,8 @@ class AntdXThoughtChainItem(ModelScopeLayoutComponent):
 
         return value
 
-    def example_payload(self) -> Any:
+    def example_payload(self) -> None:
         return None
 
-    def example_value(self) -> Any:
+    def example_value(self) -> None:
         return None

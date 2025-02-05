@@ -210,6 +210,15 @@ artifacts = [
   "/backend/modelscope_studio/components/base/markdown/templates",
   "/backend/modelscope_studio/components/antdx/conversations/templates",
   "/backend/modelscope_studio/components/antdx/conversations/item/templates",
+  "/backend/modelscope_studio/components/antdx/attachments/templates",
+  "/backend/modelscope_studio/components/antdx/prompts/templates",
+  "/backend/modelscope_studio/components/antdx/prompts/item/templates",
+  "/backend/modelscope_studio/components/antdx/sender/templates",
+  "/backend/modelscope_studio/components/antdx/sender/header/templates",
+  "/backend/modelscope_studio/components/antdx/thought_chain/templates",
+  "/backend/modelscope_studio/components/antdx/thought_chain/item/templates",
+  "/backend/modelscope_studio/components/antdx/welcome/templates",
+  "/backend/modelscope_studio/components/antdx/attachments/file_card/templates",
 ]
 
 [tool.hatch.build.targets.sdist]

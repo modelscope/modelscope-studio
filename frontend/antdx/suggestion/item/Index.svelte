@@ -15,8 +15,8 @@
   import cls from 'classnames';
   import { writable } from 'svelte/store';
 
-  const AwaitedThoughtChainItem = importComponent(
-    () => import('./thought-chain.item')
+  const AwaitedSuggestionItem = importComponent(
+    () => import('./suggestion.item')
   );
   export let gradio: Gradio;
   export let props: Record<string, any> = {};
@@ -27,7 +27,8 @@
     index?: number;
   } = {};
   export let as_item: string | undefined;
-
+  export let label: string;
+  export let value: string;
   // gradio properties
   export let visible = true;
   export let elem_id = '';
@@ -44,6 +45,8 @@
     elem_classes,
     elem_style,
     as_item,
+    label,
+    value,
     restProps: $$restProps,
   });
   const slots = getSlots();
@@ -56,17 +59,18 @@
     elem_classes,
     elem_style,
     as_item,
+    label,
+    value,
     restProps: $$restProps,
   });
 
   $: itemProps = {
     props: {
       style: $mergedProps.elem_style,
-      className: cls(
-        $mergedProps.elem_classes,
-        'ms-gr-antd-thought-chain-item'
-      ),
+      className: cls($mergedProps.elem_classes, 'ms-gr-antd-suggestion-item'),
       id: $mergedProps.elem_id,
+      label: $mergedProps.label,
+      value: $mergedProps.value,
       ...$mergedProps.restProps,
       ...$mergedProps.props,
       ...bindEvents($mergedProps),
@@ -76,14 +80,14 @@
 </script>
 
 {#if $mergedProps.visible}
-  {#await AwaitedThoughtChainItem then ThoughtChainItem}
-    <ThoughtChainItem
+  {#await AwaitedSuggestionItem then SuggestionItem}
+    <SuggestionItem
       {...itemProps.props}
       slots={itemProps.slots}
       itemIndex={$mergedProps._internal.index || 0}
       itemSlotKey={$slotKey}
     >
       <slot></slot>
-    </ThoughtChainItem>
+    </SuggestionItem>
   {/await}
 {/if}

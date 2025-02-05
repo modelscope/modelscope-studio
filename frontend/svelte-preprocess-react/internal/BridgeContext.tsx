@@ -3,6 +3,7 @@ import {
   AutoCompleteContext,
   ContextPropsProvider,
   FormItemContext,
+  SuggestionContext,
   useContextPropsContext,
 } from '@svelte-preprocess-react/context';
 import { ensureObjectCtxValue } from '@svelte-preprocess-react/slot';
@@ -96,20 +97,22 @@ export const BridgeContext: React.FC<BridgeContextProps> = ({
 
   return (
     <FormItemContext.Provider value={null}>
-      <AutoCompleteContext.Provider value={null}>
-        <ContextPropsProvider
-          {...propsContext}
-          ctx={ctxProps.originalRestProps}
-        >
-          {/* eslint-disable-next-line react/no-children-prop */}
-          {React.createElement(reactComponent, {
-            ...rest,
-            ...ctxProps.restProps,
-            ...ctxProps.events,
-            children,
-          })}
-        </ContextPropsProvider>
-      </AutoCompleteContext.Provider>
+      <SuggestionContext.Provider value={null}>
+        <AutoCompleteContext.Provider value={null}>
+          <ContextPropsProvider
+            {...propsContext}
+            ctx={ctxProps.originalRestProps}
+          >
+            {/* eslint-disable-next-line react/no-children-prop */}
+            {React.createElement(reactComponent, {
+              ...rest,
+              ...ctxProps.restProps,
+              ...ctxProps.events,
+              children,
+            })}
+          </ContextPropsProvider>
+        </AutoCompleteContext.Provider>
+      </SuggestionContext.Provider>
     </FormItemContext.Provider>
   );
 };

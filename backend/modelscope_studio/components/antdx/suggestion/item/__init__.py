@@ -1,32 +1,29 @@
 from __future__ import annotations
 
-from typing import Any, Literal
+from typing import Any
 
 from .....utils.dev import ModelScopeLayoutComponent, resolve_frontend_dir
 
 
-class AntdXThoughtChainItem(ModelScopeLayoutComponent):
+class AntdXSuggestionItem(ModelScopeLayoutComponent):
     """
-    Ant Design X: https://x.ant.design/components/thought-chain
+    Ant Design X: https://x.ant.design/components/suggestion
     """
 
     EVENTS = []
 
     # supported slots
-    SLOTS = ['content', 'description', 'extra', 'footer', 'icon', 'title']
+    SLOTS = ['label', 'icon', 'extra']
 
     def __init__(
             self,
-            content: str | None = None,
+            value: str | None = None,
+            label: str | None = None,
             props: dict | None = None,
             *,
             key: str | None = None,
-            description: str | None = None,
             extra: str | None = None,
-            footer: str | None = None,
             icon: str | None = None,
-            title: str | None = None,
-            status: Literal['pending', 'success', 'error'] | None = None,
             as_item: str | None = None,
             _internal: None = None,
             # gradio properties
@@ -44,16 +41,13 @@ class AntdXThoughtChainItem(ModelScopeLayoutComponent):
                          elem_style=elem_style,
                          **kwargs)
         self.props = props
-        self.content = content
-        self.description = description
+        self.label = label
         self.extra = extra
-        self.footer = footer
         self.icon = icon
-        self.title = title
-        self.status = status
+        self.value = value
         self.key = key
 
-    FRONTEND_DIR = resolve_frontend_dir("thought-chain", "item", type="antdx")
+    FRONTEND_DIR = resolve_frontend_dir("suggestion", "item", type="antdx")
 
     @property
     def skip_api(self):

@@ -8,20 +8,10 @@ import { renderItems } from '@utils/renderItems';
 
 import { useItems, withItemsContextProvider } from './context';
 
-function getConfig<T>(value: T): Partial<T & Record<PropertyKey, any>> {
-  if (typeof value === 'object' && value !== null) {
-    return value as any;
-  }
-  return {} as any;
-}
-
 export const ThoughtChain = sveltify<ThoughtChainProps>(
   withItemsContextProvider(
     ['default', 'items'],
     ({ children, items, ...props }) => {
-      const supportCollapsibleConfig = typeof props.collapsible === 'object';
-      const collapsibleConfig = getConfig(props.collapsible);
-
       const { items: slotItems } = useItems<['default', 'items']>();
       const resolvedSlotItems =
         slotItems.items.length > 0 ? slotItems.items : slotItems.default;
@@ -42,11 +32,6 @@ export const ThoughtChain = sveltify<ThoughtChainProps>(
                 )
               );
             }, [items, resolvedSlotItems])}
-            collapsible={
-              supportCollapsibleConfig
-                ? (collapsibleConfig as typeof props.collapsible)
-                : props.collapsible
-            }
           />
         </>
       );

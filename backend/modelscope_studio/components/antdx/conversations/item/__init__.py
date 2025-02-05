@@ -20,10 +20,10 @@ class AntdXConversationsItem(ModelScopeLayoutComponent):
 
     def __init__(
             self,
+            label: str | None = None,
             props: dict | None = None,
             *,
             key: str | None = None,
-            label: str | None = None,
             timestamp: int | float | None = None,
             group: str | None = None,
             icon: str | None = None,
