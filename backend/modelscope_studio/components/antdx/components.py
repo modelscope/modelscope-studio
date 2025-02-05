@@ -15,3 +15,4 @@ from .suggestion.item import AntdXSuggestionItem
 from .thought_chain import AntdXThoughtChain
 from .thought_chain.item import AntdXThoughtChainItem
 from .welcome import AntdXWelcome
+from .x_provider import AntdXXProvider

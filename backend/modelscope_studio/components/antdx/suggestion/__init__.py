@@ -33,7 +33,7 @@ class AntdXSuggestion(ModelScopeLayoutComponent):
             self,
             props: dict | None = None,
             *,
-            items: list[dict] | None = None,
+            items: str | list[dict] | None = None,
             block: bool | None = None,
             open: bool | None = None,
             should_trigger: str | None = None,

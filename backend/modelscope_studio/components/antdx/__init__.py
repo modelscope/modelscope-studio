@@ -16,3 +16,4 @@ from .suggestion.item import AntdXSuggestionItem as SuggestionItem
 from .thought_chain import AntdXThoughtChain as ThoughtChain
 from .thought_chain.item import AntdXThoughtChainItem as ThoughtChainItem
 from .welcome import AntdXWelcome as Welcome
+from .x_provider import AntdXXProvider as XProvider
