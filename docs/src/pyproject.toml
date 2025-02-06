@@ -8,12 +8,12 @@ build-backend = "hatchling.build"
 
 [project]
 name = "modelscope_studio"
-version = "1.0.2"
+version = "1.1.0"
 description = "A third-party component library based on Gradio."
 readme = "README.md"
 license = "Apache-2.0"
 requires-python = ">=3.8"
-authors = [{ name = "YOUR NAME", email = "YOUREMAIL@domain.com" }]
+authors = [{ name = "ModelScope team", email = "contact@modelscope.cn" }]
 keywords = [
   "gradio-custom-component",
   "modelscope-studio",

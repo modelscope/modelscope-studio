@@ -1,5 +1,15 @@
 # @modelscope-studio/antd
 
+## 1.1.0
+
+### Fixes
+
+- [#48](https://github.com/modelscope/modelscope-studio/pull/48) [`b0197ef`](https://github.com/modelscope/modelscope-studio/commit/b0197ef7ede322e2c40b4e1dcc6480530a62490e) - missing component children rendering. Thanks [@Col0ring](https://github.com/Col0ring)!
+
+### Misc Changes
+
+- [#45](https://github.com/modelscope/modelscope-studio/pull/45) [`f4f8a15`](https://github.com/modelscope/modelscope-studio/commit/f4f8a155f30995984c5f46bdd638385c9a230856) - component rendering and props context. Thanks [@Col0ring](https://github.com/Col0ring)!
+
 ## 1.0.2
 
 ### Fixes

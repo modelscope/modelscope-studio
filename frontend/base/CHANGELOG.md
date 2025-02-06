@@ -1,5 +1,15 @@
 # @modelscope-studio/base
 
+## 1.1.0
+
+### Features
+
+- [#46](https://github.com/modelscope/modelscope-studio/pull/46) [`3253ae6`](https://github.com/modelscope/modelscope-studio/commit/3253ae669e0b3afcdf8dc4dfd21ddcace161b556) - add Markdown as a base component. Thanks [@Col0ring](https://github.com/Col0ring)!
+
+### Misc Changes
+
+- [#45](https://github.com/modelscope/modelscope-studio/pull/45) [`f4f8a15`](https://github.com/modelscope/modelscope-studio/commit/f4f8a155f30995984c5f46bdd638385c9a230856) - component rendering and props context. Thanks [@Col0ring](https://github.com/Col0ring)!
+
 ## 1.0.2
 
 No significant changes to this package were made in this release.

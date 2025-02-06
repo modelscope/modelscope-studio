@@ -9,4 +9,4 @@ Additional Features:
 ## Examples
 
 <demo name="basic"></demo>
-<demo name="custom_copy_buttons"></demo>
+<demo name="custom_copy_buttons" title="Custom Copy Buttons"></demo>

@@ -25,8 +25,11 @@ with gr.Blocks() as demo:
                         ms.Text(item["text"])
 
             antd.Divider("Dynamic Render")
-            with antd.List(header="Header", footer="Footer", bordered=True):
-                with ms.Each(value=data):
+            with antd.List(header="Header",
+                           footer="Footer",
+                           data_source=data,
+                           bordered=True):
+                with ms.Slot("renderItem", params_mapping="(item) => item"):
                     with antd.List.Item():
                         antd.Typography.Text("[ITEM]", mark=True)
                         ms.Text(as_item="text")

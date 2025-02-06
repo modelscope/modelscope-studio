@@ -15,9 +15,13 @@ initial_target_keys = [
 with gr.Blocks() as demo:
     with ms.Application():
         with antd.ConfigProvider():
-            antd.Transfer(value=initial_target_keys,
-                          data_source=mock_data,
-                          titles=['Source', 'Target'])
+            with antd.Transfer(value=initial_target_keys,
+                               data_source=mock_data,
+                               titles=['Source', 'Target']):
+                # custom render items
+                with ms.Slot("render", params_mapping="(item) => item.title"):
+                    antd.Typography.Text(type="success")
+
             antd.Divider("One Way")
             antd.Transfer(one_way=True,
                           data_source=mock_data,
