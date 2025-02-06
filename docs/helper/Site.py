@@ -57,6 +57,10 @@ class Site:
   max-width: 100% !important;
   padding: 0 !important;
 }
+.gradio-container > main.fillable {
+  max-width: 100% !important;
+  padding: 0 !important;
+}
 .docs-layout-sider {
   width: 100% !important;
   max-width: 100% !important;
