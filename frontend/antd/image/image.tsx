@@ -24,7 +24,7 @@ export const Image = sveltify<
     'preview.toolbarRender',
     'preview.imageRender',
   ]
->(({ slots, preview, setSlotParams, ...props }) => {
+>(({ slots, preview, setSlotParams, children, ...props }) => {
   const previewConfig = getConfig(preview);
   const supportPreview =
     slots['preview.mask'] ||
@@ -37,53 +37,56 @@ export const Image = sveltify<
   const previewImageRenderFunction = useFunction(previewConfig.imageRender);
 
   return (
-    <AImage
-      {...props}
-      preview={
-        supportPreview
-          ? (omitUndefinedProps({
-              ...previewConfig,
-              getContainer: getContainerFunction,
-              toolbarRender: slots['preview.toolbarRender']
-                ? renderParamsSlot({
-                    slots,
-                    setSlotParams,
-                    key: 'preview.toolbarRender',
-                  })
-                : previewToolbarRenderFunction,
-              imageRender: slots['preview.imageRender']
-                ? renderParamsSlot({
-                    slots,
-                    setSlotParams,
-                    key: 'preview.imageRender',
-                  })
-                : previewImageRenderFunction,
+    <>
+      <div style={{ display: 'none' }}>{children}</div>
+      <AImage
+        {...props}
+        preview={
+          supportPreview
+            ? (omitUndefinedProps({
+                ...previewConfig,
+                getContainer: getContainerFunction,
+                toolbarRender: slots['preview.toolbarRender']
+                  ? renderParamsSlot({
+                      slots,
+                      setSlotParams,
+                      key: 'preview.toolbarRender',
+                    })
+                  : previewToolbarRenderFunction,
+                imageRender: slots['preview.imageRender']
+                  ? renderParamsSlot({
+                      slots,
+                      setSlotParams,
+                      key: 'preview.imageRender',
+                    })
+                  : previewImageRenderFunction,
 
-              ...(slots['preview.mask'] || Reflect.has(previewConfig, 'mask')
-                ? {
-                    mask: slots['preview.mask'] ? (
-                      <ReactSlot slot={slots['preview.mask']} />
-                    ) : (
-                      previewConfig.mask
-                    ),
-                  }
-                : {}),
-              closeIcon: slots['preview.closeIcon'] ? (
-                <ReactSlot slot={slots['preview.closeIcon']} />
-              ) : (
-                previewConfig.closeIcon
-              ),
-            }) as ImageProps['preview'])
-          : false
-      }
-      placeholder={
-        slots.placeholder ? (
-          <ReactSlot slot={slots.placeholder} />
-        ) : (
-          props.placeholder
-        )
-      }
-    />
+                ...(slots['preview.mask'] || Reflect.has(previewConfig, 'mask')
+                  ? {
+                      mask: slots['preview.mask'] ? (
+                        <ReactSlot slot={slots['preview.mask']} />
+                      ) : (
+                        previewConfig.mask
+                      ),
+                    }
+                  : {}),
+                closeIcon: slots['preview.closeIcon'] ? (
+                  <ReactSlot slot={slots['preview.closeIcon']} />
+                ) : (
+                  previewConfig.closeIcon
+                ),
+              }) as ImageProps['preview'])
+            : false
+        }
+        placeholder={
+          slots.placeholder ? (
+            <ReactSlot slot={slots.placeholder} />
+          ) : (
+            props.placeholder
+          )
+        }
+      />
+    </>
   );
 });
 

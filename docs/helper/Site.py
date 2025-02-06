@@ -161,7 +161,10 @@ class Site:
                                                     with antd.Splitter.Panel():
                                                         with antd.Layout(
                                                                 elem_style=dict(
-                                                                    width="100%"
+                                                                    width=
+                                                                    "100%",
+                                                                    backgroundColor
+                                                                    ="var(--ms-gr-ant-color-bg-container)"
                                                                 )):
                                                             with antd.Layout.Content(
                                                                     elem_style=

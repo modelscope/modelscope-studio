@@ -1,6 +1,6 @@
-import { createItemsContext } from '@utils/createItemsContext2';
+import { createItemsContext } from '@utils/createItemsContext';
 
 export const { useItems, withItemsContextProvider, ItemHandler } =
-  createItemsContext();
+  createItemsContext('antd-menu-items');
 
-export * from '@utils/createItemsContext2';
+export * from '@utils/createItemsContext';

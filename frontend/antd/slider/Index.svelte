@@ -15,8 +15,6 @@
   import cls from 'classnames';
   import { writable } from 'svelte/store';
 
-  import { getItems } from './context';
-
   const AwaitedSlider = importComponent(() => import('./slider'));
 
   export let gradio: Gradio;
@@ -60,7 +58,6 @@
     value,
     restProps: $$restProps,
   });
-  const { marks } = getItems(['marks']);
 </script>
 
 {#if $mergedProps.visible}
@@ -76,7 +73,6 @@
       })}
       value={$mergedProps.props.value ?? $mergedProps.value}
       slots={$slots}
-      markItems={$marks}
       onValueChange={(v) => {
         value = v;
       }}
@@ -86,6 +82,3 @@
     </Slider>
   {/await}
 {/if}
-
-<style>
-</style>

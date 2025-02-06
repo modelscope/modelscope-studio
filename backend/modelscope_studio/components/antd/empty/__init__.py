@@ -25,6 +25,8 @@ class AntdEmpty(ModelScopeLayoutComponent):
         | None = None,
             image_style: dict | None = None,
             root_class_name: str | None = None,
+            styles: dict | None = None,
+            class_names: dict | None = None,
             as_item: str | None = None,
             _internal: None = None,
             # gradio properties
@@ -42,6 +44,8 @@ class AntdEmpty(ModelScopeLayoutComponent):
                          elem_style=elem_style,
                          **kwargs)
         self.props = props
+        self.styles = styles
+        self.class_names = class_names
         self.description = description
         self.image = image
         self.image_style = image_style

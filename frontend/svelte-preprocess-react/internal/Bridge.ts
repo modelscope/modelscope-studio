@@ -1,9 +1,13 @@
+import {
+  useAutoCompleteContext,
+  useFormItemContext,
+  useSuggestionContext,
+} from '@svelte-preprocess-react/context';
 import React, { useMemo } from 'react';
 import { omitUndefinedProps } from '@utils/omitUndefinedProps';
 import { patchProps } from '@utils/patchProps';
 import { writable } from 'svelte/store';
 
-import { useAutoCompleteContext, useFormItemContext } from '../context';
 import useStore, { useStores } from '../useStore';
 
 import { BridgeContext } from './BridgeContext';
@@ -47,26 +51,52 @@ const Bridge: React.FC<BridgeProps> = ({ createPortal, node }) => {
 
   const formItemContext = useFormItemContext();
   const autoCompleteContext = useAutoCompleteContext();
+  const suggestionContext = useSuggestionContext();
   let props: typeof nodeProps = useMemo(() => {
     return {
       ...omitUndefinedProps(nodeProps),
       // If the component is ignore, then its value should ignore the influence of the context.
       ...(node.ignore ? {} : formItemContext || {}),
       ...(node.ignore ? {} : autoCompleteContext || {}),
+      ...(node.ignore ? {} : suggestionContext || {}),
+      onKeyDown:
+        (!node.ignore &&
+          (autoCompleteContext?.onKeyDown ||
+            formItemContext?.onKeyDown ||
+            suggestionContext?.onKeyDown)) ||
+        nodeProps.onKeyDown
+          ? (...args: any[]) => {
+              if (!node.ignore) {
+                autoCompleteContext?.onKeyDown?.(...args);
+                formItemContext?.onKeyDown?.(...args);
+                suggestionContext?.onKeyDown?.(...args);
+              }
+              return nodeProps?.onKeyDown?.(...args);
+            }
+          : nodeProps.onKeyDown,
       onChange:
         (!node.ignore &&
-          (autoCompleteContext?.onChange || formItemContext?.onChange)) ||
+          (autoCompleteContext?.onChange ||
+            formItemContext?.onChange ||
+            suggestionContext?.onChange)) ||
         nodeProps.onChange
           ? (...args: any[]) => {
               if (!node.ignore) {
                 autoCompleteContext?.onChange?.(...args);
                 formItemContext?.onChange?.(...args);
+                suggestionContext?.onChange?.(...args);
               }
               return nodeProps?.onChange?.(...args);
             }
           : nodeProps.onChange,
     };
-  }, [autoCompleteContext, nodeProps, formItemContext, node.ignore]);
+  }, [
+    nodeProps,
+    node.ignore,
+    formItemContext,
+    autoCompleteContext,
+    suggestionContext,
+  ]);
 
   if (!target) {
     return null;

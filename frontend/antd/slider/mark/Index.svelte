@@ -1,7 +1,10 @@
 <svelte:options accessors={true} />
 
 <script lang="ts">
-  import { bindEvents } from '@svelte-preprocess-react/component';
+  import {
+    bindEvents,
+    importComponent,
+  } from '@svelte-preprocess-react/component';
   import {
     getSlotContext,
     getSlotKey,
@@ -12,8 +15,7 @@
   import cls from 'classnames';
   import { type Writable, writable } from 'svelte/store';
 
-  import { getSetItemFn } from '../context';
-
+  const AwaitedSliderMark = importComponent(() => import('./slider.mark'));
   export let gradio: Gradio;
   export let props: Record<string, any> = {};
   const updatedProps = writable(props);
@@ -61,9 +63,8 @@
     restProps: $$restProps,
   });
   const slot: Writable<HTMLElement> = writable();
-  const setItem = getSetItemFn();
 
-  $: setItem($slotKey, $mergedProps._internal.index || 0, {
+  $: itemProps = {
     props: {
       style: $mergedProps.elem_style,
       className: cls($mergedProps.elem_classes, 'ms-gr-antd-slider-mark'),
@@ -78,14 +79,23 @@
       ...$slots,
       children: $mergedProps._internal.layout ? $slot : undefined,
     },
-  });
+  };
 </script>
 
-{#if $mergedProps.visible}
-  <svelte-slot bind:this={$slot}>
-    <slot></slot>
-  </svelte-slot>
-{/if}
+{#await AwaitedSliderMark then SliderMark}
+  <SliderMark
+    {...itemProps.props}
+    slots={itemProps.slots}
+    itemIndex={$mergedProps._internal.index || 0}
+    itemSlotKey={$slotKey}
+  >
+    {#if $mergedProps.visible}
+      <svelte-slot bind:this={$slot}>
+        <slot></slot>
+      </svelte-slot>
+    {/if}
+  </SliderMark>
+{/await}
 
 <style>
   svelte-slot {

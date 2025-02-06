@@ -6,7 +6,7 @@ import { useFunction } from '@utils/hooks/useFunction';
 import { renderParamsSlot } from '@utils/renderParamsSlot';
 import { type GetProps, Slider as ASlider } from 'antd';
 
-import { type Item } from './context';
+import { type Item, useItems, withItemsContextProvider } from './context';
 
 type SliderProps = GetProps<typeof ASlider>;
 
@@ -39,58 +39,62 @@ export const Slider = sveltify<
   SliderProps & {
     onValueChange: (value: number | number[]) => void;
     children?: React.ReactNode;
-    markItems: Item[];
     setSlotParams: SetSlotParams;
   },
   ['tooltip.formatter']
 >(
-  ({
-    marks,
-    markItems,
-    children,
-    onValueChange,
-    onChange,
-    elRef,
-    tooltip,
-    step,
-    slots,
-    setSlotParams,
-    ...props
-  }) => {
-    const onSliderChange = (v: number | number[]) => {
-      onChange?.(v as any);
-      onValueChange(v);
-    };
-    const tooltipGetPopupContainerFunction = useFunction(
-      tooltip?.getPopupContainer
-    );
-    const tooltipFormatterFunction = useFunction(tooltip?.formatter);
-    return (
-      <>
-        <div style={{ display: 'none' }}>{children}</div>
-        <ASlider
-          {...props}
-          tooltip={{
-            ...tooltip,
-            getPopupContainer: tooltipGetPopupContainerFunction,
-            formatter: slots['tooltip.formatter']
-              ? renderParamsSlot({
-                  key: 'tooltip.formatter',
-                  setSlotParams,
-                  slots,
-                })
-              : tooltipFormatterFunction,
-          }}
-          marks={useMemo(() => {
-            return marks || renderMarks(markItems);
-          }, [markItems, marks])}
-          step={step === undefined ? null : step}
-          ref={elRef}
-          onChange={onSliderChange}
-        />
-      </>
-    );
-  }
+  withItemsContextProvider(
+    ['marks'],
+    ({
+      marks,
+      children,
+      onValueChange,
+      onChange,
+      elRef,
+      tooltip,
+      step,
+      slots,
+      setSlotParams,
+      ...props
+    }) => {
+      const onSliderChange = (v: number | number[]) => {
+        onChange?.(v as any);
+        onValueChange(v);
+      };
+      const tooltipGetPopupContainerFunction = useFunction(
+        tooltip?.getPopupContainer
+      );
+      const tooltipFormatterFunction = useFunction(tooltip?.formatter);
+      const {
+        items: { marks: markItems },
+      } = useItems<['marks']>();
+      return (
+        <>
+          <div style={{ display: 'none' }}>{children}</div>
+          <ASlider
+            {...props}
+            tooltip={{
+              ...tooltip,
+              getPopupContainer: tooltipGetPopupContainerFunction,
+              formatter: slots['tooltip.formatter']
+                ? renderParamsSlot({
+                    key: 'tooltip.formatter',
+                    setSlotParams,
+                    slots,
+                  })
+                : tooltipFormatterFunction,
+            }}
+            marks={useMemo(() => {
+              return marks || renderMarks(markItems);
+            }, [markItems, marks])}
+            step={step === undefined ? null : step}
+            ref={elRef}
+            onChange={onSliderChange}
+          />
+        </>
+      );
+    }
+  )
 );
 
 export default Slider;

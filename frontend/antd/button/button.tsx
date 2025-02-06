@@ -17,7 +17,7 @@ export const Button = sveltify<
       </div>
       <AButton
         {...props}
-        icon={slots.icon ? <ReactSlot slot={slots.icon} /> : props.icon}
+        icon={slots.icon ? <ReactSlot slot={slots.icon} clone /> : props.icon}
         loading={
           slots['loading.icon']
             ? {

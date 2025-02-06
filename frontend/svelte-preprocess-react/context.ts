@@ -16,6 +16,13 @@ export const AutoCompleteContext = createContext<{
 
 export const useAutoCompleteContext = () => useContext(AutoCompleteContext);
 
+export const SuggestionContext = createContext<{
+  elRef?: React.ForwardedRef<HTMLElement>;
+  [key: PropertyKey]: any;
+} | null>(null);
+
+export const useSuggestionContext = () => useContext(SuggestionContext);
+
 export interface ContextPropsContextValue {
   params?: any[];
   initial: boolean;

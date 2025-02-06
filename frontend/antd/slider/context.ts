@@ -1,6 +1,6 @@
 import { createItemsContext } from '@utils/createItemsContext';
 
-const { getItems, getSetItemFn } = createItemsContext('slider');
+export const { withItemsContextProvider, useItems, ItemHandler } =
+  createItemsContext('antd-slider-marks');
 
-export { getItems, getSetItemFn };
 export * from '@utils/createItemsContext';

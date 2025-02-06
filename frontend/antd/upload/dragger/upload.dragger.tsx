@@ -124,6 +124,7 @@ export const UploadDragger = sveltify<
           ]);
           return false;
         }}
+        maxCount={1}
         customRequest={customRequestFunction}
         progress={
           progress

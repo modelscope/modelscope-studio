@@ -1,15 +1,19 @@
 <svelte:options accessors={true} />
 
 <script lang="ts">
-  import { bindEvents } from '@svelte-preprocess-react/component';
+  import {
+    bindEvents,
+    importComponent,
+  } from '@svelte-preprocess-react/component';
   import { getSlotContext, getSlotKey } from '@svelte-preprocess-react/slot';
   import type React from 'react';
   import type { Gradio } from '@gradio/utils';
   import cls from 'classnames';
   import { type Writable, writable } from 'svelte/store';
 
-  import { getSetItemFn } from '../context';
-
+  const AwaitedSplitterPanel = importComponent(
+    () => import('./splitter.panel')
+  );
   export let gradio: Gradio;
   export let props: Record<string, any> = {};
   const updatedProps = writable(props);
@@ -51,33 +55,35 @@
   });
 
   const slot: Writable<HTMLElement> = writable();
-  const setItem = getSetItemFn();
-  $: {
-    if ($slot) {
-      setItem($slotKey, $mergedProps._internal.index || 0, {
-        el: $slot,
-        props: {
-          style: $mergedProps.elem_style,
-          className: cls(
-            $mergedProps.elem_classes,
-            'ms-gr-antd-splitter-panel'
-          ),
-          id: $mergedProps.elem_id,
-          ...$mergedProps.restProps,
-          ...$mergedProps.props,
-          ...bindEvents($mergedProps),
-        },
-        slots: {},
-      });
-    }
-  }
+
+  $: itemProps = {
+    props: {
+      style: $mergedProps.elem_style,
+      className: cls($mergedProps.elem_classes, 'ms-gr-antd-splitter-panel'),
+      id: $mergedProps.elem_id,
+      ...$mergedProps.restProps,
+      ...$mergedProps.props,
+      ...bindEvents($mergedProps),
+    },
+    slots: {},
+  };
 </script>
 
-{#if $mergedProps.visible}
-  <svelte-slot bind:this={$slot}>
-    <slot></slot>
-  </svelte-slot>
-{/if}
+{#await AwaitedSplitterPanel then SplitterPanel}
+  <SplitterPanel
+    {...itemProps.props}
+    slots={itemProps.slots}
+    itemIndex={$mergedProps._internal.index || 0}
+    itemSlotKey={$slotKey}
+    itemElement={$slot}
+  >
+    {#if $mergedProps.visible}
+      <svelte-slot bind:this={$slot}>
+        <slot></slot>
+      </svelte-slot>
+    {/if}
+  </SplitterPanel>
+{/await}
 
 <style>
   svelte-slot {

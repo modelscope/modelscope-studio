@@ -5,7 +5,7 @@ import { Empty as AEmpty, type GetProps } from 'antd';
 export const Empty = sveltify<
   GetProps<typeof AEmpty>,
   ['description', 'image']
->(({ slots, imageStyle, ...props }) => {
+>(({ slots, styles, ...props }) => {
   const getImage = () => {
     if (slots.image) {
       return <ReactSlot slot={slots.image} />;
@@ -29,9 +29,12 @@ export const Empty = sveltify<
           props.description
         )
       }
-      imageStyle={{
-        display: 'inline-block',
-        ...imageStyle,
+      styles={{
+        ...styles,
+        image: {
+          display: 'inline-block',
+          ...styles?.image,
+        },
       }}
       image={getImage()}
     />

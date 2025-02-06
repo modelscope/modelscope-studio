@@ -5,4 +5,5 @@ packages:
   - 'frontend'
   - 'frontend/base'
   - 'frontend/antd'
+  - 'frontend/antdx'
   - 'frontend/legacy/*'

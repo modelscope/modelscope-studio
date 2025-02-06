@@ -1,14 +1,14 @@
 import { bindEvents, mapProps } from '@svelte-preprocess-react/component';
-import { ensureObjectCtxValue } from '@svelte-preprocess-react/slot';
-import React, { useMemo } from 'react';
-import { patchProps } from '@utils/patchProps';
-
 import {
   AutoCompleteContext,
   ContextPropsProvider,
   FormItemContext,
+  SuggestionContext,
   useContextPropsContext,
-} from '../context';
+} from '@svelte-preprocess-react/context';
+import { ensureObjectCtxValue } from '@svelte-preprocess-react/slot';
+import React, { useMemo } from 'react';
+import { patchProps } from '@utils/patchProps';
 
 export interface BridgeContextProps {
   reactComponent: React.ComponentType<any>;
@@ -97,20 +97,22 @@ export const BridgeContext: React.FC<BridgeContextProps> = ({
 
   return (
     <FormItemContext.Provider value={null}>
-      <AutoCompleteContext.Provider value={null}>
-        <ContextPropsProvider
-          {...propsContext}
-          ctx={ctxProps.originalRestProps}
-        >
-          {/* eslint-disable-next-line react/no-children-prop */}
-          {React.createElement(reactComponent, {
-            ...rest,
-            ...ctxProps.restProps,
-            ...ctxProps.events,
-            children,
-          })}
-        </ContextPropsProvider>
-      </AutoCompleteContext.Provider>
+      <SuggestionContext.Provider value={null}>
+        <AutoCompleteContext.Provider value={null}>
+          <ContextPropsProvider
+            {...propsContext}
+            ctx={ctxProps.originalRestProps}
+          >
+            {/* eslint-disable-next-line react/no-children-prop */}
+            {React.createElement(reactComponent, {
+              ...rest,
+              ...ctxProps.restProps,
+              ...ctxProps.events,
+              children,
+            })}
+          </ContextPropsProvider>
+        </AutoCompleteContext.Provider>
+      </SuggestionContext.Provider>
     </FormItemContext.Provider>
   );
 };

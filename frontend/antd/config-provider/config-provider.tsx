@@ -50,6 +50,7 @@ export const ConfigProvider = sveltify<
     className?: string;
     style?: React.CSSProperties;
     id?: string;
+    component?: React.ComponentType<ConfigProviderProps>;
     setSlotParams: SetSlotParams;
   },
   ['renderEmpty']
@@ -66,6 +67,7 @@ export const ConfigProvider = sveltify<
     renderEmpty,
     setSlotParams,
     children,
+    component,
     ...props
   }) => {
     const [locale, setLocale] = useState<Locale>();
@@ -87,11 +89,11 @@ export const ConfigProvider = sveltify<
         );
       }
     }, [localeProp]);
-
+    const ProviderComponent = component || AConfigProvider;
     return (
       <div id={id} className={className} style={style}>
         <StyleProvider hashPriority="high" container={document.body}>
-          <AConfigProvider
+          <ProviderComponent
             prefixCls="ms-gr-ant"
             {...combinePropsAndSlots(props, slots)}
             locale={locale}
@@ -128,7 +130,7 @@ export const ConfigProvider = sveltify<
             }}
           >
             {children}
-          </AConfigProvider>
+          </ProviderComponent>
         </StyleProvider>
       </div>
     );

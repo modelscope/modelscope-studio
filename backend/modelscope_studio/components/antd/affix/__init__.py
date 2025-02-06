@@ -32,6 +32,7 @@ class AntdAffix(ModelScopeLayoutComponent):
             offset_bottom: int | float | None = None,
             offset_top: int | float | None = None,
             get_target: str | None = None,
+            root_class_name: str | None = None,
             as_item: str | None = None,
             _internal: None = None,
             # gradio properties
@@ -58,6 +59,7 @@ class AntdAffix(ModelScopeLayoutComponent):
         self.offset_bottom = offset_bottom
         self.offset_top = offset_top
         self.get_target = get_target
+        self.root_class_name = root_class_name
 
     FRONTEND_DIR = resolve_frontend_dir("affix")
 

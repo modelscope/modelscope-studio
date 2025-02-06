@@ -41,7 +41,8 @@ class AntdAutoComplete(ModelScopeDataLayoutComponent):
 
     # supported slots
     SLOTS = [
-        'allowClear.clearIcon', 'dropdownRender', 'children', 'notFoundContent'
+        'allowClear.clearIcon', 'dropdownRender', 'children',
+        'notFoundContent', 'options'
     ]
 
     def __init__(

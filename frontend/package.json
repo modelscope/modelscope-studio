@@ -6,8 +6,9 @@
   "license": "Apache-2.0",
   "type": "module",
   "dependencies": {
-    "@ant-design/cssinjs": "^1.22.1",
-    "@ant-design/icons": "^5.5.2",
+    "@ant-design/cssinjs": "^1.23.0",
+    "@ant-design/icons": "^5.6.0",
+    "@ant-design/x": "^1.0.5",
     "@gradio/atoms": "0.7.4",
     "@gradio/button": "^0.2.43",
     "@gradio/client": "^1.10.0",
@@ -17,7 +18,7 @@
     "@gradio/upload": "0.11.2",
     "@gradio/utils": "0.9.0",
     "amuchina": "^1.0.12",
-    "antd": "^5.23.1",
+    "antd": "^5.23.2",
     "classnames": "^2.5.1",
     "dayjs": "^1.11.12",
     "dequal": "^2.0.2",
@@ -47,7 +48,7 @@
     "@vitejs/plugin-react-swc": "^3.7.2",
     "less": "^4.2.2",
     "typescript-json-schema": "^0.65.1",
-    "vite": "^6.0.7"
+    "vite": "^6.0.11"
   },
   "main_changeset": true
 }

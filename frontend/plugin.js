@@ -7,10 +7,12 @@ const globals = {
   'react-dom': 'window.ms_globals.ReactDOM',
   'react-dom/client': 'window.ms_globals.ReactDOMClient',
   antd: 'window.ms_globals.antd',
+  antdx: 'window.ms_globals.antdx',
   '@ant-design/cssinjs': 'window.ms_globals.antdCssinjs',
   '@ant-design/icons': 'window.ms_globals.antdIcons',
   '@svelte-preprocess-react/context': 'window.ms_globals.internalContext',
   dayjs: 'window.ms_globals.dayjs',
+  '@utils/createItemsContext': 'window.ms_globals.createItemsContext',
 };
 
 const dirname = path.dirname(url.fileURLToPath(import.meta.url));
@@ -57,14 +59,10 @@ export const ModelScopeStudioVitePlugin = ({ external = true } = {}) => {
           dirname,
           'svelte-preprocess-react/slot.ts'
         ),
-        ...(isBuild
-          ? {}
-          : {
-              '@svelte-preprocess-react/context': path.resolve(
-                dirname,
-                'svelte-preprocess-react/context.ts'
-              ),
-            }),
+        '@svelte-preprocess-react/context': path.resolve(
+          dirname,
+          'svelte-preprocess-react/context.ts'
+        ),
         '@svelte-preprocess-react/react-slot': path.resolve(
           dirname,
           'svelte-preprocess-react/react-slot.tsx'

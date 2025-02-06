@@ -53,7 +53,7 @@ export function renderItems<R>(
       let el: HTMLElement | undefined;
       let callback: ((key: string, params: any[]) => void) | undefined;
       let clone = options?.clone ?? false;
-      let forceClone = options?.forceClone ?? true;
+      let forceClone = options?.forceClone;
       if (elOrObject instanceof Element) {
         el = elOrObject;
       } else {
@@ -62,6 +62,8 @@ export function renderItems<R>(
         clone = elOrObject.clone ?? clone;
         forceClone = elOrObject.forceClone ?? forceClone;
       }
+
+      forceClone = forceClone ?? (callback ? true : false);
 
       current[splits[splits.length - 1]] = el ? (
         callback ? (
@@ -75,7 +77,9 @@ export function renderItems<R>(
             );
           }
         ) : (
-          <ReactSlot slot={el} clone={clone} />
+          <ContextPropsProvider forceClone={forceClone}>
+            <ReactSlot slot={el} clone={clone} />
+          </ContextPropsProvider>
         )
       ) : (
         current[splits[splits.length - 1]]

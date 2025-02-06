@@ -1,28 +1,28 @@
-import { createItemsContext } from '@utils/createItemsContext2';
+import { createItemsContext } from '@utils/createItemsContext';
 
 export const {
   useItems: useColumnItems,
   withItemsContextProvider: withColumnItemsContextProvider,
   ItemHandler: ColumnItemHandler,
-} = createItemsContext();
+} = createItemsContext('antd-table-columns');
 
 // row selection selection
 export const {
   useItems: useSelectionItems,
   withItemsContextProvider: withSelectionItemsContextProvider,
   ItemHandler: SelectionItemHandler,
-} = createItemsContext();
+} = createItemsContext('antd-table-row-selection-selections');
 
 export const {
   useItems: useRowSelectionItems,
   withItemsContextProvider: withRowSelectionItemsContextProvider,
   ItemHandler: RowSelectionItemHandler,
-} = createItemsContext();
+} = createItemsContext('antd-table-row-selection');
 
 export const {
   useItems: useExpandableItems,
   withItemsContextProvider: withExpandableItemsContextProvider,
   ItemHandler: ExpandableItemHandler,
-} = createItemsContext();
+} = createItemsContext('antd-table-expandable');
 
-export * from '@utils/createItemsContext2';
+export * from '@utils/createItemsContext';

@@ -356,12 +356,14 @@ def logo():
         antd.Image(os.path.join(os.path.dirname(__file__),
                                 "./resources/modelscope.png"),
                    preview=False,
-                   height=20)
+                   height=20,
+                   elem_style=dict(width="auto"))
         ms.Span('✖️')
         antd.Image(os.path.join(os.path.dirname(__file__),
                                 "./resources/gradio.png"),
                    preview=False,
-                   height=40)
+                   height=40,
+                   elem_style=dict(width="auto"))
 
 
 def more_components():
