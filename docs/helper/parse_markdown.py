@@ -47,6 +47,8 @@ class MarkdownParser(HTMLParser):
                 "fixed": "fixed" in dict(attrs),
                 "prefix": "",
                 "suffix": "",
+                "position": dict(attrs).get("position", "left"),
+                "collapsible": "collapsible" in dict(attrs),
                 "title": dict(attrs).get("title", "")
             })
         elif tag == "file":

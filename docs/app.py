@@ -15,11 +15,11 @@ def get_text(text: str, cn_text: str):
     return text
 
 
-def get_docs(file_path: str, type: Literal["antd", "base"]):
+def get_docs(type: Literal["antd", "base"]):
     import importlib.util
 
     components = []
-    components_dir = os.path.join(os.path.dirname(file_path), "components",
+    components_dir = os.path.join(os.path.dirname(__file__), "components",
                                   type)
     for dir in os.listdir(components_dir):
         abs_dir = os.path.join(components_dir, dir)
@@ -38,15 +38,48 @@ def get_docs(file_path: str, type: Literal["antd", "base"]):
     return docs
 
 
-index_docs = {"modelscope_studio": Docs(__file__)}
+def get_layout_templates():
+    import importlib.util
 
-base_docs = get_docs(__file__, "base")
-antd_docs = get_docs(__file__, "antd")
+    templates = []
+    templates_dir = os.path.join(os.path.dirname(__file__), "layout_templates")
+    for dir in os.listdir(templates_dir):
+        abs_dir = os.path.join(templates_dir, dir)
+        if os.path.isdir(abs_dir):
+            app_file = os.path.join(abs_dir, "app.py")
+            if os.path.exists(app_file):
+                templates.append(dir)
+
+    docs = {}
+    for template in templates:
+        spec = importlib.util.spec_from_file_location(
+            "doc", os.path.join(templates_dir, template, "app.py"))
+        module = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(module)
+        docs[template] = module.docs
+    return docs
+
+
+layout_templates = get_layout_templates()
+
+index_docs = {"overview": Docs(__file__), **layout_templates}
+
+base_docs = get_docs("base")
+antd_docs = get_docs("antd")
 
 default_active_tab = "index"
 index_menu_items = [{
     "label": get_text("ModelScope-Studio", "ModelScope-Studio"),
-    "key": "modelscope_studio"
+    "key": "overview"
+}, {
+    "label":
+    get_text("Layout Templates", "布局模板"),
+    "type":
+    "group",
+    "children": [{
+        "label": get_text("Coder-Artifacts", "Coder-Artifacts"),
+        "key": "coder_artifacts"
+    }]
 }]
 
 base_menu_items = [{
@@ -386,7 +419,7 @@ tabs = [
     {
         "label": get_text("Overview", "概览"),
         "key": "index",
-        "default_active_key": "modelscope_studio",
+        "default_active_key": "overview",
         "menus": index_menu_items
     },
     {

@@ -52,7 +52,12 @@ class Site:
                 item: gr.update(visible=True)
             }
 
-        with gr.Blocks(css="""
+        # Css is not working in demo if there are multiple Blocks, so we need to add css from demos
+        css = ""
+        for category in self.docs:
+            for component in self.docs[category]:
+                css += self.docs[category][component].get_css()
+        with gr.Blocks(css=css + """
 .gradio-container {
   max-width: 100% !important;
   padding: 0 !important;

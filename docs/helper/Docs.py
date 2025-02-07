@@ -78,6 +78,8 @@ class Docs:
                      demo_name,
                      prefix='',
                      suffix='',
+                     position="left",
+                     collapsible=False,
                      fixed=False,
                      title=''):
         content = self._read_file(f"./demos/{demo_name}.py")
@@ -87,38 +89,49 @@ class Docs:
             if title:
                 with ms.Slot("title"):
                     ms.Text(title)
-            with antd.Row(align="stretch", wrap=True, gutter=8):
-                with antd.Col(sm=dict(span=10, order=1),
+            with antd.Row(align="stretch", wrap=True, gutter=[8, 8]):
+                with antd.Col(sm=dict(span=24 if position == "bottom" else 10,
+                                      order=2 if position == "bottom" else 1),
                               xs=dict(span=24, order=2)):
-                    with antd.Row(elem_style=dict(height='100%'),
-                                  gutter=[8, 8]):
-                        with antd.Col(sm=0, xs=24):
-                            antd.Divider(type="horizontal",
-                                         variant="dashed",
-                                         elem_style=dict(width='100%',
-                                                         margin='8px 0 0'))
-                        with antd.Col(sm=23, xs=24):
-                            prefix = prefix + "\n" if prefix else ""
-                            suffix = "\n" + suffix if suffix else ""
-                            ms.Markdown(f"""{prefix}```python
-{content}
-```{suffix}""",
-                                        header_links=True)
 
-                        with antd.Col(sm=1,
-                                      xs=0,
-                                      elem_style=dict(height="100%")):
-                            with ms.Div(
-                                    elem_style=dict(display="flex",
-                                                    justifyContent="center",
-                                                    width="100%",
-                                                    height="100%")):
-                                antd.Divider(type="vertical",
+                    def render_code():
+                        with antd.Row(elem_style=dict(height='100%'),
+                                      gutter=[8, 8]):
+                            with antd.Col(sm=0, xs=24):
+                                antd.Divider(type="horizontal",
                                              variant="dashed",
-                                             elem_style=dict(height='100%',
-                                                             margin=0))
+                                             elem_style=dict(width='100%',
+                                                             margin='8px 0 0'))
+                            with antd.Col(sm=23, xs=24):
+                                ms.Markdown(
+                                    f"""{prefix + "\n" if prefix else ""}```python
+{content}
+  ```{"\n" + suffix if suffix else ""}""",
+                                    header_links=True)
+
+                            with antd.Col(sm=1,
+                                          xs=0,
+                                          elem_style=dict(height="100%")):
+                                with ms.Div(elem_style=dict(
+                                        display="flex",
+                                        justifyContent="center",
+                                        width="100%",
+                                        height="100%")):
+                                    antd.Divider(type="vertical",
+                                                 variant="dashed",
+                                                 elem_style=dict(height='100%',
+                                                                 margin=0))
+
+                    if collapsible:
+                        with antd.Collapse():
+                            with antd.Collapse.Item(label="Show Code",
+                                                    key="code"):
+                                render_code()
+                    else:
+                        render_code()
                 with antd.Col(
-                        sm=dict(span=14, order=2),
+                        sm=dict(span=24 if position == "bottom" else 14,
+                                order=1 if position == "bottom" else 2),
                         xs=dict(span=24, order=1),
                         elem_style=dict(
                             width='100%',
@@ -136,8 +149,18 @@ class Docs:
                 self._render_demo(item["name"],
                                   prefix=item["prefix"],
                                   suffix=item["suffix"],
+                                  position=item["position"],
+                                  collapsible=item["collapsible"],
                                   fixed=item["fixed"],
                                   title=item["title"])
+
+    def get_css(self):
+        css = ""
+        for demo_name in self.demo_modules:
+            module = self.demo_modules[demo_name]
+            if hasattr(module, "css"):
+                css += module.css
+        return css
 
     def render(self):
         with gr.Blocks() as demo:
