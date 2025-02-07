@@ -12,6 +12,7 @@ import { bind_copy_event, copy_to_clipboard, create_marked } from './utils';
 
 import 'katex/dist/katex.min.css';
 import './index.less';
+import './prism.less';
 
 function escapeRegExp(string: string): string {
   return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
@@ -169,7 +170,7 @@ export const Markdown = sveltify<
 
     useEffect(() => {
       onChangeMemoized();
-    }, [onChangeMemoized]);
+    }, [markdown, onChangeMemoized]);
 
     useEffect(() => {
       if (message && message.trim()) {

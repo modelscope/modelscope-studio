@@ -63,6 +63,9 @@ class ModelScopeApplication(ModelScopeDataLayoutComponent):
             _internal: None = None,
             # gradio properties
             visible: bool = True,
+            elem_id: str | None = None,
+            elem_classes: list[str] | str | None = None,
+            elem_style: dict | None = None,
             key: int | str | None = None,
             render: bool = True,
             **kwargs):
@@ -70,6 +73,9 @@ class ModelScopeApplication(ModelScopeDataLayoutComponent):
         super().__init__(value=value,
                          visible=visible,
                          render=render,
+                         elem_id=elem_id,
+                         elem_classes=elem_classes,
+                         elem_style=elem_style,
                          key=key,
                          **kwargs)
 

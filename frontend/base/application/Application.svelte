@@ -1,7 +1,10 @@
 <svelte:options accessors={true} />
 
 <script lang="ts">
+  import type React from 'react';
   import type { Gradio } from '@gradio/utils';
+  import { styleObject2String } from '@utils/style';
+  import cls from 'classnames';
   import { onDestroy, onMount } from 'svelte';
   import { getLocaleFromNavigator } from 'svelte-i18n';
 
@@ -16,7 +19,9 @@
       scrollX: number;
     };
   }
-
+  export let elem_id = '';
+  export let elem_classes: string[] = [];
+  export let elem_style: React.CSSProperties | string = {};
   export let value: ApplicationPageData;
   export let _internal: {
     bind_mount_event?: boolean;
@@ -32,7 +37,6 @@
   }>;
   export let attached_events: string[] = [];
   export let visible = true;
-  let container: HTMLDivElement;
   function get_data(): ApplicationPageData {
     return {
       theme: gradio.theme,
@@ -109,7 +113,13 @@
 </script>
 
 {#if visible}
-  <div class="ms-gr-container" bind:this={container}>
+  <div
+    class={cls('ms-gr-container', elem_classes)}
+    id={elem_id}
+    style={typeof elem_style === 'object'
+      ? styleObject2String(elem_style)
+      : elem_style}
+  >
     <slot />
   </div>
 {/if}
