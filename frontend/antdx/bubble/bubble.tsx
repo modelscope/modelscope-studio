@@ -6,6 +6,7 @@ import { Bubble as XBubble, type BubbleProps } from '@ant-design/x';
 import { useFunction } from '@utils/hooks/useFunction';
 import { renderParamsSlot } from '@utils/renderParamsSlot';
 import type { AvatarProps } from 'antd';
+import { isObject } from 'lodash-es';
 
 export const Bubble = sveltify<
   BubbleProps & {
@@ -15,6 +16,7 @@ export const Bubble = sveltify<
     'avatar',
     'avatar.icon',
     'avatar.src',
+    'typing.suffix',
     'content',
     'footer',
     'header',
@@ -59,6 +61,14 @@ export const Bubble = sveltify<
         <XBubble
           {...props}
           avatar={avatar}
+          typing={
+            slots['typing.suffix']
+              ? {
+                  ...(isObject(props.typing) ? props.typing : {}),
+                  suffix: <ReactSlot slot={slots['typing.suffix']} />,
+                }
+              : props.typing
+          }
           content={
             slots.content ? <ReactSlot slot={slots.content} /> : props.content
           }

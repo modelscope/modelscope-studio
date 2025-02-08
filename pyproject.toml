@@ -226,6 +226,9 @@ artifacts = [
   "/backend/modelscope_studio/components/antdx/x_provider/templates",
 ]
 
+[tool.yapfignore]
+ignore_patterns = ["node_modules/**", "docs/components/antdx/**"]
+
 [tool.hatch.build.targets.sdist]
 exclude = ["__pycache__"]
 include = ["/backend/modelscope_studio"]

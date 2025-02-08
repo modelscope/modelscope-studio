@@ -1,6 +1,6 @@
 import type { Gradio } from '@gradio/utils';
 import { convertToCamelCase } from '@utils/convertToCamelCase';
-import { mapKeys, omit } from 'lodash-es';
+import { isPlainObject, mapKeys, omit } from 'lodash-es';
 
 export async function initialize() {
   if (!window.ms_globals) {
@@ -125,22 +125,52 @@ export function bindEvents<
           try {
             serializedPayload = JSON.parse(JSON.stringify(payload));
           } catch {
-            serializedPayload = payload.map((item) => {
-              if (item && typeof item === 'object') {
-                return Object.fromEntries(
-                  Object.entries(item).filter(([, v]) => {
-                    try {
-                      JSON.stringify(v);
-                      return true;
-                    } catch {
-                      return false;
-                    }
-                  })
-                );
+            function serialize(obj: any) {
+              try {
+                JSON.stringify(obj);
+                return obj;
+              } catch {
+                // first level
+                if (isPlainObject(obj)) {
+                  return Object.fromEntries(
+                    Object.entries(obj)
+                      .map(([k, v]) => {
+                        try {
+                          JSON.stringify(v);
+                          return [k, v];
+                        } catch {
+                          // second level
+                          if (isPlainObject(v)) {
+                            return [
+                              k,
+                              Object.fromEntries(
+                                Object.entries(v as object).filter(
+                                  ([_, nv]) => {
+                                    try {
+                                      JSON.stringify(nv);
+                                      return true;
+                                    } catch {
+                                      return false;
+                                    }
+                                  }
+                                )
+                              ),
+                            ];
+                          }
+                          return null;
+                        }
+                      })
+                      .filter(Boolean) as [k: string, v: any][]
+                  );
+                }
+                return {};
               }
-              return item;
+            }
+            serializedPayload = payload.map((item) => {
+              return serialize(item);
             });
           }
+
           return gradio.dispatch(
             event.replace(/[A-Z]/g, (letter) => '_' + letter.toLowerCase()),
             {

@@ -29,6 +29,7 @@ class AntdXBubble(ModelScopeLayoutComponent):
         'avatar',
         'avatar.icon',
         'avatar.src',
+        'typing.suffix',
         'content',
         'footer',
         'header',
@@ -38,11 +39,11 @@ class AntdXBubble(ModelScopeLayoutComponent):
 
     def __init__(
             self,
+            content: str | None = None,
             props: dict | None = None,
             *,
             avatar: str | dict | None = None,
             class_names: dict | None = None,
-            content: str | None = None,
             footer: str | None = None,
             header: str | None = None,
             loading: bool | None = None,

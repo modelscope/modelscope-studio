@@ -7,6 +7,7 @@ import type {
 } from '@ant-design/x/es/bubble/BubbleList';
 import { useFunction } from '@utils/hooks/useFunction';
 import { renderItems } from '@utils/renderItems';
+import { isObject } from 'lodash-es';
 
 import {
   useItems,
@@ -52,19 +53,31 @@ export const BubbleList = sveltify<
         }, [roleItems, rolesProp]);
         const resolvedSlotItems =
           slotItems.items.length > 0 ? slotItems.items : slotItems.default;
+
         return (
           <>
             <div style={{ display: 'none' }}>{children}</div>
             <XBubble.List
               {...props}
               items={useMemo(() => {
-                return (
+                const resolvedItems =
                   items ||
                   renderItems<NonNullable<BubbleListProps['items']>[number]>(
                     resolvedSlotItems
-                  )
-                );
-              }, [items, resolvedSlotItems])}
+                  );
+                if (rolesFunction || Object.keys(roles || {}).length > 0) {
+                  return resolvedItems;
+                }
+                return resolvedItems?.map((item) => {
+                  // avoid React render error
+                  return {
+                    ...item,
+                    content: isObject(item.content)
+                      ? JSON.stringify(item.content)
+                      : item.content,
+                  };
+                });
+              }, [items, resolvedSlotItems, rolesFunction, roles])}
               roles={rolesFunction || roles}
             />
           </>

@@ -53,8 +53,8 @@ const Bridge: React.FC<BridgeProps> = ({ createPortal, node }) => {
   const autoCompleteContext = useAutoCompleteContext();
   const suggestionContext = useSuggestionContext();
   let props: typeof nodeProps = useMemo(() => {
-    return {
-      ...omitUndefinedProps(nodeProps),
+    return omitUndefinedProps({
+      ...nodeProps,
       // If the component is ignore, then its value should ignore the influence of the context.
       ...(node.ignore ? {} : formItemContext || {}),
       ...(node.ignore ? {} : autoCompleteContext || {}),
@@ -89,7 +89,7 @@ const Bridge: React.FC<BridgeProps> = ({ createPortal, node }) => {
               return nodeProps?.onChange?.(...args);
             }
           : nodeProps.onChange,
-    };
+    });
   }, [
     nodeProps,
     node.ignore,

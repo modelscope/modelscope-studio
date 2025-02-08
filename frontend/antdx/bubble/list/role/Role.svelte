@@ -67,15 +67,15 @@
   $: {
     let avatar = $mergedProps.props.avatar || $mergedProps.restProps.avatar;
     if ($slots.avatar) {
-      avatar = renderSlot($slots.avatar, { clone: true });
+      avatar = renderSlot($slots.avatar, { clone: true, forceClone: true });
     } else if ($slots['avatar.icon'] || $slots['avatar.src']) {
       avatar = {
         ...(avatar || {}),
         icon: $slots['avatar.icon']
-          ? renderSlot($slots['avatar.icon'], { clone: true })
+          ? renderSlot($slots['avatar.icon'], { clone: true, forceClone: true })
           : avatar?.icon,
         src: $slots['avatar.src']
-          ? renderSlot($slots['avatar.src'], { clone: true })
+          ? renderSlot($slots['avatar.src'], { clone: true, forceClone: true })
           : avatar?.src,
       };
     }

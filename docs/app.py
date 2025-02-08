@@ -15,7 +15,7 @@ def get_text(text: str, cn_text: str):
     return text
 
 
-def get_docs(type: Literal["antd", "base"]):
+def get_docs(type: Literal["antd", "antdx", "base"]):
     import importlib.util
 
     components = []
@@ -66,6 +66,7 @@ index_docs = {"overview": Docs(__file__), **layout_templates}
 
 base_docs = get_docs("base")
 antd_docs = get_docs("antd")
+antdx_docs = get_docs("antdx")
 
 default_active_tab = "index"
 index_menu_items = [{
@@ -383,6 +384,32 @@ antd_menu_items = [{
     }]
 }]
 
+antdx_menu_items = [{
+    "label": get_text("Overview", "概览"),
+    "key": "overview"
+}, {
+    "label":
+    get_text("Common", "通用"),
+    "type":
+    "group",
+    "children": [{
+        "label": get_text("Bubble", "Bubble 对话气泡"),
+        "key": "bubble"
+    }]
+}, {
+    "label":
+    get_text("Wake", "唤醒"),
+    "type":
+    "group",
+    "children": [{
+        "label": get_text("Welcome", "Welcome 欢迎"),
+        "key": "welcome"
+    }, {
+        "label": get_text("Prompts", "Prompts 提示集"),
+        "key": "prompts"
+    }]
+}]
+
 
 def logo():
     with antd.Flex(align='center', gap=8):
@@ -436,6 +463,12 @@ tabs = [
         "extra_menu_footer": more_components
     },
     {
+        "label": get_text("Antdx Components", "Antdx 组件"),
+        "key": "antdx",
+        "default_active_key": "overview",
+        "menus": antdx_menu_items,
+    },
+    {
         "label": get_text("Version 0.x", "0.x 版本"),
         "key": "legacy",
         "content": legacy_demo
@@ -448,6 +481,7 @@ site = Site(
         # match the key of tabs
         "index": index_docs,
         "antd": antd_docs,
+        "antdx": antdx_docs,
         "base": base_docs
     },
     default_active_tab=default_active_tab,

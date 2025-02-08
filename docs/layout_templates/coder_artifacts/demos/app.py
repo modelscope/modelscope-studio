@@ -175,7 +175,7 @@ class GradioEvents:
 
 
 css = """
-#coder-artifacts .output-empty, .output-loading {
+#coder-artifacts .output-empty,.output-loading {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -297,9 +297,7 @@ with gr.Blocks(css=css) as demo:
                                     ) as download_btn:
                                         with ms.Slot("icon"):
                                             antd.Icon("DownloadOutlined")
-                                    download_content = ms.Span(
-                                        elem_style=dict(display="none"),
-                                        elem_id="output-download-content")
+                                    download_content = gr.Text(visible=False)
 
                                     view_code_btn = antd.Button(
                                         "🧑‍💻 View Code", type="primary")
@@ -424,9 +422,9 @@ with gr.Blocks(css=css) as demo:
                                        outputs=[history_output])
     history_drawer.close(fn=GradioEvents.close_modal, outputs=[history_drawer])
 
-    download_btn.click(fn=lambda: None,
-                       js="""() => {
-        const content = document.getElementById('output-download-content').innerText
+    download_btn.click(fn=None,
+                       inputs=[download_content],
+                       js="""(content) => {
         const blob = new Blob([content], { type: 'text/html' })
         const url = URL.createObjectURL(blob)
         const a = document.createElement('a')
