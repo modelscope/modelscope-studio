@@ -29,7 +29,7 @@ class AntdSlider(ModelScopeDataLayoutComponent):
 
     def __init__(
             self,
-            value: int | float | tuple[int | float, int | float] | None = None,
+            value: int | float | list[int | float] | None = None,
             props: dict | None = None,
             *,
             auto_focus: bool | None = None,
