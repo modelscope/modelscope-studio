@@ -12,7 +12,7 @@
     "lint": "npm-run-all --parallel lint:* && npm run format",
     "lint:js": "eslint . --fix  --cache",
     "lint:ts": "tsc && svelte-check --tsconfig ./tsconfig.json",
-    "lint:py": "pnpm run check-encoding && flake8 . && isort . && yapf --in-place --recursive --exclude=node_modules/ .",
+    "lint:py": "pnpm run check-encoding && flake8 . && isort . && yapf --in-place --recursive --exclude=node_modules/ --exclude=docs/components/antdx/** .",
     "lint:style": "stylelint --allow-empty-input --cache --fix \"**/*.{less,css}\" ",
     "format": "prettier --cache --write '**/*.{js,jsx,tsx,ts,svelte,less,md,yaml,yml,json}' --no-error-on-unmatched-pattern",
     "check-encoding": "python ./scripts/check_encoding.py",

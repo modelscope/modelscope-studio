@@ -227,7 +227,7 @@ artifacts = [
 ]
 
 [tool.yapfignore]
-ignore_patterns = ["node_modules/**", "docs/components/antdx/**"]
+ignore_patterns = ["node_modules/**", "__pycache__/**", "**/*.pyi"]
 
 [tool.hatch.build.targets.sdist]
 exclude = ["__pycache__"]
