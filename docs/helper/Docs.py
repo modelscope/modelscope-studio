@@ -102,12 +102,13 @@ class Docs:
                                              variant="dashed",
                                              elem_style=dict(width='100%',
                                                              margin='8px 0 0'))
+                            resolved_prefix = prefix + "\n" if prefix else ""
+                            resolved_suffix = suffix + "\n" if suffix else ""
                             with antd.Col(sm=23, xs=24):
-                                ms.Markdown(
-                                    f"""{prefix + "\n" if prefix else ""}```python
+                                ms.Markdown(f"""{resolved_prefix}```python
 {content}
-  ```{"\n" + suffix if suffix else ""}""",
-                                    header_links=True)
+  ```{resolved_suffix}""",
+                                            header_links=True)
 
                             with antd.Col(sm=1,
                                           xs=0,
