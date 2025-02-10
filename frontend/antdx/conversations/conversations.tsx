@@ -21,6 +21,8 @@ import {
 
 import { useItems, withItemsContextProvider } from './context';
 
+import './index.less';
+
 function getConfig<T>(value: T): Partial<T & Record<PropertyKey, any>> {
   if (typeof value === 'object' && value !== null) {
     return value as any;
@@ -66,6 +68,10 @@ export const Conversations = sveltify<
             return menuFunction;
           } else {
             const menuProps = (props.menu || {}) as MenuProps;
+            const hasMenu = menuProps.items?.length || menuItems.length > 0;
+            if (!hasMenu) {
+              return undefined;
+            }
             return (conversation) => ({
               ...patchMenuEvents(menuProps, conversation),
               items:

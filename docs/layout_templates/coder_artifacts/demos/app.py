@@ -1,16 +1,19 @@
 import base64
 import os
 import re
-from http import HTTPStatus
 
 import gradio as gr
 import modelscope_studio.components.antd as antd
 import modelscope_studio.components.base as ms
+from openai import OpenAI
 
 # =========== Configuration
 
 # API KEY
-YOUR_API_TOKEN = os.getenv('YOUR_API_TOKEN')
+MODELSCOPE_ACCESS_TOKEN = os.getenv('MODELSCOPE_ACCESS_TOKEN')
+
+client = OpenAI(api_key=MODELSCOPE_ACCESS_TOKEN,
+                base_url="https://api-inference.modelscope.cn/v1")
 
 # =========== Configuration
 
@@ -53,11 +56,6 @@ class GradioEvents:
     @staticmethod
     def generate_code(input_value, system_prompt_input_value, state_value):
         # Define your code here
-        import dashscope
-        from dashscope import Generation
-        from dashscope.api_entities.dashscope_response import Role
-
-        dashscope.api_key = YOUR_API_TOKEN
 
         def remove_code_block(text):
             pattern = r'```html\n(.+?)\n```'
@@ -83,53 +81,48 @@ class GradioEvents:
             input_value = ''
 
         messages = [{
-            'role': Role.SYSTEM,
+            'role': "system",
             'content': system_prompt_input_value
         }] + state_value["history"]
 
-        messages.append({'role': Role.USER, 'content': input_value})
+        messages.append({'role': "user", 'content': input_value})
 
-        generator = Generation.call(model="qwen2.5-coder-32b-instruct",
-                                    messages=messages,
-                                    result_format='message',
-                                    stream=True)
-        for response in generator:
-            if response.status_code == HTTPStatus.OK:
-                role = response.output.choices[0].message.role
-                content = response.output.choices[0].message.content
-                if response.output.choices[0].finish_reason == 'stop':
-                    state_value["history"] = messages + [{
-                        'role': role,
-                        'content': content
-                    }]
-                    # Completed
-                    yield {
-                        output:
-                        gr.update(value=content),
-                        download_content:
-                        gr.update(value=remove_code_block(content)),
-                        state_tab:
-                        gr.update(active_key="render"),
-                        output_loading:
-                        gr.update(spinning=False),
-                        sandbox:
-                        gr.update(
-                            value=send_to_sandbox(remove_code_block(content))),
-                        state:
-                        gr.update(value=state_value)
-                    }
+        generator = client.chat.completions.create(
+            model="Qwen/Qwen2.5-Coder-32B-Instruct",
+            messages=messages,
+            stream=True)
+        response = ""
+        for chunk in generator:
+            content = chunk.choices[0].delta.content
+            response += content
+            if chunk.choices[0].finish_reason == 'stop':
+                state_value["history"] = messages + [{
+                    'role': "assistant",
+                    'content': response
+                }]
+                # Completed
+                yield {
+                    output:
+                    gr.update(value=response),
+                    download_content:
+                    gr.update(value=remove_code_block(response)),
+                    state_tab:
+                    gr.update(active_key="render"),
+                    output_loading:
+                    gr.update(spinning=False),
+                    sandbox:
+                    gr.update(
+                        value=send_to_sandbox(remove_code_block(response))),
+                    state:
+                    gr.update(value=state_value)
+                }
 
-                else:
-                    # Generating
-                    yield {
-                        output: gr.update(value=content),
-                        output_loading: gr.update(spinning=False),
-                    }
             else:
-                raise ValueError(
-                    'Request id: %s, Status code: %s, error code: %s, error message: %s'
-                    % (response.request_id, response.status_code,
-                       response.code, response.message))
+                # Generating
+                yield {
+                    output: gr.update(value=response),
+                    output_loading: gr.update(spinning=False),
+                }
 
     @staticmethod
     def select_example(example: dict):
@@ -175,7 +168,7 @@ class GradioEvents:
 
 
 css = """
-#coder-artifacts .output-empty, .output-loading {
+#coder-artifacts .output-empty,.output-loading {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -297,9 +290,7 @@ with gr.Blocks(css=css) as demo:
                                     ) as download_btn:
                                         with ms.Slot("icon"):
                                             antd.Icon("DownloadOutlined")
-                                    download_content = ms.Span(
-                                        elem_style=dict(display="none"),
-                                        elem_id="output-download-content")
+                                    download_content = gr.Text(visible=False)
 
                                     view_code_btn = antd.Button(
                                         "🧑‍💻 View Code", type="primary")
@@ -424,9 +415,9 @@ with gr.Blocks(css=css) as demo:
                                        outputs=[history_output])
     history_drawer.close(fn=GradioEvents.close_modal, outputs=[history_drawer])
 
-    download_btn.click(fn=lambda: None,
-                       js="""() => {
-        const content = document.getElementById('output-download-content').innerText
+    download_btn.click(fn=None,
+                       inputs=[download_content],
+                       js="""(content) => {
         const blob = new Blob([content], { type: 'text/html' })
         const url = URL.createObjectURL(blob)
         const a = document.createElement('a')

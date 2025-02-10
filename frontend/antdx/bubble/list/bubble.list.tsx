@@ -1,12 +1,14 @@
 import { sveltify } from '@svelte-preprocess-react';
 import React, { useMemo } from 'react';
-import { Bubble as XBubble } from '@ant-design/x';
+import { Bubble as XBubble, type BubbleProps } from '@ant-design/x';
 import type {
   BubbleListProps,
   RoleType,
 } from '@ant-design/x/es/bubble/BubbleList';
 import { useFunction } from '@utils/hooks/useFunction';
 import { renderItems } from '@utils/renderItems';
+import type { AvatarProps } from 'antd';
+import { isFunction, isObject } from 'lodash-es';
 
 import {
   useItems,
@@ -15,10 +17,40 @@ import {
   withRoleItemsContextProvider,
 } from './context';
 
-export const BubbleList = sveltify<
-  BubbleListProps,
-  ['avatar', 'content', 'footer', 'header', 'loadingRender', 'messageRender']
->(
+function patchBubbleSlots(role: RoleType, params: any[]) {
+  const patchSlotRender = (
+    slot?: React.ReactNode | ((...args: any[]) => React.ReactNode),
+    functionProp?: boolean
+  ) => {
+    if (isFunction(slot)) {
+      if (functionProp) {
+        return (...args: any[]) => {
+          return slot(...args, ...params);
+        };
+      }
+      return slot(...params);
+    }
+    return slot;
+  };
+  return {
+    ...role,
+    avatar: isFunction(role.avatar)
+      ? patchSlotRender(role.avatar)
+      : isObject(role.avatar)
+        ? {
+            ...role.avatar,
+            icon: patchSlotRender((role.avatar as AvatarProps)?.icon),
+            src: patchSlotRender((role.avatar as AvatarProps)?.src),
+          }
+        : role.avatar,
+    footer: patchSlotRender(role.footer),
+    header: patchSlotRender(role.header),
+    loadingRender: patchSlotRender(role.loadingRender, true),
+    messageRender: patchSlotRender(role.messageRender, true),
+  };
+}
+
+export const BubbleList = sveltify<BubbleListProps, ['items', 'roles']>(
   withRoleItemsContextProvider(
     ['roles'],
     withItemsContextProvider(
@@ -52,20 +84,39 @@ export const BubbleList = sveltify<
         }, [roleItems, rolesProp]);
         const resolvedSlotItems =
           slotItems.items.length > 0 ? slotItems.items : slotItems.default;
+        const rolesRender = useMemo(() => {
+          return (bubbleProps: BubbleProps, index: number): RoleType => {
+            if (bubbleProps.role && (roles || {})[bubbleProps.role]) {
+              return patchBubbleSlots((roles || {})[bubbleProps.role], [
+                bubbleProps,
+                index,
+              ]) as RoleType;
+            }
+            return {
+              messageRender(content) {
+                return (
+                  <>{isObject(content) ? JSON.stringify(content) : content}</>
+                );
+              },
+            };
+          };
+        }, [roles]);
+
         return (
           <>
             <div style={{ display: 'none' }}>{children}</div>
             <XBubble.List
               {...props}
               items={useMemo(() => {
-                return (
+                const resolvedItems =
                   items ||
                   renderItems<NonNullable<BubbleListProps['items']>[number]>(
                     resolvedSlotItems
-                  )
-                );
+                  );
+
+                return resolvedItems;
               }, [items, resolvedSlotItems])}
-              roles={rolesFunction || roles}
+              roles={rolesFunction || rolesRender}
             />
           </>
         );

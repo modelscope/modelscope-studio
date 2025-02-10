@@ -67,15 +67,30 @@
   $: {
     let avatar = $mergedProps.props.avatar || $mergedProps.restProps.avatar;
     if ($slots.avatar) {
-      avatar = renderSlot($slots.avatar, { clone: true });
+      avatar = (...args: any[]) =>
+        renderSlot($slots.avatar, {
+          clone: true,
+          forceClone: true,
+          params: args,
+        });
     } else if ($slots['avatar.icon'] || $slots['avatar.src']) {
       avatar = {
         ...(avatar || {}),
         icon: $slots['avatar.icon']
-          ? renderSlot($slots['avatar.icon'], { clone: true })
+          ? (...args: any[]) =>
+              renderSlot($slots['avatar.icon'], {
+                clone: true,
+                forceClone: true,
+                params: args,
+              })
           : avatar?.icon,
         src: $slots['avatar.src']
-          ? renderSlot($slots['avatar.src'], { clone: true })
+          ? (...args: any[]) =>
+              renderSlot($slots['avatar.src'], {
+                clone: true,
+                forceClone: true,
+                params: args,
+              })
           : avatar?.src,
       };
     }
@@ -109,6 +124,16 @@
         avatar: undefined,
         loadingRender: {
           el: $slots.loadingRender,
+          clone: true,
+          callback: setSlotParams,
+        },
+        header: {
+          el: $slots.header,
+          clone: true,
+          callback: setSlotParams,
+        },
+        footer: {
+          el: $slots.footer,
           clone: true,
           callback: setSlotParams,
         },

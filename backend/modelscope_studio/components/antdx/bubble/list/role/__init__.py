@@ -26,7 +26,6 @@ class AntdXBubbleListRole(ModelScopeLayoutComponent):
         'avatar',
         'avatar.icon',
         'avatar.src',
-        'content',
         'footer',
         'header',
         'loadingRender',

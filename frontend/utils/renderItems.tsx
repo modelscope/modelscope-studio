@@ -3,6 +3,7 @@ import { ReactSlot } from '@svelte-preprocess-react/react-slot';
 import React from 'react';
 
 import { type Item } from './createItemsContext';
+import { patchSlotProps } from './patchProps';
 
 export function renderItems<R>(
   items: Item[],
@@ -65,25 +66,23 @@ export function renderItems<R>(
 
       forceClone = forceClone ?? (callback ? true : false);
 
-      current[splits[splits.length - 1]] = el ? (
-        callback ? (
-          (...args: any[]) => {
-            callback(splits[splits.length - 1], args);
+      current[splits[splits.length - 1]] = el
+        ? callback
+          ? (...args: any[]) => {
+              callback(splits[splits.length - 1], args);
 
-            return (
-              <ContextPropsProvider params={args} forceClone={forceClone}>
-                <ReactSlot slot={el} clone={clone} />
+              return (
+                <ContextPropsProvider params={args} forceClone={forceClone}>
+                  <ReactSlot slot={el} clone={clone} />
+                </ContextPropsProvider>
+              );
+            }
+          : patchSlotProps((props) => (
+              <ContextPropsProvider forceClone={forceClone}>
+                <ReactSlot slot={el} clone={clone} {...props} />
               </ContextPropsProvider>
-            );
-          }
-        ) : (
-          <ContextPropsProvider forceClone={forceClone}>
-            <ReactSlot slot={el} clone={clone} />
-          </ContextPropsProvider>
-        )
-      ) : (
-        current[splits[splits.length - 1]]
-      );
+            ))
+        : current[splits[splits.length - 1]];
 
       current = result;
     });

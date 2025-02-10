@@ -69,6 +69,7 @@ with gr.Blocks() as demo:
                 ):
                     with ms.Slot(
                             "render",
+                            params_mapping=
                             "(_, record, index) => ({ invite: { value: 'Invite ' + record.name, index }, delete: { index }})"
                     ):
                         with antd.Space(size="middle"):
