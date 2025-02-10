@@ -1,5 +1,11 @@
 # @modelscope-studio/base
 
+## 1.1.1
+
+### Fixes
+
+- [#51](https://github.com/modelscope/modelscope-studio/pull/51) [`ed16f92`](https://github.com/modelscope/modelscope-studio/commit/ed16f92ee0fb7b931ac9623f813b984b779aaf17) - style. Thanks [@Col0ring](https://github.com/Col0ring)!
+
 ## 1.1.0
 
 ### Features

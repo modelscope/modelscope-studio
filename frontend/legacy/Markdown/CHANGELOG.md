@@ -1,5 +1,9 @@
 # @modelscope-studio/legacy-markdown
 
+## 1.1.1
+
+No significant changes to this package were made in this release.
+
 ## 1.1.0
 
 No significant changes to this package were made in this release.

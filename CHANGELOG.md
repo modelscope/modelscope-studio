@@ -1,5 +1,17 @@
 # modelscope_studio
 
+## 1.1.1
+
+### Fixes
+
+- [#50](https://github.com/modelscope/modelscope-studio/pull/50) [`6803034`](https://github.com/modelscope/modelscope-studio/commit/6803034619701e30b6da6795915fc682e627d576) - Fix type declaration error or antd.Slider.value. Thanks [@PatZer0](https://github.com/PatZer0)!
+- [#52](https://github.com/modelscope/modelscope-studio/pull/52) [`15e6b62`](https://github.com/modelscope/modelscope-studio/commit/15e6b624a13b32e7fc82ca54ec0329949079f189) - antdx components rendering. Thanks [@Col0ring](https://github.com/Col0ring)!
+- [#51](https://github.com/modelscope/modelscope-studio/pull/51) [`ed16f92`](https://github.com/modelscope/modelscope-studio/commit/ed16f92ee0fb7b931ac9623f813b984b779aaf17) - style. Thanks [@Col0ring](https://github.com/Col0ring)!
+
+### Misc Changes
+
+- [#51](https://github.com/modelscope/modelscope-studio/pull/51) [`ed16f92`](https://github.com/modelscope/modelscope-studio/commit/ed16f92ee0fb7b931ac9623f813b984b779aaf17) - add layout template `coder-artifacts`. Thanks [@Col0ring](https://github.com/Col0ring)!
+
 ## 1.1.0
 
 ### Features
