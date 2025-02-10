@@ -53,17 +53,15 @@ export const BridgeContext: React.FC<BridgeContextProps> = ({
     }
     ctxValue = ensureObjectCtxValue(ctxValue);
     value = ensureObjectCtxValue(value);
-
-    const restProps = patchProps(
-      mapProps(
-        {
-          ...ctxValue,
-          ...value,
-        },
-        restPropsMapping,
-        true
-      )
+    const mergedCtxValue = mapProps(
+      {
+        ...ctxValue,
+        ...value,
+      },
+      restPropsMapping,
+      true
     );
+    const restProps = patchProps(mergedCtxValue);
     if (!eventProps) {
       return {
         restProps,
@@ -75,7 +73,7 @@ export const BridgeContext: React.FC<BridgeContextProps> = ({
         ...eventProps.props,
         originalRestProps: {
           ...eventProps.props.originalRestProps,
-          ...restProps,
+          ...mergedCtxValue,
         },
       },
       eventProps.eventsMapping

@@ -12,7 +12,7 @@ def get_bubble_items(count):
         result.append({
             "role": "ai" if is_ai else "user",
             "content": content,
-            "key": i
+            "key": i - 1
         })
     return result
 
@@ -54,7 +54,7 @@ with gr.Blocks() as demo:
                             # use messageRender to render markdown content
                             with ms.Slot(
                                     "messageRender",
-                                    params_mapping="(content) => content"):
+                                    params_mapping="""content => content"""):
                                 ms.Markdown()
 
                         with antdx.Bubble.List.Role(

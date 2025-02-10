@@ -66,7 +66,7 @@ index_docs = {"overview": Docs(__file__), **layout_templates}
 
 base_docs = get_docs("base")
 antd_docs = get_docs("antd")
-antdx_docs = get_docs("antdx")
+# antdx_docs = get_docs("antdx")
 
 default_active_tab = "index"
 index_menu_items = [{
@@ -395,6 +395,9 @@ antdx_menu_items = [{
     "children": [{
         "label": get_text("Bubble", "Bubble 对话气泡"),
         "key": "bubble"
+    }, {
+        "label": get_text("Conversations", "Conversations 管理对话"),
+        "key": "conversations"
     }]
 }, {
     "label":
@@ -462,12 +465,12 @@ tabs = [
         "menus": antd_menu_items,
         "extra_menu_footer": more_components
     },
-    {
-        "label": get_text("Antdx Components", "Antdx 组件"),
-        "key": "antdx",
-        "default_active_key": "overview",
-        "menus": antdx_menu_items,
-    },
+    # {
+    #     "label": get_text("Antdx Components", "Antdx 组件"),
+    #     "key": "antdx",
+    #     "default_active_key": "overview",
+    #     "menus": antdx_menu_items,
+    # },
     {
         "label": get_text("Version 0.x", "0.x 版本"),
         "key": "legacy",
@@ -481,7 +484,7 @@ site = Site(
         # match the key of tabs
         "index": index_docs,
         "antd": antd_docs,
-        "antdx": antdx_docs,
+        # "antdx": antdx_docs,
         "base": base_docs
     },
     default_active_tab=default_active_tab,

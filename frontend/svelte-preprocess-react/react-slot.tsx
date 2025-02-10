@@ -122,7 +122,6 @@ export const ReactSlot = forwardRef<HTMLElement, ReactSlotProps>(
             child = child.children[0];
           }
         }
-
         mountElRef(elRef, child as HTMLElement);
 
         if (className) {
@@ -137,16 +136,24 @@ export const ReactSlot = forwardRef<HTMLElement, ReactSlotProps>(
         }
       }
       let observer: MutationObserver | null = null;
+      let mountPropsTimer: ReturnType<typeof setTimeout> | null = null;
       if (clone && window.MutationObserver) {
         function render() {
           if (ref.current?.contains(cloned)) {
             ref.current?.removeChild(cloned);
           }
+
           const { portals, clonedElement } = cloneElementWithEvents(slot);
           cloned = clonedElement;
           setChildren(portals);
           cloned.style.display = 'contents';
-          mountElementProps();
+          if (mountPropsTimer) {
+            clearTimeout(mountPropsTimer);
+          }
+          mountPropsTimer = setTimeout(() => {
+            mountElementProps();
+          }, 50);
+
           ref.current?.appendChild(cloned);
         }
         render();
