@@ -29,13 +29,14 @@ class AntdSlider(ModelScopeDataLayoutComponent):
 
     def __init__(
             self,
-            value: int | float | tuple[int | float, int | float] | None = None,
+            value: int | float | tuple[int | float, int | float]
+        | list[int | float] | None = None,
             props: dict | None = None,
             *,
             auto_focus: bool | None = None,
             class_names: dict | None = None,
             default_value: int | float | tuple[int | float, int | float]
-        | None = None,
+        | list[int | float] | None = None,
             disabled: bool | None = None,
             dots: bool | None = None,
             included: bool | None = True,
