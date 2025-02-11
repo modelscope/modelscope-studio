@@ -4,16 +4,18 @@ import modelscope_studio.components.antdx as antdx
 import modelscope_studio.components.base as ms
 
 
-def toggle_open(state_value, attachments_value):
+def paste_file(attachments_value, e: gr.EventData):
+    return gr.update(value=attachments_value + e._data["payload"][0])
+
+
+def toggle_open(state_value):
     state_value["open"] = not state_value["open"]
-    return gr.update(open=state_value["open"]), gr.update(
-        dot=len(attachments_value) > 0 and not state_value["open"]), gr.update(
-            value=state_value)
+    return gr.update(open=state_value["open"]), gr.update(value=state_value)
 
 
 def submit(sender_value, attachments_value):
     print(sender_value, attachments_value)
-    return gr.update(value=None), gr.update(value=None), gr.update(dot=False)
+    return gr.update(value=None), gr.update(value=None)
 
 
 with gr.Blocks() as demo:
@@ -21,14 +23,13 @@ with gr.Blocks() as demo:
     with ms.Application():
         with antdx.XProvider():
             antd.Typography.Paragraph(
-                "Work with Sender.Header to insert file into the conversation."
+                "Use header to customize the file upload example and paste image to upload files with Attachments."
             )
-            with antdx.Sender() as sender:
+            with antdx.Sender(placeholder="← Click to open") as sender:
                 with ms.Slot("prefix"):
-                    with antd.Badge(dot=False) as prefix_badge:
-                        with antd.Button(value=None) as prefix_button:
-                            with ms.Slot("icon"):
-                                antd.Icon("LinkOutlined")
+                    with antd.Button(value=None, type="text") as prefix_button:
+                        with ms.Slot("icon"):
+                            antd.Icon("LinkOutlined")
                 with ms.Slot("header"):
                     with antdx.Sender.Header(title="Attachments",
                                              open=False,
@@ -59,16 +60,18 @@ with gr.Blocks() as demo:
                             ):
                                 antd.Icon("CloudUploadOutlined")
 
-            sender_header.open_change(
-                fn=toggle_open,
-                inputs=[state, attachments],
-                outputs=[sender_header, prefix_badge, state])
+            sender_header.open_change(fn=toggle_open,
+                                      inputs=[state],
+                                      outputs=[sender_header, state])
             prefix_button.click(fn=toggle_open,
-                                inputs=[state, attachments],
-                                outputs=[sender_header, prefix_badge, state])
+                                inputs=[state],
+                                outputs=[sender_header, state])
             sender.submit(fn=submit,
                           inputs=[sender, attachments],
-                          outputs=[sender, attachments, prefix_badge])
+                          outputs=[sender, attachments])
+            sender.paste_file(fn=paste_file,
+                              inputs=[attachments],
+                              outputs=[attachments])
 
 if __name__ == "__main__":
     demo.queue().launch()

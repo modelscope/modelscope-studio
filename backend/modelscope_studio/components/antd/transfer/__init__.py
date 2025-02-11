@@ -119,7 +119,7 @@ class AntdTransfer(ModelScopeDataLayoutComponent):
                     },
                 ],
             },
-        },
+        }
 
     def preprocess(
         self, payload: list[float | int | str] | None

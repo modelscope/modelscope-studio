@@ -36,16 +36,33 @@ export const ContextPropsContext = createContext<ContextPropsContextValue>({
   forceClone: false,
 });
 
+export const useContextPropsContext = () => useContext(ContextPropsContext);
+
+const mergeCtx = (
+  ctx1?: Record<PropertyKey, any> | null,
+  ctx2?: Record<PropertyKey, any> | null
+) => {
+  if (!ctx1 && !ctx2) {
+    return null;
+  }
+
+  return {
+    ...ctx1,
+    ...ctx2,
+  };
+};
+
 export const ContextPropsProvider: React.FC<
   Partial<ContextPropsContextValue> & {
     children?: React.ReactNode;
   }
 > = ({ params, ctx, forceClone, children }) => {
+  const { forceClone: pForceClone, ctx: pCtx } = useContextPropsContext();
   const prevCtxValueRef = useRef<ContextPropsContextValue>({
     params,
-    ctx: ctx || null,
+    ctx: mergeCtx(pCtx, ctx),
     initial: true,
-    forceClone: forceClone || false,
+    forceClone: pForceClone || forceClone || false,
   });
   return React.createElement(
     ContextPropsContext.Provider,
@@ -61,16 +78,14 @@ export const ContextPropsProvider: React.FC<
         if (hasChanged) {
           prevCtxValueRef.current = {
             params,
-            ctx: ctx || null,
+            ctx: mergeCtx(pCtx, ctx),
             initial: true,
-            forceClone: forceClone || false,
+            forceClone: pForceClone || forceClone || false,
           };
         }
         return prevCtxValueRef.current;
-      }, [ctx, forceClone, params]),
+      }, [ctx, pCtx, forceClone, pForceClone, params]),
     },
     children
   );
 };
-
-export const useContextPropsContext = () => useContext(ContextPropsContext);

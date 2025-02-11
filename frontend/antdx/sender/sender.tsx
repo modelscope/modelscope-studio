@@ -13,7 +13,7 @@ export const Sender = sveltify<
     children?: React.ReactNode;
     setSlotParams: SetSlotParams;
     upload: (files: File[]) => Promise<FileData[]>;
-    onPasteFile?: (value: FileData[]) => void;
+    onPasteFile?: (value: string[]) => void;
     onValueChange: (value: string) => void;
   },
   ['actions', 'header', 'prefix']
@@ -47,7 +47,7 @@ export const Sender = sveltify<
           }}
           onPasteFile={async (file) => {
             const urls = await upload(Array.isArray(file) ? file : [file]);
-            onPasteFile?.(urls);
+            onPasteFile?.(urls.map((url) => url.path));
           }}
           header={
             slots.header ? <ReactSlot slot={slots.header} /> : props.header
