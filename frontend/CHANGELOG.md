@@ -1,5 +1,11 @@
 # @modelscope-studio/frontend
 
+## 1.1.2
+
+### Fixes
+
+- [`fb33237`](https://github.com/modelscope/modelscope-studio/commit/fb332375b552c8debdaee1102d2cc4d94a1759f9) - render slot. Thanks [@Col0ring](https://github.com/Col0ring)!
+
 ## 1.1.1
 
 ### Fixes
