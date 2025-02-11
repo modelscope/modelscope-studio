@@ -66,7 +66,7 @@ index_docs = {"overview": Docs(__file__), **layout_templates}
 
 base_docs = get_docs("base")
 antd_docs = get_docs("antd")
-antdx_docs = get_docs("antdx")
+# antdx_docs = get_docs("antdx")
 
 default_active_tab = "index"
 index_menu_items = [{
@@ -493,7 +493,7 @@ site = Site(
         # match the key of tabs
         "index": index_docs,
         "antd": antd_docs,
-        "antdx": antdx_docs,
+        # "antdx": antdx_docs,
         "base": base_docs
     },
     default_active_tab=default_active_tab,
