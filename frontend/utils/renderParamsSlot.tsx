@@ -36,7 +36,7 @@ export function renderParamsSlot(
                 params={args}
                 forceClone={options?.forceClone ?? true}
               >
-                {renderSlot(target, { clone: true, ...options })}
+                {renderSlot(target, { clone: true })}
               </ContextPropsProvider>
             );
           });
@@ -46,7 +46,7 @@ export function renderParamsSlot(
             params={args}
             forceClone={options?.forceClone ?? true}
           >
-            {renderSlot(slots[key], { clone: true, ...options })}
+            {renderSlot(slots[key], { clone: true })}
           </ContextPropsProvider>
         );
       }

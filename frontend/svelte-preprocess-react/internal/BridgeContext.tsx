@@ -92,7 +92,6 @@ export const BridgeContext: React.FC<BridgeContextProps> = ({
     restPropsMapping,
     eventProps,
   ]);
-
   return (
     <FormItemContext.Provider value={null}>
       <SuggestionContext.Provider value={null}>

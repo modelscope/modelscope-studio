@@ -175,7 +175,7 @@ class AntdUpload(ModelScopeDataLayoutComponent):
             File information as a list of FileData objects.
         """
         if value is None:
-            return None
+            return []
         value = self._download_files(value)
         return ListFiles(root=[
             FileData(

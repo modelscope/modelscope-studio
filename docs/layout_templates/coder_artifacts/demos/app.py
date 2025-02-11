@@ -15,6 +15,7 @@ MODELSCOPE_ACCESS_TOKEN = os.getenv('MODELSCOPE_ACCESS_TOKEN')
 client = OpenAI(api_key=MODELSCOPE_ACCESS_TOKEN,
                 base_url="https://api-inference.modelscope.cn/v1")
 
+model = "Qwen/Qwen2.5-Coder-32B-Instruct"
 # =========== Configuration
 
 DEFAULT_SYSTEM_PROMPT = """You are a web development engineer, writing web pages according to the instructions below. You are a powerful code editing assistant capable of writing code and creating artifacts in conversations with users, or modifying and updating existing artifacts as requested by users.
@@ -87,10 +88,9 @@ class GradioEvents:
 
         messages.append({'role': "user", 'content': input_value})
 
-        generator = client.chat.completions.create(
-            model="Qwen/Qwen2.5-Coder-32B-Instruct",
-            messages=messages,
-            stream=True)
+        generator = client.chat.completions.create(model=model,
+                                                   messages=messages,
+                                                   stream=True)
         response = ""
         for chunk in generator:
             content = chunk.choices[0].delta.content

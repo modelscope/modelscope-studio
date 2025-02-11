@@ -65,7 +65,6 @@ export const ContextPropsProvider: React.FC<
             initial: true,
             forceClone: forceClone || false,
           };
-          return prevCtxValueRef.current;
         }
         return prevCtxValueRef.current;
       }, [ctx, forceClone, params]),

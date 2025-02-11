@@ -11,14 +11,18 @@ export interface RenderSlotOptions {
 }
 
 export function renderSlot(el?: HTMLElement, options?: RenderSlotOptions) {
-  return el
-    ? patchSlotProps((props) => (
-        <ContextPropsProvider
-          forceClone={options?.forceClone}
-          params={options?.params}
-        >
-          <ReactSlot slot={el} clone={options?.clone} {...props} />
-        </ContextPropsProvider>
-      ))
-    : null;
+  if (!el) {
+    return null;
+  }
+  if (options?.forceClone || options?.params) {
+    return patchSlotProps((props) => (
+      <ContextPropsProvider
+        forceClone={options?.forceClone}
+        params={options?.params}
+      >
+        <ReactSlot slot={el} clone={options?.clone} {...props} />
+      </ContextPropsProvider>
+    ));
+  }
+  return <ReactSlot slot={el} clone={options?.clone} />;
 }

@@ -25,6 +25,8 @@ class AntdXSenderHeader(ModelScopeLayoutComponent):
             *,
             closable: bool | None = None,
             force_render: bool | None = None,
+            styles: dict | None = None,
+            class_names: dict | None = None,
             open: bool | None = None,
             title: str | None = None,
             as_item: str | None = None,
@@ -48,6 +50,8 @@ class AntdXSenderHeader(ModelScopeLayoutComponent):
         self.force_render = force_render
         self.open = open
         self.title = title
+        self.styles = styles
+        self.class_names = class_names
 
     FRONTEND_DIR = resolve_frontend_dir("sender", 'header', type="antdx")
 

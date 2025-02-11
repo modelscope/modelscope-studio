@@ -7,6 +7,7 @@ import {
 } from '@ant-design/x';
 import type { FileData } from '@gradio/client';
 import { useFunction } from '@utils/hooks/useFunction';
+import { useTargets } from '@utils/hooks/useTargets';
 import { renderParamsSlot } from '@utils/renderParamsSlot';
 import { type UploadFile } from 'antd';
 import type { RcFile } from 'antd/es/upload';
@@ -127,9 +128,12 @@ export const Attachments = sveltify<
         }) || []
       );
     }, [fileList]);
+    const targets = useTargets(children);
     return (
       <>
-        <div style={{ display: 'none' }}>{children}</div>
+        <div style={{ display: 'none' }}>
+          {targets.length > 0 ? null : children}
+        </div>
         <XAttachments
           {...props}
           getDropContainer={getDropContainerFunction}
@@ -310,7 +314,9 @@ export const Attachments = sveltify<
                 }
               : showUploadList
           }
-        />
+        >
+          {targets.length > 0 ? children : undefined}
+        </XAttachments>
       </>
     );
   }

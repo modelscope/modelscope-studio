@@ -34,14 +34,12 @@ export const Sender = sveltify<
       onValueChange,
       value: props.value,
     });
-
     return (
       <>
         <div style={{ display: 'none' }}>{children}</div>
         <XSender
           {...props}
           value={value}
-          allowSpeech
           ref={elRef}
           onChange={(v) => {
             onChange?.(v);
