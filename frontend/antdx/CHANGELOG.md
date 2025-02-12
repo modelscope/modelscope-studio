@@ -1,5 +1,11 @@
 # @modelscope-studio/antdx
 
+## 1.1.3
+
+### Fixes
+
+- [#56](https://github.com/modelscope/modelscope-studio/pull/56) [`ecfc87a`](https://github.com/modelscope/modelscope-studio/commit/ecfc87aac228556f89871abc6fa735ab4be9c533) - react slots clone & unexpected style. Thanks [@Col0ring](https://github.com/Col0ring)!
+
 ## 1.1.2
 
 ### Fixes
