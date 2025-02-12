@@ -419,6 +419,9 @@ antdx_menu_items = [{
     "children": [{
         "label": get_text("Attachments", "Attachments 输入附件"),
         "key": "attachments"
+    }, {
+        "label": get_text("Sender", "Sender 输入框"),
+        "key": "sender"
     }]
 }]
 

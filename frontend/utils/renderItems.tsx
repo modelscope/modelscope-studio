@@ -65,7 +65,6 @@ export function renderItems<R>(
       }
 
       forceClone = forceClone ?? (callback ? true : false);
-
       current[splits[splits.length - 1]] = el
         ? callback
           ? (...args: any[]) => {
@@ -77,11 +76,13 @@ export function renderItems<R>(
                 </ContextPropsProvider>
               );
             }
-          : patchSlotProps((props) => (
-              <ContextPropsProvider forceClone={forceClone}>
-                <ReactSlot slot={el} clone={clone} {...props} />
-              </ContextPropsProvider>
-            ))
+          : patchSlotProps((props) => {
+              return (
+                <ContextPropsProvider forceClone={forceClone}>
+                  <ReactSlot slot={el} clone={clone} {...props} />
+                </ContextPropsProvider>
+              );
+            })
         : current[splits[splits.length - 1]];
 
       current = result;

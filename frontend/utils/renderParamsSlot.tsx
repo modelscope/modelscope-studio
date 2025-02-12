@@ -1,4 +1,3 @@
-import { ContextPropsProvider } from '@svelte-preprocess-react/context';
 import type { SetSlotParams } from '@svelte-preprocess-react/slot';
 import React from 'react';
 
@@ -31,23 +30,24 @@ export function renderParamsSlot(
         if (targets) {
           return targets.map((target, i) => {
             return (
-              <ContextPropsProvider
-                key={i}
-                params={args}
-                forceClone={options?.forceClone ?? true}
-              >
-                {renderSlot(target, { clone: true })}
-              </ContextPropsProvider>
+              <React.Fragment key={i}>
+                {renderSlot(target, {
+                  clone: true,
+                  params: args,
+                  forceClone: options?.forceClone ?? true,
+                })}
+              </React.Fragment>
             );
           });
         }
         return (
-          <ContextPropsProvider
-            params={args}
-            forceClone={options?.forceClone ?? true}
-          >
-            {renderSlot(slots[key], { clone: true })}
-          </ContextPropsProvider>
+          <>
+            {renderSlot(slots[key], {
+              clone: true,
+              params: args,
+              forceClone: options?.forceClone ?? true,
+            })}
+          </>
         );
       }
     : undefined;
