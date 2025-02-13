@@ -1,5 +1,9 @@
 # @modelscope-studio/legacy-multimodal-input
 
+## 1.1.4
+
+No significant changes to this package were made in this release.
+
 ## 1.1.3
 
 No significant changes to this package were made in this release.

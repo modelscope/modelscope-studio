@@ -1,5 +1,11 @@
 # @modelscope-studio/frontend
 
+## 1.1.4
+
+### Misc Changes
+
+- [#57](https://github.com/modelscope/modelscope-studio/pull/57) [`e6bd44d`](https://github.com/modelscope/modelscope-studio/commit/e6bd44daefd319f7da07eadf08c3c8d1d962a060) - the documentation for antdx is ready. Thanks [@Col0ring](https://github.com/Col0ring)!
+
 ## 1.1.3
 
 ### Fixes
