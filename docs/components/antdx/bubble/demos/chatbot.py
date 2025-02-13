@@ -67,7 +67,7 @@ with gr.Blocks() as demo:
                     scroll_btn = antd.Button("Scroll To First")
                 with antdx.Bubble.List(items=default_history,
                                        elem_style=dict(maxHeight=500),
-                                       elem_id="bubble-list") as bubble_list:
+                                       elem_id="chatbot") as bubble_list:
                     # Define Roles
                     with ms.Slot("roles"):
                         with antdx.Bubble.List.Role(
@@ -141,7 +141,7 @@ with gr.Blocks() as demo:
                                  outputs=[state, bubble_list])
             scroll_btn.click(fn=None,
                              js="""() => {
-                const bubbleList = document.getElementById("bubble-list");
+                const bubbleList = document.getElementById("chatbot");
                 bubbleList.scrollTo({ top:0, behavior:'smooth' });
 }""")
 

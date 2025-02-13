@@ -1,4 +1,8 @@
 import {
+  type ContextPropsContextValue,
+  useContextPropsContext,
+} from '@svelte-preprocess-react/context';
+import {
   createContext,
   useCallback,
   useContext,
@@ -28,6 +32,7 @@ export type Item<T extends string = 'children'> =
           }
       >;
       el?: HTMLElement;
+      ctx?: ContextPropsContextValue;
     } & {
       [K in T]?: Item[];
     })
@@ -199,6 +204,7 @@ export const createItemsContext = (name: string): CreateItemsContextReturn => {
   }: ItemHandlerProps<S>) => {
     const itemChildrenMemoized = useMemoizedFn(itemChildren);
     const itemPropsMemoized = useMemoizedFn(itemProps);
+    const { ctx, forceClone } = useContextPropsContext();
     const hasItemProps = !!itemProps;
     const hasItemChildren = !!itemChildren;
     const prevValueRef = useRef<Item>();
@@ -222,6 +228,10 @@ export const createItemsContext = (name: string): CreateItemsContextReturn => {
             [itemChildrenKey]: hasItemChildren
               ? itemChildrenMemoized(subItems)
               : undefined,
+            ctx: {
+              ctx,
+              forceClone,
+            },
           };
       if (!isEqual(prevValueRef.current, value)) {
         prevValueRef.current = value;
@@ -241,6 +251,8 @@ export const createItemsContext = (name: string): CreateItemsContextReturn => {
       slots,
       hasItemProps,
       hasItemChildren,
+      ctx,
+      forceClone,
     ]);
 
     return (

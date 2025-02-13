@@ -71,14 +71,18 @@ export function renderItems<R>(
               callback(splits[splits.length - 1], args);
 
               return (
-                <ContextPropsProvider params={args} forceClone={forceClone}>
+                <ContextPropsProvider
+                  {...item.ctx}
+                  params={args}
+                  forceClone={forceClone}
+                >
                   <ReactSlot slot={el} clone={clone} />
                 </ContextPropsProvider>
               );
             }
           : patchSlotProps((props) => {
               return (
-                <ContextPropsProvider forceClone={forceClone}>
+                <ContextPropsProvider {...item.ctx} forceClone={forceClone}>
                   <ReactSlot slot={el} clone={clone} {...props} />
                 </ContextPropsProvider>
               );
