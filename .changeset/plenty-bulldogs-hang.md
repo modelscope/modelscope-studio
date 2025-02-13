@@ -4,4 +4,4 @@
 'modelscope_studio': patch
 ---
 
-docs: docs for antdx
+docs: the documentation for antdx is ready
