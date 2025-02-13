@@ -9,6 +9,7 @@ import type {
 } from '@ant-design/x/es/suggestion';
 import { useFunction } from '@utils/hooks/useFunction';
 import { useMemoizedEqualValue } from '@utils/hooks/useMemoizedEqualValue';
+import { patchSlots } from '@utils/patchSlots';
 import { renderItems } from '@utils/renderItems';
 
 import { useItems, withItemsContextProvider } from './context';
@@ -37,9 +38,11 @@ const SuggestionChildrenWrapper = forwardRef<
           ...memoizedProps,
           onKeyDown: (e) => {
             if (shouldTrigger) {
-              shouldTrigger(e, {
-                onTrigger: memoizedProps.onTrigger,
-                onKeyDown: memoizedProps.onKeyDown,
+              requestAnimationFrame(() => {
+                shouldTrigger(e, {
+                  onTrigger: memoizedProps.onTrigger,
+                  onKeyDown: memoizedProps.onKeyDown,
+                });
               });
             } else {
               memoizedProps.onKeyDown?.(e);
@@ -75,20 +78,37 @@ export const Suggestion = sveltify<
         slotItems.items.length > 0 ? slotItems.items : slotItems.default;
       const itemsFunction = useFunction(items);
       const shouldTriggerFunction = useFunction(shouldTrigger);
+      const resolvedItems = useMemo(() => {
+        return (items ||
+          renderItems<SuggestionItem>(resolvedSlotItems, {
+            clone: true,
+          }) || [{}]) as SuggestionItem[];
+      }, [items, resolvedSlotItems]);
+      const itemsRender: SuggestionProps['items'] = useMemo(() => {
+        return (...args) => {
+          return resolvedItems.map((item) => {
+            return patchSlots(args, (patchSlotRender) => {
+              const patch = (
+                suggestionItem: SuggestionItem
+              ): SuggestionItem => {
+                return {
+                  ...suggestionItem,
+                  extra: patchSlotRender(suggestionItem.extra),
+                  icon: patchSlotRender(suggestionItem.icon),
+                  label: patchSlotRender(suggestionItem.label),
+                  children: suggestionItem.children?.map((sub) => {
+                    return patch(sub);
+                  }),
+                };
+              };
+              return patch(item);
+            });
+          });
+        };
+      }, [resolvedItems]);
       return (
         <>
-          <XSuggestion
-            {...props}
-            items={useMemo(() => {
-              return (
-                itemsFunction ||
-                items ||
-                renderItems<SuggestionItem>(resolvedSlotItems, {
-                  clone: true,
-                }) || [{}]
-              );
-            }, [items, itemsFunction, resolvedSlotItems])}
-          >
+          <XSuggestion {...props} items={itemsFunction || itemsRender}>
             {(childrenProps) => {
               return (
                 <SuggestionChildrenWrapper

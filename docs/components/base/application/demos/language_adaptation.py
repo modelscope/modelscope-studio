@@ -12,6 +12,12 @@ messages = {
     },
     'zh-CN': {
         "hello": "你好"
+    },
+    "ja-JP": {
+        "hello": "こんにちは"
+    },
+    "ko-KR": {
+        "hello": "안녕하세요"
     }
 }
 
@@ -20,11 +26,11 @@ default_lang = "en"
 
 def mount(e: gr.EventData, _state):
     lang = e._data["language"]
-    if (lang in messages):
+    if lang in messages:
         _state["current_lang"] = lang
     yield 'Switch Language...', _state
     time.sleep(2)
-    yield messages[lang]["hello"], _state
+    yield messages[_state["current_lang"]]["hello"], _state
 
 
 with gr.Blocks() as demo:

@@ -66,7 +66,7 @@ index_docs = {"overview": Docs(__file__), **layout_templates}
 
 base_docs = get_docs("base")
 antd_docs = get_docs("antd")
-# antdx_docs = get_docs("antdx")
+antdx_docs = get_docs("antdx")
 
 default_active_tab = "index"
 index_menu_items = [{
@@ -422,6 +422,27 @@ antdx_menu_items = [{
     }, {
         "label": get_text("Sender", "Sender 输入框"),
         "key": "sender"
+    }, {
+        "label": get_text("Suggestion", "Suggestion 快捷指令"),
+        "key": "suggestion"
+    }]
+}, {
+    "label":
+    get_text("Confirm", "确认"),
+    "type":
+    "group",
+    "children": [{
+        "label": get_text("ThoughtChain", "ThoughtChain 思考链"),
+        "key": "thought_chain"
+    }]
+}, {
+    "label":
+    get_text("Tools", "工具"),
+    "type":
+    "group",
+    "children": [{
+        "label": get_text("XProvider", "XProvider 全局化配置"),
+        "key": "x_provider"
     }]
 }]
 
@@ -477,12 +498,12 @@ tabs = [
         "menus": antd_menu_items,
         "extra_menu_footer": more_components
     },
-    # {
-    #     "label": get_text("Antdx Components", "Antdx 组件"),
-    #     "key": "antdx",
-    #     "default_active_key": "overview",
-    #     "menus": antdx_menu_items,
-    # },
+    {
+        "label": get_text("Antdx Components", "Antdx 组件"),
+        "key": "antdx",
+        "default_active_key": "overview",
+        "menus": antdx_menu_items,
+    },
     {
         "label": get_text("Version 0.x", "0.x 版本"),
         "key": "legacy",
@@ -496,7 +517,7 @@ site = Site(
         # match the key of tabs
         "index": index_docs,
         "antd": antd_docs,
-        # "antdx": antdx_docs,
+        "antdx": antdx_docs,
         "base": base_docs
     },
     default_active_tab=default_active_tab,

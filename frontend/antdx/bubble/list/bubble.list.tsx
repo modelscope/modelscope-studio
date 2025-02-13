@@ -6,6 +6,7 @@ import type {
   RoleType,
 } from '@ant-design/x/es/bubble/BubbleList';
 import { useFunction } from '@utils/hooks/useFunction';
+import { patchSlots } from '@utils/patchSlots';
 import { renderItems } from '@utils/renderItems';
 import type { AvatarProps } from 'antd';
 import { isFunction, isObject } from 'lodash-es';
@@ -18,36 +19,24 @@ import {
 } from './context';
 
 function patchBubbleSlots(role: RoleType, params: any[]) {
-  const patchSlotRender = (
-    slot?: React.ReactNode | ((...args: any[]) => React.ReactNode),
-    functionProp?: boolean
-  ) => {
-    if (isFunction(slot)) {
-      if (functionProp) {
-        return (...args: any[]) => {
-          return slot(...args, ...params);
-        };
-      }
-      return slot(...params);
-    }
-    return slot;
-  };
-  return {
-    ...role,
-    avatar: isFunction(role.avatar)
-      ? patchSlotRender(role.avatar)
-      : isObject(role.avatar)
-        ? {
-            ...role.avatar,
-            icon: patchSlotRender((role.avatar as AvatarProps)?.icon),
-            src: patchSlotRender((role.avatar as AvatarProps)?.src),
-          }
-        : role.avatar,
-    footer: patchSlotRender(role.footer),
-    header: patchSlotRender(role.header),
-    loadingRender: patchSlotRender(role.loadingRender, true),
-    messageRender: patchSlotRender(role.messageRender, true),
-  };
+  return patchSlots(params, (patchSlotRender) => {
+    return {
+      ...role,
+      avatar: isFunction(role.avatar)
+        ? patchSlotRender(role.avatar)
+        : isObject(role.avatar)
+          ? {
+              ...role.avatar,
+              icon: patchSlotRender((role.avatar as AvatarProps)?.icon),
+              src: patchSlotRender((role.avatar as AvatarProps)?.src),
+            }
+          : role.avatar,
+      footer: patchSlotRender(role.footer),
+      header: patchSlotRender(role.header),
+      loadingRender: patchSlotRender(role.loadingRender, true),
+      messageRender: patchSlotRender(role.messageRender, true),
+    };
+  });
 }
 
 export const BubbleList = sveltify<BubbleListProps, ['items', 'roles']>(
@@ -101,7 +90,6 @@ export const BubbleList = sveltify<BubbleListProps, ['items', 'roles']>(
             };
           };
         }, [roles]);
-
         return (
           <>
             <div style={{ display: 'none' }}>{children}</div>

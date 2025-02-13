@@ -6,6 +6,7 @@
     importComponent,
   } from '@svelte-preprocess-react/component';
   import {
+    getSetSlotParamsFn,
     getSlotContext,
     getSlotKey,
     getSlots,
@@ -49,6 +50,7 @@
     value,
     restProps: $$restProps,
   });
+  const setSlotParams = getSetSlotParamsFn();
   const slots = getSlots();
   $: update({
     gradio,
@@ -75,7 +77,24 @@
       ...$mergedProps.props,
       ...bindEvents($mergedProps),
     },
-    slots: $slots,
+    slots: {
+      ...$slots,
+      extra: {
+        el: $slots.extra,
+        clone: true,
+        callback: setSlotParams,
+      },
+      icon: {
+        el: $slots.icon,
+        clone: true,
+        callback: setSlotParams,
+      },
+      label: {
+        el: $slots.label,
+        clone: true,
+        callback: setSlotParams,
+      },
+    },
   };
 </script>
 
