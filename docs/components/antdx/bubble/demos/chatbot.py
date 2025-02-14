@@ -90,8 +90,24 @@ with gr.Blocks() as demo:
                             # render footer
                             with ms.Slot("footer",
                                          params_mapping="""(item) => {
-                                            return { refresh: { key: item.key }, like: { key: item.key, color: item.meta?.action === "like" ? 'primary' : 'default' }, dislike: { key: item.key, color: item.meta?.action === "dislike" ? 'primary' : 'default' } }
+                                            return { copy: { copyable: { text: item.content, tooltips: false } } ,refresh: { key: item.key }, like: { key: item.key, color: item.meta?.action === "like" ? 'primary' : 'default' }, dislike: { key: item.key, color: item.meta?.action === "dislike" ? 'primary' : 'default' } }
                                          }"""):
+                                with antd.Typography.Text(
+                                        copyable=dict(tooltips=False),
+                                        as_item="copy"):
+                                    with ms.Slot("copyable.icon"):
+                                        with antd.Button(value=None,
+                                                         size="small",
+                                                         color="default",
+                                                         variant="text"):
+                                            with ms.Slot("icon"):
+                                                antd.Icon("CopyOutlined")
+                                        with antd.Button(value=None,
+                                                         size="small",
+                                                         color="default",
+                                                         variant="text"):
+                                            with ms.Slot("icon"):
+                                                antd.Icon("CheckOutlined")
                                 with antd.Button(
                                         value=None,
                                         size="small",

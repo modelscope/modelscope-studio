@@ -1,5 +1,15 @@
 # @modelscope-studio/frontend
 
+## 1.1.5
+
+### Fixes
+
+- [`04ac4c9`](https://github.com/modelscope/modelscope-studio/commit/04ac4c9938e064bbfeb132f8cfe88e261683fd7e) - parameters memory in the render function. Thanks [@Col0ring](https://github.com/Col0ring)!
+
+### Misc Changes
+
+- [`4ab53e4`](https://github.com/modelscope/modelscope-studio/commit/4ab53e424c43a1db9d33b8883bb71a22cc59275b) - update deps. Thanks [@Col0ring](https://github.com/Col0ring)!
+
 ## 1.1.4
 
 ### Misc Changes

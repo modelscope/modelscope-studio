@@ -1,5 +1,11 @@
 # @modelscope-studio/antd
 
+## 1.1.5
+
+### Misc Changes
+
+- [`4ab53e4`](https://github.com/modelscope/modelscope-studio/commit/4ab53e424c43a1db9d33b8883bb71a22cc59275b) - update deps. Thanks [@Col0ring](https://github.com/Col0ring)!
+
 ## 1.1.4
 
 No significant changes to this package were made in this release.

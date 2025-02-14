@@ -4,7 +4,7 @@ import { type GetProps, Progress as AProgress } from 'antd';
 
 export const Progress = sveltify<
   GetProps<typeof AProgress> & {
-    rounding: (step: number) => number;
+    rounding?: (step: number) => number;
   }
 >(({ format, rounding, ...props }) => {
   const formatFunction = useFunction(format);
