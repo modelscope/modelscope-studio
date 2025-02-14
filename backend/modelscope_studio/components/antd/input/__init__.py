@@ -61,7 +61,8 @@ class AntdInput(ModelScopeDataLayoutComponent):
             suffix: str | None = None,
             type: str | None = None,
             placeholder: str | None = None,
-            variant: Literal['outlined', 'borderless', 'filled'] | None = None,
+            variant: Literal['outlined', 'borderless', 'filled', 'underlined']
+        | None = None,
             root_class_name: str | None = None,
             as_item: str | None = None,
             _internal: None = None,

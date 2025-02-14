@@ -93,7 +93,7 @@ export const TypographyBase = sveltify<
             supportCopy
               ? omitUndefinedProps({
                   text: value,
-                  ...getConfig(copyable),
+                  ...copyableConfig,
                   tooltips:
                     copyableTooltipsTargets.length > 0
                       ? copyableTooltipsTargets.map((slot, index) => {

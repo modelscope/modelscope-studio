@@ -21,7 +21,7 @@ class AntdNotification(ModelScopeLayoutComponent):
     ]
 
     # supported slots
-    SLOTS = ['btn', 'closeIcon', "description", "icon", "message"]
+    SLOTS = ['actions', 'closeIcon', "description", "icon", "message"]
 
     def __init__(
             self,

@@ -99,7 +99,7 @@ class AntdTreeSelect(ModelScopeDataLayoutComponent):
             tree_loaded_keys: list[str] | None = None,
             tree_node_filter_prop: str | None = None,
             tree_node_label_prop: str | None = None,
-            variant: Literal['outlined', 'borderless', 'solid']
+            variant: Literal['outlined', 'borderless', 'solid', 'underlined']
         | None = None,
             virtual: bool | None = True,
             root_class_name: str | None = None,

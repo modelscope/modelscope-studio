@@ -22,7 +22,7 @@ class AntdInputOTP(ModelScopeDataLayoutComponent):
     ]
 
     # supported slots
-    SLOTS = []
+    SLOTS = ["separator"]
 
     def __init__(
             self,
@@ -33,11 +33,13 @@ class AntdInputOTP(ModelScopeDataLayoutComponent):
             disabled: bool | None = None,
             formatter: str | None = None,
             mask: str | bool | None = None,
+            separator: str | None = None,
             length: int = 6,
             placeholder: str | None = None,
             size: Literal['large', 'middle', 'small'] | None = None,
             status: Literal['error', 'warning'] | None = None,
-            variant: Literal['outlined', 'borderless', 'filled'] | None = None,
+            variant: Literal['outlined', 'borderless', 'filled', 'underlined']
+        | None = None,
             root_class_name: str | None = None,
             as_item: str | None = None,
             _internal: None = None,
@@ -58,6 +60,7 @@ class AntdInputOTP(ModelScopeDataLayoutComponent):
                          **kwargs)
         self.props = props
         self.default_value = default_value
+        self.separator = separator
         self.disabled = disabled
         self.formatter = formatter
         self.mask = mask

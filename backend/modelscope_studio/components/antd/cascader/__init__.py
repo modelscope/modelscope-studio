@@ -80,7 +80,7 @@ class AntdCascader(ModelScopeDataLayoutComponent):
             size: Literal['small', 'middle', 'large'] | None = None,
             status: Literal['error', 'warning'] | None = None,
             suffix_icon: str | None = None,
-            variant: Literal['outlined', 'borderless', 'filled']
+            variant: Literal['outlined', 'borderless', 'filled', 'underlined']
         | None = None,
             multiple: bool | None = None,
             show_checked_strategy: Literal['SHOW_PARENT', 'SHOW_CHILD']

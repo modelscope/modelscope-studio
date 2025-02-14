@@ -17,7 +17,7 @@ class AntdCarousel(ModelScopeLayoutComponent):
             props: dict | None = None,
             *,
             arrows: bool | None = None,
-            autoplay: bool | None = None,
+            autoplay: bool | dict | None = None,
             autoplay_speed: int | float | None = 3000,
             adaptive_height: bool | None = None,
             dot_position: Literal['top', 'bottom', 'left', 'right']

@@ -86,7 +86,8 @@ class AntdDatePicker(ModelScopeDataLayoutComponent):
             suffix_icon: str | None = None,
             super_next_icon: str | None = None,
             super_prev_icon: str | None = None,
-            variant: Literal['outlined', 'borderless', 'filled'] | None = None,
+            variant: Literal['outlined', 'borderless', 'filled', 'underlined']
+        | None = None,
             default_picker_value: str | int | float | None = None,
             default_value: str | int | float | None = None,
             disabled_time: str | None = None,

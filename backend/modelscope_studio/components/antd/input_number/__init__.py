@@ -63,7 +63,8 @@ class AntdInputNumber(ModelScopeDataLayoutComponent):
             step: int | float | None = 1,
             string_mode: bool | None = None,
             suffix: str | None = None,
-            variant: Literal['outlined', 'borderless', 'filled'] | None = None,
+            variant: Literal['outlined', 'borderless', 'filled', 'underlined']
+        | None = None,
             root_class_name: str | None = None,
             as_item: str | None = None,
             _internal: None = None,

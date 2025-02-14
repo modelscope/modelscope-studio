@@ -2,7 +2,9 @@ import type { ConnectionLineComponent } from '@xyflow/react';
 import { getBezierPath } from '@xyflow/react';
 import { theme } from 'antd';
 
-export const ConnectionLine: ConnectionLineComponent = ({
+import type { FlowNode } from '../type';
+
+export const ConnectionLine: ConnectionLineComponent<FlowNode> = ({
   toX,
   toY,
   fromX,

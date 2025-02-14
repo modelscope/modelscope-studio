@@ -34,6 +34,8 @@ class AntdSegmented(ModelScopeDataLayoutComponent):
             disabled: bool | None = None,
             options: list[str] | list[int | float] | list[dict] | None = None,
             size: Literal['large', 'middle', 'small'] | None = None,
+            shape: Literal['default', 'round'] | None = None,
+            form_name: str | None = None,
             vertical: bool | None = None,
             root_class_name: str | None = None,
             as_item: str | None = None,
@@ -59,6 +61,8 @@ class AntdSegmented(ModelScopeDataLayoutComponent):
         self.disabled = disabled
         self.options = options
         self.size = size
+        self.form_name = form_name
+        self.shape = shape
         self.vertical = vertical
         self.root_class_name = root_class_name
 

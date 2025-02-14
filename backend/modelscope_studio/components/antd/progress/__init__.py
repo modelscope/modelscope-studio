@@ -21,6 +21,7 @@ class AntdProgress(ModelScopeComponent):
             show_info: bool | None = None,
             status: Literal['success', 'exception', 'normal', 'active']
         | None = None,
+            rounding: str | None = None,
             stroke_color: str | None = None,
             stroke_linecap: Literal['round', 'butt', 'square']
         | None = None,
@@ -58,6 +59,7 @@ class AntdProgress(ModelScopeComponent):
         self.format = format
         self.show_info = show_info
         self.status = status
+        self.rounding = rounding
         self.stroke_color = stroke_color
         self.stroke_linecap = stroke_linecap
         self.success = success

@@ -73,7 +73,7 @@ class AntdTimePicker(ModelScopeDataLayoutComponent):
             status: Literal['error', 'warning'] | None = None,
             suffix_icon: str | None = None,
             use_12_hours: bool | None = None,
-            variant: Literal['outlined', 'borderless', 'filled']
+            variant: Literal['outlined', 'borderless', 'filled', 'underlined']
         | None = None,
             root_class_name: str | None = None,
             as_item: str | None = None,

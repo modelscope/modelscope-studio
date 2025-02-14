@@ -69,7 +69,8 @@ class AntdMentions(ModelScopeDataLayoutComponent):
             split: str | None = None,
             status: Literal['error', 'warning'] | None = None,
             validate_search: str | None = None,
-            variant: Literal['outlined', 'borderless', 'filled'] | None = None,
+            variant: Literal['outlined', 'borderless', 'filled', 'underlined']
+        | None = None,
             root_class_name: str | None = None,
             as_item: str | None = None,
             _internal: None = None,

@@ -61,7 +61,8 @@ class AntdForm(ModelScopeDataLayoutComponent):
             size: Literal['small', 'middle', 'large'] | None = None,
             validate_messages: dict | None = None,
             validate_trigger: str | list[str] = 'onChange',
-            variant: Literal['outlined', 'borderless', 'filled'] | None = None,
+            variant: Literal['outlined', 'borderless', 'filled', 'underlined']
+        | None = None,
             wrapper_col: dict | None = None,
             clear_on_destroy: bool | None = None,
             root_class_name: str | None = None,
