@@ -83,7 +83,7 @@ export function renderItems<R>(
           : patchSlotProps((props) => {
               return (
                 <ContextPropsProvider {...item.ctx} forceClone={forceClone}>
-                  <ReactSlot slot={el} clone={clone} {...props} />
+                  <ReactSlot {...props} slot={el} clone={clone} />
                 </ContextPropsProvider>
               );
             })

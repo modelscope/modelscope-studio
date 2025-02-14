@@ -47,8 +47,8 @@ const mergeCtx = (
   }
 
   return {
-    ...ctx1,
-    ...ctx2,
+    ...(ctx1 || {}),
+    ...(ctx2 || {}),
   };
 };
 
@@ -58,33 +58,48 @@ export const ContextPropsProvider: React.FC<
   }
 > = ({ params, ctx, forceClone, children }) => {
   const { forceClone: pForceClone, ctx: pCtx } = useContextPropsContext();
+  const mergedCtx = useMemo(() => {
+    return mergeCtx(pCtx, ctx);
+  }, [ctx, pCtx]);
   const prevCtxValueRef = useRef<ContextPropsContextValue>({
     params,
-    ctx: mergeCtx(pCtx, ctx),
+    ctx: mergedCtx,
     initial: true,
     forceClone: pForceClone || forceClone || false,
   });
+  const prevParamsStrRef = useRef<string>();
+
   return React.createElement(
     ContextPropsContext.Provider,
     {
       value: useMemo(() => {
         let hasChanged = false;
-        if (!isEqual(prevCtxValueRef.current.params, params)) {
+        try {
+          const paramsStr = JSON.stringify(params);
+          if (prevParamsStrRef.current !== paramsStr) {
+            prevParamsStrRef.current = paramsStr;
+            hasChanged = true;
+          }
+        } catch {
+          //
+        }
+        if (!hasChanged && !isEqual(prevCtxValueRef.current.params, params)) {
           hasChanged = true;
         }
-        if (!isEqual(prevCtxValueRef.current.ctx, ctx)) {
+        if (!hasChanged && !isEqual(prevCtxValueRef.current.ctx, mergedCtx)) {
           hasChanged = true;
         }
+
         if (hasChanged) {
           prevCtxValueRef.current = {
             params,
-            ctx: mergeCtx(pCtx, ctx),
+            ctx: mergedCtx,
             initial: true,
             forceClone: pForceClone || forceClone || false,
           };
         }
         return prevCtxValueRef.current;
-      }, [ctx, pCtx, forceClone, pForceClone, params]),
+      }, [params, mergedCtx, pForceClone, forceClone]),
     },
     children
   );
