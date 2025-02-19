@@ -60,7 +60,6 @@ export const Attachments = sveltify<
     onChange,
     onValueChange,
     onRemove,
-    maxCount,
     items,
     setSlotParams,
     placeholder,
@@ -129,6 +128,7 @@ export const Attachments = sveltify<
       );
     }, [fileList]);
     const targets = useTargets(children);
+
     return (
       <>
         <div style={{ display: 'none' }}>
@@ -173,7 +173,6 @@ export const Attachments = sveltify<
           data={dataFunction || data}
           previewFile={previewFileFunction}
           isImageUrl={isImageUrlFunction}
-          maxCount={1}
           itemRender={
             slots.itemRender
               ? renderParamsSlot({ slots, setSlotParams, key: 'itemRender' })
@@ -216,24 +215,14 @@ export const Attachments = sveltify<
                   return false;
                 }
               }
-
               if (uploadingRef.current) {
                 return false;
               }
               uploadingRef.current = true;
-              let validFiles = files;
-              if (typeof maxCount === 'number') {
-                const max = maxCount - fileList.length;
-                validFiles = files.slice(0, max < 0 ? 0 : max);
-              } else if (maxCount === 1) {
-                validFiles = files.slice(0, 1);
-              } else if (validFiles.length === 0) {
-                uploadingRef.current = false;
-                return false;
-              }
+              const validFiles = files.filter((v) => v.status !== 'done');
 
               setFileList((prev) => [
-                ...(maxCount === 1 ? [] : prev),
+                ...prev,
                 ...validFiles.map((v) => {
                   return {
                     ...v,
@@ -247,15 +236,12 @@ export const Attachments = sveltify<
               const fileDataList = (
                 await upload(validFiles.map((f) => f.originFileObj as RcFile))
               ).filter((v) => v) as (FileData & { uid: string })[];
-              const mergedFileList =
-                maxCount === 1
-                  ? fileDataList
-                  : ([
-                      ...fileList.filter(
-                        (v) => !fileDataList.some((f) => f.uid === v.uid)
-                      ),
-                      ...fileDataList,
-                    ] as FileData[]);
+              const mergedFileList = [
+                ...fileList.filter(
+                  (v) => !fileDataList.some((f) => f.uid === v.uid)
+                ),
+                ...fileDataList,
+              ] as FileData[];
               uploadingRef.current = false;
               onValueChange?.(mergedFileList);
               onChange?.(mergedFileList.map((v) => v.path));

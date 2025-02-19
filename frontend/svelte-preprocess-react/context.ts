@@ -23,6 +23,9 @@ export const SuggestionContext = createContext<{
 
 export const useSuggestionContext = () => useContext(SuggestionContext);
 
+export const SuggestionOpenContext = createContext(false);
+export const useSuggestionOpenContext = () => useContext(SuggestionOpenContext);
+
 export interface ContextPropsContextValue {
   params?: any[];
   initial: boolean;
@@ -55,9 +58,13 @@ const mergeCtx = (
 export const ContextPropsProvider: React.FC<
   Partial<ContextPropsContextValue> & {
     children?: React.ReactNode;
+    mergeContext?: boolean;
   }
-> = ({ params, ctx, forceClone, children }) => {
-  const { forceClone: pForceClone, ctx: pCtx } = useContextPropsContext();
+> = ({ params, ctx, mergeContext = true, forceClone, children }) => {
+  const contextProps = useContextPropsContext();
+  const { forceClone: pForceClone } = contextProps;
+  let pCtx = contextProps.ctx;
+  pCtx = mergeContext ? pCtx : null;
   const mergedCtx = useMemo(() => {
     return mergeCtx(pCtx, ctx);
   }, [ctx, pCtx]);

@@ -1,7 +1,10 @@
 import { sveltify } from '@svelte-preprocess-react';
-import { SuggestionContext } from '@svelte-preprocess-react/context';
+import {
+  SuggestionContext,
+  SuggestionOpenContext,
+} from '@svelte-preprocess-react/context';
 import { ReactSlot } from '@svelte-preprocess-react/react-slot';
-import React, { forwardRef, useMemo } from 'react';
+import React, { forwardRef, useEffect, useMemo, useState } from 'react';
 import { Suggestion as XSuggestion, type SuggestionProps } from '@ant-design/x';
 import type {
   RenderChildrenProps,
@@ -11,6 +14,7 @@ import { useFunction } from '@utils/hooks/useFunction';
 import { useMemoizedEqualValue } from '@utils/hooks/useMemoizedEqualValue';
 import { patchSlots } from '@utils/patchSlots';
 import { renderItems } from '@utils/renderItems';
+import { isUndefined } from 'lodash-es';
 
 import { useItems, withItemsContextProvider } from './context';
 
@@ -73,6 +77,7 @@ export const Suggestion = sveltify<
   withItemsContextProvider(
     ['default', 'items'],
     ({ children, items, shouldTrigger, slots, ...props }) => {
+      const [open, setOpen] = useState(() => props.open ?? false);
       const { items: slotItems } = useItems<['default', 'items']>();
       const resolvedSlotItems =
         slotItems.items.length > 0 ? slotItems.items : slotItems.default;
@@ -106,18 +111,37 @@ export const Suggestion = sveltify<
           });
         };
       }, [resolvedItems]);
+
+      useEffect(() => {
+        if (!isUndefined(props.open)) {
+          setOpen(props.open);
+        }
+      }, [props.open]);
       return (
         <>
-          <XSuggestion {...props} items={itemsFunction || itemsRender}>
+          <XSuggestion
+            {...props}
+            items={itemsFunction || itemsRender}
+            onOpenChange={(suggestionOpen, ...args) => {
+              if (isUndefined(props.open)) {
+                setOpen(suggestionOpen);
+              }
+              props.onOpenChange?.(suggestionOpen, ...args);
+            }}
+          >
             {(childrenProps) => {
               return (
-                <SuggestionChildrenWrapper
-                  props={childrenProps}
-                  shouldTrigger={shouldTriggerFunction}
-                >
-                  <div style={{ display: 'none' }}>{children}</div>
-                  {slots.children ? <ReactSlot slot={slots.children} /> : null}
-                </SuggestionChildrenWrapper>
+                <SuggestionOpenContext.Provider value={open}>
+                  <SuggestionChildrenWrapper
+                    props={childrenProps}
+                    shouldTrigger={shouldTriggerFunction}
+                  >
+                    <div style={{ display: 'none' }}>{children}</div>
+                    {slots.children ? (
+                      <ReactSlot slot={slots.children} />
+                    ) : null}
+                  </SuggestionChildrenWrapper>
+                </SuggestionOpenContext.Provider>
               );
             }}
           </XSuggestion>
