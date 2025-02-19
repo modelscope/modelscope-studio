@@ -1,4 +1,4 @@
-# Coder Artifacts
+# Chatbot
 
 A application template for building chatbot interfaces.
 
