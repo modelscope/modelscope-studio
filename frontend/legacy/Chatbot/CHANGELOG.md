@@ -1,5 +1,9 @@
 # @modelscope-studio/legacy-chatbot
 
+## 1.1.6
+
+No significant changes to this package were made in this release.
+
 ## 1.1.5
 
 No significant changes to this package were made in this release.

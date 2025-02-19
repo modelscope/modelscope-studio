@@ -1,5 +1,15 @@
 # modelscope_studio
 
+## 1.1.6
+
+### Features
+
+- [#58](https://github.com/modelscope/modelscope-studio/pull/58) [`2b1950b`](https://github.com/modelscope/modelscope-studio/commit/2b1950be1705223cc3c6c828ffa909f5673e3d6e) - add layout template `chatbot`. Thanks [@Col0ring](https://github.com/Col0ring)!
+
+### Fixes
+
+- [#58](https://github.com/modelscope/modelscope-studio/pull/58) [`2b1950b`](https://github.com/modelscope/modelscope-studio/commit/2b1950be1705223cc3c6c828ffa909f5673e3d6e) - component props. Thanks [@Col0ring](https://github.com/Col0ring)!
+
 ## 1.1.5
 
 ### Fixes
