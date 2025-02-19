@@ -26,7 +26,11 @@ export const Filter = sveltify<FilterProps>(
       // else undefined
     }, [asItem, ctx, paramsMappingFn]);
     return (
-      <ContextPropsProvider forceClone={forceClone} ctx={filteredContext}>
+      <ContextPropsProvider
+        forceClone={forceClone}
+        ctx={filteredContext}
+        mergeContext={false}
+      >
         {children}
       </ContextPropsProvider>
     );

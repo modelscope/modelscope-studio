@@ -1,6 +1,6 @@
 # Coder Artifacts
 
-A Application template for building code generation interfaces.
+A application template for building chatbot interfaces.
 
 ## Examples
 

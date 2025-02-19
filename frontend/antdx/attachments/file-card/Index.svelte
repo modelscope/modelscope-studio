@@ -7,7 +7,6 @@
   } from '@svelte-preprocess-react/component';
   import { getSlotContext, getSlots } from '@svelte-preprocess-react/slot';
   import type React from 'react';
-  import type { Attachment } from '@ant-design/x/es/attachments';
   import type { Gradio } from '@gradio/utils';
   import cls from 'classnames';
   import { writable } from 'svelte/store';
@@ -15,8 +14,9 @@
   const AwaitedAttachmentsFileCard = importComponent(
     () => import('./attachments.file-card')
   );
-  export let item: Attachment;
   export let gradio: Gradio;
+  export let root: string;
+  export let proxy_url: string;
   export let props: Record<string, any> = {};
   const updatedProps = writable(props);
   $: updatedProps.update((prev) => ({ ...prev, ...props }));
@@ -40,7 +40,6 @@
     elem_classes,
     elem_style,
     as_item,
-    item,
     restProps: $$restProps,
   });
   const slots = getSlots();
@@ -53,7 +52,6 @@
     elem_classes,
     elem_style,
     as_item,
-    item,
     restProps: $$restProps,
   });
 </script>
@@ -67,10 +65,11 @@
         'ms-gr-antdx-attachments-file-card'
       )}
       id={$mergedProps.elem_id}
-      item={$mergedProps.item}
       {...$mergedProps.restProps}
       {...$mergedProps.props}
       {...bindEvents($mergedProps)}
+      urlRoot={root}
+      urlProxyUrl={proxy_url}
       slots={$slots}
     >
       <slot></slot>

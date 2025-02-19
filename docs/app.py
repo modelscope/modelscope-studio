@@ -80,6 +80,9 @@ index_menu_items = [{
     "children": [{
         "label": get_text("Coder-Artifacts", "Coder-Artifacts"),
         "key": "coder_artifacts"
+    }, {
+        "label": get_text("Chatbot", "Chatbot"),
+        "key": "chatbot"
     }]
 }]
 

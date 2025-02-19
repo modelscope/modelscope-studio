@@ -1,4 +1,5 @@
 import { sveltify } from '@svelte-preprocess-react';
+import { useSuggestionOpenContext } from '@svelte-preprocess-react/context';
 import { ReactSlot } from '@svelte-preprocess-react/react-slot';
 import type { SetSlotParams } from '@svelte-preprocess-react/slot';
 import React from 'react';
@@ -34,6 +35,7 @@ export const Sender = sveltify<
       onValueChange,
       value: props.value,
     });
+    const open = useSuggestionOpenContext();
     return (
       <>
         <div style={{ display: 'none' }}>{children}</div>
@@ -41,6 +43,11 @@ export const Sender = sveltify<
           {...props}
           value={value}
           ref={elRef}
+          onSubmit={(...args) => {
+            if (!open) {
+              props.onSubmit?.(...args);
+            }
+          }}
           onChange={(v) => {
             onChange?.(v);
             setValue(v);
