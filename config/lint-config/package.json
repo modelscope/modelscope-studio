@@ -18,9 +18,9 @@
   "dependencies": {
     "@eslint/compat": "^1.2.6",
     "@eslint/js": "^9.20.0",
-    "@typescript-eslint/parser": "^8.24.0",
+    "@typescript-eslint/parser": "^8.24.1",
     "eslint-config-prettier": "^10.0.1",
-    "eslint-import-resolver-typescript": "^3.7.0",
+    "eslint-import-resolver-typescript": "^3.8.2",
     "eslint-plugin-import": "^2.31.0",
     "eslint-plugin-jsx-a11y": "^6.10.2",
     "eslint-plugin-prettier": "5.2.3",
@@ -30,7 +30,7 @@
     "eslint-plugin-simple-import-sort": "^12.1.0",
     "eslint-plugin-svelte": "^2.46.1",
     "globals": "^15.15.0",
-    "postcss": "^8.5.2",
+    "postcss": "^8.5.3",
     "postcss-less": "^6.0.0",
     "stylelint-config-ali": "^2.1.1",
     "stylelint-config-rational-order": "^0.1.2",
@@ -39,7 +39,7 @@
     "stylelint-order": "^6.0.4",
     "stylelint-prettier": "^5.0.3",
     "svelte-eslint-parser": "^0.43.0",
-    "typescript-eslint": "^8.24.0"
+    "typescript-eslint": "^8.24.1"
   },
   "devDependencies": {
     "@types/eslint": "^9.6.1",

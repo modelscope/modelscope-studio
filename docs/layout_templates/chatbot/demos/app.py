@@ -117,13 +117,14 @@ class Gradio_Events:
                     messages.append(item)
             return messages
 
-        history = state_value["conversations_histories"][
+        history = state_value["conversations_history"][
             state_value["conversation_id"]]
         history_messages = format_history(history)
 
         history.append({
             "role": "assistant",
             "content": "",
+            "key": str(uuid.uuid4()),
             "meta": {},
             "loading": True,
         })
@@ -160,22 +161,25 @@ class Gradio_Events:
             raise e
 
     @staticmethod
-    def preprocess_submit(sender_value, attachments_value, state_value):
+    def add_user_message(sender_value, attachments_value, state_value):
         if not state_value["conversation_id"]:
             random_id = str(uuid.uuid4())
             history = []
             state_value["conversation_id"] = random_id
-            state_value["conversations_histories"][random_id] = history
+            state_value["conversations_history"][random_id] = history
             state_value["conversations"].append({
                 "label": sender_value,
                 "key": random_id
             })
 
-        history = state_value["conversations_histories"][
+        history = state_value["conversations_history"][
             state_value["conversation_id"]]
         history.append({
             "role":
             "user",
+            "meta": {},
+            "key":
+            str(uuid.uuid4()),
             "content":
             dict(text=sender_value,
                  files=[
@@ -183,57 +187,142 @@ class Gradio_Events:
                      for f in attachments_value
                  ])
         })
-        return {
-            add_conversation_btn:
-            gr.update(disabled=True),
-            sender:
-            gr.update(value=None, loading=True),
-            attachments:
-            gr.update(value=[]),
-            attachments_badge:
-            gr.update(dot=False),
-            clear_btn:
-            gr.update(disabled=True),
-            conversations:
-            gr.update(active_key=state_value["conversation_id"],
-                      items=list(
-                          map(
-                              lambda item: {
-                                  **item,
-                                  "disabled":
-                                  True if item["key"] != state_value[
-                                      "conversation_id"] else False,
-                              }, state_value["conversations"]))),
-            conversation_delete_menu_item:
-            gr.update(disabled=True),
-            state:
-            gr.update(value=state_value),
-        }
+        return gr.update(value=state_value)
+
+    @staticmethod
+    def preprocess_submit(clear_input=True):
+
+        def preprocess_submit_handler(state_value):
+            history = state_value["conversations_history"][
+                state_value["conversation_id"]]
+            for conversation in history:
+                if "meta" in conversation:
+                    conversation["meta"]["disabled"] = True
+            return {
+                **({
+                    sender: gr.update(value=None, loading=True),
+                    attachments: gr.update(value=[]),
+                    attachments_badge: gr.update(dot=False),
+                } if clear_input else {}),
+                conversations:
+                gr.update(active_key=state_value["conversation_id"],
+                          items=list(
+                              map(
+                                  lambda item: {
+                                      **item,
+                                      "disabled":
+                                      True if item["key"] != state_value[
+                                          "conversation_id"] else False,
+                                  }, state_value["conversations"]))),
+                add_conversation_btn:
+                gr.update(disabled=True),
+                clear_btn:
+                gr.update(disabled=True),
+                conversation_delete_menu_item:
+                gr.update(disabled=True),
+                chatbot:
+                gr.update(items=history),
+                state:
+                gr.update(value=state_value),
+            }
+
+        return preprocess_submit_handler
 
     @staticmethod
     def postprocess_submit(state_value):
+        history = state_value["conversations_history"][
+            state_value["conversation_id"]]
+        for conversation in history:
+            if "meta" in conversation:
+                conversation["meta"]["disabled"] = False
         return {
             sender: gr.update(loading=False),
             conversation_delete_menu_item: gr.update(disabled=False),
             clear_btn: gr.update(disabled=False),
             conversations: gr.update(items=state_value["conversations"]),
-            add_conversation_btn: gr.update(disabled=False)
+            add_conversation_btn: gr.update(disabled=False),
+            chatbot: gr.update(items=history),
+            state: gr.update(value=state_value),
         }
 
     @staticmethod
     def cancel(state_value):
-        history = state_value["conversations_histories"][
+        history = state_value["conversations_history"][
             state_value["conversation_id"]]
         history[-1]["loading"] = False
         history[-1]["meta"]["end"] = True
-        return {
-            **Gradio_Events.postprocess_submit(state_value),
-            chatbot:
-            gr.update(items=state_value["conversations_histories"][
-                state_value["conversation_id"]]),
-            state:
-            gr.update(value=state_value),
-        }
+        history[-1]["meta"]["canceled"] = True
+        return Gradio_Events.postprocess_submit(state_value)
+
+    @staticmethod
+    def like(state_value, e: gr.EventData):
+        conversation_key = e._data["component"]["conversationKey"]
+        history = state_value["conversations_history"][
+            state_value["conversation_id"]]
+        index = -1
+        for i, conversation in enumerate(history):
+            if conversation["key"] == conversation_key:
+                index = i
+                break
+        if index == -1:
+            return gr.skip()
+        if history[index]["meta"].get("action") == "like":
+            history[index]["meta"]["action"] = None
+        else:
+            history[index]["meta"]["action"] = "like"
+
+        # custom code
+        return gr.update(items=history), gr.update(value=state_value)
+
+    @staticmethod
+    def dislike(state_value, e: gr.EventData):
+        conversation_key = e._data["component"]["conversationKey"]
+        history = state_value["conversations_history"][
+            state_value["conversation_id"]]
+        index = -1
+        for i, conversation in enumerate(history):
+            if conversation["key"] == conversation_key:
+                index = i
+                break
+        if index == -1:
+            return gr.skip()
+        if history[index]["meta"].get("action") == "dislike":
+            history[index]["meta"]["action"] = None
+        else:
+            history[index]["meta"]["action"] = "dislike"
+        # custom code
+        return gr.update(items=history), gr.update(value=state_value)
+
+    @staticmethod
+    def delete_message(state_value, e: gr.EventData):
+        conversation_key = e._data["component"]["conversationKey"]
+        history = state_value["conversations_history"][
+            state_value["conversation_id"]]
+        history = [item for item in history if item["key"] != conversation_key]
+        state_value["conversations_history"][
+            state_value["conversation_id"]] = history
+
+        return gr.update(items=history if len(history) >
+                         0 else DEFAULT_CONVERSATIONS_HISTORY), gr.update(
+                             value=state_value)
+
+    @staticmethod
+    def regenerating(state_value, e: gr.EventData):
+        conversation_key = e._data["component"]["conversationKey"]
+        history = state_value["conversations_history"][
+            state_value["conversation_id"]]
+        index = -1
+        for i, conversation in enumerate(history):
+            if conversation["key"] == conversation_key:
+                index = i
+                break
+        if index == -1:
+            return gr.skip()
+        history = history[:index]
+        state_value["conversations_history"][
+            state_value["conversation_id"]] = history
+        # custom code
+        return gr.update(items=history), gr.update(value=state_value)
 
     @staticmethod
     def select_suggestion(sender_value, e: gr.EventData):
@@ -255,19 +344,19 @@ class Gradio_Events:
     def select_conversation(state_value, e: gr.EventData):
         active_key = e._data["payload"][0]
         if state_value["conversation_id"] == active_key or (
-                active_key not in state_value["conversations_histories"]):
+                active_key not in state_value["conversations_history"]):
             return gr.skip()
         state_value["conversation_id"] = active_key
         return gr.update(active_key=active_key), gr.update(
-            items=state_value["conversations_histories"]
-            [active_key]), gr.update(value=state_value)
+            items=state_value["conversations_history"][active_key]), gr.update(
+                value=state_value)
 
     @staticmethod
     def click_conversation_menu(state_value, e: gr.EventData):
         conversation_id = e._data["payload"][0]["key"]
         operation = e._data["payload"][1]["key"]
         if operation == "delete":
-            del state_value["conversations_histories"][conversation_id]
+            del state_value["conversations_history"][conversation_id]
 
             state_value["conversations"] = [
                 item for item in state_value["conversations"]
@@ -291,7 +380,7 @@ class Gradio_Events:
     def clear_conversation_history(state_value):
         if not state_value["conversation_id"]:
             return gr.skip()
-        state_value["conversations_histories"][
+        state_value["conversations_history"][
             state_value["conversation_id"]] = []
         return gr.update(items=DEFAULT_CONVERSATIONS_HISTORY), gr.update(
             value=state_value)
@@ -341,8 +430,21 @@ css = """
 #chatbot .chatbot-chat .chatbot-chat-messages {
   flex: 1;
 }
-#chatbot .chatbot-sender-actions .ms-gr-ant-sender-actions-btn-loading-button {
-  color: var(--ms-gr-ant-color-primary);
+
+#chatbot .chatbot-chat .chatbot-chat-messages .chatbot-chat-message .chatbot-chat-message-footer {
+  visibility: hidden;
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+
+#chatbot .chatbot-chat .chatbot-chat-messages .chatbot-chat-message:last-child .chatbot-chat-message-footer {
+  visibility: visible;
+  opacity: 1;
+}
+
+#chatbot .chatbot-chat .chatbot-chat-messages .chatbot-chat-message:hover .chatbot-chat-message-footer {
+  visibility: visible;
+  opacity: 1;
 }
 """
 
@@ -364,7 +466,7 @@ def logo():
 
 with gr.Blocks(css=css) as demo:
     state = gr.State({
-        "conversations_histories": {},
+        "conversations_history": {},
         "conversations": [],
         "conversation_id": "",
         "attachments_open": False,
@@ -384,7 +486,8 @@ with gr.Blocks(css=css) as demo:
                     logo()
 
                     # New Conversation Button
-                    with antd.Button(color="primary",
+                    with antd.Button(value=None,
+                                     color="primary",
                                      variant="filled",
                                      block=True) as add_conversation_btn:
                         ms.Text("New Conversation")
@@ -455,6 +558,9 @@ with gr.Blocks(css=css) as demo:
                             with antdx.Bubble.List.Role(
                                     role="user",
                                     placement="end",
+                                    elem_classes="chatbot-chat-message",
+                                    class_names=dict(
+                                        footer="chatbot-chat-message-footer"),
                                     styles=dict(content=dict(
                                         maxWidth="100%",
                                         overflow='auto',
@@ -470,6 +576,7 @@ with gr.Blocks(css=css) as demo:
                                           }
                                           return { content: content.text, files_container: content.files?.length > 0 ? undefined : { style: { display: 'none' }}, files: (content.files || []).map(file => ({ item: file }))}
                                         }"""):
+
                                     with antd.Flex(vertical=True,
                                                    gap="middle"):
                                         with antd.Flex(
@@ -479,27 +586,18 @@ with gr.Blocks(css=css) as demo:
                                             with ms.Each(as_item="files"):
                                                 antdx.Attachments.FileCard()
                                         ms.Markdown(as_item="content")
-                            # Chatbot Role
-                            with antdx.Bubble.List.Role(
-                                    role="assistant",
-                                    placement="start",
-                                    styles=dict(content=dict(
-                                        maxWidth="100%", overflow='auto'))):
-                                with ms.Slot("avatar"):
-                                    with antd.Avatar():
-                                        with ms.Slot("icon"):
-                                            antd.Icon("RobotOutlined")
-                                with ms.Slot(
-                                        "messageRender",
-                                        params_mapping=
-                                        "(content) => ({ value: content })"):
-                                    ms.Markdown()
                                 with ms.Slot("footer",
                                              params_mapping="""(bubble) => {
-                                            return bubble?.meta?.end ? { copyable: { text: bubble.content, tooltips: false } } : { style: { display: 'none' } }
-                                        }"""):
-                                    with antd.Typography.Text(copyable=dict(
-                                            tooltips=False)):
+                                                    return {
+                                                      copy_btn: {
+                                                        copyable: { text: typeof bubble.content === 'string' ? bubble.content : bubble.content?.text, tooltips: false },
+                                                      },
+                                                      delete_btn: { conversationKey: bubble.key, disabled: bubble.meta.disabled },
+                                                    };
+                                             }"""):
+                                    with antd.Typography.Text(
+                                            copyable=dict(tooltips=False),
+                                            as_item="copy_btn"):
                                         with ms.Slot("copyable.icon"):
                                             with antd.Button(value=None,
                                                              size="small",
@@ -513,6 +611,142 @@ with gr.Blocks(css=css) as demo:
                                                              variant="text"):
                                                 with ms.Slot("icon"):
                                                     antd.Icon("CheckOutlined")
+                                    with antd.Popconfirm(
+                                            title="Delete the message",
+                                            description=
+                                            "Are you sure to delete this message?",
+                                            ok_button_props=dict(danger=True),
+                                            as_item="delete_btn"
+                                    ) as user_delete_popconfirm:
+                                        with antd.Button(value=None,
+                                                         size="small",
+                                                         color="default",
+                                                         variant="text",
+                                                         as_item="delete_btn"):
+                                            with ms.Slot("icon"):
+                                                antd.Icon("DeleteOutlined")
+
+                            # Chatbot Role
+                            with antdx.Bubble.List.Role(
+                                    role="assistant",
+                                    placement="start",
+                                    elem_classes="chatbot-chat-message",
+                                    class_names=dict(
+                                        footer="chatbot-chat-message-footer"),
+                                    styles=dict(content=dict(
+                                        maxWidth="100%", overflow='auto'))):
+                                with ms.Slot("avatar"):
+                                    with antd.Avatar():
+                                        with ms.Slot("icon"):
+                                            antd.Icon("RobotOutlined")
+                                with ms.Slot(
+                                        "messageRender",
+                                        params_mapping="""(content, bubble) => {
+                                          if (bubble.meta?.canceled) {
+                                            return { value: content }
+                                          }
+                                          return { value: content, canceled: { style: { display: 'none' } } }
+                                        }"""):
+                                    ms.Markdown()
+                                    antd.Divider(as_item="canceled")
+                                    antd.Typography.Text(
+                                        "Chat completion paused.",
+                                        as_item="canceled",
+                                        type="warning")
+                                with ms.Slot("footer",
+                                             params_mapping="""(bubble) => {
+                                                  if (bubble?.meta?.end) {
+                                                    return {
+                                                      copy_btn: {
+                                                        copyable: { text: bubble.content, tooltips: false },
+                                                      },
+                                                      regenerating_btn: { conversationKey: bubble.key, disabled: bubble.meta.disabled },
+                                                      delete_btn: { conversationKey: bubble.key, disabled: bubble.meta.disabled },
+                                                      like_btn: {
+                                                        conversationKey: bubble.key,
+                                                        color: bubble.meta?.action === 'like' ? 'primary' : 'default',
+                                                      },
+                                                      dislike_btn: {
+                                                        conversationKey: bubble.key,
+                                                        color: bubble.meta?.action === 'dislike' ? 'primary' : 'default',
+                                                      },
+                                                    };
+                                                  }
+                                                  return { actions_container: { style: { display: 'none' } } };
+                              }"""):
+                                    with ms.Div(as_item="actions_container"):
+                                        with antd.Typography.Text(
+                                                copyable=dict(tooltips=False),
+                                                as_item="copy_btn"):
+                                            with ms.Slot("copyable.icon"):
+                                                with antd.Button(
+                                                        value=None,
+                                                        size="small",
+                                                        color="default",
+                                                        variant="text"):
+                                                    with ms.Slot("icon"):
+                                                        antd.Icon(
+                                                            "CopyOutlined")
+                                                with antd.Button(
+                                                        value=None,
+                                                        size="small",
+                                                        color="default",
+                                                        variant="text"):
+                                                    with ms.Slot("icon"):
+                                                        antd.Icon(
+                                                            "CheckOutlined")
+
+                                        with antd.Button(value=None,
+                                                         size="small",
+                                                         color="default",
+                                                         variant="text",
+                                                         as_item="like_btn"
+                                                         ) as chatbot_like_btn:
+                                            with ms.Slot("icon"):
+                                                antd.Icon("LikeOutlined")
+                                        with antd.Button(
+                                                value=None,
+                                                size="small",
+                                                color="default",
+                                                variant="text",
+                                                as_item="dislike_btn"
+                                        ) as chatbot_dislike_btn:
+                                            with ms.Slot("icon"):
+                                                antd.Icon("DislikeOutlined")
+                                        with antd.Popconfirm(
+                                                title=
+                                                "Regenerating the message",
+                                                description=
+                                                "Regenerating the message will also delete all subsequent messages.",
+                                                ok_button_props=dict(
+                                                    danger=True),
+                                                as_item="regenerating_btn"
+                                        ) as chatbot_regenerating_popconfirm:
+                                            with antd.Button(
+                                                    value=None,
+                                                    size="small",
+                                                    color="default",
+                                                    variant="text",
+                                                    as_item="regenerating_btn",
+                                            ):
+                                                with ms.Slot("icon"):
+                                                    antd.Icon("SyncOutlined")
+                                        with antd.Popconfirm(
+                                                title="Delete the message",
+                                                description=
+                                                "Are you sure to delete this message?",
+                                                ok_button_props=dict(
+                                                    danger=True),
+                                                as_item="delete_btn"
+                                        ) as chatbot_delete_popconfirm:
+                                            with antd.Button(
+                                                    value=None,
+                                                    size="small",
+                                                    color="default",
+                                                    variant="text",
+                                                    as_item="delete_btn"):
+                                                with ms.Slot("icon"):
+                                                    antd.Icon("DeleteOutlined")
                             # Error Chatbot Role
                             with antdx.Bubble.List.Role(
                                     role="assistant-error",
@@ -548,8 +782,6 @@ with gr.Blocks(css=css) as demo:
                     }""") as suggestion:
                         with ms.Slot("children"):
                             with antdx.Sender(
-                                    class_names=dict(
-                                        actions="chatbot-sender-actions"),
                                     placeholder="Enter / to get suggestions"
                             ) as sender:
                                 with ms.Slot("prefix"):
@@ -637,23 +869,62 @@ with gr.Blocks(css=css) as demo:
     sender.paste_file(fn=Gradio_Events.paste_file,
                       inputs=[attachments, state],
                       outputs=[attachments, sender_header, state])
+    chatbot_like_btn.click(fn=Gradio_Events.like,
+                           inputs=[state],
+                           outputs=[chatbot, state])
+    chatbot_dislike_btn.click(fn=Gradio_Events.dislike,
+                              inputs=[state],
+                              outputs=[chatbot, state])
+    gr.on(triggers=[
+        chatbot_delete_popconfirm.confirm, user_delete_popconfirm.confirm
+    ],
+          fn=Gradio_Events.delete_message,
+          inputs=[state],
+          outputs=[chatbot, state])
 
-    submit_event = sender.submit(fn=Gradio_Events.preprocess_submit,
-                                 inputs=[sender, attachments, state],
-                                 outputs=[
-                                     sender, attachments, attachments_badge,
-                                     clear_btn, conversation_delete_menu_item,
-                                     add_conversation_btn, conversations, state
-                                 ]).then(fn=Gradio_Events.submit,
-                                         inputs=[state],
-                                         outputs=[chatbot, state])
+    regenerating_event = chatbot_regenerating_popconfirm.confirm(
+        fn=Gradio_Events.regenerating,
+        inputs=[state],
+        outputs=[chatbot, state
+                 ]).then(fn=Gradio_Events.preprocess_submit(clear_input=False),
+                         inputs=[state],
+                         outputs=[
+                             sender, attachments, attachments_badge, clear_btn,
+                             conversation_delete_menu_item,
+                             add_conversation_btn, conversations, chatbot,
+                             state
+                         ]).then(fn=Gradio_Events.submit,
+                                 inputs=[state],
+                                 outputs=[chatbot, state])
+
+    submit_event = sender.submit(
+        fn=Gradio_Events.add_user_message,
+        inputs=[sender, attachments, state],
+        outputs=[state
+                 ]).then(fn=Gradio_Events.preprocess_submit(clear_input=True),
+                         inputs=[state],
+                         outputs=[
+                             sender, attachments, attachments_badge, clear_btn,
+                             conversation_delete_menu_item,
+                             add_conversation_btn, conversations, chatbot,
+                             state
+                         ]).then(fn=Gradio_Events.submit,
+                                 inputs=[state],
+                                 outputs=[chatbot, state])
+    regenerating_event.then(fn=Gradio_Events.postprocess_submit,
+                            inputs=[state],
+                            outputs=[
+                                sender, conversation_delete_menu_item,
+                                clear_btn, conversations, add_conversation_btn,
+                                chatbot, state
+                            ])
     submit_event.then(fn=Gradio_Events.postprocess_submit,
                       inputs=[state],
                       outputs=[
                           sender, conversation_delete_menu_item, clear_btn,
-                          conversations, add_conversation_btn
+                          conversations, add_conversation_btn, chatbot, state
                       ])
-    sender.cancel(fn=None, cancels=[submit_event])
+    sender.cancel(fn=None, cancels=[submit_event, regenerating_event])
     sender.cancel(fn=Gradio_Events.cancel,
                   inputs=[state],
                   outputs=[

@@ -165,7 +165,7 @@ export const ReactSlot = forwardRef<HTMLElement, ReactSlotProps>(
           observer?.observe(slot, {
             childList: true,
             subtree: true,
-            attributes: observeAttributes,
+            // attributes: observeAttributes ?? (forceClone ? true : false),
           });
         }, 50);
 
@@ -189,7 +189,7 @@ export const ReactSlot = forwardRef<HTMLElement, ReactSlotProps>(
         }
         observer?.disconnect();
       };
-    }, [slot, clone, className, style, elRef, observeAttributes]);
+    }, [slot, clone, className, style, elRef, observeAttributes, forceClone]);
 
     return React.createElement(
       'react-child',

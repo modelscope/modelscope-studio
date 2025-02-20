@@ -24,7 +24,7 @@
     "detect-indent": "^7.0.1"
   },
   "devDependencies": {
-    "@changesets/types": "^6.0.0",
+    "@changesets/types": "^6.1.0",
     "@types/node": "^22.13.4",
     "tsup": "^8.3.6"
   }

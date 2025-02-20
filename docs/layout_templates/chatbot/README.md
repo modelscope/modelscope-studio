@@ -1,6 +1,6 @@
 # Chatbot
 
-A application template for building chatbot interfaces.
+Application templates for building chatbot interfaces.
 
 ## Examples
 

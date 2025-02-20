@@ -1,6 +1,6 @@
 # Coder Artifacts
 
-A Application template for building code generation interfaces.
+Application templates for building code generation interfaces.
 
 ## Examples
 
