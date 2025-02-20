@@ -1,5 +1,11 @@
 # modelscope_studio
 
+## 1.1.7
+
+### Features
+
+- [`6b3b15f`](https://github.com/modelscope/modelscope-studio/commit/6b3b15f1c7888a5f2dcbb8a478579909ca32c615) - update deps & optimize the `chatbot` template. Thanks [@Col0ring](https://github.com/Col0ring)!
+
 ## 1.1.6
 
 ### Features

@@ -1,5 +1,9 @@
 # @modelscope-studio/legacy-compiled
 
+## 1.1.7
+
+No significant changes to this package were made in this release.
+
 ## 1.1.6
 
 No significant changes to this package were made in this release.
