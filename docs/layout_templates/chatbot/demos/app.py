@@ -20,6 +20,8 @@ client = OpenAI(
 
 model = "Qwen/Qwen2.5-VL-72B-Instruct"
 
+save_history = False
+
 # =========== Configuration
 
 DEFAULT_PROMPTS = [{
@@ -111,7 +113,8 @@ class Gradio_Events:
                         }] + [{
                             "type": "image_url",
                             "image_url": image_to_base64(file["path"])
-                        } for file in item["content"]["files"]]
+                        } for file in item["content"]["files"]
+                              if os.path.exists(file["path"])]
                     })
                 elif item["role"] == "assistant":
                     messages.append(item)
@@ -400,6 +403,22 @@ class Gradio_Events:
                          e._data["payload"][0]), gr.update(
                              open=True), gr.update(value=state_value)
 
+    @staticmethod
+    def update_browser_state(state_value):
+
+        return gr.update(value=dict(
+            conversations=state_value["conversations"],
+            conversations_history=state_value["conversations_history"]))
+
+    @staticmethod
+    def apply_browser_state(browser_state_value, state_value):
+        state_value["conversations"] = browser_state_value["conversations"]
+        state_value["conversations_history"] = browser_state_value[
+            "conversations_history"]
+        return gr.update(
+            items=browser_state_value["conversations"]), gr.update(
+                value=state_value)
+
 
 css = """
 #chatbot {
@@ -464,13 +483,14 @@ def logo():
             ms.Span("Chatbot")
 
 
-with gr.Blocks(css=css) as demo:
+with gr.Blocks(css=css, fill_width=True) as demo:
     state = gr.State({
         "conversations_history": {},
         "conversations": [],
         "conversation_id": "",
         "attachments_open": False,
     })
+
     with ms.Application(), antdx.XProvider(
             theme=DEFAULT_THEME, locale=DEFAULT_LOCALE), ms.AutoLoading():
         with antd.Row(gutter=[20, 20], wrap=False, elem_id="chatbot"):
@@ -841,6 +861,21 @@ with gr.Blocks(css=css) as demo:
                                                     "CloudUploadOutlined")
 
     # Events Handler
+    if save_history:
+        browser_state = gr.BrowserState(
+            {
+                "conversations_history": {},
+                "conversations": [],
+            },
+            storage_key="ms_chatbot_storage")
+        state.change(fn=Gradio_Events.update_browser_state,
+                     inputs=[state],
+                     outputs=[browser_state])
+
+        demo.load(fn=Gradio_Events.apply_browser_state,
+                  inputs=[browser_state, state],
+                  outputs=[conversations, state])
+
     add_conversation_btn.click(fn=Gradio_Events.new_chat,
                                inputs=[state],
                                outputs=[conversations, chatbot, state])

@@ -19,7 +19,9 @@ export const AttachmentsFileCard = sveltify<
     }
     if (typeof item === 'string') {
       return {
-        url: get_fetchable_url_or_file(item, urlRoot, urlProxyUrl),
+        url: item.startsWith('http')
+          ? item
+          : get_fetchable_url_or_file(item, urlRoot, urlProxyUrl),
         uid: item,
         name: item.split('/').pop(),
       };

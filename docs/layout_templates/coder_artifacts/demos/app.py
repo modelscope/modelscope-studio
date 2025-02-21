@@ -263,6 +263,8 @@ with gr.Blocks(css=css) as demo:
                             with antd.Flex(gap="small", wrap=True):
                                 for example in EXAMPLES:
                                     with antd.Card(
+                                            elem_style=dict(
+                                                flex="1 1 fit-content"),
                                             hoverable=True) as example_card:
                                         antd.Card.Meta(
                                             title=example['title'],

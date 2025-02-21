@@ -28,7 +28,7 @@ with gr.Blocks() as demo:
     with ms.Application():
         with antdx.XProvider():
             antd.Typography.Paragraph(
-                "Set `block` to display in a whole row. ``extra` can be used to configure additional information."
+                "Set `block` to display in a whole row. `extra` can be used to configure additional information."
             )
             with antdx.Suggestion(
                     items=items,
