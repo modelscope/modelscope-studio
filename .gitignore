@@ -15,6 +15,7 @@ templates
 !.gitattributes
 !.aoneci.yml
 !.editorconfig
+package-lock.json
 
 # Logs
 logs
