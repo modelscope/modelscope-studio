@@ -38,7 +38,6 @@
     value,
     as_item,
     visible,
-    root,
     elem_id,
     elem_classes,
     elem_style,
@@ -49,7 +48,6 @@
     props: $updatedProps,
     _internal,
     value,
-    root,
     as_item,
     visible,
     elem_id,
@@ -68,7 +66,7 @@
       {...$mergedProps.restProps}
       {...$mergedProps.props}
       {...bindEvents($mergedProps)}
-      root={$mergedProps.root}
+      urlRoot={root}
       themeMode={gradio.theme}
       value={$mergedProps.value}
       slots={$slots}

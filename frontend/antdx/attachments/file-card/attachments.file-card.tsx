@@ -29,7 +29,8 @@ export const AttachmentsFileCard = sveltify<
     return {
       ...item,
       uid: item.uid || item.path || item.url,
-      name: item.name || item.orig_name || item.path.split('/').pop(),
+      name:
+        item.name || item.orig_name || (item.url || item.path).split('/').pop(),
       url:
         item.url || get_fetchable_url_or_file(item.path, urlRoot, urlProxyUrl),
     };

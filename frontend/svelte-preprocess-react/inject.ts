@@ -4,6 +4,7 @@ import ReactDOMClient from 'react-dom/client';
 import * as antdCssinjs from '@ant-design/cssinjs';
 import * as antdIcons from '@ant-design/icons';
 import * as antdx from '@ant-design/x';
+import * as globalComponents from '@globals/components';
 import * as createItemsContext from '@utils/createItemsContext';
 import * as antd from 'antd';
 import dayjs from 'dayjs';
@@ -44,6 +45,8 @@ declare global {
         string,
         ReturnType<typeof createItemsContext.createItemsContext>
       >;
+      // globals
+      components: typeof globalComponents;
     };
   }
 }
@@ -94,6 +97,7 @@ window.ms_globals = {
   // render items
   createItemsContext,
   itemsContexts: {},
+  components: globalComponents,
 };
 // register custom elements
 customElements.define('react-portal-target', class extends HTMLElement {});

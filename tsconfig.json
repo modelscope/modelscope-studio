@@ -32,7 +32,8 @@
       "@svelte-preprocess-react/context": [
         "svelte-preprocess-react/context.ts"
       ],
-      "@utils/*": ["utils/*"]
+      "@utils/*": ["utils/*"],
+      "@globals/*": ["globals/*"]
     }
   },
   "include": ["frontend", "config"],

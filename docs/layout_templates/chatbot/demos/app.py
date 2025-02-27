@@ -310,7 +310,7 @@ class Gradio_Events:
                              value=state_value)
 
     @staticmethod
-    def regenerating(state_value, e: gr.EventData):
+    def regenerate_message(state_value, e: gr.EventData):
         conversation_key = e._data["component"]["conversationKey"]
         history = state_value["conversations_history"][
             state_value["conversation_id"]]
@@ -325,6 +325,37 @@ class Gradio_Events:
         state_value["conversations_history"][
             state_value["conversation_id"]] = history
         # custom code
+        return gr.update(items=history), gr.update(value=state_value)
+
+    @staticmethod
+    def edit_message(state_value, e: gr.EventData):
+        conversation_key = e._data["component"]["conversationKey"]
+        history = state_value["conversations_history"][
+            state_value["conversation_id"]]
+        index = -1
+        for i, conversation in enumerate(history):
+            if conversation["key"] == conversation_key:
+                index = i
+                break
+        if index == -1:
+            return gr.skip()
+        state_value["editing_message_index"] = index
+        text = ''
+        if isinstance(history[index]["content"], str):
+            text = history[index]["content"]
+        else:
+            text = history[index]["content"]["text"]
+        return gr.update(value=text), gr.update(value=state_value)
+
+    @staticmethod
+    def confirm_edit_message(edit_textarea_value, state_value):
+        history = state_value["conversations_history"][
+            state_value["conversation_id"]]
+        message = history[state_value["editing_message_index"]]
+        if isinstance(message["content"], str):
+            message["content"] = edit_textarea_value
+        else:
+            message["content"]["text"] = edit_textarea_value
         return gr.update(items=history), gr.update(value=state_value)
 
     @staticmethod
@@ -402,6 +433,14 @@ class Gradio_Events:
         return gr.update(value=attachments_value +
                          e._data["payload"][0]), gr.update(
                              open=True), gr.update(value=state_value)
+
+    @staticmethod
+    def close_modal():
+        return gr.update(open=False)
+
+    @staticmethod
+    def open_modal():
+        return gr.update(open=True)
 
     @staticmethod
     def update_browser_state(state_value):
@@ -488,6 +527,7 @@ with gr.Blocks(css=css, fill_width=True) as demo:
         "conversations_history": {},
         "conversations": [],
         "conversation_id": "",
+        "editing_message_index": -1,
         "attachments_open": False,
     })
 
@@ -612,6 +652,7 @@ with gr.Blocks(css=css, fill_width=True) as demo:
                                                       copy_btn: {
                                                         copyable: { text: typeof bubble.content === 'string' ? bubble.content : bubble.content?.text, tooltips: false },
                                                       },
+                                                      edit_btn: { conversationKey: bubble.key, disabled: bubble.meta.disabled },
                                                       delete_btn: { conversationKey: bubble.key, disabled: bubble.meta.disabled },
                                                     };
                                              }"""):
@@ -631,6 +672,14 @@ with gr.Blocks(css=css, fill_width=True) as demo:
                                                              variant="text"):
                                                 with ms.Slot("icon"):
                                                     antd.Icon("CheckOutlined")
+                                    with antd.Button(value=None,
+                                                     size="small",
+                                                     color="default",
+                                                     variant="text",
+                                                     as_item="edit_btn"
+                                                     ) as user_edit_btn:
+                                        with ms.Slot("icon"):
+                                            antd.Icon("EditOutlined")
                                     with antd.Popconfirm(
                                             title="Delete the message",
                                             description=
@@ -680,8 +729,9 @@ with gr.Blocks(css=css, fill_width=True) as demo:
                                                       copy_btn: {
                                                         copyable: { text: bubble.content, tooltips: false },
                                                       },
-                                                      regenerating_btn: { conversationKey: bubble.key, disabled: bubble.meta.disabled },
+                                                      regenerate_btn: { conversationKey: bubble.key, disabled: bubble.meta.disabled },
                                                       delete_btn: { conversationKey: bubble.key, disabled: bubble.meta.disabled },
+                                                      edit_btn: { conversationKey: bubble.key, disabled: bubble.meta.disabled },
                                                       like_btn: {
                                                         conversationKey: bubble.key,
                                                         color: bubble.meta?.action === 'like' ? 'primary' : 'default',
@@ -734,23 +784,30 @@ with gr.Blocks(css=css, fill_width=True) as demo:
                                             with ms.Slot("icon"):
                                                 antd.Icon("DislikeOutlined")
                                         with antd.Popconfirm(
-                                                title=
-                                                "Regenerating the message",
+                                                title="Regenerate the message",
                                                 description=
-                                                "Regenerating the message will also delete all subsequent messages.",
+                                                "Regenerate the message will also delete all subsequent messages.",
                                                 ok_button_props=dict(
                                                     danger=True),
-                                                as_item="regenerating_btn"
-                                        ) as chatbot_regenerating_popconfirm:
+                                                as_item="regenerate_btn"
+                                        ) as chatbot_regenerate_popconfirm:
                                             with antd.Button(
                                                     value=None,
                                                     size="small",
                                                     color="default",
                                                     variant="text",
-                                                    as_item="regenerating_btn",
+                                                    as_item="regenerate_btn",
                                             ):
                                                 with ms.Slot("icon"):
                                                     antd.Icon("SyncOutlined")
+                                        with antd.Button(value=None,
+                                                         size="small",
+                                                         color="default",
+                                                         variant="text",
+                                                         as_item="edit_btn"
+                                                         ) as chatbot_edit_btn:
+                                            with ms.Slot("icon"):
+                                                antd.Icon("EditOutlined")
                                         with antd.Popconfirm(
                                                 title="Delete the message",
                                                 description=
@@ -859,7 +916,14 @@ with gr.Blocks(css=css, fill_width=True) as demo:
                                             ):
                                                 antd.Icon(
                                                     "CloudUploadOutlined")
-
+        # Modals
+        with antd.Modal(title="Edit Message",
+                        open=False,
+                        centered=True,
+                        width="60%") as edit_modal:
+            edit_textarea = antd.Input.Textarea(auto_size=dict(minRows=2,
+                                                               maxRows=6),
+                                                elem_style=dict(width="100%"))
     # Events Handler
     if save_history:
         browser_state = gr.BrowserState(
@@ -910,6 +974,16 @@ with gr.Blocks(css=css, fill_width=True) as demo:
     chatbot_dislike_btn.click(fn=Gradio_Events.dislike,
                               inputs=[state],
                               outputs=[chatbot, state])
+    gr.on(triggers=[user_edit_btn.click, chatbot_edit_btn.click],
+          fn=Gradio_Events.edit_message,
+          inputs=[state],
+          outputs=[edit_textarea, state]).then(fn=Gradio_Events.open_modal,
+                                               outputs=[edit_modal])
+    edit_modal.ok(fn=Gradio_Events.confirm_edit_message,
+                  inputs=[edit_textarea, state],
+                  outputs=[chatbot, state]).then(fn=Gradio_Events.close_modal,
+                                                 outputs=[edit_modal])
+    edit_modal.cancel(fn=Gradio_Events.close_modal, outputs=[edit_modal])
     gr.on(triggers=[
         chatbot_delete_popconfirm.confirm, user_delete_popconfirm.confirm
     ],
@@ -917,8 +991,8 @@ with gr.Blocks(css=css, fill_width=True) as demo:
           inputs=[state],
           outputs=[chatbot, state])
 
-    regenerating_event = chatbot_regenerating_popconfirm.confirm(
-        fn=Gradio_Events.regenerating,
+    regenerating_event = chatbot_regenerate_popconfirm.confirm(
+        fn=Gradio_Events.regenerate_message,
         inputs=[state],
         outputs=[chatbot, state
                  ]).then(fn=Gradio_Events.preprocess_submit(clear_input=False),
