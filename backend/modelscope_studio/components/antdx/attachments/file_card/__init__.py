@@ -22,7 +22,7 @@ class AntdXAttachmentsFileCard(ModelScopeLayoutComponent):
             self,
             props: dict | None = None,
             *,
-            item: dict | None = None,
+            item: dict | str | None = None,
             as_item: str | None = None,
             _internal: None = None,
             # gradio properties
@@ -40,7 +40,15 @@ class AntdXAttachmentsFileCard(ModelScopeLayoutComponent):
                          elem_style=elem_style,
                          **kwargs)
         self.props = props
-        self.item = item
+        if isinstance(item, str):
+            self.item = self.serve_static_file(item)
+        elif isinstance(item, dict):
+            if not item.get("url", None) and item.get("path", None):
+                self.item = {
+                    **item,
+                    **self.serve_static_file(self.item["path"])
+                }
+            self.item = item
 
     FRONTEND_DIR = resolve_frontend_dir("attachments",
                                         'file-card',

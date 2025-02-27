@@ -13,6 +13,7 @@ const globals = {
   '@svelte-preprocess-react/context': 'window.ms_globals.internalContext',
   dayjs: 'window.ms_globals.dayjs',
   '@utils/createItemsContext': 'window.ms_globals.createItemsContext',
+  '@globals/components': 'window.ms_globals.components',
 };
 
 const dirname = path.dirname(url.fileURLToPath(import.meta.url));
@@ -43,6 +44,7 @@ export const ModelScopeStudioVitePlugin = ({ external = true } = {}) => {
       userConfig.resolve.alias = {
         ...(userConfig.resolve.alias || {}),
         '@utils': path.resolve(dirname, 'utils'),
+        '@globals': path.resolve(dirname, 'globals'),
         '@svelte-preprocess-react/inject': path.resolve(
           dirname,
           'svelte-preprocess-react/inject.ts'
