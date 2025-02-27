@@ -1,0 +1,24 @@
+.ms-gr-pro-chatbot {
+  &-message {
+    &-footer {
+      visibility: hidden;
+      opacity: 0;
+      transition: opacity 0.2s;
+
+      &&-editing {
+        visibility: visible;
+        opacity: 1;
+      }
+    }
+
+    &:last-child &-footer {
+      visibility: visible;
+      opacity: 1;
+    }
+
+    &:hover &-footer {
+      visibility: visible;
+      opacity: 1;
+    }
+  }
+}
