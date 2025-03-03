@@ -69,7 +69,10 @@
       id={$mergedProps.elem_id}
       {...$mergedProps.restProps}
       {...$mergedProps.props}
-      {...bindEvents($mergedProps)}
+      {...bindEvents($mergedProps, {
+        suggestion_select: 'suggestionSelect',
+        welcome_prompt_select: 'welcomePromptSelect',
+      })}
       value={$mergedProps.value}
       onValueChange={(v) => {
         value = v;

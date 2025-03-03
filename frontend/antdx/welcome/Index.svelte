@@ -22,6 +22,8 @@
   } = {};
 
   export let as_item: string | undefined;
+  export let root: string;
+  export let proxy_url: string;
   // gradio properties
   export let visible = true;
   export let elem_id = '';
@@ -63,6 +65,8 @@
       {...$mergedProps.props}
       {...bindEvents($mergedProps)}
       slots={$slots}
+      urlRoot={root}
+      urlProxyUrl={proxy_url}
     >
       <slot></slot>
     </Welcome>

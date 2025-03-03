@@ -1,5 +1,5 @@
 import { sveltify } from '@svelte-preprocess-react';
-import React, { useMemo, useRef, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { Bubble } from '@ant-design/x';
 import type {
   BubbleDataType,
@@ -7,10 +7,11 @@ import type {
   BubbleListRef,
 } from '@ant-design/x/es/bubble/BubbleList';
 import { useMemoizedFn } from '@utils/hooks/useMemoizedFn';
+import { omitUndefinedProps } from '@utils/omitUndefinedProps';
 import { theme } from 'antd';
 import cls from 'classnames';
 import { produce } from 'immer';
-import { omit } from 'lodash-es';
+import { isEqual, omit } from 'lodash-es';
 
 import { withRoleItemsContextProvider } from '../../antdx/bubble/list/context';
 import {
@@ -18,6 +19,7 @@ import {
   useRolesRender,
 } from '../../antdx/bubble/list/utils';
 
+import { WelcomeMessage } from './messages/welcome';
 import { ChatbotFooter } from './chatbot-footer';
 import { ChatbotHeader } from './chatbot-header';
 import { Message } from './message';
@@ -28,12 +30,14 @@ import type {
   ChatbotMessages,
   ChatbotSuggestionContent,
   ChatbotUserConfig,
+  ChatbotWelcomeConfig,
   CopyData,
   DeleteData,
   EditData,
   LikeData,
-  RegenerateData,
+  RetryData,
   SuggestionData,
+  WelcomePromptData,
 } from './type';
 import {
   convertObjectKeyToCamelCase,
@@ -54,14 +58,17 @@ export const Chatbot = sveltify<{
   userConfig?: ChatbotUserConfig;
   botConfig?: ChatbotBotConfig;
   markdownConfig?: ChatbotMarkdownConfig;
+  welcomeConfig?: ChatbotWelcomeConfig;
   value: ChatbotMessages;
   onValueChange: (v: ChatbotMessages) => void;
+  onChange?: () => void;
   onCopy?: (v: CopyData) => void;
   onEdit?: (v: EditData) => void;
   onDelete?: (v: DeleteData) => void;
   onLike?: (v: LikeData) => void;
-  onRegenerate?: (v: RegenerateData) => void;
+  onRetry?: (v: RetryData) => void;
   onSuggestionSelect?: (v: SuggestionData) => void;
+  onWelcomePromptSelect?: (v: WelcomePromptData) => void;
 }>(
   withRoleItemsContextProvider(
     ['roles'],
@@ -76,16 +83,28 @@ export const Chatbot = sveltify<{
       themeMode,
       autoScroll = true,
       markdownConfig,
+      welcomeConfig,
       userConfig,
       botConfig,
       onValueChange,
       onCopy,
+      onChange,
       onEdit,
-      onRegenerate,
+      onRetry,
       onDelete,
       onLike,
       onSuggestionSelect,
+      onWelcomePromptSelect,
     }) => {
+      const resolvedWelcomeConfig = useMemo(() => {
+        return {
+          variant: 'borderless',
+          ...(welcomeConfig
+            ? omitUndefinedProps(welcomeConfig, { omitNull: true })
+            : {}),
+        } as typeof welcomeConfig;
+      }, [welcomeConfig]);
+
       const resolvedMarkdownConfig: ChatbotMarkdownConfig = useMemo(
         () => ({
           lineBreaks: true,
@@ -98,67 +117,67 @@ export const Chatbot = sveltify<{
       );
       const resolvedUserConfig = useMemo(() => {
         return (
-          userConfig
-            ? Object.keys(userConfig).reduce((acc, key) => {
-                if (userConfig[key] !== undefined && userConfig[key] !== null) {
-                  acc[key] = userConfig[key];
-                }
-                return acc;
-              }, {})
-            : {}
+          userConfig ? omitUndefinedProps(userConfig, { omitNull: true }) : {}
         ) as typeof userConfig;
       }, [userConfig]);
       const resolvedBotConfig = useMemo(() => {
         return (
-          botConfig
-            ? Object.keys(botConfig).reduce((acc, key) => {
-                if (botConfig[key] !== undefined && botConfig[key] !== null) {
-                  acc[key] = botConfig[key];
-                }
-                return acc;
-              }, {})
-            : {}
+          botConfig ? omitUndefinedProps(botConfig, { omitNull: true }) : {}
         ) as typeof botConfig;
       }, [botConfig]);
       const resolvedValue = useMemo(() => {
-        return (value || []).map((item, i) => {
-          const isLastMessage = i === value.length - 1;
-          const resolvedItem = Object.keys(item).reduce((acc, key) => {
-            // omit default item value
-            if (item[key] !== undefined && item[key] !== null) {
-              acc[key] = item[key];
-            }
-            return acc;
-          }, {} as ChatbotMessage);
-          return {
-            ...resolvedItem,
-            [messageIndexSymbol]: i,
-            // patch gradio global style
-            type: undefined,
-            content:
-              resolvedItem.type === 'suggestion' && !isLastMessage
-                ? walkSuggestionContent(
-                    resolvedItem.content as ChatbotSuggestionContent,
-                    (v) => {
-                      return {
-                        ...v,
-                        disabled: v.disabled ?? true,
-                      };
-                    }
-                  )
-                : resolvedItem.content,
-            content_type: resolvedItem.type || 'text',
-            key:
-              resolvedItem.key ||
-              `${getContextText(resolvedItem.content)}-${i}`,
-          };
-        }) as BubbleDataType[];
+        const newValue = (value || [])
+          .filter((item) => item?.role !== 'system')
+          .map((item, i) => {
+            const isLastMessage = i === value.length - 1;
+            const resolvedItem = omitUndefinedProps(item, { omitNull: true });
+            return {
+              ...resolvedItem,
+              [messageIndexSymbol]: i,
+              // patch gradio global style
+              type: undefined,
+              content:
+                resolvedItem.type === 'suggestion' && !isLastMessage
+                  ? walkSuggestionContent(
+                      resolvedItem.content as ChatbotSuggestionContent,
+                      (v) => {
+                        return {
+                          ...v,
+                          disabled: v.disabled ?? true,
+                        };
+                      }
+                    )
+                  : resolvedItem.content,
+              content_type: resolvedItem.type || 'text',
+              key:
+                resolvedItem.key ||
+                `${getContextText(resolvedItem.content)}-${i}`,
+            };
+          }) as BubbleDataType[];
+        return newValue.length > 0
+          ? newValue
+          : [
+              {
+                role: 'welcome',
+              },
+            ];
       }, [value]);
+
       const { token } = theme.useToken();
       const chatbotRef = useRef<BubbleListRef | null>(null);
       const [editIndex, setEditIndex] = useState(-1);
       const [editValue, setEditValue] = useState('');
       const [footerWidth, setFooterWidth] = useState(0);
+      const oldValueRef = useRef<typeof value>();
+
+      const onChangeMemoized = useMemoizedFn(onChange);
+      useEffect(() => {
+        if (isEqual(oldValueRef.current, value)) {
+          return;
+        }
+        onChangeMemoized();
+        oldValueRef.current = value;
+      }, [value, onChangeMemoized]);
 
       const getContentContainerRef = useMemoizedFn(
         (el: HTMLDivElement, message: ChatbotMessage) => {
@@ -181,8 +200,14 @@ export const Chatbot = sveltify<{
         onSuggestionSelect?.(v);
       });
 
-      const handleRegenerate = useMemoizedFn((v: RegenerateData) => {
-        onRegenerate?.(v);
+      const handleWelcomePromptSelect = useMemoizedFn(
+        (v: WelcomePromptData) => {
+          onWelcomePromptSelect?.(v);
+        }
+      );
+
+      const handleRetry = useMemoizedFn((v: RetryData) => {
+        onRetry?.(v);
       });
 
       const handleEdit = useMemoizedFn((index: number) => {
@@ -231,7 +256,6 @@ export const Chatbot = sveltify<{
           })
         );
       });
-
       const rolesRender = useRolesRender<ChatbotMessage>(
         {
           roles,
@@ -269,7 +293,25 @@ export const Chatbot = sveltify<{
           },
           postProcess(bubbleProps, index) {
             const isUserRole = bubbleProps.role === 'user';
+
             switch (bubbleProps.role) {
+              case 'welcome':
+                return {
+                  variant: 'borderless',
+                  styles: {
+                    content: { width: '100%' },
+                  },
+                  messageRender() {
+                    return (
+                      <WelcomeMessage
+                        urlRoot={urlRoot}
+                        urlProxyUrl={urlProxyUrl}
+                        options={resolvedWelcomeConfig || {}}
+                        onWelcomePromptSelect={handleWelcomePromptSelect}
+                      />
+                    );
+                  },
+                };
               case 'user':
               case 'assistant':
                 return {
@@ -326,7 +368,7 @@ export const Chatbot = sveltify<{
                       onCopy={handleCopy}
                       onEdit={handleEdit}
                       onDelete={handleDelete}
-                      onRegenerate={handleRegenerate}
+                      onRetry={handleRetry}
                       onLike={handleLike}
                     />
                   ),
@@ -357,6 +399,7 @@ export const Chatbot = sveltify<{
         [
           editIndex,
           resolvedUserConfig,
+          resolvedWelcomeConfig,
           resolvedBotConfig,
           resolvedMarkdownConfig,
           footerWidth,

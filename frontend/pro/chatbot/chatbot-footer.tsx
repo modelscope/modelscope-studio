@@ -27,7 +27,7 @@ import type {
   DeleteData,
   EditData,
   LikeData,
-  RegenerateData,
+  RetryData,
 } from './type';
 import { getContextText } from './utils';
 
@@ -43,7 +43,7 @@ export interface ChatbotFooterProps {
   onCopy: (data: CopyData) => void;
   onEdit: (index: number) => void;
   onDelete: (data: DeleteData) => void;
-  onRegenerate?: (data: RegenerateData) => void;
+  onRetry?: (data: RetryData) => void;
   onLike?: (data: LikeData) => void;
 }
 
@@ -100,7 +100,7 @@ const Action: React.FC<{
   onDelete: () => void;
   onEdit: () => void;
   onLike: (liked: boolean) => void;
-  onRegenerate: () => void;
+  onRetry: () => void;
 }> = ({
   action: actionOrActionObject,
   message,
@@ -108,7 +108,7 @@ const Action: React.FC<{
   onDelete,
   onEdit,
   onLike,
-  onRegenerate,
+  onRetry,
 }) => {
   const handleActionRef = useRef<() => void>();
   const renderAction = () => {
@@ -161,8 +161,8 @@ const Action: React.FC<{
             onClick={() => !disableHandler && onLike(false)}
           />
         );
-      case 'regenerate':
-        handleActionRef.current = onRegenerate;
+      case 'retry':
+        handleActionRef.current = onRetry;
         return (
           <Button
             variant="text"
@@ -170,7 +170,7 @@ const Action: React.FC<{
             size="small"
             disabled={disabled}
             icon={<SyncOutlined />}
-            onClick={() => !disableHandler && onRegenerate()}
+            onClick={() => !disableHandler && onRetry()}
           />
         );
       case 'edit':
@@ -239,7 +239,7 @@ export const ChatbotFooter: React.FC<ChatbotFooterProps> = ({
   onEdit,
   onLike,
   onDelete,
-  onRegenerate,
+  onRetry,
   editValue,
   message,
   width,
@@ -296,8 +296,8 @@ export const ChatbotFooter: React.FC<ChatbotFooterProps> = ({
             index,
           })
         }
-        onRegenerate={() =>
-          onRegenerate?.({
+        onRetry={() =>
+          onRetry?.({
             index,
             value: message.content,
           })

@@ -5,9 +5,48 @@ from pathlib import Path
 from typing import Callable, List, Literal, Optional, TypedDict, Union
 
 from gradio.data_classes import FileData, GradioModel, GradioRootModel
+from gradio.events import EventListener
 from gradio_client import utils as client_utils
 
 from ....utils.dev import ModelScopeDataLayoutComponent, resolve_frontend_dir
+
+
+# Ant Design X prompt props: https://x.ant.design/components/prompts#promptprops
+class ChatbotPromptConfig(GradioModel):
+    disabled: Optional[bool] = None
+    description: Optional[str] = None
+    label: Optional[str] = None
+    icon: Optional[str] = None
+    key: Optional[str] = None
+    children: Optional[List[Union[
+        dict,
+    ]]] = None
+
+
+# Ant Design X prompts props: https://x.ant.design/components/prompts
+class ChatbotPromptsConfig(GradioModel):
+    title: Optional[str] = None
+    vertical: Optional[bool] = False
+    wrap: Optional[bool] = False
+    styles: Optional[dict] = None
+    class_names: Optional[dict] = None
+    elem_style: Optional[dict] = None
+    elem_classes: Optional[Union[str, List[str]]] = None
+    items: Optional[List[Union[ChatbotPromptConfig, dict]]] = None
+
+
+# Ant Design X welcome props: https://x.ant.design/components/welcome
+class ChatbotWelcomeConfig(GradioModel):
+    variant: Optional[Literal['borderless', 'filled']] = 'borderless'
+    icon: Optional[Union[str, Path]] = None
+    title: Optional[str] = None
+    description: Optional[str] = None
+    extra: Optional[str] = None
+    elem_style: Optional[dict] = None
+    elem_classes: Optional[Union[str, List[str]]] = None
+    styles: Optional[dict] = None
+    class_names: Optional[dict] = None
+    prompts: Optional[Union[ChatbotPromptsConfig, dict]] = None
 
 
 class ChatbotMarkdownConfig(GradioModel):
@@ -24,7 +63,7 @@ class ChatbotMarkdownConfig(GradioModel):
 
 
 class ChatbotActionDict(TypedDict):
-    action: Literal['copy', 'dislike', 'like', 'regenerate', 'edit', 'delete']
+    action: Literal['copy', 'dislike', 'like', 'retry', 'edit', 'delete']
     disabled: Optional[bool] = None
     # Ant Design tooltip: https://ant.design/components/tooltip
     tooltip: Optional[Union[str, dict]] = None
@@ -65,11 +104,11 @@ class ChatbotBotConfig(ChatbotUserConfig):
         'copy',
         'like',
         'dislike',
-        'regenerate',
+        'retry',
         'edit',
         'delete',
     ], ChatbotActionDict, dict]]] = field(default_factory=lambda: [
-        'copy', 'like', 'dislike', 'regenerate', 'edit',
+        'copy', 'like', 'dislike', 'retry', 'edit',
         ChatbotActionDict(
             action='delete',
             popconfirm=dict(title="Delete the message",
@@ -106,20 +145,13 @@ class ChatbotDataFileContentOptions(GradioModel):
 
 
 # Ant Design X prompts props: https://x.ant.design/components/prompts
-class ChatbotDataSuggestionContentOptions(GradioModel):
-    title: Optional[str] = None
-    vertical: Optional[bool] = False
-    wrap: Optional[bool] = False
+class ChatbotDataSuggestionContentOptions(ChatbotPromptsConfig):
+    pass
 
 
 # Ant Design X prompt props: https://x.ant.design/components/prompts#promptprops
-class ChatbotDataSuggestionContentItem(GradioModel):
-    disabled: Optional[bool] = None
-    description: Optional[str] = None
-    label: Optional[str] = None
-    icon: Optional[str] = None
-    key: Optional[str] = None
-    children: Optional[List[ChatbotDataSuggestionContentItem]] = None
+class ChatbotDataSuggestionContentItem(ChatbotPromptConfig):
+    pass
 
 
 class ChatbotDataMeta(GradioModel):
@@ -127,7 +159,7 @@ class ChatbotDataMeta(GradioModel):
 
 
 class ChatbotDataMessage(ChatbotBotConfig):
-    role: Literal['user', 'assistant'] = None
+    role: Literal['user', 'assistant', 'system'] = None
     type: Optional[Literal['text', 'thought', 'file', 'suggestion']] = 'text'
     key: Optional[Union[str, int, float]] = None
     content: Union[str, List[Union[FileData, ChatbotDataSuggestionContentItem,
@@ -137,7 +169,7 @@ class ChatbotDataMessage(ChatbotBotConfig):
         'copy',
         'like',
         'dislike',
-        'regenerate',
+        'retry',
         'edit',
         'delete',
     ], ChatbotActionDict, dict]]] = None
@@ -155,17 +187,44 @@ class ChatbotDataMessages(GradioRootModel):
 class ModelscopeProChatbot(ModelScopeDataLayoutComponent):
     """
     """
-    EVENTS = []
+    EVENTS = [
+        EventListener("change",
+                      callback=lambda block: block._internal.update(
+                          bind_change_event=True)),
+        EventListener("copy",
+                      callback=lambda block: block._internal.update(
+                          bind_copy_event=True)),
+        EventListener("edit",
+                      callback=lambda block: block._internal.update(
+                          bind_edit_event=True)),
+        EventListener("delete",
+                      callback=lambda block: block._internal.update(
+                          bind_delete_event=True)),
+        EventListener("like",
+                      callback=lambda block: block._internal.update(
+                          bind_like_event=True)),
+        EventListener("retry",
+                      callback=lambda block: block._internal.update(
+                          bind_retry_event=True)),
+        EventListener("suggestion_select",
+                      callback=lambda block: block._internal.update(
+                          bind_suggestionSelect_event=True)),
+        EventListener("welcome_prompt_select",
+                      callback=lambda block: block._internal.update(
+                          bind_welcomePromptSelect_event=True)),
+    ]
 
     # supported slots
     SLOTS = ["roles"]
 
     def __init__(
             self,
-            value: Callable | list[ChatbotDataMessage | dict] | None = None,
+            value: Callable | ChatbotDataMessages
+        | list[ChatbotDataMessage | dict] | None = None,
             *,
             roles: str | dict | None = None,
             auto_scroll: bool = True,
+            welcome_config: ChatbotWelcomeConfig | dict | None = None,
             markdown_config: ChatbotMarkdownConfig | dict | None = None,
             user_config: ChatbotUserConfig | dict | None = None,
             bot_config: ChatbotBotConfig | dict | None = None,
@@ -188,6 +247,12 @@ class ModelscopeProChatbot(ModelScopeDataLayoutComponent):
                          **kwargs)
         self.roles = roles
         self.auto_scroll = auto_scroll
+        if welcome_config is None:
+            welcome_config = ChatbotWelcomeConfig()
+        elif isinstance(welcome_config, dict):
+            welcome_config = ChatbotWelcomeConfig(**welcome_config)
+        if welcome_config.icon:
+            welcome_config.icon = self.serve_static_file(welcome_config.icon)
         if markdown_config is None:
             markdown_config = ChatbotMarkdownConfig()
         elif isinstance(markdown_config, dict):
@@ -204,7 +269,7 @@ class ModelscopeProChatbot(ModelScopeDataLayoutComponent):
             user_config.avatar = self._process_avatar(user_config.avatar)
         if bot_config.avatar:
             bot_config.avatar = self._process_avatar(bot_config.avatar)
-
+        self.welcome_config = welcome_config.model_dump()
         self.markdown_config = markdown_config.model_dump()
         self.user_config = user_config.model_dump()
         self.bot_config = bot_config.model_dump()

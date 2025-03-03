@@ -1,5 +1,6 @@
 import type React from 'react';
 import { Prompts } from '@ant-design/x';
+import cls from 'classnames';
 
 import type {
   ChatbotSuggestionContent,
@@ -17,9 +18,15 @@ export const SuggestionMessage: React.FC<SuggestionMessageProps> = ({
   options,
   onItemClick,
 }) => {
+  const { elem_style, elem_classes, class_names, styles, ...props } = options;
+
   return (
     <Prompts
-      {...options}
+      {...props}
+      classNames={class_names}
+      className={cls(elem_classes)}
+      style={elem_style}
+      styles={styles}
       items={value}
       onItemClick={({ data }) => {
         onItemClick(data);

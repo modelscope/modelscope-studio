@@ -1,4 +1,9 @@
-import type { BubbleProps, PromptProps, PromptsProps } from '@ant-design/x';
+import type {
+  BubbleProps,
+  PromptProps,
+  PromptsProps,
+  WelcomeProps,
+} from '@ant-design/x';
 import type { Attachment } from '@ant-design/x/es/attachments';
 import type { BubbleDataType } from '@ant-design/x/es/bubble/BubbleList';
 import type { MarkdownProps } from '@globals/components';
@@ -9,6 +14,22 @@ import type {
   PopconfirmProps,
   TooltipProps,
 } from 'antd';
+
+export interface ChatbotPromptsConfig extends PromptsProps {
+  elem_style?: React.CSSProperties;
+  styles?: WelcomeProps['styles'];
+  class_names?: WelcomeProps['classNames'];
+  elem_classes?: string | string[];
+}
+
+export interface ChatbotWelcomeConfig extends Omit<WelcomeProps, 'icon'> {
+  icon?: WelcomeProps['icon'] | FileData;
+  prompts?: ChatbotPromptsConfig;
+  elem_style?: React.CSSProperties;
+  styles?: WelcomeProps['styles'];
+  class_names?: WelcomeProps['classNames'];
+  elem_classes?: string | string[];
+}
 
 export type ChatbotFileContent = (string | (Attachment & FileData))[];
 export type ChatbotSuggestionContent = PromptProps[];
@@ -25,7 +46,7 @@ export type ChatbotThoughtContentConfig = ChatbotMarkdownConfig & {
 };
 export type ChatbotFileContentConfig = FlexProps;
 
-export type ChatbotSuggestionContentConfig = PromptsProps;
+export type ChatbotSuggestionContentConfig = ChatbotPromptsConfig;
 
 export type ChatbotAvatar =
   | string
@@ -53,11 +74,7 @@ export interface ChatbotUserConfig
   elem_classes?: string | string[];
 }
 
-export type ChatbotBotAction =
-  | ChatbotUserAction
-  | 'like'
-  | 'dislike'
-  | 'regenerate';
+export type ChatbotBotAction = ChatbotUserAction | 'like' | 'dislike' | 'retry';
 
 export interface ChatbotBotActionObject {
   action: ChatbotBotAction;
@@ -77,7 +94,7 @@ export interface ChatbotBotConfig
 }
 
 export interface ChatbotMessage extends ChatbotBotConfig {
-  role: 'user' | 'assistant';
+  role: 'user' | 'assistant' | 'system' | 'welcome';
   key?: string | number;
   type: 'text' | 'thought' | 'file' | 'suggestion';
   content_type: 'text' | 'thought' | 'file' | 'suggestion';
@@ -120,12 +137,16 @@ export interface DeleteData {
   value: BubbleDataType['content'];
 }
 
-export interface RegenerateData {
+export interface RetryData {
   index: number;
   value: BubbleDataType['content'];
 }
 
 export interface SuggestionData {
   index: number;
+  value: PromptProps;
+}
+
+export interface WelcomePromptData {
   value: PromptProps;
 }

@@ -1,6 +1,7 @@
 import type React from 'react';
 import { useLayoutEffect, useMemo, useRef } from 'react';
 import { useMemoizedFn } from '@utils/hooks/useMemoizedFn';
+import { omitUndefinedProps } from '@utils/omitUndefinedProps';
 import { Input } from 'antd';
 
 import { FileMessage } from './messages/file';
@@ -88,24 +89,30 @@ export const Message: React.FC<MessageProps> = ({
         return (
           <TextMessage
             value={message.content as ChatbotTextContent}
-            options={{
-              ...markdownConfig,
-              ...(convertObjectKeyToCamelCase(
-                message.content_options
-              ) as ChatbotTextContentConfig),
-            }}
+            options={omitUndefinedProps(
+              {
+                ...markdownConfig,
+                ...(convertObjectKeyToCamelCase(
+                  message.content_options
+                ) as ChatbotTextContentConfig),
+              },
+              { omitNull: true }
+            )}
           />
         );
       case 'thought':
         return (
           <ThoughtMessage
             value={message.content as ChatbotThoughtContent}
-            options={{
-              ...markdownConfig,
-              ...(convertObjectKeyToCamelCase(
-                message.content_options
-              ) as ChatbotThoughtContentConfig),
-            }}
+            options={omitUndefinedProps(
+              {
+                ...markdownConfig,
+                ...(convertObjectKeyToCamelCase(
+                  message.content_options
+                ) as ChatbotThoughtContentConfig),
+              },
+              { omitNull: true }
+            )}
           />
         );
       case 'file':
@@ -114,18 +121,20 @@ export const Message: React.FC<MessageProps> = ({
             value={message.content as ChatbotFileContent}
             urlRoot={urlRoot}
             urlProxyUrl={urlProxyUrl}
-            options={
-              (message.content_options || {}) as ChatbotFileContentConfig
-            }
+            options={omitUndefinedProps(
+              (message.content_options || {}) as ChatbotFileContentConfig,
+              { omitNull: true }
+            )}
           />
         );
       case 'suggestion':
         return (
           <SuggestionMessage
             value={message.content as ChatbotSuggestionContent}
-            options={
-              (message.content_options || {}) as ChatbotSuggestionContentConfig
-            }
+            options={omitUndefinedProps(
+              (message.content_options || {}) as ChatbotSuggestionContentConfig,
+              { omitNull: true }
+            )}
             onItemClick={(v) => {
               onSuggestionSelect({
                 index,
@@ -141,12 +150,15 @@ export const Message: React.FC<MessageProps> = ({
         return (
           <TextMessage
             value={message.content as ChatbotTextContent}
-            options={{
-              ...markdownConfig,
-              ...(convertObjectKeyToCamelCase(
-                message.content_options
-              ) as ChatbotTextContentConfig),
-            }}
+            options={omitUndefinedProps(
+              {
+                ...markdownConfig,
+                ...(convertObjectKeyToCamelCase(
+                  message.content_options
+                ) as ChatbotTextContentConfig),
+              },
+              { omitNull: true }
+            )}
           />
         );
     }
