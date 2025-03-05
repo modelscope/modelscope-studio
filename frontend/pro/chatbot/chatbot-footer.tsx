@@ -29,13 +29,13 @@ import type {
   LikeData,
   RetryData,
 } from './type';
-import { getContextText } from './utils';
+import { getCopyText, updateContent } from './utils';
 
 export interface ChatbotFooterProps {
   isEditing: boolean;
   index: number;
   width: number;
-  editValue: string;
+  editValues: Record<number, string>;
   onEditCancel: () => void;
   onEditConfirm: (data: EditData) => void;
   message: ChatbotMessage;
@@ -45,6 +45,8 @@ export interface ChatbotFooterProps {
   onDelete: (data: DeleteData) => void;
   onRetry?: (data: RetryData) => void;
   onLike?: (data: LikeData) => void;
+  urlRoot: string;
+  urlProxyUrl: string;
 }
 
 export const CopyButton: React.FC<{
@@ -53,8 +55,21 @@ export const CopyButton: React.FC<{
   style?: React.CSSProperties;
   className?: string;
   disabled?: boolean;
-}> = ({ content, className, style, disabled, onCopy }) => {
-  const text = useMemo(() => getContextText(content), [content]);
+  urlRoot: string;
+  urlProxyUrl: string;
+}> = ({
+  content,
+  className,
+  style,
+  disabled,
+  urlRoot,
+  urlProxyUrl,
+  onCopy,
+}) => {
+  const text = useMemo(
+    () => getCopyText(content, urlRoot, urlProxyUrl),
+    [content, urlProxyUrl, urlRoot]
+  );
   const copyButtonRef = useRef<HTMLButtonElement | null>(null);
 
   return (
@@ -101,6 +116,8 @@ const Action: React.FC<{
   onEdit: () => void;
   onLike: (liked: boolean) => void;
   onRetry: () => void;
+  urlRoot: string;
+  urlProxyUrl: string;
 }> = ({
   action: actionOrActionObject,
   message,
@@ -109,6 +126,8 @@ const Action: React.FC<{
   onEdit,
   onLike,
   onRetry,
+  urlRoot,
+  urlProxyUrl,
 }) => {
   const handleActionRef = useRef<() => void>();
   const renderAction = () => {
@@ -131,6 +150,8 @@ const Action: React.FC<{
             disabled={disabled}
             content={message.content}
             onCopy={onCopy}
+            urlRoot={urlRoot}
+            urlProxyUrl={urlProxyUrl}
           />
         );
       case 'like':
@@ -240,11 +261,13 @@ export const ChatbotFooter: React.FC<ChatbotFooterProps> = ({
   onLike,
   onDelete,
   onRetry,
-  editValue,
+  editValues,
   message,
   width,
   index,
   actions,
+  urlRoot,
+  urlProxyUrl,
 }) => {
   if (isEditing) {
     return (
@@ -264,11 +287,11 @@ export const ChatbotFooter: React.FC<ChatbotFooterProps> = ({
           size="small"
           icon={<CheckOutlined />}
           onClick={() => {
-            const text = getContextText(message.content);
+            const newContent = updateContent(message.content, editValues);
             onEditConfirm?.({
               index,
-              value: editValue,
-              previous_value: text,
+              value: newContent,
+              previous_value: message.content,
             });
           }}
         />
@@ -279,6 +302,8 @@ export const ChatbotFooter: React.FC<ChatbotFooterProps> = ({
     return (
       <Action
         key={`${action}-${i}`}
+        urlRoot={urlRoot}
+        urlProxyUrl={urlProxyUrl}
         action={action}
         message={message}
         onCopy={(v) => onCopy({ value: v, index })}

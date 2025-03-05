@@ -220,7 +220,7 @@ export const Attachments = sveltify<
               }
               uploadingRef.current = true;
               const validFiles = files.filter((v) => v.status !== 'done');
-
+              const lastFileList = fileList;
               setFileList((prev) => [
                 ...prev,
                 ...validFiles.map((v) => {
@@ -237,9 +237,7 @@ export const Attachments = sveltify<
                 await upload(validFiles.map((f) => f.originFileObj as RcFile))
               ).filter((v) => v) as (FileData & { uid: string })[];
               const mergedFileList = [
-                ...fileList.filter(
-                  (v) => !fileDataList.some((f) => f.uid === v.uid)
-                ),
+                ...lastFileList,
                 ...fileDataList,
               ] as FileData[];
               uploadingRef.current = false;

@@ -19,8 +19,11 @@
 Currently supported UI libraries:
 
 - [Ant Design](https://ant.design/)
+- [Ant Design X](https://x.ant.design/)
 
 ![site](./resources/site.png)
+![chatbot](./resources/chatbot-template.png)
+![coder-artifacts](./resources/coder-artifacts-template.png)
 
 ## When to Use
 
@@ -30,7 +33,7 @@ However, when your application needs Gradio to handle more built-in data on the 
 
 ## Dependencies
 
-- Gradio >= 4.0
+- Gradio >= 4.43.0
 
 ## Installation
 

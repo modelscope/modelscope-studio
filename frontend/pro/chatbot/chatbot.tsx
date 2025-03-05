@@ -6,6 +6,7 @@ import type {
   BubbleListProps,
   BubbleListRef,
 } from '@ant-design/x/es/bubble/BubbleList';
+import { convertObjectKeyToCamelCase } from '@utils/convertToCamelCase';
 import { useMemoizedFn } from '@utils/hooks/useMemoizedFn';
 import { omitUndefinedProps } from '@utils/omitUndefinedProps';
 import { theme } from 'antd';
@@ -20,7 +21,7 @@ import {
 } from '../../antdx/bubble/list/utils';
 
 import { WelcomeMessage } from './messages/welcome';
-import { ChatbotFooter } from './chatbot-footer';
+import { ChatbotFooter, type ChatbotFooterProps } from './chatbot-footer';
 import { ChatbotHeader } from './chatbot-header';
 import { Message } from './message';
 import type {
@@ -28,7 +29,6 @@ import type {
   ChatbotMarkdownConfig,
   ChatbotMessage,
   ChatbotMessages,
-  ChatbotSuggestionContent,
   ChatbotUserConfig,
   ChatbotWelcomeConfig,
   CopyData,
@@ -39,13 +39,7 @@ import type {
   SuggestionData,
   WelcomePromptData,
 } from './type';
-import {
-  convertObjectKeyToCamelCase,
-  getAvatarProps,
-  getContextText,
-  updateContent,
-  walkSuggestionContent,
-} from './utils';
+import { getAvatarProps } from './utils';
 
 import './chatbot.less';
 
@@ -55,6 +49,7 @@ export const Chatbot = sveltify<{
   themeMode: string;
   roles?: BubbleListProps['roles'];
   autoScroll?: boolean;
+  height?: string | number;
   userConfig?: ChatbotUserConfig;
   botConfig?: ChatbotBotConfig;
   markdownConfig?: ChatbotMarkdownConfig;
@@ -76,6 +71,7 @@ export const Chatbot = sveltify<{
       id,
       className,
       style,
+      height,
       value,
       roles,
       urlRoot,
@@ -127,33 +123,17 @@ export const Chatbot = sveltify<{
       }, [botConfig]);
       const resolvedValue = useMemo(() => {
         const newValue = (value || [])
-          .filter((item) => item?.role !== 'system')
           .map((item, i) => {
             const isLastMessage = i === value.length - 1;
             const resolvedItem = omitUndefinedProps(item, { omitNull: true });
             return {
               ...resolvedItem,
               [messageIndexSymbol]: i,
-              // patch gradio global style
-              type: undefined,
-              content:
-                resolvedItem.type === 'suggestion' && !isLastMessage
-                  ? walkSuggestionContent(
-                      resolvedItem.content as ChatbotSuggestionContent,
-                      (v) => {
-                        return {
-                          ...v,
-                          disabled: v.disabled ?? true,
-                        };
-                      }
-                    )
-                  : resolvedItem.content,
-              content_type: resolvedItem.type || 'text',
-              key:
-                resolvedItem.key ||
-                `${getContextText(resolvedItem.content)}-${i}`,
+              isLastMessage,
+              key: resolvedItem.key ?? `${i}`,
             };
-          }) as BubbleDataType[];
+          })
+          .filter((item) => item.role !== 'system') as BubbleDataType[];
         return newValue.length > 0
           ? newValue
           : [
@@ -166,9 +146,13 @@ export const Chatbot = sveltify<{
       const { token } = theme.useToken();
       const chatbotRef = useRef<BubbleListRef | null>(null);
       const [editIndex, setEditIndex] = useState(-1);
-      const [editValue, setEditValue] = useState('');
+      const [editValues, setEditValues] = useState<Record<number, string>>({});
       const [footerWidth, setFooterWidth] = useState(0);
       const oldValueRef = useRef<typeof value>();
+
+      const handleEditValue = useMemoizedFn((itemIndex: number, v: string) => {
+        setEditValues((prev) => ({ ...prev, [itemIndex]: v }));
+      });
 
       const onChangeMemoized = useMemoizedFn(onChange);
       useEffect(() => {
@@ -216,18 +200,19 @@ export const Chatbot = sveltify<{
       const handleEditCancel = useMemoizedFn(() => {
         setEditIndex(-1);
       });
-      const handleEditConfirm = useMemoizedFn((v: EditData) => {
-        onEdit?.(v);
-        setEditIndex(-1);
-        onValueChange(
-          produce(value, (draft) => {
-            draft[v.index] = {
-              ...draft[v.index],
-              content: updateContent(draft[v.index].content, v.value),
-            };
-          })
-        );
-      });
+      const handleEditConfirm: ChatbotFooterProps['onEditConfirm'] =
+        useMemoizedFn((v) => {
+          onEdit?.(v);
+          setEditIndex(-1);
+          onValueChange([
+            ...value.slice(0, v.index),
+            {
+              ...value[v.index],
+              content: v.value,
+            },
+            ...value.slice(v.index + 1),
+          ]);
+        });
       const handleCopy = useMemoizedFn((v: CopyData) => {
         onCopy?.(v);
       });
@@ -354,7 +339,9 @@ export const Chatbot = sveltify<{
                     <ChatbotFooter
                       isEditing={editIndex === index}
                       message={bubbleProps}
-                      editValue={editValue}
+                      urlRoot={urlRoot}
+                      urlProxyUrl={urlProxyUrl}
+                      editValues={editValues}
                       index={index}
                       width={footerWidth}
                       actions={
@@ -380,12 +367,10 @@ export const Chatbot = sveltify<{
                         urlRoot={urlRoot}
                         isEditing={editIndex === index}
                         getContainerRef={getContentContainerRef}
-                        message={{
-                          ...bubbleProps,
-                          type: bubbleProps.content_type,
-                        }}
+                        message={bubbleProps}
+                        isLastMessage={bubbleProps.isLastMessage || false}
                         markdownConfig={resolvedMarkdownConfig}
-                        onEdit={setEditValue}
+                        onEdit={handleEditValue}
                         onSuggestionSelect={handleSuggestionSelect}
                       />
                     );
@@ -403,7 +388,7 @@ export const Chatbot = sveltify<{
           resolvedBotConfig,
           resolvedMarkdownConfig,
           footerWidth,
-          editValue,
+          editValues,
         ]
       );
       return (
@@ -411,7 +396,10 @@ export const Chatbot = sveltify<{
           ref={chatbotRef}
           id={id}
           className={cls(className, 'ms-gr-pro-chatbot')}
-          style={style}
+          style={{
+            height,
+            ...style,
+          }}
           autoScroll={autoScroll}
           roles={rolesRender}
           items={resolvedValue}

@@ -63,7 +63,7 @@ class ChatbotMarkdownConfig(GradioModel):
 
 
 class ChatbotActionDict(TypedDict):
-    action: Literal['copy', 'dislike', 'like', 'retry', 'edit', 'delete']
+    action: Literal['copy', 'like', 'dislike', 'retry', 'edit', 'delete']
     disabled: Optional[bool] = None
     # Ant Design tooltip: https://ant.design/components/tooltip
     tooltip: Optional[Union[str, dict]] = None
@@ -77,12 +77,13 @@ class ChatbotUserConfig(GradioModel):
         'edit',
         'delete',
     ], ChatbotActionDict, dict]]] = field(default_factory=lambda: [
-        'copy', 'edit',
-        ChatbotActionDict(
-            action='delete',
-            popconfirm=dict(title="Delete the message",
-                            description="Are you sure to delete this message?",
-                            okButtonProps=dict(danger=True)))
+        "copy"
+        # 'edit',
+        # ChatbotActionDict(
+        #     action='delete',
+        #     popconfirm=dict(title="Delete the message",
+        #                     description="Are you sure to delete this message?",
+        #                     okButtonProps=dict(danger=True)))
     ])
     header: Optional[str] = None
     # Ant Design avatar props: https://ant.design/components/avatar
@@ -108,12 +109,13 @@ class ChatbotBotConfig(ChatbotUserConfig):
         'edit',
         'delete',
     ], ChatbotActionDict, dict]]] = field(default_factory=lambda: [
-        'copy', 'like', 'dislike', 'retry', 'edit',
-        ChatbotActionDict(
-            action='delete',
-            popconfirm=dict(title="Delete the message",
-                            description="Are you sure to delete this message?",
-                            okButtonProps=dict(danger=True)))
+        'copy',
+        # 'like', 'dislike', 'retry', 'edit',
+        # ChatbotActionDict(
+        #     action='delete',
+        #     popconfirm=dict(title="Delete the message",
+        #                     description="Are you sure to delete this message?",
+        #                     okButtonProps=dict(danger=True)))
     ])
     placement: Optional[Literal['start', 'end']] = 'start'
 
@@ -158,12 +160,23 @@ class ChatbotDataMeta(GradioModel):
     feedback: Optional[Literal['like', 'dislike', None]] = None
 
 
+class ChatbotDataMessageContent(GradioModel):
+    type: Optional[Literal['text', 'thought', 'file', 'suggestion']] = 'text'
+    copyable: Optional[bool] = True
+    content: Optional[Union[str, List[Union[FileData,
+                                            ChatbotDataSuggestionContentItem,
+                                            dict, str]]]] = None
+    options: Optional[Union[dict, ChatbotDataTextContentOptions,
+                            ChatbotDataFileContentOptions,
+                            ChatbotDataThoughtContentOptions,
+                            ChatbotDataSuggestionContentOptions]] = None
+
+
 class ChatbotDataMessage(ChatbotBotConfig):
     role: Literal['user', 'assistant', 'system'] = None
-    type: Optional[Literal['text', 'thought', 'file', 'suggestion']] = 'text'
     key: Optional[Union[str, int, float]] = None
-    content: Union[str, List[Union[FileData, ChatbotDataSuggestionContentItem,
-                                   dict, str]]] = None
+    content: Union[str, ChatbotDataMessageContent, dict,
+                   List[ChatbotDataMessageContent], List[dict]] = None
     placement: Optional[Literal['start', 'end']] = None
     actions: Optional[List[Union[Literal[
         'copy',
@@ -173,10 +186,6 @@ class ChatbotDataMessage(ChatbotBotConfig):
         'edit',
         'delete',
     ], ChatbotActionDict, dict]]] = None
-    content_options: Optional[
-        Union[dict, ChatbotDataTextContentOptions,
-              ChatbotDataFileContentOptions, ChatbotDataThoughtContentOptions,
-              ChatbotDataSuggestionContentOptions]] = None
     meta: Optional[Union[ChatbotDataMeta, dict]] = None
 
 
@@ -184,7 +193,7 @@ class ChatbotDataMessages(GradioRootModel):
     root: List[ChatbotDataMessage]
 
 
-class ModelscopeProChatbot(ModelScopeDataLayoutComponent):
+class ModelScopeProChatbot(ModelScopeDataLayoutComponent):
     """
     """
     EVENTS = [
@@ -222,6 +231,7 @@ class ModelscopeProChatbot(ModelScopeDataLayoutComponent):
             value: Callable | ChatbotDataMessages
         | list[ChatbotDataMessage | dict] | None = None,
             *,
+            height: int | float | str = 400,
             roles: str | dict | None = None,
             auto_scroll: bool = True,
             welcome_config: ChatbotWelcomeConfig | dict | None = None,
@@ -245,6 +255,7 @@ class ModelscopeProChatbot(ModelScopeDataLayoutComponent):
                          as_item=as_item,
                          elem_style=elem_style,
                          **kwargs)
+        self.height = height
         self.roles = roles
         self.auto_scroll = auto_scroll
         if welcome_config is None:
@@ -288,12 +299,21 @@ class ModelscopeProChatbot(ModelScopeDataLayoutComponent):
             return {**avatar, "src": self.serve_static_file(src)}
         return self.serve_static_file(avatar)
 
-    def _preprocess_message_content(self, type: str, content: str | list):
-        if type == "file":
-            if isinstance(content, list) or isinstance(content, tuple):
-                for i, file in enumerate(content):
-                    if isinstance(file, dict):
-                        content[i] = file["path"]
+    def _preprocess_message_content(self, content: str | list | dict):
+        if isinstance(content, str):
+            return content
+        elif isinstance(content, dict):
+            type = content.get("type")
+            content_value = content.get("content")
+            if type == "file":
+                if isinstance(content_value, list) or isinstance(
+                        content_value, tuple):
+                    for i, file in enumerate(content_value):
+                        if isinstance(file, dict):
+                            content_value[i] = file["path"]
+            return content
+        elif isinstance(content, list) or isinstance(content, tuple):
+            return [self._preprocess_message_content(item) for item in content]
 
         return content
 
@@ -304,41 +324,53 @@ class ModelscopeProChatbot(ModelScopeDataLayoutComponent):
         for message in payload.root:
             message_dict = message.model_dump()
             message_dict["content"] = self._preprocess_message_content(
-                message_dict["type"], message_dict["content"])
+                message_dict["content"])
             messages.append(message_dict)
         return messages
 
-    def _postprocess_message_content(self, type: str, content: str | list):
-        if type == 'file':
-            if isinstance(content, list) or isinstance(content, tuple):
-                new_content = []
-                for i, file in enumerate(content):
-                    new_content.append(file)
-                    if isinstance(file, str):
-                        mime_type = client_utils.get_mimetype(file)
-                        if client_utils.is_http_url_like(file):
-                            new_content[i] = FileData(
-                                path=file,
-                                url=file,
-                                orig_name=file.split("/")[-1],
-                                mime_type=mime_type)
-                        else:
-                            new_content[i] = FileData(
-                                path=file,
-                                orig_name=Path(file).name,
-                                size=Path(file).stat().st_size,
-                                mime_type=mime_type)
-                return new_content
-
+    def _postprocess_message_content(self, content: str | list | dict
+                                     | ChatbotDataMessageContent):
+        if isinstance(content, str):
+            return content
+        if isinstance(content, dict) or isinstance(content,
+                                                   ChatbotDataMessageContent):
+            if isinstance(content, dict):
+                content = ChatbotDataMessageContent(**content)
+            if content.type == "file":
+                if isinstance(content.content, list) or isinstance(
+                        content.content, tuple):
+                    new_content = []
+                    for i, file in enumerate(content.content):
+                        new_content.append(file)
+                        if isinstance(file, str):
+                            mime_type = client_utils.get_mimetype(file)
+                            if client_utils.is_http_url_like(file):
+                                new_content[i] = FileData(
+                                    path=file,
+                                    url=file,
+                                    orig_name=file.split("/")[-1],
+                                    mime_type=mime_type)
+                            else:
+                                new_content[i] = FileData(
+                                    path=file,
+                                    orig_name=Path(file).name,
+                                    size=Path(file).stat().st_size,
+                                    mime_type=mime_type)
+                    content.content = new_content
+            return content
+        elif isinstance(content, list) or isinstance(content, tuple):
+            return [
+                self._postprocess_message_content(item) for item in content
+            ]
         return content
 
     def _postprocess_message(
             self, message: ChatbotDataMessage | dict) -> ChatbotDataMessage:
         if isinstance(message, dict):
             message = ChatbotDataMessage(**message)
+
         message.avatar = self._process_avatar(message.avatar)
-        message.content = self._postprocess_message_content(
-            message.type, message.content)
+        message.content = self._postprocess_message_content(message.content)
 
         return message
 

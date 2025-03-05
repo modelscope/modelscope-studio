@@ -93,21 +93,29 @@ export interface ChatbotBotConfig
   elem_classes?: string | string[];
 }
 
-export interface ChatbotMessage extends ChatbotBotConfig {
-  role: 'user' | 'assistant' | 'system' | 'welcome';
-  key?: string | number;
+export interface ChatbotMessageContentObject {
   type: 'text' | 'thought' | 'file' | 'suggestion';
-  content_type: 'text' | 'thought' | 'file' | 'suggestion';
+  copyable?: boolean;
   content:
     | ChatbotFileContent
     | ChatbotSuggestionContent
     | ChatbotTextContent
     | ChatbotThoughtContent;
-  content_options?:
+  options?:
     | ChatbotTextContentConfig
     | ChatbotThoughtContentConfig
     | ChatbotFileContentConfig
     | ChatbotSuggestionContentConfig;
+}
+
+export interface ChatbotMessage extends ChatbotBotConfig {
+  role: 'user' | 'assistant' | 'system' | 'welcome';
+  key?: string | number;
+  isLastMessage?: boolean;
+  content:
+    | string
+    | ChatbotMessageContentObject
+    | (ChatbotMessageContentObject | string)[];
   meta?: {
     feedback?: 'like' | 'dislike' | null;
   };
@@ -128,8 +136,8 @@ export interface CopyData {
 
 export interface EditData {
   index: number;
-  value: string;
-  previous_value: string;
+  value: ChatbotMessage['content'];
+  previous_value: ChatbotMessage['content'];
 }
 
 export interface DeleteData {

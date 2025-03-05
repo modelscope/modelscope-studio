@@ -21,6 +21,8 @@
 - [Ant Design](https://ant.design/)
 
 ![site](./resources/site.png)
+![chatbot](./resources/chatbot-template.png)
+![coder-artifacts](./resources/coder-artifacts-template.png)
 
 ## 何时使用
 
@@ -30,7 +32,7 @@
 
 ## 依赖
 
-- Gradio >= 4.0
+- Gradio >= 4.43.0
 
 ## 安装
 
