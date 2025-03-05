@@ -19,6 +19,7 @@
 目前支持的 UI 库：
 
 - [Ant Design](https://ant.design/)
+- [Ant Design X](https://x.ant.design/)
 
 ![site](./resources/site.png)
 ![chatbot](./resources/chatbot-template.png)
