@@ -1,10 +1,15 @@
 import { sveltify } from '@svelte-preprocess-react';
 import type { SetSlotParams } from '@svelte-preprocess-react/slot';
-import { useMemo } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import type { FileData } from '@gradio/client';
 import { useFunction } from '@utils/hooks/useFunction';
 import { renderParamsSlot } from '@utils/renderParamsSlot';
-import { type GetProps, Upload as AUpload } from 'antd';
+import { type GetProps, Upload as AUpload, type UploadFile } from 'antd';
+import { noop } from 'lodash-es';
+
+const isUploadFile = (file: FileData | UploadFile): file is UploadFile => {
+  return !!(file as UploadFile).name;
+};
 
 function getConfig<T>(value: T): Partial<T & Record<PropertyKey, any>> {
   if (typeof value === 'object' && value !== null) {
@@ -44,8 +49,9 @@ export const UploadDragger = sveltify<
     onChange,
     onValueChange,
     onRemove,
-    fileList,
+    fileList: fileListProp,
     setSlotParams,
+    maxCount,
     ...props
   }) => {
     const supportShowUploadListConfig =
@@ -72,14 +78,31 @@ export const UploadDragger = sveltify<
     const itemRenderFunction = useFunction(itemRender);
     const iconRenderFunction = useFunction(iconRender);
     const dataFunction = useFunction(data);
+    const uploadingRef = useRef(false);
+    const [fileList, setFileList] = useState<
+      (
+        | (FileData & {
+            uid?: string;
+          })
+        | UploadFile
+      )[]
+    >(fileListProp);
+    useEffect(() => {
+      setFileList(fileListProp);
+    }, [fileListProp]);
     const validFileList = useMemo(() => {
       return (
-        fileList?.map((file) => ({
-          ...file,
-          name: file.orig_name || file.path,
-          uid: file.url || file.path,
-          status: 'done' as const,
-        })) || []
+        fileList?.map((file) => {
+          if (!isUploadFile(file)) {
+            return {
+              ...file,
+              name: file.orig_name || file.path,
+              uid: file.uid || file.url || file.path,
+              status: 'done' as const,
+            };
+          }
+          return file;
+        }) || []
       );
     }, [fileList]);
     return (
@@ -100,9 +123,12 @@ export const UploadDragger = sveltify<
             : iconRenderFunction
         }
         onRemove={(file) => {
+          if (uploadingRef.current) {
+            return;
+          }
           onRemove?.(file);
           const index = validFileList.findIndex((v) => v.uid === file.uid);
-          const newFileList = fileList.slice();
+          const newFileList = fileList.slice() as FileData[];
           newFileList.splice(index, 1);
           onValueChange?.(newFileList);
           onChange?.(newFileList.map((v) => v.path));
@@ -113,19 +139,50 @@ export const UploadDragger = sveltify<
               return false;
             }
           }
-          const fileDataList = (await upload([file])).filter(
-            (v) => v
-          ) as FileData[];
 
-          onValueChange?.([...fileList, ...fileDataList]);
-          onChange?.([
-            ...fileList.map((v) => v.path),
-            ...fileDataList.map((v) => v.path),
+          if (uploadingRef.current) {
+            return false;
+          }
+          uploadingRef.current = true;
+          let validFiles = files;
+          if (typeof maxCount === 'number') {
+            const max = maxCount - fileList.length;
+            validFiles = files.slice(0, max < 0 ? 0 : max);
+          } else if (maxCount === 1) {
+            validFiles = files.slice(0, 1);
+          } else if (validFiles.length === 0) {
+            uploadingRef.current = false;
+            return false;
+          }
+
+          const lastFileList = fileList;
+          setFileList((prev) => [
+            ...(maxCount === 1 ? [] : prev),
+            ...validFiles.map((v) => {
+              return {
+                ...v,
+                size: v.size,
+                uid: v.uid,
+                name: v.name,
+                status: 'uploading' as const,
+              };
+            }),
           ]);
+          const fileDataList = (await upload(validFiles)).filter(
+            (v) => v
+          ) as (FileData & { uid: string })[];
+
+          const mergedFileList =
+            maxCount === 1
+              ? fileDataList
+              : ([...lastFileList, ...fileDataList] as FileData[]);
+          uploadingRef.current = false;
+          onValueChange?.(mergedFileList);
+          onChange?.(mergedFileList.map((v) => v.path));
           return false;
         }}
         maxCount={1}
-        customRequest={customRequestFunction}
+        customRequest={customRequestFunction || noop}
         progress={
           progress
             ? {

@@ -158,7 +158,7 @@ export const Upload = sveltify<
             uploadingRef.current = false;
             return false;
           }
-
+          const lastFileList = fileList;
           setFileList((prev) => [
             ...(maxCount === 1 ? [] : prev),
             ...validFiles.map((v) => {
@@ -177,12 +177,7 @@ export const Upload = sveltify<
           const mergedFileList =
             maxCount === 1
               ? fileDataList
-              : ([
-                  ...fileList.filter(
-                    (v) => !fileDataList.some((f) => f.uid === v.uid)
-                  ),
-                  ...fileDataList,
-                ] as FileData[]);
+              : ([...lastFileList, ...fileDataList] as FileData[]);
           uploadingRef.current = false;
           onValueChange?.(mergedFileList);
           onChange?.(mergedFileList.map((v) => v.path));
