@@ -26,7 +26,11 @@ export const ToolMessage: React.FC<ToolMessageProps> = ({ value, options }) => {
         items={[
           {
             key: 'tool',
-            label: title,
+            label: renderMarkdown ? (
+              <Markdown {...markdownProps} value={title} />
+            ) : (
+              title
+            ),
             children: renderMarkdown ? (
               <Markdown {...markdownProps} value={value} />
             ) : (

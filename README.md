@@ -22,8 +22,6 @@ Currently supported UI libraries:
 - [Ant Design X](https://x.ant.design/)
 
 ![site](./resources/site.png)
-![chatbot](./resources/chatbot-template.png)
-![coder-artifacts](./resources/coder-artifacts-template.png)
 
 ## When to Use
 
