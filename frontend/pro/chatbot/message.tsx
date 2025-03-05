@@ -7,7 +7,7 @@ import { Flex, Input } from 'antd';
 import { FileMessage } from './messages/file';
 import { SuggestionMessage } from './messages/suggestion';
 import { TextMessage } from './messages/text';
-import { ThoughtMessage } from './messages/thought';
+import { ToolMessage } from './messages/tool';
 import type {
   ChatbotFileContent,
   ChatbotFileContentConfig,
@@ -17,8 +17,8 @@ import type {
   ChatbotSuggestionContentConfig,
   ChatbotTextContent,
   ChatbotTextContentConfig,
-  ChatbotThoughtContent,
-  ChatbotThoughtContentConfig,
+  ChatbotToolContent,
+  ChatbotToolContentConfig,
   SuggestionData,
 } from './type';
 import { normalizeMessageContent, walkSuggestionContent } from './utils';
@@ -62,10 +62,8 @@ export const Message: React.FC<MessageProps> = ({
     const content = normalizeMessageContent(message.content);
     return content.map((item, i) => {
       const render = () => {
-        if (isEditing && ['text', 'thought'].includes(item.type)) {
-          const text = item.content as
-            | ChatbotTextContent
-            | ChatbotThoughtContent;
+        if (isEditing && ['text', 'tool'].includes(item.type)) {
+          const text = item.content as ChatbotTextContent | ChatbotToolContent;
           const containerWidth =
             containerRef.current?.getBoundingClientRect().width;
           return (
@@ -102,16 +100,16 @@ export const Message: React.FC<MessageProps> = ({
                 )}
               />
             );
-          case 'thought':
+          case 'tool':
             return (
-              <ThoughtMessage
-                value={item.content as ChatbotThoughtContent}
+              <ToolMessage
+                value={item.content as ChatbotToolContent}
                 options={omitUndefinedProps(
                   {
                     ...markdownConfig,
                     ...(convertObjectKeyToCamelCase(
                       item.options
-                    ) as ChatbotThoughtContentConfig),
+                    ) as ChatbotToolContentConfig),
                   },
                   { omitNull: true }
                 )}

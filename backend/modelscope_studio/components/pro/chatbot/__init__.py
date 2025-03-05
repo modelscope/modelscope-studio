@@ -124,7 +124,7 @@ class ChatbotDataTextContentOptions(ChatbotMarkdownConfig):
     pass
 
 
-class ChatbotDataThoughtContentOptions(ChatbotDataTextContentOptions):
+class ChatbotDataToolContentOptions(ChatbotDataTextContentOptions):
     title: Optional[str] = None
     status: Optional[Literal['pending', 'done']] = None
 
@@ -161,14 +161,14 @@ class ChatbotDataMeta(GradioModel):
 
 
 class ChatbotDataMessageContent(GradioModel):
-    type: Optional[Literal['text', 'thought', 'file', 'suggestion']] = 'text'
+    type: Optional[Literal['text', 'tool', 'file', 'suggestion']] = 'text'
     copyable: Optional[bool] = True
     content: Optional[Union[str, List[Union[FileData,
                                             ChatbotDataSuggestionContentItem,
                                             dict, str]]]] = None
     options: Optional[Union[dict, ChatbotDataTextContentOptions,
                             ChatbotDataFileContentOptions,
-                            ChatbotDataThoughtContentOptions,
+                            ChatbotDataToolContentOptions,
                             ChatbotDataSuggestionContentOptions]] = None
 
 

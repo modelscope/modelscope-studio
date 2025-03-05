@@ -3,20 +3,14 @@ import { useEffect, useState } from 'react';
 import { Markdown } from '@globals/components';
 import { Collapse } from 'antd';
 
-import type {
-  ChatbotThoughtContent,
-  ChatbotThoughtContentConfig,
-} from '../type';
+import type { ChatbotToolContent, ChatbotToolContentConfig } from '../type';
 
-export interface ThoughtMessageProps {
-  options: ChatbotThoughtContentConfig;
-  value?: ChatbotThoughtContent;
+export interface ToolMessageProps {
+  options: ChatbotToolContentConfig;
+  value?: ChatbotToolContent;
 }
 
-export const ThoughtMessage: React.FC<ThoughtMessageProps> = ({
-  value,
-  options,
-}) => {
+export const ToolMessage: React.FC<ToolMessageProps> = ({ value, options }) => {
   const { renderMarkdown, status, title, ...markdownProps } = options;
   const [collapsed, setCollapsed] = useState(() => status !== 'done');
   useEffect(() => {
@@ -25,13 +19,13 @@ export const ThoughtMessage: React.FC<ThoughtMessageProps> = ({
   return (
     <>
       <Collapse
-        activeKey={collapsed ? ['thought'] : []}
+        activeKey={collapsed ? ['tool'] : []}
         onChange={() => {
           setCollapsed(!collapsed);
         }}
         items={[
           {
-            key: 'thought',
+            key: 'tool',
             label: title,
             children: renderMarkdown ? (
               <Markdown {...markdownProps} value={value} />

@@ -33,14 +33,14 @@ export interface ChatbotWelcomeConfig extends Omit<WelcomeProps, 'icon'> {
 
 export type ChatbotFileContent = (string | (Attachment & FileData))[];
 export type ChatbotSuggestionContent = PromptProps[];
-export type ChatbotThoughtContent = string;
+export type ChatbotToolContent = string;
 export type ChatbotTextContent = string;
 
 export interface ChatbotMarkdownConfig extends Omit<MarkdownProps, 'value'> {
   renderMarkdown?: boolean;
 }
 export type ChatbotTextContentConfig = ChatbotMarkdownConfig;
-export type ChatbotThoughtContentConfig = ChatbotMarkdownConfig & {
+export type ChatbotToolContentConfig = ChatbotMarkdownConfig & {
   status?: 'pending' | 'done';
   title?: string;
 };
@@ -94,16 +94,16 @@ export interface ChatbotBotConfig
 }
 
 export interface ChatbotMessageContentObject {
-  type: 'text' | 'thought' | 'file' | 'suggestion';
+  type: 'text' | 'tool' | 'file' | 'suggestion';
   copyable?: boolean;
   content:
     | ChatbotFileContent
     | ChatbotSuggestionContent
     | ChatbotTextContent
-    | ChatbotThoughtContent;
+    | ChatbotToolContent;
   options?:
     | ChatbotTextContentConfig
-    | ChatbotThoughtContentConfig
+    | ChatbotToolContentConfig
     | ChatbotFileContentConfig
     | ChatbotSuggestionContentConfig;
 }
