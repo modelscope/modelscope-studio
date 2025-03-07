@@ -18,9 +18,11 @@ from ....utils.dev import ModelScopeDataLayoutComponent, resolve_frontend_dir
 class MultimodalInputUploadConfig(GradioModel):
     fullscreen_drop: Optional[bool] = False
     allow_paste_file: Optional[bool] = True
+    allow_speech: Optional[bool] = False
     show_count: Optional[bool] = True
     button_tooltip: Optional[str] = None
     accept: Optional[str] = None
+    max_count: Optional[int] = None
     directory: Optional[bool] = False
     multiple: Optional[bool] = False
     disabled: Optional[bool] = False

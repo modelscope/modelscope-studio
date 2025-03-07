@@ -529,4 +529,5 @@ site = Site(
 demo = site.render()
 
 if __name__ == "__main__":
-    demo.queue().launch(ssr_mode=False)
+    demo.queue(default_concurrency_limit=100,
+               max_size=100).launch(ssr_mode=False, max_threads=100)

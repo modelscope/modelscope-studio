@@ -11,11 +11,15 @@ import {
 } from '@ant-design/x';
 import { type FileData } from '@gradio/client';
 import { convertObjectKeyToCamelCase } from '@utils/convertToCamelCase';
+import { useMemoizedFn } from '@utils/hooks/useMemoizedFn';
 import { useValueChange } from '@utils/hooks/useValueChange';
 import { omitUndefinedProps } from '@utils/omitUndefinedProps';
 import { Badge, Button, Tooltip, type UploadFile } from 'antd';
 import type { RcFile } from 'antd/es/upload';
 import { noop, omit } from 'lodash-es';
+
+import { useRecorder } from './recorder';
+import { processAudio } from './utils';
 
 const isUploadFile = (file: FileData | UploadFile): file is UploadFile => {
   return !!(file as UploadFile).name;
@@ -33,6 +37,7 @@ export interface MultimodalInputChangedValue {
 
 export interface UploadConfig extends Omit<AttachmentsProps, 'placeholder'> {
   fullscreenDrop?: boolean;
+  allowSpeech?: boolean;
   allowPasteFile?: boolean;
   showCount?: boolean;
   buttonTooltip?: string;
@@ -66,7 +71,7 @@ export const MultimodalInput = sveltify<
   > & {
     children?: React.ReactNode;
     value?: MultimodalInputValue;
-    upload: (files: RcFile[]) => Promise<FileData[]>;
+    upload: (files: File[]) => Promise<FileData[]>;
     onPasteFile?: (value: string[]) => void;
     onValueChange: (value: MultimodalInputValue) => void;
     onChange?: (value: MultimodalInputChangedValue) => void;
@@ -99,8 +104,44 @@ export const MultimodalInput = sveltify<
   }) => {
     const [open, setOpen] = useState(false);
     const suggestionOpen = useSuggestionOpenContext();
+    const recorderContainerRef = useRef<HTMLDivElement | null>(null);
 
-    // const [recording, setRecording] = useState(false);
+    const uploadFile = useMemoizedFn(async (file: File | File[]) => {
+      if (!(uploadConfig?.allowPasteFile ?? true)) {
+        return;
+      }
+      const maxCount = uploadConfig?.maxCount;
+      if (
+        typeof maxCount === 'number' &&
+        maxCount > 0 &&
+        fileList.length >= maxCount
+      ) {
+        return;
+      }
+      const filesData = await upload(Array.isArray(file) ? file : [file]);
+
+      const newValue: MultimodalInputValue = {
+        ...value,
+        files: [...(fileList as FileData[]), ...filesData],
+      };
+      onChange?.(formatChangedValue(newValue));
+      setValue(newValue);
+      return filesData;
+    });
+
+    const { start, stop, recording } = useRecorder({
+      container: recorderContainerRef.current,
+      async onStop(blob) {
+        const audioFile = new File(
+          [await processAudio(blob)],
+          `${Date.now()}_recording_result.wav`,
+          {
+            type: 'audio/wav',
+          }
+        );
+        uploadFile(audioFile);
+      },
+    });
     const [value, setValue] = useValueChange({
       onValueChange,
       value: valueProp,
@@ -124,13 +165,19 @@ export const MultimodalInput = sveltify<
     }, [value?.files]);
 
     const validFileList = useMemo(() => {
+      const visited: Record<string, number> = {};
       return (
         fileList.map((file) => {
           if (!isUploadFile(file)) {
+            const uid = file.url || file.path;
+            if (!visited[uid]) {
+              visited[uid] = 0;
+            }
+            visited[uid]++;
             return {
               ...file,
               name: file.orig_name || file.path,
-              uid: file.uid || file.url || file.path,
+              uid: file.uid || uid + '-' + visited[uid],
               status: 'done' as const,
             };
           }
@@ -138,8 +185,10 @@ export const MultimodalInput = sveltify<
         }) || []
       );
     }, [fileList]);
+
     return (
       <>
+        <div style={{ display: 'none' }} ref={recorderContainerRef} />
         <div style={{ display: 'none' }}>{children}</div>
         <Sender
           {...senderProps}
@@ -147,12 +196,20 @@ export const MultimodalInput = sveltify<
           ref={elRef}
           disabled={disabled}
           readOnly={readOnly}
-          // allowSpeech={{
-          //   recording,
-          //   onRecordingChange(isRecording) {
-          //     setRecording(isRecording);
-          //   },
-          // }}
+          allowSpeech={
+            uploadConfig?.allowSpeech
+              ? {
+                  recording,
+                  onRecordingChange(isRecording) {
+                    if (isRecording) {
+                      start();
+                    } else {
+                      stop();
+                    }
+                  },
+                }
+              : false
+          }
           placeholder={placeholder}
           loading={loading}
           onSubmit={() => {
@@ -172,28 +229,10 @@ export const MultimodalInput = sveltify<
             setValue(newValue);
           }}
           onPasteFile={async (file) => {
-            if (!(uploadConfig?.allowPasteFile ?? true)) {
-              return;
+            const filesData = await uploadFile(file);
+            if (filesData) {
+              onPasteFile?.(filesData.map((url) => url.path));
             }
-            const maxCount = uploadConfig?.maxCount;
-            if (
-              typeof maxCount === 'number' &&
-              maxCount > 0 &&
-              fileList.length >= maxCount
-            ) {
-              return;
-            }
-            const filesData = await upload(
-              (Array.isArray(file) ? file : [file]) as RcFile[]
-            );
-
-            onPasteFile?.(filesData.map((url) => url.path));
-            const newValue: MultimodalInputValue = {
-              ...value,
-              files: [...(fileList as FileData[]), ...filesData],
-            };
-            onChange?.(formatChangedValue(newValue));
-            setValue(newValue);
           }}
           prefix={
             <>
@@ -265,35 +304,19 @@ export const MultimodalInput = sveltify<
                 onDownload={onDownload}
                 onPreview={onPreview}
                 onDrop={onDrop}
-                onRemove={(file) => {
-                  if (uploadingRef.current) {
-                    return;
-                  }
-                  onRemove?.(file);
-                  const index = validFileList.findIndex(
-                    (v) => v.uid === file.uid
-                  );
-                  const newFileList = fileList.slice() as FileData[];
-                  newFileList.splice(index, 1);
-                  const newValue: MultimodalInputValue = {
-                    ...value,
-                    files: newFileList,
-                  };
-                  setValue(newValue);
-                  onChange?.(formatChangedValue(newValue));
-                }}
                 onChange={async (info) => {
                   const file = info.file;
                   const files = info.fileList;
                   // remove
-                  if (validFileList.find((v) => v.uid === file.uid)) {
+                  const index = validFileList.findIndex(
+                    (v) => v.uid === file.uid
+                  );
+
+                  if (index !== -1) {
                     if (uploadingRef.current) {
                       return;
                     }
                     onRemove?.(file);
-                    const index = validFileList.findIndex(
-                      (v) => v.uid === file.uid
-                    );
                     const newFileList = fileList.slice() as FileData[];
                     newFileList.splice(index, 1);
                     const newValue: MultimodalInputValue = {
@@ -305,13 +328,26 @@ export const MultimodalInput = sveltify<
                   } else {
                     // add
                     if (uploadingRef.current) {
-                      return false;
+                      return;
                     }
                     uploadingRef.current = true;
-                    const validFiles = files.filter((v) => v.status !== 'done');
+                    let validFiles = files.filter((v) => v.status !== 'done');
+
+                    const maxCount = uploadConfig?.maxCount;
+                    if (maxCount === 1) {
+                      validFiles = validFiles.slice(0, 1);
+                    } else if (validFiles.length === 0) {
+                      uploadingRef.current = false;
+                      return;
+                    } else if (typeof maxCount === 'number') {
+                      const max = maxCount - fileList.length;
+                      validFiles = validFiles.slice(0, max < 0 ? 0 : max);
+                    }
+
                     const lastFileList = fileList;
+
                     setFileList((prev) => [
-                      ...prev,
+                      ...(maxCount === 1 ? [] : prev),
                       ...validFiles.map((v) => {
                         return {
                           ...v,
@@ -327,17 +363,19 @@ export const MultimodalInput = sveltify<
                       await upload(
                         validFiles.map((f) => f.originFileObj as RcFile)
                       )
-                    ).filter((v) => v) as (FileData & { uid: string })[];
-                    const mergedFileList = [
-                      ...lastFileList,
-                      ...fileDataList,
-                    ] as FileData[];
+                    ).filter(Boolean) as FileData[];
+                    const mergedFileList =
+                      maxCount === 1
+                        ? fileDataList
+                        : ([...lastFileList, ...fileDataList] as FileData[]);
 
                     uploadingRef.current = false;
                     const newValue: MultimodalInputValue = {
                       ...value,
                       files: mergedFileList,
                     };
+
+                    setFileList(mergedFileList);
                     onValueChange?.(newValue);
                     onChange?.(formatChangedValue(newValue));
                   }

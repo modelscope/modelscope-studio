@@ -203,9 +203,12 @@ class Gradio_Events:
                     conversation["meta"]["disabled"] = True
             return {
                 **({
-                    sender: gr.update(value=None, loading=True),
-                    attachments: gr.update(value=[]),
-                    attachments_badge: gr.update(dot=False),
+                    sender:
+                    gr.update(value=None, loading=True) if clear_input else gr.update(loading=True),
+                    attachments:
+                    gr.update(value=[]),
+                    attachments_badge:
+                    gr.update(dot=False),
                 } if clear_input else {}),
                 conversations:
                 gr.update(active_key=state_value["conversation_id"],
@@ -1020,13 +1023,14 @@ with gr.Blocks(css=css, fill_width=True) as demo:
                           sender, conversation_delete_menu_item, clear_btn,
                           conversations, add_conversation_btn, chatbot, state
                       ])
-    sender.cancel(fn=None, cancels=[submit_event, regenerating_event])
     sender.cancel(fn=Gradio_Events.cancel,
                   inputs=[state],
                   outputs=[
                       sender, conversation_delete_menu_item, clear_btn,
                       conversations, add_conversation_btn, chatbot, state
-                  ])
+                  ],
+                  cancels=[submit_event, regenerating_event],
+                  queue=False)
 
 if __name__ == "__main__":
     demo.queue().launch(ssr_mode=False)

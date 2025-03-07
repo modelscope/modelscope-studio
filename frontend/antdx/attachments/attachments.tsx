@@ -65,6 +65,7 @@ export const Attachments = sveltify<
     placeholder,
     getDropContainer,
     children,
+    maxCount,
     ...props
   }) => {
     const supportShowUploadListConfig =
@@ -113,13 +114,19 @@ export const Attachments = sveltify<
       setFileList(items);
     }, [items]);
     const validFileList = useMemo(() => {
+      const visited: Record<string, number> = {};
       return (
-        fileList?.map((file) => {
+        fileList.map((file) => {
           if (!isUploadFile(file)) {
+            const uid = file.url || file.path;
+            if (!visited[uid]) {
+              visited[uid] = 0;
+            }
+            visited[uid]++;
             return {
               ...file,
               name: file.orig_name || file.path,
-              uid: file.uid || file.url || file.path,
+              uid: file.uid || uid + '-' + visited[uid],
               status: 'done' as const,
             };
           }
@@ -183,27 +190,29 @@ export const Attachments = sveltify<
               ? renderParamsSlot({ slots, setSlotParams, key: 'iconRender' })
               : iconRenderFunction
           }
-          onRemove={(file) => {
-            if (uploadingRef.current) {
-              return;
-            }
-            onRemove?.(file);
-            const index = validFileList.findIndex((v) => v.uid === file.uid);
-            const newFileList = fileList.slice() as FileData[];
-            newFileList.splice(index, 1);
-            onValueChange?.(newFileList);
-            onChange?.(newFileList.map((v) => v.path));
-          }}
+          maxCount={maxCount}
+          // onRemove={(file) => {
+          //   if (uploadingRef.current) {
+          //     return;
+          //   }
+          //   onRemove?.(file);
+          //   const index = validFileList.findIndex((v) => v.uid === file.uid);
+          //   const newFileList = fileList.slice() as FileData[];
+          //   newFileList.splice(index, 1);
+          //   onValueChange?.(newFileList);
+          //   onChange?.(newFileList.map((v) => v.path));
+          // }}
           onChange={async (info) => {
             const file = info.file;
             const files = info.fileList;
             // remove
-            if (validFileList.find((v) => v.uid === file.uid)) {
+            const index = validFileList.findIndex((v) => v.uid === file.uid);
+
+            if (index !== -1) {
               if (uploadingRef.current) {
                 return;
               }
               onRemove?.(file);
-              const index = validFileList.findIndex((v) => v.uid === file.uid);
               const newFileList = fileList.slice() as FileData[];
               newFileList.splice(index, 1);
               onValueChange?.(newFileList);
@@ -212,17 +221,29 @@ export const Attachments = sveltify<
               // add
               if (beforeUploadFunction) {
                 if (!(await beforeUploadFunction(file, files))) {
-                  return false;
+                  return;
                 }
               }
               if (uploadingRef.current) {
-                return false;
+                return;
               }
               uploadingRef.current = true;
-              const validFiles = files.filter((v) => v.status !== 'done');
+              let validFiles = files.filter((v) => v.status !== 'done');
+
+              if (maxCount === 1) {
+                validFiles = validFiles.slice(0, 1);
+              } else if (validFiles.length === 0) {
+                uploadingRef.current = false;
+                return;
+              } else if (typeof maxCount === 'number') {
+                const max = maxCount - fileList.length;
+                validFiles = validFiles.slice(0, max < 0 ? 0 : max);
+              }
+
               const lastFileList = fileList;
+
               setFileList((prev) => [
-                ...prev,
+                ...(maxCount === 1 ? [] : prev),
                 ...validFiles.map((v) => {
                   return {
                     ...v,
@@ -233,14 +254,18 @@ export const Attachments = sveltify<
                   };
                 }),
               ]);
+
               const fileDataList = (
                 await upload(validFiles.map((f) => f.originFileObj as RcFile))
-              ).filter((v) => v) as (FileData & { uid: string })[];
-              const mergedFileList = [
-                ...lastFileList,
-                ...fileDataList,
-              ] as FileData[];
+              ).filter(Boolean) as FileData[];
+              const mergedFileList =
+                maxCount === 1
+                  ? fileDataList
+                  : ([...lastFileList, ...fileDataList] as FileData[]);
+
               uploadingRef.current = false;
+
+              setFileList(mergedFileList);
               onValueChange?.(mergedFileList);
               onChange?.(mergedFileList.map((v) => v.path));
             }
