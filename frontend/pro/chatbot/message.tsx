@@ -1,6 +1,5 @@
-import React, { useLayoutEffect, useRef } from 'react';
+import React, { useRef } from 'react';
 import { convertObjectKeyToCamelCase } from '@utils/convertToCamelCase';
-import { useMemoizedFn } from '@utils/hooks/useMemoizedFn';
 import { omitUndefinedProps } from '@utils/omitUndefinedProps';
 import { Flex, Input } from 'antd';
 
@@ -25,7 +24,6 @@ import { normalizeMessageContent, walkSuggestionContent } from './utils';
 
 export interface MessageProps {
   index: number;
-  getContainerRef: (div: HTMLDivElement, message: ChatbotMessage) => void;
   isEditing: boolean;
   isLastMessage: boolean;
   markdownConfig: ChatbotMarkdownConfig;
@@ -36,10 +34,11 @@ export interface MessageProps {
   onSuggestionSelect: (value: SuggestionData) => void;
 }
 
+const editableTypes = ['text', 'tool'];
+
 export const Message: React.FC<MessageProps> = ({
   isEditing,
   index,
-  getContainerRef,
   message,
   isLastMessage,
   markdownConfig,
@@ -50,19 +49,15 @@ export const Message: React.FC<MessageProps> = ({
 }) => {
   const containerRef = useRef<HTMLDivElement | null>(null);
 
-  const getContainerRefMemoized = useMemoizedFn(getContainerRef);
-  useLayoutEffect(() => {
-    if (isEditing && containerRef.current) {
-      getContainerRefMemoized(containerRef.current, message);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isEditing, getContainerRefMemoized]);
-
   const renderContent = () => {
     const content = normalizeMessageContent(message.content);
     return content.map((item, i) => {
       const render = () => {
-        if (isEditing && ['text', 'tool'].includes(item.type)) {
+        if (
+          isEditing &&
+          (item.editable ?? true) &&
+          editableTypes.includes(item.type)
+        ) {
           const text = item.content as ChatbotTextContent | ChatbotToolContent;
           const containerWidth =
             containerRef.current?.getBoundingClientRect().width;

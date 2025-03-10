@@ -52,14 +52,52 @@ class ChatbotWelcomeConfig(GradioModel):
 class ChatbotMarkdownConfig(GradioModel):
     render_markdown: Optional[bool] = True
     latex_delimiters: Optional[list[dict[str, str | bool]]] = field(
-        default_factory=lambda: [{
-            "left": "$$",
-            "right": "$$",
-            "display": True
-        }])
+        default_factory=lambda: [
+            {
+                "left": "$$",
+                "right": "$$",
+                "display": True
+            },
+            {
+                "left": "\\(",
+                "right": "\\)",
+                "display": False
+            },
+            {
+                "left": "\\begin{equation}",
+                "right": "\\end{equation}",
+                "display": True
+            },
+            {
+                "left": "\\begin{align}",
+                "right": "\\end{align}",
+                "display": True
+            },
+            {
+                "left": "\\begin{alignat}",
+                "right": "\\end{alignat}",
+                "display": True
+            },
+            {
+                "left": "\\begin{gather}",
+                "right": "\\end{gather}",
+                "display": True
+            },
+            {
+                "left": "\\begin{CD}",
+                "right": "\\end{CD}",
+                "display": True
+            },
+            {
+                "left": "\\[",
+                "right": "\\]",
+                "display": True
+            },
+        ])
     sanitize_html: Optional[bool] = True
     line_breaks: Optional[bool] = True
     rtl: Optional[bool] = False
+    allow_tags: Optional[List[str]] = None
 
 
 class ChatbotActionDict(TypedDict):
@@ -86,6 +124,7 @@ class ChatbotUserConfig(GradioModel):
         #                     okButtonProps=dict(danger=True)))
     ])
     header: Optional[str] = None
+    footer: Optional[str] = None
     # Ant Design avatar props: https://ant.design/components/avatar
     avatar: Optional[Union[str, Path, dict, None]] = None
     variant: Optional[Literal['filled', 'borderless', 'outlined',
@@ -163,6 +202,8 @@ class ChatbotDataMeta(GradioModel):
 class ChatbotDataMessageContent(GradioModel):
     type: Optional[Literal['text', 'tool', 'file', 'suggestion']] = 'text'
     copyable: Optional[bool] = True
+    # only available for text, tool
+    editable: Optional[bool] = True
     content: Optional[Union[str, List[Union[FileData,
                                             ChatbotDataSuggestionContentItem,
                                             dict, str]]]] = None
@@ -175,6 +216,7 @@ class ChatbotDataMessageContent(GradioModel):
 class ChatbotDataMessage(ChatbotBotConfig):
     role: Literal['user', 'assistant', 'system'] = None
     key: Optional[Union[str, int, float]] = None
+    status: Optional[Literal['pending', 'done']] = None
     content: Union[str, ChatbotDataMessageContent, dict,
                    List[ChatbotDataMessageContent], List[dict]] = None
     placement: Optional[Literal['start', 'end']] = None
@@ -232,6 +274,8 @@ class ModelScopeProChatbot(ModelScopeDataLayoutComponent):
         | list[ChatbotDataMessage | dict] | None = None,
             *,
             height: int | float | str = 400,
+            min_height: int | float | str | None = None,
+            max_height: int | float | str | None = None,
             roles: str | dict | None = None,
             auto_scroll: bool = True,
             welcome_config: ChatbotWelcomeConfig | dict | None = None,
@@ -256,6 +300,8 @@ class ModelScopeProChatbot(ModelScopeDataLayoutComponent):
                          elem_style=elem_style,
                          **kwargs)
         self.height = height
+        self.min_height = min_height
+        self.max_height = max_height
         self.roles = roles
         self.auto_scroll = auto_scroll
         if welcome_config is None:

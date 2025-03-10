@@ -34,7 +34,6 @@ import { getCopyText, updateContent } from './utils';
 export interface ChatbotFooterProps {
   isEditing: boolean;
   index: number;
-  width: number;
   editValues: Record<number, string>;
   onEditCancel: () => void;
   onEditConfirm: (data: EditData) => void;
@@ -43,6 +42,7 @@ export interface ChatbotFooterProps {
   onCopy: (data: CopyData) => void;
   onEdit: (index: number) => void;
   onDelete: (data: DeleteData) => void;
+  extra?: string;
   onRetry?: (data: RetryData) => void;
   onLike?: (data: LikeData) => void;
   urlRoot: string;
@@ -263,7 +263,7 @@ export const ChatbotFooter: React.FC<ChatbotFooterProps> = ({
   onRetry,
   editValues,
   message,
-  width,
+  extra,
   index,
   actions,
   urlRoot,
@@ -271,7 +271,7 @@ export const ChatbotFooter: React.FC<ChatbotFooterProps> = ({
 }) => {
   if (isEditing) {
     return (
-      <Flex justify="end" style={{ width }}>
+      <Flex justify="end">
         <Button
           variant="text"
           color="default"
@@ -298,36 +298,58 @@ export const ChatbotFooter: React.FC<ChatbotFooterProps> = ({
       </Flex>
     );
   }
-  return (actions || []).map((action, i) => {
-    return (
-      <Action
-        key={`${action}-${i}`}
-        urlRoot={urlRoot}
-        urlProxyUrl={urlProxyUrl}
-        action={action}
-        message={message}
-        onCopy={(v) => onCopy({ value: v, index })}
-        onDelete={() =>
-          onDelete({
-            index,
-            value: message.content,
-          })
+  return (
+    <Flex justify="space-between" align="center" gap="small">
+      {(message.role === 'user'
+        ? ['extra', 'actions']
+        : ['actions', 'extra']
+      ).map((type) => {
+        switch (type) {
+          case 'extra':
+            return extra ? (
+              <Typography.Text key="extra" type="secondary">
+                {extra}
+              </Typography.Text>
+            ) : null;
+          case 'actions':
+            return (
+              <div key="actions">
+                {(actions || []).map((action, i) => {
+                  return (
+                    <Action
+                      key={`${action}-${i}`}
+                      urlRoot={urlRoot}
+                      urlProxyUrl={urlProxyUrl}
+                      action={action}
+                      message={message}
+                      onCopy={(v) => onCopy({ value: v, index })}
+                      onDelete={() =>
+                        onDelete({
+                          index,
+                          value: message.content,
+                        })
+                      }
+                      onEdit={() => onEdit(index)}
+                      onLike={(liked) =>
+                        onLike?.({
+                          value: message.content,
+                          liked,
+                          index,
+                        })
+                      }
+                      onRetry={() =>
+                        onRetry?.({
+                          index,
+                          value: message.content,
+                        })
+                      }
+                    />
+                  );
+                })}
+              </div>
+            );
         }
-        onEdit={() => onEdit(index)}
-        onLike={(liked) =>
-          onLike?.({
-            value: message.content,
-            liked,
-            index,
-          })
-        }
-        onRetry={() =>
-          onRetry?.({
-            index,
-            value: message.content,
-          })
-        }
-      />
-    );
-  });
+      })}
+    </Flex>
+  );
 };

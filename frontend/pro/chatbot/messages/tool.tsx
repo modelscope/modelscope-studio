@@ -16,6 +16,7 @@ export const ToolMessage: React.FC<ToolMessageProps> = ({ value, options }) => {
   useEffect(() => {
     setCollapsed(status !== 'done');
   }, [status]);
+
   return (
     <>
       <Collapse

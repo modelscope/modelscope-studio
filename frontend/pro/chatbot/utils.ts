@@ -11,6 +11,11 @@ import type {
   ChatbotSuggestionContent,
 } from './type';
 
+export const messageHeaderSymbol = Symbol();
+export const messageFooterSymbol = Symbol();
+export const messageAvatarSymbol = Symbol();
+export const lastMessageSymbol = Symbol();
+
 export const getAvatarProps = (
   avatar?: ChatbotAvatar
 ): AvatarProps | undefined => {

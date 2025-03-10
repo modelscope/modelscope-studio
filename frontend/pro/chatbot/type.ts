@@ -15,6 +15,13 @@ import type {
   TooltipProps,
 } from 'antd';
 
+import {
+  type lastMessageSymbol,
+  type messageAvatarSymbol,
+  type messageFooterSymbol,
+  type messageHeaderSymbol,
+} from './utils';
+
 export interface ChatbotPromptsConfig extends PromptsProps {
   elem_style?: React.CSSProperties;
   styles?: WelcomeProps['styles'];
@@ -96,6 +103,7 @@ export interface ChatbotBotConfig
 export interface ChatbotMessageContentObject {
   type: 'text' | 'tool' | 'file' | 'suggestion';
   copyable?: boolean;
+  editable?: boolean;
   content:
     | ChatbotFileContent
     | ChatbotSuggestionContent
@@ -111,11 +119,15 @@ export interface ChatbotMessageContentObject {
 export interface ChatbotMessage extends ChatbotBotConfig {
   role: 'user' | 'assistant' | 'system' | 'welcome';
   key?: string | number;
-  isLastMessage?: boolean;
+  [lastMessageSymbol]?: boolean;
+  [messageHeaderSymbol]?: string;
+  [messageFooterSymbol]?: string;
+  [messageAvatarSymbol]?: string;
   content:
     | string
     | ChatbotMessageContentObject
     | (ChatbotMessageContentObject | string)[];
+  status?: 'pending' | 'done';
   meta?: {
     feedback?: 'like' | 'dislike' | null;
   };
