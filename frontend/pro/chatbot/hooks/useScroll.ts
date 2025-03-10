@@ -15,15 +15,18 @@ export function useScroll(options: useScrollOptions) {
   const [showScrollButton, setShowScrollButton] = useState(false);
   const prevMessageLengthRef = useRef(0);
   const canScrollRef = useRef(true);
+  const isProgrammaticScroll = useRef(true);
   const { autoScroll, ref, value } = options;
 
   const scrollToBottom = useMemoizedFn(() => {
     if (!ref.current) {
       return;
     }
+    isProgrammaticScroll.current = true;
     ref.current.scrollTo({
       offset: ref.current.nativeElement.scrollHeight,
     });
+
     setShowScrollButton(false);
   });
   const isAtBottom = useMemoizedFn(() => {
@@ -57,17 +60,26 @@ export function useScroll(options: useScrollOptions) {
     if (ref.current && autoScroll) {
       const el = ref.current.nativeElement;
       let lastScrollTop = 0;
+      let lastScrollHeight = 0;
       const handleScroll = (e: Event) => {
         const target = e.target as HTMLElement;
-        // user scroll up
-        if (target.scrollTop < lastScrollTop) {
-          canScrollRef.current = false;
+        if (isProgrammaticScroll.current) {
+          isProgrammaticScroll.current = false;
+          // user scroll
         } else {
-          if (isAtBottom()) {
-            canScrollRef.current = true;
+          if (
+            target.scrollTop < lastScrollTop &&
+            target.scrollHeight >= lastScrollHeight
+          ) {
+            canScrollRef.current = false;
+          } else {
+            if (isAtBottom()) {
+              canScrollRef.current = true;
+            }
           }
         }
         lastScrollTop = target.scrollTop;
+        lastScrollHeight = target.scrollHeight;
         if (isAtBottom()) {
           setShowScrollButton(false);
         }

@@ -70,7 +70,7 @@ export const Message: React.FC<MessageProps> = ({
               }}
             >
               <Input.TextArea
-                autoSize={{ minRows: 1, maxRows: 6 }}
+                autoSize={{ minRows: 1, maxRows: 10 }}
                 defaultValue={text}
                 onChange={(e) => {
                   onEdit(i, e.target.value);
