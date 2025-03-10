@@ -299,18 +299,22 @@ export const ChatbotFooter: React.FC<ChatbotFooterProps> = ({
     );
   }
   return (
-    <Flex justify="space-between" align="center" gap="small">
+    <Flex
+      justify="space-between"
+      align="center"
+      gap={extra && actions?.length ? 'small' : undefined}
+    >
       {(message.role === 'user'
         ? ['extra', 'actions']
         : ['actions', 'extra']
       ).map((type) => {
         switch (type) {
           case 'extra':
-            return extra ? (
+            return (
               <Typography.Text key="extra" type="secondary">
                 {extra}
               </Typography.Text>
-            ) : null;
+            );
           case 'actions':
             return (
               <div key="actions">
