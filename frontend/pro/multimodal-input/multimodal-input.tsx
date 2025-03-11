@@ -106,29 +106,6 @@ export const MultimodalInput = sveltify<
     const suggestionOpen = useSuggestionOpenContext();
     const recorderContainerRef = useRef<HTMLDivElement | null>(null);
 
-    const uploadFile = useMemoizedFn(async (file: File | File[]) => {
-      if (!(uploadConfig?.allowPasteFile ?? true)) {
-        return;
-      }
-      const maxCount = uploadConfig?.maxCount;
-      if (
-        typeof maxCount === 'number' &&
-        maxCount > 0 &&
-        fileList.length >= maxCount
-      ) {
-        return;
-      }
-      const filesData = await upload(Array.isArray(file) ? file : [file]);
-
-      const newValue: MultimodalInputValue = {
-        ...value,
-        files: [...(fileList as FileData[]), ...filesData],
-      };
-      onChange?.(formatChangedValue(newValue));
-      setValue(newValue);
-      return filesData;
-    });
-
     const { start, stop, recording } = useRecorder({
       container: recorderContainerRef.current,
       async onStop(blob) {
@@ -150,6 +127,31 @@ export const MultimodalInput = sveltify<
       () => convertObjectKeyToCamelCase(uploadConfigProp),
       [uploadConfigProp]
     );
+    const uploadDisabled =
+      disabled || uploadConfig?.disabled || loading || readOnly;
+
+    const uploadFile = useMemoizedFn(async (file: File | File[]) => {
+      if (uploadDisabled) {
+        return;
+      }
+      const maxCount = uploadConfig?.maxCount;
+      if (
+        typeof maxCount === 'number' &&
+        maxCount > 0 &&
+        fileList.length >= maxCount
+      ) {
+        return;
+      }
+      const filesData = await upload(Array.isArray(file) ? file : [file]);
+
+      const newValue: MultimodalInputValue = {
+        ...value,
+        files: [...(fileList as FileData[]), ...filesData],
+      };
+      onChange?.(formatChangedValue(newValue));
+      setValue(newValue);
+      return filesData;
+    });
     const uploadingRef = useRef(false);
     const [fileList, setFileList] = useState<
       (
@@ -201,6 +203,9 @@ export const MultimodalInput = sveltify<
               ? {
                   recording,
                   onRecordingChange(isRecording) {
+                    if (uploadDisabled) {
+                      return;
+                    }
                     if (isRecording) {
                       start();
                     } else {
@@ -229,6 +234,9 @@ export const MultimodalInput = sveltify<
             setValue(newValue);
           }}
           onPasteFile={async (file) => {
+            if (!(uploadConfig?.allowPasteFile ?? true)) {
+              return;
+            }
             const filesData = await uploadFile(file);
             if (filesData) {
               onPasteFile?.(filesData.map((url) => url.path));
@@ -274,9 +282,7 @@ export const MultimodalInput = sveltify<
                   ]),
                   { omitNull: true }
                 )}
-                disabled={
-                  disabled || uploadConfig?.disabled || loading || readOnly
-                }
+                disabled={uploadDisabled}
                 getDropContainer={() => {
                   return uploadConfig?.fullscreenDrop ? document.body : null;
                 }}
