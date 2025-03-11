@@ -1,5 +1,11 @@
 # @modelscope-studio/base
 
+## 1.2.0
+
+### Features
+
+- [#60](https://github.com/modelscope/modelscope-studio/pull/60) [`f33b70e`](https://github.com/modelscope/modelscope-studio/commit/f33b70ec6dba391bebeeb3075866de771904ba23) - add `Markdown` as a global component. Thanks [@Col0ring](https://github.com/Col0ring)!
+
 ## 1.1.7
 
 No significant changes to this package were made in this release.

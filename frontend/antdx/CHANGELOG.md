@@ -1,5 +1,20 @@
 # @modelscope-studio/antdx
 
+## 1.2.0
+
+### Features
+
+- [#64](https://github.com/modelscope/modelscope-studio/pull/64) [`7bf9d74`](https://github.com/modelscope/modelscope-studio/commit/7bf9d741bc66e318d3c310e798b1a781d23a0abf) - add pro components `Chatbot` and `MultimodalInput`. Thanks [@Col0ring](https://github.com/Col0ring)!
+
+### Fixes
+
+- [#64](https://github.com/modelscope/modelscope-studio/pull/64) [`7bf9d74`](https://github.com/modelscope/modelscope-studio/commit/7bf9d741bc66e318d3c310e798b1a781d23a0abf) - the logic of uploading files. Thanks [@Col0ring](https://github.com/Col0ring)!
+- [`f43b9dc`](https://github.com/modelscope/modelscope-studio/commit/f43b9dce3be1f75a7b97cb8ad7e6b3aee4b0f271) - `attachments.file_card` supports url strings. Thanks [@Col0ring](https://github.com/Col0ring)!
+
+### Misc Changes
+
+- [#60](https://github.com/modelscope/modelscope-studio/pull/60) [`f33b70e`](https://github.com/modelscope/modelscope-studio/commit/f33b70ec6dba391bebeeb3075866de771904ba23) - add edit operation to the chatbot template. Thanks [@Col0ring](https://github.com/Col0ring)!
+
 ## 1.1.7
 
 No significant changes to this package were made in this release.

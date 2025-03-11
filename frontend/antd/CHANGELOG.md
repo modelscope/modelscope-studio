@@ -1,5 +1,16 @@
 # @modelscope-studio/antd
 
+## 1.2.0
+
+### Features
+
+- [#64](https://github.com/modelscope/modelscope-studio/pull/64) [`7bf9d74`](https://github.com/modelscope/modelscope-studio/commit/7bf9d741bc66e318d3c310e798b1a781d23a0abf) - support custom components of table. Thanks [@Col0ring](https://github.com/Col0ring)!
+
+### Fixes
+
+- [#64](https://github.com/modelscope/modelscope-studio/pull/64) [`7bf9d74`](https://github.com/modelscope/modelscope-studio/commit/7bf9d741bc66e318d3c310e798b1a781d23a0abf) - lost the previous files when uploading a file for antd `Upload`. Thanks [@Col0ring](https://github.com/Col0ring)!
+- [#64](https://github.com/modelscope/modelscope-studio/pull/64) [`7bf9d74`](https://github.com/modelscope/modelscope-studio/commit/7bf9d741bc66e318d3c310e798b1a781d23a0abf) - the logic of uploading files. Thanks [@Col0ring](https://github.com/Col0ring)!
+
 ## 1.1.7
 
 ### Features
