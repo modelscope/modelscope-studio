@@ -5,7 +5,12 @@ import cls from 'classnames';
 import render_math_in_element from 'katex/contrib/auto-render';
 
 import { sanitize } from './sanitize';
-import { bind_copy_event, copy_to_clipboard, create_marked } from './utils';
+import {
+  bind_copy_event,
+  copy_to_clipboard,
+  create_marked,
+  escapeTags,
+} from './utils';
 
 import 'katex/dist/katex.min.css';
 import './markdown.less';
@@ -35,12 +40,22 @@ export interface MarkdownProps
   rtl?: boolean;
   themeMode: string;
   urlRoot: string;
+  allowTags?: string[];
   onCopy?: (options: { value: string }) => void;
   onChange?: () => void;
   copyButtons?: React.ReactNode[];
 }
 
-const defaultLatexDelimiters = [{ left: '$$', right: '$$', display: true }];
+const defaultLatexDelimiters = [
+  { left: '$$', right: '$$', display: true },
+  { left: '\\(', right: '\\)', display: false },
+  { left: '\\begin{equation}', right: '\\end{equation}', display: true },
+  { left: '\\begin{align}', right: '\\end{align}', display: true },
+  { left: '\\begin{alignat}', right: '\\end{alignat}', display: true },
+  { left: '\\begin{gather}', right: '\\end{gather}', display: true },
+  { left: '\\begin{CD}', right: '\\end{CD}', display: true },
+  { left: '\\[', right: '\\]', display: true },
+];
 
 export const Markdown: React.FC<MarkdownProps> = ({
   value: message,
@@ -55,6 +70,7 @@ export const Markdown: React.FC<MarkdownProps> = ({
   onChange,
   onCopy,
   copyButtons,
+  allowTags: allow_tags,
   ...props
 }) => {
   const [markdown, setMarkdown] = useState('');
@@ -95,6 +111,10 @@ export const Markdown: React.FC<MarkdownProps> = ({
       (_match, p1) => latexBlocks[parseInt(p1, 10)]
     );
 
+    if (allow_tags) {
+      parsedValue = escapeTags(parsedValue, allow_tags);
+    }
+
     if (sanitize_html) {
       parsedValue = sanitize(parsedValue, urlRoot);
     }
@@ -109,7 +129,7 @@ export const Markdown: React.FC<MarkdownProps> = ({
       latex_delimiters.length > 0 &&
       value
     ) {
-      const containsDelimiter = latex_delimiters.every(
+      const containsDelimiter = latex_delimiters.some(
         (delimiter) =>
           value.includes(delimiter.left) && value.includes(delimiter.right)
       );

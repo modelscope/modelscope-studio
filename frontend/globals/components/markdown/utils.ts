@@ -59,6 +59,26 @@ function escape(html: string, encode?: boolean): string {
 
   return html;
 }
+
+export function escapeTags(content: string, tagsToEscape: string[]): string {
+  const tagPattern = tagsToEscape.map((tag) => ({
+    open: new RegExp(`<(${tag})(\\s+[^>]*)?>`, 'gi'),
+    close: new RegExp(`</(${tag})>`, 'gi'),
+  }));
+
+  let result = content;
+
+  tagPattern.forEach((pattern) => {
+    result = result.replace(
+      pattern.open,
+      (_, tag, attributes) => `&lt;${tag}${attributes || ''}&gt;`
+    );
+    result = result.replace(pattern.close, (_, tag) => `&lt;/${tag}&gt;`);
+  });
+
+  return result;
+}
+
 export interface LatexTokenizer {
   name: string;
   level: string;
@@ -128,10 +148,12 @@ export function walk_nodes(
 
 function parseHtml(text: string) {
   try {
+    let matched = false;
     const rootNode = new DOMParser().parseFromString(text, 'text/html');
     walk_nodes(rootNode.body, ['IMG'], (node) => {
       // image
       if (node instanceof HTMLImageElement) {
+        matched = true;
         if (node.width && !node.style.width) {
           node.style.width = cssUnits('width', node.width);
         }
@@ -141,7 +163,10 @@ function parseHtml(text: string) {
         node.style.maxWidth = node.style.maxWidth || '100%';
       }
     });
-    return rootNode.body.innerHTML;
+    if (matched) {
+      return rootNode.body.innerHTML;
+    }
+    return text;
   } catch {
     return text;
   }

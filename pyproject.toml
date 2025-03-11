@@ -23,7 +23,7 @@ keywords = [
   'gradio-antdx',
 ]
 # Add dependencies here
-dependencies = ["gradio>=4.0,<6.0"]
+dependencies = ["gradio>=4.43.0,<6.0"]
 classifiers = [
   'Development Status :: 3 - Alpha',
   'License :: OSI Approved :: Apache Software License',
@@ -224,6 +224,8 @@ artifacts = [
   "/backend/modelscope_studio/components/antdx/suggestion/templates",
   "/backend/modelscope_studio/components/antdx/suggestion/item/templates",
   "/backend/modelscope_studio/components/antdx/x_provider/templates",
+  "/backend/modelscope_studio/components/pro/chatbot/templates",
+  "/backend/modelscope_studio/components/pro/multimodal_input/templates",
 ]
 
 [tool.yapfignore]

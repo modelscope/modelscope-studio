@@ -19,6 +19,7 @@
 目前支持的 UI 库：
 
 - [Ant Design](https://ant.design/)
+- [Ant Design X](https://x.ant.design/)
 
 ![site](./resources/site.png)
 
@@ -30,7 +31,7 @@
 
 ## 依赖
 
-- Gradio >= 4.0
+- Gradio >= 4.43.0
 
 ## 安装
 

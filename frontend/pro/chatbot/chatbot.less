@@ -1,0 +1,47 @@
+.ms-gr-pro-chatbot {
+  position: relative;
+
+  &-messages {
+    width: 100%;
+    height: 100%;
+  }
+
+  &-message {
+    .ms-gr-ant-bubble-content-wrapper {
+      flex: initial !important;
+    }
+
+    &-footer {
+      width: 100%;
+      visibility: hidden;
+      opacity: 0;
+      transition: opacity 0.2s;
+
+      &&-editing {
+        visibility: visible;
+        opacity: 1;
+      }
+    }
+
+    &:last-child &-footer {
+      visibility: visible;
+      opacity: 1;
+    }
+
+    &:hover &-footer {
+      visibility: visible;
+      opacity: 1;
+    }
+  }
+
+  &-scroll-to-bottom-button {
+    position: absolute;
+    right: 0;
+    bottom: 2px;
+    left: 0;
+    display: flex;
+    justify-content: center;
+    width: fit-content;
+    margin: auto;
+  }
+}

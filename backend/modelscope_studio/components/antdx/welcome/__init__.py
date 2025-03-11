@@ -44,7 +44,7 @@ class AntdXWelcome(ModelScopeLayoutComponent):
                          **kwargs)
         self.props = props
         self.extra = extra
-        self.icon = icon
+        self.icon = self.serve_static_file(icon)
         self.styles = styles
         self.class_names = class_names
         self.description = description

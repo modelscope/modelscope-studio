@@ -155,8 +155,8 @@ class Gradio_Events:
             }
         except Exception as e:
             history[-1]["loading"] = False
-            history[-1]["content"] = ""
-            history[-1]["role"] = "assistant-error"
+            history[-1]["meta"]["end"] = True
+            history[-1]["content"] = "Failed to respond, please try again."
             yield {
                 chatbot: gr.update(items=history),
                 state: gr.update(value=state_value)
@@ -203,9 +203,12 @@ class Gradio_Events:
                     conversation["meta"]["disabled"] = True
             return {
                 **({
-                    sender: gr.update(value=None, loading=True),
-                    attachments: gr.update(value=[]),
-                    attachments_badge: gr.update(dot=False),
+                    sender:
+                    gr.update(value=None, loading=True) if clear_input else gr.update(loading=True),
+                    attachments:
+                    gr.update(value=[]),
+                    attachments_badge:
+                    gr.update(dot=False),
                 } if clear_input else {}),
                 conversations:
                 gr.update(active_key=state_value["conversation_id"],
@@ -824,20 +827,7 @@ with gr.Blocks(css=css, fill_width=True) as demo:
                                                     as_item="delete_btn"):
                                                 with ms.Slot("icon"):
                                                     antd.Icon("DeleteOutlined")
-                            # Error Chatbot Role
-                            with antdx.Bubble.List.Role(
-                                    role="assistant-error",
-                                    placement="start",
-                                    styles=dict(content=dict(
-                                        maxWidth="100%", overflow='auto'))):
-                                with ms.Slot("avatar"):
-                                    with antd.Avatar():
-                                        with ms.Slot("icon"):
-                                            antd.Icon("RobotOutlined")
-                                with ms.Slot("messageRender"):
-                                    antd.Typography.Text(
-                                        "Failed to respond, please try again.",
-                                        type="danger")
+
                     # Sender
                     with antdx.Suggestion(
                             items=DEFAULT_SUGGESTIONS,
@@ -1033,13 +1023,14 @@ with gr.Blocks(css=css, fill_width=True) as demo:
                           sender, conversation_delete_menu_item, clear_btn,
                           conversations, add_conversation_btn, chatbot, state
                       ])
-    sender.cancel(fn=None, cancels=[submit_event, regenerating_event])
     sender.cancel(fn=Gradio_Events.cancel,
                   inputs=[state],
                   outputs=[
                       sender, conversation_delete_menu_item, clear_btn,
                       conversations, add_conversation_btn, chatbot, state
-                  ])
+                  ],
+                  cancels=[submit_event, regenerating_event],
+                  queue=False)
 
 if __name__ == "__main__":
     demo.queue().launch(ssr_mode=False)

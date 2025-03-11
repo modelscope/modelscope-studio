@@ -4,6 +4,7 @@ packages:
   # for https://github.com/gradio-app/gradio/issues/8162
   - 'frontend'
   - 'frontend/base'
+  - 'frontend/pro'
   - 'frontend/antd'
   - 'frontend/antdx'
   - 'frontend/legacy/*'

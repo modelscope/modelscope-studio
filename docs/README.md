@@ -42,7 +42,7 @@ However, when your application needs Gradio to handle more built-in data on the 
 
 ## Dependencies
 
-- Gradio >= 4.0
+- Gradio >= 4.43.0
 
 ## Installation
 

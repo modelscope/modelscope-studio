@@ -61,6 +61,7 @@ class ModelScopeMarkdown(ModelScopeDataLayoutComponent):
             sanitize_html: bool = True,
             line_breaks: bool = False,
             header_links: bool = False,
+            allow_tags: list[str] | None = None,
             show_copy_button: bool = False,
             copy_buttons: tuple[str | float | int, str | float | int]
         | None = None,
@@ -83,11 +84,53 @@ class ModelScopeMarkdown(ModelScopeDataLayoutComponent):
                          **kwargs)
         self.rtl = rtl
         if latex_delimiters is None:
-            latex_delimiters = [{"left": "$$", "right": "$$", "display": True}]
+            latex_delimiters = [
+                {
+                    "left": "$$",
+                    "right": "$$",
+                    "display": True
+                },
+                {
+                    "left": "\\(",
+                    "right": "\\)",
+                    "display": False
+                },
+                {
+                    "left": "\\begin{equation}",
+                    "right": "\\end{equation}",
+                    "display": True
+                },
+                {
+                    "left": "\\begin{align}",
+                    "right": "\\end{align}",
+                    "display": True
+                },
+                {
+                    "left": "\\begin{alignat}",
+                    "right": "\\end{alignat}",
+                    "display": True
+                },
+                {
+                    "left": "\\begin{gather}",
+                    "right": "\\end{gather}",
+                    "display": True
+                },
+                {
+                    "left": "\\begin{CD}",
+                    "right": "\\end{CD}",
+                    "display": True
+                },
+                {
+                    "left": "\\[",
+                    "right": "\\]",
+                    "display": True
+                },
+            ]
         self.latex_delimiters = latex_delimiters
         self.sanitize_html = sanitize_html
         self.line_breaks = line_breaks
         self.header_links = header_links
+        self.allow_tags = allow_tags
         self.show_copy_button = show_copy_button
         self.copy_buttons = copy_buttons
         self.props = props

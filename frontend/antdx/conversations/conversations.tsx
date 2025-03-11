@@ -34,9 +34,16 @@ function patchMenuEvents(menuProps: MenuProps, conversation: Conversation) {
   return Object.keys(menuProps).reduce((acc, key) => {
     if (key.startsWith('on') && isFunction(menuProps[key])) {
       const originalEvent = menuProps[key];
-      acc[key] = (...args: any[]) => {
-        originalEvent?.(conversation, ...args);
-      };
+      if (key === 'onClick') {
+        acc[key] = (menuInfo, ...args) => {
+          menuInfo.domEvent.stopPropagation();
+          originalEvent?.(conversation, menuInfo, ...args);
+        };
+      } else {
+        acc[key] = (...args: any[]) => {
+          originalEvent?.(conversation, ...args);
+        };
+      }
     } else {
       acc[key] = menuProps[key];
     }
