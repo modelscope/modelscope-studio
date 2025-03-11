@@ -41,7 +41,7 @@ export function useScroll(options: useScrollOptions) {
   });
   // update when value changed
   useEffect(() => {
-    if (ref.current && autoScroll) {
+    if (ref.current && autoScroll && value.length) {
       if (value.length !== prevMessageLengthRef.current) {
         canScrollRef.current = true;
       }

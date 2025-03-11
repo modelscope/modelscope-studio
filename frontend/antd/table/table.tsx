@@ -2,6 +2,7 @@ import { sveltify } from '@svelte-preprocess-react';
 import { ReactSlot } from '@svelte-preprocess-react/react-slot';
 import type { SetSlotParams } from '@svelte-preprocess-react/slot';
 import React, { useMemo } from 'react';
+import { createFunction } from '@utils/createFunction';
 import { useFunction } from '@utils/hooks/useFunction';
 import { omitUndefinedProps } from '@utils/omitUndefinedProps';
 import { renderItems } from '@utils/renderItems';
@@ -63,6 +64,7 @@ export const Table = sveltify<
           showSorterTooltip,
           onRow,
           onHeaderRow,
+          components,
           setSlotParams,
           ...props
         }) => {
@@ -108,11 +110,39 @@ export const Table = sveltify<
           const onHeaderRowFunction = useFunction(onHeaderRow);
           const summaryFunction = useFunction(summary);
           const footerFunction = useFunction(footer);
+          const customComponents = useMemo(() => {
+            const headerTable = createFunction(components?.header?.table);
+            const headerRow = createFunction(components?.header?.row);
+            const headerCell = createFunction(components?.header?.cell);
+            const headerWrapper = createFunction(components?.header?.wrapper);
+            return {
+              table: createFunction(components?.table),
+              header:
+                headerTable || headerRow || headerCell || headerWrapper
+                  ? {
+                      table: headerTable,
+                      row: headerRow,
+                      cell: headerCell,
+                      wrapper: headerWrapper,
+                    }
+                  : undefined,
+              body:
+                typeof components?.body === 'object'
+                  ? {
+                      wrapper: createFunction(components?.body?.wrapper),
+                      row: createFunction(components?.body?.row),
+                      cell: createFunction(components?.body?.cell),
+                    }
+                  : createFunction(components?.body),
+            };
+          }, [components]);
+
           return (
             <>
               <div style={{ display: 'none' }}>{children}</div>
               <ATable
                 {...props}
+                components={customComponents}
                 columns={useMemo(() => {
                   return (
                     columns?.map((item) => {
