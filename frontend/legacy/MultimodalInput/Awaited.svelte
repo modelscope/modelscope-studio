@@ -181,7 +181,7 @@
   </div>
   <div class="controls">
     <span class="input-tools">
-      {#each _sources as source}
+      {#each _sources as source, i (i)}
         {#if source === 'upload'}
           <span class="tool-button upload-button">
             <UploadButton

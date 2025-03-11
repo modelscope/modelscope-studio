@@ -1,4 +1,5 @@
 <script lang="ts">
+  /* eslint-disable svelte/valid-compile */
   import { BlockLabel, Empty, IconButton, ShareButton } from '@gradio/atoms';
   import { BaseButton } from '@gradio/button';
   import { type FileData } from '@gradio/client';
@@ -334,7 +335,7 @@
         class="thumbnails scroll-hide"
         data-testid="container_el"
       >
-        {#each resolved_value as entry, i}
+        {#each resolved_value as entry, i (i)}
           <button
             bind:this={el[i]}
             on:click={() => (selected_index = i)}
@@ -379,7 +380,7 @@
         </div>
       {/if}
       <div bind:this={waterfall_grid_el} class="waterfall">
-        {#each resolved_value as entry, i}
+        {#each resolved_value as entry, i (i)}
           <div
             class="thumbnail-item thumbnail-lg"
             class:selected={selected_index === i}

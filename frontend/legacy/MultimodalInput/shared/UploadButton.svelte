@@ -28,6 +28,7 @@
   $: if (file_types == null) {
     accept_file_types = null;
   } else {
+    // eslint-disable-next-line svelte/no-reactive-reassign
     file_types = file_types.map((x) => {
       if (x.startsWith('.')) {
         return x;

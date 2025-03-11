@@ -46,7 +46,7 @@
   {/if}
   <table class="file-preview">
     <tbody>
-      {#each normalized_files as file, i}
+      {#each normalized_files as file, i ((file.url || file.orig_name || '') + i)}
         <tr
           class="file"
           class:selectable

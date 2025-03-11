@@ -41,8 +41,10 @@ export function sveltify<P, const S extends readonly string[] = []>(
     ignore?: boolean;
   } = {}
 ):
-  | Promise<Sveltified<Omit<P & CommonProps<S>, 'children'>>>
-  | Sveltified<Omit<P & CommonProps<S>, 'children'>> {
+  | Promise<
+      Sveltified<Omit<P & CommonProps<S>, 'children'> & { children?: any }>
+    >
+  | Sveltified<Omit<P & CommonProps<S>, 'children'> & { children?: any }> {
   // svelte components options
   function Sveltified(options: any) {
     const svelteInstance: Writable<any> = writable<any>();

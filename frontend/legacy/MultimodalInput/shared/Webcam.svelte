@@ -70,6 +70,7 @@
         video: device_id ? { deviceId: { exact: device_id }, ...size } : size,
         audio: include_audio,
       });
+      // eslint-disable-next-line svelte/infinite-reactive-loop
       accessed = true;
       video_source.srcObject = stream;
       video_source.muted = true;
@@ -211,6 +212,7 @@
   //   stream?.getTracks().forEach((track) => track.stop());
   // }
   $: if (open) {
+    // eslint-disable-next-line svelte/infinite-reactive-loop
     !accessed && access_webcam();
   } else {
     cleanup();
@@ -288,7 +290,7 @@
         {#if video_sources.length === 0}
           <option value="">{i18n('common.no_devices')}</option>
         {:else}
-          {#each video_sources as source}
+          {#each video_sources as source (source.deviceId)}
             <option on:click={() => selectVideoSource(source.deviceId)}>
               {source.label}
             </option>

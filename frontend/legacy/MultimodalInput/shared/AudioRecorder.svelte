@@ -77,6 +77,7 @@
     if (!microphoneContainer) {
       return;
     }
+    // eslint-disable-next-line svelte/no-dom-manipulating
     microphoneContainer.innerHTML = '';
 
     micWaveform = WaveSurfer.create({
@@ -200,7 +201,7 @@
       {#if micDevices.length === 0}
         <option value="">{i18n('audio.no_microphone')}</option>
       {:else}
-        {#each micDevices as micDevice}
+        {#each micDevices as micDevice (micDevice.deviceId)}
           <option value={micDevice.deviceId}>{micDevice.label}</option>
         {/each}
       {/if}

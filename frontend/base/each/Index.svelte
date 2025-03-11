@@ -78,7 +78,7 @@
         </Each>
       {/await}
     {:else}
-      {#each merged_value as item, i}
+      {#each merged_value as item, i (i)}
         <EachItem
           context_value={merged_context_value}
           value={item}

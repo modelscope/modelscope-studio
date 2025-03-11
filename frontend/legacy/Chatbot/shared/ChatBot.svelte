@@ -235,8 +235,8 @@
 >
   <div class="message-wrap" class:bubble-gap={layout === 'bubble'} use:copy>
     {#if value}
-      {#each value as message_pair, i}
-        {#each message_pair as message_item, j}
+      {#each value as message_pair, i (i)}
+        {#each message_pair as message_item, j (j)}
           {#if message_item}
             {#each message_item as message, k (message?.id || `${i}-${j}-${k}`)}
               {#if message}
@@ -316,7 +316,7 @@
                         on:flushed={(e) => handle_flushed(i, j, k, e.detail)}
                       />
 
-                      {#each message.files || [] as file}
+                      {#each message.files || [] as file, index (file.file || index)}
                         {#if message && file.file}
                           <FileView
                             {theme}

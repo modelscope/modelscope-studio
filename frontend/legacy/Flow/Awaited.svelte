@@ -111,6 +111,7 @@
       const { value: newValue, data_changed } = e.detail;
       if (sync_on_data_change) {
         if (!data_changed) {
+          // eslint-disable-next-line svelte/no-reactive-reassign
           _value = newValue;
         }
       } else {
