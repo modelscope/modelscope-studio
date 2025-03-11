@@ -15,6 +15,9 @@ class AntdTableColumn(ModelScopeLayoutComponent):
         EventListener("filter_dropdown_open_change",
                       callback=lambda block: block._internal.update(
                           bind_filterDropdownOpenChange_event=True)),
+        EventListener("filter",
+                      callback=lambda block: block._internal.update(
+                          bind_filter_event=True)),
     ]
 
     # supported slots
@@ -65,6 +68,8 @@ class AntdTableColumn(ModelScopeLayoutComponent):
             width: int | float | str | None = None,
             min_width: int | float | str | None = None,
             hidden: bool | None = None,
+            on_cell: str | None = None,
+            on_header_cell: str | None = None,
             as_item: str | None = None,
             _internal: None = None,
             # gradio properties
@@ -116,6 +121,8 @@ class AntdTableColumn(ModelScopeLayoutComponent):
         self.width = width
         self.min_width = min_width
         self.hidden = hidden
+        self.on_cell = on_cell
+        self.on_header_cell = on_header_cell
 
     FRONTEND_DIR = resolve_frontend_dir("table", "column")
 

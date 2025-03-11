@@ -130,9 +130,9 @@
         onCell: createFunction(
           $mergedProps.props.onCell || $mergedProps.restProps.onCell
         ),
-        onFilter: createFunction(
-          $mergedProps.props.onFilter || $mergedProps.restProps.onFilter
-        ),
+        // onFilter: createFunction(
+        //   $mergedProps.props.onFilter || $mergedProps.restProps.onFilter
+        // ),
         onHeaderCell: createFunction(
           $mergedProps.props.onHeaderCell || $mergedProps.restProps.onHeaderCell
         ),

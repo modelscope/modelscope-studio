@@ -80,6 +80,8 @@ class AntdTable(ModelScopeLayoutComponent):
             table_layout: Literal['auto', 'fixed'] | None = None,
             title: str | None = None,
             virtual: bool | None = None,
+            on_row: str | None = None,
+            on_header_row: str | None = None,
             root_class_name: str | None = None,
             as_item: str | None = None,
             _internal: None = None,
@@ -122,6 +124,8 @@ class AntdTable(ModelScopeLayoutComponent):
         self.table_layout = table_layout
         self.title = title
         self.virtual = virtual
+        self.on_row = on_row
+        self.on_header_row = on_header_row
         self.root_class_name = root_class_name
 
     FRONTEND_DIR = resolve_frontend_dir("table")
