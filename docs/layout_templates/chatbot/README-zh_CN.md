@@ -12,4 +12,6 @@
 
 ## 示例
 
-<demo name="app" position="bottom" collapsible="true"></demo>
+<demo name="basic" position="bottom" collapsible="true"></demo>
+
+<demo name="fine_grained_control" title="细粒度控制"  position="bottom" collapsible="true"></demo>

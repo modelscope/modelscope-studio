@@ -190,6 +190,11 @@ class ChatbotUserConfig(GradioModel):
         #                     description="Are you sure to delete this message?",
         #                     okButtonProps=dict(danger=True)))
     ])
+    disabled_actions: Optional[List[Union[Literal[
+        'copy',
+        'edit',
+        'delete',
+    ]]]] = None
     header: Optional[str] = None
     footer: Optional[str] = None
     # Ant Design avatar props: https://ant.design/components/avatar
@@ -224,6 +229,14 @@ class ChatbotBotConfig(ChatbotUserConfig):
         #                     description="Are you sure to delete this message?",
         #                     okButtonProps=dict(danger=True)))
     ])
+    disabled_actions: Optional[List[Union[Literal[
+        'copy',
+        'like',
+        'dislike',
+        'retry',
+        'edit',
+        'delete',
+    ]]]] = None
     placement: Optional[Literal['start', 'end']] = 'start'
 
 
@@ -300,8 +313,9 @@ class ChatbotDataMessage(ChatbotBotConfig):
     key: Optional[Union[str, int, float]] = None
     # If status is 'pending', the message will not render the footer area (including 'actions' and 'footer').
     status: Optional[Literal['pending', 'done']] = None
-    content: Union[str, ChatbotDataMessageContent, dict,
-                   List[ChatbotDataMessageContent], List[dict]] = None
+    content: Optional[Union[str, ChatbotDataMessageContent, dict,
+                            List[ChatbotDataMessageContent],
+                            List[dict]]] = None
     placement: Optional[Literal['start', 'end']] = None
     actions: Optional[List[Union[Literal[
         'copy',
@@ -311,6 +325,14 @@ class ChatbotDataMessage(ChatbotBotConfig):
         'edit',
         'delete',
     ], ChatbotActionConfig, dict]]] = None
+    disabled_actions: Optional[List[Union[Literal[
+        'copy',
+        'like',
+        'dislike',
+        'retry',
+        'edit',
+        'delete',
+    ]]]] = None
     meta: Optional[Union[ChatbotDataMeta, dict]] = None
 
 

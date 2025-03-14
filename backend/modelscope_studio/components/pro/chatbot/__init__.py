@@ -124,6 +124,11 @@ class ChatbotUserConfig(GradioModel):
         #                     description="Are you sure to delete this message?",
         #                     okButtonProps=dict(danger=True)))
     ])
+    disabled_actions: Optional[List[Union[Literal[
+        'copy',
+        'edit',
+        'delete',
+    ]]]] = None
     header: Optional[str] = None
     footer: Optional[str] = None
     # Ant Design avatar props: https://ant.design/components/avatar
@@ -158,6 +163,14 @@ class ChatbotBotConfig(ChatbotUserConfig):
         #                     description="Are you sure to delete this message?",
         #                     okButtonProps=dict(danger=True)))
     ])
+    disabled_actions: Optional[List[Union[Literal[
+        'copy',
+        'like',
+        'dislike',
+        'retry',
+        'edit',
+        'delete',
+    ]]]] = None
     placement: Optional[Literal['start', 'end']] = 'start'
 
 
@@ -246,6 +259,14 @@ class ChatbotDataMessage(ChatbotBotConfig):
         'edit',
         'delete',
     ], ChatbotActionConfig, dict]]] = None
+    disabled_actions: Optional[List[Union[Literal[
+        'copy',
+        'like',
+        'dislike',
+        'retry',
+        'edit',
+        'delete',
+    ]]]] = None
     meta: Optional[Union[ChatbotDataMeta, dict]] = None
 
 

@@ -39,6 +39,7 @@ export interface ChatbotFooterProps {
   onEditConfirm: (data: EditData) => void;
   message: ChatbotMessage;
   actions: (ChatbotBotConfig | ChatbotUserConfig)['actions'];
+  disabledActions: string[];
   onCopy: (data: CopyData) => void;
   onEdit: (index: number) => void;
   onDelete: (data: DeleteData) => void;
@@ -110,6 +111,8 @@ export const CopyButton: React.FC<{
 
 const Action: React.FC<{
   action: NonNullable<ChatbotFooterProps['actions']>[number];
+  disabledActions: ChatbotFooterProps['disabledActions'];
+  disabled?: boolean;
   message: ChatbotMessage;
   onCopy: (v: string) => void;
   onDelete: () => void;
@@ -120,6 +123,7 @@ const Action: React.FC<{
   urlProxyUrl: string;
 }> = ({
   action: actionOrActionObject,
+  disabledActions,
   message,
   onCopy,
   onDelete,
@@ -134,12 +138,14 @@ const Action: React.FC<{
     const { action, disabled, disableHandler } = isObject(actionOrActionObject)
       ? {
           action: actionOrActionObject.action,
-          disabled: !!actionOrActionObject.disabled,
+          disabled:
+            disabledActions?.includes(actionOrActionObject.action) ||
+            !!actionOrActionObject.disabled,
           disableHandler: !!actionOrActionObject.popconfirm,
         }
       : {
           action: actionOrActionObject,
-          disabled: false,
+          disabled: disabledActions?.includes(actionOrActionObject) || false,
           disableHandler: false,
         };
 
@@ -266,6 +272,7 @@ export const ChatbotFooter: React.FC<ChatbotFooterProps> = ({
   extra,
   index,
   actions,
+  disabledActions,
   urlRoot,
   urlProxyUrl,
 }) => {
@@ -325,6 +332,7 @@ export const ChatbotFooter: React.FC<ChatbotFooterProps> = ({
                       urlRoot={urlRoot}
                       urlProxyUrl={urlProxyUrl}
                       action={action}
+                      disabledActions={disabledActions}
                       message={message}
                       onCopy={(v) => onCopy({ value: v, index })}
                       onDelete={() =>
