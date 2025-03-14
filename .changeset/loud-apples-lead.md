@@ -1,6 +1,6 @@
 ---
-'@modelscope-studio/pro': major
-'modelscope_studio': major
+'@modelscope-studio/pro': patch
+'modelscope_studio': patch
 ---
 
 fix: disabled status of multimodal input
