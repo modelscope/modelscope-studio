@@ -26,7 +26,7 @@ save_history = False
 
 DEFAULT_PROMPTS = [{
     "category":
-    "🖋 Make a plan",
+    "📅 Make a plan",
     "prompts": [
         "Help me with a plan to start a business",
         "Help me with a plan to achieve my goals",
@@ -34,7 +34,7 @@ DEFAULT_PROMPTS = [{
     ]
 }, {
     "category":
-    "📅 Help me write",
+    "🖋 Help me write",
     "prompts": [
         "Help me write a story with a twist ending",
         "Help me write a blog post on mental health",

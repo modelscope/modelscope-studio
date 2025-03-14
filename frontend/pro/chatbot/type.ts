@@ -74,6 +74,7 @@ export interface ChatbotUserActionObject {
 export interface ChatbotUserConfig
   extends Omit<BubbleProps, 'avatar' | 'content'> {
   actions?: (ChatbotUserAction | ChatbotUserActionObject)[];
+  disabled_actions?: ChatbotUserAction[];
   avatar?: ChatbotAvatar;
   elem_style?: React.CSSProperties;
   class_names?: BubbleProps['classNames'];
@@ -93,6 +94,7 @@ export interface ChatbotBotActionObject {
 export interface ChatbotBotConfig
   extends Omit<BubbleProps, 'avatar' | 'content'> {
   actions?: (ChatbotBotAction | ChatbotBotActionObject)[];
+  disabled_actions?: ChatbotBotAction[];
   avatar?: ChatbotAvatar;
   elem_style?: React.CSSProperties;
   class_names?: BubbleProps['classNames'];
@@ -117,7 +119,7 @@ export interface ChatbotMessageContentObject {
 }
 
 export interface ChatbotMessage extends ChatbotBotConfig {
-  role: 'user' | 'assistant' | 'system' | 'welcome';
+  role: 'user' | 'assistant' | 'system' | 'chatbot-internal-welcome';
   key?: string | number;
   [lastMessageSymbol]?: boolean;
   [messageHeaderSymbol]?: string;

@@ -25,6 +25,7 @@ export function useScroll(options: useScrollOptions) {
     isProgrammaticScroll.current = true;
     ref.current.scrollTo({
       offset: ref.current.nativeElement.scrollHeight,
+      behavior: 'instant',
     });
 
     setShowScrollButton(false);

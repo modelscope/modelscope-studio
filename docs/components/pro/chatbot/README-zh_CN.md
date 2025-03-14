@@ -1,16 +1,83 @@
-from __future__ import annotations
+# Chatbot
 
-from dataclasses import field
-from pathlib import Path
-from typing import Callable, List, Literal, Optional, Union
+基于 [Ant Design X](https://x.ant.design) 封装的对话机器人组件。
 
-from gradio.data_classes import FileData, GradioModel, GradioRootModel
-from gradio.events import EventListener
-from gradio_client import utils as client_utils
+## 示例
 
-from ....utils.dev import ModelScopeDataLayoutComponent, resolve_frontend_dir
+### 基础使用
 
+支持传入：
 
+- `user`,`assistant`两种 role。
+- `text`,`file`,`tool`,`suggestion`四种消息类型。
+
+<demo name="basic" position="bottom" collapsible="true"></demo>
+
+### Chatbot 配置
+
+支持传入配置项：
+
+- `markdown_config`：Chatbot 中 Markdown 文本的渲染配置。
+- `welcome_config`：当 Chatbot 中内容为空时显示的欢迎界面配置。
+- `bot_config`：Chatbot 中 bot 信息的展示配置。
+- `user_config`：Chatbot 中 user 信息的展示配置。
+
+<demo name="chatbot_config"  position="bottom" collapsible="true"></demo>
+
+### Message 配置
+
+`message`对象包含了`bot_config`和`user_config`的所有配置，这意味着用户可以自定义每条消息的显示方式。
+
+<demo name="message_config"  position="bottom"  collapsible="true"></demo>
+
+### 多模态示例
+
+<demo name="multimodal"  position="bottom" collapsible="true"></demo>
+
+### Thinking 示例
+
+<demo name="thinking"  position="bottom" collapsible="true"></demo>
+
+### API
+
+#### 属性
+
+| 属性            | 类型                                                              | 默认值 | 描述                                                                                                                                |
+| --------------- | ----------------------------------------------------------------- | ------ | ----------------------------------------------------------------------------------------------------------------------------------- |
+| value           | `list[dict \| ChatbotDataMessage] \| ChatbotDataMessages \| None` | None   | 聊天机器人中显示的默认消息列表，每条消息的格式为`ChatbotDataMessage`。                                                              |
+| welcome_config  | `ChatbotWelcomeConfig \| dict \| None`                            | None   | 欢迎界面配置。若`value`为空则会显示欢迎界面。                                                                                       |
+| markdown_config | `ChatbotMarkdownConfig \| dict \| None`                           | None   | 所有消息的 Markdown 配置。                                                                                                          |
+| user_config     | `ChatbotUserConfig \| dict \| None`                               | None   | 用户配置，当 message 的 role 为 'user'时生效。                                                                                      |
+| bot_config      | `ChatbotBotConfig \| dict \| None`                                | None   | 机器人配置，当 message 的 role 为 'assistant'时生效。                                                                               |
+| auto_scroll     | `bool`                                                            | True   | 如果为 `True`，则当值改变时将自动滚动到文本框底部，除非用户向上滚动。如果为 `False`，则当值改变时不会滚动到文本框底部。             |
+| height          | `int \| float \| str`                                             | 400    | 组件的高度，如果值为数字，则以像素为单位指定，如果传递的是字符串，则以 CSS 单位指定。如果 messages 超出了组件高度，则组件将可滚动。 |
+| max_height      | `int \| float \| str \| None`                                     | None   | 组件的最大高度，如果传递的是数字，则以像素为单位指定，如果传递的是字符串，则以 CSS 单位指定。                                       |
+| min_height      | `int \| float \| str \| None`                                     | None   | 组件的最小高度，如果传递的是数字，则以像素为单位指定，如果传递的是字符串，则以 CSS 单位指定。                                       |
+
+#### 事件
+
+| 事件                                         | 描述                                 |
+| -------------------------------------------- | ------------------------------------ |
+| `pro.Chatbot.change(fn, ···)`                | 当 Chatbot 的值发生变化时触发。      |
+| `pro.Chatbot.copy(fn, ···)`                  | 当点击复制按钮时触发。               |
+| `pro.Chatbot.edit(fn, ···)`                  | 当用户编辑消息时触发。               |
+| `pro.Chatbot.delete(fn, ···)`                | 当用户删除消息时触发。               |
+| `pro.Chatbot.like(fn, ···)`                  | 当点击喜欢/不喜欢按钮时触发。        |
+| `pro.Chatbot.retry(fn, ···)`                 | 当点击重试按钮时触发。               |
+| `pro.Chatbot.suggestion_select(fn, ···)`     | 当选择 suggestion 消息的选项时触发。 |
+| `pro.Chatbot.welcome_prompt_select(fn, ···)` | 当选择欢迎提示词的选项时触发。       |
+
+### 插槽
+
+```python
+SLOTS=["roles"]
+```
+
+另外，如果已有的 role 样式不符合预期，也可以和`Ant Design X`的`Bubble`组件一样使用`ms.Slot("roles")`进行自定义。
+
+### 类型
+
+```python
 # Ant Design X prompt props: https://x.ant.design/components/prompts#promptprops
 class ChatbotPromptConfig(GradioModel):
     disabled: Optional[bool] = None
@@ -272,210 +339,4 @@ class ChatbotDataMessage(ChatbotBotConfig):
 
 class ChatbotDataMessages(GradioRootModel):
     root: List[ChatbotDataMessage]
-
-
-class ModelScopeProChatbot(ModelScopeDataLayoutComponent):
-    """
-    """
-    EVENTS = [
-        EventListener("change",
-                      callback=lambda block: block._internal.update(
-                          bind_change_event=True)),
-        EventListener("copy",
-                      callback=lambda block: block._internal.update(
-                          bind_copy_event=True)),
-        EventListener("edit",
-                      callback=lambda block: block._internal.update(
-                          bind_edit_event=True)),
-        EventListener("delete",
-                      callback=lambda block: block._internal.update(
-                          bind_delete_event=True)),
-        EventListener("like",
-                      callback=lambda block: block._internal.update(
-                          bind_like_event=True)),
-        EventListener("retry",
-                      callback=lambda block: block._internal.update(
-                          bind_retry_event=True)),
-        EventListener("suggestion_select",
-                      callback=lambda block: block._internal.update(
-                          bind_suggestionSelect_event=True)),
-        EventListener("welcome_prompt_select",
-                      callback=lambda block: block._internal.update(
-                          bind_welcomePromptSelect_event=True)),
-    ]
-
-    # supported slots
-    SLOTS = ["roles"]
-
-    def __init__(
-            self,
-            value: Callable | ChatbotDataMessages
-        | list[ChatbotDataMessage | dict] | None = None,
-            *,
-            height: int | float | str = 400,
-            min_height: int | float | str | None = None,
-            max_height: int | float | str | None = None,
-            roles: str | dict | None = None,
-            auto_scroll: bool = True,
-            welcome_config: ChatbotWelcomeConfig | dict | None = None,
-            markdown_config: ChatbotMarkdownConfig | dict | None = None,
-            user_config: ChatbotUserConfig | dict | None = None,
-            bot_config: ChatbotBotConfig | dict | None = None,
-            as_item: str | None = None,
-            _internal: None = None,
-            # gradio properties
-            visible: bool = True,
-            elem_id: str | None = None,
-            elem_classes: list[str] | str | None = None,
-            elem_style: dict | None = None,
-            render: bool = True,
-            **kwargs):
-        super().__init__(value=value,
-                         visible=visible,
-                         elem_id=elem_id,
-                         elem_classes=elem_classes,
-                         render=render,
-                         as_item=as_item,
-                         elem_style=elem_style,
-                         **kwargs)
-        self.height = height
-        self.min_height = min_height
-        self.max_height = max_height
-        self.roles = roles
-        self.auto_scroll = auto_scroll
-        if welcome_config is None:
-            welcome_config = ChatbotWelcomeConfig()
-        elif isinstance(welcome_config, dict):
-            welcome_config = ChatbotWelcomeConfig(**welcome_config)
-        if welcome_config.icon:
-            welcome_config.icon = self.serve_static_file(welcome_config.icon)
-        if markdown_config is None:
-            markdown_config = ChatbotMarkdownConfig()
-        elif isinstance(markdown_config, dict):
-            markdown_config = ChatbotMarkdownConfig(**markdown_config)
-        if user_config is None:
-            user_config = ChatbotUserConfig()
-        elif isinstance(user_config, dict):
-            user_config = ChatbotUserConfig(**user_config)
-        if bot_config is None:
-            bot_config = ChatbotBotConfig()
-        elif isinstance(bot_config, dict):
-            bot_config = ChatbotBotConfig(**bot_config)
-        if user_config.avatar:
-            user_config.avatar = self._process_avatar(user_config.avatar)
-        if bot_config.avatar:
-            bot_config.avatar = self._process_avatar(bot_config.avatar)
-        self.welcome_config = welcome_config.model_dump()
-        self.markdown_config = markdown_config.model_dump()
-        self.user_config = user_config.model_dump()
-        self.bot_config = bot_config.model_dump()
-
-    FRONTEND_DIR = resolve_frontend_dir("chatbot", type="pro")
-
-    data_model = ChatbotDataMessages
-
-    def _process_avatar(self, avatar: str | Path | dict | None):
-        if avatar is None:
-            return None
-        if isinstance(avatar, dict):
-            src = avatar.get("src")
-            if not src:
-                return avatar
-            return {**avatar, "src": self.serve_static_file(src)}
-        return self.serve_static_file(avatar)
-
-    def _preprocess_message_content(self, content: str | list | dict):
-        if isinstance(content, str):
-            return content
-        elif isinstance(content, dict):
-            type = content.get("type")
-            content_value = content.get("content")
-            if type == "file":
-                if isinstance(content_value, list) or isinstance(
-                        content_value, tuple):
-                    for i, file in enumerate(content_value):
-                        if isinstance(file, dict):
-                            content_value[i] = file["path"]
-            return content
-        elif isinstance(content, list) or isinstance(content, tuple):
-            return [self._preprocess_message_content(item) for item in content]
-
-        return content
-
-    def preprocess(self, payload: ChatbotDataMessages | None) -> list:
-        if payload is None:
-            return []
-        messages = []
-        for message in payload.root:
-            message_dict = message.model_dump()
-            message_dict["content"] = self._preprocess_message_content(
-                message_dict["content"])
-            messages.append(message_dict)
-        return messages
-
-    def _postprocess_message_content(self, content: str | list | dict
-                                     | ChatbotDataMessageContent):
-        if isinstance(content, str):
-            return content
-        if isinstance(content, dict) or isinstance(content,
-                                                   ChatbotDataMessageContent):
-            if isinstance(content, dict):
-                content = ChatbotDataMessageContent(**content)
-            if content.type == "file":
-                if isinstance(content.content, list) or isinstance(
-                        content.content, tuple):
-                    new_content = []
-                    for i, file in enumerate(content.content):
-                        new_content.append(file)
-                        if isinstance(file, str):
-                            mime_type = client_utils.get_mimetype(file)
-                            if client_utils.is_http_url_like(file):
-                                new_content[i] = FileData(
-                                    path=file,
-                                    url=file,
-                                    orig_name=file.split("/")[-1],
-                                    mime_type=mime_type)
-                            else:
-                                new_content[i] = FileData(
-                                    path=file,
-                                    orig_name=Path(file).name,
-                                    size=Path(file).stat().st_size,
-                                    mime_type=mime_type)
-                    content.content = new_content
-            return content
-        elif isinstance(content, list) or isinstance(content, tuple):
-            return [
-                self._postprocess_message_content(item) for item in content
-            ]
-        return content
-
-    def _postprocess_message(
-            self, message: ChatbotDataMessage | dict) -> ChatbotDataMessage:
-        if isinstance(message, dict):
-            message = ChatbotDataMessage(**message)
-
-        message.avatar = self._process_avatar(message.avatar)
-        message.content = self._postprocess_message_content(message.content)
-
-        return message
-
-    def postprocess(
-        self,
-        value: ChatbotDataMessages | List[ChatbotDataMessage | dict] | None
-    ) -> ChatbotDataMessages:
-        data_model = self.data_model
-        if value is None:
-            return data_model(root=[])
-        if isinstance(value, ChatbotDataMessages):
-            value = value.root
-
-        processed_messages = [
-            self._postprocess_message(message) for message in value
-        ]
-        return ChatbotDataMessages(root=processed_messages)
-
-    def example_payload(self) -> None:
-        return None
-
-    def example_value(self) -> None:
-        return None
+```

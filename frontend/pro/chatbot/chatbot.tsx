@@ -153,7 +153,7 @@ export const Chatbot = sveltify<{
           ? newValue
           : [
               {
-                role: 'welcome',
+                role: 'chatbot-internal-welcome',
               },
             ];
       }, [value]);
@@ -198,7 +198,6 @@ export const Chatbot = sveltify<{
       });
       const handleEditConfirm: ChatbotFooterProps['onEditConfirm'] =
         useMemoizedFn((v) => {
-          onEdit?.(v);
           setEditIndex(-1);
           onValueChange([
             ...value.slice(0, v.index),
@@ -208,6 +207,7 @@ export const Chatbot = sveltify<{
             },
             ...value.slice(v.index + 1),
           ]);
+          onEdit?.(v);
         });
       const handleCopy = useMemoizedFn((v: CopyData) => {
         onCopy?.(v);
@@ -230,12 +230,12 @@ export const Chatbot = sveltify<{
         );
       });
       const handleDelete = useMemoizedFn((v: DeleteData) => {
-        onDelete?.(v);
         onValueChange(
           produce(value, (draft) => {
             draft.splice(v.index, 1);
           })
         );
+        onDelete?.(v);
       });
       const rolesRender = useRolesRender<ChatbotMessage>(
         {
@@ -276,7 +276,7 @@ export const Chatbot = sveltify<{
             const isUserRole = bubbleProps.role === 'user';
 
             switch (bubbleProps.role) {
-              case 'welcome':
+              case 'chatbot-internal-welcome':
                 return {
                   variant: 'borderless',
                   styles: {
@@ -351,8 +351,14 @@ export const Chatbot = sveltify<{
                         actions={
                           bubbleProps.actions ??
                           (isUserRole
-                            ? resolvedUserConfig?.actions
+                            ? resolvedUserConfig?.actions || []
                             : resolvedBotConfig?.actions || [])
+                        }
+                        disabledActions={
+                          bubbleProps.disabled_actions ??
+                          (isUserRole
+                            ? resolvedUserConfig?.disabled_actions || []
+                            : resolvedBotConfig?.disabled_actions || [])
                         }
                         onEditCancel={handleEditCancel}
                         onEditConfirm={handleEditConfirm}
