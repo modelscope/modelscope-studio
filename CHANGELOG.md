@@ -1,5 +1,15 @@
 # modelscope_studio
 
+## 1.2.1
+
+### Fixes
+
+- [#66](https://github.com/modelscope/modelscope-studio/pull/66) [`1f60552`](https://github.com/modelscope/modelscope-studio/commit/1f60552c9bd702301a86a8e9480bfc9f3fa352da) - disabled status of multimodal input. Thanks [@Col0ring](https://github.com/Col0ring)!
+
+### Misc Changes
+
+- [#66](https://github.com/modelscope/modelscope-studio/pull/66) [`1f60552`](https://github.com/modelscope/modelscope-studio/commit/1f60552c9bd702301a86a8e9480bfc9f3fa352da) - pro components. Thanks [@Col0ring](https://github.com/Col0ring)!
+
 ## 1.2.0
 
 ### Features

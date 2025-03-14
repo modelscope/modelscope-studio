@@ -1,5 +1,9 @@
 # @modelscope-studio/changelog
 
+## 1.2.1
+
+No significant changes to this package were made in this release.
+
 ## 1.2.0
 
 No significant changes to this package were made in this release.
