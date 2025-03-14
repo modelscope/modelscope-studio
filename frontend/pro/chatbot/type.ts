@@ -117,7 +117,7 @@ export interface ChatbotMessageContentObject {
 }
 
 export interface ChatbotMessage extends ChatbotBotConfig {
-  role: 'user' | 'assistant' | 'system' | 'welcome';
+  role: 'user' | 'assistant' | 'system' | 'chatbot-internal-welcome';
   key?: string | number;
   [lastMessageSymbol]?: boolean;
   [messageHeaderSymbol]?: string;

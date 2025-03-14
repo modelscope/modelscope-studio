@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from dataclasses import field
 from pathlib import Path
-from typing import Callable, List, Literal, Optional, TypedDict, Union
+from typing import Callable, List, Literal, Optional, Union
 
 from gradio.data_classes import FileData, GradioModel, GradioRootModel
 from gradio.events import EventListener
@@ -100,7 +100,7 @@ class ChatbotMarkdownConfig(GradioModel):
     allow_tags: Optional[List[str]] = None
 
 
-class ChatbotActionDict(TypedDict):
+class ChatbotActionConfig(GradioModel):
     action: Literal['copy', 'like', 'dislike', 'retry', 'edit', 'delete']
     disabled: Optional[bool] = None
     # Ant Design tooltip: https://ant.design/components/tooltip
@@ -110,14 +110,15 @@ class ChatbotActionDict(TypedDict):
 
 
 class ChatbotUserConfig(GradioModel):
+    # Action buttons for user message
     actions: Optional[List[Union[Literal[
         'copy',
         'edit',
         'delete',
-    ], ChatbotActionDict, dict]]] = field(default_factory=lambda: [
+    ], ChatbotActionConfig, dict]]] = field(default_factory=lambda: [
         "copy"
         # 'edit',
-        # ChatbotActionDict(
+        # ChatbotActionConfig(
         #     action='delete',
         #     popconfirm=dict(title="Delete the message",
         #                     description="Are you sure to delete this message?",
@@ -140,6 +141,7 @@ class ChatbotUserConfig(GradioModel):
 
 
 class ChatbotBotConfig(ChatbotUserConfig):
+    # Action buttons for bot message
     actions: Optional[List[Union[Literal[
         'copy',
         'like',
@@ -147,10 +149,10 @@ class ChatbotBotConfig(ChatbotUserConfig):
         'retry',
         'edit',
         'delete',
-    ], ChatbotActionDict, dict]]] = field(default_factory=lambda: [
+    ], ChatbotActionConfig, dict]]] = field(default_factory=lambda: [
         'copy',
         # 'like', 'dislike', 'retry', 'edit',
-        # ChatbotActionDict(
+        # ChatbotActionConfig(
         #     action='delete',
         #     popconfirm=dict(title="Delete the message",
         #                     description="Are you sure to delete this message?",
@@ -164,6 +166,10 @@ class ChatbotDataTextContentOptions(ChatbotMarkdownConfig):
 
 
 class ChatbotDataToolContentOptions(ChatbotDataTextContentOptions):
+    """
+    title: tool message title.
+    status: tool message status, if status is 'done', the message will be collapsed.
+    """
     title: Optional[str] = None
     status: Optional[Literal['pending', 'done']] = None
 
@@ -200,9 +206,19 @@ class ChatbotDataMeta(GradioModel):
 
 
 class ChatbotDataMessageContent(GradioModel):
+    """
+    type: Content type, support 'text', 'tool', 'file', 'suggestion'.
+
+    content: Content value.
+
+    options: Content options, each content type has different options.
+
+    copyable: Whether the content can be copied via the 'copy' button.
+
+    editable: Whether the content can be edited via the 'edit' button. Only available for content type 'text' and 'tool'.
+    """
     type: Optional[Literal['text', 'tool', 'file', 'suggestion']] = 'text'
     copyable: Optional[bool] = True
-    # only available for text, tool
     editable: Optional[bool] = True
     content: Optional[Union[str, List[Union[FileData,
                                             ChatbotDataSuggestionContentItem,
@@ -214,11 +230,13 @@ class ChatbotDataMessageContent(GradioModel):
 
 
 class ChatbotDataMessage(ChatbotBotConfig):
-    role: Literal['user', 'assistant', 'system'] = None
+    role: Union[Literal['user', 'assistant', 'system'], str] = None
     key: Optional[Union[str, int, float]] = None
+    # If status is 'pending', the message will not render the footer area (including 'actions' and 'footer').
     status: Optional[Literal['pending', 'done']] = None
-    content: Union[str, ChatbotDataMessageContent, dict,
-                   List[ChatbotDataMessageContent], List[dict]] = None
+    content: Optional[Union[str, ChatbotDataMessageContent, dict,
+                            List[ChatbotDataMessageContent],
+                            List[dict]]] = None
     placement: Optional[Literal['start', 'end']] = None
     actions: Optional[List[Union[Literal[
         'copy',
@@ -227,7 +245,7 @@ class ChatbotDataMessage(ChatbotBotConfig):
         'retry',
         'edit',
         'delete',
-    ], ChatbotActionDict, dict]]] = None
+    ], ChatbotActionConfig, dict]]] = None
     meta: Optional[Union[ChatbotDataMeta, dict]] = None
 
 

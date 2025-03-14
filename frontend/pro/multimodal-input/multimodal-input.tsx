@@ -40,7 +40,7 @@ export interface UploadConfig extends Omit<AttachmentsProps, 'placeholder'> {
   allowSpeech?: boolean;
   allowPasteFile?: boolean;
   showCount?: boolean;
-  buttonTooltip?: string;
+  uploadButtonTooltip?: string;
   title?: string;
   placeholder?: {
     [K in 'inline' | 'drop']: {
@@ -73,6 +73,7 @@ export const MultimodalInput = sveltify<
     value?: MultimodalInputValue;
     upload: (files: File[]) => Promise<FileData[]>;
     onPasteFile?: (value: string[]) => void;
+    onUpload?: (value: string[]) => void;
     onValueChange: (value: MultimodalInputValue) => void;
     onChange?: (value: MultimodalInputChangedValue) => void;
     onSubmit?: (value: MultimodalInputChangedValue) => void;
@@ -84,6 +85,7 @@ export const MultimodalInput = sveltify<
     onValueChange,
     onChange,
     onPasteFile,
+    onUpload,
     onSubmit,
     onRemove,
     onDownload,
@@ -143,7 +145,7 @@ export const MultimodalInput = sveltify<
         return;
       }
       const filesData = await upload(Array.isArray(file) ? file : [file]);
-
+      onUpload?.(filesData.map((url) => url.path));
       const newValue: MultimodalInputValue = {
         ...value,
         files: [...(fileList as FileData[]), ...filesData],
@@ -244,7 +246,7 @@ export const MultimodalInput = sveltify<
           }}
           prefix={
             <>
-              <Tooltip title={uploadConfig?.buttonTooltip}>
+              <Tooltip title={uploadConfig?.uploadButtonTooltip}>
                 <Badge
                   count={
                     (uploadConfig?.showCount ?? true) && !open
@@ -374,7 +376,7 @@ export const MultimodalInput = sveltify<
                       maxCount === 1
                         ? fileDataList
                         : ([...lastFileList, ...fileDataList] as FileData[]);
-
+                    onUpload?.(fileDataList.map((url) => url.path));
                     uploadingRef.current = false;
                     const newValue: MultimodalInputValue = {
                       ...value,

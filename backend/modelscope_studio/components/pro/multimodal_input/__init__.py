@@ -16,11 +16,37 @@ from ....utils.dev import ModelScopeDataLayoutComponent, resolve_frontend_dir
 
 
 class MultimodalInputUploadConfig(GradioModel):
+    """
+    fullscreen_drop: Whether to allow fullscreen drop files to the attachments.
+
+    allow_paste_file: Whether to allow paste file to the attachments.
+
+    allow_speech: Whether to allow speech input.
+
+    show_count: Whether to show the count of files when the attachments panel is close.
+
+    upload_button_tooltip: Tooltip of the upload button.
+
+    accept: File types that can be accepted. See [input accept Attribute](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/file#accept).
+
+    max_count: Limit the number of uploaded files. Will replace current one when maxCount is 1.
+
+    directory: Support upload whole directory.
+
+    disabled: Disable upload files.
+
+    multiple: Whether to support selected multiple files. IE10+ supported. You can select multiple files with CTRL holding down while multiple is set to be True.
+
+    overflow: Behavior when the file list overflows.
+    title: Title of the attachments panel.
+
+    placeholder: Placeholder information when there is no file.
+    """
     fullscreen_drop: Optional[bool] = False
     allow_paste_file: Optional[bool] = True
     allow_speech: Optional[bool] = False
     show_count: Optional[bool] = True
-    button_tooltip: Optional[str] = None
+    upload_button_tooltip: Optional[str] = None
     accept: Optional[str] = None
     max_count: Optional[int] = None
     directory: Optional[bool] = False
@@ -69,6 +95,9 @@ class ModelScopeProMultimodalInput(ModelScopeDataLayoutComponent):
         EventListener("key_press",
                       callback=lambda block: block._internal.update(
                           bind_keyPress_event=True)),
+        EventListener("upload",
+                      callback=lambda block: block._internal.update(
+                          bind_upload_event=True)),
         EventListener("paste",
                       callback=lambda block: block._internal.update(
                           bind_paste_event=True)),
@@ -105,7 +134,7 @@ class ModelScopeProMultimodalInput(ModelScopeDataLayoutComponent):
             read_only: bool | None = None,
             submit_type: Literal['enter', 'shiftEnter'] | None = None,
             placeholder: str | None = None,
-            upload_config: MultimodalInputUploadConfig | dict = None,
+            upload_config: MultimodalInputUploadConfig | dict | None = None,
             root_class_name: str | None = None,
             as_item: str | None = None,
             _internal: None = None,

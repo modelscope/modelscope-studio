@@ -153,7 +153,7 @@ export const Chatbot = sveltify<{
           ? newValue
           : [
               {
-                role: 'welcome',
+                role: 'chatbot-internal-welcome',
               },
             ];
       }, [value]);
@@ -276,7 +276,7 @@ export const Chatbot = sveltify<{
             const isUserRole = bubbleProps.role === 'user';
 
             switch (bubbleProps.role) {
-              case 'welcome':
+              case 'chatbot-internal-welcome':
                 return {
                   variant: 'borderless',
                   styles: {

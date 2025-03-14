@@ -15,7 +15,7 @@ def get_text(text: str, cn_text: str):
     return text
 
 
-def get_docs(type: Literal["antd", "antdx", "base"]):
+def get_docs(type: Literal["antd", "antdx", "pro", "base"]):
     import importlib.util
 
     components = []
@@ -67,6 +67,7 @@ index_docs = {"overview": Docs(__file__), **layout_templates}
 base_docs = get_docs("base")
 antd_docs = get_docs("antd")
 antdx_docs = get_docs("antdx")
+pro_docs = get_docs("pro")
 
 default_active_tab = "index"
 index_menu_items = [{
@@ -133,6 +134,20 @@ base_menu_items = [{
     }, {
         "label": get_text("Filter", "Filter 过滤"),
         "key": "filter"
+    }]
+}]
+
+pro_menu_items = [{
+    "label":
+    get_text("Chat", "对话"),
+    "type":
+    "group",
+    "children": [{
+        "label": get_text("Chatbot", "Chatbot 聊天机器人"),
+        "key": "chatbot"
+    }, {
+        "label": get_text("MultimodalInput", "MultimodalInput 多模态输入框"),
+        "key": "multimodal_input"
     }]
 }]
 
@@ -495,6 +510,12 @@ tabs = [
         "menus": base_menu_items
     },
     {
+        "label": get_text("Pro Components", "高级组件"),
+        "key": "pro",
+        "default_active_key": "chatbot",
+        "menus": pro_menu_items
+    },
+    {
         "label": get_text("Antd Components", "Antd 组件"),
         "key": "antd",
         "default_active_key": "overview",
@@ -521,7 +542,8 @@ site = Site(
         "index": index_docs,
         "antd": antd_docs,
         "antdx": antdx_docs,
-        "base": base_docs
+        "base": base_docs,
+        "pro": pro_docs
     },
     default_active_tab=default_active_tab,
     logo=logo)
