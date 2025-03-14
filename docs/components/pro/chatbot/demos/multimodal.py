@@ -16,7 +16,7 @@ from openai import OpenAI
 
 client = OpenAI(
     base_url='https://api-inference.modelscope.cn/v1/',
-    api_key=os.getenv("MODELSCOPE_API_KEY"),  # ModelScope Token
+    api_key=os.getenv("MODELSCOPE_ACCESS_TOKEN"),  # ModelScope Token
 )
 
 model = "Qwen/Qwen2.5-VL-72B-Instruct"

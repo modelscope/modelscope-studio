@@ -154,8 +154,8 @@ class GradioEvents:
         return gr.update(value=state_value["system_prompt"])
 
     @staticmethod
-    def render_history(state):
-        return gr.update(value=state["history"])
+    def render_history(statue_value):
+        return gr.update(value=statue_value["history"])
 
     @staticmethod
     def clear_history(e: gr.EventData, state_value):
