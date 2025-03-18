@@ -136,6 +136,7 @@ export const MultimodalInput = sveltify<
       if (uploadDisabled) {
         return;
       }
+      uploadingRef.current = true;
       const maxCount = uploadConfig?.maxCount;
       if (
         typeof maxCount === 'number' &&
@@ -144,15 +145,50 @@ export const MultimodalInput = sveltify<
       ) {
         return;
       }
-      const filesData = await upload(Array.isArray(file) ? file : [file]);
-      onUpload?.(filesData.map((url) => url.path));
+      let validFiles = Array.isArray(file) ? file : [file];
+      if (maxCount === 1) {
+        validFiles = validFiles.slice(0, 1);
+      } else if (validFiles.length === 0) {
+        uploadingRef.current = false;
+        return;
+      } else if (typeof maxCount === 'number') {
+        const max = maxCount - fileList.length;
+        validFiles = validFiles.slice(0, max < 0 ? 0 : max);
+      }
+
+      const lastFileList = fileList;
+      const tempFileList = validFiles.map((v) => {
+        return {
+          ...v,
+          size: v.size,
+          uid: `${v.name}-${Date.now()}`,
+          name: v.name,
+          status: 'uploading' as const,
+        };
+      });
+      setFileList((prev) => [...(maxCount === 1 ? [] : prev), ...tempFileList]);
+      const fileDataList = (await upload(validFiles))
+        .filter(Boolean)
+        .map((v, i) => {
+          return {
+            ...v,
+            uid: tempFileList[i].uid,
+          };
+        });
+
+      const mergedFileList =
+        maxCount === 1
+          ? fileDataList
+          : ([...lastFileList, ...fileDataList] as FileData[]);
+      onUpload?.(fileDataList.map((url) => url.path));
+      uploadingRef.current = false;
       const newValue: MultimodalInputValue = {
         ...value,
-        files: [...(fileList as FileData[]), ...filesData],
+        files: mergedFileList,
       };
       onChange?.(formatChangedValue(newValue));
       setValue(newValue);
-      return filesData;
+      return fileDataList;
     });
     const uploadingRef = useRef(false);
     const [fileList, setFileList] = useState<
@@ -173,7 +209,7 @@ export const MultimodalInput = sveltify<
       return (
         fileList.map((file) => {
           if (!isUploadFile(file)) {
-            const uid = file.url || file.path;
+            const uid = file.uid || file.url || file.path;
             if (!visited[uid]) {
               visited[uid] = 0;
             }
@@ -353,25 +389,31 @@ export const MultimodalInput = sveltify<
                     }
 
                     const lastFileList = fileList;
-
+                    const tempFileList = validFiles.map((v) => {
+                      return {
+                        ...v,
+                        size: v.size,
+                        uid: v.uid,
+                        name: v.name,
+                        status: 'uploading' as const,
+                      };
+                    });
                     setFileList((prev) => [
                       ...(maxCount === 1 ? [] : prev),
-                      ...validFiles.map((v) => {
-                        return {
-                          ...v,
-                          size: v.size,
-                          uid: v.uid,
-                          name: v.name,
-                          status: 'uploading' as const,
-                        };
-                      }),
+                      ...tempFileList,
                     ]);
-
                     const fileDataList = (
                       await upload(
                         validFiles.map((f) => f.originFileObj as RcFile)
                       )
-                    ).filter(Boolean) as FileData[];
+                    )
+                      .filter(Boolean)
+                      .map((v, i) => {
+                        return {
+                          ...v,
+                          uid: tempFileList[i].uid,
+                        };
+                      });
                     const mergedFileList =
                       maxCount === 1
                         ? fileDataList

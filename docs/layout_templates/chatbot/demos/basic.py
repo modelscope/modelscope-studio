@@ -530,7 +530,7 @@ with gr.Blocks(css=css, fill_width=True) as demo:
                                 },
                                 items=[{
                                     "label":
-                                    "🖋 Make a plan",
+                                    "📅 Make a plan",
                                     "children": [{
                                         "description":
                                         "Help me with a plan to start a business"
@@ -543,7 +543,7 @@ with gr.Blocks(css=css, fill_width=True) as demo:
                                     }]
                                 }, {
                                     "label":
-                                    "📅 Help me write",
+                                    "🖋 Help me write",
                                     "children": [{
                                         "description":
                                         "Help me write a story with a twist ending"
