@@ -47,7 +47,9 @@ export function useScroll(options: useScrollOptions) {
         canScrollRef.current = true;
       }
       if (canScrollRef.current) {
-        scrollToBottom();
+        requestAnimationFrame(() => {
+          scrollToBottom();
+        });
       } else {
         if (!isAtBottom()) {
           setShowScrollButton(true);
