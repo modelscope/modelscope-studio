@@ -20,6 +20,7 @@
   export let include_audio: boolean = false;
   export let disabled = false;
   export let i18n: I18nFormatter;
+  export let file_type: 'mp4' | 'webm' = 'webm';
 
   let video_source: HTMLVideoElement;
   let canvas: HTMLCanvasElement;
@@ -143,7 +144,10 @@
       ReaderObj.readAsDataURL(video_blob);
     } else {
       recorded_blobs = [];
-      const validMimeTypes = ['video/webm', 'video/mp4'];
+      const validMimeTypes =
+        file_type === 'webm'
+          ? ['video/webm', 'video/mp4']
+          : ['video/mp4', 'video/webm'];
       for (const validMimeType of validMimeTypes) {
         if (MediaRecorder.isTypeSupported(validMimeType)) {
           mimeType = validMimeType;
