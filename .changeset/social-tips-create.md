@@ -4,4 +4,4 @@
 '@modelscope-studio/frontend': patch
 ---
 
-feat: add file_type property for Webcam
+feat: add `file_type` property for Webcam

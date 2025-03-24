@@ -332,9 +332,9 @@ export const Chatbot = sveltify<{
                         : resolvedBotConfig?.avatar)
                   ),
                   footer:
-                    bubbleProps[lastMessageSymbol] &&
-                    (bubbleProps.loading ||
-                      bubbleProps.status === 'pending') ? null : (
+                    // bubbleProps[lastMessageSymbol] &&
+                    bubbleProps.loading ||
+                    bubbleProps.status === 'pending' ? null : (
                       <ChatbotFooter
                         isEditing={editIndex === index}
                         message={bubbleProps}
