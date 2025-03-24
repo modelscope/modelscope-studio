@@ -7,6 +7,7 @@ import type { ChatbotMessages } from '../type';
 
 export interface useScrollOptions {
   autoScroll?: boolean;
+  scrollButtonOffset?: number;
   ref: React.MutableRefObject<BubbleListRef | null>;
   value: ChatbotMessages;
 }
@@ -16,21 +17,23 @@ export function useScroll(options: useScrollOptions) {
   const prevMessageLengthRef = useRef(0);
   const canScrollRef = useRef(true);
   const isProgrammaticScroll = useRef(true);
-  const { autoScroll, ref, value } = options;
+  const { autoScroll, scrollButtonOffset, ref, value } = options;
 
-  const scrollToBottom = useMemoizedFn(() => {
-    if (!ref.current) {
-      return;
+  const scrollToBottom = useMemoizedFn(
+    (behavior: ScrollBehavior = 'instant') => {
+      if (!ref.current) {
+        return;
+      }
+      isProgrammaticScroll.current = true;
+      ref.current.scrollTo({
+        offset: ref.current.nativeElement.scrollHeight,
+        behavior,
+      });
+
+      setShowScrollButton(false);
     }
-    isProgrammaticScroll.current = true;
-    ref.current.scrollTo({
-      offset: ref.current.nativeElement.scrollHeight,
-      behavior: 'instant',
-    });
-
-    setShowScrollButton(false);
-  });
-  const isAtBottom = useMemoizedFn(() => {
+  );
+  const isAtBottom = useMemoizedFn((offset: number = 100) => {
     if (!ref.current) {
       return false;
     }
@@ -38,8 +41,9 @@ export function useScroll(options: useScrollOptions) {
     const currentScrollHeight = container.scrollHeight;
 
     const { scrollTop, clientHeight } = container;
-    return currentScrollHeight - (scrollTop + clientHeight) < 100;
+    return currentScrollHeight - (scrollTop + clientHeight) < offset;
   });
+
   // update when value changed
   useEffect(() => {
     if (ref.current && autoScroll && value.length) {
@@ -50,10 +54,6 @@ export function useScroll(options: useScrollOptions) {
         requestAnimationFrame(() => {
           scrollToBottom();
         });
-      } else {
-        if (!isAtBottom()) {
-          setShowScrollButton(true);
-        }
       }
       prevMessageLengthRef.current = value.length;
     }
@@ -83,9 +83,7 @@ export function useScroll(options: useScrollOptions) {
         }
         lastScrollTop = target.scrollTop;
         lastScrollHeight = target.scrollHeight;
-        if (isAtBottom()) {
-          setShowScrollButton(false);
-        }
+        setShowScrollButton(!isAtBottom(scrollButtonOffset));
       };
 
       el.addEventListener('scroll', handleScroll);
@@ -94,7 +92,7 @@ export function useScroll(options: useScrollOptions) {
       };
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [autoScroll, isAtBottom, scrollButtonOffset]);
   return {
     showScrollButton,
     scrollToBottom,

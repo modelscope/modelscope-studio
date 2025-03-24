@@ -42,17 +42,19 @@
 
 #### 属性
 
-| 属性            | 类型                                                              | 默认值 | 描述                                                                                                                                |
-| --------------- | ----------------------------------------------------------------- | ------ | ----------------------------------------------------------------------------------------------------------------------------------- |
-| value           | `list[dict \| ChatbotDataMessage] \| ChatbotDataMessages \| None` | None   | 聊天机器人中显示的默认消息列表，每条消息的格式为`ChatbotDataMessage`。                                                              |
-| welcome_config  | `ChatbotWelcomeConfig \| dict \| None`                            | None   | 欢迎界面配置。若`value`为空则会显示欢迎界面。                                                                                       |
-| markdown_config | `ChatbotMarkdownConfig \| dict \| None`                           | None   | 所有消息的 Markdown 配置。                                                                                                          |
-| user_config     | `ChatbotUserConfig \| dict \| None`                               | None   | 用户配置，当 message 的 role 为 'user'时生效。                                                                                      |
-| bot_config      | `ChatbotBotConfig \| dict \| None`                                | None   | 机器人配置，当 message 的 role 为 'assistant'时生效。                                                                               |
-| auto_scroll     | `bool`                                                            | True   | 如果为 `True`，则当值改变时将自动滚动到文本框底部，除非用户向上滚动。如果为 `False`，则当值改变时不会滚动到文本框底部。             |
-| height          | `int \| float \| str`                                             | 400    | 组件的高度，如果值为数字，则以像素为单位指定，如果传递的是字符串，则以 CSS 单位指定。如果 messages 超出了组件高度，则组件将可滚动。 |
-| max_height      | `int \| float \| str \| None`                                     | None   | 组件的最大高度，如果传递的是数字，则以像素为单位指定，如果传递的是字符串，则以 CSS 单位指定。                                       |
-| min_height      | `int \| float \| str \| None`                                     | None   | 组件的最小高度，如果传递的是数字，则以像素为单位指定，如果传递的是字符串，则以 CSS 单位指定。                                       |
+| 属性                           | 类型                                                              | 默认值 | 描述                                                                                                                                |
+| ------------------------------ | ----------------------------------------------------------------- | ------ | ----------------------------------------------------------------------------------------------------------------------------------- |
+| value                          | `list[dict \| ChatbotDataMessage] \| ChatbotDataMessages \| None` | None   | 聊天机器人中显示的默认消息列表，每条消息的格式为`ChatbotDataMessage`。                                                              |
+| welcome_config                 | `ChatbotWelcomeConfig \| dict \| None`                            | None   | 欢迎界面配置。若`value`为空则会显示欢迎界面。                                                                                       |
+| markdown_config                | `ChatbotMarkdownConfig \| dict \| None`                           | None   | 所有消息的 Markdown 配置。                                                                                                          |
+| user_config                    | `ChatbotUserConfig \| dict \| None`                               | None   | 用户配置，当 message 的 role 为 'user'时生效。                                                                                      |
+| bot_config                     | `ChatbotBotConfig \| dict \| None`                                | None   | 机器人配置，当 message 的 role 为 'assistant'时生效。                                                                               |
+| auto_scroll                    | `bool`                                                            | True   | 如果为 `True`，则当值改变时将自动滚动到文本框底部，除非用户向上滚动。如果为 `False`，则当值改变时不会滚动到文本框底部。             |
+| show_scroll_to_bottom_button   | `bool`                                                            | True   | 如果为 `True`，则会在滚动条向上一定距离时显示滚动到底部按钮。                                                                       |
+| scroll_to_bottom_button_offset | `int \| float`                                                    | 200    | 滚动到底部按钮出现时距离底部的偏移量。                                                                                              |
+| height                         | `int \| float \| str`                                             | 400    | 组件的高度，如果值为数字，则以像素为单位指定，如果传递的是字符串，则以 CSS 单位指定。如果 messages 超出了组件高度，则组件将可滚动。 |
+| max_height                     | `int \| float \| str \| None`                                     | None   | 组件的最大高度，如果传递的是数字，则以像素为单位指定，如果传递的是字符串，则以 CSS 单位指定。                                       |
+| min_height                     | `int \| float \| str \| None`                                     | None   | 组件的最小高度，如果传递的是数字，则以像素为单位指定，如果传递的是字符串，则以 CSS 单位指定。                                       |
 
 #### 事件
 
