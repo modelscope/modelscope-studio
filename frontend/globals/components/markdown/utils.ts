@@ -151,6 +151,49 @@ function createMermaidTokenizer(): Tokenizer {
   };
 }
 
+export async function renderMermaid(el: HTMLElement, themeMode: string) {
+  const mermaidDivs = el.querySelectorAll('.mermaid');
+  if (mermaidDivs.length > 0) {
+    const { default: mermaid } = await import('mermaid');
+
+    const originalContents = Array.from(mermaidDivs).map((node) => {
+      return {
+        element: node,
+        content: node.innerHTML,
+        id: node.id,
+      };
+    });
+
+    mermaid.initialize({
+      startOnLoad: false,
+      theme: themeMode === 'dark' ? 'dark' : 'default',
+      securityLevel: 'antiscript',
+      suppressErrorRendering: true,
+    });
+
+    try {
+      await mermaid.run({
+        nodes: Array.from(mermaidDivs).map((node) => node as HTMLElement),
+      });
+    } catch (e) {
+      // error log
+      console.error(e);
+
+      originalContents.forEach((item) => {
+        const element = item.element as HTMLElement;
+        // check if element has been modified by mermaid or cleared
+        if (
+          !element.querySelector('.mermaid-diagram') &&
+          element.innerHTML.trim() === ''
+        ) {
+          element.classList.add('mermaid-error');
+          element.innerHTML = `<pre><code>${item.content}</code></pre>`;
+        }
+      });
+    }
+  }
+}
+
 export function walk_nodes(
   node: Node | null | HTMLElement,
   test: string | string[] | ((node: Node | HTMLElement) => boolean),
