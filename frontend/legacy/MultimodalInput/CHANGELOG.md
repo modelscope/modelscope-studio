@@ -1,5 +1,11 @@
 # @modelscope-studio/legacy-multimodal-input
 
+## 1.2.2
+
+### Features
+
+- [#67](https://github.com/modelscope/modelscope-studio/pull/67) [`f7edea8`](https://github.com/modelscope/modelscope-studio/commit/f7edea8a448f05dd69fa121d913dd16e159dcedd) - add `file_type` property for Webcam. Thanks [@Col0ring](https://github.com/Col0ring)!
+
 ## 1.2.1
 
 No significant changes to this package were made in this release.
