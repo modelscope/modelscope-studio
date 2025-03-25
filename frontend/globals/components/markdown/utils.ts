@@ -187,7 +187,12 @@ export async function renderMermaid(el: HTMLElement, themeMode: string) {
           element.innerHTML.trim() === ''
         ) {
           element.classList.add('mermaid-error');
-          element.innerHTML = `<pre><code>${item.content}</code></pre>`;
+          element.innerHTML =
+            '<div class="code_wrap">' +
+            COPY_BUTTON_CODE +
+            '<pre><code>' +
+            escape(item.content, false) +
+            '</code></pre></div>\n';
         }
       });
     }
