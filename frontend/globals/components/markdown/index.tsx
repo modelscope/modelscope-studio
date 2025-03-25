@@ -122,21 +122,31 @@ export const Markdown: React.FC<MarkdownProps> = ({
     return parsedValue;
   });
 
-  const render_html = useMemoizedFn((value: string) => {
-    if (
-      ref.current &&
-      latex_delimiters &&
-      latex_delimiters.length > 0 &&
-      value
-    ) {
+  const render_html = useMemoizedFn(async (value: string) => {
+    const el = ref.current;
+    if (el && latex_delimiters && latex_delimiters.length > 0 && value) {
       const containsDelimiter = latex_delimiters.some(
         (delimiter) =>
           value.includes(delimiter.left) && value.includes(delimiter.right)
       );
       if (containsDelimiter) {
-        render_math_in_element(ref.current, {
+        render_math_in_element(el, {
           delimiters: latex_delimiters,
           throwOnError: false,
+        });
+      }
+    }
+    if (el) {
+      const mermaidDivs = el.querySelectorAll('.mermaid');
+      if (mermaidDivs.length > 0) {
+        const { default: mermaid } = await import('mermaid');
+        mermaid.initialize({
+          startOnLoad: false,
+          theme: themeMode === 'dark' ? 'dark' : 'default',
+          securityLevel: 'antiscript',
+        });
+        await mermaid.run({
+          nodes: Array.from(mermaidDivs).map((node) => node as HTMLElement),
         });
       }
     }

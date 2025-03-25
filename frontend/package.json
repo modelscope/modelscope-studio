@@ -29,6 +29,7 @@
     "marked": "^15.0.7",
     "marked-gfm-heading-id": "^4.1.1",
     "marked-highlight": "^2.2.1",
+    "mermaid": "^11.5.0",
     "prismjs": "^1.30.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
