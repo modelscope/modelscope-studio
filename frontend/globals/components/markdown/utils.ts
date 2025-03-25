@@ -1,5 +1,6 @@
 /* eslint-disable no-useless-escape */
 import { cssUnits } from '@utils/style';
+import { tick } from '@utils/tick';
 import GithubSlugger from 'github-slugger';
 import { Marked, type Renderer } from 'marked';
 import { gfmHeadingId } from 'marked-gfm-heading-id';
@@ -154,6 +155,7 @@ function createMermaidTokenizer(): Tokenizer {
 export async function renderMermaid(el: HTMLElement, themeMode: string) {
   const mermaidDivs = el.querySelectorAll('.mermaid');
   if (mermaidDivs.length > 0) {
+    await tick();
     const { default: mermaid } = await import('mermaid');
 
     const originalContents = Array.from(mermaidDivs).map((node) => {
@@ -164,14 +166,13 @@ export async function renderMermaid(el: HTMLElement, themeMode: string) {
       };
     });
 
-    mermaid.initialize({
-      startOnLoad: false,
-      theme: themeMode === 'dark' ? 'dark' : 'default',
-      securityLevel: 'antiscript',
-      suppressErrorRendering: true,
-    });
-
     try {
+      mermaid.initialize({
+        startOnLoad: false,
+        theme: themeMode === 'dark' ? 'dark' : 'default',
+        securityLevel: 'antiscript',
+        suppressErrorRendering: true,
+      });
       await mermaid.run({
         nodes: Array.from(mermaidDivs).map((node) => node as HTMLElement),
       });

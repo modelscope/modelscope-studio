@@ -33,6 +33,7 @@ declare global {
       internalContext: typeof internalContext;
       initializePromise: Promise<void>;
       initialize: () => void;
+      tickPromise: Promise<void> | null;
       // svelte-preprocess-react
       target: Writable<HTMLElement>;
       tree: TreeNode;

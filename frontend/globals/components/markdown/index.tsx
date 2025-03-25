@@ -123,8 +123,12 @@ export const Markdown: React.FC<MarkdownProps> = ({
     return parsedValue;
   });
 
-  const render_html = useMemoizedFn((value: string) => {
+  const render_html = useMemoizedFn(async (value: string) => {
     const el = ref.current;
+    if (el && value) {
+      await renderMermaid(el, themeMode);
+    }
+
     if (el && latex_delimiters && latex_delimiters.length > 0 && value) {
       const containsDelimiter = latex_delimiters.some(
         (delimiter) =>
@@ -136,9 +140,6 @@ export const Markdown: React.FC<MarkdownProps> = ({
           throwOnError: false,
         });
       }
-    }
-    if (el) {
-      renderMermaid(el, themeMode);
     }
   });
   const handleCopy = useMemoizedFn(async () => {
@@ -187,9 +188,12 @@ export const Markdown: React.FC<MarkdownProps> = ({
   }, [message, process_message]);
 
   useEffect(() => {
-    requestAnimationFrame(() => {
-      render_html(markdown);
-    });
+    markdown &&
+      message &&
+      requestAnimationFrame(() => {
+        render_html(message);
+      });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [markdown, render_html]);
 
   useEffect(() => {

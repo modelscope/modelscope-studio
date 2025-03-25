@@ -1,4 +1,13 @@
 import type { Locale } from 'antd/es/locale';
+import en_US from 'antd/locale/en_US';
+import dayjs from 'dayjs';
+
+import 'dayjs/locale/en';
+
+export const getDefaultLocale = () => {
+  dayjs.locale('en');
+  return en_US;
+};
 
 export const locales: Record<
   string,

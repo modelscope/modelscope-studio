@@ -10,7 +10,7 @@ import type { Locale } from 'antd/es/locale';
 import dayjs from 'dayjs';
 import { produce } from 'immer';
 
-import { locales } from './locales';
+import { getDefaultLocale, locales } from './locales';
 
 const combinePropsAndSlots = (
   props: Record<string, any>,
@@ -70,7 +70,9 @@ export const ConfigProvider = sveltify<
     component,
     ...props
   }) => {
-    const [locale, setLocale] = useState<Locale>();
+    const [locale, setLocale] = useState<Locale>(() => {
+      return getDefaultLocale();
+    });
     const algorithm = {
       dark: themeMode === 'dark' ? true : false,
       ...(props.theme?.algorithm || {}),
