@@ -162,7 +162,7 @@ with gr.Blocks() as demo, ms.Application(), antdx.XProvider(), ms.AutoLoading(
                     },
                     items=[{
                         "label":
-                        "🖋 Make a plan",
+                        "📅 Make a plan",
                         "children": [{
                             "description":
                             "Help me with a plan to start a business"
@@ -175,7 +175,7 @@ with gr.Blocks() as demo, ms.Application(), antdx.XProvider(), ms.AutoLoading(
                         }]
                     }, {
                         "label":
-                        "📅 Help me write",
+                        "🖋 Help me write",
                         "children": [{
                             "description":
                             "Help me write a story with a twist ending"

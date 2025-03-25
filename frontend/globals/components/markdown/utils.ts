@@ -79,7 +79,7 @@ export function escapeTags(content: string, tagsToEscape: string[]): string {
   return result;
 }
 
-export interface LatexTokenizer {
+export interface Tokenizer {
   name: string;
   level: string;
   start: (src: string) => number | undefined;
@@ -89,7 +89,7 @@ export interface LatexTokenizer {
 
 function createLatexTokenizer(
   delimiters: { left: string; right: string; display: boolean }[]
-): LatexTokenizer {
+): Tokenizer {
   const delimiterPatterns = delimiters.map((delimiter) => ({
     start: new RegExp(delimiter.left.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&')),
     end: new RegExp(delimiter.right.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&')),
@@ -125,6 +125,78 @@ function createLatexTokenizer(
       return `<div class="latex-block">${token.text}</div>`;
     },
   };
+}
+
+function createMermaidTokenizer(): Tokenizer {
+  return {
+    name: 'mermaid',
+    level: 'block',
+    start(src) {
+      return src.match(/^```mermaid\s*\n/)?.index;
+    },
+    tokenizer(src) {
+      const match = /^```mermaid\s*\n([\s\S]*?)```\s*(?:\n|$)/.exec(src);
+      if (match) {
+        return {
+          type: 'mermaid',
+          raw: match[0],
+          text: match[1].trim(),
+        };
+      }
+      return undefined;
+    },
+    renderer(token) {
+      return `<div class="mermaid">${token.text}</div>\n`;
+    },
+  };
+}
+
+export async function renderMermaid(el: HTMLElement, themeMode: string) {
+  const mermaidDivs = el.querySelectorAll('.mermaid');
+  if (mermaidDivs.length > 0) {
+    const { default: mermaid } = await import('mermaid');
+
+    const originalContents = Array.from(mermaidDivs).map((node) => {
+      return {
+        element: node,
+        content: node.innerHTML,
+        id: node.id,
+      };
+    });
+
+    mermaid.initialize({
+      startOnLoad: false,
+      theme: themeMode === 'dark' ? 'dark' : 'default',
+      securityLevel: 'antiscript',
+      suppressErrorRendering: true,
+    });
+
+    try {
+      await mermaid.run({
+        nodes: Array.from(mermaidDivs).map((node) => node as HTMLElement),
+      });
+    } catch (e) {
+      // error log
+      console.error(e);
+
+      originalContents.forEach((item) => {
+        const element = item.element as HTMLElement;
+        // check if element has been modified by mermaid or cleared
+        if (
+          !element.querySelector('.mermaid-diagram') &&
+          element.innerHTML.trim() === ''
+        ) {
+          element.classList.add('mermaid-error');
+          element.innerHTML =
+            '<div class="code_wrap">' +
+            COPY_BUTTON_CODE +
+            '<pre><code>' +
+            escape(item.content, false) +
+            '</code></pre></div>\n';
+        }
+      });
+    }
+  }
 }
 
 export function walk_nodes(
@@ -179,7 +251,10 @@ const renderer: Partial<Omit<Renderer, 'constructor' | 'options'>> = {
   code({ text, lang, escaped }) {
     lang = (lang ?? '').match(/\S*/)?.[0] ?? '';
     const code = text.replace(/\n$/, '') + '\n';
-    if (!lang) {
+    if (!lang || lang === 'mermaid') {
+      // We include lang === "mermaid" to handle mermaid blocks that don't match our custom tokenizer
+      // (i.e., those without closing ```). This handles mermaid blocks that have started streaming
+      // but haven't finished yet.
       return (
         '<div class="code_wrap">' +
         COPY_BUTTON_CODE +
@@ -256,8 +331,9 @@ export function create_marked({
     });
   }
   const latexTokenizer = createLatexTokenizer(latex_delimiters);
+  const mermaidTokenizer = createMermaidTokenizer();
   marked.use({
-    extensions: [latexTokenizer],
+    extensions: [latexTokenizer, mermaidTokenizer],
   });
 
   return marked;

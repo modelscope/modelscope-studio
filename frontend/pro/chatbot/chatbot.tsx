@@ -57,6 +57,8 @@ export const Chatbot = sveltify<{
   themeMode: string;
   roles?: BubbleListProps['roles'];
   autoScroll?: boolean;
+  showScrollToBottomButton?: boolean;
+  scrollToBottomButtonOffset?: number;
   height?: string | number;
   minHeight?: string | number;
   maxHeight?: string | number;
@@ -90,6 +92,8 @@ export const Chatbot = sveltify<{
       urlProxyUrl,
       themeMode,
       autoScroll = true,
+      showScrollToBottomButton = true,
+      scrollToBottomButtonOffset = 200,
       markdownConfig,
       welcomeConfig,
       userConfig,
@@ -332,9 +336,9 @@ export const Chatbot = sveltify<{
                         : resolvedBotConfig?.avatar)
                   ),
                   footer:
-                    bubbleProps[lastMessageSymbol] &&
-                    (bubbleProps.loading ||
-                      bubbleProps.status === 'pending') ? null : (
+                    // bubbleProps[lastMessageSymbol] &&
+                    bubbleProps.loading ||
+                    bubbleProps.status === 'pending' ? null : (
                       <ChatbotFooter
                         isEditing={editIndex === index}
                         message={bubbleProps}
@@ -403,6 +407,7 @@ export const Chatbot = sveltify<{
         ref: chatbotRef,
         value,
         autoScroll,
+        scrollButtonOffset: scrollToBottomButtonOffset,
       });
 
       return (
@@ -423,14 +428,14 @@ export const Chatbot = sveltify<{
             roles={rolesRender}
             items={resolvedValue}
           />
-          {showScrollButton && (
+          {showScrollToBottomButton && showScrollButton && (
             <div className="ms-gr-pro-chatbot-scroll-to-bottom-button">
               <Button
                 icon={<ArrowDownOutlined />}
                 shape="circle"
                 variant="outlined"
                 color="primary"
-                onClick={scrollToBottom}
+                onClick={() => scrollToBottom('smooth')}
               />
             </div>
           )}

@@ -10,6 +10,7 @@ import {
   copy_to_clipboard,
   create_marked,
   escapeTags,
+  renderMermaid,
 } from './utils';
 
 import 'katex/dist/katex.min.css';
@@ -123,22 +124,21 @@ export const Markdown: React.FC<MarkdownProps> = ({
   });
 
   const render_html = useMemoizedFn((value: string) => {
-    if (
-      ref.current &&
-      latex_delimiters &&
-      latex_delimiters.length > 0 &&
-      value
-    ) {
+    const el = ref.current;
+    if (el && latex_delimiters && latex_delimiters.length > 0 && value) {
       const containsDelimiter = latex_delimiters.some(
         (delimiter) =>
           value.includes(delimiter.left) && value.includes(delimiter.right)
       );
       if (containsDelimiter) {
-        render_math_in_element(ref.current, {
+        render_math_in_element(el, {
           delimiters: latex_delimiters,
           throwOnError: false,
         });
       }
+    }
+    if (el) {
+      renderMermaid(el, themeMode);
     }
   });
   const handleCopy = useMemoizedFn(async () => {

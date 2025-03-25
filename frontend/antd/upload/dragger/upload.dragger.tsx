@@ -96,7 +96,7 @@ export const UploadDragger = sveltify<
       return (
         fileList.map((file) => {
           if (!isUploadFile(file)) {
-            const uid = file.url || file.path;
+            const uid = file.uid || file.url || file.path;
             if (!visited[uid]) {
               visited[uid] = 0;
             }
@@ -182,23 +182,31 @@ export const UploadDragger = sveltify<
             }
 
             const lastFileList = fileList;
-
+            const tempFileList = validFiles.map((v) => {
+              return {
+                ...v,
+                size: v.size,
+                uid: v.uid,
+                name: v.name,
+                percent: 99,
+                status: 'uploading' as const,
+              };
+            });
             setFileList((prev) => [
               ...(maxCount === 1 ? [] : prev),
-              ...validFiles.map((v) => {
-                return {
-                  ...v,
-                  size: v.size,
-                  uid: v.uid,
-                  name: v.name,
-                  status: 'uploading' as const,
-                };
-              }),
+              ...tempFileList,
             ]);
 
             const fileDataList = (
               await upload(validFiles.map((f) => f.originFileObj as RcFile))
-            ).filter(Boolean) as FileData[];
+            )
+              .filter(Boolean)
+              .map((v, i) => {
+                return {
+                  ...v,
+                  uid: tempFileList[i].uid,
+                };
+              }) as FileData[];
             const mergedFileList =
               maxCount === 1
                 ? fileDataList
