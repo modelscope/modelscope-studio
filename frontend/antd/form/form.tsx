@@ -27,12 +27,15 @@ export const Form = sveltify<
     const feedbackIconsFunction = useFunction(feedbackIcons);
     const requiredMarkFunction = useFunction(requiredMark);
     useEffect(() => {
-      form.setFieldsValue(value);
+      if (value) {
+        form.setFieldsValue(value);
+      } else {
+        form.resetFields();
+      }
     }, [form, value]);
     return (
       <AForm
         {...props}
-        initialValues={value}
         form={form}
         requiredMark={
           slots.requiredMark

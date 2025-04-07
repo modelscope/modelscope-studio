@@ -49,7 +49,11 @@ const Bridge: React.FC<BridgeProps> = ({ createPortal, node }) => {
     )
   );
 
-  const formItemContext = useFormItemContext();
+  let formItemContext = useFormItemContext();
+  const slotKey = useStore(node.slotKey || writable());
+  if (slotKey) {
+    formItemContext = {};
+  }
   const autoCompleteContext = useAutoCompleteContext();
   const suggestionContext = useSuggestionContext();
   let props: typeof nodeProps = useMemo(() => {

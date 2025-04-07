@@ -165,7 +165,7 @@ export const ReactSlot = forwardRef<HTMLElement, ReactSlotProps>(
           observer?.observe(slot, {
             childList: true,
             subtree: true,
-            // attributes: observeAttributes ?? (forceClone ? true : false),
+            attributes: observeAttributes,
           });
         }, 50);
 
