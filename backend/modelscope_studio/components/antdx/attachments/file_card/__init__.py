@@ -16,12 +16,19 @@ class AntdXAttachmentsFileCard(ModelScopeLayoutComponent):
     ]
 
     # supported slots
-    SLOTS = []
+    SLOTS = [
+        'imageProps.placeholder',
+        'imageProps.preview.mask',
+        'imageProps.preview.closeIcon',
+        'imageProps.preview.toolbarRender',
+        'imageProps.preview.imageRender',
+    ]
 
     def __init__(
             self,
             props: dict | None = None,
             *,
+            image_props: dict | None = None,
             item: dict | str | None = None,
             as_item: str | None = None,
             _internal: None = None,
@@ -40,6 +47,7 @@ class AntdXAttachmentsFileCard(ModelScopeLayoutComponent):
                          elem_style=elem_style,
                          **kwargs)
         self.props = props
+        self.image_props = image_props
         if isinstance(item, str):
             self.item = self.serve_static_file(item)
         elif isinstance(item, dict):

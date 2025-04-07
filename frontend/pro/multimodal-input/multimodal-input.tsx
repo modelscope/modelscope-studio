@@ -1,6 +1,7 @@
 import { sveltify } from '@svelte-preprocess-react';
 import { useSuggestionOpenContext } from '@svelte-preprocess-react/context';
 import { ReactSlot } from '@svelte-preprocess-react/react-slot';
+import type { SetSlotParams } from '@svelte-preprocess-react/slot';
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { CloudUploadOutlined, LinkOutlined } from '@ant-design/icons';
 import {
@@ -11,10 +12,12 @@ import {
 } from '@ant-design/x';
 import { type FileData } from '@gradio/client';
 import { convertObjectKeyToCamelCase } from '@utils/convertToCamelCase';
+import { useFunction } from '@utils/hooks/useFunction';
 import { useMemoizedFn } from '@utils/hooks/useMemoizedFn';
 import { useValueChange } from '@utils/hooks/useValueChange';
 import { omitUndefinedProps } from '@utils/omitUndefinedProps';
-import { Badge, Button, Tooltip, type UploadFile } from 'antd';
+import { renderParamsSlot } from '@utils/renderParamsSlot';
+import { Badge, Button, theme, Tooltip, type UploadFile } from 'antd';
 import type { RcFile } from 'antd/es/upload';
 import { noop, omit } from 'lodash-es';
 
@@ -37,6 +40,7 @@ export interface MultimodalInputChangedValue {
 
 export interface UploadConfig extends Omit<AttachmentsProps, 'placeholder'> {
   fullscreenDrop?: boolean;
+  allowUpload?: boolean;
   allowSpeech?: boolean;
   allowPasteFile?: boolean;
   showCount?: boolean;
@@ -70,6 +74,7 @@ export const MultimodalInput = sveltify<
     'onPasteFile' | 'value' | 'onSubmit'
   > & {
     children?: React.ReactNode;
+    setSlotParams: SetSlotParams;
     value?: MultimodalInputValue;
     upload: (files: File[]) => Promise<FileData[]>;
     onPasteFile?: (value: string[]) => void;
@@ -79,7 +84,7 @@ export const MultimodalInput = sveltify<
     onSubmit?: (value: MultimodalInputChangedValue) => void;
     uploadConfig?: UploadConfig;
   },
-  ['prefix']
+  ['actions', 'prefix', 'footer']
 >(
   ({
     onValueChange,
@@ -100,6 +105,7 @@ export const MultimodalInput = sveltify<
     placeholder,
     elRef,
     slots,
+    setSlotParams,
     uploadConfig: uploadConfigProp,
     value: valueProp,
     ...senderProps
@@ -107,7 +113,9 @@ export const MultimodalInput = sveltify<
     const [open, setOpen] = useState(false);
     const suggestionOpen = useSuggestionOpenContext();
     const recorderContainerRef = useRef<HTMLDivElement | null>(null);
-
+    const actionsFunction = useFunction(senderProps.actions, true);
+    const footerFunction = useFunction(senderProps.footer, true);
+    const { token } = theme.useToken();
     const { start, stop, recording } = useRecorder({
       container: recorderContainerRef.current,
       async onStop(blob) {
@@ -271,37 +279,56 @@ export const MultimodalInput = sveltify<
             onChange?.(formatChangedValue(newValue));
             setValue(newValue);
           }}
-          onPasteFile={async (file) => {
+          onPasteFile={async (_file, files) => {
             if (!(uploadConfig?.allowPasteFile ?? true)) {
               return;
             }
-            const filesData = await uploadFile(file);
+            const filesData = await uploadFile(Array.from(files));
             if (filesData) {
               onPasteFile?.(filesData.map((url) => url.path));
             }
           }}
           prefix={
             <>
-              <Tooltip title={uploadConfig?.uploadButtonTooltip}>
-                <Badge
-                  count={
-                    (uploadConfig?.showCount ?? true) && !open
-                      ? validFileList.length
-                      : 0
-                  }
-                >
-                  <Button
-                    onClick={() => {
-                      setOpen(!open);
-                    }}
-                    color="default"
-                    variant="text"
-                    icon={<LinkOutlined />}
-                  />
-                </Badge>
-              </Tooltip>
+              {(uploadConfig?.allowUpload ?? true) ? (
+                <Tooltip title={uploadConfig?.uploadButtonTooltip}>
+                  <Badge
+                    count={
+                      (uploadConfig?.showCount ?? true) && !open
+                        ? validFileList.length
+                        : 0
+                    }
+                  >
+                    <Button
+                      onClick={() => {
+                        setOpen(!open);
+                      }}
+                      color="default"
+                      variant="text"
+                      icon={<LinkOutlined />}
+                    />
+                  </Badge>
+                </Tooltip>
+              ) : null}
               {slots.prefix ? <ReactSlot slot={slots.prefix} /> : null}
             </>
+          }
+          actions={
+            slots.actions
+              ? renderParamsSlot(
+                  {
+                    slots,
+                    setSlotParams,
+                    key: 'actions',
+                  },
+                  { clone: true }
+                )
+              : actionsFunction || senderProps.actions
+          }
+          footer={
+            slots.footer
+              ? renderParamsSlot({ slots, setSlotParams, key: 'footer' })
+              : footerFunction || senderProps.footer
           }
           header={
             <Sender.Header
@@ -320,6 +347,21 @@ export const MultimodalInput = sveltify<
                   ]),
                   { omitNull: true }
                 )}
+                imageProps={{
+                  ...uploadConfig?.imageProps,
+                  wrapperStyle: {
+                    width: '100%',
+                    height: '100%',
+                    ...uploadConfig?.imageProps?.wrapperStyle,
+                  },
+                  style: {
+                    width: '100%',
+                    height: '100%',
+                    objectFit: 'contain',
+                    borderRadius: token.borderRadius,
+                    ...uploadConfig?.imageProps?.style,
+                  },
+                }}
                 disabled={uploadDisabled}
                 getDropContainer={() => {
                   return uploadConfig?.fullscreenDrop ? document.body : null;

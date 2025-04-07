@@ -1,12 +1,18 @@
 import type React from 'react';
+import { useMemo } from 'react';
 import { EyeOutlined } from '@ant-design/icons';
-import { Attachments } from '@ant-design/x';
 import type { Attachment } from '@ant-design/x/es/attachments';
 import { get_fetchable_url_or_file } from '@utils/upload';
 import { Button, Flex, theme } from 'antd';
 
+import { FileCard } from '../../../antdx/attachments/file-card/file-card';
 import type { ChatbotFileContent, ChatbotFileContentConfig } from '../type';
 
+const IMG_EXTS = ['png', 'jpg', 'jpeg', 'gif', 'bmp', 'webp', 'svg'];
+
+function matchExt(suffix: string, ext: string[]) {
+  return ext.some((e) => suffix.toLowerCase() === `.${e}`);
+}
 export interface FileMessageProps {
   options: ChatbotFileContentConfig;
   value?: ChatbotFileContent;
@@ -45,28 +51,45 @@ const FileContainer: React.FC<{
   children: React.ReactNode;
 }> = ({ children, item }) => {
   const { token } = theme.useToken();
+  const isImg = useMemo(() => {
+    const nameStr = item.name || '';
+    const match = nameStr.match(/^(.*)\.[^.]+$/);
+    const nameSuffix = match ? nameStr.slice(match[1].length) : '';
+    return matchExt(nameSuffix, IMG_EXTS);
+  }, [item.name]);
 
   return (
-    <div className="ms-gr-pro-chatbot-message-file-message-container">
-      {children}
-      <div
-        className="ms-gr-pro-chatbot-message-file-message-toolbar"
-        style={{
-          backgroundColor: token.colorBgMask,
-          zIndex: token.zIndexPopupBase,
-          borderRadius: token.borderRadius,
-        }}
-      >
-        <Button
-          icon={<EyeOutlined style={{ color: token.colorWhite }} />}
-          variant="link"
-          color="default"
-          size="small"
-          href={item.url}
-          target="_blank"
-          rel="noopener noreferrer"
-        />
-      </div>
+    <div
+      className="ms-gr-pro-chatbot-message-file-message-container"
+      style={{
+        borderRadius: token.borderRadius,
+      }}
+    >
+      {isImg ? (
+        <> {children}</>
+      ) : (
+        <>
+          {children}
+          <div
+            className="ms-gr-pro-chatbot-message-file-message-toolbar"
+            style={{
+              backgroundColor: token.colorBgMask,
+              zIndex: token.zIndexPopupBase,
+              borderRadius: token.borderRadius,
+            }}
+          >
+            <Button
+              icon={<EyeOutlined style={{ color: token.colorWhite }} />}
+              variant="link"
+              color="default"
+              size="small"
+              href={item.url}
+              target="_blank"
+              rel="noopener noreferrer"
+            />
+          </div>
+        </>
+      )}
     </div>
   );
 };
@@ -77,6 +100,7 @@ export const FileMessage: React.FC<FileMessageProps> = ({
   urlRoot,
   options,
 }) => {
+  const { imageProps } = options;
   return (
     <Flex
       gap="small"
@@ -86,9 +110,15 @@ export const FileMessage: React.FC<FileMessageProps> = ({
     >
       {value?.map((file, index) => {
         const item = resolveItem(file, urlRoot, urlProxyUrl);
+
         return (
           <FileContainer key={`${item.uid}-${index}`} item={item}>
-            <Attachments.FileCard item={item} />
+            <FileCard
+              item={item as typeof file}
+              urlRoot={urlRoot}
+              urlProxyUrl={urlProxyUrl}
+              imageProps={imageProps}
+            />
           </FileContainer>
         );
       })}

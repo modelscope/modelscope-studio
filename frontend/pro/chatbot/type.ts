@@ -5,6 +5,7 @@ import type {
   WelcomeProps,
 } from '@ant-design/x';
 import type { Attachment } from '@ant-design/x/es/attachments';
+import type { FileListProps } from '@ant-design/x/es/attachments/FileList';
 import type { BubbleDataType } from '@ant-design/x/es/bubble/BubbleList';
 import type { MarkdownProps } from '@globals/components';
 import type { FileData } from '@gradio/client';
@@ -51,7 +52,9 @@ export type ChatbotToolContentConfig = ChatbotMarkdownConfig & {
   status?: 'pending' | 'done';
   title?: string;
 };
-export type ChatbotFileContentConfig = FlexProps;
+export type ChatbotFileContentConfig = FlexProps & {
+  imageProps?: FileListProps['imageProps'];
+};
 
 export type ChatbotSuggestionContentConfig = ChatbotPromptsConfig;
 

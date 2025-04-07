@@ -1,41 +1,94 @@
 import { sveltify } from '@svelte-preprocess-react';
-import React, { useMemo } from 'react';
-import { Attachments as XAttachments } from '@ant-design/x';
-import type { Attachment } from '@ant-design/x/es/attachments';
-import type { FileListCardProps } from '@ant-design/x/es/attachments/FileList/FileListCard';
-import type { FileData } from '@gradio/client';
-import { get_fetchable_url_or_file } from '@utils/upload';
+import { ReactSlot } from '@svelte-preprocess-react/react-slot';
+import type { SetSlotParams } from '@svelte-preprocess-react/slot';
+import { useFunction } from '@utils/hooks/useFunction';
+import { omitUndefinedProps } from '@utils/omitUndefinedProps';
+import { renderParamsSlot } from '@utils/renderParamsSlot';
 
-export const AttachmentsFileCard = sveltify<
-  Omit<FileListCardProps, 'item'> & {
-    urlRoot: string;
-    urlProxyUrl: string;
-    item?: string | (Attachment & FileData);
+import { FileCard, type FileCardProps } from './file-card';
+
+function getConfig<T>(value: T): Partial<T & Record<PropertyKey, any>> {
+  if (typeof value === 'object' && value !== null) {
+    return value as any;
   }
->(({ item, urlRoot, urlProxyUrl, ...props }) => {
-  const resolvedItem = useMemo(() => {
-    if (!item) {
-      return {};
-    }
-    if (typeof item === 'string') {
-      return {
-        url: item.startsWith('http')
-          ? item
-          : get_fetchable_url_or_file(item, urlRoot, urlProxyUrl),
-        uid: item,
-        name: item.split('/').pop(),
-      };
-    }
-    return {
-      ...item,
-      uid: item.uid || item.path || item.url,
-      name:
-        item.name || item.orig_name || (item.url || item.path).split('/').pop(),
-      url:
-        item.url || get_fetchable_url_or_file(item.path, urlRoot, urlProxyUrl),
-    };
-  }, [item, urlProxyUrl, urlRoot]);
-  return <XAttachments.FileCard {...props} item={resolvedItem as Attachment} />;
+  return {} as any;
+}
+export const AttachmentsFileCard = sveltify<
+  FileCardProps & {
+    setSlotParams: SetSlotParams;
+    children?: React.ReactNode;
+  },
+  [
+    'imageProps.placeholder',
+    'imageProps.preview.mask',
+    'imageProps.preview.closeIcon',
+    'imageProps.preview.toolbarRender',
+    'imageProps.preview.imageRender',
+  ]
+>(({ setSlotParams, imageProps, slots, children, ...props }) => {
+  const previewConfig = getConfig(imageProps?.preview);
+  const supportPreview =
+    slots['imageProps.preview.mask'] ||
+    slots['imageProps.preview.closeIcon'] ||
+    slots['imageProps.preview.toolbarRender'] ||
+    slots['imageProps.preview.imageRender'] ||
+    imageProps?.preview !== false;
+  const getContainerFunction = useFunction(previewConfig.getContainer);
+  const previewToolbarRenderFunction = useFunction(previewConfig.toolbarRender);
+  const previewImageRenderFunction = useFunction(previewConfig.imageRender);
+
+  return (
+    <>
+      <div style={{ display: 'none' }}>{children}</div>
+      <FileCard
+        {...props}
+        imageProps={{
+          ...imageProps,
+          preview: supportPreview
+            ? (omitUndefinedProps({
+                ...previewConfig,
+                getContainer: getContainerFunction,
+                toolbarRender: slots['imageProps.preview.toolbarRender']
+                  ? renderParamsSlot({
+                      slots,
+                      setSlotParams,
+                      key: 'imageProps.preview.toolbarRender',
+                    })
+                  : previewToolbarRenderFunction,
+                imageRender: slots['imageProps.preview.imageRender']
+                  ? renderParamsSlot({
+                      slots,
+                      setSlotParams,
+                      key: 'imageProps.preview.imageRender',
+                    })
+                  : previewImageRenderFunction,
+
+                ...(slots['imageProps.preview.mask'] ||
+                Reflect.has(previewConfig, 'mask')
+                  ? {
+                      mask: slots['imageProps.preview.mask'] ? (
+                        <ReactSlot slot={slots['imageProps.preview.mask']} />
+                      ) : (
+                        previewConfig.mask
+                      ),
+                    }
+                  : {}),
+                closeIcon: slots['imageProps.preview.closeIcon'] ? (
+                  <ReactSlot slot={slots['imageProps.preview.closeIcon']} />
+                ) : (
+                  previewConfig.closeIcon
+                ),
+              }) as NonNullable<FileCardProps['imageProps']>['preview'])
+            : false,
+          placeholder: slots['imageProps.placeholder'] ? (
+            <ReactSlot slot={slots['imageProps.placeholder']} />
+          ) : (
+            imageProps?.placeholder
+          ),
+        }}
+      />
+    </>
+  );
 });
 
 export default AttachmentsFileCard;

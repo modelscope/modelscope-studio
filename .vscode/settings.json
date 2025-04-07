@@ -16,6 +16,7 @@
     "typescriptreact",
     "svelte"
   ],
+  "stylelint.validate": ["css", "less", "scss", "sass"],
   "[md]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },

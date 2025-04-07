@@ -56,7 +56,9 @@
     ..._load_more_button_props,
     ...load_more_button_props,
   };
-  const dispatch = createEventDispatcher();
+  const dispatch = createEventDispatcher<{
+    prop_change: { selected_index: typeof selected_index };
+  }>();
 
   const handle_like = (data: LikeData) => {
     gradio.dispatch('like', data);
