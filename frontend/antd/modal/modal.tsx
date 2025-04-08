@@ -36,7 +36,7 @@ export const Modal = sveltify<
     const afterCloseFunction = useFunction(afterClose);
     const getContainerFunction = useFunction(getContainer);
     const modalRenderFunction = useFunction(modalRender);
-
+    const footerFunction = useFunction(props.footer, true);
     return (
       <AModal
         {...props}
@@ -84,7 +84,12 @@ export const Modal = sveltify<
         footer={
           slots.footer
             ? renderParamsSlot({ slots, setSlotParams, key: 'footer' })
-            : props.footer
+            : footerFunction ||
+              (props.footer === 'DEFAULT_FOOTER'
+                ? undefined
+                : props.footer == undefined
+                  ? null
+                  : props.footer)
         }
         title={slots.title ? <ReactSlot slot={slots.title} /> : props.title}
         modalRender={

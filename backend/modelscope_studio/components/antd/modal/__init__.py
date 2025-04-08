@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from typing import Any
+from typing import Any, Literal
 
 from gradio.events import EventListener
 
@@ -46,7 +46,7 @@ class AntdModal(ModelScopeLayoutComponent):
             confirm_loading: bool | None = None,
             destroy_on_close: bool | None = None,
             focus_trigger_after_close: bool | None = None,
-            footer: str | None = None,
+            footer: str | Literal['DEFAULT_FOOTER'] | None = "DEFAULT_FOOTER",
             force_render: bool | None = None,
             get_container: str | None = None,
             keyboard: bool | None = None,

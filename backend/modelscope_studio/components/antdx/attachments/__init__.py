@@ -57,6 +57,11 @@ class AntdXAttachments(ModelScopeDataLayoutComponent):
         'placeholder.title',
         'placeholder.description',
         'placeholder.icon',
+        'imageProps.placeholder',
+        'imageProps.preview.mask',
+        'imageProps.preview.closeIcon',
+        'imageProps.preview.toolbarRender',
+        'imageProps.preview.imageRender',
     ]
 
     data_model = ListFiles
@@ -66,6 +71,7 @@ class AntdXAttachments(ModelScopeDataLayoutComponent):
             value: list[str] | Callable | None = None,
             props: dict | None = None,
             *,
+            image_props: dict | None = None,
             accept: str | None = None,
             action: str | None = None,
             before_upload: str | None = None,
@@ -122,6 +128,7 @@ class AntdXAttachments(ModelScopeDataLayoutComponent):
                          render=render,
                          **kwargs)
         self.props = props
+        self.image_props = image_props
         self.accept = accept
         self.action = action
         self.before_upload = before_upload

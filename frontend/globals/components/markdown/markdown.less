@@ -2,6 +2,7 @@
   position: relative;
   max-width: 100%;
 
+  /* stylelint-disable-next-line no-invalid-position-at-import-rule */
   @import url('./prism.less');
 
   .ms-gr-markdown-copy {
@@ -61,7 +62,7 @@
   }
 
   .math.inline svg {
-    display: inline;
+    display: inline-block;
     margin-bottom: 0.22em;
   }
 
@@ -130,6 +131,7 @@
     }
 
     table {
+      /* stylelint-disable-next-line declaration-property-value-keyword-no-deprecated */
       word-break: break-word;
     }
   }

@@ -50,7 +50,7 @@ class AntdButton(ModelScopeLayoutComponent):
 
     def __init__(
             self,
-            value: str | None = "Run",
+            value: str | None = None,
             props: dict | None = None,
             *,
             auto_insert_space: bool = True,

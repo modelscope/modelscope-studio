@@ -271,6 +271,7 @@ class ChatbotDataFileContentOptions(GradioModel):
     flex: Optional[str] = "normal"
     gap: Optional[Union[Literal["small", "middle", "large"], str, int,
                         float]] = "small"
+    image_props: Optional[dict] = None
 
 
 # Ant Design X prompts props: https://x.ant.design/components/prompts

@@ -38,7 +38,7 @@ class ChatbotPromptsConfig(GradioModel):
 # Ant Design X welcome props: https://x.ant.design/components/welcome
 class ChatbotWelcomeConfig(GradioModel):
     variant: Optional[Literal['borderless', 'filled']] = 'borderless'
-    icon: Optional[Union[str, Path]] = None
+    icon: Optional[Union[str, Path, dict]] = None
     title: Optional[str] = None
     description: Optional[str] = None
     extra: Optional[str] = None
@@ -202,6 +202,7 @@ class ChatbotDataFileContentOptions(GradioModel):
     flex: Optional[str] = "normal"
     gap: Optional[Union[Literal["small", "middle", "large"], str, int,
                         float]] = "small"
+    image_props: Optional[dict] = None
 
 
 # Ant Design X prompts props: https://x.ant.design/components/prompts

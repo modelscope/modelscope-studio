@@ -36,8 +36,8 @@ class AntdXConversations(ModelScopeLayoutComponent):
 
     # supported slots
     SLOTS = [
-        'menu.expandIcon', 'menu.overflowedIndicator', 'groupable.title',
-        'items'
+        'menu.expandIcon', 'menu.overflowedIndicator', 'menu.trigger',
+        'groupable.title', 'items'
     ]
 
     def __init__(

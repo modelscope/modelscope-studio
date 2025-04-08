@@ -39,6 +39,12 @@ class AntdXSender(ModelScopeDataLayoutComponent):
         EventListener("key_press",
                       callback=lambda block: block._internal.update(
                           bind_keyPress_event=True)),
+        EventListener("focus",
+                      callback=lambda block: block._internal.update(
+                          bind_focus_event=True)),
+        EventListener("blur",
+                      callback=lambda block: block._internal.update(
+                          bind_blur_event=True)),
         EventListener("paste",
                       callback=lambda block: block._internal.update(
                           bind_paste_event=True)),
@@ -48,14 +54,16 @@ class AntdXSender(ModelScopeDataLayoutComponent):
     ]
 
     # supported slots
-    SLOTS = ['actions', 'header', 'prefix']
+    SLOTS = ['actions', 'header', 'prefix', 'footer']
 
     def __init__(
             self,
             value: str | None = None,
             props: dict | None = None,
             *,
-            actions: str | None = None,
+            auto_size: bool | dict | None = None,
+            footer: str | None = None,
+            actions: str | bool | None = None,
             allow_speech: bool | dict | None = None,
             class_names: dict | None = None,
             components: dict | None = None,
@@ -87,6 +95,8 @@ class AntdXSender(ModelScopeDataLayoutComponent):
                          elem_style=elem_style,
                          **kwargs)
         self.props = props
+        self.auto_size = auto_size
+        self.footer = footer
         self.class_names = class_names
         self.default_value = default_value
         self.disabled = disabled

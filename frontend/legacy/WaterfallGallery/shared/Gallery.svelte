@@ -1,5 +1,4 @@
 <script lang="ts">
-  /* eslint-disable svelte/valid-compile */
   import { BlockLabel, Empty, IconButton, ShareButton } from '@gradio/atoms';
   import { BaseButton } from '@gradio/button';
   import { type FileData } from '@gradio/client';

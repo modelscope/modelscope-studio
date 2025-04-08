@@ -17,7 +17,7 @@ export const Sender = sveltify<
     onPasteFile?: (value: string[]) => void;
     onValueChange: (value: string) => void;
   },
-  ['actions', 'header', 'prefix']
+  ['actions', 'header', 'prefix', 'footer']
 >(
   ({
     slots,
@@ -31,6 +31,7 @@ export const Sender = sveltify<
     ...props
   }) => {
     const actionsFunction = useFunction(props.actions, true);
+    const footerFunction = useFunction(props.footer, true);
     const [value, setValue] = useValueChange({
       onValueChange,
       value: props.value,
@@ -52,8 +53,8 @@ export const Sender = sveltify<
             onChange?.(v);
             setValue(v);
           }}
-          onPasteFile={async (file) => {
-            const urls = await upload(Array.isArray(file) ? file : [file]);
+          onPasteFile={async (_file, files) => {
+            const urls = await upload(Array.from(files));
             onPasteFile?.(urls.map((url) => url.path));
           }}
           header={
@@ -73,6 +74,11 @@ export const Sender = sveltify<
                   { clone: true }
                 )
               : actionsFunction || props.actions
+          }
+          footer={
+            slots.footer
+              ? renderParamsSlot({ slots, setSlotParams, key: 'footer' })
+              : footerFunction || props.footer
           }
         />
       </>

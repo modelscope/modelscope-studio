@@ -25,7 +25,7 @@
   },
   "devDependencies": {
     "@changesets/types": "^6.1.0",
-    "@types/node": "^22.13.10",
+    "@types/node": "^22.14.0",
     "tsup": "^8.4.0"
   }
 }

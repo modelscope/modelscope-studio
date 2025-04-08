@@ -39,7 +39,9 @@ export const Each = sveltify<EachProps, ['children']>(
       <>
         <div style={{ display: 'none' }}>
           {/* Isolate the outer Context of Each */}
-          <ContextPropsProvider>{children}</ContextPropsProvider>
+          <ContextPropsProvider mergeContext={false}>
+            {children}
+          </ContextPropsProvider>
         </div>
         {value?.map((item, i) => {
           return (

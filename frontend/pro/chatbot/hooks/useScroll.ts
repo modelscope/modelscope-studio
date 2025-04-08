@@ -25,9 +25,12 @@ export function useScroll(options: useScrollOptions) {
         return;
       }
       isProgrammaticScroll.current = true;
-      ref.current.scrollTo({
-        offset: ref.current.nativeElement.scrollHeight,
-        behavior,
+
+      requestAnimationFrame(() => {
+        ref.current?.scrollTo({
+          offset: ref.current.nativeElement.scrollHeight,
+          behavior,
+        });
       });
 
       setShowScrollButton(false);
@@ -46,7 +49,7 @@ export function useScroll(options: useScrollOptions) {
 
   // update when value changed
   useEffect(() => {
-    if (ref.current && autoScroll && value.length) {
+    if (ref.current && autoScroll) {
       if (value.length !== prevMessageLengthRef.current) {
         canScrollRef.current = true;
       }

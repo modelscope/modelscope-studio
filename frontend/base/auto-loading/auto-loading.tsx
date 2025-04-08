@@ -156,7 +156,7 @@ export const AutoLoading = sveltify<
                 closable
                 className="ms-gr-auto-loading-error-default-antd"
                 style={{
-                  zIndex: token.zIndexPopupBase,
+                  zIndex: token.zIndexPopupBase + 1,
                 }}
                 message="Error"
                 description={message}

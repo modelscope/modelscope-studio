@@ -5,7 +5,11 @@
     bindEvents,
     importComponent,
   } from '@svelte-preprocess-react/component';
-  import { getSlotContext, getSlots } from '@svelte-preprocess-react/slot';
+  import {
+    getSetSlotParamsFn,
+    getSlotContext,
+    getSlots,
+  } from '@svelte-preprocess-react/slot';
   import type React from 'react';
   import { type FileData, prepare_files } from '@gradio/client';
   import type { Gradio } from '@gradio/utils';
@@ -46,6 +50,7 @@
     value,
     restProps: $$restProps,
   });
+  const setSlotParams = getSetSlotParamsFn();
   const slots = getSlots();
   $: update({
     gradio,
@@ -84,6 +89,7 @@
       })}
       slots={$slots}
       value={$mergedProps.props.value ?? $mergedProps.value}
+      {setSlotParams}
       onValueChange={(v) => {
         value = v;
       }}

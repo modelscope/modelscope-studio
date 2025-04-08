@@ -7,8 +7,8 @@
   "type": "module",
   "dependencies": {
     "@ant-design/cssinjs": "^1.23.0",
-    "@ant-design/icons": "^5.6.1",
-    "@ant-design/x": "^1.0.5",
+    "@ant-design/icons": "^6.0.0",
+    "@ant-design/x": "^1.1.0",
     "@gradio/atoms": "0.7.4",
     "@gradio/button": "^0.2.43",
     "@gradio/client": "^1.10.0",
@@ -18,7 +18,7 @@
     "@gradio/upload": "0.11.2",
     "@gradio/utils": "0.9.0",
     "amuchina": "^1.0.12",
-    "antd": "^5.24.3",
+    "antd": "^5.24.6",
     "classnames": "^2.5.1",
     "dayjs": "^1.11.12",
     "dequal": "^2.0.2",
@@ -29,27 +29,27 @@
     "marked": "^15.0.7",
     "marked-gfm-heading-id": "^4.1.1",
     "marked-highlight": "^2.2.1",
-    "mermaid": "^11.5.0",
+    "mermaid": "^11.6.0",
     "prismjs": "^1.30.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "svelte": "^4.2.19",
     "svelte-i18n": "^4.0.1",
-    "wavesurfer.js": "^7.9.1"
+    "wavesurfer.js": "^7.9.4"
   },
   "devDependencies": {
-    "@babel/core": "^7.26.9",
+    "@babel/core": "^7.26.10",
     "@types/babel__core": "^7.20.5",
     "@types/katex": "^0.16.7",
     "@types/lodash-es": "^4.17.12",
     "@types/prismjs": "^1.26.5",
     "@types/react": "^18.3.12",
     "@types/react-dom": "^18.3.1",
-    "@types/sanitize-html": "^2.13.0",
-    "@vitejs/plugin-react-swc": "^3.8.0",
-    "less": "^4.2.2",
+    "@types/sanitize-html": "^2.15.0",
+    "@vitejs/plugin-react-swc": "^3.8.1",
+    "less": "^4.3.0",
     "typescript-json-schema": "^0.65.1",
-    "vite": "^6.2.1"
+    "vite": "^6.2.5"
   },
   "main_changeset": true
 }

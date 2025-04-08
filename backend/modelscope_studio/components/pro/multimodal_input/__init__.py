@@ -19,6 +19,8 @@ class MultimodalInputUploadConfig(GradioModel):
     """
     fullscreen_drop: Whether to allow fullscreen drop files to the attachments.
 
+    allow_upload: Whether to allow upload files to the attachments.
+
     allow_paste_file: Whether to allow paste file to the attachments.
 
     allow_speech: Whether to allow speech input.
@@ -38,11 +40,15 @@ class MultimodalInputUploadConfig(GradioModel):
     multiple: Whether to support selected multiple files. IE10+ supported. You can select multiple files with CTRL holding down while multiple is set to be True.
 
     overflow: Behavior when the file list overflows.
+
     title: Title of the attachments panel.
+
+    image_props: Image config, same as [Image](https://ant.design/components/image)
 
     placeholder: Placeholder information when there is no file.
     """
     fullscreen_drop: Optional[bool] = False
+    allow_upload: Optional[bool] = True
     allow_paste_file: Optional[bool] = True
     allow_speech: Optional[bool] = False
     show_count: Optional[bool] = True
@@ -54,6 +60,7 @@ class MultimodalInputUploadConfig(GradioModel):
     disabled: Optional[bool] = False
     overflow: Literal['wrap', 'scrollX', 'scrollY'] | None = None
     title: Optional[str] = "Attachments"
+    image_props: Optional[dict] = None
     placeholder: Optional[dict] = field(
         default_factory=lambda: {
             "inline": {
@@ -95,6 +102,12 @@ class ModelScopeProMultimodalInput(ModelScopeDataLayoutComponent):
         EventListener("key_press",
                       callback=lambda block: block._internal.update(
                           bind_keyPress_event=True)),
+        EventListener("focus",
+                      callback=lambda block: block._internal.update(
+                          bind_focus_event=True)),
+        EventListener("blur",
+                      callback=lambda block: block._internal.update(
+                          bind_blur_event=True)),
         EventListener("upload",
                       callback=lambda block: block._internal.update(
                           bind_upload_event=True)),
@@ -121,12 +134,15 @@ class ModelScopeProMultimodalInput(ModelScopeDataLayoutComponent):
     data_model = MultimodalInputValue
 
     # supported slots
-    SLOTS = ["prefix"]
+    SLOTS = ['actions', "prefix", 'footer']
 
     def __init__(
             self,
             value: dict | MultimodalInputValue | None = None,
             *,
+            auto_size: bool | dict | None = None,
+            footer: str | None = None,
+            actions: str | bool | None = None,
             class_names: dict | None = None,
             styles: dict | None = None,
             loading: bool | None = None,
@@ -153,6 +169,9 @@ class ModelScopeProMultimodalInput(ModelScopeDataLayoutComponent):
                          as_item=as_item,
                          elem_style=elem_style,
                          **kwargs)
+        self.auto_size = auto_size
+        self.footer = footer
+        self.actions = actions
         self.class_names = class_names
         self.disabled = disabled
         self.styles = styles

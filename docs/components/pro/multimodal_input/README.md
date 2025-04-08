@@ -46,6 +46,8 @@ class MultimodalInputUploadConfig(GradioModel):
     """
     fullscreen_drop: Whether to allow fullscreen drop files to the attachments.
 
+    allow_upload: Whether to allow upload files to the attachments.
+
     allow_paste_file: Whether to allow paste file to the attachments.
 
     allow_speech: Whether to allow speech input.
@@ -65,11 +67,15 @@ class MultimodalInputUploadConfig(GradioModel):
     multiple: Whether to support selected multiple files. IE10+ supported. You can select multiple files with CTRL holding down while multiple is set to be True.
 
     overflow: Behavior when the file list overflows.
+
     title: Title of the attachments panel.
+
+    image_props: Image config, same as [Image](https://ant.design/components/image)
 
     placeholder: Placeholder information when there is no file.
     """
     fullscreen_drop: Optional[bool] = False
+    allow_upload: Optional[bool] = True
     allow_paste_file: Optional[bool] = True
     allow_speech: Optional[bool] = False
     show_count: Optional[bool] = True
@@ -81,6 +87,7 @@ class MultimodalInputUploadConfig(GradioModel):
     disabled: Optional[bool] = False
     overflow: Literal['wrap', 'scrollX', 'scrollY'] | None = None
     title: Optional[str] = "Attachments"
+    image_props: Optional[dict] = None
     placeholder: Optional[dict] = field(
         default_factory=lambda: {
             "inline": {
@@ -91,7 +98,6 @@ class MultimodalInputUploadConfig(GradioModel):
                 "title": "Drop files here",
             }
         })
-
 
 class MultimodalInputValue(GradioModel):
     files: Optional[ListFiles] = None

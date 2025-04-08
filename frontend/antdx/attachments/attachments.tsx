@@ -1,4 +1,5 @@
 import { sveltify } from '@svelte-preprocess-react';
+import { ReactSlot } from '@svelte-preprocess-react/react-slot';
 import type { SetSlotParams } from '@svelte-preprocess-react/slot';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import {
@@ -8,10 +9,13 @@ import {
 import type { FileData } from '@gradio/client';
 import { useFunction } from '@utils/hooks/useFunction';
 import { useTargets } from '@utils/hooks/useTargets';
+import { omitUndefinedProps } from '@utils/omitUndefinedProps';
 import { renderParamsSlot } from '@utils/renderParamsSlot';
-import { type UploadFile } from 'antd';
+import { theme, type UploadFile } from 'antd';
 import type { RcFile } from 'antd/es/upload';
 import { noop } from 'lodash-es';
+
+import type { FileCardProps } from './file-card/file-card';
 
 const isUploadFile = (file: FileData | UploadFile): file is UploadFile => {
   return !!(file as UploadFile).name;
@@ -43,6 +47,11 @@ export const Attachments = sveltify<
     'placeholder.title',
     'placeholder.description',
     'placeholder.icon',
+    'imageProps.placeholder',
+    'imageProps.preview.mask',
+    'imageProps.preview.closeIcon',
+    'imageProps.preview.toolbarRender',
+    'imageProps.preview.imageRender',
   ]
 >(
   ({
@@ -66,8 +75,24 @@ export const Attachments = sveltify<
     getDropContainer,
     children,
     maxCount,
+    imageProps,
     ...props
   }) => {
+    // imageProps
+    const previewConfig = getConfig(imageProps?.preview);
+    const supportPreview =
+      slots['imageProps.preview.mask'] ||
+      slots['imageProps.preview.closeIcon'] ||
+      slots['imageProps.preview.toolbarRender'] ||
+      slots['imageProps.preview.imageRender'] ||
+      imageProps?.preview !== false;
+    const getContainerFunction = useFunction(previewConfig.getContainer);
+    const previewToolbarRenderFunction = useFunction(
+      previewConfig.toolbarRender
+    );
+    const previewImageRenderFunction = useFunction(previewConfig.imageRender);
+    // imageProps
+
     const supportShowUploadListConfig =
       slots['showUploadList.downloadIcon'] ||
       slots['showUploadList.removeIcon'] ||
@@ -90,6 +115,8 @@ export const Attachments = sveltify<
     const showUploadListShowDownloadIconFunction = useFunction(
       showUploadListConfig.showDownloadIcon
     );
+    const { token } = theme.useToken();
+
     const beforeUploadFunction = useFunction(beforeUpload);
     const customRequestFunction = useFunction(customRequest);
     const progressFormatFunction = useFunction(progress?.format);
@@ -143,6 +170,62 @@ export const Attachments = sveltify<
         </div>
         <XAttachments
           {...props}
+          imageProps={{
+            ...imageProps,
+            preview: supportPreview
+              ? (omitUndefinedProps({
+                  ...previewConfig,
+                  getContainer: getContainerFunction,
+                  toolbarRender: slots['imageProps.preview.toolbarRender']
+                    ? renderParamsSlot({
+                        slots,
+                        setSlotParams,
+                        key: 'imageProps.preview.toolbarRender',
+                      })
+                    : previewToolbarRenderFunction,
+                  imageRender: slots['imageProps.preview.imageRender']
+                    ? renderParamsSlot({
+                        slots,
+                        setSlotParams,
+                        key: 'imageProps.preview.imageRender',
+                      })
+                    : previewImageRenderFunction,
+
+                  ...(slots['imageProps.preview.mask'] ||
+                  Reflect.has(previewConfig, 'mask')
+                    ? {
+                        mask: slots['imageProps.preview.mask'] ? (
+                          <ReactSlot slot={slots['imageProps.preview.mask']} />
+                        ) : (
+                          previewConfig.mask
+                        ),
+                      }
+                    : {}),
+                  closeIcon: slots['imageProps.preview.closeIcon'] ? (
+                    <ReactSlot slot={slots['imageProps.preview.closeIcon']} />
+                  ) : (
+                    previewConfig.closeIcon
+                  ),
+                }) as NonNullable<FileCardProps['imageProps']>['preview'])
+              : false,
+            placeholder: slots['imageProps.placeholder'] ? (
+              <ReactSlot slot={slots['imageProps.placeholder']} />
+            ) : (
+              imageProps?.placeholder
+            ),
+            wrapperStyle: {
+              width: '100%',
+              height: '100%',
+              ...imageProps?.wrapperStyle,
+            },
+            style: {
+              width: '100%',
+              height: '100%',
+              objectFit: 'contain',
+              borderRadius: token.borderRadius,
+              ...imageProps?.style,
+            },
+          }}
           getDropContainer={getDropContainerFunction}
           placeholder={
             slots.placeholder
