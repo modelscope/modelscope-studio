@@ -11,6 +11,8 @@ import 'prismjs/components/prism-python';
 import 'prismjs/components/prism-latex';
 import 'prismjs/components/prism-bash';
 
+import { standardHtmlTags } from './html-tags';
+
 const LINK_ICON_CODE = `<svg class="md-link-icon" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true" fill="currentColor"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>`;
 
 const COPY_ICON_CODE = `
@@ -61,25 +63,41 @@ function escape(html: string, encode?: boolean): string {
   return html;
 }
 
-export function escapeTags(content: string, tagsToEscape: string[]): string {
-  const tagPattern = tagsToEscape.map((tag) => ({
-    open: new RegExp(`<(${tag})(\\s+[^>]*)?>`, 'gi'),
-    close: new RegExp(`</(${tag})>`, 'gi'),
-  }));
+export function escapeTags(
+  content: string,
+  tagsToEscape: string[] | boolean
+): string {
+  if (tagsToEscape === true) {
+    // https://www.w3schools.com/tags/
+    const tagRegex = /<\/?([a-zA-Z][a-zA-Z0-9-]*)([\s>])/g;
+    return content.replace(tagRegex, (match, tagName, _endChar) => {
+      if (!standardHtmlTags.includes(tagName.toLowerCase())) {
+        return match.replace(/</g, '&lt;').replace(/>/g, '&gt;');
+      }
+      return match;
+    });
+  }
 
-  let result = content;
+  if (Array.isArray(tagsToEscape)) {
+    const tagPattern = tagsToEscape.map((tag) => ({
+      open: new RegExp(`<(${tag})(\\s+[^>]*)?>`, 'gi'),
+      close: new RegExp(`</(${tag})>`, 'gi'),
+    }));
 
-  tagPattern.forEach((pattern) => {
-    result = result.replace(
-      pattern.open,
-      (_, tag, attributes) => `&lt;${tag}${attributes || ''}&gt;`
-    );
-    result = result.replace(pattern.close, (_, tag) => `&lt;/${tag}&gt;`);
-  });
+    let result = content;
 
-  return result;
+    tagPattern.forEach((pattern) => {
+      result = result.replace(pattern.open, (match) =>
+        match.replace(/</g, '&lt;').replace(/>/g, '&gt;')
+      );
+      result = result.replace(pattern.close, (match) =>
+        match.replace(/</g, '&lt;').replace(/>/g, '&gt;')
+      );
+    });
+    return result;
+  }
+  return content;
 }
-
 export interface Tokenizer {
   name: string;
   level: string;

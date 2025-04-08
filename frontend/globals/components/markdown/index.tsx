@@ -41,7 +41,7 @@ export interface MarkdownProps
   rtl?: boolean;
   themeMode: string;
   urlRoot: string;
-  allowTags?: string[];
+  allowTags?: string[] | boolean;
   onCopy?: (options: { value: string }) => void;
   onChange?: () => void;
   copyButtons?: React.ReactNode[];

@@ -97,7 +97,7 @@ class ChatbotMarkdownConfig(GradioModel):
     sanitize_html: Optional[bool] = True
     line_breaks: Optional[bool] = True
     rtl: Optional[bool] = False
-    allow_tags: Optional[List[str]] = None
+    allow_tags: Optional[Union[List[str], bool]] = False
 
 
 class ChatbotActionConfig(GradioModel):

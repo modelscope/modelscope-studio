@@ -10,7 +10,7 @@ with gr.Blocks() as demo:
             with antd.Space(direction="vertical"):
                 antd.Divider("Without Filter")
                 with ms.Each(value=data):
-                    antd.Button()
+                    antd.Button("Run")
                 antd.Divider("With Filter")
                 with ms.Each(value=data):
                     with ms.Filter():

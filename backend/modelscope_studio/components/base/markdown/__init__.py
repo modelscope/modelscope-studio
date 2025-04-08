@@ -61,7 +61,7 @@ class ModelScopeMarkdown(ModelScopeDataLayoutComponent):
             sanitize_html: bool = True,
             line_breaks: bool = False,
             header_links: bool = False,
-            allow_tags: list[str] | None = None,
+            allow_tags: list[str] | bool = False,
             show_copy_button: bool = False,
             copy_buttons: tuple[str | float | int, str | float | int]
         | None = None,
@@ -130,7 +130,7 @@ class ModelScopeMarkdown(ModelScopeDataLayoutComponent):
         self.sanitize_html = sanitize_html
         self.line_breaks = line_breaks
         self.header_links = header_links
-        self.allow_tags = allow_tags
+        self.allow_tags = allow_tags if allow_tags else False
         self.show_copy_button = show_copy_button
         self.copy_buttons = copy_buttons
         self.props = props
