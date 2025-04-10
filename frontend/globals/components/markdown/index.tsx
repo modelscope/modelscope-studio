@@ -104,17 +104,15 @@ export const Markdown: React.FC<MarkdownProps> = ({
         return `%%%LATEX_BLOCK_${latexBlocks.length - 1}%%%`;
       });
     });
-
+    if (allow_tags) {
+      parsedValue = escapeTags(parsedValue, allow_tags);
+    }
     parsedValue = marked.parse(parsedValue) as string;
 
     parsedValue = parsedValue.replace(
       /%%%LATEX_BLOCK_(\d+)%%%/g,
       (_match, p1) => latexBlocks[parseInt(p1, 10)]
     );
-
-    if (allow_tags) {
-      parsedValue = escapeTags(parsedValue, allow_tags);
-    }
 
     if (sanitize_html) {
       parsedValue = sanitize(parsedValue, urlRoot);

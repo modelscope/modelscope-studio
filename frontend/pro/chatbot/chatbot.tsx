@@ -245,6 +245,7 @@ export const Chatbot = sveltify<{
         {
           roles,
           preProcess(bubbleProps, index) {
+            const isUserRole = bubbleProps.role === 'user';
             return {
               ...(bubbleProps as BubbleDataType),
               style: bubbleProps.elem_style,
@@ -255,14 +256,23 @@ export const Chatbot = sveltify<{
               classNames: {
                 ...bubbleProps.class_names,
                 avatar: cls(
+                  isUserRole
+                    ? resolvedUserConfig?.class_names?.avatar
+                    : resolvedBotConfig?.class_names?.avatar,
                   bubbleProps.class_names?.avatar,
                   'ms-gr-pro-chatbot-message-avatar'
                 ),
                 header: cls(
+                  isUserRole
+                    ? resolvedUserConfig?.class_names?.header
+                    : resolvedBotConfig?.class_names?.header,
                   bubbleProps.class_names?.header,
                   'ms-gr-pro-chatbot-message-header'
                 ),
                 footer: cls(
+                  isUserRole
+                    ? resolvedUserConfig?.class_names?.footer
+                    : resolvedBotConfig?.class_names?.footer,
                   bubbleProps.class_names?.footer,
                   'ms-gr-pro-chatbot-message-footer',
                   index === editIndex
@@ -270,6 +280,9 @@ export const Chatbot = sveltify<{
                     : undefined
                 ),
                 content: cls(
+                  isUserRole
+                    ? resolvedUserConfig?.class_names?.content
+                    : resolvedBotConfig?.class_names?.content,
                   bubbleProps.class_names?.content,
                   'ms-gr-pro-chatbot-message-content'
                 ),
