@@ -1,5 +1,19 @@
 # modelscope_studio
 
+## 1.2.3
+
+### Features
+
+- [#68](https://github.com/modelscope/modelscope-studio/pull/68) [`034c4e3`](https://github.com/modelscope/modelscope-studio/commit/034c4e33ffa552e91d821171a68a1ab21eb35441) - update deps, antdx 1.0.5 => 1.1.0. Thanks [@Col0ring](https://github.com/Col0ring)!
+- [`2a2f390`](https://github.com/modelscope/modelscope-studio/commit/2a2f390f0705aea1616a97f6d4e6bf7cc68f163d) - allow custom tags for markdown. Thanks [@Col0ring](https://github.com/Col0ring)!
+
+### Fixes
+
+- [#68](https://github.com/modelscope/modelscope-studio/pull/68) [`034c4e3`](https://github.com/modelscope/modelscope-studio/commit/034c4e33ffa552e91d821171a68a1ab21eb35441) - form values & modal footer. Thanks [@Col0ring](https://github.com/Col0ring)!
+- [#68](https://github.com/modelscope/modelscope-studio/pull/68) [`034c4e3`](https://github.com/modelscope/modelscope-studio/commit/034c4e33ffa552e91d821171a68a1ab21eb35441) - remove default value `Run` of button. Thanks [@Col0ring](https://github.com/Col0ring)!
+- [#68](https://github.com/modelscope/modelscope-studio/pull/68) [`034c4e3`](https://github.com/modelscope/modelscope-studio/commit/034c4e33ffa552e91d821171a68a1ab21eb35441) - z-index of AutoLoading. Thanks [@Col0ring](https://github.com/Col0ring)!
+- [#68](https://github.com/modelscope/modelscope-studio/pull/68) [`034c4e3`](https://github.com/modelscope/modelscope-studio/commit/034c4e33ffa552e91d821171a68a1ab21eb35441) - types & chatbot scroll behavior. Thanks [@Col0ring](https://github.com/Col0ring)!
+
 ## 1.2.2
 
 ### Features

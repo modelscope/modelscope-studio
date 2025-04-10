@@ -1,5 +1,11 @@
 # @modelscope-studio/lint-config
 
+## 1.2.3
+
+### Features
+
+- [#68](https://github.com/modelscope/modelscope-studio/pull/68) [`034c4e3`](https://github.com/modelscope/modelscope-studio/commit/034c4e33ffa552e91d821171a68a1ab21eb35441) - update deps, antdx 1.0.5 => 1.1.0. Thanks [@Col0ring](https://github.com/Col0ring)!
+
 ## 1.2.2
 
 No significant changes to this package were made in this release.

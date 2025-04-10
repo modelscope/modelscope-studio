@@ -1,5 +1,17 @@
 # @modelscope-studio/pro
 
+## 1.2.3
+
+### Features
+
+- [#68](https://github.com/modelscope/modelscope-studio/pull/68) [`034c4e3`](https://github.com/modelscope/modelscope-studio/commit/034c4e33ffa552e91d821171a68a1ab21eb35441) - update deps, antdx 1.0.5 => 1.1.0. Thanks [@Col0ring](https://github.com/Col0ring)!
+- [`2a2f390`](https://github.com/modelscope/modelscope-studio/commit/2a2f390f0705aea1616a97f6d4e6bf7cc68f163d) - allow custom tags for markdown. Thanks [@Col0ring](https://github.com/Col0ring)!
+
+### Fixes
+
+- [#68](https://github.com/modelscope/modelscope-studio/pull/68) [`034c4e3`](https://github.com/modelscope/modelscope-studio/commit/034c4e33ffa552e91d821171a68a1ab21eb35441) - types & chatbot scroll behavior. Thanks [@Col0ring](https://github.com/Col0ring)!
+- [`0b6baed`](https://github.com/modelscope/modelscope-studio/commit/0b6baed271cba8f9c30a06b21822d4ed4843a3a6) - class_names for chatbot config. Thanks [@Col0ring](https://github.com/Col0ring)!
+
 ## 1.2.2
 
 ### Features

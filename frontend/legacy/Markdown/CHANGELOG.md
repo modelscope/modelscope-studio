@@ -1,5 +1,16 @@
 # @modelscope-studio/legacy-markdown
 
+## 1.2.3
+
+No significant changes to this package were made in this release.
+
+## 1.2.3
+
+### Patch Changes
+
+- Updated dependencies [[`034c4e3`](https://github.com/modelscope/modelscope-studio/commit/034c4e33ffa552e91d821171a68a1ab21eb35441)]:
+  - @modelscope-studio/legacy-compiled@1.2.3
+
 ## 1.2.2
 
 No significant changes to this package were made in this release.
