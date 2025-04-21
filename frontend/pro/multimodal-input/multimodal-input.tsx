@@ -16,7 +16,6 @@ import { useFunction } from '@utils/hooks/useFunction';
 import { useMemoizedFn } from '@utils/hooks/useMemoizedFn';
 import { useValueChange } from '@utils/hooks/useValueChange';
 import { omitUndefinedProps } from '@utils/omitUndefinedProps';
-import { renderParamsSlot } from '@utils/renderParamsSlot';
 import { Badge, Button, theme, Tooltip, type UploadFile } from 'antd';
 import type { RcFile } from 'antd/es/upload';
 import { noop, omit } from 'lodash-es';
@@ -105,7 +104,7 @@ export const MultimodalInput = sveltify<
     placeholder,
     elRef,
     slots,
-    setSlotParams,
+    // setSlotParams,
     uploadConfig: uploadConfigProp,
     value: valueProp,
     ...senderProps
@@ -326,21 +325,18 @@ export const MultimodalInput = sveltify<
             </>
           }
           actions={
-            slots.actions
-              ? renderParamsSlot(
-                  {
-                    slots,
-                    setSlotParams,
-                    key: 'actions',
-                  },
-                  { clone: true }
-                )
-              : actionsFunction || senderProps.actions
+            slots.actions ? (
+              <ReactSlot slot={slots.actions} />
+            ) : (
+              actionsFunction || senderProps.actions
+            )
           }
           footer={
-            slots.footer
-              ? renderParamsSlot({ slots, setSlotParams, key: 'footer' })
-              : footerFunction || senderProps.footer
+            slots.footer ? (
+              <ReactSlot slot={slots.footer} />
+            ) : (
+              footerFunction || senderProps.footer
+            )
           }
           header={
             <Sender.Header

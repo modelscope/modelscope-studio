@@ -7,7 +7,6 @@ import { Sender as XSender, type SenderProps } from '@ant-design/x';
 import type { FileData } from '@gradio/client';
 import { useFunction } from '@utils/hooks/useFunction';
 import { useValueChange } from '@utils/hooks/useValueChange';
-import { renderParamsSlot } from '@utils/renderParamsSlot';
 
 export const Sender = sveltify<
   Omit<SenderProps, 'onPasteFile'> & {
@@ -22,7 +21,6 @@ export const Sender = sveltify<
   ({
     slots,
     children,
-    setSlotParams,
     onValueChange,
     onChange,
     onPasteFile,
@@ -64,21 +62,18 @@ export const Sender = sveltify<
             slots.prefix ? <ReactSlot slot={slots.prefix} /> : props.prefix
           }
           actions={
-            slots.actions
-              ? renderParamsSlot(
-                  {
-                    slots,
-                    setSlotParams,
-                    key: 'actions',
-                  },
-                  { clone: true }
-                )
-              : actionsFunction || props.actions
+            slots.actions ? (
+              <ReactSlot slot={slots.actions} />
+            ) : (
+              actionsFunction || props.actions
+            )
           }
           footer={
-            slots.footer
-              ? renderParamsSlot({ slots, setSlotParams, key: 'footer' })
-              : footerFunction || props.footer
+            slots.footer ? (
+              <ReactSlot slot={slots.footer} />
+            ) : (
+              footerFunction || props.footer
+            )
           }
         />
       </>
