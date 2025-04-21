@@ -83,7 +83,7 @@ export const MultimodalInput = sveltify<
     onSubmit?: (value: MultimodalInputChangedValue) => void;
     uploadConfig?: UploadConfig;
   },
-  ['actions', 'prefix', 'footer']
+  ['actions', 'header', 'prefix', 'footer']
 >(
   ({
     onValueChange,
@@ -339,155 +339,166 @@ export const MultimodalInput = sveltify<
             )
           }
           header={
-            <Sender.Header
-              title={uploadConfig?.title || 'Attachments'}
-              open={open}
-              onOpenChange={setOpen}
-            >
-              <Attachments
-                {...omitUndefinedProps(
-                  omit(uploadConfig, [
-                    'title',
-                    'placeholder',
-                    'showCount',
-                    'buttonTooltip',
-                    'allowPasteFile',
-                  ]),
-                  { omitNull: true }
-                )}
-                imageProps={{
-                  ...uploadConfig?.imageProps,
-                  wrapperStyle: {
-                    width: '100%',
-                    height: '100%',
-                    ...uploadConfig?.imageProps?.wrapperStyle,
-                  },
-                  style: {
-                    width: '100%',
-                    height: '100%',
-                    objectFit: 'contain',
-                    borderRadius: token.borderRadius,
-                    ...uploadConfig?.imageProps?.style,
-                  },
-                }}
-                disabled={uploadDisabled}
-                getDropContainer={() => {
-                  return uploadConfig?.fullscreenDrop ? document.body : null;
-                }}
-                items={validFileList}
-                placeholder={(type) => {
-                  const isDrop = type === 'drop';
-                  return {
-                    title: isDrop
-                      ? (uploadConfig?.placeholder?.drop?.title ??
-                        'Drop file here')
-                      : (uploadConfig?.placeholder?.inline?.title ??
-                        'Upload files'),
-                    description: isDrop
-                      ? (uploadConfig?.placeholder?.drop?.description ??
-                        undefined)
-                      : (uploadConfig?.placeholder?.inline?.description ??
-                        'Click or drag files to this area to upload'),
-                    icon: isDrop
-                      ? (uploadConfig?.placeholder?.drop?.icon ?? undefined)
-                      : (uploadConfig?.placeholder?.inline?.icon ?? (
-                          <CloudUploadOutlined />
-                        )),
-                  };
-                }}
-                onDownload={onDownload}
-                onPreview={onPreview}
-                onDrop={onDrop}
-                onChange={async (info) => {
-                  try {
-                    const file = info.file;
-                    const files = info.fileList;
-                    // remove
-                    const index = validFileList.findIndex(
-                      (v) => v.uid === file.uid
-                    );
+            allowUpload ? (
+              <Sender.Header
+                title={uploadConfig?.title || 'Attachments'}
+                open={open}
+                onOpenChange={setOpen}
+              >
+                <Attachments
+                  {...omitUndefinedProps(
+                    omit(uploadConfig, [
+                      'title',
+                      'placeholder',
+                      'showCount',
+                      'buttonTooltip',
+                      'allowPasteFile',
+                    ]),
+                    { omitNull: true }
+                  )}
+                  imageProps={{
+                    ...uploadConfig?.imageProps,
+                    wrapperStyle: {
+                      width: '100%',
+                      height: '100%',
+                      ...uploadConfig?.imageProps?.wrapperStyle,
+                    },
+                    style: {
+                      width: '100%',
+                      height: '100%',
+                      objectFit: 'contain',
+                      borderRadius: token.borderRadius,
+                      ...uploadConfig?.imageProps?.style,
+                    },
+                  }}
+                  disabled={uploadDisabled}
+                  getDropContainer={() => {
+                    return uploadConfig?.fullscreenDrop ? document.body : null;
+                  }}
+                  items={validFileList}
+                  placeholder={(type) => {
+                    const isDrop = type === 'drop';
+                    return {
+                      title: isDrop
+                        ? (uploadConfig?.placeholder?.drop?.title ??
+                          'Drop file here')
+                        : (uploadConfig?.placeholder?.inline?.title ??
+                          'Upload files'),
+                      description: isDrop
+                        ? (uploadConfig?.placeholder?.drop?.description ??
+                          undefined)
+                        : (uploadConfig?.placeholder?.inline?.description ??
+                          'Click or drag files to this area to upload'),
+                      icon: isDrop
+                        ? (uploadConfig?.placeholder?.drop?.icon ?? undefined)
+                        : (uploadConfig?.placeholder?.inline?.icon ?? (
+                            <CloudUploadOutlined />
+                          )),
+                    };
+                  }}
+                  onDownload={onDownload}
+                  onPreview={onPreview}
+                  onDrop={onDrop}
+                  onChange={async (info) => {
+                    try {
+                      const file = info.file;
+                      const files = info.fileList;
+                      // remove
+                      const index = validFileList.findIndex(
+                        (v) => v.uid === file.uid
+                      );
 
-                    if (index !== -1) {
-                      if (uploadDisabled) {
-                        return;
-                      }
-                      onRemove?.(file);
-                      const newFileList = fileList.slice() as FileData[];
-                      newFileList.splice(index, 1);
-                      const newValue: MultimodalInputValue = {
-                        ...value,
-                        files: newFileList,
-                      };
-                      setValue(newValue);
-                      onChange?.(formatChangedValue(newValue));
-                    } else {
-                      // add
-                      if (uploadDisabled) {
-                        return;
-                      }
-                      setUploading(true);
-                      let validFiles = files.filter((v) => v.status !== 'done');
-
-                      const maxCount = uploadConfig?.maxCount;
-                      if (maxCount === 1) {
-                        validFiles = validFiles.slice(0, 1);
-                      } else if (validFiles.length === 0) {
-                        setUploading(false);
-                        return;
-                      } else if (typeof maxCount === 'number') {
-                        const max = maxCount - fileList.length;
-                        validFiles = validFiles.slice(0, max < 0 ? 0 : max);
-                      }
-
-                      const lastFileList = fileList;
-                      const tempFileList = validFiles.map((v) => {
-                        return {
-                          ...v,
-                          size: v.size,
-                          uid: v.uid,
-                          name: v.name,
-                          status: 'uploading' as const,
+                      if (index !== -1) {
+                        if (uploadDisabled) {
+                          return;
+                        }
+                        onRemove?.(file);
+                        const newFileList = fileList.slice() as FileData[];
+                        newFileList.splice(index, 1);
+                        const newValue: MultimodalInputValue = {
+                          ...value,
+                          files: newFileList,
                         };
-                      });
-                      setFileList((prev) => [
-                        ...(maxCount === 1 ? [] : prev),
-                        ...tempFileList,
-                      ]);
-                      const fileDataList = (
-                        await upload(
-                          validFiles.map((f) => f.originFileObj as RcFile)
-                        )
-                      )
-                        .filter(Boolean)
-                        .map((v, i) => {
+                        setValue(newValue);
+                        onChange?.(formatChangedValue(newValue));
+                      } else {
+                        // add
+                        if (uploadDisabled) {
+                          return;
+                        }
+                        setUploading(true);
+                        let validFiles = files.filter(
+                          (v) => v.status !== 'done'
+                        );
+
+                        const maxCount = uploadConfig?.maxCount;
+                        if (maxCount === 1) {
+                          validFiles = validFiles.slice(0, 1);
+                        } else if (validFiles.length === 0) {
+                          setUploading(false);
+                          return;
+                        } else if (typeof maxCount === 'number') {
+                          const max = maxCount - fileList.length;
+                          validFiles = validFiles.slice(0, max < 0 ? 0 : max);
+                        }
+
+                        const lastFileList = fileList;
+                        const tempFileList = validFiles.map((v) => {
                           return {
                             ...v,
-                            uid: tempFileList[i].uid,
+                            size: v.size,
+                            uid: v.uid,
+                            name: v.name,
+                            status: 'uploading' as const,
                           };
                         });
-                      const mergedFileList =
-                        maxCount === 1
-                          ? fileDataList
-                          : ([...lastFileList, ...fileDataList] as FileData[]);
-                      onUpload?.(fileDataList.map((url) => url.path));
-                      setUploading(false);
-                      const newValue: MultimodalInputValue = {
-                        ...value,
-                        files: mergedFileList,
-                      };
+                        setFileList((prev) => [
+                          ...(maxCount === 1 ? [] : prev),
+                          ...tempFileList,
+                        ]);
+                        const fileDataList = (
+                          await upload(
+                            validFiles.map((f) => f.originFileObj as RcFile)
+                          )
+                        )
+                          .filter(Boolean)
+                          .map((v, i) => {
+                            return {
+                              ...v,
+                              uid: tempFileList[i].uid,
+                            };
+                          });
+                        const mergedFileList =
+                          maxCount === 1
+                            ? fileDataList
+                            : ([
+                                ...lastFileList,
+                                ...fileDataList,
+                              ] as FileData[]);
+                        onUpload?.(fileDataList.map((url) => url.path));
+                        setUploading(false);
+                        const newValue: MultimodalInputValue = {
+                          ...value,
+                          files: mergedFileList,
+                        };
 
-                      setFileList(mergedFileList);
-                      onValueChange?.(newValue);
-                      onChange?.(formatChangedValue(newValue));
+                        setFileList(mergedFileList);
+                        onValueChange?.(newValue);
+                        onChange?.(formatChangedValue(newValue));
+                      }
+                    } catch (error) {
+                      setUploading(false);
+                      console.error(error);
                     }
-                  } catch (error) {
-                    setUploading(false);
-                    console.error(error);
-                  }
-                }}
-                customRequest={noop}
-              />
-            </Sender.Header>
+                  }}
+                  customRequest={noop}
+                />
+              </Sender.Header>
+            ) : slots.header ? (
+              <ReactSlot slot={slots.header} />
+            ) : (
+              senderProps.header
+            )
           }
         />
       </>
