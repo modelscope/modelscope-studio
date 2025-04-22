@@ -5,4 +5,4 @@
 'modelscope_studio': patch
 ---
 
-fix: upload disabled status
+fix: disabled status for upload components
