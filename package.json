@@ -7,7 +7,7 @@
   "license": "Apache-2.0",
   "scripts": {
     "prepare": "husky",
-    "dev": "gradio cc dev",
+    "dev": "gradio cc dev docs/app.py",
     "build": "rimraf dist && gradio cc build --no-generate-docs",
     "lint": "npm-run-all --parallel lint:* && npm run format",
     "lint:js": "eslint . --fix  --cache",

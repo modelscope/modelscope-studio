@@ -24,19 +24,21 @@ A multimodal input component based on [Ant Design X](https://x.ant.design), supp
 
 ### Props
 
-| Attribute     | Type                                          | Default Value | Description                                                                                 |
-| ------------- | --------------------------------------------- | ------------- | ------------------------------------------------------------------------------------------- |
-| value         | `dict \| MultimodalInputValue \| None`        | None          | Default value to display, formatted as `{ "text":"", "files":[] }`.                         |
-| loading       | `bool \| None`                                | None          | Whether the input is in a loading state, in which case the `cancel` event can be triggered. |
-| read_only     | `bool \| None`                                | None          | Whether the input is read-only.                                                             |
-| submit_type   | `Literal['enter', 'shiftEnter'] \| None`      | 'enter'       | How the input box triggers the `submit` event.                                              |
-| placeholder   | `str \| None`                                 | None          | Input placeholder text.                                                                     |
-| upload_config | `MultimodalInputUploadConfig \| dict \| None` | None          | File upload configuration.                                                                  |
+| Attribute     | Type                                                     | Default Value    | Description                                                                                        |
+| ------------- | -------------------------------------------------------- | ---------------- | -------------------------------------------------------------------------------------------------- |
+| value         | `dict \| MultimodalInputValue \| None`                   | None             | Default value to display, formatted as `{ "text":"", "files":[] }`.                                |
+| loading       | `bool \| None`                                           | None             | Whether the input is in a loading state, in which case the `cancel` event can be triggered.        |
+| auto_size     | `bool \| { minRows?: number; maxRows?: number } \| None` | { "maxRows": 8 } | Height auto size feature, can be set to True \| False or an object { "minRows": 2, "maxRows": 6 }. |
+| read_only     | `bool \| None`                                           | None             | Whether the input is read-only.                                                                    |
+| submit_type   | `Literal['enter', 'shiftEnter'] \| None`                 | 'enter'          | How the input box triggers the `submit` event.                                                     |
+| placeholder   | `str \| None`                                            | None             | Input placeholder text.                                                                            |
+| disabled      | `bool \| None`                                           | None             | Whether to disable.                                                                                |
+| upload_config | `MultimodalInputUploadConfig \| dict \| None`            | None             | File upload configuration.                                                                         |
 
 ### Slots
 
 ```python
-SLOTS = ["prefix"]
+SLOTS=['actions', "prefix", 'footer', 'header']
 ```
 
 ### Types
@@ -102,5 +104,4 @@ class MultimodalInputUploadConfig(GradioModel):
 class MultimodalInputValue(GradioModel):
     files: Optional[ListFiles] = None
     text: Optional[str] = None
-
 ```

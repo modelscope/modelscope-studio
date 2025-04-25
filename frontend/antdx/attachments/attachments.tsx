@@ -1,7 +1,7 @@
 import { sveltify } from '@svelte-preprocess-react';
 import { ReactSlot } from '@svelte-preprocess-react/react-slot';
 import type { SetSlotParams } from '@svelte-preprocess-react/slot';
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import {
   Attachments as XAttachments,
   type AttachmentsProps,
@@ -127,7 +127,8 @@ export const Attachments = sveltify<
     const placeholderFunction = useFunction(placeholder, true);
     const getDropContainerFunction = useFunction(getDropContainer);
     const dataFunction = useFunction(data);
-    const uploadingRef = useRef(false);
+    const [uploading, setUploading] = useState(false);
+
     const [fileList, setFileList] = useState<
       (
         | (FileData & {
@@ -162,6 +163,7 @@ export const Attachments = sveltify<
       );
     }, [fileList]);
     const targets = useTargets(children);
+    const uploadDisabled = props.disabled || uploading;
 
     return (
       <>
@@ -170,6 +172,7 @@ export const Attachments = sveltify<
         </div>
         <XAttachments
           {...props}
+          disabled={uploadDisabled}
           imageProps={{
             ...imageProps,
             preview: supportPreview
@@ -286,78 +289,83 @@ export const Attachments = sveltify<
           //   onChange?.(newFileList.map((v) => v.path));
           // }}
           onChange={async (info) => {
-            const file = info.file;
-            const files = info.fileList;
-            // remove
-            const index = validFileList.findIndex((v) => v.uid === file.uid);
+            try {
+              const file = info.file;
+              const files = info.fileList;
+              // remove
+              const index = validFileList.findIndex((v) => v.uid === file.uid);
 
-            if (index !== -1) {
-              if (uploadingRef.current) {
-                return;
-              }
-              onRemove?.(file);
-              const newFileList = fileList.slice() as FileData[];
-              newFileList.splice(index, 1);
-              onValueChange?.(newFileList);
-              onChange?.(newFileList.map((v) => v.path));
-            } else {
-              // add
-              if (beforeUploadFunction) {
-                if (!(await beforeUploadFunction(file, files))) {
+              if (index !== -1) {
+                if (uploadDisabled) {
                   return;
                 }
-              }
-              if (uploadingRef.current) {
-                return;
-              }
-              uploadingRef.current = true;
-              let validFiles = files.filter((v) => v.status !== 'done');
+                onRemove?.(file);
+                const newFileList = fileList.slice() as FileData[];
+                newFileList.splice(index, 1);
+                onValueChange?.(newFileList);
+                onChange?.(newFileList.map((v) => v.path));
+              } else {
+                // add
+                if (beforeUploadFunction) {
+                  if (!(await beforeUploadFunction(file, files))) {
+                    return;
+                  }
+                }
+                if (uploadDisabled) {
+                  return;
+                }
+                setUploading(true);
+                let validFiles = files.filter((v) => v.status !== 'done');
 
-              if (maxCount === 1) {
-                validFiles = validFiles.slice(0, 1);
-              } else if (validFiles.length === 0) {
-                uploadingRef.current = false;
-                return;
-              } else if (typeof maxCount === 'number') {
-                const max = maxCount - fileList.length;
-                validFiles = validFiles.slice(0, max < 0 ? 0 : max);
-              }
+                if (maxCount === 1) {
+                  validFiles = validFiles.slice(0, 1);
+                } else if (validFiles.length === 0) {
+                  setUploading(false);
+                  return;
+                } else if (typeof maxCount === 'number') {
+                  const max = maxCount - fileList.length;
+                  validFiles = validFiles.slice(0, max < 0 ? 0 : max);
+                }
 
-              const lastFileList = fileList;
-              const tempFileList = validFiles.map((v) => {
-                return {
-                  ...v,
-                  size: v.size,
-                  uid: v.uid,
-                  name: v.name,
-                  status: 'uploading' as const,
-                };
-              });
-              setFileList((prev) => [
-                ...(maxCount === 1 ? [] : prev),
-                ...tempFileList,
-              ]);
-
-              const fileDataList = (
-                await upload(validFiles.map((f) => f.originFileObj as RcFile))
-              )
-                .filter(Boolean)
-                .map((v, i) => {
+                const lastFileList = fileList;
+                const tempFileList = validFiles.map((v) => {
                   return {
                     ...v,
-                    uid: tempFileList[i].uid,
+                    size: v.size,
+                    uid: v.uid,
+                    name: v.name,
+                    status: 'uploading' as const,
                   };
-                }) as FileData[];
-              const mergedFileList =
-                maxCount === 1
-                  ? fileDataList
-                  : ([...lastFileList, ...fileDataList] as FileData[]);
+                });
+                setFileList((prev) => [
+                  ...(maxCount === 1 ? [] : prev),
+                  ...tempFileList,
+                ]);
 
-              uploadingRef.current = false;
+                const fileDataList = (
+                  await upload(validFiles.map((f) => f.originFileObj as RcFile))
+                )
+                  .filter(Boolean)
+                  .map((v, i) => {
+                    return {
+                      ...v,
+                      uid: tempFileList[i].uid,
+                    };
+                  }) as FileData[];
+                const mergedFileList =
+                  maxCount === 1
+                    ? fileDataList
+                    : ([...lastFileList, ...fileDataList] as FileData[]);
 
-              setFileList(mergedFileList);
-              onValueChange?.(mergedFileList);
-              onChange?.(mergedFileList.map((v) => v.path));
+                setUploading(false);
+
+                setFileList(mergedFileList);
+                onValueChange?.(mergedFileList);
+                onChange?.(mergedFileList.map((v) => v.path));
+              }
+            } catch (error) {
+              console.error(error);
+              setUploading(false);
             }
           }}
           customRequest={customRequestFunction || noop}

@@ -24,19 +24,21 @@
 
 ### 属性
 
-| 属性          | 类型                                          | 默认值  | 描述                                                   |
-| ------------- | --------------------------------------------- | ------- | ------------------------------------------------------ |
-| value         | `dict \| MultimodalInputValue \| None`        | None    | 显示的默认值，格式为`{ "text":"", "files":[] }`。      |
-| loading       | `bool \| None`                                | None    | 输入框是否处处于加载状态，此时可以触发 `cancel` 事件。 |
-| read_only     | `bool \| None`                                | None    | 输入框是否为只读状态。                                 |
-| submit_type   | `Literal['enter', 'shiftEnter'] \| None`      | 'enter' | 输入框触发`submit`事件的方式。                         |
-| placeholder   | `str \| None`                                 | None    | 输入框的提示信息。                                     |
-| upload_config | `MultimodalInputUploadConfig \| dict \| None` | None    | 文件上传配置。                                         |
+| 属性          | 类型                                                     | 默认值           | 描述                                                                            |
+| ------------- | -------------------------------------------------------- | ---------------- | ------------------------------------------------------------------------------- |
+| value         | `dict \| MultimodalInputValue \| None`                   | None             | 显示的默认值，格式为`{ "text":"", "files":[] }`。                               |
+| loading       | `bool \| None`                                           | None             | 输入框是否处处于加载状态，此时可以触发 `cancel` 事件。                          |
+| auto_size     | `bool \| { minRows?: number; maxRows?: number } \| None` | { "maxRows": 8 } | 自适应内容高度，可设置为 True \| False 或对象：{ "minRows": 2, "maxRows": 6 }。 |
+| read_only     | `bool \| None`                                           | None             | 输入框是否为只读状态。                                                          |
+| submit_type   | `Literal['enter', 'shiftEnter'] \| None`                 | 'enter'          | 输入框触发`submit`事件的方式。                                                  |
+| placeholder   | `str \| None`                                            | None             | 输入框的提示信息。                                                              |
+| disabled      | `bool \| None`                                           | None             | 是否禁用。                                                                      |
+| upload_config | `MultimodalInputUploadConfig \| dict \| None`            | None             | 文件上传配置。                                                                  |
 
 ### 插槽
 
 ```python
-SLOTS=["prefix"]
+SLOTS=['actions', "prefix", 'footer', 'header']
 ```
 
 ### 类型

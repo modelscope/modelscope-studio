@@ -134,7 +134,7 @@ class ModelScopeProMultimodalInput(ModelScopeDataLayoutComponent):
     data_model = MultimodalInputValue
 
     # supported slots
-    SLOTS = ['actions', "prefix", 'footer']
+    SLOTS = ['actions', "prefix", 'footer', 'header']
 
     def __init__(
             self,
@@ -142,6 +142,7 @@ class ModelScopeProMultimodalInput(ModelScopeDataLayoutComponent):
             *,
             auto_size: bool | dict | None = None,
             footer: str | None = None,
+            header: str | None = None,
             actions: str | bool | None = None,
             class_names: dict | None = None,
             styles: dict | None = None,
@@ -171,6 +172,7 @@ class ModelScopeProMultimodalInput(ModelScopeDataLayoutComponent):
                          **kwargs)
         self.auto_size = auto_size
         self.footer = footer
+        self.header = header
         self.actions = actions
         self.class_names = class_names
         self.disabled = disabled
