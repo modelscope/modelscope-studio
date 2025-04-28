@@ -1,5 +1,12 @@
 # @modelscope-studio/antdx
 
+## 1.2.4
+
+### Fixes
+
+- [#69](https://github.com/modelscope/modelscope-studio/pull/69) [`d1016af`](https://github.com/modelscope/modelscope-studio/commit/d1016af9922a7c83e4b2521e206148865cdce527) - disabled status for upload components. Thanks [@Col0ring](https://github.com/Col0ring)!
+- [#69](https://github.com/modelscope/modelscope-studio/pull/69) [`d1016af`](https://github.com/modelscope/modelscope-studio/commit/d1016af9922a7c83e4b2521e206148865cdce527) - footer & actions slots. Thanks [@Col0ring](https://github.com/Col0ring)!
+
 ## 1.2.3
 
 ### Features
