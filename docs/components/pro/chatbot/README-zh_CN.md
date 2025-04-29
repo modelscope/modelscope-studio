@@ -128,6 +128,11 @@ class ChatbotMarkdownConfig(GradioModel):
                 "display": True
             },
             {
+                "left": "$",
+                "right": "$",
+                "display": False
+            },
+            {
                 "left": "\\(",
                 "right": "\\)",
                 "display": False

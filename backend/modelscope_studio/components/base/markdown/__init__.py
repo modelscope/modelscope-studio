@@ -91,6 +91,11 @@ class ModelScopeMarkdown(ModelScopeDataLayoutComponent):
                     "display": True
                 },
                 {
+                    "left": "$",
+                    "right": "$",
+                    "display": False
+                },
+                {
                     "left": "\\(",
                     "right": "\\)",
                     "display": False
