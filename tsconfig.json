@@ -6,8 +6,9 @@
     "verbatimModuleSyntax": true,
     "strict": true,
     "noEmit": true,
+    "allowJs": true,
     "importHelpers": true,
-    "moduleResolution": "Node",
+    "moduleResolution": "bundler",
     "jsx": "preserve",
     "noImplicitAny": false,
     "skipLibCheck": true,
@@ -18,20 +19,7 @@
     "baseUrl": "./frontend",
     "paths": {
       "@svelte-preprocess-react": ["svelte-preprocess-react/index.ts"],
-      "@svelte-preprocess-react/inject": ["svelte-preprocess-react/inject.ts"],
-      "@svelte-preprocess-react/component": [
-        "svelte-preprocess-react/component.ts"
-      ],
-      "@svelte-preprocess-react/slot": ["svelte-preprocess-react/slot.ts"],
-      "@svelte-preprocess-react/provider": [
-        "svelte-preprocess-react/provider.ts"
-      ],
-      "@svelte-preprocess-react/react-slot": [
-        "svelte-preprocess-react/react-slot.tsx"
-      ],
-      "@svelte-preprocess-react/context": [
-        "svelte-preprocess-react/context.ts"
-      ],
+      "@svelte-preprocess-react/*": ["svelte-preprocess-react/*"],
       "@utils/*": ["utils/*"],
       "@globals/*": ["globals/*"]
     }

@@ -1,6 +1,7 @@
 import { parse, transformFromAstSync, traverse, types as t } from '@babel/core';
-import path from 'path';
-import url from 'url';
+import fg from 'fast-glob';
+import path from 'node:path';
+import url from 'node:url';
 
 const globals = {
   react: 'window.ms_globals.React',
@@ -17,6 +18,33 @@ const globals = {
 };
 
 const dirname = path.dirname(url.fileURLToPath(import.meta.url));
+
+function generateSveltePreprocessReactAliases() {
+  const baseDir = 'svelte-preprocess-react';
+  const baseAlias = {
+    '@svelte-preprocess-react': path.resolve(dirname, baseDir),
+  };
+
+  const files = fg.sync([`${baseDir}/*.ts`, `${baseDir}/*.tsx`], {
+    cwd: dirname,
+    absolute: false,
+  });
+
+  const moduleAliases = files.reduce((aliases, file) => {
+    const fileName = path.basename(file, path.extname(file));
+    aliases[`@svelte-preprocess-react/${fileName}`] = path.resolve(
+      dirname,
+      file
+    );
+    return aliases;
+  }, {});
+
+  return {
+    ...baseAlias,
+    ...moduleAliases,
+  };
+}
+
 /**
  * @type {(options:{ external?:boolean }) => import('vite').Plugin}
  */
@@ -45,34 +73,7 @@ export const ModelScopeStudioVitePlugin = ({ external = true } = {}) => {
         ...(userConfig.resolve.alias || {}),
         '@utils': path.resolve(dirname, 'utils'),
         '@globals': path.resolve(dirname, 'globals'),
-        '@svelte-preprocess-react/inject': path.resolve(
-          dirname,
-          'svelte-preprocess-react/inject.ts'
-        ),
-        '@svelte-preprocess-react/provider': path.resolve(
-          dirname,
-          'svelte-preprocess-react/provider.ts'
-        ),
-        '@svelte-preprocess-react/component': path.resolve(
-          dirname,
-          'svelte-preprocess-react/component.ts'
-        ),
-        '@svelte-preprocess-react/slot': path.resolve(
-          dirname,
-          'svelte-preprocess-react/slot.ts'
-        ),
-        '@svelte-preprocess-react/context': path.resolve(
-          dirname,
-          'svelte-preprocess-react/context.ts'
-        ),
-        '@svelte-preprocess-react/react-slot': path.resolve(
-          dirname,
-          'svelte-preprocess-react/react-slot.tsx'
-        ),
-        '@svelte-preprocess-react': path.resolve(
-          dirname,
-          'svelte-preprocess-react'
-        ),
+        ...generateSveltePreprocessReactAliases(),
       };
     },
     renderChunk(code, chunk) {

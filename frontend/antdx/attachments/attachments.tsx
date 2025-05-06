@@ -11,7 +11,7 @@ import { useFunction } from '@utils/hooks/useFunction';
 import { useTargets } from '@utils/hooks/useTargets';
 import { omitUndefinedProps } from '@utils/omitUndefinedProps';
 import { renderParamsSlot } from '@utils/renderParamsSlot';
-import { theme, type UploadFile } from 'antd';
+import { type UploadFile } from 'antd';
 import type { RcFile } from 'antd/es/upload';
 import { noop } from 'lodash-es';
 
@@ -115,7 +115,6 @@ export const Attachments = sveltify<
     const showUploadListShowDownloadIconFunction = useFunction(
       showUploadListConfig.showDownloadIcon
     );
-    const { token } = theme.useToken();
 
     const beforeUploadFunction = useFunction(beforeUpload);
     const customRequestFunction = useFunction(customRequest);
@@ -216,18 +215,6 @@ export const Attachments = sveltify<
             ) : (
               imageProps?.placeholder
             ),
-            wrapperStyle: {
-              width: '100%',
-              height: '100%',
-              ...imageProps?.wrapperStyle,
-            },
-            style: {
-              width: '100%',
-              height: '100%',
-              objectFit: 'contain',
-              borderRadius: token.borderRadius,
-              ...imageProps?.style,
-            },
           }}
           getDropContainer={getDropContainerFunction}
           placeholder={
