@@ -6,6 +6,11 @@ declare module '*?inline' {
   export default string;
 }
 
+declare module '*?raw' {
+  const string: string;
+  export default string;
+}
+
 interface Window {
   __gradio_space__: any;
 }

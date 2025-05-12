@@ -2,6 +2,8 @@ from __future__ import annotations
 
 from typing import Any, Dict, Literal, Optional, TypedDict, Union
 
+from gradio.events import EventListener
+
 from ....utils.dev import ModelScopeLayoutComponent, resolve_frontend_dir
 
 
@@ -14,12 +16,29 @@ class ModelScopeProWebSandbox(ModelScopeLayoutComponent):
     """
     """
 
+    EVENTS = [
+        EventListener("compile_success",
+                      callback=lambda block: block._internal.update(
+                          bind_compileSuccess_event=True)),
+        EventListener("compile_error",
+                      callback=lambda block: block._internal.update(
+                          bind_compileError_event=True)),
+        EventListener("render_error",
+                      callback=lambda block: block._internal.update(
+                          bind_renderError_event=True)),
+    ]
+
+    # supported slots
+    SLOTS = ["compileErrorRender"]
+
     def __init__(
             self,
             value: Dict[str, Union[str, SandboxFileData]] | None = None,
             *,
             template: Literal['react', 'html'] = 'react',
-            show_iframe_error: bool = True,
+            show_render_error: bool = True,
+            show_compile_error: bool = True,
+            compile_error_render: str | None = None,
             import_map: Dict[str, str] | None = None,
             height: str | int | float | None = 400,
             _internal: None = None,
@@ -37,7 +56,9 @@ class ModelScopeProWebSandbox(ModelScopeLayoutComponent):
                          elem_style=elem_style,
                          **kwargs)
         self.value = value
-        self.show_iframe_error = show_iframe_error
+        self.show_render_error = show_render_error
+        self.show_compile_error = show_compile_error
+        self.compile_error_render = compile_error_render
         self.template = template
         self.import_map = import_map
         self.height = height

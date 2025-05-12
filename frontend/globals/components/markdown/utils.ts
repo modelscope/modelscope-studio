@@ -1,6 +1,7 @@
 /* eslint-disable no-useless-escape */
 import { cssUnits } from '@utils/style';
 import { tick } from '@utils/tick';
+import { walkHtmlNodes } from '@utils/walkHtmlNodes';
 import GithubSlugger from 'github-slugger';
 import { Marked, type Renderer } from 'marked';
 import { gfmHeadingId } from 'marked-gfm-heading-id';
@@ -218,30 +219,11 @@ export async function renderMermaid(el: HTMLElement, themeMode: string) {
   }
 }
 
-export function walk_nodes(
-  node: Node | null | HTMLElement,
-  test: string | string[] | ((node: Node | HTMLElement) => boolean),
-  callback: (node: Node | HTMLElement) => void
-): void {
-  if (
-    node &&
-    ((typeof test === 'string' && node.nodeName === test) ||
-      (Array.isArray(test) && test.includes(node.nodeName)) ||
-      (typeof test === 'function' && test(node)))
-  ) {
-    callback(node);
-  }
-  const children = node?.childNodes || [];
-  for (let i = 0; i < children.length; i++) {
-    walk_nodes(children[i], test, callback);
-  }
-}
-
 function parseHtml(text: string) {
   try {
     let matched = false;
     const rootNode = new DOMParser().parseFromString(text, 'text/html');
-    walk_nodes(rootNode.body, ['IMG'], (node) => {
+    walkHtmlNodes(rootNode.body, ['IMG'], (node) => {
       // image
       if (node instanceof HTMLImageElement) {
         matched = true;

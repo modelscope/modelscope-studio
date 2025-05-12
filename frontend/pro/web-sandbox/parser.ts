@@ -2,11 +2,12 @@ import { packages, transform } from '@babel/standalone';
 import path from 'path-browserify-esm';
 
 import {
-  DEFAULT_ENTRY_FILES,
   DEFAULT_EXTENSIONS,
   FILE_EXTENSIONS,
   type FileInfo,
+  getFileCode,
   type InputFileObject,
+  JS_EXTENSIONS,
   normalizePath,
 } from './utils';
 
@@ -16,41 +17,26 @@ export class WebSandboxParser {
   private options: {
     importMap: Record<string, string>;
     files: Record<string, string | InputFileObject>;
+    entryFilePath: string;
   };
   constructor(options: typeof this.options) {
     this.options = options;
+    this.entryFilePath = normalizePath(options.entryFilePath);
+    this.filesMap = this._normalizeFiles(this.options.files);
   }
 
   private _normalizeFiles(files: Record<string, string | InputFileObject>) {
-    let foundEntry = false;
     const normalizedFiles: typeof this.filesMap = {};
     Object.entries(files).forEach(([filePath, fileContent]) => {
-      let code: string;
-      let isEntry = false;
-
-      if (typeof fileContent === 'string') {
-        code = fileContent;
-      } else {
-        code = fileContent.code;
-        isEntry = !!fileContent.is_entry;
-      }
+      const code = getFileCode(fileContent);
 
       const normalizedPath = normalizePath(filePath);
 
-      if (
-        isEntry ||
-        (!foundEntry && DEFAULT_ENTRY_FILES.includes(normalizedPath))
-      ) {
-        isEntry = true;
-        foundEntry = true;
-        this.entryFilePath = normalizedPath;
-      }
-
-      const isCss = normalizedPath.endsWith('.css');
+      const isJs = JS_EXTENSIONS.includes(path.extname(normalizedPath));
 
       normalizedFiles[normalizedPath] = {
         code,
-        isCss,
+        isJs,
         originalPath: filePath,
       };
     });
@@ -67,7 +53,7 @@ export class WebSandboxParser {
 
     // Analyze dependencies for each non-CSS file
     for (const [filePath, fileInfo] of Object.entries(files)) {
-      if (fileInfo.isCss) continue;
+      if (!fileInfo.isJs) continue;
       const dependencies = new Set<string>();
 
       // Parse code to generate AST
@@ -199,7 +185,7 @@ export class WebSandboxParser {
 
     files.forEach((filePath) => {
       const fileInfo = filesMap[filePath];
-      if (!fileInfo || fileInfo.isCss) return;
+      if (!fileInfo || !fileInfo.isJs) return;
 
       try {
         // Transform code, replace relative import paths with Blob URLs
@@ -217,6 +203,7 @@ export class WebSandboxParser {
                     filePath,
                     filesMap
                   );
+
                   if (filesMap[resolvedImportPath]) {
                     if (resolvedImportPath.endsWith('.css')) {
                       nodePath.remove();
@@ -232,9 +219,11 @@ export class WebSandboxParser {
                     }
                   } // Process third-party CSS imports
                   else if (
-                    resolvedImportPath.includes('.css') ||
-                    (resolvedImportPath.includes('style') &&
-                      !resolvedImportPath.includes('.js'))
+                    resolvedImportPath.includes('.css') &&
+                    !(
+                      importPath.startsWith('./') ||
+                      importPath.startsWith('../')
+                    )
                   ) {
                     externalCssImports.add(resolvedImportPath);
                     nodePath.remove();
@@ -247,6 +236,7 @@ export class WebSandboxParser {
         });
 
         if (result?.code) {
+          fileInfo.transformedCode = result.code;
           // Create new Blob URL
           const blob = new Blob([result.code], {
             type: 'application/javascript',
@@ -293,7 +283,6 @@ export class WebSandboxParser {
   }
 
   parse() {
-    this.filesMap = this._normalizeFiles(this.options.files);
     const graph = this._buildDependencyGraph(this.filesMap);
     const sortedFiles = this._topologicalSort(graph, this.filesMap);
     const { compileErrors, styleSheetUrls, blobUrlMap } = this._transform(
@@ -313,6 +302,7 @@ export class WebSandboxParser {
     return {
       entryUrl,
       styleSheetUrls,
+      normalizedFiles: this.filesMap,
       cleanup() {
         blobUrlMap.values().forEach((url) => {
           URL.revokeObjectURL(url);
