@@ -18,3 +18,38 @@
 <demo name="theme_adaptation" title="根据用户界面主题返回不同权重内容"></demo>
 
 <demo name="custom_event" title="发送自定义事件"></demo>
+
+## API
+
+### 属性
+
+| 属性  | 类型                | 默认值 | 描述     |
+| ----- | ------------------- | ------ | -------- |
+| value | ApplicationPageData | None   | 页面数据 |
+
+### 事件
+
+| 事件                              | 描述                                                                         |
+| --------------------------------- | ---------------------------------------------------------------------------- |
+| `ms.Application.mount(fn, ···)`   | 当页面加载时触发。                                                           |
+| `ms.Application.resize(fn, ···)`  | 当页面尺寸变化时触发。                                                       |
+| `ms.Application.unmount(fn, ···)` | 当页面卸载时触发。                                                           |
+| `ms.Application.custom(fn, ···)`  | 当用户在 JavaScript 中调用`window.ms_globals.dispatch`抛出自定义事件时触发。 |
+
+### 类型
+
+```python
+
+class ApplicationPageScreenData(GradioModel):
+    width: float
+    height: float
+    scrollX: float
+    scrollY: float
+
+
+class ApplicationPageData(GradioModel):
+    screen: ApplicationPageScreenData
+    language: str
+    theme: str
+    userAgent: str
+```

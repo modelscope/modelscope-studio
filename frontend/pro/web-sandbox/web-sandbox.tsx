@@ -21,7 +21,7 @@ import './web-sandbox.less';
 
 export interface WebSandboxProps {
   value?: Record<string, string | InputFileObject>;
-  importMap?: Record<string, string>;
+  imports?: Record<string, string>;
   showRenderError?: boolean;
   showCompileError?: boolean;
   template?: 'react' | 'html';
@@ -39,14 +39,14 @@ export const WebSandbox = sveltify<WebSandboxProps, ['compileErrorRender']>(
   ({
     children,
     value,
-    importMap,
+    imports,
     slots,
     setSlotParams,
     template = 'react',
     themeMode,
     showRenderError,
     showCompileError,
-    height = 500,
+    height,
     className,
     style,
     onCompileError,
@@ -87,9 +87,9 @@ export const WebSandbox = sveltify<WebSandboxProps, ['compileErrorRender']>(
               'react-dom': 'https://esm.sh/react-dom',
               'react-dom/': 'https://esm.sh/react-dom/',
             }),
-        ...importMap,
+        ...imports,
       };
-    }, [importMap, template]);
+    }, [imports, template]);
 
     // Process all files and create Blob URLs
     useEffect(() => {

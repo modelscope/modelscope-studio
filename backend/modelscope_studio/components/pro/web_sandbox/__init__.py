@@ -39,7 +39,7 @@ class ModelScopeProWebSandbox(ModelScopeLayoutComponent):
             show_render_error: bool = True,
             show_compile_error: bool = True,
             compile_error_render: str | None = None,
-            import_map: Dict[str, str] | None = None,
+            imports: Dict[str, str] | None = None,
             height: str | int | float | None = 400,
             _internal: None = None,
             # gradio properties
@@ -60,7 +60,7 @@ class ModelScopeProWebSandbox(ModelScopeLayoutComponent):
         self.show_compile_error = show_compile_error
         self.compile_error_render = compile_error_render
         self.template = template
-        self.import_map = import_map
+        self.imports = imports
         self.height = height
 
     FRONTEND_DIR = resolve_frontend_dir("web-sandbox", type='pro')

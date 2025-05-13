@@ -21,7 +21,9 @@ If you need to add certain unified properties to all list item components, you c
 
 <demo name="use_context_value" title="Using the context_value Parameter"></demo>
 
-### API
+## API
+
+### Props
 
 | Attribute     | Type | Default Value | Description                   |
 | ------------- | ---- | ------------- | ----------------------------- |
