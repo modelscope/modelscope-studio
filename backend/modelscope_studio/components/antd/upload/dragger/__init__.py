@@ -65,6 +65,7 @@ class AntdUploadDragger(ModelScopeDataLayoutComponent):
             default_file_list: list[dict] | None = None,
             directory: bool | None = None,
             disabled: bool | None = None,
+            pastable: bool | None = None,
             file_list: list[dict] | None = None,
             headers: dict | None = None,
             icon_render: str | None = None,
@@ -116,6 +117,7 @@ class AntdUploadDragger(ModelScopeDataLayoutComponent):
         self.default_file_list = default_file_list
         self.directory = directory
         self.disabled = disabled
+        self.pastable = pastable
         self.file_list = file_list
         self.headers = headers
         self.icon_render = icon_render

@@ -71,6 +71,7 @@
       {...bindEvents($mergedProps, {
         popup_scroll: 'popupScroll',
         dropdown_visible_change: 'dropdownVisibleChange',
+        popup_visible_change: 'popupVisibleChange',
       })}
       value={$mergedProps.props.value ?? $mergedProps.value}
       slots={$slots}

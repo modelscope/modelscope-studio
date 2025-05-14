@@ -27,6 +27,9 @@ class AntdCascader(ModelScopeDataLayoutComponent):
         EventListener("dropdown_visible_change",
                       callback=lambda block: block._internal.update(
                           bind_dropdownVisibleChange_event=True)),
+        EventListener("popup_visible_change",
+                      callback=lambda block: block._internal.update(
+                          bind_popupVisibleChange_event=True)),
         EventListener("load_data",
                       callback=lambda block: block._internal.update(
                           bind_loadData_event=True)),
@@ -44,6 +47,7 @@ class AntdCascader(ModelScopeDataLayoutComponent):
         'displayRender',
         'tagRender',
         'dropdownRender',
+        'popupRender'
         'showSearch.render',
     ]
 
@@ -62,6 +66,7 @@ class AntdCascader(ModelScopeDataLayoutComponent):
             tag_render: str | None = None,
             popup_class_name: str | None = None,
             dropdown_render: str | None = None,
+            popup_render: str | None = None,
             expand_icon: str | None = None,
             prefix: str | None = None,
             expand_trigger: Literal['click', 'hover'] = 'click',
@@ -90,6 +95,8 @@ class AntdCascader(ModelScopeDataLayoutComponent):
             dropdown_menu_column_style: dict | None = None,
             option_render: str | None = None,
             root_class_name: str | None = None,
+            class_names: dict | None = None,
+            styles: dict | None = None,
             as_item: str | None = None,
             _internal: None = None,
             # gradio properties
@@ -119,6 +126,7 @@ class AntdCascader(ModelScopeDataLayoutComponent):
         self.prefix = prefix
         self.popup_class_name = popup_class_name
         self.dropdown_render = dropdown_render
+        self.popup_render = popup_render
         self.expand_icon = expand_icon
         self.expand_trigger = expand_trigger
         self.filed_names = filed_names
@@ -142,6 +150,8 @@ class AntdCascader(ModelScopeDataLayoutComponent):
         self.search_value = search_value
         self.dropdown_menu_column_style = dropdown_menu_column_style
         self.option_render = option_render
+        self.class_names = class_names
+        self.styles = styles
         self.root_class_name = root_class_name
 
     FRONTEND_DIR = resolve_frontend_dir("cascader")

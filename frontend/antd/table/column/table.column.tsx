@@ -70,6 +70,18 @@ export const TableColumn = sveltify<
                     }
                   )
                 : createFunction(itemProps.filterDropdownProps?.dropdownRender),
+              popupRender: slots['filterDropdownProps.popupRender']
+                ? renderParamsSlot(
+                    {
+                      setSlotParams,
+                      slots: slots,
+                      key: 'filterDropdownProps.popupRender',
+                    },
+                    {
+                      clone: true,
+                    }
+                  )
+                : createFunction(itemProps.filterDropdownProps?.popupRender),
               menu:
                 Object.values(filterDropdownMenu).filter(Boolean).length > 0
                   ? filterDropdownMenu

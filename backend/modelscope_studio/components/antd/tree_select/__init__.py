@@ -34,6 +34,9 @@ class AntdTreeSelect(ModelScopeDataLayoutComponent):
         EventListener("dropdown_visible_change",
                       callback=lambda block: block._internal.update(
                           bind_dropdownVisibleChange_event=True)),
+        EventListener("popup_visible_change",
+                      callback=lambda block: block._internal.update(
+                          bind_dropdownVisibleChange_event=True)),
         EventListener("load_data",
                       callback=lambda block: block._internal.update(
                           bind_loadData_event=True)),
@@ -42,8 +45,8 @@ class AntdTreeSelect(ModelScopeDataLayoutComponent):
     # supported slots
     SLOTS = [
         'allowClear.clearIcon', 'maxTagPlaceholder', 'notFoundContent',
-        'prefix', 'suffixIcon', 'switcherIcon', 'dropdownRender', 'tagRender',
-        'treeTitleRender', 'treeData'
+        'prefix', 'suffixIcon', 'switcherIcon', 'dropdownRender',
+        "popupRender", 'tagRender', 'treeTitleRender', 'treeData'
     ]
 
     def __init__(
@@ -59,6 +62,7 @@ class AntdTreeSelect(ModelScopeDataLayoutComponent):
             popup_class_name: str | None = None,
             popup_match_select_width: bool | float | int | None = True,
             dropdown_render: str | None = None,
+            popup_render: str | None = None,
             dropdown_style: dict | None = None,
             field_names: dict | None = None,
             filter_tree_node: str | bool | None = None,
@@ -102,6 +106,8 @@ class AntdTreeSelect(ModelScopeDataLayoutComponent):
             variant: Literal['outlined', 'borderless', 'solid', 'underlined']
         | None = None,
             virtual: bool | None = True,
+            class_names: dict | None = None,
+            styles: dict | None = None,
             root_class_name: str | None = None,
             as_item: str | None = None,
             _internal: None = None,
@@ -129,6 +135,7 @@ class AntdTreeSelect(ModelScopeDataLayoutComponent):
         self.popup_class_name = popup_class_name
         self.popup_match_select_width = popup_match_select_width
         self.dropdown_render = dropdown_render
+        self.popup_render = popup_render
         self.dropdown_style = dropdown_style
         self.prefix = prefix
         self.field_names = field_names
@@ -169,7 +176,8 @@ class AntdTreeSelect(ModelScopeDataLayoutComponent):
         self.tree_node_label_prop = tree_node_label_prop
         self.variant = variant
         self.virtual = virtual
-        self.root_class_name = root_class_name
+        self.class_names = class_names
+        self.styles = styles
         self.root_class_name = root_class_name
 
     FRONTEND_DIR = resolve_frontend_dir("tree-select")

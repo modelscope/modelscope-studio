@@ -35,8 +35,8 @@ class AntdDropdownButton(ModelScopeLayoutComponent):
 
     # supported slots
     SLOTS = [
-        "icon", 'dropdownRender', 'buttonsRender', "menu.expandIcon",
-        'menu.overflowedIndicator', "menu.items"
+        "icon", 'dropdownRender', 'popupRender', 'buttonsRender',
+        "menu.expandIcon", 'menu.overflowedIndicator', "menu.items"
     ]
 
     def __init__(
@@ -49,7 +49,9 @@ class AntdDropdownButton(ModelScopeLayoutComponent):
             auto_focus: bool | None = None,
             disabled: bool | None = None,
             destroy_popup_on_hide: bool | None = None,
+            destroy_on_hidden: bool | None = None,
             dropdown_render: str | None = None,
+            popup_render: str | None = None,
             get_popup_container: str | None = None,
             menu: dict | None = None,
             overlay_class_name: str | None = None,
@@ -66,6 +68,8 @@ class AntdDropdownButton(ModelScopeLayoutComponent):
             size: Literal["large", "middle", "small"] | None = None,
             type: Literal["primary", "dashed", "link", "text", "default"]
         | None = None,
+            class_names: dict | None = None,
+            styles: dict | None = None,
             root_class_name: str | None = None,
             as_item: str | None = None,
             _internal: None = None,
@@ -90,7 +94,9 @@ class AntdDropdownButton(ModelScopeLayoutComponent):
         self.auto_focus = auto_focus
         self.disabled = disabled
         self.destroy_popup_on_hide = destroy_popup_on_hide
+        self.destroy_on_hidden = destroy_on_hidden
         self.dropdown_render = dropdown_render
+        self.popup_render = popup_render
         self.get_popup_container = get_popup_container
         self.menu = menu
         self.overlay_class_name = overlay_class_name
@@ -104,6 +110,8 @@ class AntdDropdownButton(ModelScopeLayoutComponent):
         self.icon = icon
         self.size = size
         self.type = type
+        self.class_names = class_names
+        self.styles = styles
         self.root_class_name = root_class_name
 
     FRONTEND_DIR = resolve_frontend_dir("dropdown", "button")

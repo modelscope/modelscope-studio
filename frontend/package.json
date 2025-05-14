@@ -19,7 +19,7 @@
     "@gradio/upload": "0.11.2",
     "@gradio/utils": "0.9.0",
     "amuchina": "^1.0.12",
-    "antd": "^5.24.9",
+    "antd": "^5.25.1",
     "classnames": "^2.5.1",
     "dayjs": "^1.11.12",
     "dequal": "^2.0.2",
@@ -37,7 +37,7 @@
     "react-dom": "^18.3.1",
     "svelte": "^4.2.19",
     "svelte-i18n": "^4.0.1",
-    "wavesurfer.js": "^7.9.4"
+    "wavesurfer.js": "^7.9.5"
   },
   "devDependencies": {
     "@babel/core": "^7.27.1",

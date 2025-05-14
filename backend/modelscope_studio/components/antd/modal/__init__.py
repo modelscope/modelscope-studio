@@ -45,6 +45,7 @@ class AntdModal(ModelScopeLayoutComponent):
             close_icon: str | None = None,
             confirm_loading: bool | None = None,
             destroy_on_close: bool | None = None,
+            destroy_on_hidden: bool | None = None,
             focus_trigger_after_close: bool | None = None,
             footer: str | Literal['DEFAULT_FOOTER'] | None = "DEFAULT_FOOTER",
             force_render: bool | None = None,
@@ -91,6 +92,7 @@ class AntdModal(ModelScopeLayoutComponent):
         self.close_icon = close_icon
         self.confirm_loading = confirm_loading
         self.destroy_on_close = destroy_on_close
+        self.destroy_on_hidden = destroy_on_hidden
         self.focus_trigger_after_close = focus_trigger_after_close
         self.footer = footer
         self.force_render = force_render

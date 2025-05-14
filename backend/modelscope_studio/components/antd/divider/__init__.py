@@ -30,6 +30,7 @@ class AntdDivider(ModelScopeLayoutComponent):
             orientation_margin: str | int | float | None = None,
             plain: bool | None = None,
             type: Literal["horizontal", "vertical"] = "horizontal",
+            size: Literal["small", "middle", "large"] | None = None,
             root_class_name: str | None = None,
             as_item: str | None = None,
             _internal: None = None,
@@ -49,6 +50,7 @@ class AntdDivider(ModelScopeLayoutComponent):
             orientation_margin: The margin-left/right between the title and its closest border, while the orientation must be left or right, If a numeric value of type string is provided without a unit, it is assumed to be in pixels (px) by default.
             plain: Divider text show as plain style.
             type: The direction type of divider.
+            size: The size of divider. Only valid for horizontal layout.
         """
         super().__init__(visible=visible,
                          elem_id=elem_id,
@@ -65,6 +67,7 @@ class AntdDivider(ModelScopeLayoutComponent):
         self.orientation_margin = orientation_margin
         self.plain = plain
         self.type = type
+        self.size = size
         self.root_class_name = root_class_name
 
     FRONTEND_DIR = resolve_frontend_dir("divider")

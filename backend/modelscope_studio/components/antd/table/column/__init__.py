@@ -23,6 +23,7 @@ class AntdTableColumn(ModelScopeLayoutComponent):
     # supported slots
     SLOTS = [
         'filterDropdown', "filterDropdownProps.dropdownRender",
+        "filterDropdownProps.popupRender",
         "filterDropdownProps.menu.expandIcon",
         'filterDropdownProps.menu.overflowedIndicator',
         "filterDropdownProps.menu.items", 'filterIcon', 'render', 'title',

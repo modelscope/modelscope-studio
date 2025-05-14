@@ -14,7 +14,7 @@ export const Tour = sveltify<
     children?: React.ReactNode;
     setSlotParams: SetSlotParams;
   },
-  ['closeIcon', 'indicatorsRender']
+  ['closeIcon', 'indicatorsRender', 'actionsRender']
 >(
   withItemsContextProvider(
     ['steps', 'default'],
@@ -27,10 +27,12 @@ export const Tour = sveltify<
       getPopupContainer,
       setSlotParams,
       indicatorsRender,
+      actionsRender,
       ...props
     }) => {
       const getPopupContainerFunction = useFunction(getPopupContainer);
       const indicatorsRenderFunction = useFunction(indicatorsRender);
+      const actionsRenderFunction = useFunction(actionsRender);
       const { items: slotItems } = useItems<['steps', 'default']>();
       const resolvedSlotItems =
         slotItems.steps.length > 0 ? slotItems.steps : slotItems.default;
@@ -56,6 +58,15 @@ export const Tour = sveltify<
               ) : (
                 props.closeIcon
               )
+            }
+            actionsRender={
+              slots.actionsRender
+                ? renderParamsSlot({
+                    slots,
+                    setSlotParams,
+                    key: 'actionsRender',
+                  })
+                : actionsRenderFunction
             }
             indicatorsRender={
               slots.indicatorsRender

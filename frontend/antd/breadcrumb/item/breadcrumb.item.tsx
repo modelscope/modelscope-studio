@@ -95,6 +95,18 @@ export const BreadcrumbItem = sveltify<
                     }
                   )
                 : createFunction(itemProps.dropdownProps?.dropdownRender),
+              popupRender: slots['dropdownProps.popupRender']
+                ? renderParamsSlot(
+                    {
+                      setSlotParams,
+                      slots: slots,
+                      key: 'dropdownProps.popupRender',
+                    },
+                    {
+                      clone: true,
+                    }
+                  )
+                : createFunction(itemProps.dropdownProps?.popupRender),
               menu:
                 Object.values(dropdownMenu).filter(Boolean).length > 0
                   ? dropdownMenu

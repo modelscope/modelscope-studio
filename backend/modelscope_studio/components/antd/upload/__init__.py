@@ -70,6 +70,7 @@ class AntdUpload(ModelScopeDataLayoutComponent):
             directory: bool | None = None,
             disabled: bool | None = None,
             file_list: list[dict] | None = None,
+            pastable: bool | None = None,
             headers: dict | None = None,
             icon_render: str | None = None,
             is_image_url: str | None = None,
@@ -132,6 +133,7 @@ class AntdUpload(ModelScopeDataLayoutComponent):
         self.open_file_dialog_on_click = open_file_dialog_on_click
         self.preview_file = preview_file
         self.progress = progress
+        self.pastable = pastable
         self.show_upload_list = show_upload_list
         self.with_credentials = with_credentials
         self.root_class_name = root_class_name
