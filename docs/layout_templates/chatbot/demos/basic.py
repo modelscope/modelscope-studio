@@ -431,6 +431,9 @@ css = """
 #chatbot .chatbot-conversations .chatbot-conversations-list {
   padding-left: 0;
   padding-right: 0;
+  flex: 1;
+  height: 0;
+  overflow: auto;
 }
 
 #chatbot .chatbot-chat {
@@ -479,6 +482,7 @@ with gr.Blocks(css=css, fill_width=True) as demo:
             with antd.Col(md=dict(flex="0 0 260px", span=24, order=0),
                           span=0,
                           order=1,
+                          elem_style=dict(width=0),
                           elem_classes="chatbot-conversations"):
                 with antd.Flex(vertical=True,
                                gap="small",
