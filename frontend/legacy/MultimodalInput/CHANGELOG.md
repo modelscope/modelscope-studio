@@ -1,5 +1,16 @@
 # @modelscope-studio/legacy-multimodal-input
 
+## 1.3.0
+
+No significant changes to this package were made in this release.
+
+## 1.2.5
+
+### Patch Changes
+
+- Updated dependencies [[`d3259ab`](https://github.com/modelscope/modelscope-studio/commit/d3259abd179f7953b81f8d76c82cd2d3dd59766c)]:
+  - @modelscope-studio/legacy-compiled@1.2.5
+
 ## 1.2.4
 
 No significant changes to this package were made in this release.
