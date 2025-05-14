@@ -35,6 +35,7 @@ class AntdCollapse(ModelScopeLayoutComponent):
             default_active_key: str | float | list[int | float] | list[str]
         | None = None,
             destroy_inactive_panel: bool | None = None,
+            destroy_on_hidden: bool | None = None,
             expand_icon: str | None = None,
             expand_icon_position: Literal['start', 'end'] | None = None,
             ghost: bool | None = None,
@@ -63,6 +64,7 @@ class AntdCollapse(ModelScopeLayoutComponent):
         self.bordered = bordered
         self.collapsible = collapsible
         self.default_active_key = default_active_key
+        self.destroy_on_hidden = destroy_on_hidden
         self.destroy_inactive_panel = destroy_inactive_panel
         self.expand_icon = expand_icon
         self.expand_icon_position = expand_icon_position

@@ -226,6 +226,7 @@ artifacts = [
   "/backend/modelscope_studio/components/antdx/x_provider/templates",
   "/backend/modelscope_studio/components/pro/chatbot/templates",
   "/backend/modelscope_studio/components/pro/multimodal_input/templates",
+  "/backend/modelscope_studio/components/pro/web_sandbox/templates",
 ]
 
 [tool.yapfignore]

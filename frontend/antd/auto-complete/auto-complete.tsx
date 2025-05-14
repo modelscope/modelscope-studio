@@ -35,7 +35,13 @@ export const AutoComplete = sveltify<
     onValueChange: (value: string) => void;
     setSlotParams: SetSlotParams;
   },
-  ['allowClear.clearIcon', 'children', 'dropdownRender', 'notFoundContent']
+  [
+    'allowClear.clearIcon',
+    'children',
+    'dropdownRender',
+    'popupRender',
+    'notFoundContent',
+  ]
 >(
   withItemsContextProvider(
     ['options', 'default'],
@@ -48,6 +54,7 @@ export const AutoComplete = sveltify<
       options,
       getPopupContainer,
       dropdownRender,
+      popupRender,
       elRef,
       setSlotParams,
       ...props
@@ -55,6 +62,7 @@ export const AutoComplete = sveltify<
       const getPopupContainerFunction = useFunction(getPopupContainer);
       const filterOptionFunction = useFunction(filterOption);
       const dropdownRenderFunction = useFunction(dropdownRender);
+      const popupRenderFunction = useFunction(popupRender);
       const [value, setValue] = useValueChange({
         onValueChange,
         value: props.value,
@@ -106,6 +114,18 @@ export const AutoComplete = sveltify<
             }
             filterOption={filterOptionFunction || filterOption}
             getPopupContainer={getPopupContainerFunction}
+            popupRender={
+              slots.popupRender
+                ? renderParamsSlot(
+                    {
+                      slots,
+                      setSlotParams,
+                      key: 'popupRender',
+                    },
+                    { clone: true }
+                  )
+                : popupRenderFunction
+            }
             dropdownRender={
               slots.dropdownRender
                 ? renderParamsSlot(

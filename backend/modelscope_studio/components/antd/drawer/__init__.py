@@ -30,6 +30,7 @@ class AntdDrawer(ModelScopeLayoutComponent):
             close_icon: str | None = None,
             class_names: dict | None = None,
             destroy_on_close: bool | None = None,
+            destroy_on_hidden: bool | None = None,
             extra: str | None = None,
             footer: str | None = None,
             force_render: bool | None = None,
@@ -73,6 +74,7 @@ class AntdDrawer(ModelScopeLayoutComponent):
         self.close_icon = close_icon
         self.class_names = class_names
         self.destroy_on_close = destroy_on_close
+        self.destroy_on_hidden = destroy_on_hidden
         self.extra = extra
         self.footer = footer
         self.force_render = force_render

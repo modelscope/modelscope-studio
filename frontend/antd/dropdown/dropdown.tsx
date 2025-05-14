@@ -18,7 +18,12 @@ export const Dropdown = sveltify<
     innerStyle?: React.CSSProperties;
     setSlotParams: SetSlotParams;
   },
-  ['menu.expandIcon', 'dropdownRender', 'menu.overflowedIndicator']
+  [
+    'menu.expandIcon',
+    'dropdownRender',
+    'popupRender',
+    'menu.overflowedIndicator',
+  ]
 >(
   withMenuItemsContextProvider(
     ['menu.items'],
@@ -28,11 +33,13 @@ export const Dropdown = sveltify<
       children,
       slots,
       dropdownRender,
+      popupRender,
       setSlotParams,
       ...props
     }) => {
       const getPopupContainerFunction = useFunction(getPopupContainer);
       const dropdownRenderFunction = useFunction(dropdownRender);
+      const popupRenderFunction = useFunction(popupRender);
       const {
         items: { 'menu.items': menuItems },
       } = useMenuItems<['menu.items']>();
@@ -75,6 +82,18 @@ export const Dropdown = sveltify<
                     { clone: true }
                   )
                 : dropdownRenderFunction
+            }
+            popupRender={
+              slots.popupRender
+                ? renderParamsSlot(
+                    {
+                      slots,
+                      setSlotParams,
+                      key: 'popupRender',
+                    },
+                    { clone: true }
+                  )
+                : popupRenderFunction
             }
           >
             <div

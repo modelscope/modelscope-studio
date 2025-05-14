@@ -4,7 +4,7 @@ import type { Attachment } from '@ant-design/x/es/attachments';
 import type { FileListCardProps } from '@ant-design/x/es/attachments/FileList/FileListCard';
 import type { FileData } from '@gradio/client';
 import { get_fetchable_url_or_file } from '@utils/upload';
-import { theme } from 'antd';
+// import { theme } from 'antd';
 
 export type FileCardProps = Omit<FileListCardProps, 'item'> & {
   urlRoot: string;
@@ -18,7 +18,7 @@ export const FileCard: React.FC<FileCardProps> = ({
   urlProxyUrl,
   ...props
 }) => {
-  const { token } = theme.useToken();
+  // const { token } = theme.useToken();
   const resolvedItem = useMemo(() => {
     if (!item) {
       return {};
@@ -46,18 +46,19 @@ export const FileCard: React.FC<FileCardProps> = ({
       {...props}
       imageProps={{
         ...props.imageProps,
-        wrapperStyle: {
-          width: '100%',
-          height: '100%',
-          ...props.imageProps?.wrapperStyle,
-        },
-        style: {
-          width: '100%',
-          height: '100%',
-          objectFit: 'contain',
-          borderRadius: token.borderRadius,
-          ...props.imageProps?.style,
-        },
+        // fixed in @ant-design/x@1.2.0
+        // wrapperStyle: {
+        //   width: '100%',
+        //   height: '100%',
+        //   ...props.imageProps?.wrapperStyle,
+        // },
+        // style: {
+        //   width: '100%',
+        //   height: '100%',
+        //   objectFit: 'contain',
+        //   borderRadius: token.borderRadius,
+        //   ...props.imageProps?.style,
+        // },
       }}
       item={resolvedItem as Attachment}
     />

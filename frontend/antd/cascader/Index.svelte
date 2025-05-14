@@ -70,6 +70,7 @@
       {...$mergedProps.props}
       {...bindEvents($mergedProps, {
         dropdown_visible_change: 'dropdownVisibleChange',
+        popup_visible_change: 'popupVisibleChange',
         load_data: 'loadData',
       })}
       value={$mergedProps.props.value ?? $mergedProps.value}

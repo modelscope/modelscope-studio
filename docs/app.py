@@ -149,6 +149,15 @@ pro_menu_items = [{
         "label": get_text("MultimodalInput", "MultimodalInput 多模态输入框"),
         "key": "multimodal_input"
     }]
+}, {
+    "label":
+    get_text("Interactive Preview", "交互式预览"),
+    "type":
+    "group",
+    "children": [{
+        "label": get_text("WebSandbox", "WebSandbox 网页沙盒"),
+        "key": "web_sandbox"
+    }]
 }]
 
 antd_menu_items = [{

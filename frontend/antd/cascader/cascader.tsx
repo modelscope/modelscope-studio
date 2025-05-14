@@ -34,6 +34,7 @@ export const Cascader = sveltify<
     'displayRender',
     'tagRender',
     'dropdownRender',
+    'popupRender',
     'showSearch.render',
   ]
 >(
@@ -50,6 +51,7 @@ export const Cascader = sveltify<
       tagRender,
       maxTagPlaceholder,
       dropdownRender,
+      popupRender,
       optionRender,
       showSearch,
       options,
@@ -62,6 +64,7 @@ export const Cascader = sveltify<
       const tagRenderFunction = useFunction(tagRender);
       const optionRenderFunction = useFunction(optionRender);
       const dropdownRenderFunction = useFunction(dropdownRender);
+      const popupRenderFunction = useFunction(popupRender);
       const maxTagPlaceholderFunction = useFunction(maxTagPlaceholder);
       const supportShowSearchConfig =
         typeof showSearch === 'object' || slots['showSearch.render'];
@@ -124,6 +127,15 @@ export const Cascader = sveltify<
                     key: 'dropdownRender',
                   })
                 : dropdownRenderFunction
+            }
+            popupRender={
+              slots.popupRender
+                ? renderParamsSlot({
+                    slots,
+                    setSlotParams,
+                    key: 'popupRender',
+                  })
+                : popupRenderFunction
             }
             displayRender={
               slots.displayRender

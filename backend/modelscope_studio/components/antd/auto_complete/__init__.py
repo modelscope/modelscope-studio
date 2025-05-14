@@ -37,11 +37,14 @@ class AntdAutoComplete(ModelScopeDataLayoutComponent):
         EventListener("dropdown_visible_change",
                       callback=lambda block: block._internal.update(
                           bind_dropdownVisibleChange_event=True)),
+        EventListener("popup_visible_change",
+                      callback=lambda block: block._internal.update(
+                          bind_popupVisibleChange_event=True)),
     ]
 
     # supported slots
     SLOTS = [
-        'allowClear.clearIcon', 'dropdownRender', 'children',
+        'allowClear.clearIcon', 'dropdownRender', 'popupRender', 'children',
         'notFoundContent', 'options'
     ]
 
@@ -58,6 +61,7 @@ class AntdAutoComplete(ModelScopeDataLayoutComponent):
             default_value: str | None = None,
             disabled: bool | None = None,
             dropdown_render: str | None = None,
+            popup_render: str | None = None,
             popup_class_name: str | None = None,
             popup_match_select_width: bool | int | float = True,
             filter_option: bool | str = True,
@@ -72,6 +76,8 @@ class AntdAutoComplete(ModelScopeDataLayoutComponent):
             status: Literal['error', 'warning'] | None = None,
             variant: Literal['outlined', 'borderless', 'filled']
         | None = None,
+            class_names: dict | None = None,
+            styles: dict | None = None,
             root_class_name: str | None = None,
             as_item: str | None = None,
             _internal: None = None,
@@ -99,6 +105,7 @@ class AntdAutoComplete(ModelScopeDataLayoutComponent):
         self.default_value = default_value
         self.disabled = disabled
         self.dropdown_render = dropdown_render
+        self.popup_render = popup_render
         self.popup_class_name = popup_class_name
         self.popup_match_select_width = popup_match_select_width
         self.filter_option = filter_option
@@ -111,6 +118,8 @@ class AntdAutoComplete(ModelScopeDataLayoutComponent):
         self.variant = variant
         self.placement = placement
         self.size = size
+        self.class_names = class_names
+        self.styles = styles
         self.root_class_name = root_class_name
 
     FRONTEND_DIR = resolve_frontend_dir("auto-complete")

@@ -22,6 +22,7 @@ export const DropdownButton = sveltify<
   [
     'icon',
     'buttonsRender',
+    'popupRender',
     'dropdownRender',
     'menu.expandIcon',
     'menu.overflowedIndicator',
@@ -34,6 +35,7 @@ export const DropdownButton = sveltify<
       slots,
       children,
       dropdownRender,
+      popupRender,
       buttonsRender,
       setSlotParams,
       value,
@@ -42,6 +44,7 @@ export const DropdownButton = sveltify<
       const getPopupContainerFunction = useFunction(getPopupContainer);
       const dropdownRenderFunction = useFunction(dropdownRender);
       const buttonsRenderFunction = useFunction(buttonsRender);
+      const popupRenderFunction = useFunction(popupRender);
       const buttonsRenderTargets = useTargets(children, 'buttonsRender');
       const targets = useTargets(children);
       const {
@@ -96,6 +99,14 @@ export const DropdownButton = sveltify<
                     key: 'dropdownRender',
                   })
                 : dropdownRenderFunction
+            }
+            popupRender={
+              slots.popupRender
+                ? renderParamsSlot(
+                    { slots, setSlotParams, key: 'popupRender' },
+                    { clone: true }
+                  )
+                : popupRenderFunction
             }
             icon={slots.icon ? <ReactSlot slot={slots.icon} /> : props.icon}
           >

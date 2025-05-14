@@ -26,6 +26,7 @@ export const TreeSelect = sveltify<
     'prefix',
     'switcherIcon',
     'dropdownRender',
+    'popupRender',
     'tagRender',
     'treeTitleRender',
   ]
@@ -37,6 +38,7 @@ export const TreeSelect = sveltify<
       filterTreeNode,
       getPopupContainer,
       dropdownRender,
+      popupRender,
       tagRender,
       treeTitleRender,
       treeData,
@@ -53,6 +55,7 @@ export const TreeSelect = sveltify<
       const getPopupContainerFunction = useFunction(getPopupContainer);
       const tagRenderFunction = useFunction(tagRender);
       const dropdownRenderFunction = useFunction(dropdownRender);
+      const popupRenderFunction = useFunction(popupRender);
       const treeTitleRenderFunction = useFunction(treeTitleRender);
       const { items: slotItems } = useItems<['default', 'treeData']>();
       const resolvedSlotItems =
@@ -70,6 +73,9 @@ export const TreeSelect = sveltify<
           dropdownRender: slots.dropdownRender
             ? renderParamsSlot({ slots, setSlotParams, key: 'dropdownRender' })
             : dropdownRenderFunction,
+          popupRender: slots.popupRender
+            ? renderParamsSlot({ slots, setSlotParams, key: 'popupRender' })
+            : popupRenderFunction,
           allowClear: slots['allowClear.clearIcon']
             ? {
                 clearIcon: <ReactSlot slot={slots['allowClear.clearIcon']} />,
@@ -111,6 +117,7 @@ export const TreeSelect = sveltify<
         };
       }, [
         dropdownRenderFunction,
+        popupRenderFunction,
         filterTreeNode,
         filterTreeNodeFunction,
         getPopupContainerFunction,

@@ -9,10 +9,10 @@ with gr.Blocks() as demo:
                 antd.Breadcrumb.Item(title="Ant Design")
                 with antd.Breadcrumb.Item():
                     with ms.Slot("title"):
-                        antd.Button(type="link", href="#")
+                        antd.Button("Link", type="link", href="#")
                 with antd.Breadcrumb.Item():
                     with ms.Slot("title"):
-                        antd.Button(type="link", href="General")
+                        antd.Button("General", type="link", href="#")
                     with ms.Slot("menu.items"):
                         with antd.Menu.Item(key="1"):
                             with ms.Slot("label"):

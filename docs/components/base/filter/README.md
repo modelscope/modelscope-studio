@@ -14,7 +14,7 @@ If no parameters are provided, this component will block the context transmissio
 <demo name="use_as_item" title="Using the as_item Parameter"></demo>
 <demo name="use_params_mapping" title="Using the params_mapping Parameter"></demo>
 
-### API
+## API
 
 | Property       | Type | Default Value | Description                                                                                                                                  |
 | -------------- | ---- | ------------- | -------------------------------------------------------------------------------------------------------------------------------------------- |

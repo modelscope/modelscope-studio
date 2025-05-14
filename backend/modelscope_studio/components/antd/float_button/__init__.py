@@ -29,7 +29,7 @@ class AntdFloatButton(ModelScopeLayoutComponent):
     ]
 
     # supported slots
-    SLOTS = ['icon', 'description', 'tooltip', 'badge.count']
+    SLOTS = ['icon', 'description', 'tooltip', 'tooltip.title', 'badge.count']
 
     def __init__(
             self,
@@ -37,7 +37,7 @@ class AntdFloatButton(ModelScopeLayoutComponent):
             *,
             icon: str | None = None,
             description: str | None = None,
-            tooltip: str | None = None,
+            tooltip: str | dict | None = None,
             type: Literal['default', 'primary'] = 'default',
             shape: Literal['circle', 'square'] = 'circle',
             href: str | None = None,

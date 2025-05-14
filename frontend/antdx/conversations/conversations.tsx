@@ -14,6 +14,7 @@ import { renderItems } from '@utils/renderItems';
 import { renderParamsSlot } from '@utils/renderParamsSlot';
 import type { MenuProps } from 'antd';
 import type { ItemType } from 'antd/es/menu/interface';
+import classNames from 'classnames';
 import { isFunction } from 'lodash-es';
 
 import {
@@ -121,23 +122,32 @@ export const Conversations = sveltify<
         const resolvedSlotItems =
           slotItems.items.length > 0 ? slotItems.items : slotItems.default;
 
+        const resolvedItems = useMemo(() => {
+          return (
+            items ||
+            renderItems<NonNullable<ConversationsProps['items']>[number]>(
+              resolvedSlotItems,
+              {
+                clone: true,
+              }
+            )
+          );
+        }, [items, resolvedSlotItems]);
+
         return (
           <>
             <div style={{ display: 'none' }}>{children}</div>
             <XConversations
               {...props}
               menu={menu}
-              items={useMemo(() => {
-                return (
-                  items ||
-                  renderItems<NonNullable<ConversationsProps['items']>[number]>(
-                    resolvedSlotItems,
-                    {
-                      clone: true,
-                    }
-                  )
-                );
-              }, [items, resolvedSlotItems])}
+              classNames={{
+                ...props.classNames,
+                item: classNames(
+                  props.classNames?.item,
+                  'ms-gr-antdx-conversations-item'
+                ),
+              }}
+              items={resolvedItems}
               groupable={
                 supportGroupableConfig
                   ? {

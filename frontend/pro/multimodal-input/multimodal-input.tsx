@@ -16,7 +16,7 @@ import { useFunction } from '@utils/hooks/useFunction';
 import { useMemoizedFn } from '@utils/hooks/useMemoizedFn';
 import { useValueChange } from '@utils/hooks/useValueChange';
 import { omitUndefinedProps } from '@utils/omitUndefinedProps';
-import { Badge, Button, theme, Tooltip, type UploadFile } from 'antd';
+import { Badge, Button, Tooltip, type UploadFile } from 'antd';
 import type { RcFile } from 'antd/es/upload';
 import { noop, omit } from 'lodash-es';
 
@@ -115,7 +115,6 @@ export const MultimodalInput = sveltify<
     const [uploading, setUploading] = useState(false);
     const actionsFunction = useFunction(senderProps.actions, true);
     const footerFunction = useFunction(senderProps.footer, true);
-    const { token } = theme.useToken();
     const { start, stop, recording } = useRecorder({
       container: recorderContainerRef.current,
       async onStop(blob) {
@@ -358,18 +357,6 @@ export const MultimodalInput = sveltify<
                   )}
                   imageProps={{
                     ...uploadConfig?.imageProps,
-                    wrapperStyle: {
-                      width: '100%',
-                      height: '100%',
-                      ...uploadConfig?.imageProps?.wrapperStyle,
-                    },
-                    style: {
-                      width: '100%',
-                      height: '100%',
-                      objectFit: 'contain',
-                      borderRadius: token.borderRadius,
-                      ...uploadConfig?.imageProps?.style,
-                    },
                   }}
                   disabled={uploadDisabled}
                   getDropContainer={() => {

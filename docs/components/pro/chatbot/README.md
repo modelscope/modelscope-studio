@@ -37,7 +37,7 @@ The `message` object includes all configurations from `bot_config` and `user_con
 
 <demo name="thinking"  position="bottom" collapsible="true"></demo>
 
-### API
+## API
 
 ### Props
 
@@ -55,7 +55,7 @@ The `message` object includes all configurations from `bot_config` and `user_con
 | max_height                     | `int \| float \| str \| None`                                     | None          | The maximum height of the component, specified in pixels if a number is passed, or in CSS units if a string is passed.                                                                               |
 | min_height                     | `int \| float \| str \| None`                                     | None          | The minimum height of the component, specified in pixels if a number is passed, or in CSS units if a string is passed.                                                                               |
 
-#### Events
+### Events
 
 | Event                                        | Description                                             |
 | -------------------------------------------- | ------------------------------------------------------- |

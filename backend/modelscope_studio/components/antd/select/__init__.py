@@ -40,13 +40,17 @@ class AntdSelect(ModelScopeDataLayoutComponent):
         EventListener("dropdown_visible_change",
                       callback=lambda block: block._internal.update(
                           bind_dropdownVisibleChange_event=True)),
+        EventListener("popup_visible_change",
+                      callback=lambda block: block._internal.update(
+                          bind_popupVisibleChange_event=True)),
     ]
 
     # supported slots
     SLOTS = [
         'allowClear.clearIcon', 'maxTagPlaceholder', 'menuItemSelectedIcon',
-        'dropdownRender', 'optionRender', 'tagRender', 'labelRender',
-        'notFoundContent', 'removeIcon', 'suffixIcon', 'prefix', 'options'
+        'dropdownRender', 'popupRender', 'optionRender', 'tagRender',
+        'labelRender', 'notFoundContent', 'removeIcon', 'suffixIcon', 'prefix',
+        'options'
     ]
 
     def __init__(
@@ -65,6 +69,7 @@ class AntdSelect(ModelScopeDataLayoutComponent):
             popup_class_name: str | None = None,
             popup_match_select_width: bool | int | float | None = True,
             dropdown_render: str | None = None,
+            popup_render: str | None = None,
             dropdown_style: dict | None = None,
             field_names: dict | None = None,
             filter_option: bool | str | None = None,
@@ -101,6 +106,8 @@ class AntdSelect(ModelScopeDataLayoutComponent):
             variant: Literal['outlined', 'borderless', 'filled', 'underlined']
         | None = None,
             virtual: bool | None = True,
+            class_names: dict | None = None,
+            styles: dict | None = None,
             root_class_name: str | None = None,
             as_item: str | None = None,
             _internal: None = None,
@@ -134,6 +141,7 @@ class AntdSelect(ModelScopeDataLayoutComponent):
         self.popup_match_select_width = popup_match_select_width
         self.get_popup_container = get_popup_container
         self.dropdown_render = dropdown_render
+        self.popup_render = popup_render
         self.dropdown_style = dropdown_style
         self.field_names = field_names
         self.filter_option = filter_option
@@ -166,6 +174,8 @@ class AntdSelect(ModelScopeDataLayoutComponent):
         self.token_separators = token_separators
         self.variant = variant
         self.virtual = virtual
+        self.class_names = class_names
+        self.styles = styles
         self.root_class_name = root_class_name
 
     FRONTEND_DIR = resolve_frontend_dir("select")

@@ -58,6 +58,7 @@ class AntdTabs(ModelScopeLayoutComponent):
             tab_position: Literal["left", "right", "top", "bottom"]
         | None = None,
             destroy_inactive_tab_pane: bool | None = None,
+            destroy_on_hidden: bool | None = None,
             type: Literal["card", "line", "editable-card"] | None = None,
             root_class_name: str | None = None,
             as_item: str | None = None,
@@ -95,6 +96,7 @@ class AntdTabs(ModelScopeLayoutComponent):
         self.tab_bar_style = tab_bar_style
         self.tab_position = tab_position
         self.destroy_inactive_tab_pane = destroy_inactive_tab_pane
+        self.destroy_on_hidden = destroy_on_hidden
         self.type = type
         self.root_class_name = root_class_name
 

@@ -26,7 +26,7 @@ class AntdTour(ModelScopeLayoutComponent):
     ]
 
     # supported slots
-    SLOTS = ['closeIcon', 'indicatorsRender']
+    SLOTS = ['closeIcon', 'indicatorsRender', 'actionsRender']
 
     def __init__(
             self,
@@ -47,6 +47,7 @@ class AntdTour(ModelScopeLayoutComponent):
             type: Literal['default', 'primary'] = 'default',
             scroll_into_view_options: bool | dict = True,
             indicators_render: str | None = None,
+            actions_render: str | None = None,
             z_index: int | None = None,
             get_popup_container: str | None = None,
             root_class_name: str | None = None,
@@ -78,6 +79,7 @@ class AntdTour(ModelScopeLayoutComponent):
         self.type = type
         self.scroll_into_view_options = scroll_into_view_options
         self.indicators_render = indicators_render
+        self.actions_render = actions_render
         self.z_index = z_index
         self.get_popup_container = get_popup_container
         self.root_class_name = root_class_name

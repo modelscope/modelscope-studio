@@ -22,6 +22,7 @@ export const Select = sveltify<
     'removeIcon',
     'suffixIcon',
     'dropdownRender',
+    'popupRender',
     'optionRender',
     'tagRender',
     'labelRender',
@@ -39,6 +40,7 @@ export const Select = sveltify<
       options,
       getPopupContainer,
       dropdownRender,
+      popupRender,
       optionRender,
       tagRender,
       labelRender,
@@ -50,6 +52,7 @@ export const Select = sveltify<
       const getPopupContainerFunction = useFunction(getPopupContainer);
       const filterOptionFunction = useFunction(filterOption);
       const dropdownRenderFunction = useFunction(dropdownRender);
+      const popupRenderFunction = useFunction(popupRender);
       const filterSortFunction = useFunction(filterSort);
       const optionRenderFunction = useFunction(optionRender);
       const tagRenderFunction = useFunction(tagRender);
@@ -138,6 +141,15 @@ export const Select = sveltify<
                     key: 'dropdownRender',
                   })
                 : dropdownRenderFunction
+            }
+            popupRender={
+              slots.popupRender
+                ? renderParamsSlot({
+                    slots,
+                    setSlotParams,
+                    key: 'popupRender',
+                  })
+                : popupRenderFunction
             }
             optionRender={
               slots.optionRender

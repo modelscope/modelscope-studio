@@ -32,6 +32,7 @@ class AntdPopover(ModelScopeLayoutComponent):
             color: str | None = None,
             default_open: bool | None = None,
             destroy_tooltip_on_hide: bool | None = None,
+            destroy_on_hidden: bool | None = None,
             fresh: bool | None = None,
             get_popup_container: str | None = None,
             mouse_enter_delay: float | int | None = None,
@@ -84,6 +85,7 @@ class AntdPopover(ModelScopeLayoutComponent):
         self.color = color
         self.default_open = default_open
         self.destroy_tooltip_on_hide = destroy_tooltip_on_hide
+        self.destroy_on_hidden = destroy_on_hidden
         self.fresh = fresh
         self.get_popup_container = get_popup_container
         self.mouse_enter_delay = mouse_enter_delay
