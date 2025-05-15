@@ -16,6 +16,10 @@
 
 <demo name="extra_button"></demo>
 
+### Block 模式
+
+<demo name="block_mode"></demo>
+
 ### 上传配置
 
 <demo name="upload_config"></demo>
@@ -28,6 +32,7 @@
 | ------------- | -------------------------------------------------------- | ---------------- | ------------------------------------------------------------------------------- |
 | value         | `dict \| MultimodalInputValue \| None`                   | None             | 显示的默认值，格式为`{ "text":"", "files":[] }`。                               |
 | loading       | `bool \| None`                                           | None             | 输入框是否处处于加载状态，此时可以触发 `cancel` 事件。                          |
+| mode          | `inline \| block`                                        | 'inline'         | 输入框的渲染模式， 值为 `block` 时会将输入框与提交按钮分开渲染。                |
 | auto_size     | `bool \| { minRows?: number; maxRows?: number } \| None` | { "maxRows": 8 } | 自适应内容高度，可设置为 True \| False 或对象：{ "minRows": 2, "maxRows": 6 }。 |
 | read_only     | `bool \| None`                                           | None             | 输入框是否为只读状态。                                                          |
 | submit_type   | `Literal['enter', 'shiftEnter'] \| None`                 | 'enter'          | 输入框触发`submit`事件的方式。                                                  |

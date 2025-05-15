@@ -28,6 +28,10 @@ with gr.Blocks() as demo, ms.Application(), antdx.XProvider():
         antd.Divider("Other Sources")
         pro.MultimodalInput(upload_config=MultimodalInputUploadConfig(
             allow_speech=True, allow_paste_file=True))
+        pro.MultimodalInput(mode="block",
+                            auto_size=dict(minRows=2, maxRows=6),
+                            upload_config=MultimodalInputUploadConfig(
+                                allow_speech=True, allow_paste_file=True))
 
 if __name__ == "__main__":
     demo.queue().launch()

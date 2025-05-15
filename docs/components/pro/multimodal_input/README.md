@@ -16,6 +16,10 @@ A multimodal input component based on [Ant Design X](https://x.ant.design), supp
 
 <demo name="extra_button"></demo>
 
+### Block Mode
+
+<demo name="block_mode"></demo>
+
 ### Upload Configuration
 
 <demo name="upload_config"></demo>
@@ -24,16 +28,17 @@ A multimodal input component based on [Ant Design X](https://x.ant.design), supp
 
 ### Props
 
-| Attribute     | Type                                                     | Default Value    | Description                                                                                        |
-| ------------- | -------------------------------------------------------- | ---------------- | -------------------------------------------------------------------------------------------------- |
-| value         | `dict \| MultimodalInputValue \| None`                   | None             | Default value to display, formatted as `{ "text":"", "files":[] }`.                                |
-| loading       | `bool \| None`                                           | None             | Whether the input is in a loading state, in which case the `cancel` event can be triggered.        |
-| auto_size     | `bool \| { minRows?: number; maxRows?: number } \| None` | { "maxRows": 8 } | Height auto size feature, can be set to True \| False or an object { "minRows": 2, "maxRows": 6 }. |
-| read_only     | `bool \| None`                                           | None             | Whether the input is read-only.                                                                    |
-| submit_type   | `Literal['enter', 'shiftEnter'] \| None`                 | 'enter'          | How the input box triggers the `submit` event.                                                     |
-| placeholder   | `str \| None`                                            | None             | Input placeholder text.                                                                            |
-| disabled      | `bool \| None`                                           | None             | Whether to disable.                                                                                |
-| upload_config | `MultimodalInputUploadConfig \| dict \| None`            | None             | File upload configuration.                                                                         |
+| Attribute     | Type                                                     | Default Value    | Description                                                                                                     |
+| ------------- | -------------------------------------------------------- | ---------------- | --------------------------------------------------------------------------------------------------------------- |
+| value         | `dict \| MultimodalInputValue \| None`                   | None             | Default value to display, formatted as `{ "text":"", "files":[] }`.                                             |
+| loading       | `bool \| None`                                           | None             | Whether the input is in a loading state, in which case the `cancel` event can be triggered.                     |
+| mode          | `inline \| block`                                        | 'inline'         | The rending mode of the input box. If `block`, the input box and the submit button will be rendered separately. |
+| auto_size     | `bool \| { minRows?: number; maxRows?: number } \| None` | { "maxRows": 8 } | Height auto size feature, can be set to True \| False or an object { "minRows": 2, "maxRows": 6 }.              |
+| read_only     | `bool \| None`                                           | None             | Whether the input is read-only.                                                                                 |
+| submit_type   | `Literal['enter', 'shiftEnter'] \| None`                 | 'enter'          | How the input box triggers the `submit` event.                                                                  |
+| placeholder   | `str \| None`                                            | None             | Input placeholder text.                                                                                         |
+| disabled      | `bool \| None`                                           | None             | Whether to disable.                                                                                             |
+| upload_config | `MultimodalInputUploadConfig \| dict \| None`            | None             | File upload configuration.                                                                                      |
 
 ### Slots
 

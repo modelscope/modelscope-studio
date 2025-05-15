@@ -16,12 +16,14 @@ import { useFunction } from '@utils/hooks/useFunction';
 import { useMemoizedFn } from '@utils/hooks/useMemoizedFn';
 import { useValueChange } from '@utils/hooks/useValueChange';
 import { omitUndefinedProps } from '@utils/omitUndefinedProps';
-import { Badge, Button, Tooltip, type UploadFile } from 'antd';
+import { Badge, Button, Flex, Tooltip, type UploadFile } from 'antd';
 import type { RcFile } from 'antd/es/upload';
 import { noop, omit } from 'lodash-es';
 
 import { useRecorder } from './recorder';
 import { processAudio } from './utils';
+
+import './multimodal-input.less';
 
 const isUploadFile = (file: FileData | UploadFile): file is UploadFile => {
   return !!(file as UploadFile).name;
@@ -75,6 +77,7 @@ export const MultimodalInput = sveltify<
     children?: React.ReactNode;
     setSlotParams: SetSlotParams;
     value?: MultimodalInputValue;
+    mode?: 'inline' | 'block';
     upload: (files: File[]) => Promise<FileData[]>;
     onPasteFile?: (value: string[]) => void;
     onUpload?: (value: string[]) => void;
@@ -104,6 +107,7 @@ export const MultimodalInput = sveltify<
     placeholder,
     elRef,
     slots,
+    mode,
     // setSlotParams,
     uploadConfig: uploadConfigProp,
     value: valueProp,
@@ -244,6 +248,27 @@ export const MultimodalInput = sveltify<
     const allowSpeech = allowUpload ? uploadConfig?.allowSpeech : false;
     const allowPasteFile = allowUpload ? uploadConfig?.allowPasteFile : false;
 
+    const uploadHandlerNode = (
+      <Tooltip title={uploadConfig?.uploadButtonTooltip}>
+        <Badge
+          count={
+            (uploadConfig?.showCount ?? true) && !open
+              ? validFileList.length
+              : 0
+          }
+        >
+          <Button
+            onClick={() => {
+              setOpen(!open);
+            }}
+            color="default"
+            variant="text"
+            icon={<LinkOutlined />}
+          />
+        </Badge>
+      </Tooltip>
+    );
+
     return (
       <>
         <div style={{ display: 'none' }} ref={recorderContainerRef} />
@@ -300,38 +325,46 @@ export const MultimodalInput = sveltify<
           }}
           prefix={
             <>
-              {allowUpload ? (
-                <Tooltip title={uploadConfig?.uploadButtonTooltip}>
-                  <Badge
-                    count={
-                      (uploadConfig?.showCount ?? true) && !open
-                        ? validFileList.length
-                        : 0
-                    }
-                  >
-                    <Button
-                      onClick={() => {
-                        setOpen(!open);
-                      }}
-                      color="default"
-                      variant="text"
-                      icon={<LinkOutlined />}
-                    />
-                  </Badge>
-                </Tooltip>
-              ) : null}
+              {allowUpload && mode !== 'block' ? uploadHandlerNode : null}
               {slots.prefix ? <ReactSlot slot={slots.prefix} /> : null}
             </>
           }
           actions={
-            slots.actions ? (
+            mode === 'block' ? (
+              false
+            ) : slots.actions ? (
               <ReactSlot slot={slots.actions} />
             ) : (
               actionsFunction || senderProps.actions
             )
           }
           footer={
-            slots.footer ? (
+            mode === 'block' ? (
+              ({ components }) => {
+                const { SendButton, SpeechButton, LoadingButton } = components;
+
+                return (
+                  <Flex
+                    align="center"
+                    justify="space-between"
+                    gap="small"
+                    className="ms-gr-pro-multimodal-input-footer"
+                  >
+                    <div className="ms-gr-pro-multimodal-input-footer-extra">
+                      {allowUpload ? uploadHandlerNode : null}
+                      {slots.footer ? <ReactSlot slot={slots.footer} /> : null}
+                    </div>
+                    <Flex
+                      gap="small"
+                      className="ms-gr-pro-multimodal-input-footer-actions"
+                    >
+                      {allowSpeech ? <SpeechButton /> : null}
+                      {loading ? <LoadingButton /> : <SendButton />}
+                    </Flex>
+                  </Flex>
+                );
+              }
+            ) : slots.footer ? (
               <ReactSlot slot={slots.footer} />
             ) : (
               footerFunction || senderProps.footer
