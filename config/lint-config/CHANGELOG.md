@@ -1,5 +1,11 @@
 # @modelscope-studio/lint-config
 
+## 1.3.0
+
+### Features
+
+- [#72](https://github.com/modelscope/modelscope-studio/pull/72) [`d3259ab`](https://github.com/modelscope/modelscope-studio/commit/d3259abd179f7953b81f8d76c82cd2d3dd59766c) - update deps. Thanks [@Col0ring](https://github.com/Col0ring)!
+
 ## 1.2.4
 
 No significant changes to this package were made in this release.

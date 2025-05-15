@@ -1,5 +1,9 @@
 # @modelscope-studio/legacy-waterfall-gallery
 
+## 1.3.0
+
+No significant changes to this package were made in this release.
+
 ## 1.2.4
 
 No significant changes to this package were made in this release.
