@@ -1,0 +1,19 @@
+.ms-gr-container {
+  react-portal-target:has(.ms-gr-antd-radio) {
+    &:not(:first-child) {
+      > .ms-gr-ant-radio-button-wrapper {
+        border-start-start-radius: 0 !important;
+        border-end-start-radius: 0 !important;
+        margin-inline-start: calc(var(--ms-gr-antd-line-width) * -1);
+      }
+    }
+
+    &:not(:last-child) {
+      > .ms-gr-ant-radio-button-wrapper {
+        border-start-end-radius: 0 !important;
+        border-end-end-radius: 0 !important;
+        margin-inline-end: calc(var(--ms-gr-antd-line-width) * -1);
+      }
+    }
+  }
+}
