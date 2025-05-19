@@ -25,6 +25,7 @@ module.exports = {
     'plugin/declaration-block-no-ignored-properties': true,
     'font-family-name-quotes': null,
     'color-function-notation': 'legacy',
+    'color-function-alias-notation': 'without-alpha',
     'alpha-value-notation': 'number',
     // selector
     'selector-class-pattern': [
