@@ -1,5 +1,15 @@
 # modelscope_studio
 
+## 1.3.1
+
+### Features
+
+- [#74](https://github.com/modelscope/modelscope-studio/pull/74) [`e1b47a0`](https://github.com/modelscope/modelscope-studio/commit/e1b47a04b3fd075cd5795f5bfa4c2047ef0adece) - add block mode support for `MultimodalInput`. Thanks [@Col0ring](https://github.com/Col0ring)!
+
+### Fixes
+
+- [#74](https://github.com/modelscope/modelscope-studio/pull/74) [`e1b47a0`](https://github.com/modelscope/modelscope-studio/commit/e1b47a04b3fd075cd5795f5bfa4c2047ef0adece) - button style when use `Radio` in `Radio.Group`. Thanks [@Col0ring](https://github.com/Col0ring)!
+
 ## 1.3.0
 
 ### Features
