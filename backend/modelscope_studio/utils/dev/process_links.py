@@ -52,7 +52,7 @@ def process_links(text: str, block: Component):
                 or src.startswith("data")):
             return src
         file_path = str(utils.abspath(src))
-        if (not os.path.exists(file_path)):
+        if (not src or not os.path.exists(file_path)):
             return src
         return f"/file={processing_utils.move_resource_to_block_cache(file_path, block)}"
 
