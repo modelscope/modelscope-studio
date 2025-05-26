@@ -140,6 +140,7 @@ class ModelScopeProMultimodalInput(ModelScopeDataLayoutComponent):
             self,
             value: dict | MultimodalInputValue | None = None,
             *,
+            mode: Literal['inline', 'block'] = 'inline',
             auto_size: bool | dict | None = None,
             footer: str | None = None,
             header: str | None = None,
@@ -171,6 +172,7 @@ class ModelScopeProMultimodalInput(ModelScopeDataLayoutComponent):
                          elem_style=elem_style,
                          **kwargs)
         self.auto_size = auto_size
+        self.mode = mode
         self.footer = footer
         self.header = header
         self.actions = actions

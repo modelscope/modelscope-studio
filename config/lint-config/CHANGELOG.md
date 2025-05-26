@@ -1,5 +1,9 @@
 # @modelscope-studio/lint-config
 
+## 1.3.1
+
+No significant changes to this package were made in this release.
+
 ## 1.3.0
 
 ### Features

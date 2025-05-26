@@ -3,6 +3,7 @@ from __future__ import annotations
 from typing import Any, Literal
 
 from ....utils.dev import ModelScopeLayoutComponent, resolve_frontend_dir
+from ...antd.config_provider import LocaleType
 
 
 class AntdXXProvider(ModelScopeLayoutComponent):
@@ -25,7 +26,7 @@ class AntdXXProvider(ModelScopeLayoutComponent):
                  get_popup_container: str | None = None,
                  get_target_container: str | None = None,
                  icon_prefix_cls: str | None = None,
-                 locale: str | None = None,
+                 locale: LocaleType | None = None,
                  popup_match_select_width: bool | int | float | None = None,
                  popup_overflow: Literal['viewport', 'scroll'] | None = None,
                  prefix_cls: str | None = None,
