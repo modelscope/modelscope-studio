@@ -28,8 +28,12 @@ function patchBubbleSlots(role: RoleType, params: any[]) {
               src: patchSlotRender((role.avatar as AvatarProps)?.src),
             }
           : role.avatar,
-      footer: patchSlotRender(role.footer),
-      header: patchSlotRender(role.header),
+      footer: patchSlotRender(role.footer, {
+        unshift: true,
+      }),
+      header: patchSlotRender(role.header, {
+        unshift: true,
+      }),
       loadingRender: patchSlotRender(role.loadingRender, true),
       messageRender: patchSlotRender(role.messageRender, true),
     };
