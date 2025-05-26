@@ -108,6 +108,14 @@
         avatar: undefined,
         'avatar.icon': undefined,
         'avatar.src': undefined,
+        header: {
+          el: $slots.header,
+          callback: setSlotParams,
+        },
+        footer: {
+          el: $slots.footer,
+          callback: setSlotParams,
+        },
         loadingRender: {
           el: $slots.loadingRender,
           callback: setSlotParams,

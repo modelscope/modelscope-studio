@@ -14,7 +14,7 @@
     "@subscribe-kit/core": "^2.1.1",
     "@subscribe-kit/react": "^2.1.1",
     "@ungap/structured-clone": "^1.3.0",
-    "@xyflow/react": "12.6.1",
+    "@xyflow/react": "12.6.4",
     "ajv": "^8.17.1",
     "ajv-i18n": "^4.2.0",
     "deepmerge": "^4.3.1",

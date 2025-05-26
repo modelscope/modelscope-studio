@@ -1,10 +1,14 @@
-import { isFunction } from 'lodash-es';
+import { isFunction, isObject } from 'lodash-es';
 
 export function patchSlots<
   T extends (
     patch: <S extends React.ReactNode | ((...args: any[]) => React.ReactNode)>(
       slot?: S,
-      functionProp?: boolean
+      functionProp?:
+        | boolean
+        | {
+            unshift?: boolean;
+          }
     ) => S
   ) => Record<PropertyKey, any>,
 >(params: any[], transform: T): ReturnType<T> {
@@ -12,6 +16,9 @@ export function patchSlots<
     if (isFunction(slot)) {
       if (functionProp) {
         return (...args: any[]) => {
+          if (isObject(functionProp) && functionProp.unshift) {
+            return slot(...params, ...args);
+          }
           return slot(...args, ...params);
         };
       }

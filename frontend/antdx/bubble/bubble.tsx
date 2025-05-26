@@ -34,6 +34,8 @@ export const Bubble = sveltify<
   }) => {
     const loadingRenderFunction = useFunction(loadingRender);
     const messageRenderFunction = useFunction(messageRender);
+    const headerFunction = useFunction(props.header, true);
+    const footerFunction = useFunction(props.footer, true);
     const avatar = useMemo(() => {
       if (slots.avatar) {
         return <ReactSlot slot={slots.avatar} />;
@@ -73,7 +75,18 @@ export const Bubble = sveltify<
             slots.content ? <ReactSlot slot={slots.content} /> : props.content
           }
           footer={
-            slots.footer ? <ReactSlot slot={slots.footer} /> : props.footer
+            slots.footer ? (
+              <ReactSlot slot={slots.footer} />
+            ) : (
+              footerFunction || props.footer
+            )
+          }
+          header={
+            slots.header ? (
+              <ReactSlot slot={slots.header} />
+            ) : (
+              headerFunction || props.header
+            )
           }
           loadingRender={
             slots.loadingRender
