@@ -1,5 +1,12 @@
 # @modelscope-studio/pro
 
+## 1.4.0
+
+### Features
+
+- [#77](https://github.com/modelscope/modelscope-studio/pull/77) [`30804ea`](https://github.com/modelscope/modelscope-studio/commit/30804eab8ae0817dad72766d932f4a84e3850861) - add pro component `WebSandbox`. Thanks [@Col0ring](https://github.com/Col0ring)!
+- [#77](https://github.com/modelscope/modelscope-studio/pull/77) [`30804ea`](https://github.com/modelscope/modelscope-studio/commit/30804eab8ae0817dad72766d932f4a84e3850861) - update deps. Thanks [@Col0ring](https://github.com/Col0ring)!
+
 ## 1.3.1
 
 ### Features

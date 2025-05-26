@@ -1,5 +1,21 @@
 # modelscope_studio
 
+## 1.4.0
+
+### Features
+
+- [#77](https://github.com/modelscope/modelscope-studio/pull/77) [`30804ea`](https://github.com/modelscope/modelscope-studio/commit/30804eab8ae0817dad72766d932f4a84e3850861) - add pro component `WebSandbox`. Thanks [@Col0ring](https://github.com/Col0ring)!
+- [#77](https://github.com/modelscope/modelscope-studio/pull/77) [`30804ea`](https://github.com/modelscope/modelscope-studio/commit/30804eab8ae0817dad72766d932f4a84e3850861) - update deps. Thanks [@Col0ring](https://github.com/Col0ring)!
+
+### Fixes
+
+- [#76](https://github.com/modelscope/modelscope-studio/pull/76) [`45bea12`](https://github.com/modelscope/modelscope-studio/commit/45bea1262a9a173cdabd0e5509b201f1baddd4b9) - update process_links.py. Thanks [@GioldDiorld](https://github.com/GioldDiorld)!
+- [`fce50d2`](https://github.com/modelscope/modelscope-studio/commit/fce50d28cf2aa8a35a03d0574a64ca1b92f33a30) - locale type for antd ConfigProvider. Thanks [@Col0ring](https://github.com/Col0ring)!
+
+### Misc Changes
+
+- [#77](https://github.com/modelscope/modelscope-studio/pull/77) [`30804ea`](https://github.com/modelscope/modelscope-studio/commit/30804eab8ae0817dad72766d932f4a84e3850861) - update deps. Thanks [@Col0ring](https://github.com/Col0ring)!
+
 ## 1.3.1
 
 ### Features
