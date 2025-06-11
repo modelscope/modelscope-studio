@@ -464,6 +464,15 @@ antdx_menu_items = [{
     }]
 }, {
     "label":
+    get_text("Feedback", "反馈"),
+    "type":
+    "group",
+    "children": [{
+        "label": get_text("Actions", "Actions 操作列表"),
+        "key": "actions"
+    }]
+}, {
+    "label":
     get_text("Tools", "工具"),
     "type":
     "group",

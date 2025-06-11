@@ -41,6 +41,7 @@ class AntdTableExpandable(ModelScopeLayoutComponent):
             indent_size: int | float | None = 15,
             row_expandable: str | None = None,
             show_expand_column: bool | None = None,
+            expanded_row_offset: int | None = None,
             as_item: str | None = None,
             _internal: None = None,
             # gradio properties
@@ -72,6 +73,7 @@ class AntdTableExpandable(ModelScopeLayoutComponent):
         self.indent_size = indent_size
         self.row_expandable = row_expandable
         self.show_expand_column = show_expand_column
+        self.expanded_row_offset = expanded_row_offset
 
     FRONTEND_DIR = resolve_frontend_dir("table", "expandable")
 

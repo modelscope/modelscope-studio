@@ -213,6 +213,8 @@ artifacts = [
   "/backend/modelscope_studio/components/antdx/conversations/templates",
   "/backend/modelscope_studio/components/antdx/conversations/item/templates",
   "/backend/modelscope_studio/components/antdx/attachments/templates",
+  "/backend/modelscope_studio/components/antdx/actions/templates",
+  "/backend/modelscope_studio/components/antdx/actions/item/templates",
   "/backend/modelscope_studio/components/antdx/prompts/templates",
   "/backend/modelscope_studio/components/antdx/prompts/item/templates",
   "/backend/modelscope_studio/components/antdx/sender/templates",
