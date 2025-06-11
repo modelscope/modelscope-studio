@@ -31,6 +31,7 @@ class AntdXActions(ModelScopeLayoutComponent):
             *,
             items: list[dict] | None = None,
             variant: Literal['borderless', 'border'] | None = None,
+            block: bool | None = None,
             prefix_cls: str | None = None,
             root_class_name: str | None = None,
             as_item: str | None = None,
@@ -53,6 +54,7 @@ class AntdXActions(ModelScopeLayoutComponent):
         self.items = items
         self.prefix_cls = prefix_cls
         self.variant = variant
+        self.block = block
         self.root_class_name = root_class_name
 
     FRONTEND_DIR = resolve_frontend_dir("actions", type="antdx")
