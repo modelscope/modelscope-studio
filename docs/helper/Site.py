@@ -119,7 +119,6 @@ class Site:
                                             with ms.Div(elem_style=dict(
                                                     maxHeight="100%",
                                                     overflow="auto")):
-                                                pass
                                                 tab["content"].render()
                                         elif "menus" in tab:
                                             # menus render
