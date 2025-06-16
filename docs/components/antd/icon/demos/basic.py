@@ -15,5 +15,9 @@ with gr.Blocks() as demo:
                 antd.Icon("SmileTwoTone")
                 icon = antd.Icon("HeartTwoTone", two_tone_color="#eb2f96")
                 icon.click(lambda: print("clicked"))
+            antd.Divider("Custom Icon")
+            with antd.Icon():
+                with ms.Slot("component"):
+                    ms.Text("🔥")
 if __name__ == "__main__":
     demo.queue().launch()

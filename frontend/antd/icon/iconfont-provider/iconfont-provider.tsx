@@ -1,10 +1,9 @@
 import { sveltify } from '@svelte-preprocess-react';
+import { IconFontContext } from '@svelte-preprocess-react/context';
 import React, { useMemo, useRef } from 'react';
 import { createFromIconfontCN } from '@ant-design/icons';
 import type { CustomIconOptions } from '@ant-design/icons/es/components/IconFont';
 import { isEqual } from 'lodash-es';
-
-import { IconFontContext } from './context';
 
 export const Icon = sveltify<
   CustomIconOptions & {

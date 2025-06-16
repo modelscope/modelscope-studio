@@ -2,11 +2,11 @@ from __future__ import annotations
 
 from gradio.events import EventListener
 
-from ....utils.dev import ModelScopeComponent, resolve_frontend_dir
+from ....utils.dev import ModelScopeDataLayoutComponent, resolve_frontend_dir
 from .iconfont_provider import AntdIconIconfontProvider
 
 
-class AntdIcon(ModelScopeComponent):
+class AntdIcon(ModelScopeDataLayoutComponent):
     """
     Ant Design: https://ant.design/components/icon
 
@@ -22,7 +22,7 @@ class AntdIcon(ModelScopeComponent):
     ]
 
     # supported slots
-    SLOTS = []
+    SLOTS = ["component"]
 
     def __init__(
             self,
