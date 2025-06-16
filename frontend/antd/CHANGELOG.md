@@ -1,5 +1,15 @@
 # @modelscope-studio/antd
 
+## 1.4.2
+
+### Features
+
+- [#79](https://github.com/modelscope/modelscope-studio/pull/79) [`6184b9c`](https://github.com/modelscope/modelscope-studio/commit/6184b9cfb4938f651d6b5b02415ed60b3d9e39cd) - add support for custom user icons. Thanks [@Col0ring](https://github.com/Col0ring)!
+
+### Fixes
+
+- [#79](https://github.com/modelscope/modelscope-studio/pull/79) [`6184b9c`](https://github.com/modelscope/modelscope-studio/commit/6184b9cfb4938f651d6b5b02415ed60b3d9e39cd) - iconfont provider not displaying after build. Thanks [@Col0ring](https://github.com/Col0ring)!
+
 ## 1.4.1
 
 No significant changes to this package were made in this release.
