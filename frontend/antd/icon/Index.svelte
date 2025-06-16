@@ -68,6 +68,8 @@
       {...bindEvents($mergedProps)}
       slots={$slots}
       value={$mergedProps.value}
-    />
+    >
+      <slot />
+    </Icon>
   {/await}
 {/if}

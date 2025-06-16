@@ -1,5 +1,14 @@
 import React, { createContext, useContext, useMemo, useRef } from 'react';
+import type { createFromIconfontCN } from '@ant-design/icons';
 import { isEqual } from 'lodash-es';
+
+export const IconFontContext = createContext<ReturnType<
+  typeof createFromIconfontCN
+> | null>(null);
+
+export const useIconFontContext = () => {
+  return useContext(IconFontContext);
+};
 
 export const FormItemContext = createContext<{
   value?: any;
