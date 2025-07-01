@@ -62,7 +62,26 @@ def get_layout_templates():
 
 layout_templates = get_layout_templates()
 
-index_docs = {"overview": Docs(__file__), **layout_templates}
+misc_docs = Docs(__file__)
+
+
+class IndexDocsItem:
+
+    def __init__(self, module_name):
+        self.module_name = module_name
+
+    def get_css(self):
+        return misc_docs.get_css()
+
+    def render(self):
+        return misc_docs.render(module_name=self.module_name)
+
+
+index_docs = {
+    "overview": IndexDocsItem("README"),
+    "faq": IndexDocsItem("FAQ"),
+    **layout_templates
+}
 
 base_docs = get_docs("base")
 antd_docs = get_docs("antd")
@@ -73,6 +92,9 @@ default_active_tab = "index"
 index_menu_items = [{
     "label": get_text("ModelScope-Studio", "ModelScope-Studio"),
     "key": "overview"
+}, {
+    "label": get_text("FAQ", "FAQ"),
+    "key": "faq"
 }, {
     "label":
     get_text("Layout Templates", "布局模板"),

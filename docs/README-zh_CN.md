@@ -23,6 +23,8 @@
 
 然而，当您的应用需要 Gradio 在 Python 端更多地处理内置数据时，`modelscope_studio`的组件可能不是最好的选择，但是不用担心，它可以很好地与已有的 Gradio 组件相结合，您仍然可以使用`modelscope_studio`来优化您的应用。
 
+> 如果您正在 Hugging Face Space 中使用`modelscope_studio`，请在`demo.launch()`方法中添加`ssr_mode=False`参数：`demo.launch(ssr_mode=False)`，否则页面可能无法正常显示。
+
 ## 依赖
 
 - Gradio >= 4.43.0
