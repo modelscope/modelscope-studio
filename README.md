@@ -29,6 +29,8 @@ Compared to the original components of Gradio, `modelscope_studio` focuses more 
 
 However, when your application needs Gradio to handle more built-in data on the Python side, the components of `modelscope_studio` may not be the best choice, but don't worry, it integrates well with existing Gradio components, you can still use `modelscope_studio` to optimize your application.
 
+> If you are using `modelscope_studio` in Hugging Face Space, please add the `ssr_mode=False` parameter to the `demo.launch()`: `demo.launch(ssr_mode=False)`, otherwise the page may not display properly.
+
 ## Dependencies
 
 - Gradio >= 4.43.0

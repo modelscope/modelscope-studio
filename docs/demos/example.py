@@ -7,4 +7,4 @@ with gr.Blocks() as demo:
         antd.DatePicker()
 
 if __name__ == "__main__":
-    demo.queue().launch()
+    demo.queue().launch(ssr_mode=False)

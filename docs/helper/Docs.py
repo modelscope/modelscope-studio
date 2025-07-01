@@ -30,6 +30,11 @@ class Docs:
                 filter(lambda x: not x.endswith("-zh_CN.md"),
                        self.markdown_files))
 
+    def _get_filename(self, filename: str):
+        if is_modelscope_studio:
+            return f"{filename}-zh_CN.md"
+        return f"{filename}.md"
+
     def _remove_formatter(self, markdown_text):
         pattern = r"^ *---[\s\S]*?---"
         replaced_text = re.sub(pattern, "", markdown_text)
@@ -163,7 +168,10 @@ class Docs:
                 css += module.css
         return css
 
-    def render(self):
+    def render(self, module_name: str = None):
+        parsed_filename = self._get_filename(
+            module_name) if module_name else None
         with gr.Blocks() as demo:
-            self._render_markdown(self.markdown_files[0])
+            self._render_markdown(
+                parsed_filename if parsed_filename else self.markdown_files[0])
         return demo
