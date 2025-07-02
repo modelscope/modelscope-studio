@@ -43,7 +43,7 @@
       : src.replaceAll('/file=', replaceStr);
   };
   $: _value = redirect_src_url(value);
-  $: label, gradio.dispatch('change');
+  $: (label, gradio.dispatch('change'));
 </script>
 
 <Block

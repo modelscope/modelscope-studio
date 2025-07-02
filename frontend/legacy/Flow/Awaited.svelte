@@ -62,7 +62,7 @@
       };
     }
   }
-  $: background_props, update_background_props();
+  $: (background_props, update_background_props());
   // process schema
   $: _schema = {
     ...schema,

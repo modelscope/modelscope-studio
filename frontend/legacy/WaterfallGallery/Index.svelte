@@ -64,7 +64,7 @@
     gradio.dispatch('like', data);
   };
 
-  $: selected_index, dispatch('prop_change', { selected_index });
+  $: (selected_index, dispatch('prop_change', { selected_index }));
 </script>
 
 <Block

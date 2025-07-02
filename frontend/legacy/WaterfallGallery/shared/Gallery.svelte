@@ -256,7 +256,7 @@
     });
   }
   $: if (waterfall_grid_el) {
-    cols, createWaterfall();
+    (cols, createWaterfall());
   }
 
   onDestroy(() => {

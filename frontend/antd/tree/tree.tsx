@@ -65,6 +65,19 @@ export const Tree = sveltify<
               resolvedSlotItems,
               {
                 clone: true,
+                itemPropsTransformer: (itemProps) => {
+                  if (
+                    itemProps.value &&
+                    itemProps.key &&
+                    itemProps.value !== itemProps.key
+                  ) {
+                    return {
+                      ...itemProps,
+                      key: undefined,
+                    };
+                  }
+                  return itemProps;
+                },
               }
             ),
           showLine: slots['showLine.showLeafIcon']
@@ -101,7 +114,8 @@ export const Tree = sveltify<
                   nodeDraggable: draggableNodeDraggableFunction,
                 }
               : draggableFunction || draggable,
-          loadData: onLoadData,
+          // eslint-disable-next-line require-await
+          loadData: async (...args: any[]) => onLoadData?.(...args),
         };
       }, [
         props,

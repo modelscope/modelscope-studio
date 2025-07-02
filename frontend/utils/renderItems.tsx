@@ -12,6 +12,7 @@ export function renderItems<R>(
     fallback?: (item: any) => R;
     clone?: boolean;
     forceClone?: boolean;
+    itemPropsTransformer?: (props: Record<string, any>) => Record<string, any>;
   },
   key?: React.Key
 ): undefined | R[] {
@@ -26,10 +27,15 @@ export function renderItems<R>(
       }
       return item;
     }
-    const result = {
-      ...item.props,
-      key: item.props?.key ?? (key ? `${key}-${i}` : `${i}`),
-    };
+    const result = options?.itemPropsTransformer
+      ? options?.itemPropsTransformer({
+          ...item.props,
+          key: item.props?.key ?? (key ? `${key}-${i}` : `${i}`),
+        })
+      : {
+          ...item.props,
+          key: item.props?.key ?? (key ? `${key}-${i}` : `${i}`),
+        };
 
     let current = result;
     Object.keys(item.slots).forEach((slotKey) => {
