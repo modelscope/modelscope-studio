@@ -1,5 +1,11 @@
 # @modelscope-studio/legacy-multimodal-input
 
+## 1.4.3
+
+### Misc Changes
+
+- [#82](https://github.com/modelscope/modelscope-studio/pull/82) [`ca7519f`](https://github.com/modelscope/modelscope-studio/commit/ca7519f439e00e0d99d921e88ec38dc4689d7849) - update deps. Thanks [@Col0ring](https://github.com/Col0ring)!
+
 ## 1.4.2
 
 No significant changes to this package were made in this release.

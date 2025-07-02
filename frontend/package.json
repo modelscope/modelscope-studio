@@ -1,6 +1,6 @@
 {
   "name": "@modelscope-studio/frontend",
-  "version": "1.4.2",
+  "version": "1.4.3",
   "private": false,
   "description": "ModelScope Gradio Components",
   "license": "Apache-2.0",

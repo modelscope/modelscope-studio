@@ -1,5 +1,16 @@
 # @modelscope-studio/antd
 
+## 1.4.3
+
+### Fixes
+
+- [#82](https://github.com/modelscope/modelscope-studio/pull/82) [`ca7519f`](https://github.com/modelscope/modelscope-studio/commit/ca7519f439e00e0d99d921e88ec38dc4689d7849) - ensure the same key and value in the tree data. Thanks [@Col0ring](https://github.com/Col0ring)!
+- [#82](https://github.com/modelscope/modelscope-studio/pull/82) [`ca7519f`](https://github.com/modelscope/modelscope-studio/commit/ca7519f439e00e0d99d921e88ec38dc4689d7849) - ensure the load_data event returns a Promise. Thanks [@Col0ring](https://github.com/Col0ring)!
+
+### Misc Changes
+
+- [#82](https://github.com/modelscope/modelscope-studio/pull/82) [`ca7519f`](https://github.com/modelscope/modelscope-studio/commit/ca7519f439e00e0d99d921e88ec38dc4689d7849) - update deps. Thanks [@Col0ring](https://github.com/Col0ring)!
+
 ## 1.4.2
 
 ### Features

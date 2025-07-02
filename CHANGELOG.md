@@ -1,5 +1,17 @@
 # modelscope_studio
 
+## 1.4.3
+
+### Fixes
+
+- [#82](https://github.com/modelscope/modelscope-studio/pull/82) [`ca7519f`](https://github.com/modelscope/modelscope-studio/commit/ca7519f439e00e0d99d921e88ec38dc4689d7849) - ensure the same key and value in the tree data. Thanks [@Col0ring](https://github.com/Col0ring)!
+
+### Misc Changes
+
+- [#82](https://github.com/modelscope/modelscope-studio/pull/82) [`ca7519f`](https://github.com/modelscope/modelscope-studio/commit/ca7519f439e00e0d99d921e88ec38dc4689d7849) - update deps. Thanks [@Col0ring](https://github.com/Col0ring)!
+- [`070ac18`](https://github.com/modelscope/modelscope-studio/commit/070ac183b86a7d55d6881bd4e73d23f3e7b13b80) - add usage recommendations for `ms.AutoLoading` to the docs. Thanks [@Col0ring](https://github.com/Col0ring)!
+- [#80](https://github.com/modelscope/modelscope-studio/pull/80) [`ef8f398`](https://github.com/modelscope/modelscope-studio/commit/ef8f3981eccb71767760c8c935bf52dcb63d083b) - add FAQ docs. Thanks [@Col0ring](https://github.com/Col0ring)!
+
 ## 1.4.2
 
 ### Features
