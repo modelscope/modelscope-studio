@@ -30,7 +30,7 @@
   let previous_scroll_top = 0;
   let user_has_scrolled_up = false;
 
-  $: value, el && lines !== max_lines && resize({ target: el });
+  $: (value, el && lines !== max_lines && resize({ target: el }));
 
   $: if (value === null) value = '';
 
@@ -68,7 +68,7 @@
     }
     value_is_output = false;
   });
-  $: value, handle_change();
+  $: (value, handle_change());
 
   async function handle_copy(): Promise<void> {
     if ('clipboard' in navigator) {

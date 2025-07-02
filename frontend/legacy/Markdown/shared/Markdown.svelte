@@ -32,7 +32,7 @@
     dispatch('custom', { tag, tag_index, value: v });
   }
 
-  $: value, dispatch('change');
+  $: (value, dispatch('change'));
 </script>
 
 <div
