@@ -101,7 +101,8 @@ export const Tree = sveltify<
                   nodeDraggable: draggableNodeDraggableFunction,
                 }
               : draggableFunction || draggable,
-          loadData: onLoadData,
+          // eslint-disable-next-line require-await
+          loadData: async (...args: any[]) => onLoadData?.(...args),
         };
       }, [
         props,

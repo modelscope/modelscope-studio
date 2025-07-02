@@ -63,7 +63,8 @@ export const TreeSelect = sveltify<
       const componentProps: TreeSelectProps = useMemo(() => {
         return {
           ...props,
-          loadData: onLoadData,
+          // eslint-disable-next-line require-await
+          loadData: async (...args) => onLoadData?.(...args),
           treeData:
             treeData ||
             renderItems<NonNullable<TreeSelectProps['treeData']>[number]>(
