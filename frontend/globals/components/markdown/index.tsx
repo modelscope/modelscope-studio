@@ -1,8 +1,13 @@
-import React, { useEffect, useMemo, useRef, useState } from 'react';
+import React, {
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'react';
 import { CheckOutlined, CopyOutlined } from '@ant-design/icons';
 import { useMemoizedFn } from '@utils/hooks/useMemoizedFn';
 import cls from 'classnames';
-import render_math_in_element from 'katex/contrib/auto-render';
 
 import { sanitize } from './sanitize';
 import {
@@ -13,7 +18,6 @@ import {
   renderMermaid,
 } from './utils';
 
-import 'katex/dist/katex.min.css';
 import './markdown.less';
 
 function escapeRegExp(string: string): string {
@@ -59,6 +63,8 @@ const defaultLatexDelimiters = [
   { left: '\\[', right: '\\]', display: true },
 ];
 
+let katexLoaded = false;
+
 export const Markdown: React.FC<MarkdownProps> = ({
   value: message,
   headerLinks: header_links,
@@ -88,6 +94,19 @@ export const Markdown: React.FC<MarkdownProps> = ({
       latex_delimiters: latex_delimiters || [],
     });
   }, [header_links, latex_delimiters, line_breaks]);
+
+  const hasMathSyntax = useCallback(
+    (text: string) => {
+      if (!latex_delimiters || latex_delimiters.length === 0) {
+        return false;
+      }
+      return latex_delimiters.some(
+        (delimiter) =>
+          text.includes(delimiter.left) && text.includes(delimiter.right)
+      );
+    },
+    [latex_delimiters]
+  );
 
   const process_message = useMemoizedFn((value: string) => {
     let parsedValue = value;
@@ -128,12 +147,28 @@ export const Markdown: React.FC<MarkdownProps> = ({
       await renderMermaid(el, themeMode);
     }
 
-    if (el && latex_delimiters && latex_delimiters.length > 0 && value) {
-      const containsDelimiter = latex_delimiters.some(
-        (delimiter) =>
-          value.includes(delimiter.left) && value.includes(delimiter.right)
-      );
-      if (containsDelimiter) {
+    if (
+      el &&
+      latex_delimiters &&
+      latex_delimiters.length > 0 &&
+      value &&
+      hasMathSyntax(value)
+    ) {
+      if (!katexLoaded) {
+        await Promise.all([
+          import('katex/dist/katex.min.css'),
+          import('katex/contrib/auto-render'),
+        ]).then(([, { default: render_math_in_element }]) => {
+          katexLoaded = true;
+          render_math_in_element(el, {
+            delimiters: latex_delimiters,
+            throwOnError: false,
+          });
+        });
+      } else {
+        const { default: render_math_in_element } = await import(
+          'katex/contrib/auto-render'
+        );
         render_math_in_element(el, {
           delimiters: latex_delimiters,
           throwOnError: false,

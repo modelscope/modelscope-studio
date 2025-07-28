@@ -11,6 +11,9 @@ import * as Prism from 'prismjs';
 import 'prismjs/components/prism-python';
 import 'prismjs/components/prism-latex';
 import 'prismjs/components/prism-bash';
+import 'prismjs/components/prism-jsx';
+import 'prismjs/components/prism-typescript';
+import 'prismjs/components/prism-tsx';
 
 import { allHtmlAndSvgTags } from './html-tags';
 

@@ -2,6 +2,8 @@ from __future__ import annotations
 
 from typing import Any
 
+from gradio.events import EventListener
+
 from .....utils.dev import ModelScopeLayoutComponent, resolve_frontend_dir
 from .item import AntdXBubbleListItem
 from .role import AntdXBubbleListRole
@@ -14,7 +16,12 @@ class AntdXBubbleList(ModelScopeLayoutComponent):
     Role = AntdXBubbleListRole
     Item = AntdXBubbleListItem
 
-    EVENTS = []
+    EVENTS = [
+        EventListener("scroll",
+                      callback=lambda block: block._internal.update(
+                          bind_scroll_event=True),
+                      doc="Callback when the bubble list is scrolled.")
+    ]
 
     # supported slots
     SLOTS = [

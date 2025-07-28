@@ -11,6 +11,8 @@ declare module '*?raw' {
   export default string;
 }
 
+declare module '*css' {}
+
 interface Window {
   __gradio_space__: any;
 }
