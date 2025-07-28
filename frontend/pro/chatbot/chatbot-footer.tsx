@@ -134,19 +134,23 @@ const Action: React.FC<{
   urlProxyUrl,
 }) => {
   const handleActionRef = useRef<() => void>();
-  const { action, disabled, disableHandler } = isObject(actionOrActionObject)
-    ? {
-        action: actionOrActionObject.action,
-        disabled:
-          disabledActions?.includes(actionOrActionObject.action) ||
-          !!actionOrActionObject.disabled,
-        disableHandler: !!actionOrActionObject.popconfirm,
-      }
-    : {
-        action: actionOrActionObject,
-        disabled: disabledActions?.includes(actionOrActionObject) || false,
-        disableHandler: false,
-      };
+  const getActionProps = () => {
+    return isObject(actionOrActionObject)
+      ? {
+          action: actionOrActionObject.action,
+          disabled:
+            disabledActions?.includes(actionOrActionObject.action) ||
+            !!actionOrActionObject.disabled,
+          disableHandler: !!actionOrActionObject.popconfirm,
+        }
+      : {
+          action: actionOrActionObject,
+          disabled: disabledActions?.includes(actionOrActionObject) || false,
+          disableHandler: false,
+        };
+  };
+  const { action, disabled, disableHandler } = getActionProps();
+
   const getActionContent = () => {
     switch (action) {
       case 'copy':
