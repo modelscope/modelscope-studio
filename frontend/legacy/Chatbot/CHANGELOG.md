@@ -1,5 +1,16 @@
 # @modelscope-studio/legacy-chatbot
 
+## 1.4.4
+
+No significant changes to this package were made in this release.
+
+## 1.4.4
+
+### Patch Changes
+
+- Updated dependencies [[`6d9b760`](https://github.com/modelscope/modelscope-studio/commit/6d9b760ea3132be488155e67a1c816f260fa7e4c)]:
+  - @modelscope-studio/legacy-compiled@1.4.4
+
 ## 1.4.3
 
 No significant changes to this package were made in this release.

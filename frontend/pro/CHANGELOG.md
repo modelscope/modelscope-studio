@@ -1,5 +1,19 @@
 # @modelscope-studio/pro
 
+## 1.4.4
+
+### Features
+
+- [#83](https://github.com/modelscope/modelscope-studio/pull/83) [`6d9b760`](https://github.com/modelscope/modelscope-studio/commit/6d9b760ea3132be488155e67a1c816f260fa7e4c) - improve load times. Thanks [@Col0ring](https://github.com/Col0ring)!
+
+### Fixes
+
+- [#83](https://github.com/modelscope/modelscope-studio/pull/83) [`6d9b760`](https://github.com/modelscope/modelscope-studio/commit/6d9b760ea3132be488155e67a1c816f260fa7e4c) - disabled status of action buttons. Thanks [@Col0ring](https://github.com/Col0ring)!
+
+### Misc Changes
+
+- [#83](https://github.com/modelscope/modelscope-studio/pull/83) [`6d9b760`](https://github.com/modelscope/modelscope-studio/commit/6d9b760ea3132be488155e67a1c816f260fa7e4c) - update deps. Thanks [@Col0ring](https://github.com/Col0ring)!
+
 ## 1.4.3
 
 No significant changes to this package were made in this release.

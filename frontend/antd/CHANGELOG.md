@@ -1,5 +1,11 @@
 # @modelscope-studio/antd
 
+## 1.4.4
+
+### Misc Changes
+
+- [#83](https://github.com/modelscope/modelscope-studio/pull/83) [`6d9b760`](https://github.com/modelscope/modelscope-studio/commit/6d9b760ea3132be488155e67a1c816f260fa7e4c) - update deps. Thanks [@Col0ring](https://github.com/Col0ring)!
+
 ## 1.4.3
 
 ### Fixes
