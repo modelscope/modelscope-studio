@@ -18,7 +18,9 @@ export const Splitter = sveltify<GetProps<typeof ASplitter>>(
               if (!item) {
                 return null;
               }
+
               const { el, props: panelProps } = item;
+
               return (
                 <ASplitter.Panel {...panelProps} key={index}>
                   {el && <ReactSlot slot={el} />}

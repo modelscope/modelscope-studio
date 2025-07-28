@@ -134,21 +134,20 @@ const Action: React.FC<{
   urlProxyUrl,
 }) => {
   const handleActionRef = useRef<() => void>();
-  const renderAction = () => {
-    const { action, disabled, disableHandler } = isObject(actionOrActionObject)
-      ? {
-          action: actionOrActionObject.action,
-          disabled:
-            disabledActions?.includes(actionOrActionObject.action) ||
-            !!actionOrActionObject.disabled,
-          disableHandler: !!actionOrActionObject.popconfirm,
-        }
-      : {
-          action: actionOrActionObject,
-          disabled: disabledActions?.includes(actionOrActionObject) || false,
-          disableHandler: false,
-        };
-
+  const { action, disabled, disableHandler } = isObject(actionOrActionObject)
+    ? {
+        action: actionOrActionObject.action,
+        disabled:
+          disabledActions?.includes(actionOrActionObject.action) ||
+          !!actionOrActionObject.disabled,
+        disableHandler: !!actionOrActionObject.popconfirm,
+      }
+    : {
+        action: actionOrActionObject,
+        disabled: disabledActions?.includes(actionOrActionObject) || false,
+        disableHandler: false,
+      };
+  const getActionContent = () => {
     switch (action) {
       case 'copy':
         return (
@@ -228,7 +227,7 @@ const Action: React.FC<{
         return null;
     }
   };
-  const actionContent = renderAction();
+  const actionContent = getActionContent();
   if (isObject(actionOrActionObject)) {
     const popconfirmProps: PopconfirmProps = {
       ...(typeof actionOrActionObject.popconfirm === 'string'
@@ -237,6 +236,7 @@ const Action: React.FC<{
             ...actionOrActionObject.popconfirm,
             title: actionOrActionObject.popconfirm?.title,
           }),
+      disabled,
       onConfirm() {
         handleActionRef.current?.();
       },

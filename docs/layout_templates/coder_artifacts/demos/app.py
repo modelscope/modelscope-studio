@@ -177,21 +177,27 @@ css = """
   min-height: 680px;
 }
 
+#coder-artifacts #output-container .ms-gr-ant-tabs-content,.ms-gr-ant-tabs-tabpane {
+    height: 100%;
+}
+
 #coder-artifacts .output-html {
   display: flex;
   flex-direction: column;
   width: 100%;
+  height: 100%;
   min-height: 680px;
+  max-height: 1200px;
 }
 
-#coder-artifacts .output-html > iframe {
-  flex: 1;
+#coder-artifacts .output-html .html-container {
+  height: 100%;
 }
 
-#code-artifacts-code-drawer .output-code {
+#coder-artifacts-code-drawer .output-code {
   flex:1;
 }
-#code-artifacts-code-drawer .output-code .ms-gr-ant-spin-nested-loading {
+#coder-artifacts-code-drawer .output-code .ms-gr-ant-spin-nested-loading {
   min-height: 100%;
 }
 """
@@ -277,10 +283,13 @@ with gr.Blocks(css=css) as demo:
 
                     # Right Column
                     with antd.Col(span=24, md=16):
-                        with antd.Card(title="Output",
-                                       elem_style=dict(height="100%"),
-                                       styles=dict(body=dict(height="100%")),
-                                       elem_id="output-container"):
+                        with antd.Card(
+                                title="Output",
+                                elem_style=dict(height="100%",
+                                                display="flex",
+                                                flexDirection="column"),
+                                styles=dict(body=dict(height=0, flex=1)),
+                                elem_id="output-container"):
                             # Output Container Extra
                             with ms.Slot("extra"):
                                 with ms.Div(elem_id="output-container-extra"):
@@ -298,6 +307,7 @@ with gr.Blocks(css=css) as demo:
                                         "🧑‍💻 View Code", type="primary")
                             # Output Content
                             with antd.Tabs(
+                                    elem_style=dict(height="100%"),
                                     active_key="empty",
                                     render_tab_bar="() => null") as state_tab:
                                 with antd.Tabs.Item(key="empty"):
@@ -333,7 +343,7 @@ with gr.Blocks(css=css) as demo:
                             placement="right",
                             get_container=
                             "() => document.querySelector('.gradio-container')",
-                            elem_id="code-artifacts-code-drawer",
+                            elem_id="coder-artifacts-code-drawer",
                             styles=dict(
                                 body=dict(display="flex",
                                           flexDirection="column-reverse")),
