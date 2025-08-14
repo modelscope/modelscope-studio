@@ -31,12 +31,21 @@ class AntdCard(ModelScopeLayoutComponent):
 
     # supported slots
     SLOTS = [
-        "actions",
+        'actions',
         'cover',
         'extra',
         'tabBarExtraContent',
+        'tabBarExtraContent.left',
+        'tabBarExtraContent.right',
         'title',
         'tabList',
+        'tabProps.addIcon',
+        'tabProps.removeIcon',
+        'tabProps.renderTabBar',
+        'tabProps.tabBarExtraContent',
+        'tabProps.tabBarExtraContent.left',
+        'tabProps.tabBarExtraContent.right',
+        'tabProps.more.icon',
     ]
 
     def __exit__(self, *args, **kwargs):

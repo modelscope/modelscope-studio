@@ -16,7 +16,9 @@ export const prettyBytes = (bytes: number): string => {
   return bytes.toFixed(1) + '&nbsp;' + unit;
 };
 
-export function audioBufferToWav(audioBuffer: AudioBuffer): Uint8Array {
+export function audioBufferToWav(
+  audioBuffer: AudioBuffer
+): Uint8Array<ArrayBuffer> {
   // Write WAV header
   const writeString = function (
     view: DataView,
@@ -77,7 +79,7 @@ export const process_audio = (
   audioBuffer: AudioBuffer,
   start?: number,
   end?: number
-): Promise<Uint8Array> => {
+): Promise<Uint8Array<ArrayBuffer>> => {
   const audioContext = new AudioContext();
   const numberOfChannels = audioBuffer.numberOfChannels;
   const sampleRate = audioBuffer.sampleRate;

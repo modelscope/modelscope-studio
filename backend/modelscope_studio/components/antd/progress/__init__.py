@@ -22,7 +22,7 @@ class AntdProgress(ModelScopeComponent):
             status: Literal['success', 'exception', 'normal', 'active']
         | None = None,
             rounding: str | None = None,
-            stroke_color: str | None = None,
+            stroke_color: str | list[str] | dict | None = None,
             stroke_linecap: Literal['round', 'butt', 'square']
         | None = None,
             success: dict | None = None,

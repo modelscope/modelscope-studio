@@ -52,6 +52,7 @@ class AntdTableRowSelection(ModelScopeLayoutComponent):
             column_width: int | float | str | None = None,
             fixed: bool | None = None,
             get_checkbox_props: str | None = None,
+            get_title_checkbox_props: str | None = None,
             hide_select_all: bool | None = None,
             preserve_selected_rows_keys: bool | None = None,
             render_cell: str | None = None,
@@ -83,6 +84,7 @@ class AntdTableRowSelection(ModelScopeLayoutComponent):
         self.column_width = column_width
         self.fixed = fixed
         self.get_checkbox_props = get_checkbox_props
+        self.get_title_checkbox_props = get_title_checkbox_props
         self.hide_select_all = hide_select_all
         self.preserve_selected_rows_keys = preserve_selected_rows_keys
         self.render_cell = render_cell

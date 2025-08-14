@@ -33,7 +33,9 @@
   }>();
   const { upload } = getContextValue();
 
-  const handle_upload = async (blobs: Uint8Array[] | Blob[]): Promise<void> => {
+  const handle_upload = async (
+    blobs: Uint8Array<ArrayBuffer>[] | Blob[]
+  ): Promise<void> => {
     const _audio_blob = new File(blobs, 'audio.wav', {
       type: 'audio/wav',
     });
@@ -117,9 +119,11 @@
       const audio_buffer = await context.decodeAudioData(array_buffer);
 
       if (audio_buffer) {
-        await process_audio(audio_buffer).then((audio: Uint8Array) => {
-          handle_upload([audio]);
-        });
+        await process_audio(audio_buffer).then(
+          (audio: Uint8Array<ArrayBuffer>) => {
+            handle_upload([audio]);
+          }
+        );
       }
     });
     record.on('record-resume', () => {

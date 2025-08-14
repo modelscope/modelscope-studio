@@ -1,4 +1,6 @@
-export function audioBufferToWav(audioBuffer: AudioBuffer): Uint8Array {
+export function audioBufferToWav(
+  audioBuffer: AudioBuffer
+): Uint8Array<ArrayBuffer> {
   // Write WAV header
   const writeString = function (
     view: DataView,
@@ -120,5 +122,5 @@ export async function processAudio(blob: Blob, start?: number, end?: number) {
     }
   }
 
-  return Promise.resolve(audioBufferToWav(trimmedAudioBuffer));
+  return audioBufferToWav(trimmedAudioBuffer);
 }

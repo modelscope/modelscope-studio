@@ -86,6 +86,10 @@
         $mergedProps.props.getCheckboxProps ||
           $mergedProps.restProps.getCheckboxProps
       ),
+      getTitleCheckboxProps: createFunction(
+        $mergedProps.props.getTitleCheckboxProps ||
+          $mergedProps.restProps.getTitleCheckboxProps
+      ),
       renderCell: createFunction(
         $mergedProps.props.renderCell || $mergedProps.restProps.renderCell
       ),
