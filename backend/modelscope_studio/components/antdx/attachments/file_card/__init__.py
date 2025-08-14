@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+from typing import Literal, Union
+
 from gradio.events import EventListener
 
 from .....utils.dev import ModelScopeLayoutComponent, resolve_frontend_dir
@@ -17,11 +19,9 @@ class AntdXAttachmentsFileCard(ModelScopeLayoutComponent):
 
     # supported slots
     SLOTS = [
-        'imageProps.placeholder',
-        'imageProps.preview.mask',
-        'imageProps.preview.closeIcon',
-        'imageProps.preview.toolbarRender',
-        'imageProps.preview.imageRender',
+        'imageProps.placeholder', 'imageProps.preview.mask',
+        'imageProps.preview.closeIcon', 'imageProps.preview.toolbarRender',
+        'imageProps.preview.imageRender', 'icon'
     ]
 
     def __init__(
@@ -29,6 +29,10 @@ class AntdXAttachmentsFileCard(ModelScopeLayoutComponent):
             props: dict | None = None,
             *,
             image_props: dict | None = None,
+            icon: Union[Literal['default', 'excel', 'image', 'markdown', 'pdf',
+                                'ppt', 'word', 'zip', 'video', 'audio'], str]
+        | None = None,
+            type: Literal['image', 'file'] | None = None,
             item: dict | str | None = None,
             as_item: str | None = None,
             _internal: None = None,
@@ -47,6 +51,8 @@ class AntdXAttachmentsFileCard(ModelScopeLayoutComponent):
                          elem_style=elem_style,
                          **kwargs)
         self.props = props
+        self.icon = icon
+        self.type = type
         self.image_props = image_props
         if isinstance(item, str):
             self.item = self.serve_static_file(item)

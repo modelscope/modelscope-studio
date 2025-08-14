@@ -22,12 +22,16 @@ class AntdTagCheckableTag(ModelScopeDataLayoutComponent):
                           bind_click_event=True))
     ]
 
+    # supported slots
+    SLOTS = ["icon"]
+
     def __init__(
             self,
             label: str | None = None,
             value: bool | None = None,
             props: dict | None = None,
             *,
+            icon: str | None = None,
             root_class_name: str | None = None,
             as_item: str | None = None,
             _internal: None = None,
@@ -48,6 +52,7 @@ class AntdTagCheckableTag(ModelScopeDataLayoutComponent):
                          **kwargs)
         self.props = props
         self.label = label
+        self.icon = icon
         self.root_class_name = root_class_name
 
     FRONTEND_DIR = resolve_frontend_dir("tag", 'checkable-tag')

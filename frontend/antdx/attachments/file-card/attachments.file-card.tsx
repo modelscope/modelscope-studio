@@ -24,6 +24,7 @@ export const AttachmentsFileCard = sveltify<
     'imageProps.preview.closeIcon',
     'imageProps.preview.toolbarRender',
     'imageProps.preview.imageRender',
+    'icon',
   ]
 >(({ setSlotParams, imageProps, slots, children, ...props }) => {
   const previewConfig = getConfig(imageProps?.preview);
@@ -42,6 +43,7 @@ export const AttachmentsFileCard = sveltify<
       <div style={{ display: 'none' }}>{children}</div>
       <FileCard
         {...props}
+        icon={slots.icon ? <ReactSlot slot={slots.icon} /> : props.icon}
         imageProps={{
           ...imageProps,
           preview: supportPreview

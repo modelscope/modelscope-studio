@@ -11,6 +11,6 @@ def resolve_frontend_dir(component: str,
             dir = dir + f"/{c}"
         return f"{'../' * len(sub_component)}../../../../../frontend/{type}/{component}{dir}"
 
-    if (sub_component):
+    if sub_component:
         return f"../../../../../../frontend/{type}/{component}/{sub_component}"
     return f"../../../../../frontend/{type}/{component}"
