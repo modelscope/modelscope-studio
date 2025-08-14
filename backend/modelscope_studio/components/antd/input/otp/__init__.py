@@ -31,6 +31,7 @@ class AntdInputOTP(ModelScopeDataLayoutComponent):
             *,
             default_value: str | None = None,
             disabled: bool | None = None,
+            read_only: bool | None = None,
             formatter: str | None = None,
             mask: str | bool | None = None,
             separator: str | None = None,
@@ -62,6 +63,7 @@ class AntdInputOTP(ModelScopeDataLayoutComponent):
         self.default_value = default_value
         self.separator = separator
         self.disabled = disabled
+        self.read_only = read_only
         self.formatter = formatter
         self.mask = mask
         self.length = length

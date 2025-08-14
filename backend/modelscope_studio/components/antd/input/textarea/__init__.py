@@ -37,6 +37,7 @@ class AntdInputTextarea(ModelScopeDataLayoutComponent):
             class_names: dict | None = None,
             count: dict | None = None,
             default_value: str | None = None,
+            read_only: bool | None = None,
             disabled: bool | None = None,
             max_length: int | None = None,
             show_count: bool | dict = None,
@@ -72,6 +73,7 @@ class AntdInputTextarea(ModelScopeDataLayoutComponent):
         self.count = count
         self.default_value = default_value
         self.disabled = disabled
+        self.read_only = read_only
         self.max_length = max_length
         self.show_count = show_count
         self.size = size

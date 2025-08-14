@@ -46,6 +46,7 @@ class AntdInputPassword(ModelScopeDataLayoutComponent):
             class_names: dict | None = None,
             count: dict | None = None,
             default_value: str | None = None,
+            read_only: bool | None = None,
             disabled: bool | None = None,
             max_length: int | None = None,
             prefix: str | None = None,
@@ -85,6 +86,7 @@ class AntdInputPassword(ModelScopeDataLayoutComponent):
         self.class_names = class_names
         self.count = count
         self.default_value = default_value
+        self.read_only = read_only
         self.disabled = disabled
         self.max_length = max_length
         self.prefix = prefix
