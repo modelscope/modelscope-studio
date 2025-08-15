@@ -1,6 +1,6 @@
 {
   "name": "@modelscope-studio/lint-config",
-  "version": "1.4.4",
+  "version": "1.4.5",
   "private": false,
   "description": "ModelScope Studio Lint Config",
   "repository": "git@github.com:modelscope/modelscope-studio.git",
@@ -32,7 +32,6 @@
     "globals": "^16.3.0",
     "postcss": "^8.5.6",
     "postcss-less": "^6.0.0",
-    "stylelint-config-ali": "^2.2.0",
     "stylelint-config-rational-order": "^0.1.2",
     "stylelint-config-standard": "^39.0.0",
     "stylelint-declaration-block-no-ignored-properties": "^2.8.0",

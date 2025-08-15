@@ -115,12 +115,6 @@
   }
 
   &-code {
-    &&-dark {
-      .ms-markdown-code-header {
-        background-color: #222;
-      }
-    }
-
     &-header {
       display: flex;
       align-items: center;
@@ -139,6 +133,12 @@
         &:hover {
           color: var(--body-text-color);
         }
+      }
+    }
+
+    &&-dark {
+      .ms-markdown-code-header {
+        background-color: #222;
       }
     }
   }

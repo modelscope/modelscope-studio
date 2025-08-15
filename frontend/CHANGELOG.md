@@ -1,5 +1,11 @@
 # @modelscope-studio/frontend
 
+## 1.4.5
+
+### Misc Changes
+
+- [#87](https://github.com/modelscope/modelscope-studio/pull/87) [`cb4a962`](https://github.com/modelscope/modelscope-studio/commit/cb4a9623833ec345e86a16d4e2f202e949c3875b) - upgrade to antd 5.27.0, antdx 1.6.0. Thanks [@Col0ring](https://github.com/Col0ring)!
+
 ## 1.4.4
 
 ### Features

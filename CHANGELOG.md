@@ -1,5 +1,15 @@
 # modelscope_studio
 
+## 1.4.5
+
+### Features
+
+- [#87](https://github.com/modelscope/modelscope-studio/pull/87) [`cb4a962`](https://github.com/modelscope/modelscope-studio/commit/cb4a9623833ec345e86a16d4e2f202e949c3875b) - support `read_only` property for `Input`. Thanks [@Col0ring](https://github.com/Col0ring)!
+
+### Misc Changes
+
+- [#87](https://github.com/modelscope/modelscope-studio/pull/87) [`cb4a962`](https://github.com/modelscope/modelscope-studio/commit/cb4a9623833ec345e86a16d4e2f202e949c3875b) - upgrade to antd 5.27.0, antdx 1.6.0. Thanks [@Col0ring](https://github.com/Col0ring)!
+
 ## 1.4.4
 
 ### Features

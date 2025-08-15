@@ -17,7 +17,6 @@ module.exports = {
     'stylelint-config-rational-order',
     // prettier
     'stylelint-prettier/recommended',
-    'stylelint-config-ali',
   ],
   plugins: ['stylelint-declaration-block-no-ignored-properties'],
   rules: {

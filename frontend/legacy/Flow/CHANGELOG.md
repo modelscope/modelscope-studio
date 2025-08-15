@@ -1,5 +1,16 @@
 # @modelscope-studio/legacy-flow
 
+## 1.4.5
+
+No significant changes to this package were made in this release.
+
+## 1.4.5
+
+### Patch Changes
+
+- Updated dependencies [[`cb4a962`](https://github.com/modelscope/modelscope-studio/commit/cb4a9623833ec345e86a16d4e2f202e949c3875b)]:
+  - @modelscope-studio/legacy-compiled@1.4.5
+
 ## 1.4.4
 
 No significant changes to this package were made in this release.
