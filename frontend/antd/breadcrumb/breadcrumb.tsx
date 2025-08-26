@@ -19,9 +19,8 @@ export const Breadcrumb = sveltify<
     ['default', 'items'],
     ({ slots, items, setSlotParams, children, ...props }) => {
       const { items: slotItems } = useItems<['default', 'items']>();
-      const resolvedSlotItems = slotItems.items.length
-        ? slotItems.items
-        : slotItems.default;
+      const resolvedSlotItems =
+        slotItems.items.length > 0 ? slotItems.items : slotItems.default;
       return (
         <>
           <div style={{ display: 'none' }}>{children}</div>
