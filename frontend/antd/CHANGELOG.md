@@ -1,5 +1,11 @@
 # @modelscope-studio/antd
 
+## 1.4.6
+
+### Fixes
+
+- [`6747060`](https://github.com/modelscope/modelscope-studio/commit/6747060f38f6acf8529a914548d4fadd6cfd6c62) - slot items resolver of Checkbox. Thanks [@Col0ring](https://github.com/Col0ring)!
+
 ## 1.4.5
 
 ### Misc Changes

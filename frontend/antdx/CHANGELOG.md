@@ -1,5 +1,9 @@
 # @modelscope-studio/antdx
 
+## 1.4.6
+
+No significant changes to this package were made in this release.
+
 ## 1.4.5
 
 ### Misc Changes
