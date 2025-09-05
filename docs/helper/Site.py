@@ -13,7 +13,7 @@ class Site:
                  docs: dict,
                  default_active_tab: str | None = None,
                  logo: Component | Callable | None = None):
-        self.tabs = tabs
+        self.tabs = [tab for tab in tabs if tab]
         self.docs = docs
         self.default_active_tab = default_active_tab
         self.default_active_tab_item = next(
