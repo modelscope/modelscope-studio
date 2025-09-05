@@ -15,3 +15,5 @@ This template provides the following features:
 <demo name="basic" position="bottom" collapsible="true"></demo>
 
 <demo name="fine_grained_control" title="Fine-grained Control"  position="bottom" collapsible="true"></demo>
+
+<demo name="copilot" title="Copilot"  position="bottom" collapsible="true"></demo>
