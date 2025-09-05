@@ -22,26 +22,41 @@ DEFAULT_SYSTEM_PROMPT = """You are a web development engineer, writing web pages
 All code is written in a single code block to form a complete code file for display, without separating HTML and JavaScript code. An artifact refers to a runnable complete code snippet, you prefer to integrate and output such complete runnable code rather than breaking it down into several code blocks. For certain types of code, they can render graphical interfaces in a UI window. After generation, please check the code execution again to ensure there are no errors in the output.
 Output only the HTML, without any additional descriptive text."""
 
-EXAMPLES = [
-    {
-        "title":
-        "Qwen，Start！",
-        "description":
-        "Help me design an interface with a purple button that says 'Qwen, Start!'. When the button is clicked, display a countdown from 5 in a very large font for 5 seconds.",
-    },
-    {
-        "title":
-        "Spam with emojis!",
-        "description":
-        "Write code in a single HTML file: Capture the click event, place a random number of emojis at the click position, and add gravity and collision effects to each emoji."
-    },
-    {
-        "title":
-        "TODO list",
-        "description":
-        "I want a TODO list that allows me to add tasks, delete tasks, and I would like the overall color theme to be purple."
-    },
-]
+EXAMPLES = [{
+    "tab":
+    "Section 1",
+    "examples": [
+        {
+            "title":
+            "Qwen，Start！",
+            "description":
+            "Help me design an interface with a purple button that says 'Qwen, Start!'. When the button is clicked, display a countdown from 5 in a very large font for 5 seconds.",
+        },
+        {
+            "title":
+            "Spam with emojis!",
+            "description":
+            "Write code in a single HTML file: Capture the click event, place a random number of emojis at the click position, and add gravity and collision effects to each emoji."
+        },
+    ]
+}, {
+    "tab":
+    "Section 2",
+    "examples": [
+        {
+            "title":
+            "Strawberry card",
+            "description":
+            """How many "r"s are in the word "strawberry"? Make a cute little card!"""
+        },
+        {
+            "title":
+            "TODO list",
+            "description":
+            "I want a TODO list that allows me to add tasks, delete tasks, and I would like the overall color theme to be purple."
+        },
+    ]
+}]
 
 DEFAULT_LOCALE = 'en_US'
 
@@ -266,20 +281,26 @@ with gr.Blocks(css=css) as demo:
                             antd.Divider("Examples")
 
                             # Examples
-                            with antd.Flex(gap="small", wrap=True):
-                                for example in EXAMPLES:
-                                    with antd.Card(
-                                            elem_style=dict(
-                                                flex="1 1 fit-content"),
-                                            hoverable=True) as example_card:
-                                        antd.Card.Meta(
-                                            title=example['title'],
-                                            description=example['description'])
+                            with antd.Tabs():
+                                for item in EXAMPLES:
+                                    with antd.Tabs.Item(label=item["tab"]):
+                                        with antd.Flex(gap="small", wrap=True):
+                                            for example in item["examples"]:
+                                                with antd.Card(
+                                                        elem_style=dict(
+                                                            flex=
+                                                            "1 1 fit-content"),
+                                                        hoverable=True
+                                                ) as example_card:
+                                                    antd.Card.Meta(
+                                                        title=example['title'],
+                                                        description=example[
+                                                            'description'])
 
-                                    example_card.click(
-                                        fn=GradioEvents.select_example(
-                                            example),
-                                        outputs=[input])
+                                                example_card.click(
+                                                    fn=GradioEvents.
+                                                    select_example(example),
+                                                    outputs=[input])
 
                     # Right Column
                     with antd.Col(span=24, md=16):

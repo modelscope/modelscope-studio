@@ -59,6 +59,7 @@ class AntdCard(ModelScopeLayoutComponent):
             *,
             actions: str | None = None,
             active_tab_key: str | None = None,
+            variant: Literal['outlined', 'borderless'] | None = None,
             bordered: bool | None = None,
             cover: str | None = None,
             default_active_tab_key: str | None = None,
@@ -87,6 +88,7 @@ class AntdCard(ModelScopeLayoutComponent):
         Parameters:
             actions:  The action list, shows at the bottom of the Card.
             active_tab_key:  Current TabPane's key.
+            variant:  Card variant.
             bordered:  Toggles rendering of the border around the card.
             cover:  Card cover.
             default_active_tab_key:  Initial active TabPane's key, if activeTabKey is not set.
@@ -111,6 +113,7 @@ class AntdCard(ModelScopeLayoutComponent):
         self.actions = actions
         self.active_tab_key = active_tab_key
         self.bordered = bordered
+        self.variant = variant
         self.cover = cover
         self.default_active_tab_key = default_active_tab_key
         self.extra = extra
