@@ -9,7 +9,7 @@ export const getDefaultLocale = () => {
   return en_US;
 };
 
-export const simpleLocaleMap = {
+export const lang2RegionMap = {
   ar: 'ar_EG',
   az: 'az_AZ',
   bg: 'bg_BG',

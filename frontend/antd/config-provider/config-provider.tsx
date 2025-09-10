@@ -11,7 +11,7 @@ import dayjs from 'dayjs';
 import { produce } from 'immer';
 import { getLocaleFromNavigator } from 'svelte-i18n';
 
-import { getDefaultLocale, locales, simpleLocaleMap } from './locales';
+import { getDefaultLocale, lang2RegionMap, locales } from './locales';
 
 function formatLocale(locale: string | null) {
   if (!locale) {
@@ -20,7 +20,7 @@ function formatLocale(locale: string | null) {
   let lang = 'en_US';
   const parts = locale.replace('-', '_').split('_');
   if (parts.length === 1) {
-    lang = simpleLocaleMap[parts[0].toLowerCase()] || 'en_US';
+    lang = lang2RegionMap[parts[0].toLowerCase()] || 'en_US';
   } else if (parts.length === 2) {
     lang = `${parts[0].toLowerCase()}_${parts[1].toUpperCase()}`;
   }
