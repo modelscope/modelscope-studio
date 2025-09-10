@@ -11,19 +11,20 @@ import dayjs from 'dayjs';
 import { produce } from 'immer';
 import { getLocaleFromNavigator } from 'svelte-i18n';
 
-import { getDefaultLocale, locales } from './locales';
+import { getDefaultLocale, locales, simpleLocaleMap } from './locales';
 
 function formatLocale(locale: string | null) {
   if (!locale) {
     return 'en_US';
   }
-
+  let lang = 'en_US';
   const parts = locale.replace('-', '_').split('_');
-
-  if (parts.length === 2) {
-    return `${parts[0].toLowerCase()}_${parts[1].toUpperCase()}`;
+  if (parts.length === 1) {
+    lang = simpleLocaleMap[parts[0].toLowerCase()] || 'en_US';
+  } else if (parts.length === 2) {
+    lang = `${parts[0].toLowerCase()}_${parts[1].toUpperCase()}`;
   }
-  return 'en_US';
+  return lang;
 }
 
 const combinePropsAndSlots = (

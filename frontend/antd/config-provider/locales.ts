@@ -9,6 +9,83 @@ export const getDefaultLocale = () => {
   return en_US;
 };
 
+export const simpleLocaleMap = {
+  ar: 'ar_EG',
+  az: 'az_AZ',
+  bg: 'bg_BG',
+  bn: 'bn_BD',
+  be: 'by_BY', // Belarusian (Belarus)
+  ca: 'ca_ES',
+  cs: 'cs_CZ',
+  da: 'da_DK',
+  de: 'de_DE',
+  el: 'el_GR',
+  en_gb: 'en_GB',
+  en: 'en_US',
+  es: 'es_ES',
+  et: 'et_EE',
+  eu: 'eu_ES', // Basque
+  fa: 'fa_IR',
+  fi: 'fi_FI',
+  fr_be: 'fr_BE',
+  fr_ca: 'fr_CA',
+  fr_fr: 'fr_FR',
+  fr: 'fr_FR',
+  ga: 'ga_IE', // Irish
+  gl: 'gl_ES', // Galician
+  he: 'he_IL',
+  hi: 'hi_IN',
+  hr: 'hr_HR',
+  hu: 'hu_HU',
+  am: 'hy_AM', // Armenian
+  id: 'id_ID',
+  is: 'is_IS',
+  it: 'it_IT',
+  ja: 'ja_JP',
+  ka: 'ka_GE', // Georgian
+  kk: 'kk_KZ', // Kazakh
+  km: 'km_KH', // Khmer
+  kmr: 'kmr_IQ', // Kurdish (Northern)
+  kn: 'kn_IN', // Kannada
+  ko: 'ko_KR',
+  ku: 'ku_IQ', // Kurdish (Central)
+  lt: 'lt_LT',
+  lv: 'lv_LV',
+  mk: 'mk_MK', // Macedonian
+  ml: 'ml_IN', // Malayalam
+  mn: 'mn_MN', // Mongolian
+  ms: 'ms_MY',
+  my: 'my_MM', // Burmese
+  nb: 'nb_NO', // Norwegian Bokmål
+  ne: 'ne_NP', // Nepali
+  nl_be: 'nl_BE', // Dutch (Belgium)
+  nl_nl: 'nl_NL', // Dutch (Netherlands)
+  nl: 'nl_NL', // Dutch (Netherlands)
+  pl: 'pl_PL',
+  pt_br: 'pt_BR', // Portuguese (Brazil)
+  pt_pt: 'pt_PT', // Portuguese (Portugal)
+  pt: 'pt_PT',
+  ro: 'ro_RO',
+  ru: 'ru_RU',
+  si: 'si_LK', // Sinhala
+  sk: 'sk_SK',
+  sl: 'sl_SI',
+  sr: 'sr_RS', // Serbian
+  sv: 'sv_SE',
+  ta: 'ta_IN', // Tamil
+  th: 'th_TH',
+  tk: 'tk_TK', // Turkmen
+  tr: 'tr_TR',
+  uk: 'uk_UA', // Ukrainian
+  ur: 'ur_PK', // Urdu
+  uz: 'uz_UZ', // Uzbek
+  vi: 'vi_VN',
+  zh: 'zh_CN', // Chinese (Simplified),
+  zh_cn: 'zh_CN', // Chinese (Simplified)
+  zh_hk: 'zh_HK', // Chinese (Hong Kong)
+  zh_tw: 'zh_TW', // Chinese (Taiwan)
+};
+
 export const locales: Record<
   string,
   () => Promise<{ antd: Locale; dayjs: string }>
