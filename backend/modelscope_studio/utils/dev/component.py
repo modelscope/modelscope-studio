@@ -29,11 +29,13 @@ class ModelScopeLayoutComponent(BlockContext, metaclass=ComponentMeta):
             elem_id: Union[str, None] = None,
             elem_classes: Union[List[str], str, None] = None,
             elem_style: Union[dict, None] = None,
-            render: bool = True):
+            render: bool = True,
+            **kwargs):
         super().__init__(visible=visible,
                          elem_id=elem_id,
                          elem_classes=elem_classes,
-                         render=render)
+                         render=render,
+                         **kwargs)
         AppContext.assert_app()
         self.as_item = as_item
         if self.parent:
@@ -68,7 +70,8 @@ class ModelScopeComponent(Component):
             inputs: Union[Component, List[Component], Set[Component],
                           None] = None,
             load_fn: Union[Callable, None] = None,
-            render: bool = True):
+            render: bool = True,
+            **kwargs):
         super().__init__(visible=visible,
                          value=value,
                          elem_id=elem_id,
@@ -77,7 +80,8 @@ class ModelScopeComponent(Component):
                          every=every,
                          inputs=inputs,
                          load_fn=load_fn,
-                         render=render)
+                         render=render,
+                         **kwargs)
         AppContext.assert_app()
 
         if self.parent:
@@ -130,7 +134,8 @@ class ModelScopeDataLayoutComponent(Component,
             inputs: Union[Component, List[Component], Set[Component],
                           None] = None,
             load_fn: Union[Callable, None] = None,
-            render: bool = True):
+            render: bool = True,
+            **kwargs):
         super().__init__(
             visible=visible,
             value=value,
@@ -141,7 +146,8 @@ class ModelScopeDataLayoutComponent(Component,
             inputs=inputs,
             load_fn=load_fn,
             # disable render twice
-            render=False)
+            render=False,
+            **kwargs)
         BlockContext.__init__(self,
                               visible=visible,
                               elem_id=elem_id,
