@@ -9,8 +9,23 @@ import { ConfigProvider as AConfigProvider, type GetProps, theme } from 'antd';
 import type { Locale } from 'antd/es/locale';
 import dayjs from 'dayjs';
 import { produce } from 'immer';
+import { getLocaleFromNavigator } from 'svelte-i18n';
 
-import { getDefaultLocale, locales } from './locales';
+import { getDefaultLocale, lang2RegionMap, locales } from './locales';
+
+function formatLocale(locale: string | null) {
+  if (!locale) {
+    return 'en_US';
+  }
+  let lang = 'en_US';
+  const parts = locale.replace('-', '_').split('_');
+  if (parts.length === 1) {
+    lang = lang2RegionMap[parts[0].toLowerCase()] || 'en_US';
+  } else if (parts.length === 2) {
+    lang = `${parts[0].toLowerCase()}_${parts[1].toUpperCase()}`;
+  }
+  return lang;
+}
 
 const combinePropsAndSlots = (
   props: Record<string, any>,
@@ -61,7 +76,7 @@ export const ConfigProvider = sveltify<
     id,
     className,
     style,
-    locale: localeProp = 'en_US',
+    locale: localeProp = formatLocale(getLocaleFromNavigator()),
     getTargetContainer,
     getPopupContainer,
     renderEmpty,
@@ -82,14 +97,14 @@ export const ConfigProvider = sveltify<
     const getTargetContainerFunction = useFunction(getTargetContainer);
     const renderEmptyFunction = useFunction(renderEmpty);
     useEffect(() => {
-      if (localeProp && locales[localeProp]) {
-        locales[localeProp]().then(
-          ({ antd: antdLocale, dayjs: dayjsLocale }) => {
-            setLocale(antdLocale);
-            dayjs.locale(dayjsLocale);
-          }
-        );
-      }
+      const getLocaleConfig =
+        localeProp && locales[localeProp]
+          ? locales[localeProp]
+          : locales['en_US'];
+      getLocaleConfig().then(({ antd: antdLocale, dayjs: dayjsLocale }) => {
+        setLocale(antdLocale);
+        dayjs.locale(dayjsLocale);
+      });
     }, [localeProp]);
     const ProviderComponent = component || AConfigProvider;
     return (
