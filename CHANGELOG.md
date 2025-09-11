@@ -1,5 +1,21 @@
 # modelscope_studio
 
+## 1.5.0
+
+### Features
+
+- [#98](https://github.com/modelscope/modelscope-studio/pull/98) [`1372ab6`](https://github.com/modelscope/modelscope-studio/commit/1372ab6fd71bb814977f115097ded0687ad33fd2) - add the `form_action` property to manually trigger form actions. Thanks [@Col0ring](https://github.com/Col0ring)!
+- [#97](https://github.com/modelscope/modelscope-studio/pull/97) [`9b9e705`](https://github.com/modelscope/modelscope-studio/commit/9b9e705b6d4705cf3c9b7fa82c62037bafb3f7cf) - support automatic i18n detection for ConfigProvider. Thanks [@Col0ring](https://github.com/Col0ring)!
+
+### Fixes
+
+- [#93](https://github.com/modelscope/modelscope-studio/pull/93) [`4bfbc1d`](https://github.com/modelscope/modelscope-studio/commit/4bfbc1d9a400224020c380b5dba90f77b39442eb) - bugfix in dev mode. Thanks [@Col0ring](https://github.com/Col0ring)!
+
+### Misc Changes
+
+- [`5af9cdc`](https://github.com/modelscope/modelscope-studio/commit/5af9cdcb011e3bda1ea9419f34cffd93b81590e7) - update deps. Thanks [@Col0ring](https://github.com/Col0ring)!
+- [#92](https://github.com/modelscope/modelscope-studio/pull/92) [`369e50a`](https://github.com/modelscope/modelscope-studio/commit/369e50a7465fc732ccf38ff07be0211c1d387565) - add copilot demo for chatbot. Thanks [@Col0ring](https://github.com/Col0ring)!
+
 ## 1.4.6
 
 ### Fixes

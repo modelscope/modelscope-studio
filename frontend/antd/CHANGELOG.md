@@ -1,5 +1,12 @@
 # @modelscope-studio/antd
 
+## 1.5.0
+
+### Features
+
+- [#98](https://github.com/modelscope/modelscope-studio/pull/98) [`1372ab6`](https://github.com/modelscope/modelscope-studio/commit/1372ab6fd71bb814977f115097ded0687ad33fd2) - add the `form_action` property to manually trigger form actions. Thanks [@Col0ring](https://github.com/Col0ring)!
+- [#97](https://github.com/modelscope/modelscope-studio/pull/97) [`9b9e705`](https://github.com/modelscope/modelscope-studio/commit/9b9e705b6d4705cf3c9b7fa82c62037bafb3f7cf) - support automatic i18n detection for ConfigProvider. Thanks [@Col0ring](https://github.com/Col0ring)!
+
 ## 1.4.6
 
 ### Fixes

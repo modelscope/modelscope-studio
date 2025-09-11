@@ -1,5 +1,11 @@
 # @modelscope-studio/legacy-compiled
 
+## 1.5.0
+
+### Misc Changes
+
+- [`5af9cdc`](https://github.com/modelscope/modelscope-studio/commit/5af9cdcb011e3bda1ea9419f34cffd93b81590e7) - update deps. Thanks [@Col0ring](https://github.com/Col0ring)!
+
 ## 1.4.6
 
 No significant changes to this package were made in this release.

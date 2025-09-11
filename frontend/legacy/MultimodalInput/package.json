@@ -1,6 +1,6 @@
 {
   "name": "@modelscope-studio/legacy-multimodal-input",
-  "version": "1.4.6",
+  "version": "1.5.0",
   "private": false,
   "description": "ModelScope Gradio Components",
   "repository": "git@github.com:modelscope/modelscope-studio.git",
