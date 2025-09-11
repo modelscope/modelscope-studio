@@ -45,6 +45,7 @@ class AntdForm(ModelScopeDataLayoutComponent):
             value: dict | None = None,
             props: dict | None = None,
             *,
+            form_action: Literal['reset', 'submit', 'validate'] | None = None,
             colon: bool = True,
             disabled: bool | None = None,
             component: str | False | None = None,
@@ -84,6 +85,7 @@ class AntdForm(ModelScopeDataLayoutComponent):
                          elem_style=elem_style,
                          **kwargs)
         self.props = props
+        self.form_action = form_action
         self.colon = colon
         self.disabled = disabled
         self.component = component

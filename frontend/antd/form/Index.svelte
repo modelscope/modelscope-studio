@@ -15,9 +15,12 @@
   import cls from 'classnames';
   import { writable } from 'svelte/store';
 
+  import type { FormProps } from './form';
+
   const AwaitedForm = importComponent(() => import('./form'));
   export let gradio: Gradio;
   export let value: Record<string, any>;
+  export let form_action: FormProps['formAction'] | null = null;
   export let props: Record<string, any> = {};
   const updatedProps = writable(props);
   $: updatedProps.update((prev) => ({ ...prev, ...props }));
@@ -43,6 +46,7 @@
       elem_style,
       as_item,
       value,
+      form_action,
       restProps: $$restProps,
     },
     {
@@ -61,6 +65,7 @@
     elem_style,
     as_item,
     value,
+    form_action,
     restProps: $$restProps,
   });
 </script>
@@ -79,9 +84,13 @@
         values_change: 'valuesChange',
       })}
       slots={$slots}
+      formAction={$mergedProps.form_action}
       value={$mergedProps.value}
       onValueChange={(v) => {
         value = v;
+      }}
+      onResetFormAction={() => {
+        form_action = null;
       }}
       {setSlotParams}
     >
