@@ -1,5 +1,11 @@
 # modelscope_studio
 
+## 1.5.1
+
+### Features
+
+- [#109](https://github.com/modelscope/modelscope-studio/pull/109) [`bcd21ea`](https://github.com/modelscope/modelscope-studio/commit/bcd21eae473de38af862b8661644abc7f0034f60) - add `preserved_by_key` parameter and override `api_info` method. Thanks [@Col0ring](https://github.com/Col0ring)!
+
 ## 1.5.0
 
 ### Features

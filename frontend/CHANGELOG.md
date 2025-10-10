@@ -1,5 +1,9 @@
 # @modelscope-studio/frontend
 
+## 1.5.1
+
+No significant changes to this package were made in this release.
+
 ## 1.5.0
 
 ### Misc Changes
