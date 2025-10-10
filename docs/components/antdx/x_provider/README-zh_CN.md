@@ -1,6 +1,6 @@
 # XProvider
 
-Provide a uniform configuration support for x components.. See [Ant Design X](https://x.ant.design/components/x-provider/) for more information.
+Provide a uniform configuration support for x components. See [Ant Design X](https://x.ant.design/components/x-provider/) for more information.
 
 The `XProvider` extends the `ConfigProvider` from antd and provides global configuration for components in `@ant-design/x`.
 
