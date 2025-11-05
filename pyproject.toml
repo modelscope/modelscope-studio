@@ -8,7 +8,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "modelscope_studio"
-version = "1.5.1"
+version = "1.5.2"
 description = "A third-party component library based on Gradio."
 readme = "README.md"
 license = "Apache-2.0"
@@ -229,6 +229,7 @@ artifacts = [
   "/backend/modelscope_studio/components/pro/chatbot/templates",
   "/backend/modelscope_studio/components/pro/multimodal_input/templates",
   "/backend/modelscope_studio/components/pro/web_sandbox/templates",
+  "/backend/modelscope_studio/components/antd/statistic/timer/templates",
 ]
 
 [tool.yapfignore]

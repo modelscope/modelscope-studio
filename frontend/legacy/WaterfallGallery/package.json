@@ -1,6 +1,6 @@
 {
   "name": "@modelscope-studio/legacy-waterfall-gallery",
-  "version": "1.5.1",
+  "version": "1.5.2",
   "description": "ModelScope Gradio Components",
   "repository": "git@github.com:modelscope/modelscope-studio.git",
   "license": "Apache-2.0",

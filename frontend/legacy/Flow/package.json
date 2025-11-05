@@ -1,6 +1,6 @@
 {
   "name": "@modelscope-studio/legacy-flow",
-  "version": "1.5.1",
+  "version": "1.5.2",
   "private": false,
   "description": "ModelScope Gradio Components",
   "repository": "git@github.com:modelscope/modelscope-studio.git",

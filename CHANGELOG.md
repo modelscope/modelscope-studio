@@ -1,5 +1,11 @@
 # modelscope_studio
 
+## 1.5.2
+
+### Features
+
+- [#111](https://github.com/modelscope/modelscope-studio/pull/111) [`4888b2b`](https://github.com/modelscope/modelscope-studio/commit/4888b2b209b8758c92c33f932b61992c3fe4362a) - upgrade to antd 5.28.0, antdx 1.6.1. Thanks [@Col0ring](https://github.com/Col0ring)!
+
 ## 1.5.1
 
 ### Features

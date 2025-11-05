@@ -1,2 +1,2 @@
-modelscope_studio==1.5.1
+modelscope_studio==1.5.2
 openai
