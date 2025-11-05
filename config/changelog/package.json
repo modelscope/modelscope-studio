@@ -21,11 +21,11 @@
   "dependencies": {
     "@changesets/get-github-info": "^0.6.0",
     "@manypkg/get-packages": "^3.1.0",
-    "detect-indent": "^7.0.1"
+    "detect-indent": "^7.0.2"
   },
   "devDependencies": {
     "@changesets/types": "^6.1.0",
-    "@types/node": "^24.3.1",
+    "@types/node": "^24.10.0",
     "tsup": "^8.5.0"
   }
 }

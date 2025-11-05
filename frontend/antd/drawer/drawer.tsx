@@ -6,11 +6,24 @@ import { useFunction } from '@utils/hooks/useFunction';
 import { renderParamsSlot } from '@utils/renderParamsSlot';
 import { Drawer as ADrawer, type GetProps } from 'antd';
 
+function getConfig<T>(value: T): Partial<T & Record<PropertyKey, any>> {
+  if (typeof value === 'object' && value !== null) {
+    return value as any;
+  }
+  return {} as any;
+}
 export const Drawer = sveltify<
   GetProps<typeof ADrawer> & {
     setSlotParams: SetSlotParams;
   },
-  ['closeIcon', 'extra', 'footer', 'title', 'drawerRender']
+  [
+    'closeIcon',
+    'closeable.closeIcon',
+    'extra',
+    'footer',
+    'title',
+    'drawerRender',
+  ]
 >(
   ({
     slots,
@@ -23,10 +36,19 @@ export const Drawer = sveltify<
     const afterOpenChangeFunction = useFunction(afterOpenChange);
     const getContainerFunction = useFunction(getContainer);
     const drawerRenderFunction = useFunction(drawerRender);
+    const closeableConfig = getConfig(props.closable);
     return (
       <ADrawer
         {...props}
         afterOpenChange={afterOpenChangeFunction}
+        closable={
+          slots['closeable.closeIcon']
+            ? {
+                ...closeableConfig,
+                closeIcon: <ReactSlot slot={slots['closeable.closeIcon']} />,
+              }
+            : props.closable
+        }
         closeIcon={
           slots.closeIcon ? (
             <ReactSlot slot={slots.closeIcon} />

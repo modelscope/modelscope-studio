@@ -23,7 +23,7 @@
     "github-markdown-css": "^5.8.1",
     "github-slugger": "^2.0.0",
     "hastscript": "^9.0.1",
-    "katex": "^0.16.22",
+    "katex": "^0.16.25",
     "pdfjs-dist": "^3.11.174",
     "react-markdown": "^9.0.3",
     "react-syntax-highlighter": "^15.6.6",

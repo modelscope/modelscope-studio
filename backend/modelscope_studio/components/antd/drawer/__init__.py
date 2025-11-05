@@ -18,7 +18,10 @@ class AntdDrawer(ModelScopeLayoutComponent):
     ]
 
     # supported slots
-    SLOTS = ['closeIcon', 'extra', 'footer', 'title', 'drawerRender']
+    SLOTS = [
+        'closeIcon', 'closable.closeIcon', 'extra', 'footer', 'title',
+        'drawerRender'
+    ]
 
     def __init__(
             self,
@@ -29,6 +32,7 @@ class AntdDrawer(ModelScopeLayoutComponent):
             body_style: dict | None = None,
             close_icon: str | None = None,
             class_names: dict | None = None,
+            closable: bool | dict | None = None,
             destroy_on_close: bool | None = None,
             destroy_on_hidden: bool | None = None,
             extra: str | None = None,
@@ -72,6 +76,7 @@ class AntdDrawer(ModelScopeLayoutComponent):
         self.auto_focus = auto_focus
         self.body_style = body_style
         self.close_icon = close_icon
+        self.closeable = closable
         self.class_names = class_names
         self.destroy_on_close = destroy_on_close
         self.destroy_on_hidden = destroy_on_hidden

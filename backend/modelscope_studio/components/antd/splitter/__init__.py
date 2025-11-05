@@ -32,6 +32,10 @@ class AntdSplitter(ModelScopeLayoutComponent):
                       doc="Drag end callback.",
                       callback=lambda block: block._internal.update(
                           bind_resizeEnd_event=True)),
+        EventListener("collapse",
+                      doc="Callback when expanding or collapsing.",
+                      callback=lambda block: block._internal.update(
+                          bind_collapse_event=True)),
     ]
 
     def __init__(
