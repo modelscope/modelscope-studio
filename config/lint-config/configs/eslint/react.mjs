@@ -29,6 +29,7 @@ export const react = [
     },
     rules: {
       ...eslintPluginReactHooks.configs.recommended.rules,
+      'react-hooks/refs': 'off',
       'react/self-closing-comp': 'error',
       'react/react-in-jsx-scope': 'off',
       'react/prop-types': 'warn',

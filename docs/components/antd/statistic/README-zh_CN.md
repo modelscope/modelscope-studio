@@ -5,4 +5,4 @@ Display statistic number. See [Ant Design](https://ant.design/components/statist
 ## Examples
 
 <demo name="basic"></demo>
-<demo name="countdown" title="Countdown"></demo>
+<demo name="timer" title="Timer"></demo>

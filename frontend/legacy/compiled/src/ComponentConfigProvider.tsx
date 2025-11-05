@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useMemo } from 'react';
 import {
   legacyLogicalPropertiesTransformer,
   StyleProvider,
@@ -27,10 +27,10 @@ export const ComponentConfigProvider: React.FC<ComponentConfigProviderProps> = (
   props
 ) => {
   const { locale, theme, children } = props;
-  const [localeConfig, setLocaleConfig] = useState<Locale | undefined>();
-  useEffect(() => {
+
+  const localeConfig = useMemo<Locale | undefined>(() => {
     if (locale) {
-      setLocaleConfig(langs[locale]);
+      return langs[locale];
     }
   }, [locale]);
 

@@ -1,34 +1,36 @@
 from __future__ import annotations
 
-from typing import Callable
+from typing import Any, Callable, Literal
 
-from ....utils.dev import ModelScopeDataLayoutComponent, resolve_frontend_dir
-from .countdown import AntdStatisticCountdown
-from .timer import AntdStatisticTimer
+from gradio.events import EventListener
+
+from .....utils.dev import ModelScopeDataLayoutComponent, resolve_frontend_dir
 
 
-class AntdStatistic(ModelScopeDataLayoutComponent):
+class AntdStatisticTimer(ModelScopeDataLayoutComponent):
     """
     Ant Design: https://ant.design/components/statistic
     """
-    Countdown = AntdStatisticCountdown
-    Timer = AntdStatisticTimer
 
-    EVENTS = []
+    EVENTS = [
+        EventListener("finish",
+                      callback=lambda block: block._internal.update(
+                          bind_finish_event=True)),
+        EventListener("change",
+                      callback=lambda block: block._internal.update(
+                          bind_change_event=True)),
+    ]
 
     # supported slots
-    SLOTS = ['prefix', 'suffix', 'title', 'formatter']
+    SLOTS = ['prefix', 'suffix', 'title']
 
     def __init__(
             self,
-            value: Callable | int | float | str | None = None,
+            value: Callable | int | float | None = None,
             props: dict | None = None,
             *,
-            decimal_separator: str | None = None,
-            formatter: str | None = None,
-            group_separator: str | None = None,
-            loading: bool | None = None,
-            precision: int | float | None = None,
+            type: Literal['countdown', 'countup'] | None = 'countdown',
+            format: str | None = None,
             prefix: str | None = None,
             suffix: str | None = None,
             title: str | None = None,
@@ -52,32 +54,28 @@ class AntdStatistic(ModelScopeDataLayoutComponent):
                          elem_style=elem_style,
                          **kwargs)
         self.props = props
-        self.decimal_separator = decimal_separator
-        self.formatter = formatter
-        self.group_separator = group_separator
-        self.loading = loading
-        self.precision = precision
+        self.type = type
+        self.format = format
         self.prefix = prefix
         self.suffix = suffix
         self.title = title
         self.value_style = value_style
         self.root_class_name = root_class_name
 
-    FRONTEND_DIR = resolve_frontend_dir("statistic")
+    FRONTEND_DIR = resolve_frontend_dir("statistic", "timer")
 
     @property
     def skip_api(self):
         return True
 
-    def preprocess(self, payload: int | float | str | None) -> None:
+    def preprocess(self, payload: int | float | None) -> int | float | None:
         return payload
 
-    def postprocess(self, value: int | float | str | None) -> None:
-
+    def postprocess(self, value: int | float | None) -> int | float | None:
         return value
 
-    def example_payload(self) -> None:
+    def example_payload(self) -> Any:
         return None
 
-    def example_value(self) -> None:
+    def example_value(self) -> Any:
         return None

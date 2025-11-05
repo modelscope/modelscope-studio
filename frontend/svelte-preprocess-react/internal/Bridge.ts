@@ -37,10 +37,10 @@ function omitNodeProps(props: Record<string, any>) {
 const Bridge: React.FC<BridgeProps> = ({ createPortal, node }) => {
   // rerender when target or slot changed
   const target = useStore(node.target);
-  let nodeProps = useStore(node.props);
-  nodeProps = useMemo(() => {
-    return patchProps(omitNodeProps(nodeProps));
-  }, [nodeProps]);
+  const originalNodeProps = useStore(node.props);
+  const nodeProps = useMemo(() => {
+    return patchProps(omitNodeProps(originalNodeProps));
+  }, [originalNodeProps]);
   const slot = useStore(node.slot);
   const subSlotKeys = useStores<string | undefined>(
     useMemo(
@@ -146,6 +146,7 @@ const Bridge: React.FC<BridgeProps> = ({ createPortal, node }) => {
     reactComponent: node.reactComponent,
     children,
   });
+  // eslint-disable-next-line react-hooks/immutability
   target._reactElement = element;
   return createPortal(element, target);
 };

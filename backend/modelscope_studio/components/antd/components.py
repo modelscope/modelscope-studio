@@ -103,7 +103,9 @@ from .space.compact import AntdSpaceCompact
 from .spin import AntdSpin
 from .splitter import AntdSplitter
 from .splitter.panel import AntdSplitterPanel
-from .statistic import AntdStatistic, AntdStatisticCountdown
+from .statistic import AntdStatistic
+from .statistic.countdown import AntdStatisticCountdown
+from .statistic.timer import AntdStatisticTimer
 from .steps import AntdSteps
 from .steps.item import AntdStepsItem
 from .switch import AntdSwitch

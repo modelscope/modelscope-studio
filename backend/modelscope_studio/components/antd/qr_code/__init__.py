@@ -30,6 +30,7 @@ class AntdQRCode(ModelScopeComponent):
             bordered: bool = True,
             color: str | None = "#000",
             bg_color: str | None = 'transparent',
+            boost_level: bool | None = True,
             error_level: Literal['L', 'M', 'Q', 'H'] | None = 'M',
             icon: str | None = None,
             icon_size: int | dict | None = 40,
@@ -60,6 +61,7 @@ class AntdQRCode(ModelScopeComponent):
         self.bordered = bordered
         self.color = color
         self.bg_color = bg_color
+        self.boost_level = boost_level
         self.error_level = error_level
         self.icon = icon
         self.icon_size = icon_size

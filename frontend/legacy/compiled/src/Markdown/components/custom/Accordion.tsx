@@ -84,6 +84,7 @@ export const Accordion: Components['accordion'] = (nodeProps) => {
   });
   const renderBody = <AccordionBody>{renderBodyChildrenArray}</AccordionBody>;
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setOpen(!hasEnd);
   }, [hasEnd]);
 

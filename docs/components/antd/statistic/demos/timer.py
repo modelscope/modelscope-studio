@@ -9,16 +9,24 @@ with gr.Blocks() as demo:
         with antd.ConfigProvider():
             with antd.Row(gutter=20):
                 with antd.Col(span=12):
-                    antd.Statistic.Countdown(
+                    antd.Statistic.Timer(
+                        type="countup",
+                        value=lambda: time.time() - 60 * 60 * 24 * 2,
+                        title="Countup")
+                with antd.Col(span=12):
+                    antd.Statistic.Timer(
+                        type="countdown",
                         value=lambda: time.time() + 60 * 60 * 24 * 2,
                         title="Countdown")
                 with antd.Col(span=12):
-                    antd.Statistic.Countdown(
+                    antd.Statistic.Timer(
+                        type="countdown",
                         value=lambda: time.time() + 60 * 60 * 24 * 2,
                         title="Million Seconds",
                         format="HH:mm:ss:SSS")
                 with antd.Col(span=12):
-                    antd.Statistic.Countdown(
+                    antd.Statistic.Timer(
+                        type="countdown",
                         value=lambda: time.time() + 60 * 60 * 24 * 2,
                         title="Day Level",
                         format="D-H-m-s")

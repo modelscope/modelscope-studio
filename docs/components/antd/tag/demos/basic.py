@@ -12,7 +12,7 @@ with gr.Blocks() as demo:
                         "Link",
                         href=
                         "https://github.com/ant-design/ant-design/issues/1862")
-                antd.Tag('Closeable', close_icon=True)
+                antd.Tag('Closable', close_icon=True)
                 with antd.Tag():
                     with ms.Slot("closeIcon"):
                         antd.Icon("CloseCircleOutlined",

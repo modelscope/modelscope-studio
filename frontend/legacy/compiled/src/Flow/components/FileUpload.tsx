@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useMemo, useRef } from 'react';
 import { FileOutlined } from '@ant-design/icons';
 import { Upload, type UploadProps } from 'antd';
 
@@ -16,13 +16,10 @@ export const FileUpload: React.FC<FileUploadProps> = ({
   onChange,
   ...props
 }) => {
-  const [fileList, setFileList] = useState<
-    NonNullable<UploadProps['fileList']>
-  >([]);
   const uploadingRef = useRef(false);
   const { onUpload, locale } = useFlow();
-  useEffect(() => {
-    setFileList(
+  const fileList = useMemo<NonNullable<UploadProps['fileList']>>(() => {
+    return (
       value?.map((file) => ({
         ...file,
         uid: file.url,
@@ -30,6 +27,7 @@ export const FileUpload: React.FC<FileUploadProps> = ({
       })) || []
     );
   }, [value]);
+
   return (
     <Upload.Dragger
       {...props}

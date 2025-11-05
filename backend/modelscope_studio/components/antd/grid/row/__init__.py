@@ -33,7 +33,7 @@ class AntdRow(ModelScopeLayoutComponent):
             *,
             align: Literal["top", "middle", "bottom", "stretch"]
         | dict[str, Literal["top", "middle", "bottom", "stretch"]] = "top",
-            gutter: int | dict | list[int] = 0,
+            gutter: int | str | dict | list = 0,
             justify: Literal["start", "end", "center", "space-between",
                              'space-around', 'space-evenly']
         | dict[str, Literal["start", "end", "center", "space-between",

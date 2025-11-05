@@ -107,7 +107,8 @@ from .spin import AntdSpin as Spin
 from .splitter import AntdSplitter as Splitter
 from .splitter.panel import AntdSplitterPanel as SplitterPanel
 from .statistic import AntdStatistic as Statistic
-from .statistic import AntdStatisticCountdown as StatisticCountdown
+from .statistic.countdown import AntdStatisticCountdown as StatisticCountdown
+from .statistic.timer import AntdStatisticTimer as StatisticTimer
 from .steps import AntdSteps as Steps
 from .steps.item import AntdStepsItem as StepsItem
 from .switch import AntdSwitch as Switch
