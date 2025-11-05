@@ -76,7 +76,7 @@ class AntdDrawer(ModelScopeLayoutComponent):
         self.auto_focus = auto_focus
         self.body_style = body_style
         self.close_icon = close_icon
-        self.closeable = closable
+        self.closable = closable
         self.class_names = class_names
         self.destroy_on_close = destroy_on_close
         self.destroy_on_hidden = destroy_on_hidden

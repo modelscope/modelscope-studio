@@ -18,7 +18,7 @@ export const Drawer = sveltify<
   },
   [
     'closeIcon',
-    'closeable.closeIcon',
+    'closable.closeIcon',
     'extra',
     'footer',
     'title',
@@ -36,16 +36,16 @@ export const Drawer = sveltify<
     const afterOpenChangeFunction = useFunction(afterOpenChange);
     const getContainerFunction = useFunction(getContainer);
     const drawerRenderFunction = useFunction(drawerRender);
-    const closeableConfig = getConfig(props.closable);
+    const closableConfig = getConfig(props.closable);
     return (
       <ADrawer
         {...props}
         afterOpenChange={afterOpenChangeFunction}
         closable={
-          slots['closeable.closeIcon']
+          slots['closable.closeIcon']
             ? {
-                ...closeableConfig,
-                closeIcon: <ReactSlot slot={slots['closeable.closeIcon']} />,
+                ...closableConfig,
+                closeIcon: <ReactSlot slot={slots['closable.closeIcon']} />,
               }
             : props.closable
         }
