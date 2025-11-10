@@ -67,7 +67,6 @@ class ModelScopeProMonacoEditor(ModelScopeDataLayoutComponent):
                          **kwargs)
         self.line = line
         self.loading = loading
-        print('loader', ModelScopeProMonacoEditor.LOADER)
         self._loader = ModelScopeProMonacoEditor.LOADER
         self.override_services = override_services
         self.options = options
