@@ -8,6 +8,14 @@ declare module '*?worker' {
   };
   export default workerConstructor;
 }
+
+declare module '*?worker&inline' {
+  const workerConstructor: {
+    new (options?: { name?: string }): Worker;
+  };
+  export default workerConstructor;
+}
+
 declare module '*?inline' {
   const string: string;
   export default string;

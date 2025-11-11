@@ -80,11 +80,14 @@
     themeMode: gradio.theme,
   };
 
+  $: mode = _loader?.mode;
+  $: cdn_url = _loader?.cdn_url;
+
   $: awaitedLoader =
-    _loader?.mode === 'local'
+    mode === 'local'
       ? initLocalLoader()
-      : _loader?.cdn_url
-        ? initCDNLoader(_loader.cdn_url)
+      : cdn_url
+        ? initCDNLoader(cdn_url)
         : undefined;
 </script>
 
