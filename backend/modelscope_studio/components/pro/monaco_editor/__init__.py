@@ -21,13 +21,20 @@ class ModelScopeProMonacoEditor(ModelScopeDataLayoutComponent):
     EVENTS = [
         EventListener("mount",
                       callback=lambda block: block._internal.update(
-                          bind_mount_event=True)),
-        EventListener("change",
-                      callback=lambda block: block._internal.update(
-                          bind_change_event=True)),
-        EventListener("validate",
-                      callback=lambda block: block._internal.update(
-                          bind_validate_event=True)),
+                          bind_mount_event=True),
+                      doc="An event is emitted when the editor is mounted."),
+        EventListener(
+            "change",
+            callback=lambda block: block._internal.update(bind_change_event=
+                                                          True),
+            doc="An event is emitted when the editor value is changed."),
+        EventListener(
+            "validate",
+            callback=lambda block: block._internal.update(bind_validate_event=
+                                                          True),
+            doc=
+            "An event is emitted when the editor value is changed and the validation markers are ready."
+        ),
     ]
 
     # supported slots
@@ -45,9 +52,10 @@ class ModelScopeProMonacoEditor(ModelScopeDataLayoutComponent):
             before_mount: str | None = None,
             after_mount: str | None = None,
             override_services: dict | None = None,
-            loading: str | None = None,
+            loading: str | None = "Editor is loading...",
             options: dict | None = None,
             line: int | None = None,
+            read_only: bool | None = None,
             height: str | int | float | None = 400,
             _loader: None = None,
             _internal: None = None,
@@ -70,6 +78,7 @@ class ModelScopeProMonacoEditor(ModelScopeDataLayoutComponent):
         self._loader = ModelScopeProMonacoEditor.LOADER
         self.override_services = override_services
         self.options = options
+        self.read_only = read_only
         self.before_mount = before_mount
         self.after_mount = after_mount
         self.language = language

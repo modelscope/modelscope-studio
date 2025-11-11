@@ -181,6 +181,9 @@ pro_menu_items = [{
     "children": [{
         "label": get_text("WebSandbox", "WebSandbox 网页沙盒"),
         "key": "web_sandbox"
+    }, {
+        "label": get_text("MonacoEditor", "MonacoEditor 代码编辑器"),
+        "key": "monaco_editor"
     }]
 }]
 
