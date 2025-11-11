@@ -9,6 +9,7 @@ colorFrom: blue
 colorTo: gray
 short_description: A third-party component library based on Gradio.
 sdk: gradio
+sdk_version: 5.34.1
 pinned: false
 header: mini
 app_file: app.py

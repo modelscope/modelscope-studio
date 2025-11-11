@@ -1,5 +1,5 @@
 {
-  "name": "@modelscope-studio/monaco-diff-editor",
+  "name": "@modelscope-studio/monaco-editor.diff-editor",
   "type": "module",
   "exports": {
     ".": {
