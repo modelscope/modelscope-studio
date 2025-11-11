@@ -53,7 +53,7 @@
 | original          | `str\| None`          | None                   | 原始源的值（左侧）。                                                                                                                                  |
 | language          | `str\| None`          | None                   | 编辑器的语言（monaco-editor [支持](https://github.com/microsoft/monaco-editor/tree/main/src/basic-languages)的所有语言）。                            |
 | original_language | `str\| None`          | None                   | 单独指定原始源的语言。否则，它将获取 language 属性的值。                                                                                              |
-| modified_Language | `str\| None`          | None                   | 单独指定修改后的源的语言。否则，它将获取 language 属性的值。                                                                                          |
+| modified_language | `str\| None`          | None                   | 单独指定修改后的源的语言。否则，它将获取 language 属性的值。                                                                                          |
 | line              | `number\| None`       | None                   | 垂直滚动编辑器到指定行。                                                                                                                              |
 | read_only         | `bool\| None`         | None                   | 编辑器是否只读。                                                                                                                                      |
 | loading           | `str\| None`          | 'Editor is loading...' | 编辑器初始化加载时的加载文案。                                                                                                                        |

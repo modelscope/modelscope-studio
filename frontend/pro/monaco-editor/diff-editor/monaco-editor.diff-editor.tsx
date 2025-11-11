@@ -7,6 +7,7 @@ import { ReactSlot } from '@svelte-preprocess-react/react-slot';
 import { sveltify } from '@svelte-preprocess-react/sveltify';
 import React, { useEffect, useMemo, useRef } from 'react';
 import { useFunction } from '@utils/hooks/useFunction';
+import { useMemoizedFn } from '@utils/hooks/useMemoizedFn';
 import { Spin } from 'antd';
 import { isNumber } from 'lodash-es';
 import type { editor, IDisposable } from 'monaco-editor';
@@ -61,6 +62,8 @@ export const MonacoDiffEditor = sveltify<MonacoDiffEditorProps, ['loading']>(
       onValueChange,
       value: valueProp,
     });
+    const onChangeMemoized = useMemoizedFn(onChange);
+    const onValidateMemoized = useMemoizedFn(onValidate);
     const handleEditorMount: MonacoDiffEditorProps['onMount'] = (
       editor,
       monaco
@@ -74,7 +77,7 @@ export const MonacoDiffEditor = sveltify<MonacoDiffEditorProps, ['loading']>(
       const mountDisposable = modifiedEditor.onDidChangeModelContent((e) => {
         const newValue = modifiedEditor.getValue();
         setValue(newValue);
-        onChange?.(newValue, e);
+        onChangeMemoized(newValue, e);
       });
 
       const validateDisposable = monaco.editor.onDidChangeMarkers((uris) => {
@@ -87,7 +90,7 @@ export const MonacoDiffEditor = sveltify<MonacoDiffEditorProps, ['loading']>(
             const markers = monaco.editor.getModelMarkers({
               resource: editorUri,
             });
-            onValidate?.(markers);
+            onValidateMemoized(markers);
           }
         }
       });
