@@ -1,4 +1,5 @@
 import type { loader as monacoLoader } from '@monaco-editor/react';
+import { loader } from '@monaco-editor/react';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import ReactDOMClient from 'react-dom/client';
@@ -42,7 +43,7 @@ declare global {
       autokey: number;
       loadingKey: number;
       monacoLoader: typeof monacoLoader | null;
-      monacoLoaderPromise: Promise<typeof monacoLoader> | null;
+      monacoLoaderPromise: Promise<void> | null;
       rerender: (props: BridgeProps) => void;
       // render items
       createItemsContext: typeof createItemsContext;
@@ -103,7 +104,7 @@ window.ms_globals = {
     nodes: [],
   },
   rerender,
-  monacoLoader: null,
+  monacoLoader: loader,
   monacoLoaderPromise: null,
   // render items
   createItemsContext,

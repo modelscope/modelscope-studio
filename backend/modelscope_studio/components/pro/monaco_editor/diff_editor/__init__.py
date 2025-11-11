@@ -45,7 +45,7 @@ class ModelScopeProMonacoEditorDiffEditor(ModelScopeDataLayoutComponent):
             before_mount: str | None = None,
             after_mount: str | None = None,
             override_services: dict | None = None,
-            loading: str | None = None,
+            loading: str | None = "Editor is loading...",
             read_only: bool | None = None,
             options: dict | None = None,
             line: int | None = None,

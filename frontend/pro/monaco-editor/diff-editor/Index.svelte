@@ -79,32 +79,21 @@
     slots: $slots,
     themeMode: gradio.theme,
   };
+
+  $: awaitedLoader =
+    _loader?.mode === 'local'
+      ? initLocalLoader()
+      : _loader?.cdn_url
+        ? initCDNLoader(_loader.cdn_url)
+        : undefined;
 </script>
 
 {#if $mergedProps.visible}
-  {#if _loader?.mode === 'local'}
-    {#await initLocalLoader()}
-      <!-- Loading local loader -->
-    {:then}
-      {#await AwaitedMonacoDiffEditor then MonacoDiffEditor}
-        <MonacoDiffEditor {...editorProps}>
-          <slot></slot>
-        </MonacoDiffEditor>
-      {/await}
-    {/await}
-  {:else if _loader?.cdn_url}
-    {#await initCDNLoader(_loader.cdn_url)}
-      {#await AwaitedMonacoDiffEditor then MonacoDiffEditor}
-        <MonacoDiffEditor {...editorProps}>
-          <slot></slot>
-        </MonacoDiffEditor>
-      {/await}
-    {/await}
-  {:else}
+  {#await awaitedLoader then}
     {#await AwaitedMonacoDiffEditor then MonacoDiffEditor}
       <MonacoDiffEditor {...editorProps}>
         <slot></slot>
       </MonacoDiffEditor>
     {/await}
-  {/if}
+  {/await}
 {/if}

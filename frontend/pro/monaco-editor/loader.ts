@@ -1,30 +1,25 @@
-function getMonacoLoader() {
+import { initialize } from '@svelte-preprocess-react/component';
+
+async function getMonacoLoader() {
+  await initialize();
   return new Promise<{
     loader: typeof window.ms_globals.monacoLoader;
     done?: () => void;
   }>((resolve) => {
-    if (!window.ms_globals?.monacoLoader) {
-      if (window.ms_globals?.monacoLoaderPromise) {
-        window.ms_globals.monacoLoaderPromise.then((loader) => {
-          resolve({
-            loader,
-          });
+    if (window.ms_globals?.monacoLoaderPromise) {
+      window.ms_globals.monacoLoaderPromise.then(() => {
+        resolve({
+          loader: window.ms_globals.monacoLoader,
         });
-      } else {
-        window.ms_globals ??= {} as typeof window.ms_globals;
-        window.ms_globals.monacoLoaderPromise = new Promise((resolve2) => {
-          import('@monaco-editor/react').then((m) => {
-            window.ms_globals.monacoLoader = m.loader;
-            resolve({
-              loader: m.loader,
-              done: () => resolve2(m.loader),
-            });
-          });
-        });
-      }
+      });
     } else {
-      resolve({
-        loader: window.ms_globals.monacoLoader,
+      window.ms_globals.monacoLoaderPromise = new Promise((resolve2) => {
+        resolve({
+          loader: window.ms_globals.monacoLoader,
+          done: () => {
+            resolve2();
+          },
+        });
       });
     }
   });
