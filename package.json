@@ -1,6 +1,6 @@
 {
   "name": "modelscope_studio",
-  "version": "1.5.2",
+  "version": "1.6.0",
   "private": true,
   "description": "ModelScope Gradio Components",
   "repository": "git@github.com:modelscope/modelscope-studio.git",

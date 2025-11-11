@@ -1,5 +1,9 @@
 # @modelscope-studio/legacy-compiled
 
+## 1.6.0
+
+No significant changes to this package were made in this release.
+
 ## 1.5.2
 
 ### Features

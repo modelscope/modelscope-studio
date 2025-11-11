@@ -1,5 +1,11 @@
 # @modelscope-studio/pro
 
+## 1.6.0
+
+### Features
+
+- [#112](https://github.com/modelscope/modelscope-studio/pull/112) [`6158f88`](https://github.com/modelscope/modelscope-studio/commit/6158f88ce0f97436e35054689d5bd2dc8c8c509a) - add pro component `MonacoEditor`. Thanks [@Col0ring](https://github.com/Col0ring)!
+
 ## 1.5.2
 
 No significant changes to this package were made in this release.
