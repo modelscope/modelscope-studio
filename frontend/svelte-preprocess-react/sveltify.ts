@@ -87,6 +87,13 @@ export function sveltify<P, const S extends readonly string[] = []>(
   }
 
   return new Promise((resolve) => {
+    if (!window.ms_globals.initializePromise) {
+      window.ms_globals.initializePromise = new Promise((r) => {
+        window.ms_globals.initialize = () => {
+          r();
+        };
+      });
+    }
     window.ms_globals.initializePromise.then(() => {
       resolve(Sveltified as any);
     });

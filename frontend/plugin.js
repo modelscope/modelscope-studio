@@ -3,7 +3,7 @@ import fg from 'fast-glob';
 import path from 'node:path';
 import url from 'node:url';
 
-const globals = {
+const baseGlobals = {
   react: 'window.ms_globals.React',
   'react-dom': 'window.ms_globals.ReactDOM',
   'react-dom/client': 'window.ms_globals.ReactDOMClient',
@@ -15,6 +15,7 @@ const globals = {
   dayjs: 'window.ms_globals.dayjs',
   '@utils/createItemsContext': 'window.ms_globals.createItemsContext',
   '@globals/components': 'window.ms_globals.components',
+  '@monaco-editor/loader': 'window.ms_globals.monacoLoader',
 };
 
 const dirname = path.dirname(url.fileURLToPath(import.meta.url));
@@ -46,9 +47,17 @@ function generateSveltePreprocessReactAliases() {
 }
 
 /**
- * @type {(options:{ external?:boolean }) => import('vite').Plugin}
+ * @type {(options:{ external?: { excludes:string[] } | boolean }) => import('vite').Plugin}
  */
 export const ModelScopeStudioVitePlugin = ({ external = true } = {}) => {
+  const globals = external?.excludes
+    ? Object.keys(baseGlobals).reduce((aliases, name) => {
+        if (!external.excludes.includes(name)) {
+          aliases[name] = baseGlobals[name];
+        }
+        return aliases;
+      }, {})
+    : baseGlobals;
   return {
     name: 'modelscope-studio-vite-plugin',
     config(userConfig, { command }) {

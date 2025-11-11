@@ -1,3 +1,5 @@
+import type { loader as monacoLoader } from '@monaco-editor/react';
+import { loader } from '@monaco-editor/react';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import ReactDOMClient from 'react-dom/client';
@@ -8,6 +10,7 @@ import * as globalComponents from '@globals/components';
 import * as createItemsContext from '@utils/createItemsContext';
 import * as antd from 'antd';
 import dayjs from 'dayjs';
+import { noop } from 'lodash-es';
 import { type Readable, type Writable, writable } from 'svelte/store';
 
 import './events-polyfills';
@@ -31,7 +34,7 @@ declare global {
       antdIcons: typeof antdIcons;
       dayjs: typeof dayjs;
       internalContext: typeof internalContext;
-      initializePromise: Promise<void>;
+      initializePromise: Promise<void> | null;
       initialize: () => void;
       tickPromise: Promise<void> | null;
       // svelte-preprocess-react
@@ -39,6 +42,8 @@ declare global {
       tree: TreeNode;
       autokey: number;
       loadingKey: number;
+      monacoLoader: typeof monacoLoader | null;
+      monacoLoaderPromise: Promise<void> | null;
       rerender: (props: BridgeProps) => void;
       // render items
       createItemsContext: typeof createItemsContext;
@@ -68,8 +73,12 @@ const rerender = (props: BridgeProps) => {
 };
 
 window.ms_globals ??= {} as typeof window.ms_globals;
+
 window.ms_globals = {
-  ...window.ms_globals,
+  dispatch: noop,
+  initialize: noop,
+  tickPromise: null,
+  initializePromise: null,
   React,
   ReactDOM,
   ReactDOMClient,
@@ -95,10 +104,13 @@ window.ms_globals = {
     nodes: [],
   },
   rerender,
+  monacoLoader: loader,
+  monacoLoaderPromise: null,
   // render items
   createItemsContext,
   itemsContexts: {},
   components: globalComponents,
+  ...(window.ms_globals as Partial<typeof window.ms_globals>),
 };
 // register custom elements
 customElements.define('react-portal-target', class extends HTMLElement {});

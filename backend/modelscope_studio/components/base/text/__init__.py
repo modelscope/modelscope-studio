@@ -27,14 +27,14 @@ class ModelScopeText(ModelScopeComponent):
             elem_style: dict | None = None,
             render: bool = True,
             **kwargs):
-        super().__init__(visible=visible,
+        super().__init__(value=value,
+                         visible=visible,
                          elem_id=elem_id,
                          elem_classes=elem_classes,
                          render=render,
                          as_item=as_item,
                          elem_style=elem_style,
                          **kwargs)
-        self.value = value
 
     FRONTEND_DIR = resolve_frontend_dir("text", type="base")
 

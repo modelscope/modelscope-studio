@@ -230,6 +230,8 @@ artifacts = [
   "/backend/modelscope_studio/components/pro/multimodal_input/templates",
   "/backend/modelscope_studio/components/pro/web_sandbox/templates",
   "/backend/modelscope_studio/components/antd/statistic/timer/templates",
+  "/backend/modelscope_studio/components/pro/monaco_editor/templates",
+  "/backend/modelscope_studio/components/pro/monaco_editor/diff_editor/templates",
 ]
 
 [tool.yapfignore]
