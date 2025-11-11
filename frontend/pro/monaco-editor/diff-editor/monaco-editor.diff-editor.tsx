@@ -5,10 +5,13 @@ import {
 } from '@monaco-editor/react';
 import { ReactSlot } from '@svelte-preprocess-react/react-slot';
 import { sveltify } from '@svelte-preprocess-react/sveltify';
-import React, { useEffect } from 'react';
+import React, { useEffect, useMemo, useRef } from 'react';
 import { useFunction } from '@utils/hooks/useFunction';
 import { Spin } from 'antd';
+import { isNumber } from 'lodash-es';
 import type { editor, IDisposable } from 'monaco-editor';
+
+import { useValueChange } from '../useValueChange';
 
 import '../monaco-editor.less';
 
@@ -16,6 +19,7 @@ export interface MonacoDiffEditorProps extends DiffEditorProps {
   themeMode?: string;
   height?: string | number;
   children?: React.ReactNode;
+  readOnly?: boolean;
   value?: string;
   onValueChange: (value: string | undefined) => void;
   onChange?: (
@@ -24,6 +28,7 @@ export interface MonacoDiffEditorProps extends DiffEditorProps {
   ) => void;
   onValidate?: OnValidate;
   afterMount?: DiffEditorProps['onMount'];
+  line?: number;
 }
 
 export const MonacoDiffEditor = sveltify<MonacoDiffEditorProps, ['loading']>(
@@ -40,22 +45,35 @@ export const MonacoDiffEditor = sveltify<MonacoDiffEditorProps, ['loading']>(
     onChange,
     onValueChange,
     onValidate,
-    value,
+    value: valueProp,
     modified,
+    options,
+    readOnly,
+    line,
     ...props
   }) => {
     const beforeMountFunction = useFunction(beforeMount);
     const afterMountFunction = useFunction(afterMount);
-    const disposablesRef = React.useRef<IDisposable[]>([]);
-
+    const disposablesRef = useRef<IDisposable[]>([]);
+    const editorRef = useRef<editor.IStandaloneDiffEditor | null>(null);
+    const [isEditorReady, setIsEditorReady] = React.useState(false);
+    const [value, setValue] = useValueChange({
+      onValueChange,
+      value: valueProp,
+    });
     const handleEditorMount: MonacoDiffEditorProps['onMount'] = (
       editor,
       monaco
     ) => {
+      editorRef.current = editor;
+      if (isNumber(line)) {
+        editor.revealLine(line);
+      }
+      setIsEditorReady(true);
       const modifiedEditor = editor.getModifiedEditor();
       const mountDisposable = modifiedEditor.onDidChangeModelContent((e) => {
         const newValue = modifiedEditor.getValue();
-        onValueChange(newValue);
+        setValue(newValue);
         onChange?.(newValue, e);
       });
 
@@ -84,6 +102,13 @@ export const MonacoDiffEditor = sveltify<MonacoDiffEditorProps, ['loading']>(
         });
       };
     }, []);
+
+    useEffect(() => {
+      if (isEditorReady && isNumber(line)) {
+        editorRef.current?.revealLine(line);
+      }
+    }, [line, isEditorReady]);
+
     return (
       <>
         <div style={{ display: 'none' }}>{children}</div>
@@ -96,6 +121,13 @@ export const MonacoDiffEditor = sveltify<MonacoDiffEditorProps, ['loading']>(
         >
           <DiffEditor
             {...props}
+            options={useMemo(
+              () => ({
+                readOnly,
+                ...(options || {}),
+              }),
+              [options, readOnly]
+            )}
             modified={value || modified}
             beforeMount={beforeMountFunction}
             onMount={(editor, monaco) => {
@@ -107,14 +139,12 @@ export const MonacoDiffEditor = sveltify<MonacoDiffEditorProps, ['loading']>(
               slots.loading ? (
                 <ReactSlot slot={slots.loading} />
               ) : (
-                props.loading || (
-                  <Spin
-                    tip="Editor is Loading..."
-                    wrapperClassName="ms-gr-pro-monaco-editor-spin"
-                  >
-                    <div />
-                  </Spin>
-                )
+                <Spin
+                  tip={props.loading}
+                  wrapperClassName="ms-gr-pro-monaco-editor-spin"
+                >
+                  <div />
+                </Spin>
               )
             }
             theme={themeMode === 'dark' ? 'vs-dark' : 'light'}

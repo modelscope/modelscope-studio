@@ -1,15 +1,18 @@
 import { Editor, type EditorProps } from '@monaco-editor/react';
 import { ReactSlot } from '@svelte-preprocess-react/react-slot';
 import { sveltify } from '@svelte-preprocess-react/sveltify';
-import React from 'react';
+import React, { useMemo } from 'react';
 import { useFunction } from '@utils/hooks/useFunction';
 import { Spin } from 'antd';
+
+import { useValueChange } from './useValueChange';
 
 import './monaco-editor.less';
 
 export interface MonacoEditorProps extends EditorProps {
   themeMode?: string;
   height?: string | number;
+  readOnly?: boolean;
   onValueChange: (value: string | undefined) => void;
   children?: React.ReactNode;
   afterMount?: EditorProps['onMount'];
@@ -18,7 +21,7 @@ export interface MonacoEditorProps extends EditorProps {
 export const MonacoEditor = sveltify<MonacoEditorProps, ['loading']>(
   ({
     height,
-    value,
+    value: valueProp,
     className,
     style,
     themeMode,
@@ -29,10 +32,16 @@ export const MonacoEditor = sveltify<MonacoEditorProps, ['loading']>(
     afterMount,
     children,
     onMount,
+    options,
+    readOnly,
     ...props
   }) => {
     const beforeMountFunction = useFunction(beforeMount);
     const afterMountFunction = useFunction(afterMount);
+    const [value, setValue] = useValueChange({
+      onValueChange,
+      value: valueProp,
+    });
 
     return (
       <>
@@ -52,22 +61,27 @@ export const MonacoEditor = sveltify<MonacoEditorProps, ['loading']>(
               onMount?.(...args);
               afterMountFunction?.(...args);
             }}
+            options={useMemo(
+              () => ({
+                readOnly,
+                ...(options || {}),
+              }),
+              [options, readOnly]
+            )}
             loading={
               slots.loading ? (
                 <ReactSlot slot={slots.loading} />
               ) : (
-                props.loading || (
-                  <Spin
-                    tip="Editor is Loading..."
-                    wrapperClassName="ms-gr-pro-monaco-editor-spin"
-                  >
-                    <div />
-                  </Spin>
-                )
+                <Spin
+                  tip={props.loading}
+                  wrapperClassName="ms-gr-pro-monaco-editor-spin"
+                >
+                  <div />
+                </Spin>
               )
             }
             onChange={(v, ev) => {
-              onValueChange(v);
+              setValue(v);
               onChange?.(v, ev);
             }}
             theme={themeMode === 'dark' ? 'vs-dark' : 'light'}
