@@ -1,5 +1,5 @@
 {
-  "name": "@modelscope-studio/monaco-editor",
+  "name": "@modelscope-studio/pro-monaco-editor",
   "type": "module",
   "exports": {
     ".": {

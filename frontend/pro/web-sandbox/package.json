@@ -1,5 +1,5 @@
 {
-  "name": "@modelscope-studio/web-sandbox",
+  "name": "@modelscope-studio/pro-web-sandbox",
   "type": "module",
   "exports": {
     ".": {
