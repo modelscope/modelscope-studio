@@ -52,7 +52,6 @@ When `template` is set to `react`, the following dependencies will be automatica
 | `pro.WebSandbox.compile_success(fn, ···)` | Triggered when Sandbox compilation succeeds.                                                                               |
 | `pro.WebSandbox.compile_error(fn, ···)`   | Triggered when Sandbox compilation fails.                                                                                  |
 | `pro.WebSandbox.render_error(fn, ···)`    | Triggered when Sandbox rendering throws an error.                                                                          |
-| `pro.WebSandbox.render_error(fn, ···)`    | Triggered when Sandbox rendering throws an error.                                                                          |
 | `pro.WebSandbox.custom(fn, ···)`          | Custom events triggered within the Sandbox are invoked via JavaScript when `window.dispatch` is called within the Sandbox. |
 
 ### Slots
