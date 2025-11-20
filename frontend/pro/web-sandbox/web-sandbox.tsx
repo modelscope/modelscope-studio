@@ -28,6 +28,7 @@ export interface WebSandboxProps {
   onCompileError?: (message: string) => void;
   onCompileSuccess?: () => void;
   onRenderError?: (message: string) => void;
+  onCustom?: (...args: any[]) => void;
   height?: string | number;
   themeMode: string;
   setSlotParams: SetSlotParams;
@@ -53,6 +54,7 @@ export const WebSandbox = sveltify<WebSandboxProps, ['compileErrorRender']>(
     onRenderError,
     onCompileSuccess,
     compileErrorRender,
+    onCustom,
   }) => {
     const iframeRef = React.useRef<HTMLIFrameElement>(null);
     const divRef = React.useRef<HTMLDivElement>(null);
@@ -75,6 +77,7 @@ export const WebSandbox = sveltify<WebSandboxProps, ['compileErrorRender']>(
     const onCompileErrorMemoized = useMemoizedFn(onCompileError);
     const onRenderErrorMemoized = useMemoizedFn(onRenderError);
     const onCompileSuccessMemoized = useMemoizedFn(onCompileSuccess);
+    const onCustomMemoized = useMemoizedFn(onCustom);
 
     // Build import map (only includes third-party dependencies)
     const resolvedImportMap = useMemo(() => {
@@ -248,6 +251,8 @@ export const WebSandbox = sveltify<WebSandboxProps, ['compileErrorRender']>(
           try {
             // Inject theme
             (iframeRef.current.contentWindow as any).gradio_theme = themeMode;
+            (iframeRef.current.contentWindow as any).dispatch =
+              onCustomMemoized;
           } catch {
             //
           }
@@ -288,6 +293,7 @@ export const WebSandbox = sveltify<WebSandboxProps, ['compileErrorRender']>(
       iframeUrl,
       notificationApi,
       onCompileSuccessMemoized,
+      onCustomMemoized,
       onRenderErrorMemoized,
       showRenderError,
       themeMode,

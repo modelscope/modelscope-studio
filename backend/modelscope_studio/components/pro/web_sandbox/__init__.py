@@ -26,6 +26,9 @@ class ModelScopeProWebSandbox(ModelScopeLayoutComponent):
         EventListener("render_error",
                       callback=lambda block: block._internal.update(
                           bind_renderError_event=True)),
+        EventListener("custom",
+                      callback=lambda block: block._internal.update(
+                          bind_custom_event=True)),
     ]
 
     # supported slots

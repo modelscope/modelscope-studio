@@ -23,6 +23,10 @@ When `template` is set to `react`, the following dependencies will be automatica
 
 <demo name="html"></demo>
 
+### Custom Sandbox Event
+
+<demo name="custom_sandbox_event"></demo>
+
 ### Error Handling
 
 <demo name="error_handling"></demo>
@@ -43,11 +47,12 @@ When `template` is set to `react`, the following dependencies will be automatica
 
 ### Events
 
-| Event                                     | Description                                       |
-| ----------------------------------------- | ------------------------------------------------- |
-| `pro.WebSandbox.compile_success(fn, ···)` | Triggered when Sandbox compilation succeeds.      |
-| `pro.WebSandbox.compile_error(fn, ···)`   | Triggered when Sandbox compilation fails.         |
-| `pro.WebSandbox.render_error(fn, ···)`    | Triggered when Sandbox rendering throws an error. |
+| Event                                     | Description                                                                                                                |
+| ----------------------------------------- | -------------------------------------------------------------------------------------------------------------------------- |
+| `pro.WebSandbox.compile_success(fn, ···)` | Triggered when Sandbox compilation succeeds.                                                                               |
+| `pro.WebSandbox.compile_error(fn, ···)`   | Triggered when Sandbox compilation fails.                                                                                  |
+| `pro.WebSandbox.render_error(fn, ···)`    | Triggered when Sandbox rendering throws an error.                                                                          |
+| `pro.WebSandbox.custom(fn, ···)`          | Custom events triggered within the Sandbox are invoked via JavaScript when `window.dispatch` is called within the Sandbox. |
 
 ### Slots
 

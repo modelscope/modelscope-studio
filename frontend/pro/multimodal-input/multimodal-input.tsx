@@ -392,9 +392,13 @@ export const MultimodalInput = sveltify<
                     ...uploadConfig?.imageProps,
                   }}
                   disabled={uploadDisabled}
-                  getDropContainer={() => {
-                    return uploadConfig?.fullscreenDrop ? document.body : null;
-                  }}
+                  getDropContainer={
+                    uploadConfig?.fullscreenDrop
+                      ? () => {
+                          return document.body;
+                        }
+                      : undefined
+                  }
                   items={validFileList}
                   placeholder={(type) => {
                     const isDrop = type === 'drop';
