@@ -1,3 +1,3 @@
 gradio==5.34.1
-modelscope_studio==1.6.0
+modelscope_studio==1.6.1
 openai

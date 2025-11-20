@@ -1,5 +1,15 @@
 # modelscope_studio
 
+## 1.6.1
+
+### Features
+
+- [#113](https://github.com/modelscope/modelscope-studio/pull/113) [`5371a56`](https://github.com/modelscope/modelscope-studio/commit/5371a56456d5b0c985689eef6e52a426a7a26fd3) - add `custom` event to allow sending notifications from sandbox to Python. Thanks [@Col0ring](https://github.com/Col0ring)!
+
+### Fixes
+
+- [#113](https://github.com/modelscope/modelscope-studio/pull/113) [`5371a56`](https://github.com/modelscope/modelscope-studio/commit/5371a56456d5b0c985689eef6e52a426a7a26fd3) - drop container of MulimodalInput. Thanks [@Col0ring](https://github.com/Col0ring)!
+
 ## 1.6.0
 
 ### Features
