@@ -23,6 +23,10 @@
 
 <demo name="html"></demo>
 
+### 自定义 Sandbox 事件
+
+<demo name="custom_sandbox_event"></demo>
+
 ### 处理错误
 
 <demo name="error_handling"></demo>
@@ -43,11 +47,12 @@
 
 ### 事件
 
-| 事件                                      | 描述                        |
-| ----------------------------------------- | --------------------------- |
-| `pro.WebSandbox.compile_success(fn, ···)` | 当 Sandbox 编译成功时触发。 |
-| `pro.WebSandbox.compile_error(fn, ···)`   | 当 Sandbox 编译失败时触发。 |
-| `pro.WebSandbox.render_error(fn, ···)`    | 当 Sandbox 渲染抛错时触发。 |
+| 事件                                      | 描述                                                                                        |
+| ----------------------------------------- | ------------------------------------------------------------------------------------------- |
+| `pro.WebSandbox.compile_success(fn, ···)` | 当 Sandbox 编译成功时触发。                                                                 |
+| `pro.WebSandbox.compile_error(fn, ···)`   | 当 Sandbox 编译失败时触发。                                                                 |
+| `pro.WebSandbox.render_error(fn, ···)`    | 当 Sandbox 渲染抛错时触发。                                                                 |
+| `pro.WebSandbox.custom(fn, ···)`          | 在 Sandbox 内触发的自定义事件，在 Sandbox 内通过 JavaScript 调用 `window.dispatch` 时触发。 |
 
 ### 插槽
 
