@@ -1,31 +1,37 @@
-<svelte:options accessors={true} />
-
 <script lang="ts">
   import { importComponent } from '@svelte-preprocess-react/component';
   // import { getSetSlotContextFn } from '@svelte-preprocess-react/slot';
   import { merge } from 'lodash-es';
 
   import Fragment from '../fragment/Index.svelte';
+  import type { Snippet } from 'svelte';
 
   const AwaitedEachItem = importComponent(() => import('./each.item'));
-  export let context_value: Record<PropertyKey, any>;
-  export let index: number;
-  export let subIndex: number;
-  export let value: Record<PropertyKey, any>;
-  // const setSlotContext = getSetSlotContextFn();
+  const {
+    context_value,
+    index,
+    subIndex,
+    value,
+    children,
+  }: {
+    context_value: Record<PropertyKey, any>;
+    index: number;
+    subIndex: number;
+    value: Record<PropertyKey, any>;
+    children: Snippet;
+  } = $props();
 
-  $: resolved_value =
-    typeof value !== 'object' || Array.isArray(value) ? { value } : value;
-  $: merged_value = merge({}, context_value, resolved_value);
-  // use lodash to deep merge
-  // setSlotContext(merged_value);
-  // $: setSlotContext(merged_value);
+  const resolved_value = $derived(
+    typeof value !== 'object' || Array.isArray(value) ? { value } : value
+  );
+
+  const merged_value = $derived(merge({}, context_value, resolved_value));
 </script>
 
 <Fragment _internal={{ index, subIndex: index + subIndex }}>
   {#await AwaitedEachItem then EachItem}
     <EachItem __internal_value={merged_value} slots={{}}>
-      <slot />
+      {@render children()}
     </EachItem>
   {/await}
 </Fragment>

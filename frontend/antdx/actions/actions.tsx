@@ -1,7 +1,7 @@
 import { sveltify } from '@svelte-preprocess-react';
 import React, { useMemo } from 'react';
 import { Actions as XActions, type ActionsProps } from '@ant-design/x';
-import type { ActionItem } from '@ant-design/x/es/actions/interface';
+import type { ItemType } from '@ant-design/x/es/actions/interface';
 import { renderItems } from '@utils/renderItems';
 import classNames from 'classnames';
 
@@ -24,7 +24,7 @@ export const Actions = sveltify<Partial<ActionsProps>>(
             items={useMemo(() => {
               return (
                 items ||
-                renderItems<ActionItem>(resolvedSlotItems, {
+                renderItems<ItemType>(resolvedSlotItems, {
                   clone: true,
                 }) ||
                 []

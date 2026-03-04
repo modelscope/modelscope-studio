@@ -11,7 +11,7 @@
   const AwaitedButton = importComponent(() => import('./button'));
 
   const props = $props();
-  const { gradio, getComponentProps, getAdditionalProps, children } = getProps<{
+  const { getComponentProps, getAdditionalProps, children } = getProps<{
     additional_props: Record<string, any>;
     value: string | undefined;
     elem_style: React.CSSProperties;
@@ -36,7 +36,6 @@
       } = getComponentProps();
       return {
         additionalProps: getAdditionalProps(),
-        gradio,
         _internal,
         as_item,
         restProps,

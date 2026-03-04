@@ -8,7 +8,7 @@
   import { createFunction } from '@utils/createFunction';
 
   const props = $props();
-  const { gradio, getComponentProps, getAdditionalProps, children } = getProps<{
+  const { getComponentProps, getAdditionalProps, children } = getProps<{
     value: string;
     visible: boolean;
     params_mapping: string;
@@ -20,7 +20,6 @@
     const { value, visible, as_item, _internal, params_mapping } =
       getComponentProps();
     return {
-      gradio,
       restProps: {},
       additionalProps: getAdditionalProps(),
       value,

@@ -1,8 +1,8 @@
 <script lang="ts">
   import {
+    getProps,
     importComponent,
     processProps,
-    getProps,
   } from '@svelte-preprocess-react/component';
   import type React from 'react';
   import cls from 'classnames';
@@ -10,7 +10,7 @@
   const AwaitedDiv = importComponent(() => import('./div'));
   const props = $props();
 
-  const { gradio, getComponentProps, getAdditionalProps, children } = getProps<{
+  const { getComponentProps, getAdditionalProps, children } = getProps<{
     value: string;
     elem_style: React.CSSProperties;
     additional_props: Record<string, any>;
@@ -32,7 +32,6 @@
     } = getComponentProps();
     return {
       additionalProps: getAdditionalProps(),
-      gradio,
       _internal,
       as_item,
       restProps,

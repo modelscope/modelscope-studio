@@ -219,9 +219,9 @@ export function processProps<
   T extends {
     as_item: string | undefined;
     _internal: Record<string, any>;
-    additionalProps: Record<string, any>;
+    additionalProps?: Record<string, any>;
     restProps: Record<string, any>;
-    gradio: Gradio<Record<PropertyKey, any>>;
+    gradio?: Gradio<Record<PropertyKey, any>>;
   },
 >(
   getProps: () => T,

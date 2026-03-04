@@ -1,7 +1,7 @@
 <script lang="ts">
   import {
-    importComponent,
     getProps,
+    importComponent,
     processProps,
   } from '@svelte-preprocess-react/component';
 
@@ -9,7 +9,7 @@
     () => import('./iconfont-provider')
   );
   const props = $props();
-  const { gradio, getComponentProps, getAdditionalProps, children } = getProps<{
+  const { getComponentProps, getAdditionalProps, children } = getProps<{
     additionalProps: Record<string, any>;
   }>(() => props);
 
@@ -25,7 +25,6 @@
     } = getComponentProps();
     return {
       additionalProps: getAdditionalProps(),
-      gradio,
       _internal,
       as_item,
       restProps,

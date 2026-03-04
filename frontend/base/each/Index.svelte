@@ -1,13 +1,11 @@
-<svelte:options accessors={true} />
-
 <script lang="ts">
   import {
-    importComponent,
     getProps,
+    importComponent,
     processProps,
   } from '@svelte-preprocess-react/component';
-  import { getSlotKey } from '@svelte-preprocess-react/svelte-contexts/slot.svelte';
   import { getSubIndex } from '@svelte-preprocess-react/svelte-contexts/each.svelte';
+  import { getSlotKey } from '@svelte-preprocess-react/svelte-contexts/slot.svelte';
 
   import EachItem from './EachItem.svelte';
 
@@ -15,51 +13,62 @@
   const AwaitedEachPlaceholder = importComponent(
     () => import('./each.placeholder')
   );
-  export let context_value: Record<PropertyKey, any>;
-  export let value: Record<PropertyKey, any>[] = [];
-  export let as_item: string | undefined;
-  // gradio properties
-  export let visible = true;
-  export let _internal: {
-    index?: number;
-  } = {};
+  const props = $props();
+  const { getComponentProps, children } = getProps<{
+    context_value: Record<PropertyKey, any> | undefined;
+    value: Record<PropertyKey, any>[] | undefined;
+    _internal: {
+      index?: number;
+    };
+  }>(() => props);
+
   // if ms.Each inside ms.Each
   const subIndex = getSubIndex();
   const slotKey = getSlotKey();
-  const [mergedProps, update] = getSlotContext(
-    {
-      _internal,
-      value,
-      as_item,
-      visible,
-      restProps: $$restProps,
-      context_value,
+
+  const getProceedProps = processProps(
+    () => {
+      const {
+        visible,
+        _internal,
+        value,
+        as_item,
+        elem_classes,
+        elem_id,
+        elem_style,
+        context_value,
+        ...restProps
+      } = getComponentProps();
+      return {
+        _internal,
+        as_item,
+        value,
+        visible,
+        elem_id,
+        elem_classes,
+        elem_style,
+        context_value,
+        restProps,
+      };
     },
     undefined,
-    {
-      shouldResetSlotKey: false,
-    }
+    { shouldResetSlotKey: false }
   );
-  $: update({
-    _internal,
-    value,
-    as_item,
-    visible,
-    restProps: $$restProps,
-    context_value,
-  });
-  let merged_value: typeof value = [];
-  let merged_context_value: typeof context_value;
-  let force_clone = false;
+
+  const proceedProps = $derived(getProceedProps());
+
+  let merged_value: typeof proceedProps.value = $state([]);
+  let merged_context_value: typeof proceedProps.context_value = $state({});
+  let force_clone = $state(false);
 </script>
 
-{#if $mergedProps.visible}
+{#if proceedProps.visible}
   {#await AwaitedEachPlaceholder then EachPlaceholder}
     <EachPlaceholder
-      value={$mergedProps.value}
-      contextValue={$mergedProps.context_value}
+      value={proceedProps.value}
+      contextValue={proceedProps.context_value}
       slots={{}}
-      {...$mergedProps.restProps}
+      {...proceedProps.restProps}
       onChange={(props) => {
         merged_value = props.value || [];
         merged_context_value = props.contextValue || {};
@@ -69,24 +78,24 @@
     {#if force_clone}
       {#await AwaitedEach then Each}
         <Each
-          {...$mergedProps.restProps}
-          contextValue={$mergedProps.context_value}
-          value={$mergedProps.value}
-          __internal_slot_key={$slotKey}
+          {...proceedProps.restProps}
+          contextValue={proceedProps.context_value}
+          value={proceedProps.value}
+          __internal_slot_key={slotKey?.value}
           slots={{}}
         >
-          <slot />
+          {@render children()}
         </Each>
       {/await}
     {:else}
       {#each merged_value as item, i (i)}
         <EachItem
-          context_value={merged_context_value}
+          context_value={merged_context_value || {}}
           value={item}
-          index={($mergedProps._internal.index || 0) + (subIndex || 0)}
-          subIndex={(subIndex || 0) + i}
+          index={(proceedProps._internal.index || 0) + (subIndex || 0)}
+          subIndex={(subIndex?.value || 0) + i}
         >
-          <slot />
+          {@render children()}
         </EachItem>
       {/each}
     {/if}

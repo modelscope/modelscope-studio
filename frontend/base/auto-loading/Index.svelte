@@ -12,7 +12,7 @@
   const AwaitedAutoLoading = importComponent(() => import('./auto-loading'));
   const props = $props();
 
-  const { gradio, getComponentProps, getAdditionalProps, children } = getProps<{
+  const { getComponentProps, getAdditionalProps, children } = getProps<{
     additionalProps: Record<string, any>;
     generating: boolean;
     showError: boolean;
@@ -33,7 +33,6 @@
       } = getComponentProps();
       return {
         additionalProps: getAdditionalProps(),
-        gradio,
         restProps,
         _internal,
         as_item,

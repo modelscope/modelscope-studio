@@ -1,8 +1,8 @@
 <svelte:options />
 
 <script lang="ts">
-  import type React from 'react';
   import { getProps } from '@svelte-preprocess-react/component';
+  import type React from 'react';
   import { styleObject2String } from '@utils/style';
   import cls from 'classnames';
   import { onDestroy, onMount } from 'svelte';
