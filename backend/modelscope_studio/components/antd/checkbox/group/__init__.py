@@ -29,7 +29,7 @@ class AntdCheckboxGroup(ModelScopeDataLayoutComponent):
     def __init__(
             self,
             value: list[str | int | float | bool] | None = None,
-            props: dict | None = None,
+            additional_props: dict | None = None,
             *,
             default_value: list[str | int | float | bool] | None = None,
             disabled: bool | None = None,
@@ -52,7 +52,7 @@ class AntdCheckboxGroup(ModelScopeDataLayoutComponent):
                          as_item=as_item,
                          elem_style=elem_style,
                          **kwargs)
-        self.props = props
+        self.additional_props = additional_props
         self.default_value = default_value
         self.disabled = disabled
         self.options = options

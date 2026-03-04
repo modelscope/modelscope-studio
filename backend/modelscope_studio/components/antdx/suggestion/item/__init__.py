@@ -19,7 +19,7 @@ class AntdXSuggestionItem(ModelScopeLayoutComponent):
             self,
             value: str | None = None,
             label: str | None = None,
-            props: dict | None = None,
+            additional_props: dict | None = None,
             *,
             key: str | None = None,
             extra: str | None = None,
@@ -40,7 +40,7 @@ class AntdXSuggestionItem(ModelScopeLayoutComponent):
                          as_item=as_item,
                          elem_style=elem_style,
                          **kwargs)
-        self.props = props
+        self.additional_props = additional_props
         self.label = label
         self.extra = extra
         self.icon = icon

@@ -28,7 +28,7 @@ class AntdCascaderPanel(ModelScopeDataLayoutComponent):
     def __init__(
             self,
             value: list[str] | list[int | float] | None = None,
-            props: dict | None = None,
+            additional_props: dict | None = None,
             *,
             change_on_select: bool | None = None,
             default_value: str | None = None,
@@ -58,7 +58,7 @@ class AntdCascaderPanel(ModelScopeDataLayoutComponent):
                          as_item=as_item,
                          elem_style=elem_style,
                          **kwargs)
-        self.props = props
+        self.additional_props = additional_props
         self.change_on_select = change_on_select
         self.default_value = default_value
         self.expand_icon = expand_icon

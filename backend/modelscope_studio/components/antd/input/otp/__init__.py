@@ -27,7 +27,7 @@ class AntdInputOTP(ModelScopeDataLayoutComponent):
     def __init__(
             self,
             value: str | None = None,
-            props: dict | None = None,
+            additional_props: dict | None = None,
             *,
             default_value: str | None = None,
             disabled: bool | None = None,
@@ -59,7 +59,7 @@ class AntdInputOTP(ModelScopeDataLayoutComponent):
                          as_item=as_item,
                          elem_style=elem_style,
                          **kwargs)
-        self.props = props
+        self.additional_props = additional_props
         self.default_value = default_value
         self.separator = separator
         self.disabled = disabled

@@ -30,7 +30,7 @@ class AntdInputTextarea(ModelScopeDataLayoutComponent):
     def __init__(
             self,
             value: str | None = None,
-            props: dict | None = None,
+            additional_props: dict | None = None,
             *,
             auto_size: bool | dict | None = None,
             allow_clear: bool | dict | None = None,
@@ -66,7 +66,7 @@ class AntdInputTextarea(ModelScopeDataLayoutComponent):
                          as_item=as_item,
                          elem_style=elem_style,
                          **kwargs)
-        self.props = props
+        self.additional_props = additional_props
         self.auto_size = auto_size
         self.allow_clear = allow_clear
         self.class_names = class_names

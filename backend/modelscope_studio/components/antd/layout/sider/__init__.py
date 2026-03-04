@@ -42,7 +42,7 @@ class AntdLayoutSider(ModelScopeLayoutComponent):
 
     def __init__(
             self,
-            props: dict | None = None,
+            additional_props: dict | None = None,
             *,
             breakpoint: Literal['xs', 'sm', 'md', 'lg', 'xl', 'xxl']
         | None = None,
@@ -84,7 +84,7 @@ class AntdLayoutSider(ModelScopeLayoutComponent):
                          as_item=as_item,
                          elem_style=elem_style,
                          **kwargs)
-        self.props = props
+        self.additional_props = additional_props
         self.breakpoint = breakpoint
         self.collapsed = collapsed
         self.collapsed_width = collapsed_width

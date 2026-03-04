@@ -1,4 +1,3 @@
-import { type Snippet, untrack } from 'svelte';
 import {
   getSubIndex,
   setSubIndex,
@@ -10,10 +9,12 @@ import {
   resetSlotKey,
   setComponentSlotValue,
 } from '@svelte-preprocess-react/svelte-contexts/slot.svelte';
+import type React from 'react';
 import { SvelteSet } from 'svelte/reactivity';
 import { Gradio, type SharedProps } from '@gradio/utils';
 import { convertToCamelCase } from '@utils/convertToCamelCase';
 import { isPlainObject, mapKeys, omit } from 'lodash-es';
+import { type Snippet, untrack } from 'svelte';
 
 const skippedGradioProps = [
   'interactive',
@@ -224,14 +225,14 @@ export function processProps<
     gradio?: Gradio<Record<PropertyKey, any>>;
   },
 >(
-  getProps: () => T,
+  getPlainProps: () => T,
   restPropsMapping?: Partial<Record<keyof T['restProps'], string>>,
   options?: {
     shouldSetLoadingStatus?: boolean;
     shouldResetSlotKey?: boolean;
   }
 ) {
-  const props = $derived(getProps());
+  const props = $derived(getPlainProps());
   const shouldResetSlotKey = options?.shouldResetSlotKey ?? true;
   const shouldSetLoadingStatus = options?.shouldSetLoadingStatus ?? true;
 
@@ -343,7 +344,7 @@ export function getProps<
           | string
           | string[]
           | undefined,
-        elem_style: gradio.props.elem_style,
+        elem_style: gradio.props.elem_style as React.CSSProperties,
         visible: gradio.shared.visible,
         attached_events: gradio.shared.attached_events,
         as_item: gradio.props.as_item as string | undefined,
@@ -355,13 +356,13 @@ export function getProps<
     );
 
   let additionalProps = $state(
-    (() => $state.snapshot(gradio.props.additional_props))()
+    (() => $state.snapshot(gradio.props.additional_props) || {})()
   );
 
   $effect(() => {
     additionalProps = {
       ...untrack(() => $state.snapshot(additionalProps)),
-      ...gradio.props.additional_props,
+      ...(gradio.props.additional_props || {}),
     };
   });
   const getAdditionalProps = () => additionalProps;

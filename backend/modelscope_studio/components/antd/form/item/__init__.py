@@ -21,7 +21,7 @@ class AntdFormItem(ModelScopeLayoutComponent):
     def __init__(
             self,
             label: str | None = None,
-            props: dict | None = None,
+            additional_props: dict | None = None,
             *,
             form_name: str | int | float | list[str | int | float]
         | None = None,
@@ -75,7 +75,7 @@ class AntdFormItem(ModelScopeLayoutComponent):
                          **kwargs)
         self.label = label
         self.form_name = form_name
-        self.props = props
+        self.additional_props = additional_props
         self.colon = colon
         self.dependencies = dependencies
         self.extra = extra

@@ -15,7 +15,7 @@ class AntdProgress(ModelScopeComponent):
     def __init__(
             self,
             percent: int = 0,
-            props: dict | None = None,
+            additional_props: dict | None = None,
             *,
             format: str | None = None,
             show_info: bool | None = None,
@@ -54,7 +54,7 @@ class AntdProgress(ModelScopeComponent):
                          as_item=as_item,
                          elem_style=elem_style,
                          **kwargs)
-        self.props = props
+        self.additional_props = additional_props
         self.percent = percent
         self.format = format
         self.show_info = show_info

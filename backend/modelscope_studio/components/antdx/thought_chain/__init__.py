@@ -27,7 +27,7 @@ class AntdXThoughtChain(ModelScopeLayoutComponent):
 
     def __init__(
             self,
-            props: dict | None = None,
+            additional_props: dict | None = None,
             *,
             collapsible: bool | dict | None = None,
             items: list[dict] | None = None,
@@ -52,7 +52,7 @@ class AntdXThoughtChain(ModelScopeLayoutComponent):
                          as_item=as_item,
                          elem_style=elem_style,
                          **kwargs)
-        self.props = props
+        self.additional_props = additional_props
         self.collapsible = collapsible
         self.items = items
         self.size = size

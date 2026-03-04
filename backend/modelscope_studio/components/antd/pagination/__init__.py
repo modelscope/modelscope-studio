@@ -25,7 +25,7 @@ class AntdPagination(ModelScopeLayoutComponent):
 
     def __init__(
             self,
-            props: dict | None = None,
+            additional_props: dict | None = None,
             *,
             align: Literal['start', 'center', 'end'] | None = None,
             current: int | None = None,
@@ -62,7 +62,7 @@ class AntdPagination(ModelScopeLayoutComponent):
                          as_item=as_item,
                          elem_style=elem_style,
                          **kwargs)
-        self.props = props
+        self.additional_props = additional_props
         self.align = align
         self.current = current
         self.page_size = page_size

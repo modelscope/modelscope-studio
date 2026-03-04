@@ -31,7 +31,7 @@ class AntdXSuggestion(ModelScopeLayoutComponent):
 
     def __init__(
             self,
-            props: dict | None = None,
+            additional_props: dict | None = None,
             *,
             items: str | list[dict] | None = None,
             block: bool | None = None,
@@ -54,7 +54,7 @@ class AntdXSuggestion(ModelScopeLayoutComponent):
                          as_item=as_item,
                          elem_style=elem_style,
                          **kwargs)
-        self.props = props
+        self.additional_props = additional_props
         self.items = items
         self.block = block
         self.open = open

@@ -13,7 +13,7 @@ class AntdButtonGroup(ModelScopeLayoutComponent):
 
     def __init__(
             self,
-            props: dict | None = None,
+            additional_props: dict | None = None,
             *,
             size: Literal['small', 'middle', 'large'] | None = None,
             as_item: str | None = None,
@@ -32,7 +32,7 @@ class AntdButtonGroup(ModelScopeLayoutComponent):
                          as_item=as_item,
                          elem_style=elem_style,
                          **kwargs)
-        self.props = props
+        self.additional_props = additional_props
         self.size = size
 
     FRONTEND_DIR = resolve_frontend_dir("button", 'group')

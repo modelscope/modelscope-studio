@@ -56,7 +56,7 @@ class AntdSelect(ModelScopeDataLayoutComponent):
     def __init__(
             self,
             value: str | int | float | list[float | int | str] | None = None,
-            props: dict | None = None,
+            additional_props: dict | None = None,
             *,
             allow_clear: bool | dict | None = None,
             auto_clear_search_value: bool | None = None,
@@ -128,7 +128,7 @@ class AntdSelect(ModelScopeDataLayoutComponent):
                          key=key,
                          elem_style=elem_style,
                          **kwargs)
-        self.props = props
+        self.additional_props = additional_props
         self.allow_clear = allow_clear
         self.auto_clear_search_value = auto_clear_search_value
         self.auto_focus = auto_focus

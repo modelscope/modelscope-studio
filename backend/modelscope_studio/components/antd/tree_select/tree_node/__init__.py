@@ -19,7 +19,7 @@ class AntdTreeSelectTreeNode(ModelScopeLayoutComponent):
             self,
             value: str | None = None,
             title: str | None = None,
-            props: dict | None = None,
+            additional_props: dict | None = None,
             *,
             disabled: bool | None = None,
             selectable: bool = True,
@@ -51,7 +51,7 @@ class AntdTreeSelectTreeNode(ModelScopeLayoutComponent):
         self.disable_checkbox = disable_checkbox
         self.is_leaf = is_leaf
         self.key = key
-        self.props = props
+        self.additional_props = additional_props
 
     FRONTEND_DIR = resolve_frontend_dir("tree-select", "tree-node")
 

@@ -37,7 +37,7 @@ class AntdAnchor(ModelScopeLayoutComponent):
 
     def __init__(
             self,
-            props: dict | None = None,
+            additional_props: dict | None = None,
             *,
             affix: bool | dict = True,
             bounds: int | float = 5,
@@ -79,7 +79,7 @@ class AntdAnchor(ModelScopeLayoutComponent):
                          as_item=as_item,
                          elem_style=elem_style,
                          **kwargs)
-        self.props = props
+        self.additional_props = additional_props
         self.affix = affix
         self.bounds = bounds
         self.get_container = get_container

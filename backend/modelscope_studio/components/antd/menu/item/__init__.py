@@ -23,7 +23,7 @@ class AntdMenuItem(ModelScopeLayoutComponent):
     def __init__(
             self,
             label: str | None = None,
-            props: dict | None = None,
+            additional_props: dict | None = None,
             *,
             title: str | None = None,
             danger: bool | None = None,
@@ -52,7 +52,7 @@ class AntdMenuItem(ModelScopeLayoutComponent):
                          elem_style=elem_style,
                          **kwargs)
         self.label = label
-        self.props = props
+        self.additional_props = additional_props
         self.title = title
         self.danger = danger
         self.disabled = disabled

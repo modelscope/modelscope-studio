@@ -61,9 +61,9 @@ class AntdBreadcrumbItem(ModelScopeLayoutComponent):
     def __init__(
             self,
             title: str | None = None,
-            props: dict | None = None,
+            additional_props: dict | None = None,
             *,
-            dropdown_props: dict | None = None,
+            dropdown_additional_props: dict | None = None,
             href: str | None = None,
             path: str | None = None,
             menu: dict | None = None,
@@ -85,7 +85,7 @@ class AntdBreadcrumbItem(ModelScopeLayoutComponent):
                          as_item=as_item,
                          elem_style=elem_style,
                          **kwargs)
-        self.props = props
+        self.additional_props = additional_props
         self.title = title
         self.dropdown_props = dropdown_props
         self.href = href

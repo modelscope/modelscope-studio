@@ -54,7 +54,7 @@ class ModelScopeMarkdown(ModelScopeDataLayoutComponent):
     def __init__(
             self,
             value: str | None = None,
-            props: dict | None = None,
+            additional_props: dict | None = None,
             *,
             rtl: bool = False,
             latex_delimiters: list[dict[str, str | bool]] | None = None,
@@ -138,7 +138,7 @@ class ModelScopeMarkdown(ModelScopeDataLayoutComponent):
         self.allow_tags = allow_tags if allow_tags else False
         self.show_copy_button = show_copy_button
         self.copy_buttons = copy_buttons
-        self.props = props
+        self.additional_props = additional_props
 
     FRONTEND_DIR = resolve_frontend_dir("markdown", type="base")
 

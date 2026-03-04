@@ -16,7 +16,7 @@ class AntdXWelcome(ModelScopeLayoutComponent):
 
     def __init__(
             self,
-            props: dict | None = None,
+            additional_props: dict | None = None,
             *,
             extra: str | None = None,
             icon: str | None = None,
@@ -42,7 +42,7 @@ class AntdXWelcome(ModelScopeLayoutComponent):
                          as_item=as_item,
                          elem_style=elem_style,
                          **kwargs)
-        self.props = props
+        self.additional_props = additional_props
         self.extra = extra
         self.icon = self.serve_static_file(icon)
         self.styles = styles

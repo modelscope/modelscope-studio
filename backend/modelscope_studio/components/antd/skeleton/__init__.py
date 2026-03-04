@@ -21,7 +21,7 @@ class AntdSkeleton(ModelScopeLayoutComponent):
 
     def __init__(
             self,
-            props: dict | None = None,
+            additional_props: dict | None = None,
             *,
             active: bool | None = None,
             avatar: bool | dict | None = None,
@@ -46,7 +46,7 @@ class AntdSkeleton(ModelScopeLayoutComponent):
                          as_item=as_item,
                          elem_style=elem_style,
                          **kwargs)
-        self.props = props
+        self.additional_props = additional_props
         self.active = active
         self.avatar = avatar
         self.loading = loading

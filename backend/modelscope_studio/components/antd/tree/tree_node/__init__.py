@@ -18,7 +18,7 @@ class AntdTreeTreeNode(ModelScopeLayoutComponent):
     def __init__(
             self,
             title: str | None = None,
-            props: dict | None = None,
+            additional_props: dict | None = None,
             *,
             checkable: bool | None = None,
             disable_checkbox: bool | None = None,
@@ -44,7 +44,7 @@ class AntdTreeTreeNode(ModelScopeLayoutComponent):
                          elem_style=elem_style,
                          **kwargs)
         self.title = title
-        self.props = props
+        self.additional_props = additional_props
         self.checkable = checkable
         self.disable_checkbox = disable_checkbox
         self.disabled = disabled

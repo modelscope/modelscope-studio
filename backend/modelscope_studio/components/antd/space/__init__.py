@@ -29,7 +29,7 @@ class AntdSpace(ModelScopeLayoutComponent):
 
     def __init__(
             self,
-            props: dict | None = None,
+            additional_props: dict | None = None,
             *,
             align: Literal['start', 'end', 'center', 'baseline'] | None = None,
             class_names: dict | None = None,
@@ -67,7 +67,7 @@ class AntdSpace(ModelScopeLayoutComponent):
                          as_item=as_item,
                          elem_style=elem_style,
                          **kwargs)
-        self.props = props
+        self.additional_props = additional_props
         self.align = align
         self.class_names = class_names
         self.styles = styles

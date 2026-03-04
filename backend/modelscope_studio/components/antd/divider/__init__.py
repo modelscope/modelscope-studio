@@ -21,7 +21,7 @@ class AntdDivider(ModelScopeLayoutComponent):
     def __init__(
             self,
             value: str | None = None,
-            props: dict | None = None,
+            additional_props: dict | None = None,
             *,
             dashed: bool | None = None,
             variant: Literal["dashed", "dotted", "solid"] = "solid",
@@ -60,7 +60,7 @@ class AntdDivider(ModelScopeLayoutComponent):
                          elem_style=elem_style,
                          **kwargs)
         self.value = value
-        self.props = props
+        self.additional_props = additional_props
         self.dashed = dashed
         self.variant = variant
         self.orientation = orientation

@@ -1,35 +1,40 @@
-<svelte:options accessors={true} />
-
 <script lang="ts">
-  import { importComponent } from '@svelte-preprocess-react/component';
-  import { getSlotContext } from '@svelte-preprocess-react/slot';
+  import {
+    getProps,
+    importComponent,
+    processProps,
+  } from '@svelte-preprocess-react/component';
 
   const AwaitedText = importComponent(() => import('./text'));
+  const props = $props();
 
-  export let value: string = '';
-  export let as_item: string | undefined;
-  // gradio properties
-  export let visible = true;
-  export let _internal: {} = {};
+  const { getComponentProps, getAdditionalProps } = getProps<{
+    value?: string;
+  }>(() => props);
 
-  const [mergedProps, update] = getSlotContext({
-    _internal,
-    value,
-    as_item,
-    visible,
-    restProps: $$restProps,
+  const getProceedProps = processProps(() => {
+    const { visible, _internal, value, as_item, ...restProps } =
+      getComponentProps();
+    return {
+      additionalProps: getAdditionalProps(),
+      _internal,
+      as_item,
+      restProps,
+      value,
+      visible,
+    };
   });
-  $: update({
-    _internal,
-    value,
-    as_item,
-    visible,
-    restProps: $$restProps,
-  });
+
+  const proceedProps = $derived(getProceedProps());
 </script>
 
-{#if $mergedProps.visible}
+{#if proceedProps.visible}
   {#await AwaitedText then Text}
-    <Text value={$mergedProps.value} {...$mergedProps.restProps} slots={{}} />
+    <Text
+      value={proceedProps.value}
+      {...proceedProps.restProps}
+      {...proceedProps.additionalProps}
+      slots={{}}
+    />
   {/await}
 {/if}

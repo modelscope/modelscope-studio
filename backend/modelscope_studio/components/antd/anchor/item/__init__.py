@@ -20,7 +20,7 @@ class AntdAnchorItem(ModelScopeLayoutComponent):
     def __init__(
             self,
             title: str | None = None,
-            props: dict | None = None,
+            additional_props: dict | None = None,
             *,
             key: str | None = None,
             replace: bool | None = None,
@@ -50,7 +50,7 @@ class AntdAnchorItem(ModelScopeLayoutComponent):
                          as_item=as_item,
                          elem_style=elem_style,
                          **kwargs)
-        self.props = props
+        self.additional_props = additional_props
         self.title = title
         self.key = key
         self.replace = replace

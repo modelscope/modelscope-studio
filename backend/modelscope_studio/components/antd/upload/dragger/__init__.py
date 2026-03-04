@@ -55,7 +55,7 @@ class AntdUploadDragger(ModelScopeDataLayoutComponent):
     def __init__(
             self,
             value: list[str] | Callable | None = None,
-            props: dict | None = None,
+            additional_props: dict | None = None,
             *,
             accept: str | None = None,
             action: str | None = None,
@@ -108,7 +108,7 @@ class AntdUploadDragger(ModelScopeDataLayoutComponent):
                          render=render,
                          **kwargs)
 
-        self.props = props
+        self.additional_props = additional_props
         self.accept = accept
         self.action = action
         self.before_upload = before_upload

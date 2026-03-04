@@ -29,7 +29,7 @@ class AntdRow(ModelScopeLayoutComponent):
 
     def __init__(
             self,
-            props: dict | None = None,
+            additional_props: dict | None = None,
             *,
             align: Literal["top", "middle", "bottom", "stretch"]
         | dict[str, Literal["top", "middle", "bottom", "stretch"]] = "top",
@@ -63,7 +63,7 @@ class AntdRow(ModelScopeLayoutComponent):
                          as_item=as_item,
                          elem_style=elem_style,
                          **kwargs)
-        self.props = props
+        self.additional_props = additional_props
         self.align = align
         self.gutter = gutter
         self.justify = justify

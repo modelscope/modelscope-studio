@@ -26,7 +26,7 @@ class AntdImagePreviewGroup(ModelScopeLayoutComponent):
     def __init__(
             self,
             items: list[dict | str] | None = None,
-            props: dict | None = None,
+            additional_props: dict | None = None,
             *,
             preview: bool | dict | None = None,
             fallback: str | None = None,
@@ -46,7 +46,7 @@ class AntdImagePreviewGroup(ModelScopeLayoutComponent):
                          as_item=as_item,
                          elem_style=elem_style,
                          **kwargs)
-        self.props = props
+        self.additional_props = additional_props
         self.items = items
         self.preview = preview
         self.fallback = fallback

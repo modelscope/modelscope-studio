@@ -20,7 +20,7 @@ class AntdFlex(ModelScopeLayoutComponent):
 
     def __init__(
             self,
-            props: dict | None = None,
+            additional_props: dict | None = None,
             *,
             vertical: bool | None = None,
             wrap: Literal['nowrap', 'wrap', 'wrap-reverse'] | bool = "nowrap",
@@ -62,7 +62,7 @@ class AntdFlex(ModelScopeLayoutComponent):
                          as_item=as_item,
                          elem_style=elem_style,
                          **kwargs)
-        self.props = props
+        self.additional_props = additional_props
         self.vertical = vertical
         self.wrap = wrap
         self.justify = justify

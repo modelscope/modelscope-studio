@@ -19,7 +19,7 @@ class AntdSplitterPanel(ModelScopeLayoutComponent):
 
     def __init__(
             self,
-            props: dict | None = None,
+            additional_props: dict | None = None,
             *,
             default_size: str | int | None = None,
             min: int | str | None = None,
@@ -53,7 +53,7 @@ class AntdSplitterPanel(ModelScopeLayoutComponent):
                          as_item=as_item,
                          elem_style=elem_style,
                          **kwargs)
-        self.props = props
+        self.additional_props = additional_props
         self.default_size = default_size
         self.min = min
         self.max = max

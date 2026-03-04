@@ -22,7 +22,7 @@ class AntdStatistic(ModelScopeDataLayoutComponent):
     def __init__(
             self,
             value: Callable | int | float | str | None = None,
-            props: dict | None = None,
+            additional_props: dict | None = None,
             *,
             decimal_separator: str | None = None,
             formatter: str | None = None,
@@ -51,7 +51,7 @@ class AntdStatistic(ModelScopeDataLayoutComponent):
                          as_item=as_item,
                          elem_style=elem_style,
                          **kwargs)
-        self.props = props
+        self.additional_props = additional_props
         self.decimal_separator = decimal_separator
         self.formatter = formatter
         self.group_separator = group_separator

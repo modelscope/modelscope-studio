@@ -19,7 +19,7 @@ class AntdBreadcrumb(ModelScopeLayoutComponent):
 
     def __init__(
             self,
-            props: dict | None = None,
+            additional_props: dict | None = None,
             *,
             item_render: str | None = None,
             params: dict | None = None,
@@ -42,7 +42,7 @@ class AntdBreadcrumb(ModelScopeLayoutComponent):
                          as_item=as_item,
                          elem_style=elem_style,
                          **kwargs)
-        self.props = props
+        self.additional_props = additional_props
         self.item_render = item_render
         self.params = params
         self.items = items

@@ -1,74 +1,64 @@
-<svelte:options accessors={true} />
-
 <script lang="ts">
   import {
-    bindEvents,
+    getProps,
     importComponent,
+    processProps,
   } from '@svelte-preprocess-react/component';
-  import { getSlotContext, getSlots } from '@svelte-preprocess-react/slot';
+  import { getSlots } from '@svelte-preprocess-react/svelte-contexts/slot.svelte';
   import type React from 'react';
-  import type { Gradio } from '@gradio/utils';
   import cls from 'classnames';
-  import { writable } from 'svelte/store';
 
   const AwaitedBadge = importComponent(() => import('./badge'));
 
-  export let gradio: Gradio;
-  export let props: Record<string, any> = {};
-  const updatedProps = writable(props);
-  $: updatedProps.update((prev) => ({ ...prev, ...props }));
-  export let _internal: {
-    layout?: boolean;
-  } = {};
+  const props = $props();
+  const { getComponentProps, getAdditionalProps, children } = getProps<{
+    additional_props?: Record<string, any>;
 
-  export let as_item: string | undefined;
-  // gradio properties
-  export let visible = true;
-  export let elem_id = '';
-  export let elem_classes: string[] = [];
-  export let elem_style: React.CSSProperties = {};
+    as_item?: string | undefined;
+    _internal: {
+      layout?: boolean;
+    };
+  }>(() => props);
 
-  const [mergedProps, update] = getSlotContext({
-    gradio,
-    props: $updatedProps,
-    _internal,
-    visible,
-    elem_id,
-    elem_classes,
-    elem_style,
-    as_item,
-    restProps: $$restProps,
+  const getProceedProps = processProps(() => {
+    const {
+      visible,
+      _internal,
+      as_item,
+      elem_classes,
+      elem_id,
+      elem_style,
+      ...restProps
+    } = getComponentProps();
+    return {
+      additionalProps: getAdditionalProps(),
+      _internal,
+      as_item,
+      restProps,
+      visible,
+      elem_id,
+      elem_classes,
+      elem_style,
+    };
   });
+  const proceedProps = $derived(getProceedProps());
+
   const slots = getSlots();
-  $: update({
-    gradio,
-    props: $updatedProps,
-    _internal,
-    visible,
-    elem_id,
-    elem_classes,
-    elem_style,
-    as_item,
-    restProps: $$restProps,
+  const badge_props = $derived({
+    style: proceedProps.elem_style,
+    className: cls(proceedProps.elem_classes, 'ms-gr-antd-badge'),
+    id: proceedProps.elem_id,
+    ...proceedProps.restProps,
+    ...proceedProps.additionalProps,
+    slots: slots.value,
   });
-
-  $: badge_props = {
-    style: $mergedProps.elem_style,
-    className: cls($mergedProps.elem_classes, 'ms-gr-antd-badge'),
-    id: $mergedProps.elem_id,
-    ...$mergedProps.restProps,
-    ...$mergedProps.props,
-    ...bindEvents($mergedProps),
-    slots: $slots,
-  };
 </script>
 
-<!-- $$slots.default and slot fallbacks are not working in gradio -->
-{#if $mergedProps.visible}
+{#if proceedProps.visible}
   {#await AwaitedBadge then Badge}
-    {#if $mergedProps._internal.layout}
+    {#if proceedProps._internal.layout}
       <Badge {...badge_props}>
-        <slot></slot>
+        {@render children()}
       </Badge>
     {:else}
       <Badge {...badge_props} />

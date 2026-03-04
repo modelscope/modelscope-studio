@@ -4,7 +4,6 @@
     importComponent,
     processProps,
   } from '@svelte-preprocess-react/component';
-  import type React from 'react';
   import cls from 'classnames';
 
   const AwaitedDiv = importComponent(() => import('./div'));
@@ -12,8 +11,7 @@
 
   const { getComponentProps, getAdditionalProps, children } = getProps<{
     value: string;
-    elem_style: React.CSSProperties;
-    additional_props: Record<string, any>;
+    additional_props?: Record<string, any>;
     _internal: {
       layout?: boolean;
     };

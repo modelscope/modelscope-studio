@@ -25,7 +25,7 @@ class AntdDrawer(ModelScopeLayoutComponent):
 
     def __init__(
             self,
-            props: dict | None = None,
+            additional_props: dict | None = None,
             *,
             after_open_change: str | None = None,
             auto_focus: bool | None = None,
@@ -71,7 +71,7 @@ class AntdDrawer(ModelScopeLayoutComponent):
                          as_item=as_item,
                          elem_style=elem_style,
                          **kwargs)
-        self.props = props
+        self.additional_props = additional_props
         self.after_open_change = after_open_change
         self.auto_focus = auto_focus
         self.body_style = body_style

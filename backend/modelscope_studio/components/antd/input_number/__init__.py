@@ -38,7 +38,7 @@ class AntdInputNumber(ModelScopeDataLayoutComponent):
     def __init__(
             self,
             value: int | float | None = None,
-            props: dict | None = None,
+            additional_props: dict | None = None,
             *,
             addon_after: str | None = None,
             addon_before: str | None = None,
@@ -83,7 +83,7 @@ class AntdInputNumber(ModelScopeDataLayoutComponent):
                          as_item=as_item,
                          elem_style=elem_style,
                          **kwargs)
-        self.props = props
+        self.additional_props = additional_props
         self.addon_after = addon_after
         self.addon_before = addon_before
         self.auto_focus = auto_focus

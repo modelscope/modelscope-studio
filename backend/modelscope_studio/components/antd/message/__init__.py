@@ -26,7 +26,7 @@ class AntdMessage(ModelScopeLayoutComponent):
     def __init__(
             self,
             content: str | None = None,
-            props: dict | None = None,
+            additional_props: dict | None = None,
             *,
             type: Literal['success', 'info', 'warning', 'error', 'loading']
         | None = None,
@@ -62,7 +62,7 @@ class AntdMessage(ModelScopeLayoutComponent):
         self.rtl = rtl
         self.top = top
         self.root_class_name = root_class_name
-        self.props = props
+        self.additional_props = additional_props
 
     FRONTEND_DIR = resolve_frontend_dir("message")
 

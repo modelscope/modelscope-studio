@@ -16,7 +16,7 @@ class AntdDatePickerPreset(ModelScopeLayoutComponent):
 
     def __init__(
             self,
-            props: dict | None = None,
+            additional_props: dict | None = None,
             *,
             value: int | str | float | None = None,
             label: str | None = None,
@@ -36,7 +36,7 @@ class AntdDatePickerPreset(ModelScopeLayoutComponent):
                          as_item=as_item,
                          elem_style=elem_style,
                          **kwargs)
-        self.props = props
+        self.additional_props = additional_props
         self.label = label
         self.value = value
 

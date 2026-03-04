@@ -1,43 +1,46 @@
-<svelte:options accessors={true} />
-
 <script lang="ts">
-  import { importComponent } from '@svelte-preprocess-react/component';
-  import { getSlotContext } from '@svelte-preprocess-react/slot';
+  import {
+    getProps,
+    importComponent,
+    processProps,
+  } from '@svelte-preprocess-react/component';
 
   const AwaitedFragment = importComponent(() => import('./fragment'));
-  export let _internal: {
-    layout?: boolean;
-    index?: number;
-    subIndex?: number;
-  } = {};
-  export let as_item: string | undefined = undefined;
-  // gradio properties
-  export let visible = true;
 
-  const [mergedProps, update] = getSlotContext(
-    {
-      _internal,
-      visible,
-      as_item,
-      restProps: $$restProps,
+  const props = $props();
+
+  const { getComponentProps, getAdditionalProps, children } = getProps<{}>(
+    () => props
+  );
+
+  const getProceedProps = processProps(
+    () => {
+      const { visible, _internal, as_item, ...restProps } = getComponentProps();
+      return {
+        additionalProps: getAdditionalProps(),
+        _internal,
+        as_item,
+        restProps,
+        visible,
+      };
     },
     undefined,
     {
       shouldResetSlotKey: false,
     }
   );
-  $: update({
-    _internal,
-    visible,
-    as_item,
-    restProps: $$restProps,
-  });
+
+  const proceedProps = $derived(getProceedProps());
 </script>
 
-{#if $mergedProps.visible}
+{#if proceedProps.visible}
   {#await AwaitedFragment then Fragment}
-    <Fragment slots={{}}>
-      <slot></slot>
+    <Fragment
+      {...proceedProps.restProps}
+      {...proceedProps.additionalProps}
+      slots={{}}
+    >
+      {@render children()}
     </Fragment>
   {/await}
 {/if}

@@ -39,7 +39,7 @@ class AntdColorPicker(ModelScopeDataLayoutComponent):
     def __init__(
             self,
             value: str | list[dict] | None = None,
-            props: dict | None = None,
+            additional_props: dict | None = None,
             *,
             value_format: Literal['hex', 'rgb', 'hsb'] = 'hex',
             allow_clear: bool | None = None,
@@ -80,7 +80,7 @@ class AntdColorPicker(ModelScopeDataLayoutComponent):
                          as_item=as_item,
                          elem_style=elem_style,
                          **kwargs)
-        self.props = props
+        self.additional_props = additional_props
         self.value_format = value_format
         self.allow_clear = allow_clear
         self.arrow = arrow

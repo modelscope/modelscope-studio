@@ -37,7 +37,7 @@ class AntdTabs(ModelScopeLayoutComponent):
 
     def __init__(
             self,
-            props: dict | None = None,
+            additional_props: dict | None = None,
             *,
             active_key: str | None = None,
             add_icon: str | None = None,
@@ -77,7 +77,7 @@ class AntdTabs(ModelScopeLayoutComponent):
                          as_item=as_item,
                          elem_style=elem_style,
                          **kwargs)
-        self.props = props
+        self.additional_props = additional_props
         self.active_key = active_key
         self.add_icon = add_icon
         self.animated = animated

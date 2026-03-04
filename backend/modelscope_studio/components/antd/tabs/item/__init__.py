@@ -14,7 +14,7 @@ class AntdTabsItem(ModelScopeLayoutComponent):
 
     def __init__(
             self,
-            props: dict | None = None,
+            additional_props: dict | None = None,
             *,
             close_icon: str | None = None,
             destroy_inactive_tab_pane: bool | None = None,
@@ -40,7 +40,7 @@ class AntdTabsItem(ModelScopeLayoutComponent):
                          as_item=as_item,
                          elem_style=elem_style,
                          **kwargs)
-        self.props = props
+        self.additional_props = additional_props
         self.close_icon = close_icon
         self.destroy_inactive_tab_pane = destroy_inactive_tab_pane
         self.disabled = disabled

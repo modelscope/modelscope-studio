@@ -21,7 +21,7 @@ class AntdXSenderHeader(ModelScopeLayoutComponent):
 
     def __init__(
             self,
-            props: dict | None = None,
+            additional_props: dict | None = None,
             *,
             closable: bool | None = None,
             force_render: bool | None = None,
@@ -45,7 +45,7 @@ class AntdXSenderHeader(ModelScopeLayoutComponent):
                          as_item=as_item,
                          elem_style=elem_style,
                          **kwargs)
-        self.props = props
+        self.additional_props = additional_props
         self.closable = closable
         self.force_render = force_render
         self.open = open

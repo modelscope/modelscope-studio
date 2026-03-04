@@ -40,7 +40,7 @@ class AntdSplitter(ModelScopeLayoutComponent):
 
     def __init__(
             self,
-            props: dict | None = None,
+            additional_props: dict | None = None,
             *,
             layout: Literal['horizontal', 'vertical'] | None = 'horizontal',
             lazy: bool | None = None,
@@ -65,7 +65,7 @@ class AntdSplitter(ModelScopeLayoutComponent):
                          as_item=as_item,
                          elem_style=elem_style,
                          **kwargs)
-        self.props = props
+        self.additional_props = additional_props
         self.layout = layout
         self.lazy = lazy
         self.root_class_name = root_class_name

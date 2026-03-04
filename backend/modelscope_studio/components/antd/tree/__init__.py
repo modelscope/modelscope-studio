@@ -67,7 +67,7 @@ class AntdTree(ModelScopeLayoutComponent):
 
     def __init__(
             self,
-            props: dict | None = None,
+            additional_props: dict | None = None,
             *,
             allow_drop: str | None = None,
             auto_expand_parent: bool | None = None,
@@ -115,7 +115,7 @@ class AntdTree(ModelScopeLayoutComponent):
                          as_item=as_item,
                          elem_style=elem_style,
                          **kwargs)
-        self.props = props
+        self.additional_props = additional_props
         self.allow_drop = allow_drop
         self.auto_expand_parent = auto_expand_parent
         self.block_node = block_node

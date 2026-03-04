@@ -16,7 +16,7 @@ class AntdXXProvider(ModelScopeLayoutComponent):
     SLOTS = ["renderEmpty"]
 
     def __init__(self,
-                 props: dict | None = None,
+                 additional_props: dict | None = None,
                  *,
                  component_disabled: bool | None = None,
                  component_size: Literal['small', 'middle', 'large']
@@ -51,7 +51,7 @@ class AntdXXProvider(ModelScopeLayoutComponent):
                          as_item=as_item,
                          elem_style=elem_style,
                          **kwargs)
-        self.props = props
+        self.additional_props = additional_props
         self.component_disabled = component_disabled
         self.component_size = component_size
         self.csp = csp

@@ -2,18 +2,15 @@
   import { getProps, processProps } from '@svelte-preprocess-react/component';
   import {
     getSetSlot,
-    setSlotParamsMapping,
     setSlotKey,
+    setSlotParamsMapping,
   } from '@svelte-preprocess-react/svelte-contexts/slot.svelte';
   import { createFunction } from '@utils/createFunction';
 
   const props = $props();
   const { getComponentProps, getAdditionalProps, children } = getProps<{
     value: string;
-    visible: boolean;
     params_mapping: string;
-    as_item?: string | undefined;
-    _internal: {};
   }>(() => props);
 
   const getProceedProps = processProps(() => {

@@ -15,7 +15,7 @@ class AntdStepsItem(ModelScopeLayoutComponent):
 
     def __init__(
             self,
-            props: dict | None = None,
+            additional_props: dict | None = None,
             *,
             description: str | None = None,
             disabled: bool | None = None,
@@ -40,7 +40,7 @@ class AntdStepsItem(ModelScopeLayoutComponent):
                          as_item=as_item,
                          elem_style=elem_style,
                          **kwargs)
-        self.props = props
+        self.additional_props = additional_props
         self.description = description
         self.disabled = disabled
         self.icon = icon

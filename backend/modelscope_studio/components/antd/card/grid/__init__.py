@@ -24,7 +24,7 @@ class AntdCardGrid(ModelScopeLayoutComponent):
 
     def __init__(
             self,
-            props: dict | None = None,
+            additional_props: dict | None = None,
             *,
             hoverable: bool | None = None,
             as_item: str | None = None,
@@ -47,7 +47,7 @@ class AntdCardGrid(ModelScopeLayoutComponent):
                          elem_style=elem_style,
                          as_item=as_item,
                          **kwargs)
-        self.props = props
+        self.additional_props = additional_props
         self.hoverable = hoverable
 
     FRONTEND_DIR = resolve_frontend_dir("card", "grid")

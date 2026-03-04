@@ -1,77 +1,62 @@
-<svelte:options accessors={true} />
-
 <script lang="ts">
   import {
-    bindEvents,
+    getProps,
     importComponent,
+    processProps,
   } from '@svelte-preprocess-react/component';
-  import { getSlotContext, getSlots } from '@svelte-preprocess-react/slot';
-  import type React from 'react';
-  import type { Gradio } from '@gradio/utils';
+  import { getSlots } from '@svelte-preprocess-react/svelte-contexts/slot.svelte';
   import cls from 'classnames';
-  import { writable } from 'svelte/store';
 
   const AwaitedMarkdown = importComponent(() => import('./markdown'));
+  const props = $props();
 
-  export let value: string = '';
-  export let as_item: string | undefined;
-  export let props: Record<string, any> = {};
-  const updatedProps = writable(props);
-  $: updatedProps.update((prev) => ({ ...prev, ...props }));
-  // gradio properties
-  export let gradio: Gradio;
-  export let root: string;
+  const { gradio, getComponentProps, getAdditionalProps, children } = getProps<{
+    value: string;
+  }>(() => props);
 
-  export let visible = true;
-  export let _internal: {
-    layout?: boolean;
-  } = {};
-
-  export let elem_id = '';
-  export let elem_classes: string[] = [];
-  export let elem_style: React.CSSProperties = {};
   const slots = getSlots();
-  const [mergedProps, update] = getSlotContext({
-    gradio,
-    props: $updatedProps,
-    _internal,
-    value,
-    as_item,
-    visible,
-    elem_id,
-    elem_classes,
-    elem_style,
-    restProps: $$restProps,
+
+  const getProceedProps = processProps(() => {
+    const {
+      visible,
+      _internal,
+      value,
+      as_item,
+      elem_classes,
+      elem_id,
+      elem_style,
+      ...restProps
+    } = getComponentProps();
+    return {
+      additionalProps: getAdditionalProps(),
+      _internal,
+      as_item,
+      restProps,
+      value,
+      visible,
+      elem_id,
+      elem_classes,
+      elem_style,
+    };
   });
-  $: update({
-    gradio,
-    props: $updatedProps,
-    _internal,
-    value,
-    as_item,
-    visible,
-    elem_id,
-    elem_classes,
-    elem_style,
-    restProps: $$restProps,
-  });
+
+  const proceedProps = $derived(getProceedProps());
 </script>
 
-{#if $mergedProps.visible}
+{#if proceedProps.visible}
   {#await AwaitedMarkdown then Markdown}
     <Markdown
-      style={$mergedProps.elem_style}
-      className={cls($mergedProps.elem_classes)}
-      id={$mergedProps.elem_id}
-      {...$mergedProps.restProps}
-      {...$mergedProps.props}
-      {...bindEvents($mergedProps)}
-      urlRoot={root}
-      themeMode={gradio.theme}
-      value={$mergedProps.value}
-      slots={$slots}
+      style={proceedProps.elem_style}
+      className={cls(proceedProps.elem_classes)}
+      id={proceedProps.elem_id}
+      {...proceedProps.restProps}
+      {...proceedProps.additionalProps}
+      urlRoot={gradio.shared.root}
+      themeMode={gradio.shared.theme}
+      value={proceedProps.value}
+      slots={slots.value}
     >
-      <slot />
+      {@render children()}
     </Markdown>
   {/await}
 {/if}

@@ -12,9 +12,9 @@
 
   const props = $props();
   const { getComponentProps, getAdditionalProps, children } = getProps<{
-    additional_props: Record<string, any>;
+    additional_props?: Record<string, any>;
     value: string | undefined;
-    elem_style: React.CSSProperties;
+
     as_item?: string | undefined;
     _internal: {
       layout?: boolean;

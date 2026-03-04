@@ -33,12 +33,12 @@ class AntdModal(ModelScopeLayoutComponent):
 
     def __init__(
             self,
-            props: dict | None = None,
+            additional_props: dict | None = None,
             *,
             after_close: str | None = None,
             class_names: dict | None = None,
             styles: dict | None = None,
-            cancel_button_props: dict | None = None,
+            cancel_button_additional_props: dict | None = None,
             cancel_text: str | None = None,
             centered: bool | None = None,
             closable: bool | dict | None = None,
@@ -56,7 +56,7 @@ class AntdModal(ModelScopeLayoutComponent):
             modal_render: str | None = None,
             ok_text: str | None = None,
             ok_type: str | None = None,
-            ok_button_props: dict | None = None,
+            ok_button_additional_props: dict | None = None,
             loading: bool | None = None,
             title: str | None = None,
             open: bool | None = None,
@@ -81,7 +81,7 @@ class AntdModal(ModelScopeLayoutComponent):
                          as_item=as_item,
                          elem_style=elem_style,
                          **kwargs)
-        self.props = props
+        self.additional_props = additional_props
         self.after_close = after_close
         self.class_names = class_names
         self.styles = styles

@@ -24,7 +24,7 @@ class AntdSteps(ModelScopeLayoutComponent):
 
     def __init__(
             self,
-            props: dict | None = None,
+            additional_props: dict | None = None,
             *,
             current: int = 0,
             direction: Literal['vertical', 'horizontal'] = "horizontal",
@@ -54,7 +54,7 @@ class AntdSteps(ModelScopeLayoutComponent):
                          as_item=as_item,
                          elem_style=elem_style,
                          **kwargs)
-        self.props = props
+        self.additional_props = additional_props
         self.current = current
         self.direction = direction
         self.initial = initial

@@ -27,7 +27,7 @@ class AntdStatisticCountdown(ModelScopeDataLayoutComponent):
     def __init__(
             self,
             value: Callable | int | float | None = None,
-            props: dict | None = None,
+            additional_props: dict | None = None,
             *,
             format: str | None = None,
             prefix: str | None = None,
@@ -52,7 +52,7 @@ class AntdStatisticCountdown(ModelScopeDataLayoutComponent):
                          as_item=as_item,
                          elem_style=elem_style,
                          **kwargs)
-        self.props = props
+        self.additional_props = additional_props
         self.format = format
         self.prefix = prefix
         self.suffix = suffix

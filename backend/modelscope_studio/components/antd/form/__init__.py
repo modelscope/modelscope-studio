@@ -43,7 +43,7 @@ class AntdForm(ModelScopeDataLayoutComponent):
     def __init__(
             self,
             value: dict | None = None,
-            props: dict | None = None,
+            additional_props: dict | None = None,
             *,
             form_action: Literal['reset', 'submit', 'validate'] | None = None,
             colon: bool = True,
@@ -84,7 +84,7 @@ class AntdForm(ModelScopeDataLayoutComponent):
                          as_item=as_item,
                          elem_style=elem_style,
                          **kwargs)
-        self.props = props
+        self.additional_props = additional_props
         self.form_action = form_action
         self.colon = colon
         self.disabled = disabled

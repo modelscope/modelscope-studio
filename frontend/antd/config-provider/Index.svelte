@@ -4,10 +4,9 @@
     importComponent,
     processProps,
   } from '@svelte-preprocess-react/component';
-  import { getSlots } from '@svelte-preprocess-react/svelte-contexts/slot.svelte';
-  import type React from 'react';
-  import cls from 'classnames';
   import { setConfigType } from '@svelte-preprocess-react/svelte-contexts/config.svelte';
+  import { getSlots } from '@svelte-preprocess-react/svelte-contexts/slot.svelte';
+  import cls from 'classnames';
 
   const AwaitedConfigProvider = importComponent(
     () => import('./config-provider')
@@ -15,8 +14,8 @@
 
   const props = $props();
   const { gradio, getComponentProps, getAdditionalProps, children } = getProps<{
-    additional_props: Record<string, any>;
-    elem_style: React.CSSProperties;
+    additional_props?: Record<string, any>;
+
     as_item?: string | undefined;
   }>(() => props);
 

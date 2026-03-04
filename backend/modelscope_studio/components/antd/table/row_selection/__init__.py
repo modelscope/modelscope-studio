@@ -44,7 +44,7 @@ class AntdTableRowSelection(ModelScopeLayoutComponent):
 
     def __init__(
             self,
-            props: dict | None = None,
+            additional_props: dict | None = None,
             *,
             align: Literal['left', 'right', 'center'] | None = None,
             check_strictly: bool | None = None,
@@ -77,7 +77,7 @@ class AntdTableRowSelection(ModelScopeLayoutComponent):
                          as_item=as_item,
                          elem_style=elem_style,
                          **kwargs)
-        self.props = props
+        self.additional_props = additional_props
         self.align = align
         self.check_strictly = check_strictly
         self.column_title = column_title

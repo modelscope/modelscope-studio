@@ -19,7 +19,7 @@ class AntdSelectOption(ModelScopeLayoutComponent):
             self,
             value: str | None = None,
             label: str | None = None,
-            props: dict | None = None,
+            additional_props: dict | None = None,
             *,
             title: str | None = None,
             disabled: bool | None = None,
@@ -40,7 +40,7 @@ class AntdSelectOption(ModelScopeLayoutComponent):
                          as_item=as_item,
                          elem_style=elem_style,
                          **kwargs)
-        self.props = props
+        self.additional_props = additional_props
         self.value = value
         self.label = label
         self.disabled = disabled

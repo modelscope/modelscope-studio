@@ -71,7 +71,7 @@ class AntdTypographyText(ModelScopeLayoutComponent):
     def __init__(
             self,
             value: str | None = "",
-            props: dict | None = None,
+            additional_props: dict | None = None,
             *,
             code: bool | None = None,
             copyable: bool | dict = False,
@@ -119,7 +119,7 @@ class AntdTypographyText(ModelScopeLayoutComponent):
                          elem_style=elem_style,
                          **kwargs)
         self.value = value
-        self.props = props
+        self.additional_props = additional_props
         self.code = code
         self.copyable = copyable
         self.delete = delete

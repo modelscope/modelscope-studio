@@ -45,7 +45,7 @@ class AntdDatePickerRangePicker(ModelScopeDataLayoutComponent):
     def __init__(
             self,
             value: tuple[str | int | float, str | int | float] | None = None,
-            props: dict | None = None,
+            additional_props: dict | None = None,
             *,
             allow_clear: bool | dict = True,
             auto_focus: bool | None = None,
@@ -110,7 +110,7 @@ class AntdDatePickerRangePicker(ModelScopeDataLayoutComponent):
                          as_item=as_item,
                          elem_style=elem_style,
                          **kwargs)
-        self.props = props
+        self.additional_props = additional_props
         self.order = order
         self.preserve_invalid_on_blur = preserve_invalid_on_blur
         self.components = components

@@ -37,7 +37,7 @@ class AntdTransfer(ModelScopeDataLayoutComponent):
     def __init__(
             self,
             value: list[float | int | str] | None = None,
-            props: dict | None = None,
+            additional_props: dict | None = None,
             *,
             data_source: list[dict] | None = None,
             disabled: bool | None = None,
@@ -78,7 +78,7 @@ class AntdTransfer(ModelScopeDataLayoutComponent):
                          key=key,
                          elem_style=elem_style,
                          **kwargs)
-        self.props = props
+        self.additional_props = additional_props
         self.data_source = data_source
         self.disabled = disabled
         self.selections_icon = selections_icon

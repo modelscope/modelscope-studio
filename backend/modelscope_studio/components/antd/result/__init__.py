@@ -16,7 +16,7 @@ class AntdResult(ModelScopeLayoutComponent):
 
     def __init__(
             self,
-            props: dict | None = None,
+            additional_props: dict | None = None,
             *,
             extra: str | None = None,
             icon: str | None = None,
@@ -42,7 +42,7 @@ class AntdResult(ModelScopeLayoutComponent):
                          as_item=as_item,
                          elem_style=elem_style,
                          **kwargs)
-        self.props = props
+        self.additional_props = additional_props
         self.extra = extra
         self.icon = icon
         self.status = status

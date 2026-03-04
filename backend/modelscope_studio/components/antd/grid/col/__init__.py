@@ -29,7 +29,7 @@ class AntdCol(ModelScopeLayoutComponent):
 
     def __init__(
             self,
-            props: dict | None = None,
+            additional_props: dict | None = None,
             *,
             flex: str | int | None = None,
             offset: int = 0,
@@ -75,7 +75,7 @@ class AntdCol(ModelScopeLayoutComponent):
                          as_item=as_item,
                          elem_style=elem_style,
                          **kwargs)
-        self.props = props
+        self.additional_props = additional_props
         self.flex = flex
         self.offset = offset
         self.order = order

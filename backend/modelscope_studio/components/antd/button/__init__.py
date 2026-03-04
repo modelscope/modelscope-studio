@@ -51,7 +51,7 @@ class AntdButton(ModelScopeLayoutComponent):
     def __init__(
             self,
             value: str | None = None,
-            props: dict | None = None,
+            additional_props: dict | None = None,
             *,
             auto_insert_space: bool = True,
             block: bool | None = None,
@@ -113,7 +113,7 @@ class AntdButton(ModelScopeLayoutComponent):
                          elem_style=elem_style,
                          **kwargs)
         self.value = value
-        self.props = props
+        self.additional_props = additional_props
         self.auto_insert_space = auto_insert_space
         self.block = block
         self.class_names = class_names

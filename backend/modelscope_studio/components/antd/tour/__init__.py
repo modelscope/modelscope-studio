@@ -30,7 +30,7 @@ class AntdTour(ModelScopeLayoutComponent):
 
     def __init__(
             self,
-            props: dict | None = None,
+            additional_props: dict | None = None,
             *,
             open: bool | None = None,
             current: int | None = None,
@@ -67,7 +67,7 @@ class AntdTour(ModelScopeLayoutComponent):
                          as_item=as_item,
                          elem_style=elem_style,
                          **kwargs)
-        self.props = props
+        self.additional_props = additional_props
         self.open = open
         self.current = current
         self.arrow = arrow

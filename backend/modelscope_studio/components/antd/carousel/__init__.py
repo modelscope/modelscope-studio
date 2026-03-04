@@ -14,7 +14,7 @@ class AntdCarousel(ModelScopeLayoutComponent):
 
     def __init__(
             self,
-            props: dict | None = None,
+            additional_props: dict | None = None,
             *,
             arrows: bool | None = None,
             autoplay: bool | dict | None = None,
@@ -49,7 +49,7 @@ class AntdCarousel(ModelScopeLayoutComponent):
                          as_item=as_item,
                          elem_style=elem_style,
                          **kwargs)
-        self.props = props
+        self.additional_props = additional_props
         self.arrows = arrows
         self.autoplay = autoplay
         self.autoplay_speed = autoplay_speed

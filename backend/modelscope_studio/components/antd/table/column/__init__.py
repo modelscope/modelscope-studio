@@ -32,7 +32,7 @@ class AntdTableColumn(ModelScopeLayoutComponent):
 
     def __init__(
             self,
-            props: dict | None = None,
+            additional_props: dict | None = None,
             built_in_column: Literal['SELECTION_COLUMN', 'EXPAND_COLUMN']
         | None = None,
             *,
@@ -53,7 +53,7 @@ class AntdTableColumn(ModelScopeLayoutComponent):
             filter_mode: Literal['menu', 'tree'] | None = None,
             filter_search: bool | str | None = None,
             filters: list[dict] | None = None,
-            filter_dropdown_props: dict | None = None,
+            filter_dropdown_additional_props: dict | None = None,
             fixed: str | bool | None = None,
             key: str | None = None,
             column_render: str | None = None,
@@ -87,7 +87,7 @@ class AntdTableColumn(ModelScopeLayoutComponent):
                          as_item=as_item,
                          elem_style=elem_style,
                          **kwargs)
-        self.props = props
+        self.additional_props = additional_props
         self.built_in_column = built_in_column
         self.align = align
         self.col_span = col_span

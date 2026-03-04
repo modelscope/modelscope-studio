@@ -36,7 +36,7 @@ class AntdInputPassword(ModelScopeDataLayoutComponent):
     def __init__(
             self,
             value: str | None = None,
-            props: dict | None = None,
+            additional_props: dict | None = None,
             *,
             icon_render: str | None = None,
             visiable_toggle: bool | dict | None = True,
@@ -77,7 +77,7 @@ class AntdInputPassword(ModelScopeDataLayoutComponent):
                          as_item=as_item,
                          elem_style=elem_style,
                          **kwargs)
-        self.props = props
+        self.additional_props = additional_props
         self.icon_render = icon_render
         self.visiable_toggle = visiable_toggle
         self.addon_after = addon_after

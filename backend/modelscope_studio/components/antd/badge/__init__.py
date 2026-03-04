@@ -20,7 +20,7 @@ class AntdBadge(ModelScopeLayoutComponent):
     def __init__(
             self,
             count: int | float | str | None = None,
-            props: dict | None = None,
+            additional_props: dict | None = None,
             *,
             color: str | None = None,
             class_names: dict | None = None,
@@ -64,7 +64,7 @@ class AntdBadge(ModelScopeLayoutComponent):
         self.title = title
         self.styles = styles
         self.root_class_name = root_class_name
-        self.props = props
+        self.additional_props = additional_props
 
     FRONTEND_DIR = resolve_frontend_dir("badge")
 

@@ -27,7 +27,7 @@ class AntdList(ModelScopeLayoutComponent):
 
     def __init__(
             self,
-            props: dict | None = None,
+            additional_props: dict | None = None,
             *,
             bordered: bool | None = None,
             data_source: list[Any] | None = None,
@@ -60,7 +60,7 @@ class AntdList(ModelScopeLayoutComponent):
                          as_item=as_item,
                          elem_style=elem_style,
                          **kwargs)
-        self.props = props
+        self.additional_props = additional_props
         self.bordered = bordered
         self.data_source = data_source
         self.footer = footer

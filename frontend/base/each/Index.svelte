@@ -69,10 +69,10 @@
       contextValue={proceedProps.context_value}
       slots={{}}
       {...proceedProps.restProps}
-      onChange={(props) => {
-        merged_value = props.value || [];
-        merged_context_value = props.contextValue || {};
-        force_clone = props.forceClone || false;
+      onChange={(changedValue) => {
+        merged_value = changedValue.value || [];
+        merged_context_value = changedValue.contextValue || {};
+        force_clone = changedValue.forceClone || false;
       }}
     />
     {#if force_clone}

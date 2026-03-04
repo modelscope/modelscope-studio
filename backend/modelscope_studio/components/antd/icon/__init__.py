@@ -27,7 +27,7 @@ class AntdIcon(ModelScopeDataLayoutComponent):
     def __init__(
             self,
             value: str | None = "GithubOutlined",
-            props: dict | None = None,
+            additional_props: dict | None = None,
             *,
             spin: bool | None = None,
             rotate: int | float | None = None,
@@ -57,7 +57,7 @@ class AntdIcon(ModelScopeDataLayoutComponent):
                          as_item=as_item,
                          elem_style=elem_style,
                          **kwargs)
-        self.props = props
+        self.additional_props = additional_props
         self.spin = spin
         self.rotate = rotate
         self.component = component

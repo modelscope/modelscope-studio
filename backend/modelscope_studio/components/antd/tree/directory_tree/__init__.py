@@ -63,7 +63,7 @@ class AntdTreeDirectoryTree(ModelScopeLayoutComponent):
 
     def __init__(
             self,
-            props: dict | None = None,
+            additional_props: dict | None = None,
             *,
             expand_action: Literal['click', 'doubleClick'] | bool
         | None = None,
@@ -113,7 +113,7 @@ class AntdTreeDirectoryTree(ModelScopeLayoutComponent):
                          as_item=as_item,
                          elem_style=elem_style,
                          **kwargs)
-        self.props = props
+        self.additional_props = additional_props
         self.expand_action = expand_action
         self.allow_drop = allow_drop
         self.auto_expand_parent = auto_expand_parent

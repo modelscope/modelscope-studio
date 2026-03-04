@@ -44,7 +44,7 @@ class ModelScopeSpan(ModelScopeLayoutComponent):
     def __init__(
             self,
             value: str | None = None,
-            props: dict | None = None,
+            additional_props: dict | None = None,
             *,
             as_item: str | None = None,
             _internal: None = None,
@@ -64,7 +64,7 @@ class ModelScopeSpan(ModelScopeLayoutComponent):
                          **kwargs)
 
         self.value = value
-        self.props = props
+        self.additional_props = additional_props
 
     FRONTEND_DIR = resolve_frontend_dir("span", type="base")
 

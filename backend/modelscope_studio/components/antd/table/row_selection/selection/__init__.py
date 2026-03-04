@@ -27,7 +27,7 @@ class AntdTableRowSelectionSelection(ModelScopeLayoutComponent):
             text: str | None = None,
             built_in_selection: Literal["SELECT_ALL", "SELECT_INVERT",
                                         "SELECT_NONE"] | None = None,
-            props: dict | None = None,
+            additional_props: dict | None = None,
             *,
             key: str | int | float | None = None,
             as_item: str | None = None,
@@ -46,7 +46,7 @@ class AntdTableRowSelectionSelection(ModelScopeLayoutComponent):
                          as_item=as_item,
                          elem_style=elem_style,
                          **kwargs)
-        self.props = props
+        self.additional_props = additional_props
         self.key = key
         self.text = text
         self.built_in_selection = built_in_selection

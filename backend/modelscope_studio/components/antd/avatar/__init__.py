@@ -33,7 +33,7 @@ class AntdAvatar(ModelScopeDataLayoutComponent):
     def __init__(
             self,
             value: str | None = None,
-            props: dict | None = None,
+            additional_props: dict | None = None,
             *,
             alt: str | None = None,
             gap: int | None = None,
@@ -72,7 +72,7 @@ class AntdAvatar(ModelScopeDataLayoutComponent):
         self.draggable = draggable
         self.cross_origin = cross_origin
         self.root_class_name = root_class_name
-        self.props = props
+        self.additional_props = additional_props
 
     FRONTEND_DIR = resolve_frontend_dir("avatar")
 

@@ -27,7 +27,7 @@ class AntdRadio(ModelScopeDataLayoutComponent):
             self,
             group_value: Any | None = None,
             value: bool | None = None,
-            props: dict | None = None,
+            additional_props: dict | None = None,
             *,
             auto_focus: bool | None = None,
             default_checked: bool | None = None,
@@ -50,7 +50,7 @@ class AntdRadio(ModelScopeDataLayoutComponent):
                          as_item=as_item,
                          elem_style=elem_style,
                          **kwargs)
-        self.props = props
+        self.additional_props = additional_props
         self.group_value = group_value
         self.auto_focus = auto_focus
         self.default_checked = default_checked

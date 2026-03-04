@@ -27,7 +27,7 @@ class AntdSegmented(ModelScopeDataLayoutComponent):
     def __init__(
             self,
             value: str | int | float | None = None,
-            props: dict | None = None,
+            additional_props: dict | None = None,
             *,
             block: bool | None = None,
             default_value: str | int | float | None = None,
@@ -55,7 +55,7 @@ class AntdSegmented(ModelScopeDataLayoutComponent):
                          as_item=as_item,
                          elem_style=elem_style,
                          **kwargs)
-        self.props = props
+        self.additional_props = additional_props
         self.block = block
         self.default_value = default_value
         self.disabled = disabled

@@ -31,7 +31,7 @@ class AntdCalendar(ModelScopeComponent):
     def __init__(
             self,
             value: int | str | float | None = None,
-            props: dict | None = None,
+            additional_props: dict | None = None,
             *,
             cell_render: str | None = None,
             full_cell_render: str | None = None,
@@ -62,7 +62,7 @@ class AntdCalendar(ModelScopeComponent):
                          as_item=as_item,
                          elem_style=elem_style,
                          **kwargs)
-        self.props = props
+        self.additional_props = additional_props
         self.cell_render = cell_render
         self.full_cell_render = full_cell_render
         self.default_value = default_value

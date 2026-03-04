@@ -24,7 +24,7 @@ class AntdQRCode(ModelScopeComponent):
     def __init__(
             self,
             value: str | None = None,
-            props: dict | None = None,
+            additional_props: dict | None = None,
             *,
             type: Literal['canvas', 'svg'] | None = 'canvas',
             bordered: bool = True,
@@ -56,7 +56,7 @@ class AntdQRCode(ModelScopeComponent):
                          as_item=as_item,
                          elem_style=elem_style,
                          **kwargs)
-        self.props = props
+        self.additional_props = additional_props
         self.type = type
         self.bordered = bordered
         self.color = color

@@ -36,7 +36,7 @@ class AntdInputSearch(ModelScopeDataLayoutComponent):
     def __init__(
             self,
             value: str | None = None,
-            props: dict | None = None,
+            additional_props: dict | None = None,
             *,
             enter_button: str | bool | None = None,
             loading: bool | None = None,
@@ -77,7 +77,7 @@ class AntdInputSearch(ModelScopeDataLayoutComponent):
                          as_item=as_item,
                          elem_style=elem_style,
                          **kwargs)
-        self.props = props
+        self.additional_props = additional_props
         self.enter_button = enter_button
         self.loading = loading
         self.addon_after = addon_after

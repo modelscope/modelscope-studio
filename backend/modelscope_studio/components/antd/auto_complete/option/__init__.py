@@ -19,7 +19,7 @@ class AntdAutoCompleteOption(ModelScopeLayoutComponent):
             self,
             value: str | None = None,
             label: str | None = None,
-            props: dict | None = None,
+            additional_props: dict | None = None,
             *,
             as_item: str | None = None,
             _internal: None = None,
@@ -37,7 +37,7 @@ class AntdAutoCompleteOption(ModelScopeLayoutComponent):
                          as_item=as_item,
                          elem_style=elem_style,
                          **kwargs)
-        self.props = props
+        self.additional_props = additional_props
         self.value = value
         self.label = label
 

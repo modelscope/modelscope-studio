@@ -59,7 +59,7 @@ class AntdXSender(ModelScopeDataLayoutComponent):
     def __init__(
             self,
             value: str | None = None,
-            props: dict | None = None,
+            additional_props: dict | None = None,
             *,
             auto_size: bool | dict | None = None,
             footer: str | None = None,
@@ -94,7 +94,7 @@ class AntdXSender(ModelScopeDataLayoutComponent):
                          as_item=as_item,
                          elem_style=elem_style,
                          **kwargs)
-        self.props = props
+        self.additional_props = additional_props
         self.auto_size = auto_size
         self.footer = footer
         self.class_names = class_names

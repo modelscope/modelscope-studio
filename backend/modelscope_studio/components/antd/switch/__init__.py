@@ -28,7 +28,7 @@ class AntdSwitch(ModelScopeDataLayoutComponent):
     def __init__(
             self,
             value: bool | None = None,
-            props: dict | None = None,
+            additional_props: dict | None = None,
             *,
             auto_focus: bool | None = None,
             checked: bool | None = None,
@@ -56,7 +56,7 @@ class AntdSwitch(ModelScopeDataLayoutComponent):
                          as_item=as_item,
                          elem_style=elem_style,
                          **kwargs)
-        self.props = props
+        self.additional_props = additional_props
         self.auto_focus = auto_focus
         self.checked = checked
         self.checked_children = checked_children

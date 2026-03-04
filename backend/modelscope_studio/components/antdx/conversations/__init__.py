@@ -42,7 +42,7 @@ class AntdXConversations(ModelScopeLayoutComponent):
 
     def __init__(
             self,
-            props: dict | None = None,
+            additional_props: dict | None = None,
             *,
             active_key: str | None = None,
             default_active_key: str | None = None,
@@ -68,7 +68,7 @@ class AntdXConversations(ModelScopeLayoutComponent):
                          as_item=as_item,
                          elem_style=elem_style,
                          **kwargs)
-        self.props = props
+        self.additional_props = additional_props
         self.active_key = active_key
         self.default_active_key = default_active_key
         self.items = items

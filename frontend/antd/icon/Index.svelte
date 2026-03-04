@@ -1,17 +1,17 @@
 <script lang="ts">
   import {
-    importComponent,
     getProps,
+    importComponent,
     processProps,
   } from '@svelte-preprocess-react/component';
-  import cls from 'classnames';
   import { getSlots } from '@svelte-preprocess-react/svelte-contexts/slot.svelte';
+  import cls from 'classnames';
 
   const AwaitedIcon = importComponent(() => import('./icon'));
   const props = $props();
 
   const { getComponentProps, getAdditionalProps, children } = getProps<{
-    additional_props: Record<string, any>;
+    additional_props?: Record<string, any>;
     _internal: {
       layout?: boolean;
     };

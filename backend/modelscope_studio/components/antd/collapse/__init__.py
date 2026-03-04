@@ -25,7 +25,7 @@ class AntdCollapse(ModelScopeLayoutComponent):
 
     def __init__(
             self,
-            props: dict | None = None,
+            additional_props: dict | None = None,
             *,
             accordion: bool | None = None,
             active_key: str | float | list[int | float] | list[str]
@@ -58,7 +58,7 @@ class AntdCollapse(ModelScopeLayoutComponent):
                          as_item=as_item,
                          elem_style=elem_style,
                          **kwargs)
-        self.props = props
+        self.additional_props = additional_props
         self.accordion = accordion
         self.active_key = active_key
         self.bordered = bordered

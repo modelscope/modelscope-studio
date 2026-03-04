@@ -31,7 +31,7 @@ class AntdXBubbleList(ModelScopeLayoutComponent):
 
     def __init__(
             self,
-            props: dict | None = None,
+            additional_props: dict | None = None,
             *,
             items: list[dict] | None = None,
             roles: list[dict] | None = None,
@@ -53,7 +53,7 @@ class AntdXBubbleList(ModelScopeLayoutComponent):
                          as_item=as_item,
                          elem_style=elem_style,
                          **kwargs)
-        self.props = props
+        self.additional_props = additional_props
         self.items = items
         self.roles = roles
         self.auto_scroll = auto_scroll

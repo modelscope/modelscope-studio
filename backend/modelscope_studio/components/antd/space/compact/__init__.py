@@ -23,7 +23,7 @@ class AntdSpaceCompact(ModelScopeLayoutComponent):
 
     def __init__(
             self,
-            props: dict | None = None,
+            additional_props: dict | None = None,
             *,
             block: bool | None = None,
             direction: Literal['vertical', 'horizontal'] = 'horizontal',
@@ -51,7 +51,7 @@ class AntdSpaceCompact(ModelScopeLayoutComponent):
                          as_item=as_item,
                          elem_style=elem_style,
                          **kwargs)
-        self.props = props
+        self.additional_props = additional_props
         self.block = block
         self.direction = direction
         self.size = size

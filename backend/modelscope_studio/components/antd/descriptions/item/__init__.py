@@ -18,7 +18,7 @@ class AntdDescriptionsItem(ModelScopeLayoutComponent):
     def __init__(
             self,
             label: str | None = None,
-            props: dict | None = None,
+            additional_props: dict | None = None,
             *,
             content_style: dict | None = None,
             label_style: dict | None = None,
@@ -39,7 +39,7 @@ class AntdDescriptionsItem(ModelScopeLayoutComponent):
                          as_item=as_item,
                          elem_style=elem_style,
                          **kwargs)
-        self.props = props
+        self.additional_props = additional_props
         self.label = label
         self.span = span
         self.content_style = content_style

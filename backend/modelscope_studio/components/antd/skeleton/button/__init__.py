@@ -13,7 +13,7 @@ class AntdSkeletonButton(ModelScopeLayoutComponent):
 
     def __init__(
             self,
-            props: dict | None = None,
+            additional_props: dict | None = None,
             *,
             active: bool | None = None,
             block: bool | None = None,
@@ -37,7 +37,7 @@ class AntdSkeletonButton(ModelScopeLayoutComponent):
                          as_item=as_item,
                          elem_style=elem_style,
                          **kwargs)
-        self.props = props
+        self.additional_props = additional_props
         self.active = active
         self.block = block
         self.shape = shape

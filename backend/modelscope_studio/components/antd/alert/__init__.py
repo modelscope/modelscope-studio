@@ -24,7 +24,7 @@ class AntdAlert(ModelScopeLayoutComponent):
 
     def __init__(
             self,
-            props: dict | None = None,
+            additional_props: dict | None = None,
             *,
             action: str | None = None,
             after_close: str | None = None,
@@ -52,7 +52,7 @@ class AntdAlert(ModelScopeLayoutComponent):
                          as_item=as_item,
                          elem_style=elem_style,
                          **kwargs)
-        self.props = props
+        self.additional_props = additional_props
         self.action = action
         self.after_close = after_close
         self.banner = banner

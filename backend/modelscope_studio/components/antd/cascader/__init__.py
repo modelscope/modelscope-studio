@@ -54,7 +54,7 @@ class AntdCascader(ModelScopeDataLayoutComponent):
     def __init__(
             self,
             value: list[str] | list[int | float] | None = None,
-            props: dict | None = None,
+            additional_props: dict | None = None,
             *,
             allow_clear: bool | dict = False,
             auto_clear_search_value: bool = True,
@@ -114,7 +114,7 @@ class AntdCascader(ModelScopeDataLayoutComponent):
                          as_item=as_item,
                          elem_style=elem_style,
                          **kwargs)
-        self.props = props
+        self.additional_props = additional_props
         self.allow_clear = allow_clear
         self.auto_clear_search_value = auto_clear_search_value
         self.auto_focus = auto_focus

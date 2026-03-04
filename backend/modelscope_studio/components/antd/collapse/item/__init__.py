@@ -25,7 +25,7 @@ class AntdCollapseItem(ModelScopeLayoutComponent):
             self,
             label: str | None = None,
             key: str | float | int | None = None,
-            props: dict | None = None,
+            additional_props: dict | None = None,
             *,
             class_names: dict | None = None,
             collapsible: Literal['header', 'icon', 'disabled'] | None = None,
@@ -50,7 +50,7 @@ class AntdCollapseItem(ModelScopeLayoutComponent):
                          elem_style=elem_style,
                          **kwargs)
         self.label = label
-        self.props = props
+        self.additional_props = additional_props
         self.key = key
         self.class_names = class_names
         self.collapsible = collapsible

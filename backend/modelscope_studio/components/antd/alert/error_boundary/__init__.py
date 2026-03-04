@@ -22,7 +22,7 @@ class AntdAlertErrorBoundary(ModelScopeLayoutComponent):
 
     def __init__(
             self,
-            props: dict | None = None,
+            additional_props: dict | None = None,
             *,
             description: str | None = None,
             message: str | None = None,
@@ -43,7 +43,7 @@ class AntdAlertErrorBoundary(ModelScopeLayoutComponent):
                          as_item=as_item,
                          elem_style=elem_style,
                          **kwargs)
-        self.props = props
+        self.additional_props = additional_props
         self.description = description
         self.message = message
         self.root_class_name = root_class_name

@@ -26,7 +26,7 @@ class AntdTag(ModelScopeLayoutComponent):
     def __init__(
             self,
             value: str | None = None,
-            props: dict | None = None,
+            additional_props: dict | None = None,
             *,
             bordered: bool | None = None,
             close_icon: str | bool | None = None,
@@ -50,7 +50,7 @@ class AntdTag(ModelScopeLayoutComponent):
                          elem_style=elem_style,
                          **kwargs)
         self.value = value
-        self.props = props
+        self.additional_props = additional_props
         self.bordered = bordered
         self.close_icon = close_icon
         self.color = color

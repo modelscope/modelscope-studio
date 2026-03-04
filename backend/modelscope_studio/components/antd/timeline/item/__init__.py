@@ -16,7 +16,7 @@ class AntdTimelineItem(ModelScopeLayoutComponent):
 
     def __init__(
             self,
-            props: dict | None = None,
+            additional_props: dict | None = None,
             *,
             color: str | None = None,
             dot: str | None = None,
@@ -38,7 +38,7 @@ class AntdTimelineItem(ModelScopeLayoutComponent):
                          as_item=as_item,
                          elem_style=elem_style,
                          **kwargs)
-        self.props = props
+        self.additional_props = additional_props
         self.color = color
         self.dot = dot
         self.label = label

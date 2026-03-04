@@ -56,7 +56,7 @@ class AntdTable(ModelScopeLayoutComponent):
             self,
             data_source: list[dict] | None = None,
             columns: list[dict] | None = None,
-            props: dict | None = None,
+            additional_props: dict | None = None,
             *,
             bordered: bool | None = None,
             components: dict | None = None,
@@ -99,7 +99,7 @@ class AntdTable(ModelScopeLayoutComponent):
                          as_item=as_item,
                          elem_style=elem_style,
                          **kwargs)
-        self.props = props
+        self.additional_props = additional_props
         self.data_source = data_source
         self.columns = columns
         self.bordered = bordered

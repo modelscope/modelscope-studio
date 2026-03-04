@@ -27,7 +27,7 @@ class AntdXActions(ModelScopeLayoutComponent):
 
     def __init__(
             self,
-            props: dict | None = None,
+            additional_props: dict | None = None,
             *,
             items: list[dict] | None = None,
             variant: Literal['borderless', 'border'] | None = None,
@@ -50,7 +50,7 @@ class AntdXActions(ModelScopeLayoutComponent):
                          as_item=as_item,
                          elem_style=elem_style,
                          **kwargs)
-        self.props = props
+        self.additional_props = additional_props
         self.items = items
         self.prefix_cls = prefix_cls
         self.variant = variant

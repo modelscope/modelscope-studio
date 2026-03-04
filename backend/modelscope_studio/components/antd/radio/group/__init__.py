@@ -26,7 +26,7 @@ class AntdRadioGroup(ModelScopeDataLayoutComponent):
     def __init__(
             self,
             value: Any | None = None,
-            props: dict | None = None,
+            additional_props: dict | None = None,
             *,
             button_style: Literal['outline', 'solid'] | None = None,
             default_value: Any | None = None,
@@ -54,7 +54,7 @@ class AntdRadioGroup(ModelScopeDataLayoutComponent):
                          as_item=as_item,
                          elem_style=elem_style,
                          **kwargs)
-        self.props = props
+        self.additional_props = additional_props
         self.button_style = button_style
         self.default_value = default_value
         self.disabled = disabled

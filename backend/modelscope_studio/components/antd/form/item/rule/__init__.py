@@ -11,7 +11,7 @@ class AntdFormItemRule(ModelScopeLayoutComponent):
 
     def __init__(
             self,
-            props: dict | None = None,
+            additional_props: dict | None = None,
             *,
             default_field: dict | str | None = None,
             enum: list | None = None,
@@ -44,7 +44,7 @@ class AntdFormItemRule(ModelScopeLayoutComponent):
                          as_item=as_item,
                          elem_style=elem_style,
                          **kwargs)
-        self.props = props
+        self.additional_props = additional_props
         self.default_field = default_field
         self.enum = enum
         self.fields = fields

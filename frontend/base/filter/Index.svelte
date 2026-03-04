@@ -1,72 +1,44 @@
-<svelte:options accessors={true} />
-
 <script lang="ts">
-  import { importComponent } from '@svelte-preprocess-react/component';
   import {
-    // getSetSlotContextFn,
-    getSlotContext,
-  } from '@svelte-preprocess-react/slot';
+    getProps,
+    importComponent,
+    processProps,
+  } from '@svelte-preprocess-react/component';
 
   const AwaitedFilter = importComponent(() => import('./filter'));
 
-  export let as_item: string | undefined;
-  export let params_mapping: string;
-  // gradio properties
-  export let visible = true;
-  export let _internal = {};
+  const props = $props();
 
-  const [mergedProps, update] = getSlotContext(
-    {
+  const { getComponentProps, getAdditionalProps, children } = getProps<{
+    params_mapping: string;
+  }>(() => props);
+
+  const getProceedProps = processProps(() => {
+    const { visible, _internal, as_item, params_mapping, ...restProps } =
+      getComponentProps();
+    return {
+      additionalProps: getAdditionalProps(),
       _internal,
       as_item,
+      restProps,
       visible,
       params_mapping,
-      restProps: $$restProps,
-    },
-    undefined,
-    {
-      shouldResetSlotKey: false,
-    }
-  );
-  $: update({
-    _internal,
-    as_item,
-    visible,
-    params_mapping,
-    restProps: $$restProps,
+    };
   });
-  $: paramsMapping = $mergedProps.params_mapping;
 
-  // const setSlotContext = getSetSlotContextFn();
-
-  // $: {
-  //   const {
-  //     _internal: _,
-  //     as_item: _as_item,
-  //     visible: _visible,
-  //     ...restProps
-  //   } = $mergedProps;
-  //   if (paramsMappingFn) {
-  //     setSlotContext(paramsMappingFn(restProps));
-  //   } else {
-  //     if (!as_item) {
-  //       setSlotContext(undefined);
-  //     } else {
-  //       setSlotContext(restProps);
-  //     }
-  //   }
-  // }
+  const proceedProps = $derived(getProceedProps());
 </script>
 
-{#if $mergedProps.visible}
+{#if proceedProps.visible}
   {#await AwaitedFilter then Filter}
     <Filter
-      {...$mergedProps.restProps}
-      {paramsMapping}
+      {...proceedProps.restProps}
+      {...proceedProps.additionalProps}
+      paramsMapping={proceedProps.params_mapping}
       slots={{}}
-      asItem={$mergedProps.as_item}
+      asItem={proceedProps.as_item}
     >
-      <slot />
+      {@render children()}
     </Filter>
   {/await}
 {/if}

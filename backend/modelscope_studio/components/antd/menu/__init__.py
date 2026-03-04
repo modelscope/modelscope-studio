@@ -34,7 +34,7 @@ class AntdMenu(ModelScopeLayoutComponent):
 
     def __init__(
             self,
-            props: dict | None = None,
+            additional_props: dict | None = None,
             *,
             open_keys: list[str] | None = None,
             selected_keys: list[str] | None = None,
@@ -71,7 +71,7 @@ class AntdMenu(ModelScopeLayoutComponent):
                          as_item=as_item,
                          elem_style=elem_style,
                          **kwargs)
-        self.props = props
+        self.additional_props = additional_props
         self.open_keys = open_keys
         self.selected_keys = selected_keys
         self.selectable = selectable

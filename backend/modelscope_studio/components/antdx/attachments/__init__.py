@@ -69,9 +69,9 @@ class AntdXAttachments(ModelScopeDataLayoutComponent):
     def __init__(
             self,
             value: list[str] | Callable | None = None,
-            props: dict | None = None,
+            additional_props: dict | None = None,
             *,
-            image_props: dict | None = None,
+            image_additional_props: dict | None = None,
             accept: str | None = None,
             action: str | None = None,
             before_upload: str | None = None,
@@ -127,7 +127,7 @@ class AntdXAttachments(ModelScopeDataLayoutComponent):
                          inputs=inputs,
                          render=render,
                          **kwargs)
-        self.props = props
+        self.additional_props = additional_props
         self.image_props = image_props
         self.accept = accept
         self.action = action

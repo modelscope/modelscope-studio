@@ -25,7 +25,7 @@ class AntdTableExpandable(ModelScopeLayoutComponent):
 
     def __init__(
             self,
-            props: dict | None = None,
+            additional_props: dict | None = None,
             *,
             children_column_name: str | None = None,
             column_title: str | None = None,
@@ -58,7 +58,7 @@ class AntdTableExpandable(ModelScopeLayoutComponent):
                          as_item=as_item,
                          elem_style=elem_style,
                          **kwargs)
-        self.props = props
+        self.additional_props = additional_props
         self.children_column_name = children_column_name
         self.column_title = column_title
         self.column_width = column_width
