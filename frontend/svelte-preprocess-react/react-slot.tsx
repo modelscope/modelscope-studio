@@ -1,4 +1,4 @@
-import { useContextPropsContext } from '@svelte-preprocess-react/context';
+import { useContextPropsContext } from '@svelte-preprocess-react/react-contexts';
 import React, { forwardRef, useEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { styleObject2HtmlStyle } from '@utils/style';
@@ -21,7 +21,14 @@ function cloneElementWithEvents(element: HTMLElement) {
     } = React.Children.toArray(element._reactElement.props.children).map(
       (child) => {
         // get svelte-slot
-        if (React.isValidElement(child) && child.props.__slot__) {
+        if (
+          React.isValidElement<{
+            el: HTMLElement;
+            children: React.ReactNode;
+            __slot__?: boolean;
+          }>(child) &&
+          child.props.__slot__
+        ) {
           const { portals: childPortals, clonedElement: childClonedElement } =
             cloneElementWithEvents(child.props.el);
 
@@ -97,7 +104,7 @@ function mountElRef(elRef: React.ForwardedRef<HTMLElement>, el: HTMLElement) {
 // eslint-disable-next-line react/display-name
 export const ReactSlot = forwardRef<HTMLElement, ReactSlotProps>(
   ({ slot, clone: cloneProp, className, style, observeAttributes }, elRef) => {
-    const ref = useRef<HTMLElement>();
+    const ref = useRef<HTMLElement | null>(null);
     const [children, setChildren] = useState<React.ReactElement[]>([]);
     const { forceClone } = useContextPropsContext();
     const clone = forceClone ? true : cloneProp;

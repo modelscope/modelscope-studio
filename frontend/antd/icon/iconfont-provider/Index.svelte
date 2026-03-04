@@ -1,46 +1,52 @@
-<svelte:options accessors={true} />
-
 <script lang="ts">
-  import { importComponent } from '@svelte-preprocess-react/component';
-  import { getSlotContext } from '@svelte-preprocess-react/slot';
-  import { writable } from 'svelte/store';
+  import {
+    importComponent,
+    getProps,
+    processProps,
+  } from '@svelte-preprocess-react/component';
 
   const AwaitIconFontProvider = importComponent(
     () => import('./iconfont-provider')
   );
-  export let props: Record<string, any> = {};
-  const updatedProps = writable(props);
-  $: updatedProps.update((prev) => ({ ...prev, ...props }));
-  export let _internal: Record<string, any> = {};
+  const props = $props();
+  const { gradio, getComponentProps, getAdditionalProps, children } = getProps<{
+    additionalProps: Record<string, any>;
+  }>(() => props);
 
-  export let as_item: string | undefined;
-  // gradio properties
-  export let visible = true;
+  const getProceedProps = processProps(() => {
+    const {
+      visible,
+      _internal,
+      as_item,
+      elem_classes,
+      elem_id,
+      elem_style,
+      ...restProps
+    } = getComponentProps();
+    return {
+      additionalProps: getAdditionalProps(),
+      gradio,
+      _internal,
+      as_item,
+      restProps,
+      visible,
+      elem_id,
+      elem_classes,
+      elem_style,
+    };
+  });
 
-  const [mergedProps, update] = getSlotContext({
-    props: $updatedProps,
-    _internal,
-    visible,
-    as_item,
-    restProps: $$restProps,
-  });
-  $: update({
-    props: $updatedProps,
-    _internal,
-    visible,
-    as_item,
-    restProps: $$restProps,
-  });
+  const proceedProps = $derived(getProceedProps());
 </script>
 
-{#if $mergedProps.visible}
+{#if proceedProps.visible}
   {#await AwaitIconFontProvider then IconFontProvider}
     <IconFontProvider
-      {...$mergedProps.restProps}
-      {...$mergedProps.props}
+      {...proceedProps.restProps}
+      {...proceedProps.additionalProps}
       slots={{}}
     >
-      <slot></slot>
+      {@render children()}
     </IconFontProvider>
   {/await}
 {/if}

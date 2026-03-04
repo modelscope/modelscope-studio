@@ -4,5 +4,4 @@
  * */
 
 export * from './internal/types';
-export * from './sveltify';
-export * from './useStore';
+export * from './sveltify.svelte';

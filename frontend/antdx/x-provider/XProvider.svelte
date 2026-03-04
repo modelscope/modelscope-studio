@@ -2,7 +2,7 @@
 
 <script lang="ts">
   import { importComponent } from '@svelte-preprocess-react/component';
-  import { setConfigType } from '@svelte-preprocess-react/provider';
+  import { setConfigType } from '@svelte-preprocess-react/provider.svelte';
   import {
     getSetSlotParamsFn,
     getSlotContext,

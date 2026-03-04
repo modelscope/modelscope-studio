@@ -2,7 +2,7 @@ import { sveltify } from '@svelte-preprocess-react';
 import {
   ContextPropsProvider,
   useContextPropsContext,
-} from '@svelte-preprocess-react/context';
+} from '@svelte-preprocess-react/react-contexts';
 import { useEffect, useState } from 'react';
 import { useFunction } from '@utils/hooks/useFunction';
 

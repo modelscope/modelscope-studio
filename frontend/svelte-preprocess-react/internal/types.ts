@@ -1,5 +1,5 @@
 import type { ComponentClass, FunctionComponent } from 'react';
-import type { Readable } from 'svelte/store';
+import type { Component, Snippet } from 'svelte';
 
 export type HandlerName<T extends string> = `on${Capitalize<T>}`;
 export type EventName<T extends string> = T extends `on${infer N}`
@@ -49,7 +49,6 @@ export type OmitEventProps<ReactProps> = Omit<
 >;
 
 export type TreeNode = Omit<SvelteInit, 'onDestroy'> & {
-  svelteInstance: Readable<any>;
   reactComponent: FunctionComponent<any> | ComponentClass<any>;
   key: number;
   ignore?: boolean;
@@ -58,11 +57,22 @@ export type TreeNode = Omit<SvelteInit, 'onDestroy'> & {
 
 export type SvelteInit = {
   parent?: TreeNode;
-  props: Readable<Record<string, any>>;
-  target: Readable<HTMLElement | undefined>;
-  slot: Readable<HTMLElement | undefined>;
-  slotKey: Readable<string | undefined> | undefined;
-  slotIndex: Readable<number | undefined> | undefined;
-  subSlotIndex: Readable<number | undefined> | undefined;
-  onDestroy: (callback: () => void) => void;
+  props: Record<string, any>;
+  portalTarget: HTMLElement | undefined;
+  svelteChildren: Snippet | undefined;
+  childrenSource: HTMLElement | undefined;
+  slotKey: string | undefined;
+  slotIndex: number | undefined;
+  subSlotIndex: number | undefined;
+  rerender?: () => void | undefined;
 };
+
+export type ChildrenPropsAsSnippet<T> = T extends { children: unknown }
+  ? Omit<T, 'children'> & { children: Snippet | T['children'] }
+  : T extends { children?: unknown }
+    ? Omit<T, 'children'> & { children?: Snippet | T['children'] }
+    : T;
+
+export type Sveltified<T extends Record<string, any>> = Component<
+  ChildrenPropsAsSnippet<T>
+>;

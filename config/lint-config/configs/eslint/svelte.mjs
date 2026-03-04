@@ -6,7 +6,7 @@ import eslintPluginSvelte from 'eslint-plugin-svelte';
 export const svelte = [
   ...eslintPluginSvelte.configs['flat/recommended'],
   {
-    files: ['**/*.svelte', '*.svelte'],
+    files: ['**/*.svelte', '*.svelte', '**/*.svelte.ts'],
     languageOptions: {
       parserOptions: {
         parser: '@typescript-eslint/parser',
@@ -15,6 +15,7 @@ export const svelte = [
     rules: {
       'svelte/no-at-html-tags': 'off',
       'svelte/valid-compile': 'warn',
+      'svelte/prefer-writable-derived': 'off',
     },
   },
 ];

@@ -1,5 +1,5 @@
 import { sveltify } from '@svelte-preprocess-react';
-import { IconFontContext } from '@svelte-preprocess-react/context';
+import { IconFontContext } from '@svelte-preprocess-react/react-contexts';
 import React, { useMemo, useRef } from 'react';
 import { createFromIconfontCN } from '@ant-design/icons';
 import type { CustomIconOptions } from '@ant-design/icons/es/components/IconFont';

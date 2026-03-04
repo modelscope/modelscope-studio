@@ -1,8 +1,7 @@
 import { sveltify } from '@svelte-preprocess-react';
-import { type ConfigType } from '@svelte-preprocess-react/provider';
-import type { SetSlotParams } from '@svelte-preprocess-react/slot';
+import { type ConfigType } from '@svelte-preprocess-react/svelte-contexts/config.svelte';
 import React from 'react';
-import type { LoadingStatus } from '@gradio/statustracker';
+import type { ILoadingStatus } from '@gradio/statustracker';
 import { renderParamsSlot } from '@utils/renderParamsSlot';
 import { Alert, Spin, theme } from 'antd';
 
@@ -29,10 +28,9 @@ export const AutoLoading = sveltify<
     configType: ConfigType;
     showMask?: boolean;
     showTimer?: boolean;
-    loadingStatus?: LoadingStatus | null;
+    loadingStatus?: ILoadingStatus | null;
     loadingText?: string;
     children?: React.ReactNode;
-    setSlotParams: SetSlotParams;
   },
   ['render', 'errorRender', 'loadingText']
 >(
@@ -44,7 +42,6 @@ export const AutoLoading = sveltify<
     className,
     id,
     style,
-    setSlotParams,
     showMask,
     showTimer,
     loadingText,
@@ -74,7 +71,6 @@ export const AutoLoading = sveltify<
     if (isLoading) {
       if (slots.render) {
         loadingContent = renderParamsSlot({
-          setSlotParams,
           slots,
           key: 'render',
         })?.(loadingStatus);
@@ -93,7 +89,6 @@ export const AutoLoading = sveltify<
                   showLoadingText ? (
                     slots.loadingText ? (
                       renderParamsSlot({
-                        setSlotParams,
                         slots,
                         key: 'loadingText',
                       })?.(loadingStatus)
@@ -144,7 +139,6 @@ export const AutoLoading = sveltify<
     if (status === 'error' && !instance) {
       if (slots.errorRender) {
         errorContent = renderParamsSlot({
-          setSlotParams,
           slots,
           key: 'errorRender',
         })?.(loadingStatus);

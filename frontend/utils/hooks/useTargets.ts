@@ -1,9 +1,8 @@
-import { type TreeNode, useStores } from '@svelte-preprocess-react';
+import { type TreeNode } from '@svelte-preprocess-react';
 import React, { useMemo } from 'react';
-import { get, type Writable } from 'svelte/store';
 
 export function useTargets(children: React.ReactNode, slotKey?: string) {
-  const $targets = useMemo(() => {
+  const targets = useMemo(() => {
     const array = React.Children.toArray(
       (children as Array<any> & { originalChildren: React.ReactNode })
         .originalChildren || children
@@ -24,16 +23,16 @@ export function useTargets(children: React.ReactNode, slotKey?: string) {
       })
       .sort((a, b) => {
         if (a.props.node.slotIndex && b.props.node.slotIndex) {
-          const slotIndexA = get(a.props.node.slotIndex) || 0;
-          const slotIndexB = get(b.props.node.slotIndex) || 0;
+          const slotIndexA = a.props.node.slotIndex || 0;
+          const slotIndexB = b.props.node.slotIndex || 0;
           if (
             slotIndexA - slotIndexB === 0 &&
             a.props.node.subSlotIndex &&
             b.props.node.subSlotIndex
           ) {
             return (
-              (get(a.props.node.subSlotIndex) || 0) -
-              (get(b.props.node.subSlotIndex) || 0)
+              (a.props.node.subSlotIndex || 0) -
+              (b.props.node.subSlotIndex || 0)
             );
           }
           return slotIndexA - slotIndexB;
@@ -41,9 +40,9 @@ export function useTargets(children: React.ReactNode, slotKey?: string) {
         return 0;
       })
       .map((child) => {
-        return child.props.node.target;
-      }) as Writable<HTMLElement>[];
+        return child.props.node.portalTarget;
+      }) as HTMLElement[];
   }, [children, slotKey]);
-  const targets = useStores($targets);
+
   return targets;
 }

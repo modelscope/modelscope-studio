@@ -1,12 +1,13 @@
 <svelte:options accessors={true} />
 
 <script lang="ts">
-  import { importComponent } from '@svelte-preprocess-react/component';
   import {
-    getSlotContext,
-    getSlotKey,
-    getSubIndexContext,
-  } from '@svelte-preprocess-react/slot';
+    importComponent,
+    getProps,
+    processProps,
+  } from '@svelte-preprocess-react/component';
+  import { getSlotKey } from '@svelte-preprocess-react/svelte-contexts/slot.svelte';
+  import { getSubIndex } from '@svelte-preprocess-react/svelte-contexts/each.svelte';
 
   import EachItem from './EachItem.svelte';
 
@@ -23,7 +24,7 @@
     index?: number;
   } = {};
   // if ms.Each inside ms.Each
-  const subIndex = getSubIndexContext();
+  const subIndex = getSubIndex();
   const slotKey = getSlotKey();
   const [mergedProps, update] = getSlotContext(
     {
@@ -36,7 +37,7 @@
     },
     undefined,
     {
-      shouldRestSlotKey: false,
+      shouldResetSlotKey: false,
     }
   );
   $: update({

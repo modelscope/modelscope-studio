@@ -24,14 +24,10 @@ function escapeRegExp(string: string): string {
   return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 }
 
-export interface MarkdownProps
-  extends Omit<
-    React.DetailedHTMLProps<
-      React.HTMLAttributes<HTMLDivElement>,
-      HTMLDivElement
-    >,
-    'onCopy'
-  > {
+export interface MarkdownProps extends Omit<
+  React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement>,
+  'onCopy'
+> {
   value?: string;
   sanitizeHtml?: boolean;
   latexDelimiters?: {
@@ -83,7 +79,7 @@ export const Markdown: React.FC<MarkdownProps> = ({
 }) => {
   const [markdown, setMarkdown] = useState('');
   const [copied, setCopied] = useState(false);
-  const copyTimerRef = useRef<ReturnType<typeof setTimeout>>();
+  const copyTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const ref = useRef<HTMLSpanElement | null>(null);
   const containerRef = useRef<HTMLDivElement | null>(null);
   const onChangeMemoized = useMemoizedFn(onChange);
@@ -166,9 +162,8 @@ export const Markdown: React.FC<MarkdownProps> = ({
           });
         });
       } else {
-        const { default: render_math_in_element } = await import(
-          'katex/contrib/auto-render'
-        );
+        const { default: render_math_in_element } =
+          await import('katex/contrib/auto-render');
         render_math_in_element(el, {
           delimiters: latex_delimiters,
           throwOnError: false,

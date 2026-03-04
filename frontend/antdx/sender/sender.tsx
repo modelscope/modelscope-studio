@@ -1,5 +1,5 @@
 import { sveltify } from '@svelte-preprocess-react';
-import { useSuggestionOpenContext } from '@svelte-preprocess-react/context';
+import { useSuggestionOpenContext } from '@svelte-preprocess-react/react-contexts';
 import { ReactSlot } from '@svelte-preprocess-react/react-slot';
 import type { SetSlotParams } from '@svelte-preprocess-react/slot';
 import React from 'react';

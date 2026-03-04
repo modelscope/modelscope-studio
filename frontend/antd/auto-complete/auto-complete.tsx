@@ -1,7 +1,6 @@
 import { sveltify } from '@svelte-preprocess-react';
-import { AutoCompleteContext } from '@svelte-preprocess-react/context';
+import { AutoCompleteContext } from '@svelte-preprocess-react/react-contexts';
 import { ReactSlot } from '@svelte-preprocess-react/react-slot';
-import type { SetSlotParams } from '@svelte-preprocess-react/slot';
 import { forwardRef, useMemo } from 'react';
 import { useFunction } from '@utils/hooks/useFunction';
 import { useValueChange } from '@utils/hooks/useValueChange';
@@ -33,7 +32,6 @@ const AutoCompleteChildrenWrapper = forwardRef<
 export const AutoComplete = sveltify<
   GetProps<typeof AAutoComplete> & {
     onValueChange: (value: string) => void;
-    setSlotParams: SetSlotParams;
   },
   [
     'allowClear.clearIcon',
@@ -56,7 +54,6 @@ export const AutoComplete = sveltify<
       dropdownRender,
       popupRender,
       elRef,
-      setSlotParams,
       ...props
     }) => {
       const getPopupContainerFunction = useFunction(getPopupContainer);
@@ -119,7 +116,6 @@ export const AutoComplete = sveltify<
                 ? renderParamsSlot(
                     {
                       slots,
-                      setSlotParams,
                       key: 'popupRender',
                     },
                     { clone: true }
@@ -131,7 +127,6 @@ export const AutoComplete = sveltify<
                 ? renderParamsSlot(
                     {
                       slots,
-                      setSlotParams,
                       key: 'dropdownRender',
                     },
                     { clone: true }

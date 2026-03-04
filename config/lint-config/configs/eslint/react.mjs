@@ -1,6 +1,6 @@
 import eslintPluginReactRecommendedConfig from 'eslint-plugin-react/configs/recommended.js';
 import eslintPluginReactHooks from 'eslint-plugin-react-hooks';
-import reactRefresh from 'eslint-plugin-react-refresh';
+import { reactRefresh } from 'eslint-plugin-react-refresh';
 import { fixupPluginRules } from '@eslint/compat';
 import jsxA11y from 'eslint-plugin-jsx-a11y';
 /**
@@ -13,7 +13,7 @@ export const react = [
     name: '@modelscope-studio/eslint-config/react',
     plugins: {
       'react-hooks': fixupPluginRules(eslintPluginReactHooks),
-      'react-refresh': fixupPluginRules(reactRefresh),
+      'react-refresh': reactRefresh.plugin,
     },
     languageOptions: {
       parserOptions: {
@@ -40,10 +40,11 @@ export const react = [
       'jsx-a11y/mouse-events-have-key-events': 'off',
       'jsx-a11y/no-noninteractive-element-interactions': 'off',
       'jsx-a11y/alt-text': 'warn',
-      'react-refresh/only-export-components': [
-        'warn',
-        { allowConstantExport: true },
-      ],
+      // 'react-refresh/only-export-components': [
+      //   'warn',
+      //   { allowConstantExport: true },
+      // ],
+      'react-refresh/only-export-components': 'off',
     },
   },
   {

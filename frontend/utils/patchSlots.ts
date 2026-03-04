@@ -1,5 +1,6 @@
 import { isFunction, isObject } from 'lodash-es';
 
+// Add a new param to slot render func, so we can pass down additional parameters
 export function patchSlots<
   T extends (
     patch: <S extends React.ReactNode | ((...args: any[]) => React.ReactNode)>(

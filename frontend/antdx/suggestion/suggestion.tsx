@@ -2,7 +2,7 @@ import { sveltify } from '@svelte-preprocess-react';
 import {
   SuggestionContext,
   SuggestionOpenContext,
-} from '@svelte-preprocess-react/context';
+} from '@svelte-preprocess-react/react-contexts';
 import { ReactSlot } from '@svelte-preprocess-react/react-slot';
 import React, { forwardRef, useEffect, useMemo, useState } from 'react';
 import { Suggestion as XSuggestion, type SuggestionProps } from '@ant-design/x';

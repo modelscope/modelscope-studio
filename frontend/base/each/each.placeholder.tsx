@@ -1,5 +1,5 @@
 import { sveltify } from '@svelte-preprocess-react';
-import { useContextPropsContext } from '@svelte-preprocess-react/context';
+import { useContextPropsContext } from '@svelte-preprocess-react/react-contexts';
 import { useEffect, useRef } from 'react';
 
 export interface EachPlaceHolderProps {

@@ -1,52 +1,74 @@
 <script lang="ts">
-  import { beforeUpdate, getContext, onDestroy, setContext } from 'svelte';
-  import { type Writable, writable } from 'svelte/store';
-
-  import { getComponentSlotContext } from '../slot';
+  import { getComponentSlotValue } from '@svelte-preprocess-react/svelte-contexts/slot.svelte';
+  import { createContext } from '@svelte-preprocess-react/svelte-contexts/utils.svelte';
+  import { onDestroy, type Snippet } from 'svelte';
 
   import type { SvelteInit, TreeNode } from './types';
 
-  export let svelteInit: (options: SvelteInit) => TreeNode;
+  const {
+    svelteInit,
+    componentProps,
+  }: {
+    svelteInit: (options: SvelteInit) => TreeNode;
+    componentProps: {
+      children?: Snippet;
+    };
+  } = $props();
+  const { children, ...rest } = $derived(componentProps);
 
-  const props = writable<Record<string, any>>(extractProps($$props));
-  const target: Writable<HTMLElement | undefined> = writable();
-  const slot: Writable<HTMLElement | undefined> = writable<
-    HTMLElement | undefined
-  >();
+  const [getReactWrapperContext, setReactWrapperContext] = createContext<
+    TreeNode | undefined
+  >('$$context/react-wrapper');
 
-  const listeners: Array<() => void> = [];
+  let portalTarget = $state<HTMLElement | undefined>();
+  let childrenSource = $state<HTMLElement | undefined>();
 
-  const parent = getContext<TreeNode | undefined>('$$ms-gr-react-wrapper');
-  const { slotKey, slotIndex, subSlotIndex } = getComponentSlotContext() || {};
+  const parentReactWrapper = getReactWrapperContext();
+  const componentSlotValue = getComponentSlotValue();
+
+  // only run once when the component initialized
+  // svelte-ignore state_referenced_locally
   const node = svelteInit({
-    parent,
-    props,
-    target,
-    slot,
-    slotKey,
-    slotIndex,
-    subSlotIndex,
-    onDestroy(callback) {
-      listeners.push(callback);
+    get parent() {
+      return parentReactWrapper;
+    },
+    get props() {
+      return rest;
+    },
+    get portalTarget() {
+      return portalTarget;
+    },
+    get childrenSource() {
+      return childrenSource;
+    },
+    get svelteChildren() {
+      return children;
+    },
+    get slotKey() {
+      return componentSlotValue?.value.slotKey;
+    },
+    get slotIndex() {
+      return componentSlotValue?.value.slotIndex;
+    },
+    get subSlotIndex() {
+      return componentSlotValue?.value.subSlotIndex;
     },
   });
-  setContext('$$ms-gr-react-wrapper', node);
-  beforeUpdate(() => {
-    props.set(extractProps($$props));
-  });
+
+  setReactWrapperContext(node);
+
   onDestroy(() => {
-    listeners.forEach((callback) => callback());
+    if (node.parent) {
+      node.parent.nodes = node.parent.nodes.filter((n: any) => n !== node);
+      // => node.parent.rerender
+      node.rerender?.();
+    }
   });
-  function extractProps(values: Record<string, any>) {
-    const { svelteInit: _excluded, ...rest } = values;
-    return rest;
-  }
 </script>
 
-<react-portal-target bind:this={$target}></react-portal-target>
-
-{#if $$slots.default}
-  <svelte-slot bind:this={$slot}><slot /></svelte-slot>
+<react-portal-target bind:this={portalTarget}></react-portal-target>
+{#if children}
+  <svelte-slot bind:this={childrenSource}>{@render children()}</svelte-slot>
 {/if}
 
 <style>

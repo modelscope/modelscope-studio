@@ -1,4 +1,3 @@
-import type { SetSlotParams } from '@svelte-preprocess-react/slot';
 import React from 'react';
 
 import { renderSlot, type RenderSlotOptions } from './renderSlot';
@@ -10,10 +9,7 @@ export function renderParamsSlot(
     targets,
   }: {
     key: string;
-    /**
-     * @deprecated
-     */
-    setSlotParams?: SetSlotParams;
+
     slots: Record<string, HTMLElement>;
     /**
      * multiple targets

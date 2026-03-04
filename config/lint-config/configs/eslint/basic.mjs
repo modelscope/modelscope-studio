@@ -62,7 +62,7 @@ export const basic = [
       'import/no-named-as-default-member': 'off',
 
       // prettier config
-      'prettier/prettier': 'warn',
+      'prettier/prettier': 'off',
       'no-unused-vars': ['warn', { vars: 'all', varsIgnorePattern: '^_' }],
 
       'require-await': 'warn',

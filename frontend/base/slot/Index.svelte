@@ -1,77 +1,66 @@
-<svelte:options accessors={true} />
-
 <script lang="ts">
+  import { getProps, processProps } from '@svelte-preprocess-react/component';
   import {
-    // getSetSlotContextFn,
-    getSetSlotFn,
-    getSetSlotParamsMappingFnFn,
-    getSlotContext,
-    // getSlotParams,
+    getSetSlot,
+    setSlotParamsMapping,
     setSlotKey,
-  } from '@svelte-preprocess-react/slot';
+  } from '@svelte-preprocess-react/svelte-contexts/slot.svelte';
   import { createFunction } from '@utils/createFunction';
-  import { type Writable, writable } from 'svelte/store';
 
-  export let params_mapping: string;
-  export let value: string = '';
-  export let visible = true;
-  export let as_item: string | undefined;
-  export let _internal = {};
-  export let skip_context_value = true;
+  const props = $props();
+  const { gradio, getComponentProps, getAdditionalProps, children } = getProps<{
+    value: string;
+    visible: boolean;
+    params_mapping: string;
+    as_item?: string | undefined;
+    _internal: {};
+  }>(() => props);
 
-  // const slotParams = getSlotParams();
-
-  const [mergedProps, update] = getSlotContext({
-    _internal,
-    value,
-    visible,
-    as_item,
-    params_mapping,
-    skip_context_value,
+  const getProceedProps = processProps(() => {
+    const { value, visible, as_item, _internal, params_mapping } =
+      getComponentProps();
+    return {
+      gradio,
+      restProps: {},
+      additionalProps: getAdditionalProps(),
+      value,
+      visible,
+      as_item,
+      _internal,
+      params_mapping,
+    };
   });
-  $: update({
-    _internal,
-    value,
-    visible,
-    as_item,
-    params_mapping,
-    skip_context_value,
-  });
-  const slot: Writable<HTMLElement> = writable();
-  const setSlot = getSetSlotFn();
-  let prevValue: string | undefined;
-  let currentValue: string = value;
-  $: paramsMapping = $mergedProps.params_mapping;
-  $: paramsMappingFn = createFunction(paramsMapping);
 
-  $: {
-    if ($slot && $mergedProps.value) {
-      currentValue = $mergedProps.skip_context_value
-        ? value
-        : $mergedProps.value;
-      setSlot(prevValue || '', currentValue, $slot);
+  const proceedProps = $derived(getProceedProps());
+  const setSlot = getSetSlot();
+
+  let slot = $state<HTMLElement>();
+  // svelte-ignore state_referenced_locally
+  let currentValue = $state(proceedProps.value);
+  let prevValue = $state<typeof currentValue>();
+
+  const paramsMapping = $derived(createFunction(proceedProps.params_mapping));
+
+  $effect(() => {
+    if (
+      slot &&
+      proceedProps.value &&
+      (prevValue !== currentValue || !currentValue)
+    ) {
+      currentValue = proceedProps.value;
+      setSlot(prevValue || '', currentValue, slot);
       prevValue = currentValue;
     }
-  }
+  });
 
-  const slotKey = setSlotKey(currentValue);
-  $: slotKey.set(currentValue);
-
-  const slotParamsMappingFn = getSetSlotParamsMappingFnFn(paramsMappingFn);
-  $: slotParamsMappingFn.set(paramsMappingFn);
-
-  // const setSlotContext = getSetSlotContextFn({ inherit: true });
-  // $: {
-  //   if ($slotParams && $slotParams[currentValue]) {
-  //     if (paramsMappingFn) {
-  //       setSlotContext(paramsMappingFn(...$slotParams[currentValue]));
-  //     }
-  //   }
-  // }
+  setSlotKey(() => currentValue);
+  setSlotParamsMapping(() => paramsMapping);
 </script>
 
-{#if $mergedProps.visible}
-  <svelte-slot bind:this={$slot}><slot /></svelte-slot>
+{#if proceedProps.visible}
+  <svelte-slot bind:this={slot}>
+    {@render children()}
+  </svelte-slot>
 {/if}
 
 <style>

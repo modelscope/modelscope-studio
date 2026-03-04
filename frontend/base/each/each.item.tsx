@@ -1,5 +1,5 @@
 import { sveltify } from '@svelte-preprocess-react';
-import { ContextPropsProvider } from '@svelte-preprocess-react/context';
+import { ContextPropsProvider } from '@svelte-preprocess-react/react-contexts';
 
 export interface EachItemProps {
   __internal_value: any;

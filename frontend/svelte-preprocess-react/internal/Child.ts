@@ -6,7 +6,7 @@ export interface ChildProps {
   children?: React.ReactNode[];
 }
 const Child: React.FC<ChildProps> = ({ el, children }) => {
-  const ref = useRef<HTMLElement>();
+  const ref = useRef<HTMLElement | null>(null);
   useEffect(() => {
     if (!ref.current) {
       return;

@@ -1,5 +1,5 @@
 import { sveltify } from '@svelte-preprocess-react';
-import { ContextPropsProvider } from '@svelte-preprocess-react/context';
+import { ContextPropsProvider } from '@svelte-preprocess-react/react-contexts';
 import { ReactSlot } from '@svelte-preprocess-react/react-slot';
 import React, { useMemo } from 'react';
 import { useTargets } from '@utils/hooks/useTargets';

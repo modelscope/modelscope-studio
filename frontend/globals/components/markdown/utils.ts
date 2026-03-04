@@ -380,7 +380,9 @@ export function bind_copy_event(node: HTMLDivElement) {
 }
 
 export async function copy_to_clipboard(value: string): Promise<boolean> {
+  // eslint-disable-next-line no-useless-assignment
   let copied = false;
+
   if ('clipboard' in navigator) {
     await navigator.clipboard.writeText(value);
     copied = true;
@@ -404,6 +406,5 @@ export async function copy_to_clipboard(value: string): Promise<boolean> {
       textArea.remove();
     }
   }
-
   return copied;
 }

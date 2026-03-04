@@ -1,5 +1,5 @@
 import { sveltify } from '@svelte-preprocess-react';
-import { FormItemContext } from '@svelte-preprocess-react/context';
+import { FormItemContext } from '@svelte-preprocess-react/react-contexts';
 import { ReactSlot } from '@svelte-preprocess-react/react-slot';
 import { useMemo } from 'react';
 import { useFunction } from '@utils/hooks/useFunction';

@@ -1,83 +1,74 @@
-<svelte:options accessors={true} />
-
 <script lang="ts">
   import {
-    bindEvents,
+    getProps,
     importComponent,
+    processProps,
   } from '@svelte-preprocess-react/component';
-  import { getSlotContext, getSlots } from '@svelte-preprocess-react/slot';
+  import { getSlots } from '@svelte-preprocess-react/svelte-contexts/slot.svelte';
   import type React from 'react';
-  import type { Gradio } from '@gradio/utils';
   import cls from 'classnames';
-  import { writable } from 'svelte/store';
 
   const AwaitedButton = importComponent(() => import('./button'));
 
-  export let gradio: Gradio;
-  export let props: Record<string, any> = {};
-  const updatedProps = writable(props);
-  $: updatedProps.update((prev) => ({ ...prev, ...props }));
-  export let _internal: {
-    layout?: boolean;
-  } = {};
-  export let value: string | undefined;
+  const props = $props();
+  const { gradio, getComponentProps, getAdditionalProps, children } = getProps<{
+    additional_props: Record<string, any>;
+    value: string | undefined;
+    elem_style: React.CSSProperties;
+    as_item?: string | undefined;
+    _internal: {
+      layout?: boolean;
+    };
+    href_target?: string;
+  }>(() => props);
 
-  export let as_item: string | undefined;
-  // gradio properties
-  export let visible = true;
-  export let elem_id = '';
-  export let elem_classes: string[] = [];
-  export let elem_style: React.CSSProperties = {};
-  const [mergedProps, update] = getSlotContext(
-    {
-      gradio,
-      props: $updatedProps,
-      _internal,
-      value,
-      visible,
-      elem_id,
-      elem_classes,
-      elem_style,
-      as_item,
-      restProps: $$restProps,
+  const getProceedProps = processProps(
+    () => {
+      const {
+        visible,
+        _internal,
+        as_item,
+        value,
+        elem_classes,
+        elem_id,
+        elem_style,
+        ...restProps
+      } = getComponentProps();
+      return {
+        additionalProps: getAdditionalProps(),
+        gradio,
+        _internal,
+        as_item,
+        restProps,
+        value,
+        visible,
+        elem_id,
+        elem_classes,
+        elem_style,
+      };
     },
     {
       href_target: 'target',
     }
   );
+  const proceedProps = $derived(getProceedProps());
 
   const slots = getSlots();
-  $: update({
-    gradio,
-    props: $updatedProps,
-    _internal,
-    value,
-    visible,
-    elem_id,
-    elem_classes,
-    elem_style,
-    as_item,
-    restProps: $$restProps,
-  });
 </script>
 
 <!-- $$slots.default and slot fallbacks are not working in gradio -->
-{#if $mergedProps.visible}
+{#if proceedProps.visible}
   {#await AwaitedButton then Button}
     <Button
-      style={$mergedProps.elem_style}
-      className={cls($mergedProps.elem_classes, 'ms-gr-antd-button')}
-      id={$mergedProps.elem_id}
-      {...$mergedProps.restProps}
-      {...$mergedProps.props}
-      {...bindEvents($mergedProps)}
-      slots={$slots}
-      value={$mergedProps.value}
+      style={proceedProps.elem_style}
+      className={cls(proceedProps.elem_classes, 'ms-gr-antd-button')}
+      id={proceedProps.elem_id}
+      {...proceedProps.restProps}
+      {...proceedProps.additionalProps}
+      slots={slots.value}
+      value={proceedProps.value}
     >
-      <slot></slot>
+      {@render children()}
     </Button>
   {/await}
 {/if}
-
-<style>
-</style>

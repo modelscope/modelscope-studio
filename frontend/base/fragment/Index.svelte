@@ -23,7 +23,7 @@
     },
     undefined,
     {
-      shouldRestSlotKey: false,
+      shouldResetSlotKey: false,
     }
   );
   $: update({

@@ -14,7 +14,6 @@ class ModelScopeSlot(ModelScopeLayoutComponent):
                  value: str = '',
                  params_mapping: str | None = None,
                  *,
-                 skip_context_value: bool = True,
                  as_item: str | None = None,
                  _internal: None = None,
                  visible: bool = True,
@@ -25,7 +24,6 @@ class ModelScopeSlot(ModelScopeLayoutComponent):
                          as_item=as_item,
                          **kwargs)
         self.params_mapping = params_mapping
-        self.skip_context_value = skip_context_value
         if isinstance(self.parent, ModelScopeSlot):
             self.value = f"{self.parent.value}.{value}"
         else:

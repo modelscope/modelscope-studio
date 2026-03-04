@@ -6,7 +6,6 @@ import modelscope_studio.components.base as ms
 from helper.Docs import Docs
 from helper.env import is_modelscope_studio
 from helper.Site import Site
-from legacy_app import legacy_demo
 
 is_dev = os.environ.get("GRADIO_WATCH_MODULE_NAME") == 'docs.app'
 
@@ -573,11 +572,6 @@ tabs = [
         "default_active_key": "overview",
         "menus": antdx_menu_items,
     },
-    {
-        "label": get_text("Version 0.x", "0.x 版本"),
-        "key": "legacy",
-        "content": legacy_demo
-    } if not is_dev else None,
 ]
 
 site = Site(

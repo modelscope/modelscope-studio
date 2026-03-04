@@ -11,9 +11,7 @@ export const Div = sveltify<
   }
 >(({ slots: _slots, value, children, ...props }) => {
   const targets = useTargets(children);
-  return (
-    <div {...props}>{targets.length > 0 ? children : value || children}</div>
-  );
+  return <div {...props}>{targets.length > 0 ? children : value}</div>;
 });
 
 export default Div;

@@ -1,7 +1,7 @@
 import {
   type ContextPropsContextValue,
   useContextPropsContext,
-} from '@svelte-preprocess-react/context';
+} from '@svelte-preprocess-react/react-contexts';
 import {
   createContext,
   useCallback,
@@ -207,7 +207,7 @@ export const createItemsContext = (name: string): CreateItemsContextReturn => {
     const { ctx, forceClone } = useContextPropsContext();
     const hasItemProps = !!itemProps;
     const hasItemChildren = !!itemChildren;
-    const prevValueRef = useRef<Item>();
+    const prevValueRef = useRef<Item | undefined>(undefined);
     const [subItems, setSubItems] = useState(
       () =>
         (allowedSlots || []).reduce((acc, slotKey) => {

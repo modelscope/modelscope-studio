@@ -1,8 +1,8 @@
-<svelte:options accessors={true} />
+<svelte:options />
 
 <script lang="ts">
   import type React from 'react';
-  import type { Gradio } from '@gradio/utils';
+  import { getProps } from '@svelte-preprocess-react/component';
   import { styleObject2String } from '@utils/style';
   import cls from 'classnames';
   import { onDestroy, onMount } from 'svelte';
@@ -19,27 +19,40 @@
       scrollX: number;
     };
   }
-  export let elem_id = '';
-  export let elem_classes: string[] = [];
-  export let elem_style: React.CSSProperties | string = {};
-  export let value: ApplicationPageData;
-  export let _internal: {
-    bind_mount_event?: boolean;
-    bind_resize_event?: boolean;
-    bind_unmount_event?: boolean;
-    bind_custom_event?: boolean;
-  } = {};
-  export let gradio: Gradio<{
-    custom: any;
-    mount: ApplicationPageData;
-    resize: ApplicationPageData;
-    unmount: ApplicationPageData;
-  }>;
-  export let attached_events: string[] = [];
-  export let visible = true;
+
+  const props = $props();
+
+  const { gradio, getComponentProps, updateProps, children } = getProps<
+    {
+      elem_style?: React.CSSProperties | string;
+      value: ApplicationPageData;
+      _internal: {
+        bind_mount_event?: boolean;
+        bind_resize_event?: boolean;
+        bind_unmount_event?: boolean;
+        bind_custom_event?: boolean;
+      };
+    },
+    {
+      mount: ApplicationPageData;
+      resize: ApplicationPageData;
+      unmount: ApplicationPageData;
+      custom: any[];
+    }
+  >(() => props);
+
+  const {
+    elem_id = '',
+    elem_classes = [],
+    elem_style = {},
+    _internal = {},
+    attached_events = [],
+    visible = true,
+  } = $derived(getComponentProps());
+
   function get_data(): ApplicationPageData {
     return {
-      theme: gradio.theme,
+      theme: gradio.shared.theme || 'light',
       language: getLocaleFromNavigator() || 'en',
       userAgent: navigator.userAgent,
       screen: {
@@ -74,21 +87,27 @@
   }
 
   function on_mount() {
-    value = get_data();
+    updateProps({
+      value: get_data(),
+    });
     if (_internal.bind_mount_event || attached_events.includes('mount')) {
       gradio.dispatch('mount', get_data());
     }
   }
 
   const on_resize = wrap_event(() => {
-    value = get_data();
+    updateProps({
+      value: get_data(),
+    });
     if (_internal.bind_resize_event || attached_events.includes('resize')) {
       gradio.dispatch('resize', get_data());
     }
   }, 500);
 
   const on_before_unload = wrap_event(() => {
-    value = get_data();
+    updateProps({
+      value: get_data(),
+    });
     if (_internal.bind_unmount_event || attached_events.includes('unmount')) {
       gradio.dispatch('unmount', get_data());
     }
@@ -120,7 +139,7 @@
       ? styleObject2String(elem_style)
       : elem_style}
   >
-    <slot />
+    {@render children()}
   </div>
 {/if}
 

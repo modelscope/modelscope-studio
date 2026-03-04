@@ -1,8 +1,8 @@
 import { useEffect, useRef, useState } from 'react';
-import type { LoadingStatus } from '@gradio/statustracker';
+import type { ILoadingStatus } from '@gradio/statustracker';
 import { useMemoizedFn } from '@utils/hooks/useMemoizedFn';
 
-export function useLoadingStatus(loadingStatus?: LoadingStatus | null) {
+export function useLoadingStatus(loadingStatus?: ILoadingStatus | null) {
   const [eta, setEta] = useState<number | null>(loadingStatus?.eta ?? null);
   const { status, progress, queue_position, message, queue_size } =
     loadingStatus || {};

@@ -1,74 +1,65 @@
-<svelte:options accessors={true} />
-
 <script lang="ts">
-  import { importComponent } from '@svelte-preprocess-react/component';
-  import { setConfigType } from '@svelte-preprocess-react/provider';
   import {
-    getSetSlotParamsFn,
-    getSlotContext,
-    getSlots,
-  } from '@svelte-preprocess-react/slot';
+    getProps,
+    importComponent,
+    processProps,
+  } from '@svelte-preprocess-react/component';
+  import { getSlots } from '@svelte-preprocess-react/svelte-contexts/slot.svelte';
   import type React from 'react';
-  import type { Gradio } from '@gradio/utils';
   import cls from 'classnames';
-  import { writable } from 'svelte/store';
+  import { setConfigType } from '@svelte-preprocess-react/svelte-contexts/config.svelte';
 
   const AwaitedConfigProvider = importComponent(
     () => import('./config-provider')
   );
-  export let gradio: Gradio;
-  export let props: Record<string, any> = {};
-  const updatedProps = writable(props);
-  $: updatedProps.update((prev) => ({ ...prev, ...props }));
-  export let as_item: string | undefined;
-  // gradio properties
-  export let visible = true;
-  export let elem_id = '';
-  export let elem_classes: string[] = [];
-  export let elem_style: React.CSSProperties = {};
-  export let _internal = {};
 
-  const [mergedProps, update] = getSlotContext({
-    gradio,
-    props: $updatedProps,
-    visible,
-    _internal,
-    elem_id,
-    elem_classes,
-    elem_style,
-    as_item,
-    restProps: $$restProps,
+  const props = $props();
+  const { gradio, getComponentProps, getAdditionalProps, children } = getProps<{
+    additional_props: Record<string, any>;
+    elem_style: React.CSSProperties;
+    as_item?: string | undefined;
+  }>(() => props);
+
+  const getProceedProps = processProps(() => {
+    const {
+      visible,
+      _internal,
+      as_item,
+      elem_classes,
+      elem_id,
+      elem_style,
+      ...restProps
+    } = getComponentProps();
+    return {
+      additionalProps: getAdditionalProps(),
+      gradio,
+      _internal,
+      as_item,
+      restProps,
+      visible,
+      elem_id,
+      elem_classes,
+      elem_style,
+    };
   });
-  const setSlotParams = getSetSlotParamsFn();
+  const proceedProps = $derived(getProceedProps());
+
   const slots = getSlots();
-  $: update({
-    gradio,
-    props: $updatedProps,
-    visible,
-    _internal,
-    elem_id,
-    elem_classes,
-    elem_style,
-    as_item,
-    restProps: $$restProps,
-  });
-
-  setConfigType('antd');
+  setConfigType(() => 'antd');
 </script>
 
-{#if $mergedProps.visible}
+{#if proceedProps.visible}
   {#await AwaitedConfigProvider then ConfigProvider}
     <ConfigProvider
-      className={cls('ms-gr-antd-config-provider', $mergedProps.elem_classes)}
-      id={$mergedProps.elem_id}
-      style={$mergedProps.elem_style}
-      {...$mergedProps.restProps}
-      {...$mergedProps.props}
-      slots={$slots}
-      themeMode={$mergedProps.gradio.theme}
-      {setSlotParams}
+      className={cls('ms-gr-antd-config-provider', proceedProps.elem_classes)}
+      id={proceedProps.elem_id}
+      style={proceedProps.elem_style}
+      {...proceedProps.restProps}
+      {...proceedProps.additionalProps}
+      slots={slots.value}
+      themeMode={proceedProps.gradio.shared.theme}
     >
-      <slot />
+      {@render children()}
     </ConfigProvider>
   {/await}
 {/if}

@@ -1,15 +1,27 @@
-import { bindEvents, mapProps } from '@svelte-preprocess-react/component';
+import {
+  mapComponentProps,
+  processEvents,
+} from '@svelte-preprocess-react/component';
 import {
   AutoCompleteContext,
   ContextPropsProvider,
   FormItemContext,
   SuggestionContext,
   useContextPropsContext,
-} from '@svelte-preprocess-react/context';
-import { ensureObjectCtxValue } from '@svelte-preprocess-react/slot';
+} from '@svelte-preprocess-react/react-contexts';
 import React, { useMemo } from 'react';
 import { patchProps } from '@utils/patchProps';
+import { isUndefined } from 'lodash-es';
 
+function ensureObjectCtxValue(ctxValue: any) {
+  if (isUndefined(ctxValue)) {
+    return {};
+  }
+
+  return typeof ctxValue === 'object' && !Array.isArray(ctxValue)
+    ? ctxValue
+    : { value: ctxValue };
+}
 export interface BridgeContextProps {
   reactComponent: React.ComponentType<any>;
   props: Record<string, any>;
@@ -25,19 +37,18 @@ export const BridgeContext: React.FC<BridgeContextProps> = ({
   const { params, ctx, initial } = propsContext;
   const {
     // for params
-    __render_slotParamsMappingFn: slotParamsMappingFn,
+    __render_slotParamsMapping: slotParamsMapping,
     __render_as_item: as_item,
     __render_restPropsMapping: restPropsMapping,
-    // for events
-    __render_eventProps: eventProps,
+    __render_eventsRestProps: eventsRestProps,
     ...rest
   } = props || {};
   // for render slot like this: (...args) => React.ReactNode
   const ctxProps = useMemo(() => {
-    if (!initial || (!slotParamsMappingFn && !ctx)) {
+    if (!initial || (!slotParamsMapping && !ctx)) {
       return {};
     }
-    let value = params ? slotParamsMappingFn?.(...params) : undefined;
+    let value = params ? slotParamsMapping?.(...params) : undefined;
     let ctxValue = ctx;
 
     const merged_as_item = ctx?.as_item ?? as_item;
@@ -53,7 +64,7 @@ export const BridgeContext: React.FC<BridgeContextProps> = ({
     }
     ctxValue = ensureObjectCtxValue(ctxValue);
     value = ensureObjectCtxValue(value);
-    const mergedCtxValue = mapProps(
+    const mergedCtxValue = mapComponentProps(
       {
         ...ctxValue,
         ...value,
@@ -62,21 +73,18 @@ export const BridgeContext: React.FC<BridgeContextProps> = ({
       true
     );
     const restProps = patchProps(mergedCtxValue);
-    if (!eventProps) {
+    if (!eventsRestProps) {
       return {
         restProps,
         originalRestProps,
       };
     }
-    const { __render_eventProps, ...events } = bindEvents(
+    const events = processEvents(
       {
-        ...eventProps.props,
-        originalRestProps: {
-          ...eventProps.props.originalRestProps,
-          ...mergedCtxValue,
-        },
+        ...eventsRestProps,
+        ...mergedCtxValue,
       },
-      eventProps.eventsMapping
+      restPropsMapping
     );
     return {
       restProps,
@@ -85,12 +93,12 @@ export const BridgeContext: React.FC<BridgeContextProps> = ({
     };
   }, [
     initial,
-    slotParamsMappingFn,
+    slotParamsMapping,
     ctx,
     params,
     as_item,
     restPropsMapping,
-    eventProps,
+    eventsRestProps,
   ]);
   return (
     <FormItemContext.Provider value={null}>
