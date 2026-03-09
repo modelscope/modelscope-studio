@@ -1,5 +1,4 @@
 import { sveltify } from '@svelte-preprocess-react';
-import type { SetSlotParams } from '@svelte-preprocess-react/slot';
 import { useFunction } from '@utils/hooks/useFunction';
 import { useValueChange } from '@utils/hooks/useValueChange';
 import { renderParamsSlot } from '@utils/renderParamsSlot';
@@ -8,7 +7,6 @@ import { type GetProps, Input as AInput } from 'antd';
 export const InputOTP = sveltify<
   GetProps<typeof AInput.OTP> & {
     onValueChange: (value: string) => void;
-    setSlotParams: SetSlotParams;
   },
   ['separator']
 >(
@@ -17,7 +15,6 @@ export const InputOTP = sveltify<
     onValueChange,
     onChange,
     children,
-    setSlotParams,
     elRef,
     slots,
     separator,
@@ -42,7 +39,6 @@ export const InputOTP = sveltify<
             slots.separator
               ? renderParamsSlot({
                   slots,
-                  setSlotParams,
                   key: 'separator',
                 })
               : separatorFunction || separator

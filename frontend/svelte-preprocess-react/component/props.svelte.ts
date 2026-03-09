@@ -215,14 +215,13 @@ export function processEvents<
     ),
   };
 }
-
 export function processProps<
   T extends {
     as_item: string | undefined;
     _internal: Record<string, any>;
     additionalProps?: Record<string, any>;
     restProps: Record<string, any>;
-    gradio?: Gradio<Record<PropertyKey, any>>;
+    gradio: Gradio<Record<PropertyKey, any>>;
   },
 >(
   getPlainProps: () => T,
@@ -232,15 +231,17 @@ export function processProps<
     shouldResetSlotKey?: boolean;
   }
 ) {
-  const props = $derived(getPlainProps());
+  const props = $derived.by(() => getPlainProps());
   const shouldResetSlotKey = options?.shouldResetSlotKey ?? true;
   const shouldSetLoadingStatus = options?.shouldSetLoadingStatus ?? true;
 
   // throw error once if the property keys are not exist
-  if (!Reflect.has(props, 'as_item') || !Reflect.has(props, '_internal')) {
-    throw new Error('`as_item` and `_internal` is required');
-  }
-
+  const assertProps = () => {
+    if (!Reflect.has(props, 'as_item') || !Reflect.has(props, '_internal')) {
+      throw new Error('`as_item` and `_internal` is required');
+    }
+  };
+  assertProps();
   const slotKey = getSlotKey();
   // get slotParamsMapping for slot
   const slotParamsMapping = getSlotParamsMapping();
@@ -276,7 +277,9 @@ export function processProps<
     return subIndex?.value;
   });
 
-  const proceedEvents = $derived(processEvents(props, restPropsMapping));
+  const proceedEvents = $derived.by(() =>
+    processEvents(props, restPropsMapping)
+  );
 
   const processRestProps = (
     restProps?: Record<string, any>,
@@ -323,15 +326,13 @@ export function getProps<
   P extends Record<string, any>,
   E extends Record<string, any> = Record<string, any>,
 >(getSvelteProps: () => any) {
-  const {
-    children,
-    ...restProps
-  }: {
+  const props: {
     children: Snippet;
     props: P;
     shared_props: SharedProps;
   } = getSvelteProps();
-  const gradio = new Gradio<E, P>(restProps);
+  const gradio = new Gradio<E, P>(props);
+
   const updateProps = (updatedProps: Partial<P & SharedProps>) => {
     gradio.update(updatedProps);
   };
@@ -356,7 +357,10 @@ export function getProps<
     );
 
   let additionalProps = $state(
-    (() => $state.snapshot(gradio.props.additional_props) || {})()
+    (() => $state.snapshot(gradio.props.additional_props) || {})() as Record<
+      PropertyKey,
+      any
+    >
   );
 
   $effect(() => {
@@ -372,6 +376,6 @@ export function getProps<
     getComponentProps,
     getAdditionalProps,
     updateProps,
-    children,
+    children: props.children,
   };
 }

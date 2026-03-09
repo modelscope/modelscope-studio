@@ -1,109 +1,99 @@
-<svelte:options accessors={true} />
-
 <script lang="ts">
   import {
-    bindEvents,
+    getProps,
     importComponent,
+    processProps,
   } from '@svelte-preprocess-react/component';
   import {
-    getSlotContext,
     getSlotKey,
     getSlots,
-  } from '@svelte-preprocess-react/slot';
-  import type React from 'react';
-  import type { Gradio } from '@gradio/utils';
+  } from '@svelte-preprocess-react/svelte-contexts/slot.svelte';
   import cls from 'classnames';
-  import { writable } from 'svelte/store';
 
   const AwaitedRadioGroupOption = importComponent(
     () => import('./radio.group.option')
   );
-  export let gradio: Gradio;
-  export let props: Record<string, any> = {};
-  const updatedProps = writable(props);
-  $: updatedProps.update((prev) => ({ ...prev, ...props }));
-  export let _internal: {
-    layout?: boolean;
-    index?: number;
-  } = {};
-  export let value: string | undefined;
-  export let label: string | undefined;
-  export let disabled: boolean | undefined;
-  export let title: string | undefined;
-  export let required: boolean | undefined;
-  export let as_item: string | undefined;
 
-  // gradio properties
-  export let visible = true;
-  export let elem_id = '';
-  export let elem_classes: string[] = [];
-  export let elem_style: React.CSSProperties = {};
+  const props = $props();
+  const { getComponentProps, getAdditionalProps, children } = getProps<{
+    additional_props?: Record<string, any>;
+    value?: string;
+    label?: string;
+    disabled?: boolean;
+    title?: string;
+    required?: boolean;
+    as_item?: string;
+    _internal: {
+      layout?: boolean;
+      index?: number;
+    };
+  }>(() => props);
+
+  const getProceedProps = processProps(() => {
+    const {
+      visible,
+      _internal,
+      as_item,
+      elem_classes,
+      elem_id,
+      elem_style,
+      value,
+      label,
+      disabled,
+      title,
+      required,
+      ...restProps
+    } = getComponentProps();
+    return {
+      additionalProps: getAdditionalProps(),
+      _internal,
+      as_item,
+      restProps,
+      visible,
+      elem_id,
+      elem_classes,
+      elem_style,
+      value,
+      label,
+      disabled,
+      title,
+      required,
+    };
+  });
+  const proceedProps = $derived(getProceedProps());
 
   const slotKey = getSlotKey();
-  const [mergedProps, update] = getSlotContext({
-    gradio,
-    props: $updatedProps,
-    _internal,
-    visible,
-    elem_id,
-    elem_classes,
-    elem_style,
-    as_item,
-    value,
-    label,
-    disabled,
-    title,
-    required,
-    restProps: $$restProps,
-  });
   const slots = getSlots();
-  $: update({
-    gradio,
-    props: $updatedProps,
-    _internal,
-    visible,
-    elem_id,
-    elem_classes,
-    elem_style,
-    as_item,
-    value,
-    label,
-    disabled,
-    title,
-    required,
-    restProps: $$restProps,
-  });
 
-  $: itemProps = {
+  const itemProps = $derived({
     props: {
-      style: $mergedProps.elem_style,
+      style: proceedProps.elem_style,
       className: cls(
-        $mergedProps.elem_classes,
+        proceedProps.elem_classes,
         'ms-gr-antd-radio-group-option'
       ),
-      id: $mergedProps.elem_id,
-      value: $mergedProps.value,
-      label: $mergedProps.label,
-      disabled: $mergedProps.disabled,
-      title: $mergedProps.title,
-      required: $mergedProps.required,
-      ...$mergedProps.restProps,
-      ...$mergedProps.props,
-      ...bindEvents($mergedProps),
+      id: proceedProps.elem_id,
+      value: proceedProps.value,
+      label: proceedProps.label,
+      disabled: proceedProps.disabled,
+      title: proceedProps.title,
+      required: proceedProps.required,
+      ...proceedProps.restProps,
+      ...proceedProps.additionalProps,
     },
-    slots: $slots,
-  };
+    slots: slots.value,
+  });
 </script>
 
 {#await AwaitedRadioGroupOption then RadioGroupOption}
   <RadioGroupOption
     {...itemProps.props}
     slots={itemProps.slots}
-    itemIndex={$mergedProps._internal.index || 0}
-    itemSlotKey={$slotKey}
+    itemIndex={proceedProps._internal.index || 0}
+    itemSlotKey={slotKey?.value}
   >
-    {#if $mergedProps.visible}
-      <slot></slot>
+    {#if proceedProps.visible}
+      {@render children?.()}
     {/if}
   </RadioGroupOption>
 {/await}

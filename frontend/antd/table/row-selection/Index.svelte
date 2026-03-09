@@ -1,127 +1,114 @@
-<svelte:options accessors={true} />
-
 <script lang="ts">
   import {
-    bindEvents,
+    getProps,
     importComponent,
+    processProps,
   } from '@svelte-preprocess-react/component';
   import {
-    getSetSlotParamsFn,
-    getSlotContext,
     getSlotKey,
     getSlots,
-  } from '@svelte-preprocess-react/slot';
-  import type React from 'react';
-  import type { Gradio } from '@gradio/utils';
+  } from '@svelte-preprocess-react/svelte-contexts/slot.svelte';
   import { createFunction } from '@utils/createFunction';
   import cls from 'classnames';
-  import { writable } from 'svelte/store';
 
-  const AwaitedTableRowSelection = importComponent(
+  const AwaitedRowSelection = importComponent(
     () => import('./table.row-selection')
   );
-  export let gradio: Gradio;
-  export let props: Record<string, any> = {};
-  const updatedProps = writable(props);
-  $: updatedProps.update((prev) => ({ ...prev, ...props }));
-  export let _internal: {
-    layout?: boolean;
-    index?: number;
-  } = {};
 
-  export let as_item: string | undefined;
+  const props = $props();
+  const { getComponentProps, getAdditionalProps, children } = getProps<{
+    additional_props?: Record<string, any>;
+    as_item?: string | undefined;
+    _internal: {
+      layout?: boolean;
+      index?: number;
+    };
+    onCell?: string;
+    getCheckboxProps?: string;
+    getTitleCheckboxProps?: string;
+    renderCell?: string;
+    columnTitle?: string;
+  }>(() => props);
 
-  // gradio properties
-  export let visible = true;
-  export let elem_id = '';
-  export let elem_classes: string[] = [];
-  export let elem_style: React.CSSProperties = {};
-
-  const slotKey = getSlotKey();
-  const [mergedProps, update] = getSlotContext({
-    gradio,
-    props: $updatedProps,
-    _internal,
-    visible,
-    elem_id,
-    elem_classes,
-    elem_style,
-    as_item,
-    restProps: $$restProps,
+  const getProceedProps = processProps(() => {
+    const {
+      visible,
+      _internal,
+      as_item,
+      elem_classes,
+      elem_id,
+      elem_style,
+      ...restProps
+    } = getComponentProps();
+    return {
+      additionalProps: getAdditionalProps(),
+      _internal,
+      as_item,
+      restProps,
+      visible,
+      elem_id,
+      elem_classes,
+      elem_style,
+    };
   });
-  const setSlotParams = getSetSlotParamsFn();
+  const proceedProps = $derived(getProceedProps());
+
   const slots = getSlots();
-  $: update({
-    gradio,
-    props: $updatedProps,
-    _internal,
-    visible,
-    elem_id,
-    elem_classes,
-    elem_style,
-    as_item,
-    restProps: $$restProps,
-  });
+  const slotKey = getSlotKey();
 
-  $: itemProps = {
+  const itemProps = $derived({
     props: {
-      style: $mergedProps.elem_style,
+      style: proceedProps.elem_style,
       className: cls(
-        $mergedProps.elem_classes,
+        proceedProps.elem_classes,
         'ms-gr-antd-table-row-selection'
       ),
-      id: $mergedProps.elem_id,
-      ...$mergedProps.restProps,
-      ...$mergedProps.props,
-      ...bindEvents($mergedProps, {
-        select_all: 'selectAll',
-        select_invert: 'selectInvert',
-        select_none: 'selectNone',
-        select_multiple: 'selectMultiple',
-      }),
+      id: proceedProps.elem_id,
+      ...proceedProps.restProps,
+      ...proceedProps.additionalProps,
       onCell: createFunction(
-        $mergedProps.props.onCell || $mergedProps.restProps.onCell
+        proceedProps.additionalProps.onCell || proceedProps.restProps.onCell
       ),
       getCheckboxProps: createFunction(
-        $mergedProps.props.getCheckboxProps ||
-          $mergedProps.restProps.getCheckboxProps
+        proceedProps.additionalProps.getCheckboxProps ||
+          proceedProps.restProps.getCheckboxProps
       ),
       getTitleCheckboxProps: createFunction(
-        $mergedProps.props.getTitleCheckboxProps ||
-          $mergedProps.restProps.getTitleCheckboxProps
+        proceedProps.additionalProps.getTitleCheckboxProps ||
+          proceedProps.restProps.getTitleCheckboxProps
       ),
       renderCell: createFunction(
-        $mergedProps.props.renderCell || $mergedProps.restProps.renderCell
+        proceedProps.additionalProps.renderCell ||
+          proceedProps.restProps.renderCell
       ),
       columnTitle:
-        $mergedProps.props.columnTitle || $mergedProps.restProps.columnTitle,
+        proceedProps.additionalProps.columnTitle ||
+        proceedProps.restProps.columnTitle,
     },
     slots: {
-      ...$slots,
+      ...slots.value,
       selections: undefined,
       columnTitle: {
-        el: $slots.columnTitle,
-        callback: setSlotParams,
+        el: slots.value.columnTitle,
         clone: true,
       },
       renderCell: {
-        el: $slots.renderCell,
-        callback: setSlotParams,
+        el: slots.value.renderCell,
         clone: true,
       },
     },
-  };
+  });
 </script>
 
-{#await AwaitedTableRowSelection then TableRowSelection}
-  <TableRowSelection
+{#await AwaitedRowSelection then RowSelection}
+  <RowSelection
     {...itemProps.props}
     slots={itemProps.slots}
-    itemSlotKey={$slotKey}
-    itemIndex={$mergedProps._internal.index || 0}
+    itemSlotKey={slotKey?.value}
+    itemIndex={proceedProps._internal.index || 0}
   >
-    {#if $mergedProps.visible}
-      <slot></slot>
+    {#if proceedProps.visible}
+      {@render children()}
     {/if}
-  </TableRowSelection>
+  </RowSelection>
 {/await}

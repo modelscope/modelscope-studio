@@ -63,7 +63,7 @@ class AntdBreadcrumbItem(ModelScopeLayoutComponent):
             title: str | None = None,
             additional_props: dict | None = None,
             *,
-            dropdown_additional_props: dict | None = None,
+            dropdown_props: dict | None = None,
             href: str | None = None,
             path: str | None = None,
             menu: dict | None = None,

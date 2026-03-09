@@ -1,6 +1,5 @@
 import { sveltify } from '@svelte-preprocess-react';
 import { ReactSlot } from '@svelte-preprocess-react/react-slot';
-import type { SetSlotParams } from '@svelte-preprocess-react/slot';
 import React, { useMemo } from 'react';
 import { useFunction } from '@utils/hooks/useFunction';
 import { omitUndefinedProps } from '@utils/omitUndefinedProps';
@@ -12,7 +11,6 @@ import { useItems, withItemsContextProvider } from './context';
 
 export const Tabs = sveltify<
   GetProps<typeof ATabs> & {
-    setSlotParams: SetSlotParams;
   },
   [
     'addIcon',
@@ -34,7 +32,6 @@ export const Tabs = sveltify<
       more,
       children,
       renderTabBar,
-      setSlotParams,
       ...props
     }) => {
       const indicatorSizeFunction = useFunction(indicator?.size);
@@ -62,7 +59,6 @@ export const Tabs = sveltify<
               slots.renderTabBar
                 ? renderParamsSlot({
                     slots,
-                    setSlotParams,
                     key: 'renderTabBar',
                   })
                 : renderTabBarFunction

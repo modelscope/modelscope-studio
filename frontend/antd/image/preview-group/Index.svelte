@@ -1,84 +1,70 @@
-<svelte:options accessors={true} />
-
 <script lang="ts">
   import {
-    bindEvents,
+    getProps,
     importComponent,
+    processProps,
   } from '@svelte-preprocess-react/component';
-  import { getSlotContext, getSlots } from '@svelte-preprocess-react/slot';
-  import type React from 'react';
-  import type { Gradio } from '@gradio/utils';
+  import { getSlots } from '@svelte-preprocess-react/svelte-contexts/slot.svelte';
   import cls from 'classnames';
-  import { writable } from 'svelte/store';
 
-  const AwaitedImagePreviewGroup = importComponent(
+  const AwaitedPreviewGroup = importComponent(
     () => import('./image.preview-group')
   );
 
-  export let gradio: Gradio;
-  export let props: Record<string, any> = {};
-  const updatedProps = writable(props);
-  $: updatedProps.update((prev) => ({ ...prev, ...props }));
-  export let _internal: {
-    layout?: boolean;
-  } = {};
-  export let items: (string | Record<string, any>)[] | undefined;
-  export let as_item: string | undefined;
-  // gradio properties
-  export let visible = true;
-  export let elem_id = '';
-  export let elem_classes: string[] = [];
-  export let elem_style: React.CSSProperties = {};
+  const props = $props();
+  const { getComponentProps, getAdditionalProps, children } = getProps<{
+    additional_props?: Record<string, any>;
+    _internal: {
+      layout?: boolean;
+    };
+    preview_visible_change?: any;
+  }>(() => props);
 
-  const [mergedProps, update] = getSlotContext({
-    gradio,
-    props: $updatedProps,
-    _internal,
-    visible,
-    elem_id,
-    elem_classes,
-    elem_style,
-    as_item,
-    items,
-    restProps: $$restProps,
-  });
+  const getProceedProps = processProps(
+    () => {
+      const {
+        visible,
+        _internal,
+        as_item,
+        elem_classes,
+        elem_id,
+        elem_style,
+        ...restProps
+      } = getComponentProps();
+      return {
+        additionalProps: getAdditionalProps(),
+        _internal,
+        as_item,
+        restProps,
+        visible,
+        elem_id,
+        elem_classes,
+        elem_style,
+      };
+    },
+    {
+      preview_visible_change: 'preview_visibleChange',
+    }
+  );
+  const proceedProps = $derived(getProceedProps());
+
   const slots = getSlots();
-  $: update({
-    gradio,
-    props: $updatedProps,
-    _internal,
-    visible,
-    elem_id,
-    elem_classes,
-    elem_style,
-    as_item,
-    items,
-    restProps: $$restProps,
-  });
 </script>
 
-<!-- $$slots.default and slot fallbacks are not working in gradio -->
-{#if $mergedProps.visible}
-  {#await AwaitedImagePreviewGroup then ImagePreviewGroup}
-    <ImagePreviewGroup
-      style={$mergedProps.elem_style}
+{#if proceedProps.visible}
+  {#await AwaitedPreviewGroup then PreviewGroup}
+    <PreviewGroup
+      style={proceedProps.elem_style}
       className={cls(
-        $mergedProps.elem_classes,
+        proceedProps.elem_classes,
         'ms-gr-antd-image-preview-group'
       )}
-      id={$mergedProps.elem_id}
-      {...$mergedProps.restProps}
-      {...$mergedProps.props}
-      {...bindEvents($mergedProps, {
-        preview_visible_change: 'preview_visibleChange',
-      })}
-      slots={$slots}
-      items={$mergedProps.props.items || $mergedProps.items}
+      id={proceedProps.elem_id}
+      {...proceedProps.restProps}
+      {...proceedProps.additionalProps}
+      slots={slots.value}
     >
-      <slot></slot>
-    </ImagePreviewGroup>
+      {@render children()}
+    </PreviewGroup>
   {/await}
 {/if}
-
-<style>
-</style>

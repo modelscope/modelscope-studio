@@ -56,7 +56,7 @@
       {...proceedProps.restProps}
       {...proceedProps.additionalProps}
       slots={slots.value}
-      themeMode={proceedProps.gradio.shared.theme}
+      themeMode={proceedProps.gradio.shared.theme || 'light'}
     >
       {@render children()}
     </ConfigProvider>

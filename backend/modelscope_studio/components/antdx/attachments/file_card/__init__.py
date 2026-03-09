@@ -28,7 +28,7 @@ class AntdXAttachmentsFileCard(ModelScopeLayoutComponent):
             self,
             additional_props: dict | None = None,
             *,
-            image_additional_props: dict | None = None,
+            image_props: dict | None = None,
             icon: Union[Literal['default', 'excel', 'image', 'markdown', 'pdf',
                                 'ppt', 'word', 'zip', 'video', 'audio'], str]
         | None = None,

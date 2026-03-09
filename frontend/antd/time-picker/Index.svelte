@@ -1,87 +1,80 @@
-<svelte:options accessors={true} />
-
 <script lang="ts">
   import {
-    bindEvents,
+    getProps,
     importComponent,
+    processProps,
   } from '@svelte-preprocess-react/component';
-  import {
-    getSetSlotParamsFn,
-    getSlotContext,
-    getSlots,
-  } from '@svelte-preprocess-react/slot';
-  import type React from 'react';
-  import type { Gradio } from '@gradio/utils';
+  import { getSlots } from '@svelte-preprocess-react/svelte-contexts/slot.svelte';
   import cls from 'classnames';
-  import { writable } from 'svelte/store';
 
   const AwaitedTimePicker = importComponent(() => import('./time-picker'));
 
-  export let gradio: Gradio;
-  export let props: Record<string, any> = {};
-  const updatedProps = writable(props);
-  $: updatedProps.update((prev) => ({ ...prev, ...props }));
-  export let _internal: {
-    layout?: boolean;
-  } = {};
+  const props = $props();
+  const { getComponentProps, getAdditionalProps, children, updateProps } =
+    getProps<{
+      additional_props?: Record<string, any>;
 
-  export let value: string | number;
-  export let as_item: string | undefined;
-  // gradio properties
-  export let visible = true;
-  export let elem_id = '';
-  export let elem_classes: string[] = [];
-  export let elem_style: React.CSSProperties = {};
+      as_item?: string | undefined;
+      _internal: {
+        layout?: boolean;
+      };
+      value?: string | number;
 
-  const [mergedProps, update] = getSlotContext({
-    gradio,
-    props: $updatedProps,
-    _internal,
-    visible,
-    elem_id,
-    elem_classes,
-    elem_style,
-    as_item,
-    value,
-    restProps: $$restProps,
-  });
+      open_change?: any;
+      calendar_change?: any;
+    }>(() => props);
 
-  const setSlotParams = getSetSlotParamsFn();
+  const getProceedProps = processProps(
+    () => {
+      const {
+        visible,
+        _internal,
+        as_item,
+        elem_classes,
+        elem_id,
+        elem_style,
+        value,
+        ...restProps
+      } = getComponentProps();
+      return {
+        additionalProps: getAdditionalProps(),
+        _internal,
+        as_item,
+        restProps,
+        visible,
+        elem_id,
+        elem_classes,
+        elem_style,
+        value,
+      };
+    },
+    {
+      open_change: 'openChange',
+      calendar_change: 'calendarChange',
+    }
+  );
+  const proceedProps = $derived(getProceedProps());
+
   const slots = getSlots();
-  $: update({
-    gradio,
-    props: $updatedProps,
-    _internal,
-    visible,
-    elem_id,
-    elem_classes,
-    elem_style,
-    as_item,
-    value,
-    restProps: $$restProps,
-  });
 </script>
 
-{#if $mergedProps.visible}
+{#if proceedProps.visible}
   {#await AwaitedTimePicker then TimePicker}
     <TimePicker
-      style={$mergedProps.elem_style}
-      className={cls($mergedProps.elem_classes, 'ms-gr-antd-time-picker')}
-      id={$mergedProps.elem_id}
-      {...$mergedProps.restProps}
-      {...$mergedProps.props}
-      {...bindEvents($mergedProps, {
-        open_change: 'openChange',
-        calendar_change: 'calendarChange',
-      })}
-      slots={$slots}
-      value={$mergedProps.props.value || $mergedProps.value}
-      onValueChange={(val) => {
-        value = val;
+      style={proceedProps.elem_style}
+      className={cls(proceedProps.elem_classes, 'ms-gr-antd-time-picker')}
+      id={proceedProps.elem_id}
+      {...proceedProps.restProps}
+      {...proceedProps.additionalProps}
+      slots={slots.value}
+      value={proceedProps.additionalProps.value ?? proceedProps.value}
+      onValueChange={(v) => {
+        updateProps({
+          value: v,
+        });
       }}
-      {setSlotParams}
     >
-      <slot />
+      {@render children()}
     </TimePicker>
   {/await}
 {/if}

@@ -1,11 +1,10 @@
 import { sveltify } from '@svelte-preprocess-react';
-import type { SetSlotParams } from '@svelte-preprocess-react/slot';
 import React from 'react';
 import { createFunction } from '@utils/createFunction';
 import { renderItems } from '@utils/renderItems';
 import { renderParamsSlot } from '@utils/renderParamsSlot';
 import { renderSlot } from '@utils/renderSlot';
-import { type TableColumnProps } from 'antd';
+import { type TableColumnProps as ATableColumnProps } from 'antd';
 
 import {
   useItems as useMenuItems,
@@ -13,16 +12,15 @@ import {
 } from '../../menu/context';
 import { ColumnItemHandler, type ItemHandlerProps } from '../context';
 
-export const TableColumn = sveltify<
-  TableColumnProps &
-    ItemHandlerProps & {
-      setSlotParams: SetSlotParams;
-      itemSlots: Record<string, HTMLElement>;
-    }
->(
+export type TableColumnProps = ATableColumnProps &
+  ItemHandlerProps & {
+    itemSlots: Record<string, HTMLElement>;
+  };
+
+export const TableColumn = sveltify<TableColumnProps>(
   withMenuItemsContextProvider(
     ['filterDropdownProps.menu.items'],
-    ({ setSlotParams, itemSlots: slots, ...props }) => {
+    ({ itemSlots: slots, ...props }) => {
       const {
         items: { 'filterDropdownProps.menu.items': dropdownMenuItems },
       } = useMenuItems<['filterDropdownProps.menu.items']>();
@@ -42,7 +40,6 @@ export const TableColumn = sveltify<
               expandIcon:
                 renderParamsSlot(
                   {
-                    setSlotParams,
                     slots: slots,
                     key: 'filterDropdownProps.menu.expandIcon',
                   },
@@ -61,7 +58,6 @@ export const TableColumn = sveltify<
               dropdownRender: slots['filterDropdownProps.dropdownRender']
                 ? renderParamsSlot(
                     {
-                      setSlotParams,
                       slots: slots,
                       key: 'filterDropdownProps.dropdownRender',
                     },
@@ -73,7 +69,6 @@ export const TableColumn = sveltify<
               popupRender: slots['filterDropdownProps.popupRender']
                 ? renderParamsSlot(
                     {
-                      setSlotParams,
                       slots: slots,
                       key: 'filterDropdownProps.popupRender',
                     },

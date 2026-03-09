@@ -1,6 +1,5 @@
 import { sveltify } from '@svelte-preprocess-react';
 import { ReactSlot } from '@svelte-preprocess-react/react-slot';
-import type { SetSlotParams } from '@svelte-preprocess-react/slot';
 import React, { useMemo } from 'react';
 import { useFunction } from '@utils/hooks/useFunction';
 import { renderItems } from '@utils/renderItems';
@@ -12,7 +11,6 @@ import { useItems, withItemsContextProvider } from './context';
 export const Tour = sveltify<
   GetProps<typeof ATour> & {
     children?: React.ReactNode;
-    setSlotParams: SetSlotParams;
   },
   ['closeIcon', 'indicatorsRender', 'actionsRender']
 >(
@@ -25,7 +23,6 @@ export const Tour = sveltify<
       onChange,
       onClose,
       getPopupContainer,
-      setSlotParams,
       indicatorsRender,
       actionsRender,
       ...props
@@ -63,7 +60,6 @@ export const Tour = sveltify<
               slots.actionsRender
                 ? renderParamsSlot({
                     slots,
-                    setSlotParams,
                     key: 'actionsRender',
                   })
                 : actionsRenderFunction
@@ -72,7 +68,6 @@ export const Tour = sveltify<
               slots.indicatorsRender
                 ? renderParamsSlot({
                     slots,
-                    setSlotParams,
                     key: 'indicatorsRender',
                   })
                 : indicatorsRenderFunction

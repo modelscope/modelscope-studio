@@ -53,7 +53,7 @@ class AntdTableColumn(ModelScopeLayoutComponent):
             filter_mode: Literal['menu', 'tree'] | None = None,
             filter_search: bool | str | None = None,
             filters: list[dict] | None = None,
-            filter_dropdown_additional_props: dict | None = None,
+            filter_dropdown_props: dict | None = None,
             fixed: str | bool | None = None,
             key: str | None = None,
             column_render: str | None = None,

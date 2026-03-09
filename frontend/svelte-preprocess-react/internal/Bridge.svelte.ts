@@ -10,6 +10,7 @@ import React, {
   useRef,
   useState,
 } from 'react';
+import { createFunction } from '@utils/createFunction';
 import { omitUndefinedProps } from '@utils/omitUndefinedProps';
 import { patchProps } from '@utils/patchProps';
 
@@ -109,8 +110,15 @@ function BridgeInternal({
   const autoCompleteContext = useAutoCompleteContext();
   const suggestionContext = useSuggestionContext();
   const props: typeof nodeProps = useMemo(() => {
+    const styles = createFunction(nodeProps.styles, true) || nodeProps.styles;
+    const classNames =
+      createFunction(nodeProps.classNames, true) || nodeProps.classNames;
+
     return omitUndefinedProps({
       ...nodeProps,
+      ...(styles ? { styles } : {}),
+      ...(classNames ? { classNames } : {}),
+      // convert styles & classNames
       // If the component is ignore, then its value should ignore the influence of the context.
       ...(node.ignore ? {} : formItemContext || {}),
       ...(node.ignore ? {} : autoCompleteContext || {}),

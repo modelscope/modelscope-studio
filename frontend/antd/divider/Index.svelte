@@ -1,86 +1,73 @@
-<svelte:options accessors={true} />
-
 <script lang="ts">
   import {
-    bindEvents,
+    getProps,
     importComponent,
+    processProps,
   } from '@svelte-preprocess-react/component';
-  import { getSlotContext, getSlots } from '@svelte-preprocess-react/slot';
-  import type React from 'react';
-  import type { Gradio } from '@gradio/utils';
+  import { getSlots } from '@svelte-preprocess-react/svelte-contexts/slot.svelte';
   import cls from 'classnames';
-  import { writable } from 'svelte/store';
 
   const AwaitedDivider = importComponent(() => import('./divider'));
 
-  export let gradio: Gradio;
-  export let props: Record<string, any> = {};
-  const updatedProps = writable(props);
-  $: updatedProps.update((prev) => ({ ...prev, ...props }));
-  export let _internal: {
-    layout?: boolean;
-  } = {};
+  const props = $props();
+  const { getComponentProps, getAdditionalProps, children } = getProps<{
+    additional_props?: Record<string, any>;
 
-  export let value = '';
-  export let as_item: string | undefined;
-  // gradio properties
-  export let visible = true;
-  export let elem_id = '';
-  export let elem_classes: string[] = [];
-  export let elem_style: React.CSSProperties = {};
+    as_item?: string | undefined;
+    _internal: {
+      layout?: boolean;
+    };
+    value?: string;
+  }>(() => props);
 
-  const [mergedProps, update] = getSlotContext({
-    gradio,
-    props: $updatedProps,
-    _internal,
-    value,
-    visible,
-    elem_id,
-    elem_classes,
-    elem_style,
-    as_item,
-    restProps: $$restProps,
+  const getProceedProps = processProps(() => {
+    const {
+      visible,
+      _internal,
+      as_item,
+      elem_classes,
+      elem_id,
+      elem_style,
+      value,
+      ...restProps
+    } = getComponentProps();
+    return {
+      additionalProps: getAdditionalProps(),
+      _internal,
+      as_item,
+      restProps,
+      visible,
+      elem_id,
+      elem_classes,
+      elem_style,
+      value,
+    };
   });
+  const proceedProps = $derived(getProceedProps());
+
   const slots = getSlots();
-  $: update({
-    gradio,
-    props: $updatedProps,
-    _internal,
-    value,
-    visible,
-    elem_id,
-    elem_classes,
-    elem_style,
-    as_item,
-    restProps: $$restProps,
+  const divider_props = $derived({
+    style: proceedProps.elem_style,
+    className: cls(proceedProps.elem_classes, 'ms-gr-antd-divider'),
+    id: proceedProps.elem_id,
+    ...proceedProps.restProps,
+    ...proceedProps.additionalProps,
+    slots: slots.value,
   });
-  $: passed_props = {
-    style: $mergedProps.elem_style,
-    className: cls($mergedProps.elem_classes, 'ms-gr-antd-divider'),
-    id: $mergedProps.elem_id,
-    ...$mergedProps.restProps,
-    ...$mergedProps.props,
-    ...bindEvents($mergedProps),
-    slots: $slots,
-  };
 </script>
 
-<!-- $$slots.default and slot fallbacks are not working in gradio -->
-{#if $mergedProps.visible}
+{#if proceedProps.visible}
   {#await AwaitedDivider then Divider}
-    {#if $mergedProps._internal.layout}
-      <Divider {...passed_props}>
-        <slot></slot>
+    {#if proceedProps._internal.layout}
+      <Divider {...divider_props}>
+        {@render children()}
       </Divider>
-    {:else if $mergedProps.value}
-      <Divider {...passed_props}>
-        {$mergedProps.value}
+    {:else if proceedProps.value}
+      <Divider {...divider_props}>
+        {proceedProps.value}
       </Divider>
     {:else}
-      <Divider {...passed_props} />
+      <Divider {...divider_props} />
     {/if}
   {/await}
 {/if}
-
-<style>
-</style>

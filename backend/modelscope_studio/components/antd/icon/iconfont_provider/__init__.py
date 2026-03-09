@@ -21,7 +21,7 @@ class AntdIconIconfontProvider(ModelScopeLayoutComponent):
             script_url: str | list[str] | None = None,
             additional_props: dict | None = None,
             *,
-            extra_common_additional_props: dict | None = None,
+            extra_common_props: dict | None = None,
             as_item: str | None = None,
             _internal: None = None,
             # gradio properties

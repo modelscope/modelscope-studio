@@ -1,7 +1,6 @@
 import { sveltify } from '@svelte-preprocess-react';
 import { useSuggestionOpenContext } from '@svelte-preprocess-react/react-contexts';
 import { ReactSlot } from '@svelte-preprocess-react/react-slot';
-import type { SetSlotParams } from '@svelte-preprocess-react/slot';
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { CloudUploadOutlined, LinkOutlined } from '@ant-design/icons';
 import {
@@ -75,7 +74,6 @@ export const MultimodalInput = sveltify<
     'onPasteFile' | 'value' | 'onSubmit'
   > & {
     children?: React.ReactNode;
-    setSlotParams: SetSlotParams;
     value?: MultimodalInputValue;
     mode?: 'inline' | 'block';
     upload: (files: File[]) => Promise<FileData[]>;

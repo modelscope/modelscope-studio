@@ -1,84 +1,76 @@
-<svelte:options accessors={true} />
-
 <script lang="ts">
   import {
-    bindEvents,
+    getProps,
     importComponent,
+    processProps,
   } from '@svelte-preprocess-react/component';
-  import { getSlotContext, getSlots } from '@svelte-preprocess-react/slot';
-  import type React from 'react';
-  import type { Gradio } from '@gradio/utils';
+  import { getSlots } from '@svelte-preprocess-react/svelte-contexts/slot.svelte';
   import cls from 'classnames';
-  import { writable } from 'svelte/store';
 
   const AwaitedRadio = importComponent(() => import('./radio'));
 
-  export let gradio: Gradio;
-  export let props: Record<string, any> = {};
-  const updatedProps = writable(props);
-  $: updatedProps.update((prev) => ({ ...prev, ...props }));
-  export let _internal: {
-    layout?: boolean;
-  } = {};
-  export let value: boolean;
-  export let as_item: string | undefined;
-  // gradio properties
-  export let visible = true;
-  export let elem_id = '';
-  export let elem_classes: string[] = [];
-  export let elem_style: React.CSSProperties = {};
+  const props = $props();
+  const { getComponentProps, getAdditionalProps, children, updateProps } =
+    getProps<{
+      additional_props?: Record<string, any>;
 
-  const [mergedProps, update] = getSlotContext(
-    {
-      gradio,
-      props: $updatedProps,
-      _internal,
-      visible,
-      elem_id,
-      elem_classes,
-      elem_style,
-      as_item,
-      value,
-      restProps: $$restProps,
+      group_value?: any;
+      _internal: {
+        layout?: boolean;
+      };
+      value?: boolean;
+    }>(() => props);
+
+  const getProceedProps = processProps(
+    () => {
+      const {
+        visible,
+        _internal,
+        as_item,
+        elem_classes,
+        elem_id,
+        elem_style,
+        value,
+        ...restProps
+      } = getComponentProps();
+      return {
+        additionalProps: getAdditionalProps(),
+        _internal,
+        as_item,
+        restProps,
+        visible,
+        elem_id,
+        elem_classes,
+        elem_style,
+        value,
+      };
     },
     {
       group_value: 'value',
     }
   );
+  const proceedProps = $derived(getProceedProps());
+
   const slots = getSlots();
-  $: update({
-    gradio,
-    props: $updatedProps,
-    _internal,
-    visible,
-    elem_id,
-    elem_classes,
-    elem_style,
-    as_item,
-    value,
-    restProps: $$restProps,
-  });
 </script>
 
-{#if $mergedProps.visible}
+{#if proceedProps.visible}
   {#await AwaitedRadio then Radio}
     <Radio
-      style={$mergedProps.elem_style}
-      className={cls($mergedProps.elem_classes, 'ms-gr-antd-radio')}
-      id={$mergedProps.elem_id}
-      checked={$mergedProps.value}
-      {...$mergedProps.restProps}
-      {...$mergedProps.props}
-      {...bindEvents($mergedProps)}
-      slots={$slots}
+      style={proceedProps.elem_style}
+      className={cls(proceedProps.elem_classes, 'ms-gr-antd-radio')}
+      id={proceedProps.elem_id}
+      checked={proceedProps.value}
+      {...proceedProps.restProps}
+      {...proceedProps.additionalProps}
+      slots={slots.value}
       onValueChange={(v) => {
-        value = v;
+        updateProps({
+          value: v,
+        });
       }}
     >
-      <slot />
+      {@render children()}
     </Radio>
   {/await}
 {/if}
-
-<style>
-</style>

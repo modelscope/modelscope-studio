@@ -1,15 +1,22 @@
-<svelte:options accessors={true} />
-
 <script lang="ts">
+  import type { Snippet } from 'svelte';
+
   import Fragment from './Index.svelte';
 
-  export let show: boolean | undefined = false;
+  const {
+    show = false,
+    children,
+    ...restProps
+  }: {
+    show?: boolean;
+    children?: Snippet;
+  } = $props();
 </script>
 
 {#if show}
-  <Fragment {...$$restProps}>
-    <slot />
+  <Fragment {...restProps}>
+    {@render children?.()}
   </Fragment>
 {:else}
-  <slot />
+  {@render children?.()}
 {/if}

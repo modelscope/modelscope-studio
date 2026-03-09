@@ -1,6 +1,5 @@
 import { sveltify } from '@svelte-preprocess-react';
 import { ReactSlot } from '@svelte-preprocess-react/react-slot';
-import type { SetSlotParams } from '@svelte-preprocess-react/slot';
 import { useMemo } from 'react';
 import { useFunction } from '@utils/hooks/useFunction';
 import { useTargets } from '@utils/hooks/useTargets';
@@ -16,7 +15,6 @@ import {
 
 export const DropdownButton = sveltify<
   GetProps<typeof ADropdown.Button> & {
-    setSlotParams: SetSlotParams;
     value?: string;
   },
   [
@@ -37,7 +35,6 @@ export const DropdownButton = sveltify<
       dropdownRender,
       popupRender,
       buttonsRender,
-      setSlotParams,
       value,
       ...props
     }) => {
@@ -62,7 +59,6 @@ export const DropdownButton = sveltify<
                 ? renderParamsSlot({
                     key: 'buttonsRender',
                     slots,
-                    setSlotParams,
                     targets: buttonsRenderTargets,
                   })
                 : buttonsRenderFunction
@@ -80,7 +76,7 @@ export const DropdownButton = sveltify<
               }, [menuItems, props.menu?.items]),
               expandIcon: slots['menu.expandIcon']
                 ? renderParamsSlot(
-                    { slots, setSlotParams, key: 'menu.expandIcon' },
+                    { slots, key: 'menu.expandIcon' },
                     { clone: true }
                   )
                 : props.menu?.expandIcon,
@@ -95,7 +91,6 @@ export const DropdownButton = sveltify<
               slots.dropdownRender
                 ? renderParamsSlot({
                     slots,
-                    setSlotParams,
                     key: 'dropdownRender',
                   })
                 : dropdownRenderFunction
@@ -103,7 +98,7 @@ export const DropdownButton = sveltify<
             popupRender={
               slots.popupRender
                 ? renderParamsSlot(
-                    { slots, setSlotParams, key: 'popupRender' },
+                    { slots, key: 'popupRender' },
                     { clone: true }
                   )
                 : popupRenderFunction

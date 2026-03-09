@@ -71,7 +71,7 @@ class AntdXAttachments(ModelScopeDataLayoutComponent):
             value: list[str] | Callable | None = None,
             additional_props: dict | None = None,
             *,
-            image_additional_props: dict | None = None,
+            image_props: dict | None = None,
             accept: str | None = None,
             action: str | None = None,
             before_upload: str | None = None,

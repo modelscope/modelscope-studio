@@ -1,15 +1,12 @@
 import { sveltify } from '@svelte-preprocess-react';
 import { ReactSlot } from '@svelte-preprocess-react/react-slot';
-import type { SetSlotParams } from '@svelte-preprocess-react/slot';
 import React from 'react';
 import { useFunction } from '@utils/hooks/useFunction';
 import { renderParamsSlot } from '@utils/renderParamsSlot';
 import { type GetProps, Modal as AModal } from 'antd';
 
 export const Modal = sveltify<
-  GetProps<typeof AModal> & {
-    setSlotParams: SetSlotParams;
-  },
+  GetProps<typeof AModal>,
   [
     'cancelButtonProps.icon',
     'cancelText',
@@ -29,7 +26,6 @@ export const Modal = sveltify<
     getContainer,
     children,
     modalRender,
-    setSlotParams,
     ...props
   }) => {
     const afterOpenChangeFunction = useFunction(afterOpenChange);
@@ -83,7 +79,7 @@ export const Modal = sveltify<
         }
         footer={
           slots.footer
-            ? renderParamsSlot({ slots, setSlotParams, key: 'footer' })
+            ? renderParamsSlot({ slots, key: 'footer' })
             : footerFunction ||
               (props.footer === 'DEFAULT_FOOTER'
                 ? undefined
@@ -94,7 +90,7 @@ export const Modal = sveltify<
         title={slots.title ? <ReactSlot slot={slots.title} /> : props.title}
         modalRender={
           slots.modalRender
-            ? renderParamsSlot({ slots, setSlotParams, key: 'modalRender' })
+            ? renderParamsSlot({ slots, key: 'modalRender' })
             : modalRenderFunction
         }
         getContainer={

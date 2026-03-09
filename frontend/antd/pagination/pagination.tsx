@@ -1,6 +1,5 @@
 import { sveltify } from '@svelte-preprocess-react';
 import { ReactSlot } from '@svelte-preprocess-react/react-slot';
-import type { SetSlotParams } from '@svelte-preprocess-react/slot';
 import React from 'react';
 import { useFunction } from '@utils/hooks/useFunction';
 import { renderParamsSlot } from '@utils/renderParamsSlot';
@@ -9,7 +8,6 @@ import { type GetProps, Pagination as APagination } from 'antd';
 export const Pagination = sveltify<
   GetProps<typeof APagination> & {
     children?: React.ReactNode;
-    setSlotParams: SetSlotParams;
   },
   ['showQuickJumper.goButton', 'itemRender']
 >(
@@ -20,7 +18,6 @@ export const Pagination = sveltify<
     onChange,
     children,
     itemRender,
-    setSlotParams,
     ...props
   }) => {
     const itemRenderFunction = useFunction(itemRender);
@@ -34,7 +31,7 @@ export const Pagination = sveltify<
           itemRender={
             slots.itemRender
               ? renderParamsSlot(
-                  { slots, setSlotParams, key: 'itemRender' },
+                  { slots, key: 'itemRender' },
                   { clone: true }
                 )
               : itemRenderFunction

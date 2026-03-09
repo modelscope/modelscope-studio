@@ -1,20 +1,12 @@
-<svelte:options accessors={true} />
-
 <script lang="ts">
   import {
-    bindEvents,
+    getProps,
     importComponent,
+    processProps,
   } from '@svelte-preprocess-react/component';
-  import {
-    getSetSlotParamsFn,
-    getSlotContext,
-    getSlots,
-  } from '@svelte-preprocess-react/slot';
-  import type React from 'react';
+  import { getSlots } from '@svelte-preprocess-react/svelte-contexts/slot.svelte';
   import { type FileData, prepare_files } from '@gradio/client';
-  import type { Gradio } from '@gradio/utils';
   import cls from 'classnames';
-  import { writable } from 'svelte/store';
 
   import type { MultimodalInputValue } from './multimodal-input';
 
@@ -22,80 +14,86 @@
     () => import('./multimodal-input')
   );
 
-  export let gradio: Gradio;
-  export let props: Record<string, any> = {};
-  const updatedProps = writable(props);
-  $: updatedProps.update((prev) => ({ ...prev, ...props }));
-  export let _internal: {
-    layout?: boolean;
-  } = {};
-  export let root: string;
-  export let value: MultimodalInputValue;
-  export let as_item: string | undefined;
-  // gradio properties
-  export let visible = true;
-  export let elem_id = '';
-  export let elem_classes: string[] = [];
-  export let elem_style: React.CSSProperties = {};
+  const props = $props();
+  const { getComponentProps, getAdditionalProps, children, updateProps } =
+    getProps<{
+      additional_props?: Record<string, any>;
 
-  const [mergedProps, update] = getSlotContext({
-    gradio,
-    props: $updatedProps,
-    _internal,
-    visible,
-    elem_id,
-    elem_classes,
-    elem_style,
-    as_item,
-    value,
-    restProps: $$restProps,
-  });
-  const setSlotParams = getSetSlotParamsFn();
+      as_item?: string | undefined;
+      _internal: {
+        layout?: boolean;
+      };
+      value?: MultimodalInputValue;
+      root?: string;
+      key_press?: any;
+      paste_file?: any;
+      key_down?: any;
+    }>(() => props);
+
+  const getProceedProps = processProps(
+    () => {
+      const {
+        visible,
+        _internal,
+        as_item,
+        elem_classes,
+        elem_id,
+        elem_style,
+        value,
+        root,
+        ...restProps
+      } = getComponentProps();
+      return {
+        additionalProps: getAdditionalProps(),
+        _internal,
+        as_item,
+        restProps,
+        visible,
+        elem_id,
+        elem_classes,
+        elem_style,
+        value,
+        root,
+      };
+    },
+    {
+      key_press: 'keyPress',
+      paste_file: 'pasteFile',
+      key_down: 'keyDown',
+    }
+  );
+  const proceedProps = $derived(getProceedProps());
+
   const slots = getSlots();
-  $: update({
-    gradio,
-    props: $updatedProps,
-    _internal,
-    visible,
-    elem_id,
-    elem_classes,
-    elem_style,
-    as_item,
-    value,
-    restProps: $$restProps,
-  });
+
   const upload = async (files: File[]) => {
     return (
-      ((await gradio.client.upload(
+      ((await proceedProps.additionalProps.gradio.client.upload(
         await prepare_files(files),
-        root
+        proceedProps.root
       )) as FileData[]) || []
     );
   };
 </script>
 
-{#if $mergedProps.visible}
+{#if proceedProps.visible}
   {#await AwaitedMultimodalInput then MultimodalInput}
     <MultimodalInput
-      style={$mergedProps.elem_style}
-      className={cls($mergedProps.elem_classes, 'ms-gr-pro-multimodal-input')}
-      id={$mergedProps.elem_id}
-      {...$mergedProps.restProps}
-      {...$mergedProps.props}
-      {...bindEvents($mergedProps, {
-        key_press: 'keyPress',
-        paste_file: 'pasteFile',
-        key_down: 'keyDown',
-      })}
-      slots={$slots}
-      value={$mergedProps.props.value ?? $mergedProps.value}
-      {setSlotParams}
+      style={proceedProps.elem_style}
+      className={cls(proceedProps.elem_classes, 'ms-gr-pro-multimodal-input')}
+      id={proceedProps.elem_id}
+      {...proceedProps.restProps}
+      {...proceedProps.additionalProps}
+      slots={slots.value}
+      value={proceedProps.value}
       onValueChange={(v) => {
-        value = v;
+        updateProps({
+          value: v,
+        });
       }}
       {upload}
     >
-      <slot></slot>
+      {@render children()}
     </MultimodalInput>
   {/await}
 {/if}

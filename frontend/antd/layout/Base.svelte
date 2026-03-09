@@ -1,71 +1,69 @@
-<svelte:options accessors={true} />
-
 <script lang="ts">
   import {
-    bindEvents,
+    getProps,
     importComponent,
+    processProps,
   } from '@svelte-preprocess-react/component';
-  import { getSlotContext, getSlots } from '@svelte-preprocess-react/slot';
-  import type React from 'react';
-  import type { Gradio } from '@gradio/utils';
+  import { getSlots } from '@svelte-preprocess-react/svelte-contexts/slot.svelte';
   import cls from 'classnames';
-  import { writable } from 'svelte/store';
+  import type { Snippet } from 'svelte';
 
   const AwaitedLayoutBase = importComponent(() => import('./layout.base'));
-  export let component: 'header' | 'footer' | 'content' | 'layout';
-  export let gradio: Gradio = {} as Gradio;
-  export let props: Record<string, any> = {};
-  const updatedProps = writable(props);
-  $: updatedProps.update((prev) => ({ ...prev, ...props }));
-  export let _internal: {
-    layout?: boolean;
-  } = {};
 
-  export let as_item: string | undefined = undefined;
-  // gradio properties
-  export let visible = true;
-  export let elem_id = '';
-  export let elem_classes: string[] = [];
-  export let elem_style: React.CSSProperties = {};
+  const props: {
+    component: 'header' | 'footer' | 'content' | 'layout';
+    children?: Snippet;
+  } = $props();
+  const { getComponentProps, getAdditionalProps, children } = getProps<{
+    additional_props?: Record<string, any>;
 
-  const [mergedProps, update] = getSlotContext({
-    gradio,
-    props: $updatedProps,
-    _internal,
-    visible,
-    elem_id,
-    elem_classes,
-    elem_style,
-    as_item,
-    restProps: $$restProps,
+    component: 'header' | 'footer' | 'content' | 'layout';
+    as_item?: string | undefined;
+    _internal: {
+      layout?: boolean;
+    };
+  }>(() => props);
+
+  const getProceedProps = processProps(() => {
+    const {
+      visible,
+      _internal,
+      as_item,
+      elem_classes,
+      elem_id,
+      elem_style,
+      component,
+      ...restProps
+    } = getComponentProps();
+    return {
+      additionalProps: getAdditionalProps(),
+      _internal,
+      as_item,
+      restProps,
+      visible,
+      elem_id,
+      elem_classes,
+      elem_style,
+      component,
+    };
   });
+  const proceedProps = $derived(getProceedProps());
+
   const slots = getSlots();
-  $: update({
-    gradio,
-    props: $updatedProps,
-    _internal,
-    visible,
-    elem_id,
-    elem_classes,
-    elem_style,
-    as_item,
-    restProps: $$restProps,
-  });
 </script>
 
-{#if $mergedProps.visible}
+{#if proceedProps.visible}
   {#await AwaitedLayoutBase then LayoutBase}
     <LayoutBase
-      {component}
-      style={$mergedProps.elem_style}
-      className={cls($mergedProps.elem_classes)}
-      id={$mergedProps.elem_id}
-      {...$mergedProps.restProps}
-      {...$mergedProps.props}
-      {...bindEvents($mergedProps)}
-      slots={$slots}
+      component={proceedProps.component}
+      style={proceedProps.elem_style}
+      className={cls(proceedProps.elem_classes)}
+      id={proceedProps.elem_id}
+      {...proceedProps.restProps}
+      {...proceedProps.additionalProps}
+      slots={slots.value}
     >
-      <slot></slot>
+      {@render children()}
     </LayoutBase>
   {/await}
 {/if}

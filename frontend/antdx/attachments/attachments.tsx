@@ -1,6 +1,5 @@
 import { sveltify } from '@svelte-preprocess-react';
 import { ReactSlot } from '@svelte-preprocess-react/react-slot';
-import type { SetSlotParams } from '@svelte-preprocess-react/slot';
 import { useEffect, useMemo, useState } from 'react';
 import {
   Attachments as XAttachments,
@@ -34,7 +33,6 @@ export const Attachments = sveltify<
     onChange?: (value: string[]) => void;
     upload: (files: RcFile[]) => Promise<(FileData | null)[]>;
     items: FileData[];
-    setSlotParams: SetSlotParams;
   },
   [
     'showUploadList.extra',
@@ -70,7 +68,6 @@ export const Attachments = sveltify<
     onValueChange,
     onRemove,
     items,
-    setSlotParams,
     placeholder,
     getDropContainer,
     children,
@@ -181,14 +178,12 @@ export const Attachments = sveltify<
                   toolbarRender: slots['imageProps.preview.toolbarRender']
                     ? renderParamsSlot({
                         slots,
-                        setSlotParams,
                         key: 'imageProps.preview.toolbarRender',
                       })
                     : previewToolbarRenderFunction,
                   imageRender: slots['imageProps.preview.imageRender']
                     ? renderParamsSlot({
                         slots,
-                        setSlotParams,
                         key: 'imageProps.preview.imageRender',
                       })
                     : previewImageRenderFunction,
@@ -219,7 +214,7 @@ export const Attachments = sveltify<
           getDropContainer={getDropContainerFunction}
           placeholder={
             slots.placeholder
-              ? renderParamsSlot({ slots, setSlotParams, key: 'placeholder' })
+              ? renderParamsSlot({ slots, key: 'placeholder' })
               : supportPlaceholderConfig
                 ? (...args) => {
                     return {
@@ -227,21 +222,18 @@ export const Attachments = sveltify<
                       icon: slots['placeholder.icon']
                         ? renderParamsSlot({
                             slots,
-                            setSlotParams,
                             key: 'placeholder.icon',
                           })?.(...args)
                         : placeholderConfig.icon,
                       title: slots['placeholder.title']
                         ? renderParamsSlot({
                             slots,
-                            setSlotParams,
                             key: 'placeholder.title',
                           })?.(...args)
                         : placeholderConfig.title,
                       description: slots['placeholder.description']
                         ? renderParamsSlot({
                             slots,
-                            setSlotParams,
                             key: 'placeholder.description',
                           })?.(...args)
                         : placeholderConfig.description,
@@ -255,12 +247,12 @@ export const Attachments = sveltify<
           isImageUrl={isImageUrlFunction}
           itemRender={
             slots.itemRender
-              ? renderParamsSlot({ slots, setSlotParams, key: 'itemRender' })
+              ? renderParamsSlot({ slots, key: 'itemRender' })
               : itemRenderFunction
           }
           iconRender={
             slots.iconRender
-              ? renderParamsSlot({ slots, setSlotParams, key: 'iconRender' })
+              ? renderParamsSlot({ slots, key: 'iconRender' })
               : iconRenderFunction
           }
           maxCount={maxCount}
@@ -380,28 +372,24 @@ export const Attachments = sveltify<
                   downloadIcon: slots['showUploadList.downloadIcon']
                     ? renderParamsSlot({
                         slots,
-                        setSlotParams,
                         key: 'showUploadList.downloadIcon',
                       })
                     : showUploadListConfig.downloadIcon,
                   removeIcon: slots['showUploadList.removeIcon']
                     ? renderParamsSlot({
                         slots,
-                        setSlotParams,
                         key: 'showUploadList.removeIcon',
                       })
                     : showUploadListConfig.removeIcon,
                   previewIcon: slots['showUploadList.previewIcon']
                     ? renderParamsSlot({
                         slots,
-                        setSlotParams,
                         key: 'showUploadList.previewIcon',
                       })
                     : showUploadListConfig.previewIcon,
                   extra: slots['showUploadList.extra']
                     ? renderParamsSlot({
                         slots,
-                        setSlotParams,
                         key: 'showUploadList.extra',
                       })
                     : showUploadListConfig.extra,

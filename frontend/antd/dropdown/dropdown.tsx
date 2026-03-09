@@ -1,6 +1,5 @@
 import { sveltify } from '@svelte-preprocess-react';
 import { ReactSlot } from '@svelte-preprocess-react/react-slot';
-import type { SetSlotParams } from '@svelte-preprocess-react/slot';
 import { useMemo } from 'react';
 import { useFunction } from '@utils/hooks/useFunction';
 import { renderItems } from '@utils/renderItems';
@@ -16,7 +15,6 @@ import {
 export const Dropdown = sveltify<
   GetProps<typeof ADropdown> & {
     innerStyle?: React.CSSProperties;
-    setSlotParams: SetSlotParams;
   },
   [
     'menu.expandIcon',
@@ -34,7 +32,6 @@ export const Dropdown = sveltify<
       slots,
       dropdownRender,
       popupRender,
-      setSlotParams,
       ...props
     }) => {
       const getPopupContainerFunction = useFunction(getPopupContainer);
@@ -60,7 +57,7 @@ export const Dropdown = sveltify<
               }, [menuItems, props.menu?.items]),
               expandIcon: slots['menu.expandIcon']
                 ? renderParamsSlot(
-                    { slots, setSlotParams, key: 'menu.expandIcon' },
+                    { slots, key: 'menu.expandIcon' },
                     { clone: true }
                   )
                 : props.menu?.expandIcon,
@@ -76,7 +73,6 @@ export const Dropdown = sveltify<
                 ? renderParamsSlot(
                     {
                       slots,
-                      setSlotParams,
                       key: 'dropdownRender',
                     },
                     { clone: true }
@@ -88,7 +84,6 @@ export const Dropdown = sveltify<
                 ? renderParamsSlot(
                     {
                       slots,
-                      setSlotParams,
                       key: 'popupRender',
                     },
                     { clone: true }

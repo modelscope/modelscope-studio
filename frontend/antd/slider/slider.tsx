@@ -1,6 +1,5 @@
 import { sveltify } from '@svelte-preprocess-react';
 import { ReactSlot } from '@svelte-preprocess-react/react-slot';
-import type { SetSlotParams } from '@svelte-preprocess-react/slot';
 import { useMemo } from 'react';
 import { useFunction } from '@utils/hooks/useFunction';
 import { renderParamsSlot } from '@utils/renderParamsSlot';
@@ -39,7 +38,6 @@ export const Slider = sveltify<
   SliderProps & {
     onValueChange: (value: number | number[]) => void;
     children?: React.ReactNode;
-    setSlotParams: SetSlotParams;
   },
   ['tooltip.formatter']
 >(
@@ -54,7 +52,6 @@ export const Slider = sveltify<
       tooltip,
       step,
       slots,
-      setSlotParams,
       ...props
     }) => {
       const onSliderChange = (v: number | number[]) => {
@@ -79,7 +76,6 @@ export const Slider = sveltify<
               formatter: slots['tooltip.formatter']
                 ? renderParamsSlot({
                     key: 'tooltip.formatter',
-                    setSlotParams,
                     slots,
                   })
                 : tooltipFormatterFunction,

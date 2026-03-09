@@ -1,8 +1,8 @@
 import { exec } from '@actions/exec';
 import { getOctokit } from '@actions/github';
 import { getPackagesSync } from '@manypkg/get-packages';
-import fs from 'fs';
-import path from 'path';
+import fs from 'node:fs';
+import path from 'node:path';
 
 const githubToken = process.env.GITHUB_TOKEN as string;
 const repo = process.env.REPO as string;

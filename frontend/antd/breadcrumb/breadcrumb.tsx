@@ -1,6 +1,5 @@
 import { sveltify } from '@svelte-preprocess-react';
 import { ReactSlot } from '@svelte-preprocess-react/react-slot';
-import type { SetSlotParams } from '@svelte-preprocess-react/slot';
 import React, { useMemo } from 'react';
 import { renderItems } from '@utils/renderItems';
 import { renderParamsSlot } from '@utils/renderParamsSlot';
@@ -10,14 +9,12 @@ import type { ItemType } from 'antd/es/breadcrumb/Breadcrumb';
 import { useItems, withItemsContextProvider } from './context';
 
 export const Breadcrumb = sveltify<
-  GetProps<typeof ABreadcrumb> & {
-    setSlotParams: SetSlotParams;
-  },
+  GetProps<typeof ABreadcrumb>,
   ['separator', 'itemRender']
 >(
   withItemsContextProvider(
     ['default', 'items'],
-    ({ slots, items, setSlotParams, children, ...props }) => {
+    ({ slots, items, children, ...props }) => {
       const { items: slotItems } = useItems<['default', 'items']>();
       const resolvedSlotItems =
         slotItems.items.length > 0 ? slotItems.items : slotItems.default;
@@ -30,7 +27,6 @@ export const Breadcrumb = sveltify<
               slots['itemRender']
                 ? renderParamsSlot(
                     {
-                      setSlotParams,
                       slots,
                       key: 'itemRender',
                     },

@@ -1,6 +1,5 @@
 import { sveltify } from '@svelte-preprocess-react';
 import { ReactSlot } from '@svelte-preprocess-react/react-slot';
-import type { SetSlotParams } from '@svelte-preprocess-react/slot';
 import React, { useMemo } from 'react';
 import { useSlotsChildren } from '@utils/hooks/useSlotsChildren';
 import { useTargets } from '@utils/hooks/useTargets';
@@ -23,7 +22,6 @@ export const TypographyBase = sveltify<
     GetProps<typeof Typography.Title> &
     GetProps<typeof Typography.Link> & {
       component: 'title' | 'paragraph' | 'text' | 'link';
-      setSlotParams: SetSlotParams;
       value?: string;
     },
   [
@@ -47,7 +45,6 @@ export const TypographyBase = sveltify<
     copyable,
     editable,
     ellipsis,
-    setSlotParams,
     value,
     ...props
   }) => {
@@ -141,7 +138,6 @@ export const TypographyBase = sveltify<
                       ? renderParamsSlot(
                           {
                             key: 'ellipsis.symbol',
-                            setSlotParams,
                             slots,
                           },
                           { clone: true }

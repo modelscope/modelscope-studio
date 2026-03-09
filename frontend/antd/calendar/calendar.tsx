@@ -1,5 +1,4 @@
 import { sveltify } from '@svelte-preprocess-react';
-import type { SetSlotParams } from '@svelte-preprocess-react/slot';
 import { useMemo } from 'react';
 import { useFunction } from '@utils/hooks/useFunction';
 import { renderParamsSlot } from '@utils/renderParamsSlot';
@@ -21,7 +20,6 @@ export const Calendar = sveltify<
     onPanelChange?: (date: number, ...args: any[]) => void;
     onSelect?: (date: number, ...args: any[]) => void;
     onValueChange: (date: number) => void;
-    setSlotParams: SetSlotParams;
     children?: React.ReactNode;
   },
   ['cellRender', 'fullCellRender', 'headerRender']
@@ -35,7 +33,6 @@ export const Calendar = sveltify<
     onPanelChange,
     onSelect,
     onValueChange,
-    setSlotParams,
     cellRender,
     fullCellRender,
     headerRender,
@@ -69,21 +66,20 @@ export const Calendar = sveltify<
           disabledDate={disabledDateFunction}
           cellRender={
             slots.cellRender
-              ? renderParamsSlot({ slots, setSlotParams, key: 'cellRender' })
+              ? renderParamsSlot({ slots, key: 'cellRender' })
               : cellRenderFunction
           }
           fullCellRender={
             slots.fullCellRender
               ? renderParamsSlot({
                   slots,
-                  setSlotParams,
                   key: 'fullCellRender',
                 })
               : fullCellRenderFunction
           }
           headerRender={
             slots.headerRender
-              ? renderParamsSlot({ slots, setSlotParams, key: 'headerRender' })
+              ? renderParamsSlot({ slots, key: 'headerRender' })
               : headerRenderFunction
           }
           onChange={(date, ...args) => {

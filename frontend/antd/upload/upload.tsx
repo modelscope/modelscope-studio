@@ -1,5 +1,4 @@
 import { sveltify } from '@svelte-preprocess-react';
-import type { SetSlotParams } from '@svelte-preprocess-react/slot';
 import { useEffect, useMemo, useState } from 'react';
 import type { FileData } from '@gradio/client';
 import { useFunction } from '@utils/hooks/useFunction';
@@ -25,7 +24,6 @@ export const Upload = sveltify<
     onChange?: (value: string[]) => void;
     upload: (files: RcFile[]) => Promise<(FileData | null)[]>;
     fileList: FileData[];
-    setSlotParams: SetSlotParams;
   },
   [
     'showUploadList.extra',
@@ -53,7 +51,6 @@ export const Upload = sveltify<
     onRemove,
     maxCount,
     fileList: fileListProp,
-    setSlotParams,
     ...props
   }) => {
     const supportShowUploadListConfig =
@@ -127,12 +124,12 @@ export const Upload = sveltify<
         maxCount={maxCount}
         itemRender={
           slots.itemRender
-            ? renderParamsSlot({ slots, setSlotParams, key: 'itemRender' })
+            ? renderParamsSlot({ slots, key: 'itemRender' })
             : itemRenderFunction
         }
         iconRender={
           slots.iconRender
-            ? renderParamsSlot({ slots, setSlotParams, key: 'iconRender' })
+            ? renderParamsSlot({ slots, key: 'iconRender' })
             : iconRenderFunction
         }
         // onRemove={(file) => {
@@ -252,28 +249,24 @@ export const Upload = sveltify<
                 downloadIcon: slots['showUploadList.downloadIcon']
                   ? renderParamsSlot({
                       slots,
-                      setSlotParams,
                       key: 'showUploadList.downloadIcon',
                     })
                   : showUploadListConfig.downloadIcon,
                 removeIcon: slots['showUploadList.removeIcon']
                   ? renderParamsSlot({
                       slots,
-                      setSlotParams,
                       key: 'showUploadList.removeIcon',
                     })
                   : showUploadListConfig.removeIcon,
                 previewIcon: slots['showUploadList.previewIcon']
                   ? renderParamsSlot({
                       slots,
-                      setSlotParams,
                       key: 'showUploadList.previewIcon',
                     })
                   : showUploadListConfig.previewIcon,
                 extra: slots['showUploadList.extra']
                   ? renderParamsSlot({
                       slots,
-                      setSlotParams,
                       key: 'showUploadList.extra',
                     })
                   : showUploadListConfig.extra,

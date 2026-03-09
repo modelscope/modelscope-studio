@@ -1,5 +1,4 @@
 import { sveltify } from '@svelte-preprocess-react';
-import type { SetSlotParams } from '@svelte-preprocess-react/slot';
 import { useMemo } from 'react';
 import { useFunction } from '@utils/hooks/useFunction';
 import { useTargets } from '@utils/hooks/useTargets';
@@ -19,7 +18,6 @@ export const ColorPicker = sveltify<
       ...args: any[]
     ) => void;
     value_format: 'rgb' | 'hex' | 'hsb';
-    setSlotParams: SetSlotParams;
   },
   ['panelRender', 'showText']
 >(
@@ -34,7 +32,6 @@ export const ColorPicker = sveltify<
       presets,
       children,
       value_format,
-      setSlotParams,
       slots,
       ...props
     }) => {
@@ -63,12 +60,12 @@ export const ColorPicker = sveltify<
             }, [presets, presetItems])}
             showText={
               slots.showText
-                ? renderParamsSlot({ slots, setSlotParams, key: 'showText' })
+                ? renderParamsSlot({ slots, key: 'showText' })
                 : showTextFunction || showText
             }
             panelRender={
               slots.panelRender
-                ? renderParamsSlot({ slots, setSlotParams, key: 'panelRender' })
+                ? renderParamsSlot({ slots, key: 'panelRender' })
                 : panelRenderFunction
             }
             onChange={(v, ...args) => {

@@ -1,6 +1,5 @@
 import { sveltify } from '@svelte-preprocess-react';
 import { ReactSlot } from '@svelte-preprocess-react/react-slot';
-import type { SetSlotParams } from '@svelte-preprocess-react/slot';
 import React, { useMemo } from 'react';
 import { createFunction } from '@utils/createFunction';
 import { useFunction } from '@utils/hooks/useFunction';
@@ -28,7 +27,6 @@ function getConfig<T>(value: T): Partial<T & Record<PropertyKey, any>> {
 type TableProps = GetProps<typeof ATable>;
 export const Table = sveltify<
   TableProps & {
-    setSlotParams: SetSlotParams;
   },
   [
     'footer',
@@ -65,7 +63,6 @@ export const Table = sveltify<
           onRow,
           onHeaderRow,
           components,
-          setSlotParams,
           ...props
         }) => {
           const {
@@ -172,7 +169,7 @@ export const Table = sveltify<
                 onHeaderRow={onHeaderRowFunction}
                 summary={
                   slots.summary
-                    ? renderParamsSlot({ slots, setSlotParams, key: 'summary' })
+                    ? renderParamsSlot({ slots, key: 'summary' })
                     : summaryFunction
                 }
                 rowSelection={useMemo(() => {
@@ -236,7 +233,6 @@ export const Table = sveltify<
                         itemRender: slots['pagination.itemRender']
                           ? renderParamsSlot({
                               slots,
-                              setSlotParams,
                               key: 'pagination.itemRender',
                             })
                           : paginationConfig.itemRender,
@@ -263,12 +259,12 @@ export const Table = sveltify<
                 }
                 footer={
                   slots.footer
-                    ? renderParamsSlot({ slots, setSlotParams, key: 'footer' })
+                    ? renderParamsSlot({ slots, key: 'footer' })
                     : footerFunction
                 }
                 title={
                   slots.title
-                    ? renderParamsSlot({ slots, setSlotParams, key: 'title' })
+                    ? renderParamsSlot({ slots, key: 'title' })
                     : props.title
                 }
               />

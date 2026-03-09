@@ -1,12 +1,10 @@
-<svelte:options accessors={true} />
-
 <script lang="ts">
+  import type { Snippet } from 'svelte';
   import Base from '../Base.svelte';
 
-  export let value = '';
+  let { children, ...restProps }: { children?: Snippet } = $props();
 </script>
 
-<Base {...$$props} {value} component="title"><slot /></Base>
-
-<style>
-</style>
+<Base {...restProps} component="title">
+  {@render children?.()}
+</Base>

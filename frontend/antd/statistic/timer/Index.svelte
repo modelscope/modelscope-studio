@@ -1,74 +1,68 @@
-<svelte:options accessors={true} />
-
 <script lang="ts">
   import {
-    bindEvents,
+    getProps,
     importComponent,
+    processProps,
   } from '@svelte-preprocess-react/component';
-  import { getSlotContext, getSlots } from '@svelte-preprocess-react/slot';
-  import type React from 'react';
-  import type { Gradio } from '@gradio/utils';
+  import { getSlots } from '@svelte-preprocess-react/svelte-contexts/slot.svelte';
   import cls from 'classnames';
-  import { type Writable, writable } from 'svelte/store';
+  import type StatisticTimer from './statistic.timer';
 
-  const AwaitedStatisticTimer = importComponent(
-    () => import('./statistic.timer')
-  );
-  export let gradio: Gradio;
-  export let _internal: Record<string, any> = {};
-  export let as_item: string | undefined;
-  export let props: Record<string, any> = {};
-  export let value: number;
-  const updatedProps: Writable<typeof props> = writable(props);
-  $: updatedProps.update((prev) => ({ ...prev, ...props }));
-  export let elem_id = '';
-  export let elem_classes: string[] = [];
-  export let elem_style: React.CSSProperties = {};
-  export let visible = true;
+  const AwaitedTimer = importComponent(() => import('./statistic.timer'));
+
+  const props = $props();
+  const { getComponentProps, getAdditionalProps, children } = getProps<{
+    additional_props?: Record<string, any>;
+    as_item?: string | undefined;
+    _internal: {};
+    value?: number;
+    type?: StatisticTimer['type'];
+  }>(() => props);
+
+  const getProceedProps = processProps(() => {
+    const {
+      visible,
+      _internal,
+      as_item,
+      elem_classes,
+      elem_id,
+      elem_style,
+      ...restProps
+    } = getComponentProps();
+    return {
+      additionalProps: getAdditionalProps(),
+      _internal,
+      as_item,
+      restProps,
+      visible,
+      elem_id,
+      elem_classes,
+      elem_style,
+    };
+  });
+  const proceedProps = $derived(getProceedProps());
+
   const slots = getSlots();
-  const [mergedProps, update] = getSlotContext({
-    gradio,
-    props: $updatedProps,
-    _internal,
-    as_item,
-    visible,
-    elem_id,
-    elem_classes,
-    elem_style,
-    value,
-    restProps: $$restProps,
-  });
-  $: update({
-    gradio,
-    props: $updatedProps,
-    _internal,
-    as_item,
-    visible,
-    elem_id,
-    elem_classes,
-    elem_style,
-    value,
-    restProps: $$restProps,
-  });
+
+  const type = $derived(
+    proceedProps.additionalProps.type ??
+      proceedProps.restProps.type ??
+      'countdown'
+  );
 </script>
 
-{#if $mergedProps.visible}
-  {#await AwaitedStatisticTimer then StatisticTimer}
-    <StatisticTimer
-      style={$mergedProps.elem_style}
-      className={cls($mergedProps.elem_classes, 'ms-gr-antd-statistic-timer')}
-      id={$mergedProps.elem_id}
-      {...$mergedProps.restProps}
-      {...$mergedProps.props}
-      {...bindEvents($mergedProps)}
-      type={$mergedProps.props.type ?? $mergedProps.restProps.type}
-      slots={$slots}
-      value={$mergedProps.props.value ?? $mergedProps.value}
+{#if proceedProps.visible}
+  {#await AwaitedTimer then Timer}
+    <Timer
+      style={proceedProps.elem_style}
+      className={cls(proceedProps.elem_classes, 'ms-gr-antd-statistic-timer')}
+      id={proceedProps.elem_id}
+      {...proceedProps.restProps}
+      {...proceedProps.additionalProps}
+      {type}
+      slots={slots.value}
     >
-      <slot></slot>
-    </StatisticTimer>
+      {@render children()}
+    </Timer>
   {/await}
 {/if}
-
-<style>
-</style>

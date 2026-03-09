@@ -44,7 +44,7 @@ class ModelScopeDiv(ModelScopeLayoutComponent):
     def __init__(
             self,
             value: str | None = None,
-            additional_additional_props: dict | None = None,
+            additional_props: dict | None = None,
             *,
             as_item: str | None = None,
             _internal: None = None,

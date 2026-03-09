@@ -1,6 +1,5 @@
 import { sveltify } from '@svelte-preprocess-react';
 import { ReactSlot } from '@svelte-preprocess-react/react-slot';
-import type { SetSlotParams } from '@svelte-preprocess-react/slot';
 import React, { useMemo } from 'react';
 import {
   Conversations as XConversations,
@@ -56,7 +55,6 @@ function patchMenuEvents(menuProps: MenuProps, conversation: Conversation) {
 
 export const Conversations = sveltify<
   ConversationsProps & {
-    setSlotParams: SetSlotParams;
   },
   [
     'menu.expandIcon',
@@ -69,7 +67,7 @@ export const Conversations = sveltify<
     ['menu.items'],
     withItemsContextProvider(
       ['default', 'items'],
-      ({ slots, setSlotParams, children, items, ...props }) => {
+      ({ slots, children, items, ...props }) => {
         const {
           items: { 'menu.items': menuItems },
         } = useMenuItems<['menu.items']>();
@@ -100,13 +98,13 @@ export const Conversations = sveltify<
                 [],
               trigger: slots['menu.trigger']
                 ? renderParamsSlot(
-                    { slots, setSlotParams, key: 'menu.trigger' },
+                    { slots, key: 'menu.trigger' },
                     { clone: true }
                   )
                 : createFunction(menuProps.trigger, true) || menuProps.trigger,
               expandIcon: slots['menu.expandIcon']
                 ? renderParamsSlot(
-                    { slots, setSlotParams, key: 'menu.expandIcon' },
+                    { slots, key: 'menu.expandIcon' },
                     { clone: true }
                   )
                 : menuProps.expandIcon,
@@ -117,7 +115,7 @@ export const Conversations = sveltify<
               ),
             });
           }
-        }, [menuFunction, menuItems, props.menu, setSlotParams, slots]);
+        }, [menuFunction, menuItems, props.menu, slots]);
         const { items: slotItems } = useItems<['default', 'items']>();
         const resolvedSlotItems =
           slotItems.items.length > 0 ? slotItems.items : slotItems.default;
@@ -155,7 +153,6 @@ export const Conversations = sveltify<
                       title: slots['groupable.title']
                         ? renderParamsSlot({
                             slots,
-                            setSlotParams,
                             key: 'groupable.title',
                           })
                         : groupableConfig.title,

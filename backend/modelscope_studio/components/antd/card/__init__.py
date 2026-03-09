@@ -69,7 +69,7 @@ class AntdCard(ModelScopeLayoutComponent):
             size: Literal["default", "small"] | None = None,
             tab_bar_extra_content: str | None = None,
             tab_list: list[str] | str | None = None,
-            tab_additional_props: dict | None = None,
+            tab_props: dict | None = None,
             title: str | None = None,
             type: str | None = None,
             class_names: dict | None = None,

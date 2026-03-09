@@ -1,6 +1,5 @@
 import { sveltify } from '@svelte-preprocess-react';
 import { ReactSlot } from '@svelte-preprocess-react/react-slot';
-import type { SetSlotParams } from '@svelte-preprocess-react/slot';
 import React from 'react';
 import { useFunction } from '@utils/hooks/useFunction';
 import { useTargets } from '@utils/hooks/useTargets';
@@ -11,7 +10,6 @@ export const Transfer = sveltify<
   GetProps<typeof ATransfer> & {
     children?: React.ReactNode;
     onValueChange: (value: (string | number)[]) => void;
-    setSlotParams: SetSlotParams;
   },
   [
     'selectionsIcon',
@@ -32,7 +30,6 @@ export const Transfer = sveltify<
     locale,
     onChange,
     onValueChange,
-    setSlotParams,
     ...props
   }) => {
     const titles = useTargets(children, 'titles');
@@ -69,7 +66,7 @@ export const Transfer = sveltify<
           }
           render={
             slots.render
-              ? renderParamsSlot({ slots, setSlotParams, key: 'render' })
+              ? renderParamsSlot({ slots, key: 'render' })
               : renderFunction ||
                 ((item) => ({
                   label: item.title || item.label,
@@ -79,7 +76,7 @@ export const Transfer = sveltify<
           filterOption={filterOptionFunction}
           footer={
             slots.footer
-              ? renderParamsSlot({ slots, setSlotParams, key: 'footer' })
+              ? renderParamsSlot({ slots, key: 'footer' })
               : footerFunction || footer
           }
           titles={

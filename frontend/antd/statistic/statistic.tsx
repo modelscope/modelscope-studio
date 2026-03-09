@@ -1,6 +1,5 @@
 import { sveltify } from '@svelte-preprocess-react';
 import { ReactSlot } from '@svelte-preprocess-react/react-slot';
-import type { SetSlotParams } from '@svelte-preprocess-react/slot';
 import React from 'react';
 import { useFunction } from '@utils/hooks/useFunction';
 import { renderParamsSlot } from '@utils/renderParamsSlot';
@@ -9,10 +8,9 @@ import { type GetProps, Statistic as AStatistic } from 'antd';
 export const Statistic = sveltify<
   GetProps<typeof AStatistic> & {
     children: React.ReactNode;
-    setSlotParams: SetSlotParams;
   },
   ['prefix', 'suffix', 'title', 'formatter']
->(({ children, slots, setSlotParams, formatter, ...props }) => {
+>(({ children, slots, formatter, ...props }) => {
   const formatterFunction = useFunction(formatter);
   return (
     <>
@@ -21,7 +19,7 @@ export const Statistic = sveltify<
         {...props}
         formatter={
           slots.formatter
-            ? renderParamsSlot({ slots, setSlotParams, key: 'formatter' })
+            ? renderParamsSlot({ slots, key: 'formatter' })
             : formatterFunction
         }
         title={slots.title ? <ReactSlot slot={slots.title} /> : props.title}

@@ -1,81 +1,71 @@
-<svelte:options accessors={true} />
-
 <script lang="ts">
   import {
-    bindEvents,
+    getProps,
     importComponent,
+    processProps,
   } from '@svelte-preprocess-react/component';
-  import { getSlotContext, getSlots } from '@svelte-preprocess-react/slot';
-  import type React from 'react';
-  import type { Gradio } from '@gradio/utils';
+  import { getSlots } from '@svelte-preprocess-react/svelte-contexts/slot.svelte';
   import cls from 'classnames';
-  import { writable } from 'svelte/store';
 
   const AwaitedMessage = importComponent(() => import('./message'));
 
-  export let gradio: Gradio;
-  export let props: Record<string, any> = {};
-  const updatedProps = writable(props);
-  $: updatedProps.update((prev) => ({ ...prev, ...props }));
-  export let _internal: {
-    layout?: boolean;
-  } = {};
+  const props = $props();
+  const { getComponentProps, getAdditionalProps, children, updateProps } =
+    getProps<{
+      additional_props?: Record<string, any>;
 
-  export let content = '';
-  export let as_item: string | undefined;
-  // gradio properties
-  export let visible = false;
-  export let elem_id = '';
-  export let elem_classes: string[] = [];
-  export let elem_style: React.CSSProperties = {};
+      _internal: {
+        layout?: boolean;
+      };
+      key?: string;
+      content?: string;
+    }>(() => props);
 
-  const [mergedProps, update] = getSlotContext({
-    gradio,
-    props: $updatedProps,
-    _internal,
-    content,
-    visible,
-    elem_id,
-    elem_classes,
-    elem_style,
-    as_item,
-    restProps: $$restProps,
+  const getProceedProps = processProps(() => {
+    const {
+      visible,
+      _internal,
+      as_item,
+      elem_classes,
+      elem_id,
+      elem_style,
+      content,
+      ...restProps
+    } = getComponentProps();
+    return {
+      additionalProps: getAdditionalProps(),
+      _internal,
+      as_item,
+      restProps,
+      visible,
+      elem_id,
+      elem_classes,
+      elem_style,
+      content,
+    };
   });
+  const proceedProps = $derived(getProceedProps());
 
   const slots = getSlots();
-  $: update({
-    gradio,
-    props: $updatedProps,
-    _internal,
-    content,
-    visible,
-    elem_id,
-    elem_classes,
-    elem_style,
-    as_item,
-    restProps: $$restProps,
-  });
 </script>
 
 {#await AwaitedMessage then Message}
   <Message
-    style={$mergedProps.elem_style}
-    className={cls($mergedProps.elem_classes, 'ms-gr-antd-message')}
-    id={$mergedProps.elem_id}
-    {...$mergedProps.restProps}
-    {...$mergedProps.props}
-    {...bindEvents($mergedProps)}
-    content={$mergedProps.props.content || $mergedProps.content}
-    slots={$slots}
-    messageKey={$mergedProps.props.key || $mergedProps.restProps.key}
-    visible={$mergedProps.visible}
+    style={proceedProps.elem_style}
+    className={cls(proceedProps.elem_classes, 'ms-gr-antd-message')}
+    id={proceedProps.elem_id}
+    {...proceedProps.restProps}
+    {...proceedProps.additionalProps}
+    content={proceedProps.additionalProps.content || proceedProps.content}
+    slots={slots.value}
+    messageKey={proceedProps.additionalProps.key || proceedProps.restProps.key}
+    visible={proceedProps.visible as boolean}
     onVisible={(v) => {
-      visible = v;
+      updateProps({
+        visible: v,
+      });
     }}
   >
-    <slot></slot>
+    {@render children()}
   </Message>
 {/await}
-
-<style>
-</style>

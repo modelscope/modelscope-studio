@@ -15,7 +15,7 @@
     _internal: {
       layout?: boolean;
     };
-    value: string | undefined;
+    value?: string;
   }>(() => props);
 
   const getProceedProps = processProps(() => {
@@ -23,10 +23,10 @@
       visible,
       _internal,
       as_item,
-      value,
       elem_classes,
       elem_id,
       elem_style,
+      value,
       ...restProps
     } = getComponentProps();
     return {
@@ -34,15 +34,18 @@
       _internal,
       as_item,
       restProps,
-      value,
       visible,
       elem_id,
       elem_classes,
       elem_style,
+      value,
     };
   });
   const proceedProps = $derived(getProceedProps());
   const slots = getSlots();
+  const value = $derived(
+    proceedProps.additionalProps.value || proceedProps.value || ''
+  );
 </script>
 
 {#if proceedProps.visible}
@@ -53,8 +56,8 @@
       id={proceedProps.elem_id}
       {...proceedProps.restProps}
       {...proceedProps.additionalProps}
+      {value}
       slots={slots.value}
-      value={proceedProps.value}
     >
       {@render children()}
     </Icon>

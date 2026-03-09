@@ -12,7 +12,7 @@
   const props = $props();
   const { getComponentProps, getAdditionalProps, children, updateProps } =
     getProps<{
-      value: boolean;
+      value?: boolean;
       additional_props?: Record<string, any>;
 
       as_item?: string | undefined;

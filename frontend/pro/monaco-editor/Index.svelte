@@ -1,99 +1,94 @@
-<svelte:options accessors={true} />
-
 <script lang="ts">
   import {
-    bindEvents,
+    getProps,
     importComponent,
+    processProps,
   } from '@svelte-preprocess-react/component';
-  import { getSlotContext, getSlots } from '@svelte-preprocess-react/slot';
-  import type React from 'react';
-  import type { Gradio } from '@gradio/utils';
+  import { getSlots } from '@svelte-preprocess-react/svelte-contexts/slot.svelte';
   import cls from 'classnames';
-  import { writable } from 'svelte/store';
 
   import { initCDNLoader, initLocalLoader } from './loader';
 
   const AwaitedMonacoEditor = importComponent(() => import('./monaco-editor'));
 
-  export let value: string | undefined;
-  export let _loader: {
-    mode?: 'cdn' | 'local';
-    cdn_url?: string;
-  };
-  export let gradio: Gradio;
-  export let props: Record<string, any> = {};
-  const updatedProps = writable(props);
-  $: updatedProps.update((prev) => ({ ...prev, ...props }));
-  export let _internal: {
-    layout?: boolean;
-  } = {};
-  export let as_item: string | undefined;
-  // gradio properties
-  export let visible = true;
-  export let elem_id = '';
-  export let elem_classes: string[] = [];
-  export let elem_style: React.CSSProperties = {};
+  const props = $props();
+  const { getComponentProps, getAdditionalProps, children, updateProps } =
+    getProps<{
+      additional_props?: Record<string, any>;
 
-  const [mergedProps, update] = getSlotContext({
-    gradio,
-    props: $updatedProps,
-    _internal,
-    visible,
-    elem_id,
-    elem_classes,
-    elem_style,
-    as_item,
-    value,
-    restProps: $$restProps,
+      as_item?: string | undefined;
+      _internal: {
+        layout?: boolean;
+      };
+      value?: string | undefined;
+      _loader?: {
+        mode?: 'cdn' | 'local';
+        cdn_url?: string;
+      };
+    }>(() => props);
+
+  const getProceedProps = processProps(() => {
+    const {
+      visible,
+      _internal,
+      as_item,
+      elem_classes,
+      elem_id,
+      elem_style,
+      value,
+      _loader,
+      ...restProps
+    } = getComponentProps();
+    return {
+      additionalProps: getAdditionalProps(),
+      _internal,
+      as_item,
+      restProps,
+      visible,
+      elem_id,
+      elem_classes,
+      elem_style,
+      value,
+      _loader,
+    };
   });
+  const proceedProps = $derived(getProceedProps());
 
   const slots = getSlots();
-  $: update({
-    gradio,
-    props: $updatedProps,
-    _internal,
-    visible,
-    elem_id,
-    elem_classes,
-    elem_style,
-    as_item,
-    value,
-    restProps: $$restProps,
-  });
-  // define this method outside of the $ block to avoid re-rendering
-  const onValueChange = (v: string | undefined) => {
-    value = v;
-  };
 
-  $: editorProps = {
-    style: $mergedProps.elem_style,
-    className: cls($mergedProps.elem_classes, 'ms-gr-pro-monaco-editor'),
-    id: $mergedProps.elem_id,
-    ...$mergedProps.restProps,
-    ...$mergedProps.props,
-    ...bindEvents($mergedProps),
-    onValueChange,
-    value: $mergedProps.value,
-    slots: $slots,
-    themeMode: gradio.theme,
-  };
+  const mode = $derived(proceedProps._loader?.mode);
+  const cdn_url = $derived(proceedProps._loader?.cdn_url);
 
-  $: mode = _loader?.mode;
-  $: cdn_url = _loader?.cdn_url;
-
-  $: awaitedLoader =
+  const awaitedLoader = $derived(
     mode === 'local'
       ? initLocalLoader()
       : cdn_url
         ? initCDNLoader(cdn_url)
-        : undefined;
+        : undefined
+  );
+
+  const editorProps = $derived({
+    style: proceedProps.elem_style,
+    className: cls(proceedProps.elem_classes, 'ms-gr-pro-monaco-editor'),
+    id: proceedProps.elem_id,
+    ...proceedProps.restProps,
+    ...proceedProps.additionalProps,
+    onValueChange: (v: string | undefined) => {
+      updateProps({
+        value: v,
+      });
+    },
+    value: proceedProps.value,
+    slots: slots.value,
+    themeMode: proceedProps.additionalProps.gradio?.theme,
+  });
 </script>
 
-{#if $mergedProps.visible}
+{#if proceedProps.visible}
   {#await awaitedLoader then}
     {#await AwaitedMonacoEditor then MonacoEditor}
       <MonacoEditor {...editorProps}>
-        <slot></slot>
+        {@render children()}
       </MonacoEditor>
     {/await}
   {/await}

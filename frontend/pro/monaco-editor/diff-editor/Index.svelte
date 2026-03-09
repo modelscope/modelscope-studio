@@ -1,102 +1,65 @@
-<svelte:options accessors={true} />
-
 <script lang="ts">
   import {
-    bindEvents,
+    getProps,
     importComponent,
+    processProps,
   } from '@svelte-preprocess-react/component';
-  import { getSlotContext, getSlots } from '@svelte-preprocess-react/slot';
-  import type React from 'react';
-  import type { Gradio } from '@gradio/utils';
+  import { getSlots } from '@svelte-preprocess-react/svelte-contexts/slot.svelte';
   import cls from 'classnames';
-  import { writable } from 'svelte/store';
 
-  import { initCDNLoader, initLocalLoader } from '../loader';
-
-  const AwaitedMonacoDiffEditor = importComponent(
+  const AwaitedDiffEditor = importComponent(
     () => import('./monaco-editor.diff-editor')
   );
 
-  export let value: string | undefined;
-  export let _loader: {
-    mode?: 'cdn' | 'local';
-    cdn_url?: string;
-  };
-  export let gradio: Gradio;
-  export let props: Record<string, any> = {};
-  const updatedProps = writable(props);
-  $: updatedProps.update((prev) => ({ ...prev, ...props }));
-  export let _internal: {
-    layout?: boolean;
-  } = {};
-  export let as_item: string | undefined;
-  // gradio properties
-  export let visible = true;
-  export let elem_id = '';
-  export let elem_classes: string[] = [];
-  export let elem_style: React.CSSProperties = {};
+  const props = $props();
+  const { getComponentProps, getAdditionalProps, children } = getProps<{
+    additional_props?: Record<string, any>;
+    as_item?: string | undefined;
+    _internal: {
+      layout?: boolean;
+    };
+  }>(() => props);
 
-  const [mergedProps, update] = getSlotContext({
-    gradio,
-    props: $updatedProps,
-    _internal,
-    visible,
-    elem_id,
-    elem_classes,
-    elem_style,
-    as_item,
-    value,
-    restProps: $$restProps,
+  const getProceedProps = processProps(() => {
+    const {
+      visible,
+      _internal,
+      as_item,
+      elem_classes,
+      elem_id,
+      elem_style,
+      ...restProps
+    } = getComponentProps();
+    return {
+      additionalProps: getAdditionalProps(),
+      _internal,
+      as_item,
+      restProps,
+      visible,
+      elem_id,
+      elem_classes,
+      elem_style,
+    };
   });
+  const proceedProps = $derived(getProceedProps());
 
   const slots = getSlots();
-  $: update({
-    gradio,
-    props: $updatedProps,
-    _internal,
-    visible,
-    elem_id,
-    elem_classes,
-    elem_style,
-    as_item,
-    value,
-    restProps: $$restProps,
-  });
-
-  const onValueChange = (v: string | undefined) => {
-    value = v;
-  };
-
-  $: editorProps = {
-    style: $mergedProps.elem_style,
-    className: cls($mergedProps.elem_classes, 'ms-gr-pro-monaco-diff-editor'),
-    id: $mergedProps.elem_id,
-    ...$mergedProps.restProps,
-    ...$mergedProps.props,
-    ...bindEvents($mergedProps),
-    onValueChange,
-    value: $mergedProps.value,
-    slots: $slots,
-    themeMode: gradio.theme,
-  };
-
-  $: mode = _loader?.mode;
-  $: cdn_url = _loader?.cdn_url;
-
-  $: awaitedLoader =
-    mode === 'local'
-      ? initLocalLoader()
-      : cdn_url
-        ? initCDNLoader(cdn_url)
-        : undefined;
 </script>
 
-{#if $mergedProps.visible}
-  {#await awaitedLoader then}
-    {#await AwaitedMonacoDiffEditor then MonacoDiffEditor}
-      <MonacoDiffEditor {...editorProps}>
-        <slot></slot>
-      </MonacoDiffEditor>
-    {/await}
+{#if proceedProps.visible}
+  {#await AwaitedDiffEditor then DiffEditor}
+    <DiffEditor
+      style={proceedProps.elem_style}
+      className={cls(
+        proceedProps.elem_classes,
+        'ms-gr-pro-monaco-editor-diff-editor'
+      )}
+      id={proceedProps.elem_id}
+      {...proceedProps.restProps}
+      {...proceedProps.additionalProps}
+      slots={slots.value}
+    >
+      {@render children()}
+    </DiffEditor>
   {/await}
 {/if}

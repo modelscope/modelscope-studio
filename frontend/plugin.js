@@ -1,5 +1,4 @@
 import { parse, transformFromAstSync, traverse, types as t } from '@babel/core';
-import fg from 'fast-glob';
 import path from 'node:path';
 import url from 'node:url';
 
@@ -28,19 +27,7 @@ function generateSveltePreprocessReactAliases() {
     '@svelte-preprocess-react': path.resolve(dirname, baseDir),
   };
 
-  const files = fg.sync([`${baseDir}/*.ts`, `${baseDir}/*.tsx`], {
-    cwd: dirname,
-    absolute: false,
-  });
-
-  const moduleAliases = files.reduce((aliases, file) => {
-    const fileName = path.basename(file, path.extname(file));
-    aliases[`@svelte-preprocess-react/${fileName}`] = path.resolve(
-      dirname,
-      file
-    );
-    return aliases;
-  }, {});
+  const moduleAliases = {};
 
   return {
     ...baseAlias,

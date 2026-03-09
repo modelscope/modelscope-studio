@@ -1,6 +1,5 @@
 import { sveltify } from '@svelte-preprocess-react';
 import { ReactSlot } from '@svelte-preprocess-react/react-slot';
-import type { SetSlotParams } from '@svelte-preprocess-react/slot';
 import React from 'react';
 import { useFunction } from '@utils/hooks/useFunction';
 import { renderParamsSlot } from '@utils/renderParamsSlot';
@@ -8,10 +7,9 @@ import { type GetProps, List as AList } from 'antd';
 
 export const List = sveltify<
   GetProps<typeof AList> & {
-    setSlotParams: SetSlotParams;
   },
   ['footer', 'header', 'loadMore', 'renderItem']
->(({ slots, renderItem, setSlotParams, ...props }) => {
+>(({ slots, renderItem, ...props }) => {
   const renderItemFunction = useFunction(renderItem);
   return (
     <AList
@@ -24,7 +22,7 @@ export const List = sveltify<
       renderItem={
         slots.renderItem
           ? renderParamsSlot(
-              { slots, setSlotParams, key: 'renderItem' },
+              { slots, key: 'renderItem' },
               {
                 forceClone: true,
               }

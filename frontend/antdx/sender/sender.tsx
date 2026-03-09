@@ -1,7 +1,6 @@
 import { sveltify } from '@svelte-preprocess-react';
 import { useSuggestionOpenContext } from '@svelte-preprocess-react/react-contexts';
 import { ReactSlot } from '@svelte-preprocess-react/react-slot';
-import type { SetSlotParams } from '@svelte-preprocess-react/slot';
 import React from 'react';
 import { Sender as XSender, type SenderProps } from '@ant-design/x';
 import type { FileData } from '@gradio/client';
@@ -11,7 +10,6 @@ import { useValueChange } from '@utils/hooks/useValueChange';
 export const Sender = sveltify<
   Omit<SenderProps, 'onPasteFile'> & {
     children?: React.ReactNode;
-    setSlotParams: SetSlotParams;
     upload: (files: File[]) => Promise<FileData[]>;
     onPasteFile?: (value: string[]) => void;
     onValueChange: (value: string) => void;

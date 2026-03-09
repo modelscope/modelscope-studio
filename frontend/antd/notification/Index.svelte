@@ -1,81 +1,73 @@
-<svelte:options accessors={true} />
-
 <script lang="ts">
   import {
-    bindEvents,
+    getProps,
     importComponent,
+    processProps,
   } from '@svelte-preprocess-react/component';
-  import { getSlotContext, getSlots } from '@svelte-preprocess-react/slot';
-  import type React from 'react';
-  import type { Gradio } from '@gradio/utils';
+  import { getSlots } from '@svelte-preprocess-react/svelte-contexts/slot.svelte';
   import cls from 'classnames';
-  import { writable } from 'svelte/store';
 
   const AwaitedNotification = importComponent(() => import('./notification'));
 
-  export let gradio: Gradio;
-  export let props: Record<string, any> = {};
-  const updatedProps = writable(props);
-  $: updatedProps.update((prev) => ({ ...prev, ...props }));
-  export let _internal: {
-    layout?: boolean;
-  } = {};
+  const props = $props();
+  const { getComponentProps, getAdditionalProps, children, updateProps } =
+    getProps<{
+      additional_props?: Record<string, any>;
 
-  export let message = '';
-  export let as_item: string | undefined;
-  // gradio properties
-  export let visible = false;
-  export let elem_id = '';
-  export let elem_classes: string[] = [];
-  export let elem_style: React.CSSProperties = {};
+      as_item?: string | undefined;
+      _internal: {
+        layout?: boolean;
+      };
+      key?: string;
+      message?: string;
+    }>(() => props);
 
-  const [mergedProps, update] = getSlotContext({
-    gradio,
-    props: $updatedProps,
-    _internal,
-    message,
-    visible,
-    elem_id,
-    elem_classes,
-    elem_style,
-    as_item,
-    restProps: $$restProps,
+  const getProceedProps = processProps(() => {
+    const {
+      visible,
+      _internal,
+      as_item,
+      elem_classes,
+      elem_id,
+      elem_style,
+      message,
+      ...restProps
+    } = getComponentProps();
+    return {
+      additionalProps: getAdditionalProps(),
+      _internal,
+      as_item,
+      restProps,
+      visible,
+      elem_id,
+      elem_classes,
+      elem_style,
+      message,
+    };
   });
+  const proceedProps = $derived(getProceedProps());
 
   const slots = getSlots();
-  $: update({
-    gradio,
-    props: $updatedProps,
-    _internal,
-    message,
-    visible,
-    elem_id,
-    elem_classes,
-    elem_style,
-    as_item,
-    restProps: $$restProps,
-  });
 </script>
 
 {#await AwaitedNotification then Notification}
   <Notification
-    style={$mergedProps.elem_style}
-    className={cls($mergedProps.elem_classes, 'ms-gr-antd-notification')}
-    id={$mergedProps.elem_id}
-    {...$mergedProps.restProps}
-    {...$mergedProps.props}
-    {...bindEvents($mergedProps)}
-    message={$mergedProps.props.message || $mergedProps.message}
-    notificationKey={$mergedProps.props.key || $mergedProps.restProps.key}
-    slots={$slots}
-    visible={$mergedProps.visible}
+    style={proceedProps.elem_style}
+    className={cls(proceedProps.elem_classes, 'ms-gr-antd-notification')}
+    id={proceedProps.elem_id}
+    {...proceedProps.restProps}
+    {...proceedProps.additionalProps}
+    message={proceedProps.additionalProps.message || proceedProps.message}
+    notificationKey={proceedProps.additionalProps.key ||
+      proceedProps.restProps.key}
+    slots={slots.value}
+    visible={proceedProps.visible as boolean}
     onVisible={(v) => {
-      visible = v;
+      updateProps({
+        visible: v,
+      });
     }}
   >
-    <slot></slot>
+    {@render children()}
   </Notification>
 {/await}
-
-<style>
-</style>

@@ -1,6 +1,5 @@
 import { sveltify } from '@svelte-preprocess-react';
 import { ReactSlot } from '@svelte-preprocess-react/react-slot';
-import type { SetSlotParams } from '@svelte-preprocess-react/slot';
 import React, { useMemo } from 'react';
 import { useFunction } from '@utils/hooks/useFunction';
 import { omitUndefinedProps } from '@utils/omitUndefinedProps';
@@ -16,7 +15,6 @@ export const TreeSelect = sveltify<
   TreeSelectProps & {
     onValueChange: (options: string | string[]) => void;
     onLoadData?: (...args: any[]) => Promise<unknown>;
-    setSlotParams: SetSlotParams;
   },
   [
     'allowClear.clearIcon',
@@ -47,7 +45,6 @@ export const TreeSelect = sveltify<
       children,
       maxTagPlaceholder,
       elRef,
-      setSlotParams,
       onLoadData,
       ...props
     }) => {
@@ -87,10 +84,10 @@ export const TreeSelect = sveltify<
               }
             ),
           dropdownRender: slots.dropdownRender
-            ? renderParamsSlot({ slots, setSlotParams, key: 'dropdownRender' })
+            ? renderParamsSlot({ slots, key: 'dropdownRender' })
             : dropdownRenderFunction,
           popupRender: slots.popupRender
-            ? renderParamsSlot({ slots, setSlotParams, key: 'popupRender' })
+            ? renderParamsSlot({ slots, key: 'popupRender' })
             : popupRenderFunction,
           allowClear: slots['allowClear.clearIcon']
             ? {
@@ -108,20 +105,19 @@ export const TreeSelect = sveltify<
             props.prefix
           ),
           switcherIcon: slots.switcherIcon
-            ? renderParamsSlot({ slots, setSlotParams, key: 'switcherIcon' })
+            ? renderParamsSlot({ slots, key: 'switcherIcon' })
             : props.switcherIcon,
           getPopupContainer: getPopupContainerFunction,
           tagRender: slots.tagRender
-            ? renderParamsSlot({ slots, setSlotParams, key: 'tagRender' })
+            ? renderParamsSlot({ slots, key: 'tagRender' })
             : tagRenderFunction,
           treeTitleRender: slots.treeTitleRender
-            ? renderParamsSlot({ slots, setSlotParams, key: 'treeTitleRender' })
+            ? renderParamsSlot({ slots, key: 'treeTitleRender' })
             : treeTitleRenderFunction,
           filterTreeNode: filterTreeNodeFunction || filterTreeNode,
           maxTagPlaceholder: slots.maxTagPlaceholder
             ? renderParamsSlot({
                 slots,
-                setSlotParams,
                 key: 'maxTagPlaceholder',
               })
             : maxTagPlaceholder,
@@ -140,7 +136,6 @@ export const TreeSelect = sveltify<
         maxTagPlaceholder,
         onLoadData,
         props,
-        setSlotParams,
         resolvedSlotItems,
         slots,
         tagRenderFunction,

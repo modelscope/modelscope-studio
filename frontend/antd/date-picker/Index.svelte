@@ -18,7 +18,7 @@
       _internal: {
         layout?: boolean;
       };
-      value?: string | number | (string | number | null)[];
+      value?: string | number | (string | number | null)[] | null;
       panel_change?: any;
       open_change?: any;
     }>(() => props);

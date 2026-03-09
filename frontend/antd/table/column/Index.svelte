@@ -1,186 +1,201 @@
-<svelte:options accessors={true} />
-
 <script lang="ts">
   import {
-    bindEvents,
+    getProps,
     importComponent,
+    processProps,
   } from '@svelte-preprocess-react/component';
   import {
-    getSetSlotParamsFn,
-    getSlotContext,
-    getSlotKey,
     getSlots,
-  } from '@svelte-preprocess-react/slot';
-  import type React from 'react';
-  import type { Gradio } from '@gradio/utils';
+    getSlotKey,
+  } from '@svelte-preprocess-react/svelte-contexts/slot.svelte';
   import { createFunction } from '@utils/createFunction';
   import cls from 'classnames';
-  import { writable } from 'svelte/store';
+  import type { TableColumnProps } from './table.column';
 
   const AwaitedTableColumn = importComponent(() => import('./table.column'));
-  export let gradio: Gradio;
-  export let props: Record<string, any> = {};
-  const updatedProps = writable(props);
-  $: updatedProps.update((prev) => ({ ...prev, ...props }));
-  export let _internal: Record<string, any> = {};
-  export let as_item: string | undefined;
-  export let built_in_column: string | undefined;
-  // gradio properties
-  export let visible = true;
-  export let elem_id = '';
-  export let elem_classes: string[] = [];
-  export let elem_style: React.CSSProperties = {};
-  const slotKey = getSlotKey();
 
-  const [mergedProps, update] = getSlotContext(
-    {
-      gradio,
-      props: $updatedProps,
-      _internal,
-      visible,
-      elem_id,
-      elem_classes,
-      elem_style,
-      as_item,
-      restProps: $$restProps,
+  const props = $props();
+  const { getComponentProps, getAdditionalProps, children } = getProps<{
+    additional_props?: Record<string, any>;
+    as_item?: string | undefined;
+    _internal: {};
+    filter_dropdown_open_change?: any;
+    built_in_column?: string;
+    column_render?: string;
+    show_sorter_tooltip?: TableColumnProps['showSorterTooltip'];
+    sorter?: TableColumnProps['sorter'];
+    filter_search?: TableColumnProps['filterSearch'];
+    should_cell_update?: TableColumnProps['shouldCellUpdate'];
+    on_cell?: TableColumnProps['onCell'];
+    on_filter?: TableColumnProps['onFilter'];
+    on_header_cell?: TableColumnProps['onHeaderCell'];
+    render?: TableColumnProps['render'];
+    filter_icon?: TableColumnProps['filterIcon'];
+    filter_dropdown?: TableColumnProps['filterDropdown'];
+  }>(() => props);
+
+  const getProceedProps = processProps(
+    () => {
+      const {
+        visible,
+        _internal,
+        as_item,
+        elem_classes,
+        elem_id,
+        elem_style,
+        built_in_column,
+        show_sorter_tooltip,
+        sorter,
+        filter_search,
+        should_cell_update,
+        on_cell,
+        on_filter,
+        on_header_cell,
+        render,
+        filter_icon,
+        filter_dropdown,
+        ...restProps
+      } = getComponentProps();
+      return {
+        additionalProps: getAdditionalProps(),
+        _internal,
+        as_item,
+        restProps,
+        visible,
+        elem_id,
+        elem_classes,
+        elem_style,
+        built_in_column,
+        showSorterTooltip: show_sorter_tooltip,
+        sorter,
+        filterSearch: filter_search,
+        shouldCellUpdate: should_cell_update,
+        onCell: on_cell,
+        onFilter: on_filter,
+        onHeaderCell: on_header_cell,
+        render,
+        filterIcon: filter_icon,
+        filterDropdown: filter_dropdown,
+      };
     },
     {
       column_render: 'render',
+      filter_dropdown_open_change: 'filterDropdownOpenChange',
     }
   );
+  const proceedProps = $derived(getProceedProps());
 
   const slots = getSlots();
-  $: update({
-    gradio,
-    props: $updatedProps,
-    _internal,
-    visible,
-    elem_id,
-    elem_classes,
-    elem_style,
-    as_item,
-    restProps: $$restProps,
+  const slotKey = getSlotKey();
+  const itemProps = $derived.by(() => {
+    {
+      const showSorterTooltip =
+        proceedProps.additionalProps.showSorterTooltip ||
+        proceedProps.showSorterTooltip;
+      const sorter = proceedProps.additionalProps.sorter || proceedProps.sorter;
+
+      return {
+        props: {
+          style: proceedProps.elem_style,
+          className: cls(proceedProps.elem_classes, 'ms-gr-antd-table-column'),
+          id: proceedProps.elem_id,
+          ...proceedProps.restProps,
+          ...proceedProps.additionalProps,
+
+          render: createFunction(
+            proceedProps.additionalProps.render || proceedProps.render
+          ),
+          filterIcon: createFunction(
+            proceedProps.additionalProps.filterIcon || proceedProps.filterIcon
+          ),
+          filterDropdown: createFunction(
+            proceedProps.additionalProps.filterDropdown ||
+              proceedProps.filterDropdown
+          ),
+          showSorterTooltip:
+            typeof showSorterTooltip === 'object'
+              ? {
+                  ...showSorterTooltip,
+                  afterOpenChange: createFunction(
+                    typeof showSorterTooltip === 'object'
+                      ? showSorterTooltip.afterOpenChange
+                      : undefined
+                  ),
+                  getPopupContainer: createFunction(
+                    typeof showSorterTooltip === 'object'
+                      ? showSorterTooltip.getPopupContainer
+                      : undefined
+                  ),
+                }
+              : showSorterTooltip,
+          sorter:
+            typeof sorter === 'object'
+              ? {
+                  ...sorter,
+                  compare: createFunction(sorter.compare) || sorter.compare,
+                }
+              : createFunction(sorter) || proceedProps.additionalProps.sorter,
+          filterSearch:
+            createFunction(
+              proceedProps.additionalProps.filterSearch ||
+                proceedProps.filterSearch
+            ) ||
+            proceedProps.additionalProps.filterSearch ||
+            proceedProps.filterSearch,
+          shouldCellUpdate: createFunction(
+            proceedProps.additionalProps.shouldCellUpdate ||
+              proceedProps.shouldCellUpdate
+          ),
+          onCell: createFunction(
+            proceedProps.additionalProps.onCell || proceedProps.onCell
+          ),
+          // onFilter: createFunction(
+          //   proceedProps.additionalProps.onFilter || proceedProps.restProps.onFilter
+          // ),
+          onHeaderCell: createFunction(
+            proceedProps.additionalProps.onHeaderCell ||
+              proceedProps.onHeaderCell
+          ),
+        },
+        slots: {
+          ...slots.value,
+          filterIcon: {
+            el: slots.value.filterIcon,
+            clone: true,
+          },
+          filterDropdown: {
+            el: slots.value.filterDropdown,
+            clone: true,
+          },
+          sortIcon: {
+            el: slots.value.sortIcon,
+            clone: true,
+          },
+          title: {
+            el: slots.value.title,
+            clone: true,
+          },
+          render: {
+            el: slots.value.render,
+            clone: true,
+          },
+        },
+      };
+    }
   });
-
-  const setSlotParams = getSetSlotParamsFn();
-  let itemProps = {
-    props: {},
-    slots: {},
-  };
-  $: {
-    const showSorterTooltip =
-      $mergedProps.props.showSorterTooltip ||
-      $mergedProps.restProps.showSorterTooltip;
-    const sorter = $mergedProps.props.sorter || $mergedProps.restProps.sorter;
-
-    itemProps = {
-      props: {
-        style: $mergedProps.elem_style,
-        className: cls($mergedProps.elem_classes, 'ms-gr-antd-table-column'),
-        id: $mergedProps.elem_id,
-        ...$mergedProps.restProps,
-        ...$mergedProps.props,
-        ...bindEvents($mergedProps, {
-          filter_dropdown_open_change: 'filterDropdownOpenChange',
-        }),
-        render: createFunction(
-          $mergedProps.props.render || $mergedProps.restProps.render
-        ),
-        filterIcon: createFunction(
-          $mergedProps.props.filterIcon || $mergedProps.restProps.filterIcon
-        ),
-        filterDropdown: createFunction(
-          $mergedProps.props.filterDropdown ||
-            $mergedProps.restProps.filterDropdown
-        ),
-        showSorterTooltip:
-          typeof showSorterTooltip === 'object'
-            ? {
-                ...showSorterTooltip,
-                afterOpenChange: createFunction(
-                  typeof showSorterTooltip === 'object'
-                    ? showSorterTooltip.afterOpenChange
-                    : undefined
-                ),
-                getPopupContainer: createFunction(
-                  typeof showSorterTooltip === 'object'
-                    ? showSorterTooltip.getPopupContainer
-                    : undefined
-                ),
-              }
-            : showSorterTooltip,
-        sorter:
-          typeof sorter === 'object'
-            ? {
-                ...sorter,
-                compare: createFunction(sorter.compare) || sorter.compare,
-              }
-            : createFunction(sorter) || $mergedProps.props.sorter,
-        filterSearch:
-          createFunction(
-            $mergedProps.props.filterSearch ||
-              $mergedProps.restProps.filterSearch
-          ) ||
-          $mergedProps.props.filterSearch ||
-          $mergedProps.restProps.filterSearch,
-        shouldCellUpdate: createFunction(
-          $mergedProps.props.shouldCellUpdate ||
-            $mergedProps.restProps.shouldCellUpdate
-        ),
-        onCell: createFunction(
-          $mergedProps.props.onCell || $mergedProps.restProps.onCell
-        ),
-        // onFilter: createFunction(
-        //   $mergedProps.props.onFilter || $mergedProps.restProps.onFilter
-        // ),
-        onHeaderCell: createFunction(
-          $mergedProps.props.onHeaderCell || $mergedProps.restProps.onHeaderCell
-        ),
-      },
-      slots: {
-        ...$slots,
-        filterIcon: {
-          el: $slots.filterIcon,
-          callback: setSlotParams,
-          clone: true,
-        },
-        filterDropdown: {
-          el: $slots.filterDropdown,
-          callback: setSlotParams,
-          clone: true,
-        },
-        sortIcon: {
-          el: $slots.sortIcon,
-          callback: setSlotParams,
-          clone: true,
-        },
-        title: {
-          el: $slots.title,
-          callback: setSlotParams,
-          clone: true,
-        },
-        render: {
-          el: $slots.render,
-          callback: setSlotParams,
-          clone: true,
-        },
-      },
-    };
-  }
 </script>
 
 {#await AwaitedTableColumn then TableColumn}
   <TableColumn
     {...itemProps.props}
     slots={itemProps.slots}
-    {setSlotParams}
-    itemSlotKey={$slotKey}
-    itemIndex={$mergedProps._internal.index || 0}
-    itemSlots={$slots}
-    itemBuiltIn={built_in_column}
+    itemIndex={proceedProps._internal.index || 0}
+    itemSlotKey={slotKey?.value}
+    itemSlots={slots.value}
+    itemBuiltIn={proceedProps.built_in_column}
   >
-    {#if $mergedProps.visible}
-      <slot></slot>
+    {#if proceedProps.visible}
+      {@render children()}
     {/if}
   </TableColumn>
 {/await}

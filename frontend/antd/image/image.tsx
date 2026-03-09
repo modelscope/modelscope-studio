@@ -1,6 +1,5 @@
 import { sveltify } from '@svelte-preprocess-react';
 import { ReactSlot } from '@svelte-preprocess-react/react-slot';
-import type { SetSlotParams } from '@svelte-preprocess-react/slot';
 import { useFunction } from '@utils/hooks/useFunction';
 import { omitUndefinedProps } from '@utils/omitUndefinedProps';
 import { renderParamsSlot } from '@utils/renderParamsSlot';
@@ -15,7 +14,6 @@ function getConfig<T>(value: T): Partial<T & Record<PropertyKey, any>> {
 type ImageProps = GetProps<typeof AImage>;
 export const Image = sveltify<
   ImageProps & {
-    setSlotParams: SetSlotParams;
   },
   [
     'placeholder',
@@ -24,7 +22,7 @@ export const Image = sveltify<
     'preview.toolbarRender',
     'preview.imageRender',
   ]
->(({ slots, preview, setSlotParams, children, ...props }) => {
+>(({ slots, preview, children, ...props }) => {
   const previewConfig = getConfig(preview);
   const supportPreview =
     slots['preview.mask'] ||
@@ -49,14 +47,12 @@ export const Image = sveltify<
                 toolbarRender: slots['preview.toolbarRender']
                   ? renderParamsSlot({
                       slots,
-                      setSlotParams,
                       key: 'preview.toolbarRender',
                     })
                   : previewToolbarRenderFunction,
                 imageRender: slots['preview.imageRender']
                   ? renderParamsSlot({
                       slots,
-                      setSlotParams,
                       key: 'preview.imageRender',
                     })
                   : previewImageRenderFunction,

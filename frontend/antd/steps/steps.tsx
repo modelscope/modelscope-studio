@@ -1,5 +1,4 @@
 import { sveltify } from '@svelte-preprocess-react';
-import type { SetSlotParams } from '@svelte-preprocess-react/slot';
 import React, { useMemo } from 'react';
 import { useFunction } from '@utils/hooks/useFunction';
 import { renderItems } from '@utils/renderItems';
@@ -10,13 +9,13 @@ import { useItems, withItemsContextProvider } from './context';
 
 export const Steps = sveltify<
   GetProps<typeof ASteps> & {
-    setSlotParams: SetSlotParams;
+    children?: React.ReactNode;
   },
   ['progressDot']
 >(
   withItemsContextProvider(
     ['items', 'default'],
-    ({ slots, items, setSlotParams, children, progressDot, ...props }) => {
+    ({ slots, items, children, progressDot, ...props }) => {
       const { items: slotItems } = useItems<['items', 'default']>();
       const resolvedSlotItems =
         slotItems.items.length > 0 ? slotItems.items : slotItems.default;
@@ -37,7 +36,7 @@ export const Steps = sveltify<
             progressDot={
               slots.progressDot
                 ? renderParamsSlot(
-                    { slots, setSlotParams, key: 'progressDot' },
+                    { slots, key: 'progressDot' },
                     { clone: true }
                   )
                 : progressDotFunction || progressDot

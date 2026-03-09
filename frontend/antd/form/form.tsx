@@ -1,5 +1,4 @@
 import { sveltify } from '@svelte-preprocess-react';
-import type { SetSlotParams } from '@svelte-preprocess-react/slot';
 import { useEffect } from 'react';
 import { useFunction } from '@utils/hooks/useFunction';
 import { useMemoizedFn } from '@utils/hooks/useMemoizedFn';
@@ -7,9 +6,8 @@ import { renderParamsSlot } from '@utils/renderParamsSlot';
 import { Form as AForm, type GetProps } from 'antd';
 
 export interface FormProps extends GetProps<typeof AForm> {
-  value: Record<string, any>;
+  value?: Record<string, any>;
   onValueChange: (value: Record<string, any>) => void;
-  setSlotParams: SetSlotParams;
   formAction?: 'reset' | 'submit' | 'validate' | null;
   onResetFormAction: () => void;
 }
@@ -22,7 +20,6 @@ export const Form = sveltify<FormProps, ['requiredMark']>(
     requiredMark,
     onValuesChange,
     feedbackIcons,
-    setSlotParams,
     slots,
     onResetFormAction,
     ...props
@@ -62,7 +59,6 @@ export const Form = sveltify<FormProps, ['requiredMark']>(
           slots.requiredMark
             ? renderParamsSlot({
                 key: 'requiredMark',
-                setSlotParams,
                 slots,
               })
             : requiredMark === 'optional'

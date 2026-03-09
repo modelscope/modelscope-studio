@@ -1,5 +1,3 @@
-<svelte:options />
-
 <script lang="ts">
   import { getProps } from '@svelte-preprocess-react/component';
   import type React from 'react';
@@ -139,7 +137,7 @@
       ? styleObject2String(elem_style)
       : elem_style}
   >
-    {@render children()}
+    {@render children?.()}
   </div>
 {/if}
 

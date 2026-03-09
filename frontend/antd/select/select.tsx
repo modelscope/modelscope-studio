@@ -1,6 +1,5 @@
 import { sveltify } from '@svelte-preprocess-react';
 import { ReactSlot } from '@svelte-preprocess-react/react-slot';
-import type { SetSlotParams } from '@svelte-preprocess-react/slot';
 import { useMemo } from 'react';
 import { useFunction } from '@utils/hooks/useFunction';
 import { renderItems } from '@utils/renderItems';
@@ -12,7 +11,6 @@ import { useItems, withItemsContextProvider } from './context';
 export const Select = sveltify<
   GetProps<typeof ASelect> & {
     onValueChange: (value: string | number | (string | number)[]) => void;
-    setSlotParams: SetSlotParams;
   },
   [
     'allowClear.clearIcon',
@@ -46,7 +44,6 @@ export const Select = sveltify<
       labelRender,
       filterSort,
       elRef,
-      setSlotParams,
       ...props
     }) => {
       const getPopupContainerFunction = useFunction(getPopupContainer);
@@ -127,7 +124,6 @@ export const Select = sveltify<
               slots.maxTagPlaceholder
                 ? renderParamsSlot({
                     slots,
-                    setSlotParams,
                     key: 'maxTagPlaceholder',
                   })
                 : props.maxTagPlaceholder
@@ -137,7 +133,6 @@ export const Select = sveltify<
               slots.dropdownRender
                 ? renderParamsSlot({
                     slots,
-                    setSlotParams,
                     key: 'dropdownRender',
                   })
                 : dropdownRenderFunction
@@ -146,7 +141,6 @@ export const Select = sveltify<
               slots.popupRender
                 ? renderParamsSlot({
                     slots,
-                    setSlotParams,
                     key: 'popupRender',
                   })
                 : popupRenderFunction
@@ -155,7 +149,6 @@ export const Select = sveltify<
               slots.optionRender
                 ? renderParamsSlot({
                     slots,
-                    setSlotParams,
                     key: 'optionRender',
                   })
                 : optionRenderFunction
@@ -164,7 +157,6 @@ export const Select = sveltify<
               slots.tagRender
                 ? renderParamsSlot({
                     slots,
-                    setSlotParams,
                     key: 'tagRender',
                   })
                 : tagRenderFunction
@@ -173,7 +165,6 @@ export const Select = sveltify<
               slots.labelRender
                 ? renderParamsSlot({
                     slots,
-                    setSlotParams,
                     key: 'labelRender',
                   })
                 : labelRenderFunction

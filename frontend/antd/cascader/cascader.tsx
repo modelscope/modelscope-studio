@@ -1,6 +1,5 @@
 import { sveltify } from '@svelte-preprocess-react';
 import { ReactSlot } from '@svelte-preprocess-react/react-slot';
-import type { SetSlotParams } from '@svelte-preprocess-react/slot';
 import { useMemo } from 'react';
 import { useFunction } from '@utils/hooks/useFunction';
 import { useValueChange } from '@utils/hooks/useValueChange';
@@ -21,7 +20,6 @@ export const Cascader = sveltify<
   CascaderProps<any> & {
     onValueChange: (value: string[] | number[]) => void;
     onLoadData?: (...args: any[]) => void;
-    setSlotParams: SetSlotParams;
   },
   [
     'allowClear.clearIcon',
@@ -55,7 +53,6 @@ export const Cascader = sveltify<
       optionRender,
       showSearch,
       options,
-      setSlotParams,
       onLoadData,
       ...props
     }) => {
@@ -105,7 +102,6 @@ export const Cascader = sveltify<
                     render: slots['showSearch.render']
                       ? renderParamsSlot({
                           slots,
-                          setSlotParams,
                           key: 'showSearch.render',
                         })
                       : showSearchRenderFunction || showSearchConfig.render,
@@ -123,7 +119,6 @@ export const Cascader = sveltify<
               slots.dropdownRender
                 ? renderParamsSlot({
                     slots,
-                    setSlotParams,
                     key: 'dropdownRender',
                   })
                 : dropdownRenderFunction
@@ -132,7 +127,6 @@ export const Cascader = sveltify<
               slots.popupRender
                 ? renderParamsSlot({
                     slots,
-                    setSlotParams,
                     key: 'popupRender',
                   })
                 : popupRenderFunction
@@ -141,7 +135,6 @@ export const Cascader = sveltify<
               slots.displayRender
                 ? renderParamsSlot({
                     slots,
-                    setSlotParams,
                     key: 'displayRender',
                   })
                 : displayRenderFunction
@@ -150,7 +143,6 @@ export const Cascader = sveltify<
               slots.tagRender
                 ? renderParamsSlot({
                     slots,
-                    setSlotParams,
                     key: 'tagRender',
                   })
                 : tagRenderFunction
@@ -191,7 +183,6 @@ export const Cascader = sveltify<
               slots.maxTagPlaceholder
                 ? renderParamsSlot({
                     slots,
-                    setSlotParams,
                     key: 'maxTagPlaceholder',
                   })
                 : maxTagPlaceholderFunction || maxTagPlaceholder

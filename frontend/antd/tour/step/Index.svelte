@@ -1,96 +1,80 @@
-<svelte:options accessors={true} />
-
 <script lang="ts">
   import {
-    bindEvents,
+    getProps,
     importComponent,
+    processProps,
   } from '@svelte-preprocess-react/component';
   import {
-    getSlotContext,
-    getSlotKey,
     getSlots,
-  } from '@svelte-preprocess-react/slot';
-  import type React from 'react';
-  import type { Gradio } from '@gradio/utils';
+    getSlotKey,
+  } from '@svelte-preprocess-react/svelte-contexts/slot.svelte';
   import { createFunction } from '@utils/createFunction';
   import cls from 'classnames';
-  import { writable } from 'svelte/store';
 
   const AwaitedTourStep = importComponent(() => import('./tour.step'));
-  export let gradio: Gradio;
-  export let props: Record<string, any> = {};
-  const updatedProps = writable(props);
-  $: updatedProps.update((prev) => ({ ...prev, ...props }));
-  export let _internal: Record<string, any> = {};
-  export let as_item: string | undefined;
-  // gradio properties
-  export let visible = true;
-  export let elem_id = '';
-  export let elem_classes: string[] = [];
-  export let elem_style: React.CSSProperties = {};
 
-  const slotKey = getSlotKey();
-  const [mergedProps, update] = getSlotContext(
-    {
-      gradio,
-      props: $updatedProps,
-      _internal,
-      visible,
-      elem_id,
-      elem_classes,
-      elem_style,
-      as_item,
-      restProps: $$restProps,
+  const props = $props();
+  const { getComponentProps, getAdditionalProps, children } = getProps<{
+    additional_props?: Record<string, any>;
+    _internal: {};
+    get_target?: string;
+    next_button_click?: any;
+    prev_button_click?: any;
+  }>(() => props);
+
+  const getProceedProps = processProps(
+    () => {
+      const {
+        visible,
+        _internal,
+        as_item,
+        elem_classes,
+        elem_id,
+        elem_style,
+        get_target,
+        ...restProps
+      } = getComponentProps();
+      return {
+        additionalProps: getAdditionalProps(),
+        _internal,
+        as_item,
+        restProps,
+        visible,
+        elem_id,
+        elem_classes,
+        elem_style,
+        target: get_target,
+      };
     },
     {
-      get_target: 'target',
+      next_button_click: 'nextButtonProps_click',
+      prev_button_click: 'prevButtonProps_click',
     }
   );
+  const proceedProps = $derived(getProceedProps());
 
   const slots = getSlots();
-  $: update({
-    gradio,
-    props: $updatedProps,
-    _internal,
-    visible,
-    elem_id,
-    elem_classes,
-    elem_style,
-    as_item,
-    restProps: $$restProps,
-  });
-
-  $: itemProps = {
-    props: {
-      style: $mergedProps.elem_style,
-      className: cls($mergedProps.elem_classes, 'ms-gr-antd-tour-step'),
-      id: $mergedProps.elem_id,
-      ...$mergedProps.restProps,
-      ...$mergedProps.props,
-      ...bindEvents($mergedProps, {
-        next_button_click: 'nextButtonProps_click',
-        prev_button_click: 'prevButtonProps_click',
-      }),
-      target:
-        createFunction(
-          $mergedProps.props.target || $mergedProps.restProps.target
-        ) ||
-        $mergedProps.props.target ||
-        $mergedProps.restProps.target,
-    },
-    slots: $slots,
-  };
+  const slotKey = getSlotKey();
 </script>
 
 {#await AwaitedTourStep then TourStep}
   <TourStep
-    {...itemProps.props}
-    slots={itemProps.slots}
-    itemIndex={$mergedProps._internal.index || 0}
-    itemSlotKey={$slotKey}
+    style={proceedProps.elem_style}
+    className={cls(proceedProps.elem_classes, 'ms-gr-antd-tour-step')}
+    id={proceedProps.elem_id}
+    {...proceedProps.restProps}
+    {...proceedProps.additionalProps}
+    slots={slots.value}
+    target={createFunction(
+      proceedProps.additionalProps.target || proceedProps.target
+    ) ||
+      proceedProps.additionalProps.target ||
+      proceedProps.target}
+    itemIndex={proceedProps._internal.index || 0}
+    itemSlotKey={slotKey?.value}
   >
-    {#if $mergedProps.visible}
-      <slot></slot>
+    {#if proceedProps.visible}
+      {@render children()}
     {/if}
   </TourStep>
 {/await}

@@ -1,76 +1,73 @@
-<svelte:options accessors={true} />
-
 <script lang="ts">
   import {
-    bindEvents,
+    getProps,
     importComponent,
+    processProps,
   } from '@svelte-preprocess-react/component';
-  import { getSlotContext, getSlots } from '@svelte-preprocess-react/slot';
-  import type React from 'react';
+  import { getSlots } from '@svelte-preprocess-react/svelte-contexts/slot.svelte';
   import type { SuggestionItem } from '@ant-design/x/es/suggestion';
-  import type { Gradio } from '@gradio/utils';
   import cls from 'classnames';
-  import { writable } from 'svelte/store';
 
   const AwaitedSuggestion = importComponent(() => import('./suggestion'));
 
-  export let gradio: Gradio;
-  export let props: Record<string, any> = {};
-  const updatedProps = writable(props);
-  $: updatedProps.update((prev) => ({ ...prev, ...props }));
-  export let _internal: {
-    layout?: boolean;
-  } = {};
-  export let items: SuggestionItem[];
-  export let as_item: string | undefined;
-  // gradio properties
-  export let visible = true;
-  export let elem_id = '';
-  export let elem_classes: string[] = [];
-  export let elem_style: React.CSSProperties = {};
+  const props = $props();
+  const { getComponentProps, getAdditionalProps, children } = getProps<{
+    additional_props?: Record<string, any>;
 
-  const [mergedProps, update] = getSlotContext({
-    gradio,
-    props: $updatedProps,
-    _internal,
-    visible,
-    elem_id,
-    elem_classes,
-    elem_style,
-    items,
-    as_item,
-    restProps: $$restProps,
-  });
+    as_item?: string | undefined;
+    _internal: {
+      layout?: boolean;
+    };
+    items: SuggestionItem[];
+
+    open_change?: any;
+  }>(() => props);
+
+  const getProceedProps = processProps(
+    () => {
+      const {
+        visible,
+        _internal,
+        as_item,
+        elem_classes,
+        elem_id,
+        elem_style,
+        items,
+        ...restProps
+      } = getComponentProps();
+      return {
+        additionalProps: getAdditionalProps(),
+        _internal,
+        as_item,
+        restProps,
+        visible,
+        elem_id,
+        elem_classes,
+        elem_style,
+        items,
+      };
+    },
+    {
+      open_change: 'openChange',
+    }
+  );
+  const proceedProps = $derived(getProceedProps());
+
   const slots = getSlots();
-  $: update({
-    gradio,
-    props: $updatedProps,
-    _internal,
-    visible,
-    elem_id,
-    elem_classes,
-    elem_style,
-    items,
-    as_item,
-    restProps: $$restProps,
-  });
 </script>
 
-{#if $mergedProps.visible}
+{#if proceedProps.visible}
   {#await AwaitedSuggestion then Suggestion}
     <Suggestion
-      style={$mergedProps.elem_style}
-      className={cls($mergedProps.elem_classes, 'ms-gr-antdx-suggestion')}
-      id={$mergedProps.elem_id}
-      {items}
-      {...$mergedProps.restProps}
-      {...$mergedProps.props}
-      {...bindEvents($mergedProps, {
-        open_change: 'openChange',
-      })}
-      slots={$slots}
+      style={proceedProps.elem_style}
+      className={cls(proceedProps.elem_classes, 'ms-gr-antdx-suggestion')}
+      id={proceedProps.elem_id}
+      items={proceedProps.items}
+      {...proceedProps.restProps}
+      {...proceedProps.additionalProps}
+      slots={slots.value}
     >
-      <slot></slot>
+      {@render children()}
     </Suggestion>
   {/await}
 {/if}

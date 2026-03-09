@@ -5,7 +5,8 @@ import { type GetProps, Segmented as ASegmented } from 'antd';
 
 import { useItems, withItemsContextProvider } from './context';
 
-type SegmentedProps = GetProps<typeof ASegmented>;
+export type SegmentedProps = GetProps<typeof ASegmented>;
+
 export const Segmented = sveltify<
   SegmentedProps & {
     onValueChange: (value: string | number) => void;

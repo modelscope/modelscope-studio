@@ -1,120 +1,122 @@
-<svelte:options accessors={true} />
-
 <script lang="ts">
   import {
-    bindEvents,
+    getProps,
     importComponent,
+    processProps,
   } from '@svelte-preprocess-react/component';
   import {
-    getSetSlotParamsFn,
-    getSlotContext,
     getSlotKey,
     getSlots,
-  } from '@svelte-preprocess-react/slot';
-  import type React from 'react';
-  import type { Gradio } from '@gradio/utils';
+  } from '@svelte-preprocess-react/svelte-contexts/slot.svelte';
   import { createFunction } from '@utils/createFunction';
   import cls from 'classnames';
-  import { writable } from 'svelte/store';
 
-  const AwaitedTableExpandable = importComponent(
-    () => import('./table.expandable')
+  const AwaitedExpandable = importComponent(() => import('./table.expandable'));
+
+  const props = $props();
+  const { getComponentProps, getAdditionalProps, children } = getProps<{
+    additional_props?: Record<string, any>;
+    as_item?: string | undefined;
+    _internal: {
+      layout?: boolean;
+      index?: number;
+    };
+    expanded_rows_change?: any;
+    expanded_row_class_name?: string;
+    expanded_row_render?: string;
+    row_expandable?: string;
+    expand_icon?: string;
+    column_title?: string;
+  }>(() => props);
+
+  const getProceedProps = processProps(
+    () => {
+      const {
+        visible,
+        _internal,
+        as_item,
+        elem_classes,
+        elem_id,
+        elem_style,
+        row_expandable,
+        expand_icon,
+        expanded_row_class_name,
+        expanded_row_render,
+        column_title,
+        ...restProps
+      } = getComponentProps();
+      return {
+        additionalProps: getAdditionalProps(),
+        _internal,
+        as_item,
+        restProps,
+        visible,
+        elem_id,
+        elem_classes,
+        elem_style,
+        rowExpandable: row_expandable,
+        expandIcon: expand_icon,
+        expandedRowClassName: expanded_row_class_name,
+        expandedRowRender: expanded_row_render,
+        columnTitle: column_title,
+      };
+    },
+    {
+      expanded_rows_change: 'expandedRowsChange',
+    }
   );
-  export let gradio: Gradio;
-  export let props: Record<string, any> = {};
-  const updatedProps = writable(props);
-  $: updatedProps.update((prev) => ({ ...prev, ...props }));
-  export let _internal: {
-    layout?: boolean;
-    index?: number;
-  } = {};
+  const proceedProps = $derived(getProceedProps());
 
-  export let as_item: string | undefined;
-
-  // gradio properties
-  export let visible = true;
-  export let elem_id = '';
-  export let elem_classes: string[] = [];
-  export let elem_style: React.CSSProperties = {};
-
-  const slotKey = getSlotKey();
-  const [mergedProps, update] = getSlotContext({
-    gradio,
-    props: $updatedProps,
-    _internal,
-    visible,
-    elem_id,
-    elem_classes,
-    elem_style,
-    as_item,
-    restProps: $$restProps,
-  });
   const slots = getSlots();
-  $: update({
-    gradio,
-    props: $updatedProps,
-    _internal,
-    visible,
-    elem_id,
-    elem_classes,
-    elem_style,
-    as_item,
-    restProps: $$restProps,
-  });
-  const setSlotParams = getSetSlotParamsFn();
-  $: itemProps = {
+  const slotKey = getSlotKey();
+  const itemProps = $derived({
     props: {
-      style: $mergedProps.elem_style,
-      className: cls($mergedProps.elem_classes, 'ms-gr-antd-table-expandable'),
-      id: $mergedProps.elem_id,
-      ...$mergedProps.restProps,
-      ...$mergedProps.props,
-      ...bindEvents($mergedProps, {
-        expanded_rows_change: 'expandedRowsChange',
-      }),
+      style: proceedProps.elem_style,
+      className: cls(proceedProps.elem_classes, 'ms-gr-antd-table-expandable'),
+      id: proceedProps.elem_id,
+      ...proceedProps.restProps,
+      ...proceedProps.additionalProps,
       expandedRowClassName: createFunction(
-        $mergedProps.props.expandedRowClassName ||
-          $mergedProps.restProps.expandedRowClassName,
+        proceedProps.additionalProps.expandedRowClassName ||
+          proceedProps.expandedRowClassName,
         true
       ),
       expandedRowRender: createFunction(
-        $mergedProps.props.expandedRowRender ||
-          $mergedProps.restProps.expandedRowRender
+        proceedProps.additionalProps.expandedRowRender ||
+          proceedProps.expandedRowRender
       ),
       rowExpandable: createFunction(
-        $mergedProps.props.rowExpandable || $mergedProps.restProps.rowExpandable
+        proceedProps.additionalProps.rowExpandable || proceedProps.rowExpandable
       ),
       expandIcon: createFunction(
-        $mergedProps.props.expandIcon || $mergedProps.restProps.expandIcon
+        proceedProps.additionalProps.expandIcon || proceedProps.expandIcon
       ),
       columnTitle:
-        $mergedProps.props.columnTitle || $mergedProps.restProps.columnTitle,
+        proceedProps.additionalProps.columnTitle || proceedProps.columnTitle,
     },
     slots: {
-      ...$slots,
+      ...slots.value,
       expandIcon: {
-        el: $slots['expandIcon'],
-        callback: setSlotParams,
+        el: slots.value['expandIcon'],
         clone: true,
       },
       expandedRowRender: {
-        el: $slots['expandedRowRender'],
-        callback: setSlotParams,
+        el: slots.value['expandedRowRender'],
         clone: true,
       },
     },
-  };
+  });
 </script>
 
-{#await AwaitedTableExpandable then TableExpandable}
-  <TableExpandable
+{#await AwaitedExpandable then Expandable}
+  <Expandable
     {...itemProps.props}
     slots={itemProps.slots}
-    itemSlotKey={$slotKey}
-    itemIndex={$mergedProps._internal.index || 0}
+    itemSlotKey={slotKey?.value}
+    itemIndex={proceedProps._internal.index || 0}
   >
-    {#if $mergedProps.visible}
-      <slot></slot>
+    {#if proceedProps.visible}
+      {@render children()}
     {/if}
-  </TableExpandable>
+  </Expandable>
 {/await}

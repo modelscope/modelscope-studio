@@ -1,3 +1,3 @@
-import config from '../../defineConfig.js';
+// import config from '../../defineConfig.js';
 
-export default config({ external: false });
+export default {};

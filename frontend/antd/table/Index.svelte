@@ -1,73 +1,59 @@
-<svelte:options accessors={true} />
-
 <script lang="ts">
   import {
-    bindEvents,
+    getProps,
     importComponent,
+    processProps,
   } from '@svelte-preprocess-react/component';
-  import {
-    getSetSlotParamsFn,
-    getSlotContext,
-    getSlots,
-  } from '@svelte-preprocess-react/slot';
-  import type React from 'react';
-  import type { Gradio } from '@gradio/utils';
+  import { getSlots } from '@svelte-preprocess-react/svelte-contexts/slot.svelte';
   import cls from 'classnames';
-  import { type Writable, writable } from 'svelte/store';
 
   const AwaitedTable = importComponent(() => import('./table'));
-  export let gradio: Gradio;
-  export let _internal: Record<string, any> = {};
-  export let as_item: string | undefined;
-  export let props: Record<string, any> = {};
-  const updatedProps: Writable<typeof props> = writable(props);
-  $: updatedProps.update((prev) => ({ ...prev, ...props }));
-  export let elem_id = '';
-  export let elem_classes: string[] = [];
-  export let elem_style: React.CSSProperties = {};
-  export let visible = true;
+
+  const props = $props();
+  const { getComponentProps, getAdditionalProps, children } = getProps<{
+    additional_props?: Record<string, any>;
+
+    as_item?: string | undefined;
+    _internal: {};
+  }>(() => props);
+
+  const getProceedProps = processProps(() => {
+    const {
+      visible,
+      _internal,
+      as_item,
+      elem_classes,
+      elem_id,
+      elem_style,
+      ...restProps
+    } = getComponentProps();
+    return {
+      additionalProps: getAdditionalProps(),
+      _internal,
+      as_item,
+      restProps,
+      visible,
+      elem_id,
+      elem_classes,
+      elem_style,
+    };
+  });
+  const proceedProps = $derived(getProceedProps());
+
   const slots = getSlots();
-  const [mergedProps, update] = getSlotContext({
-    gradio,
-    props: $updatedProps,
-    _internal,
-    as_item,
-    visible,
-    elem_id,
-    elem_classes,
-    elem_style,
-    restProps: $$restProps,
-  });
-  $: update({
-    gradio,
-    props: $updatedProps,
-    _internal,
-    as_item,
-    visible,
-    elem_id,
-    elem_classes,
-    elem_style,
-    restProps: $$restProps,
-  });
-  const setSlotParams = getSetSlotParamsFn();
 </script>
 
-{#if $mergedProps.visible}
+{#if proceedProps.visible}
   {#await AwaitedTable then Table}
     <Table
-      style={$mergedProps.elem_style}
-      className={cls($mergedProps.elem_classes, 'ms-gr-antd-table')}
-      id={$mergedProps.elem_id}
-      {...$mergedProps.restProps}
-      {...$mergedProps.props}
-      {...bindEvents($mergedProps)}
-      slots={$slots}
-      {setSlotParams}
+      style={proceedProps.elem_style}
+      className={cls(proceedProps.elem_classes, 'ms-gr-antd-table')}
+      id={proceedProps.elem_id}
+      {...proceedProps.restProps}
+      {...proceedProps.additionalProps}
+      slots={slots.value}
     >
-      <slot></slot>
+      {@render children()}
     </Table>
   {/await}
 {/if}
-
-<style>
-</style>

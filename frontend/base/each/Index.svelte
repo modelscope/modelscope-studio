@@ -14,9 +14,9 @@
     () => import('./each.placeholder')
   );
   const props = $props();
-  const { getComponentProps, children } = getProps<{
-    context_value: Record<PropertyKey, any> | undefined;
-    value: Record<PropertyKey, any>[] | undefined;
+  const { gradio, getComponentProps, children } = getProps<{
+    context_value?: Record<PropertyKey, any>;
+    value?: Record<PropertyKey, any>[];
     _internal: {
       index?: number;
     };
@@ -40,6 +40,7 @@
         ...restProps
       } = getComponentProps();
       return {
+        gradio,
         _internal,
         as_item,
         value,

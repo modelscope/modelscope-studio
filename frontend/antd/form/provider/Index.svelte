@@ -1,69 +1,62 @@
-<svelte:options accessors={true} />
-
 <script lang="ts">
   import {
-    bindEvents,
+    getProps,
     importComponent,
+    processProps,
   } from '@svelte-preprocess-react/component';
-  import { getSlotContext } from '@svelte-preprocess-react/slot';
-  import type React from 'react';
-  import type { Gradio } from '@gradio/utils';
   import cls from 'classnames';
-  import { type Writable, writable } from 'svelte/store';
 
   const AwaitedFormProvider = importComponent(() => import('./form.provider'));
-  export let gradio: Gradio;
-  export let _internal: Record<string, any> = {};
-  export let as_item: string | undefined;
-  export let props: Record<string, any> = {};
-  const updatedProps: Writable<typeof props> = writable(props);
-  $: updatedProps.update((prev) => ({ ...prev, ...props }));
-  export let elem_id = '';
-  export let elem_classes: string[] = [];
-  export let elem_style: React.CSSProperties = {};
-  export let visible = true;
-  const [mergedProps, update] = getSlotContext({
-    gradio,
-    props: $updatedProps,
-    _internal,
-    as_item,
-    visible,
-    elem_id,
-    elem_classes,
-    elem_style,
-    restProps: $$restProps,
-  });
-  $: update({
-    gradio,
-    props: $updatedProps,
-    _internal,
-    as_item,
-    visible,
-    elem_id,
-    elem_classes,
-    elem_style,
-    restProps: $$restProps,
-  });
+
+  const props = $props();
+  const { getComponentProps, getAdditionalProps, children } = getProps<{
+    additional_props?: Record<string, any>;
+    _internal: Record<string, any>;
+    form_change?: any;
+    form_finish?: any;
+  }>(() => props);
+
+  const getProceedProps = processProps(
+    () => {
+      const {
+        visible,
+        _internal,
+        as_item,
+        elem_classes,
+        elem_id,
+        elem_style,
+        ...restProps
+      } = getComponentProps();
+      return {
+        additionalProps: getAdditionalProps(),
+        _internal,
+        as_item,
+        restProps,
+        visible,
+        elem_id,
+        elem_classes,
+        elem_style,
+      };
+    },
+    {
+      form_change: 'formChange',
+      form_finish: 'formFinish',
+    }
+  );
+  const proceedProps = $derived(getProceedProps());
 </script>
 
-{#if $mergedProps.visible}
+{#if proceedProps.visible}
   {#await AwaitedFormProvider then FormProvider}
     <FormProvider
-      style={$mergedProps.elem_style}
-      className={cls($mergedProps.elem_classes, 'ms-gr-antd-form-provider')}
-      id={$mergedProps.elem_id}
-      {...$mergedProps.restProps}
-      {...$mergedProps.props}
-      {...bindEvents($mergedProps, {
-        form_change: 'formChange',
-        form_finish: 'formFinish',
-      })}
+      style={proceedProps.elem_style}
+      className={cls(proceedProps.elem_classes, 'ms-gr-antd-form-provider')}
+      id={proceedProps.elem_id}
+      {...proceedProps.restProps}
+      {...proceedProps.additionalProps}
       slots={{}}
     >
-      <slot></slot>
+      {@render children?.()}
     </FormProvider>
   {/await}
 {/if}
-
-<style>
-</style>

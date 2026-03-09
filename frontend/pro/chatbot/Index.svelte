@@ -1,88 +1,89 @@
-<svelte:options accessors={true} />
-
 <script lang="ts">
   import {
-    bindEvents,
+    getProps,
     importComponent,
+    processProps,
   } from '@svelte-preprocess-react/component';
-  import { getSlotContext, getSlots } from '@svelte-preprocess-react/slot';
-  import type React from 'react';
-  import type { Gradio } from '@gradio/utils';
+  import { getSlots } from '@svelte-preprocess-react/svelte-contexts/slot.svelte';
   import cls from 'classnames';
-  import { writable } from 'svelte/store';
 
   import type { ChatbotMessages } from './type';
 
   const AwaitedChatbot = importComponent(() => import('./chatbot'));
-  export let value: ChatbotMessages = [];
-  export let gradio: Gradio;
-  export let props: Record<string, any> = {};
-  const updatedProps = writable(props);
-  $: updatedProps.update((prev) => ({ ...prev, ...props }));
-  export let _internal: {
-    layout?: boolean;
-  } = {};
 
-  export let as_item: string | undefined;
-  export let root: string;
-  export let proxy_url: string;
-  // gradio properties
-  export let visible = true;
-  export let elem_id = '';
-  export let elem_classes: string[] = [];
-  export let elem_style: React.CSSProperties = {};
-
-  const [mergedProps, update] = getSlotContext({
+  const props = $props();
+  const {
     gradio,
-    props: $updatedProps,
-    _internal,
-    visible,
-    elem_id,
-    elem_classes,
-    elem_style,
-    as_item,
-    value,
-    restProps: $$restProps,
-  });
+    getComponentProps,
+    getAdditionalProps,
+    children,
+    updateProps,
+  } = getProps<{
+    additional_props?: Record<string, any>;
+    as_item?: string | undefined;
+    _internal: {
+      layout?: boolean;
+    };
+    value?: ChatbotMessages;
+    suggestion_select?: any;
+    welcome_prompt_select?: any;
+  }>(() => props);
+
+  const getProceedProps = processProps(
+    () => {
+      const {
+        visible,
+        _internal,
+        as_item,
+        elem_classes,
+        elem_id,
+        elem_style,
+        value,
+        ...restProps
+      } = getComponentProps();
+      return {
+        additionalProps: getAdditionalProps(),
+        _internal,
+        as_item,
+        restProps,
+        visible,
+        elem_id,
+        elem_classes,
+        elem_style,
+        value,
+        gradio,
+      };
+    },
+    {
+      suggestion_select: 'suggestionSelect',
+      welcome_prompt_select: 'welcomePromptSelect',
+    }
+  );
+  const proceedProps = $derived(getProceedProps());
 
   const slots = getSlots();
-
-  $: update({
-    gradio,
-    props: $updatedProps,
-    _internal,
-    visible,
-    elem_id,
-    elem_classes,
-    elem_style,
-    as_item,
-    value,
-    restProps: $$restProps,
-  });
 </script>
 
-{#if $mergedProps.visible}
+{#if proceedProps.visible}
   {#await AwaitedChatbot then Chatbot}
     <Chatbot
-      style={$mergedProps.elem_style}
-      className={cls($mergedProps.elem_classes)}
-      id={$mergedProps.elem_id}
-      {...$mergedProps.restProps}
-      {...$mergedProps.props}
-      {...bindEvents($mergedProps, {
-        suggestion_select: 'suggestionSelect',
-        welcome_prompt_select: 'welcomePromptSelect',
-      })}
-      value={$mergedProps.value}
+      style={proceedProps.elem_style}
+      className={cls(proceedProps.elem_classes, 'ms-gr-pro-chatbot')}
+      id={proceedProps.elem_id}
+      {...proceedProps.restProps}
+      {...proceedProps.additionalProps}
+      value={proceedProps.value}
       onValueChange={(v) => {
-        value = v;
+        updateProps({
+          value: v,
+        });
       }}
-      urlRoot={root}
-      urlProxyUrl={proxy_url}
-      themeMode={gradio.theme}
-      slots={$slots}
+      urlRoot={proceedProps.gradio.shared.root}
+      urlProxyUrl={proceedProps.gradio.shared.proxy_url}
+      themeMode={proceedProps.additionalProps.gradio?.theme}
+      slots={slots.value}
     >
-      <slot></slot>
+      {@render children()}
     </Chatbot>
   {/await}
 {/if}

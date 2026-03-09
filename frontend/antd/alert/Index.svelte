@@ -1,5 +1,3 @@
-<svelte:options accessors={true} />
-
 <script lang="ts">
   import {
     getProps,
@@ -7,7 +5,6 @@
     processProps,
   } from '@svelte-preprocess-react/component';
   import { getSlots } from '@svelte-preprocess-react/svelte-contexts/slot.svelte';
-  import type React from 'react';
   import cls from 'classnames';
 
   const AwaitedAlert = importComponent(() => import('./alert'));
@@ -58,7 +55,7 @@
       {...proceedProps.additionalProps}
       slots={slots.value}
     >
-      {@render children()}
+      {@render children?.()}
     </Alert>
   {/await}
 {/if}

@@ -1,6 +1,5 @@
 import { sveltify } from '@svelte-preprocess-react';
 import { ReactSlot } from '@svelte-preprocess-react/react-slot';
-import type { SetSlotParams } from '@svelte-preprocess-react/slot';
 import React, { useEffect, useRef } from 'react';
 import { useFunction } from '@utils/hooks/useFunction';
 import { renderParamsSlot } from '@utils/renderParamsSlot';
@@ -9,7 +8,6 @@ import type { ModalFuncWithPromise } from 'antd/es/modal/useModal';
 
 export const ModalStatic = sveltify<
   ModalFuncProps & {
-    setSlotParams: SetSlotParams;
     visible?: boolean;
     type?: 'info' | 'success' | 'error' | 'warning' | 'confirm';
     onVisible?: (visible: boolean) => void;
@@ -34,7 +32,6 @@ export const ModalStatic = sveltify<
     getContainer,
     children,
     modalRender,
-    setSlotParams,
     onVisible,
     onCancel,
     onOk,
@@ -101,11 +98,11 @@ export const ModalStatic = sveltify<
             props.closeIcon
           ),
           footer: slots.footer
-            ? renderParamsSlot({ slots, setSlotParams, key: 'footer' })
+            ? renderParamsSlot({ slots, key: 'footer' })
             : props.footer,
           title: slots.title ? <ReactSlot slot={slots.title} /> : props.title,
           modalRender: slots.modalRender
-            ? renderParamsSlot({ slots, setSlotParams, key: 'modalRender' })
+            ? renderParamsSlot({ slots, key: 'modalRender' })
             : modalRenderFunction,
           onCancel(...args) {
             onCancel?.(...args);

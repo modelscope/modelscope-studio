@@ -1,94 +1,99 @@
-<svelte:options accessors={true} />
-
 <script lang="ts">
   import {
-    bindEvents,
+    getProps,
     importComponent,
+    processProps,
   } from '@svelte-preprocess-react/component';
-  import {
-    getSetSlotParamsFn,
-    getSlotContext,
-    getSlots,
-  } from '@svelte-preprocess-react/slot';
-  import type React from 'react';
+  import { getSlots } from '@svelte-preprocess-react/svelte-contexts/slot.svelte';
   import { type FileData, prepare_files } from '@gradio/client';
-  import type { Gradio } from '@gradio/utils';
   import cls from 'classnames';
-  import { writable } from 'svelte/store';
 
   const AwaitedUploadDragger = importComponent(
     () => import('./upload.dragger')
   );
-  export let gradio: Gradio;
 
-  export let props: Record<string, any> = {};
-  const updatedProps = writable(props);
-  $: updatedProps.update((prev) => ({ ...prev, ...props }));
-  export let _internal: Record<string, any>;
-  export let root: string;
-  export let value: FileData[] = [];
-  export let as_item: string | undefined;
-  // gradio properties
-  export let visible = true;
-  export let elem_id = '';
-  export let elem_classes: string[] = [];
-  export let elem_style: React.CSSProperties = {};
-
-  const [mergedProps, update] = getSlotContext({
+  const props = $props();
+  const {
+    getComponentProps,
+    getAdditionalProps,
+    children,
+    updateProps,
     gradio,
-    props: $updatedProps,
-    _internal,
-    value,
-    visible,
-    elem_id,
-    elem_classes,
-    elem_style,
-    as_item,
-    restProps: $$restProps,
-  });
-  const setSlotParams = getSetSlotParamsFn();
+  } = getProps<{
+    additional_props?: Record<string, any>;
+
+    _internal: {};
+    value?: FileData[];
+    form_name?: string;
+  }>(() => props);
+
+  const getProceedProps = processProps(
+    () => {
+      const {
+        visible,
+        _internal,
+        as_item,
+        elem_classes,
+        elem_id,
+        elem_style,
+        value,
+        ...restProps
+      } = getComponentProps();
+      return {
+        additionalProps: getAdditionalProps(),
+        _internal,
+        as_item,
+        restProps,
+        visible,
+        elem_id,
+        elem_classes,
+        elem_style,
+        value,
+        gradio,
+      };
+    },
+    {
+      form_name: 'name',
+    }
+  );
+  const proceedProps = $derived(getProceedProps());
 
   const slots = getSlots();
-  $: update({
-    gradio,
-    props: $updatedProps,
-    _internal,
-    value,
-    visible,
-    elem_id,
-    elem_classes,
-    elem_style,
-    as_item,
-    restProps: $$restProps,
-  });
 </script>
 
-<!-- $$slots.default and slot fallbacks are not working in gradio -->
-{#if $mergedProps.visible}
+{#if proceedProps.visible}
   {#await AwaitedUploadDragger then UploadDragger}
     <UploadDragger
-      style={$mergedProps.elem_style}
-      className={cls($mergedProps.elem_classes, 'ms-gr-antd-upload-dragger')}
-      id={$mergedProps.elem_id}
-      fileList={$mergedProps.value}
-      {...$mergedProps.restProps}
-      {...$mergedProps.props}
-      {...bindEvents($mergedProps)}
-      slots={$slots}
+      style={proceedProps.elem_style}
+      className={cls(proceedProps.elem_classes, 'ms-gr-antd-upload')}
+      id={proceedProps.elem_id}
+      {...proceedProps.restProps}
+      {...proceedProps.additionalProps}
+      slots={slots.value}
+      fileList={proceedProps.additionalProps.fileList ?? proceedProps.value}
       onValueChange={(v) => {
-        value = v;
+        updateProps({
+          value: v,
+        });
       }}
       upload={async (files) => {
         return (
-          (await gradio.client.upload(await prepare_files(files), root)) || []
-        );
+          (await proceedProps.gradio.shared.client.upload(
+            await prepare_files(files),
+            proceedProps.gradio.shared.root
+          )) || []
+        ).map((file, i) => {
+          if (!file) {
+            return file;
+          }
+          return {
+            ...file,
+            uid: files[i].uid,
+          };
+        });
       }}
-      {setSlotParams}
     >
-      <slot></slot>
+      {@render children()}
     </UploadDragger>
   {/await}
 {/if}
-
-<style>
-</style>

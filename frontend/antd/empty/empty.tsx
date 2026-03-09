@@ -1,6 +1,7 @@
 import { sveltify } from '@svelte-preprocess-react';
 import { ReactSlot } from '@svelte-preprocess-react/react-slot';
 import { Empty as AEmpty, type GetProps } from 'antd';
+import { isFunction } from 'lodash-es';
 
 export const Empty = sveltify<
   GetProps<typeof AEmpty>,
@@ -19,6 +20,7 @@ export const Empty = sveltify<
         return props.image;
     }
   };
+
   return (
     <AEmpty
       {...props}
@@ -29,12 +31,17 @@ export const Empty = sveltify<
           props.description
         )
       }
-      styles={{
-        ...styles,
-        image: {
-          display: 'inline-block',
-          ...styles?.image,
-        },
+      styles={(info) => {
+        if (isFunction(styles)) {
+          return styles(info);
+        }
+        return {
+          ...styles,
+          image: {
+            display: 'inline-block',
+            ...styles?.image,
+          },
+        };
       }}
       image={getImage()}
     />

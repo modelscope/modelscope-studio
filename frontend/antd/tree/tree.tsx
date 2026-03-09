@@ -1,6 +1,5 @@
 import { sveltify } from '@svelte-preprocess-react';
 import { ReactSlot } from '@svelte-preprocess-react/react-slot';
-import type { SetSlotParams } from '@svelte-preprocess-react/slot';
 import React, { useMemo } from 'react';
 import { useFunction } from '@utils/hooks/useFunction';
 import { omitUndefinedProps } from '@utils/omitUndefinedProps';
@@ -15,7 +14,6 @@ type TreeProps = GetProps<typeof ATree>;
 export const Tree = sveltify<
   TreeProps & {
     directory?: boolean;
-    setSlotParams: SetSlotParams;
     onLoadData?: (...args: any[]) => Promise<any>;
   },
   [
@@ -40,7 +38,6 @@ export const Tree = sveltify<
       onExpand,
       children,
       directory,
-      setSlotParams,
       onLoadData,
       titleRender,
       ...props
@@ -84,13 +81,12 @@ export const Tree = sveltify<
             ? {
                 showLeafIcon: renderParamsSlot({
                   slots,
-                  setSlotParams,
                   key: 'showLine.showLeafIcon',
                 }),
               }
             : props.showLine,
           icon: slots.icon
-            ? renderParamsSlot({ slots, setSlotParams, key: 'icon' })
+            ? renderParamsSlot({ slots, key: 'icon' })
             : props.icon,
           switcherLoadingIcon: slots.switcherLoadingIcon ? (
             <ReactSlot slot={slots.switcherLoadingIcon} />
@@ -98,10 +94,10 @@ export const Tree = sveltify<
             props.switcherLoadingIcon
           ),
           switcherIcon: slots.switcherIcon
-            ? renderParamsSlot({ slots, setSlotParams, key: 'switcherIcon' })
+            ? renderParamsSlot({ slots, key: 'switcherIcon' })
             : props.switcherIcon,
           titleRender: slots.titleRender
-            ? renderParamsSlot({ slots, setSlotParams, key: 'titleRender' })
+            ? renderParamsSlot({ slots, key: 'titleRender' })
             : titleRenderFunction,
           draggable:
             slots['draggable.icon'] || draggableNodeDraggableFunction
@@ -122,7 +118,6 @@ export const Tree = sveltify<
         treeData,
         resolvedSlotItems,
         slots,
-        setSlotParams,
         draggableNodeDraggableFunction,
         draggable,
         titleRenderFunction,

@@ -3,10 +3,12 @@ import { ReactSlot } from '@svelte-preprocess-react/react-slot';
 import React from 'react';
 import { type GetProps, Statistic as AStatistic } from 'antd';
 
+export type StatisticTimer = GetProps<typeof AStatistic.Timer> & {
+  children: React.ReactNode;
+};
+
 export const StatisticTimer = sveltify<
-  GetProps<typeof AStatistic.Timer> & {
-    children: React.ReactNode;
-  },
+  StatisticTimer,
   ['prefix', 'suffix', 'title']
 >(({ children, value, slots, ...props }) => {
   return (

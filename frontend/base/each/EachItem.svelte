@@ -1,10 +1,9 @@
 <script lang="ts">
   import { importComponent } from '@svelte-preprocess-react/component';
-  // import { getSetSlotContextFn } from '@svelte-preprocess-react/slot';
   import { merge } from 'lodash-es';
+  import type { Snippet } from 'svelte';
 
   import Fragment from '../fragment/Index.svelte';
-  import type { Snippet } from 'svelte';
 
   const AwaitedEachItem = importComponent(() => import('./each.item'));
   const {

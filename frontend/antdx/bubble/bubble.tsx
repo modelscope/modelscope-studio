@@ -1,6 +1,5 @@
 import { sveltify } from '@svelte-preprocess-react';
 import { ReactSlot } from '@svelte-preprocess-react/react-slot';
-import type { SetSlotParams } from '@svelte-preprocess-react/slot';
 import React, { useMemo } from 'react';
 import { Bubble as XBubble, type BubbleProps } from '@ant-design/x';
 import { useFunction } from '@utils/hooks/useFunction';
@@ -10,7 +9,6 @@ import { isObject } from 'lodash-es';
 
 export const Bubble = sveltify<
   BubbleProps & {
-    setSlotParams: SetSlotParams;
   },
   [
     'avatar',
@@ -28,7 +26,6 @@ export const Bubble = sveltify<
     loadingRender,
     messageRender,
     slots,
-    setSlotParams,
     children,
     ...props
   }) => {
@@ -92,7 +89,6 @@ export const Bubble = sveltify<
             slots.loadingRender
               ? renderParamsSlot({
                   slots,
-                  setSlotParams,
                   key: 'loadingRender',
                 })
               : loadingRenderFunction
@@ -101,7 +97,6 @@ export const Bubble = sveltify<
             slots.messageRender
               ? renderParamsSlot({
                   slots,
-                  setSlotParams,
                   key: 'messageRender',
                 })
               : messageRenderFunction

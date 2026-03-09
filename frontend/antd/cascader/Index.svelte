@@ -29,7 +29,6 @@
         visible,
         _internal,
         as_item,
-        value,
         elem_classes,
         elem_id,
         elem_style,
@@ -39,7 +38,6 @@
         additionalProps: getAdditionalProps(),
         _internal,
         as_item,
-        value,
         restProps,
         visible,
         elem_id,
@@ -66,7 +64,6 @@
       id={proceedProps.elem_id}
       {...proceedProps.restProps}
       {...proceedProps.additionalProps}
-      value={proceedProps.additionalProps.value ?? proceedProps.value}
       slots={slots.value}
       onValueChange={(v) => {
         updateProps({

@@ -1,6 +1,5 @@
 import { sveltify } from '@svelte-preprocess-react';
 import { ReactSlot } from '@svelte-preprocess-react/react-slot';
-import type { SetSlotParams } from '@svelte-preprocess-react/slot';
 import { useFunction } from '@utils/hooks/useFunction';
 import { omitUndefinedProps } from '@utils/omitUndefinedProps';
 import { renderParamsSlot } from '@utils/renderParamsSlot';
@@ -15,7 +14,6 @@ function getConfig<T>(value: T): Partial<T & Record<PropertyKey, any>> {
 }
 export const AttachmentsFileCard = sveltify<
   FileCardProps & {
-    setSlotParams: SetSlotParams;
     children?: React.ReactNode;
   },
   [
@@ -26,7 +24,7 @@ export const AttachmentsFileCard = sveltify<
     'imageProps.preview.imageRender',
     'icon',
   ]
->(({ setSlotParams, imageProps, slots, children, ...props }) => {
+>(({ imageProps, slots, children, ...props }) => {
   const previewConfig = getConfig(imageProps?.preview);
   const supportPreview =
     slots['imageProps.preview.mask'] ||
@@ -53,14 +51,12 @@ export const AttachmentsFileCard = sveltify<
                 toolbarRender: slots['imageProps.preview.toolbarRender']
                   ? renderParamsSlot({
                       slots,
-                      setSlotParams,
                       key: 'imageProps.preview.toolbarRender',
                     })
                   : previewToolbarRenderFunction,
                 imageRender: slots['imageProps.preview.imageRender']
                   ? renderParamsSlot({
                       slots,
-                      setSlotParams,
                       key: 'imageProps.preview.imageRender',
                     })
                   : previewImageRenderFunction,

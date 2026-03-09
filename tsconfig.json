@@ -19,7 +19,10 @@
     "baseUrl": "./frontend",
     "paths": {
       "@svelte-preprocess-react": ["svelte-preprocess-react/index.ts"],
-      "@svelte-preprocess-react/*": ["svelte-preprocess-react/*"],
+      "@svelte-preprocess-react/*": [
+        "svelte-preprocess-react/*/index.ts",
+        "svelte-preprocess-react/*"
+      ],
       "@utils/*": ["utils/*"],
       "@globals/*": ["globals/*"]
     }

@@ -39,7 +39,7 @@ export function sveltify<P, const S extends readonly string[] = []>(
   | Sveltified<Omit<P & CommonProps<S>, 'children'> & { children?: any }> {
   // svelte components options
   function Sveltified(internals: any, $$props: any) {
-    const wrapperProps = $derived({
+    const wrapperProps = {
       componentProps: $$props,
       svelteInit: (init: SvelteInit) => {
         window.ms_globals.autokey += 1;
@@ -63,8 +63,15 @@ export function sveltify<P, const S extends readonly string[] = []>(
           const rootEl = document.createElement('react-root');
           const root = ReactDOM.createRoot(rootEl);
           portalTarget = document.createElement('bridge-root');
-          document.head.appendChild(rootEl);
-          document.head.appendChild(portalTarget);
+
+          $effect(() => {
+            document.head.appendChild(rootEl);
+            document.head.appendChild(portalTarget);
+            return () => {
+              document.head.removeChild(rootEl);
+              document.head.removeChild(portalTarget);
+            };
+          });
           rootNode.rerender = () => {
             root.render(
               React.createElement(Bridge, {
@@ -91,7 +98,7 @@ export function sveltify<P, const S extends readonly string[] = []>(
         parent.rerender?.();
         return node;
       },
-    });
+    };
 
     (ReactWrapper as any)(internals, wrapperProps);
   }

@@ -1,83 +1,73 @@
-<svelte:options accessors={true} />
-
 <script lang="ts">
   import {
-    bindEvents,
+    getProps,
     importComponent,
+    processProps,
   } from '@svelte-preprocess-react/component';
   import {
-    getSlotContext,
-    getSlotKey,
     getSlots,
-  } from '@svelte-preprocess-react/slot';
-  import type React from 'react';
-  import type { Gradio } from '@gradio/utils';
+    getSlotKey,
+  } from '@svelte-preprocess-react/svelte-contexts/slot.svelte';
   import cls from 'classnames';
-  import { writable } from 'svelte/store';
 
   const AwaitedAnchorItem = importComponent(() => import('./anchor.item'));
 
-  export let gradio: Gradio;
-  export let props: Record<string, any> = {};
-  const updatedProps = writable(props);
-  $: updatedProps.update((prev) => ({ ...prev, ...props }));
-  export let _internal: {
-    layout?: boolean;
-    index?: number;
-  } = {};
+  const props = $props();
+  const { getComponentProps, getAdditionalProps, children } = getProps<{
+    additional_props?: Record<string, any>;
+    as_item?: string | undefined;
+    _internal: {
+      layout?: boolean;
+      index?: number;
+    };
+    href_target?: string;
+  }>(() => props);
 
-  export let as_item: string | undefined;
-
-  // gradio properties
-  export let visible = true;
-  export let elem_id = '';
-  export let elem_classes: string[] = [];
-  export let elem_style: React.CSSProperties = {};
-  const slotKey = getSlotKey();
-  const [mergedProps, update] = getSlotContext(
-    {
-      gradio,
-      props: $updatedProps,
-      _internal,
-      visible,
-      elem_id,
-      elem_classes,
-      elem_style,
-      as_item,
-      restProps: $$restProps,
+  const getProceedProps = processProps(
+    () => {
+      const {
+        visible,
+        _internal,
+        as_item,
+        elem_classes,
+        elem_id,
+        elem_style,
+        ...restProps
+      } = getComponentProps();
+      return {
+        additionalProps: getAdditionalProps(),
+        _internal,
+        as_item,
+        restProps,
+        visible,
+        elem_id,
+        elem_classes,
+        elem_style,
+      };
     },
     {
       href_target: 'target',
     }
   );
+  const proceedProps = $derived(getProceedProps());
+
   const slots = getSlots();
-  $: update({
-    gradio,
-    props: $updatedProps,
-    _internal,
-    visible,
-    elem_id,
-    elem_classes,
-    elem_style,
-    as_item,
-    restProps: $$restProps,
-  });
+  const slotKey = getSlotKey();
 </script>
 
 {#await AwaitedAnchorItem then AnchorItem}
   <AnchorItem
-    style={$mergedProps.elem_style}
-    className={cls($mergedProps.elem_classes, 'ms-gr-antd-anchor-item')}
-    id={$mergedProps.elem_id}
-    {...$mergedProps.restProps}
-    {...$mergedProps.props}
-    {...bindEvents($mergedProps)}
-    slots={$slots}
-    itemIndex={$mergedProps._internal.index || 0}
-    itemSlotKey={$slotKey}
+    style={proceedProps.elem_style}
+    className={cls(proceedProps.elem_classes, 'ms-gr-antd-anchor-item')}
+    id={proceedProps.elem_id}
+    {...proceedProps.restProps}
+    {...proceedProps.additionalProps}
+    slots={slots.value}
+    itemIndex={proceedProps._internal.index || 0}
+    itemSlotKey={slotKey?.value}
   >
-    {#if $mergedProps.visible}
-      <slot></slot>
+    {#if proceedProps.visible}
+      {@render children()}
     {/if}
   </AnchorItem>
 {/await}

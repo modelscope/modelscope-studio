@@ -1,6 +1,5 @@
 import reactIframeTemplate from './react-iframe-template.html?raw';
 import { sveltify } from '@svelte-preprocess-react';
-import type { SetSlotParams } from '@svelte-preprocess-react/slot';
 import React, { useEffect, useMemo, useState } from 'react';
 import { useFunction } from '@utils/hooks/useFunction';
 import { useMemoizedFn } from '@utils/hooks/useMemoizedFn';
@@ -31,7 +30,6 @@ export interface WebSandboxProps {
   onCustom?: (...args: any[]) => void;
   height?: string | number;
   themeMode: string;
-  setSlotParams: SetSlotParams;
   compileErrorRender?: (message: string) => React.ReactNode;
   children?: React.ReactNode;
 }
@@ -42,7 +40,6 @@ export const WebSandbox = sveltify<WebSandboxProps, ['compileErrorRender']>(
     value,
     imports,
     slots,
-    setSlotParams,
     template = 'react',
     themeMode,
     showRenderError,
@@ -323,7 +320,6 @@ export const WebSandbox = sveltify<WebSandboxProps, ['compileErrorRender']>(
               <div style={{ display: 'none' }}>{children}</div>
               {renderParamsSlot({
                 slots,
-                setSlotParams,
                 key: 'compileErrorRender',
               })?.(compileError)}
             </>

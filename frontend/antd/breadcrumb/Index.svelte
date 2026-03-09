@@ -1,86 +1,76 @@
-<svelte:options accessors={true} />
-
 <script lang="ts">
   import {
-    bindEvents,
+    getProps,
     importComponent,
+    processProps,
   } from '@svelte-preprocess-react/component';
-  import {
-    getSetSlotParamsFn,
-    getSlotContext,
-    getSlots,
-  } from '@svelte-preprocess-react/slot';
-  import type React from 'react';
-  import type { Gradio } from '@gradio/utils';
+  import { getSlots } from '@svelte-preprocess-react/svelte-contexts/slot.svelte';
   import cls from 'classnames';
-  import { writable } from 'svelte/store';
 
   const AwaitedBreadcrumb = importComponent(() => import('./breadcrumb'));
 
-  export let gradio: Gradio;
-  export let props: Record<string, any> = {};
-  const updatedProps = writable(props);
-  $: updatedProps.update((prev) => ({ ...prev, ...props }));
-  export let _internal: {
-    layout?: boolean;
-  } = {};
+  const props = $props();
+  const { getComponentProps, getAdditionalProps, children } = getProps<{
+    additional_props?: Record<string, any>;
+    as_item?: string | undefined;
+    _internal: {
+      layout?: boolean;
+    };
+    menu_open_change?: any;
+    dropdown_open_change?: any;
+    dropdown_menu_click?: any;
+    dropdown_menu_deselect?: any;
+    dropdown_menu_open_change?: any;
+    dropdown_menu_select?: any;
+  }>(() => props);
 
-  export let as_item: string | undefined;
-  // gradio properties
-  export let visible = true;
-  export let elem_id = '';
-  export let elem_classes: string[] = [];
-  export let elem_style: React.CSSProperties = {};
+  const getProceedProps = processProps(
+    () => {
+      const {
+        visible,
+        _internal,
+        as_item,
+        elem_classes,
+        elem_id,
+        elem_style,
+        ...restProps
+      } = getComponentProps();
+      return {
+        additionalProps: getAdditionalProps(),
+        _internal,
+        as_item,
+        restProps,
+        visible,
+        elem_id,
+        elem_classes,
+        elem_style,
+      };
+    },
+    {
+      menu_open_change: 'menu_openChange',
+      dropdown_open_change: 'dropdownProps_openChange',
+      dropdown_menu_click: 'dropdownProps_menu_click',
+      dropdown_menu_deselect: 'dropdownProps_menu_deselect',
+      dropdown_menu_open_change: 'dropdownProps_menu_openChange',
+      dropdown_menu_select: 'dropdownProps_menu_select',
+    }
+  );
+  const proceedProps = $derived(getProceedProps());
 
-  const [mergedProps, update] = getSlotContext({
-    gradio,
-    props: $updatedProps,
-    _internal,
-    visible,
-    elem_id,
-    elem_classes,
-    elem_style,
-    as_item,
-    restProps: $$restProps,
-  });
   const slots = getSlots();
-  $: update({
-    gradio,
-    props: $updatedProps,
-    _internal,
-    visible,
-    elem_id,
-    elem_classes,
-    elem_style,
-    as_item,
-    restProps: $$restProps,
-  });
-  const setSlotParams = getSetSlotParamsFn();
 </script>
 
-{#if $mergedProps.visible}
+{#if proceedProps.visible}
   {#await AwaitedBreadcrumb then Breadcrumb}
     <Breadcrumb
-      style={$mergedProps.elem_style}
-      className={cls($mergedProps.elem_classes, 'ms-gr-antd-breadcrumb')}
-      id={$mergedProps.elem_id}
-      {...$mergedProps.restProps}
-      {...$mergedProps.props}
-      {...bindEvents($mergedProps, {
-        menu_open_change: 'menu_openChange',
-        dropdown_open_change: 'dropdownProps_openChange',
-        dropdown_menu_click: 'dropdownProps_menu_click',
-        dropdown_menu_deselect: 'dropdownProps_menu_deselect',
-        dropdown_menu_open_change: 'dropdownProps_menu_openChange',
-        dropdown_menu_select: 'dropdownProps_menu_select',
-      })}
-      slots={$slots}
-      {setSlotParams}
+      style={proceedProps.elem_style}
+      className={cls(proceedProps.elem_classes, 'ms-gr-antd-breadcrumb')}
+      id={proceedProps.elem_id}
+      {...proceedProps.restProps}
+      {...proceedProps.additionalProps}
+      slots={slots.value}
     >
-      <slot></slot>
+      {@render children()}
     </Breadcrumb>
   {/await}
 {/if}
-
-<style>
-</style>
