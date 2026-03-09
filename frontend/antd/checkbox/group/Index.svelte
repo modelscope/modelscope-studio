@@ -12,7 +12,7 @@
   );
 
   const props = $props();
-  const { getComponentProps, getAdditionalProps, children, updateProps } =
+  const { gradio, getComponentProps, getAdditionalProps, children, updateProps } =
     getProps<{
       additional_props?: Record<string, any>;
       as_item?: string | undefined;
@@ -33,6 +33,7 @@
       ...restProps
     } = getComponentProps();
     return {
+      gradio,
       additionalProps: getAdditionalProps(),
       _internal,
       as_item,
@@ -63,7 +64,7 @@
         });
       }}
     >
-      {@render children()}
+      {@render children?.()}
     </CheckboxGroup>
   {/await}
 {/if}

@@ -11,7 +11,7 @@
   const AwaitedSender = importComponent(() => import('./sender'));
 
   const props = $props();
-  const { getComponentProps, getAdditionalProps, children, updateProps } =
+  const { gradio, getComponentProps, getAdditionalProps, children, updateProps } =
     getProps<{
       additional_props?: Record<string, any>;
 
@@ -42,7 +42,8 @@
         ...restProps
       } = getComponentProps();
       return {
-        additionalProps: getAdditionalProps(),
+        gradio,
+      additionalProps: getAdditionalProps(),
         _internal,
         as_item,
         restProps,
@@ -92,7 +93,7 @@
       }}
       {upload}
     >
-      {@render children()}
+      {@render children?.()}
     </Sender>
   {/await}
 {/if}

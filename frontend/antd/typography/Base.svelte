@@ -16,7 +16,7 @@
     component: 'text' | 'title' | 'paragraph' | 'link';
     children?: Snippet;
   } = $props();
-  const { getComponentProps, getAdditionalProps, children } = getProps<{
+  const { gradio, getComponentProps, getAdditionalProps, children } = getProps<{
     additional_props?: Record<string, any>;
     as_item?: string | undefined;
     component: 'text' | 'title' | 'paragraph' | 'link';
@@ -42,7 +42,8 @@
         ...restProps
       } = getComponentProps();
       return {
-        additionalProps: getAdditionalProps(),
+        gradio,
+      additionalProps: getAdditionalProps(),
         _internal,
         as_item,
         restProps,
@@ -77,7 +78,7 @@
       slots={slots.value}
     >
       {#if proceedProps._internal.layout}
-        {@render children()}
+        {@render children?.()}
       {:else}
         {proceedProps.value}
       {/if}

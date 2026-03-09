@@ -10,7 +10,7 @@
   const AwaitedQRCode = importComponent(() => import('./qr-code'));
 
   const props = $props();
-  const { getComponentProps, getAdditionalProps } = getProps<{
+  const { gradio, getComponentProps, getAdditionalProps } = getProps<{
     additional_props?: Record<string, any>;
 
     _internal: {
@@ -31,6 +31,7 @@
       ...restProps
     } = getComponentProps();
     return {
+      gradio,
       additionalProps: getAdditionalProps(),
       _internal,
       as_item,

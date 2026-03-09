@@ -5,15 +5,15 @@
     processProps,
   } from '@svelte-preprocess-react/component';
   import {
-    getSlots,
     getSlotKey,
+    getSlots,
   } from '@svelte-preprocess-react/svelte-contexts/slot.svelte';
   import cls from 'classnames';
 
   const AwaitedAnchorItem = importComponent(() => import('./anchor.item'));
 
   const props = $props();
-  const { getComponentProps, getAdditionalProps, children } = getProps<{
+  const { gradio, getComponentProps, getAdditionalProps, children } = getProps<{
     additional_props?: Record<string, any>;
     as_item?: string | undefined;
     _internal: {
@@ -35,7 +35,8 @@
         ...restProps
       } = getComponentProps();
       return {
-        additionalProps: getAdditionalProps(),
+        gradio,
+      additionalProps: getAdditionalProps(),
         _internal,
         as_item,
         restProps,
@@ -67,7 +68,7 @@
     itemSlotKey={slotKey?.value}
   >
     {#if proceedProps.visible}
-      {@render children()}
+      {@render children?.()}
     {/if}
   </AnchorItem>
 {/await}

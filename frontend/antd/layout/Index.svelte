@@ -11,7 +11,7 @@
   } = $props();
 </script>
 
-<Base {...props} component="layout">{@render children()}</Base>
+<Base {...props} component="layout">{@render children?.()}</Base>
 
 <style>
 </style>

@@ -327,7 +327,7 @@ export function getProps<
   E extends Record<string, any> = Record<string, any>,
 >(getSvelteProps: () => any) {
   const props: {
-    children: Snippet;
+    children?: Snippet;
     props: P;
     shared_props: SharedProps;
   } = getSvelteProps();

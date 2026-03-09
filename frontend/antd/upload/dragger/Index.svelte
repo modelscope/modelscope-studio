@@ -40,6 +40,7 @@
         ...restProps
       } = getComponentProps();
       return {
+        gradio,
         additionalProps: getAdditionalProps(),
         _internal,
         as_item,
@@ -49,7 +50,6 @@
         elem_classes,
         elem_style,
         value,
-        gradio,
       };
     },
     {
@@ -93,7 +93,7 @@
         });
       }}
     >
-      {@render children()}
+      {@render children?.()}
     </UploadDragger>
   {/await}
 {/if}

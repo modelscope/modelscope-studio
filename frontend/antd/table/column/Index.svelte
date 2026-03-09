@@ -5,17 +5,18 @@
     processProps,
   } from '@svelte-preprocess-react/component';
   import {
-    getSlots,
     getSlotKey,
+    getSlots,
   } from '@svelte-preprocess-react/svelte-contexts/slot.svelte';
   import { createFunction } from '@utils/createFunction';
   import cls from 'classnames';
+
   import type { TableColumnProps } from './table.column';
 
   const AwaitedTableColumn = importComponent(() => import('./table.column'));
 
   const props = $props();
-  const { getComponentProps, getAdditionalProps, children } = getProps<{
+  const { gradio, getComponentProps, getAdditionalProps, children } = getProps<{
     additional_props?: Record<string, any>;
     as_item?: string | undefined;
     _internal: {};
@@ -57,7 +58,8 @@
         ...restProps
       } = getComponentProps();
       return {
-        additionalProps: getAdditionalProps(),
+        gradio,
+      additionalProps: getAdditionalProps(),
         _internal,
         as_item,
         restProps,
@@ -195,7 +197,7 @@
     itemBuiltIn={proceedProps.built_in_column}
   >
     {#if proceedProps.visible}
-      {@render children()}
+      {@render children?.()}
     {/if}
   </TableColumn>
 {/await}

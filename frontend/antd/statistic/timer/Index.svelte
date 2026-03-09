@@ -6,12 +6,13 @@
   } from '@svelte-preprocess-react/component';
   import { getSlots } from '@svelte-preprocess-react/svelte-contexts/slot.svelte';
   import cls from 'classnames';
+
   import type StatisticTimer from './statistic.timer';
 
   const AwaitedTimer = importComponent(() => import('./statistic.timer'));
 
   const props = $props();
-  const { getComponentProps, getAdditionalProps, children } = getProps<{
+  const { gradio, getComponentProps, getAdditionalProps, children } = getProps<{
     additional_props?: Record<string, any>;
     as_item?: string | undefined;
     _internal: {};
@@ -30,6 +31,7 @@
       ...restProps
     } = getComponentProps();
     return {
+      gradio,
       additionalProps: getAdditionalProps(),
       _internal,
       as_item,
@@ -62,7 +64,7 @@
       {type}
       slots={slots.value}
     >
-      {@render children()}
+      {@render children?.()}
     </Timer>
   {/await}
 {/if}

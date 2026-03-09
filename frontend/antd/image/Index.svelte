@@ -11,7 +11,7 @@
   const AwaitedImage = importComponent(() => import('./image'));
 
   const props = $props();
-  const { getComponentProps, getAdditionalProps, children } = getProps<{
+  const { gradio, getComponentProps, getAdditionalProps, children } = getProps<{
     additional_props?: Record<string, any>;
 
     as_item?: string | undefined;
@@ -36,7 +36,8 @@
         ...restProps
       } = getComponentProps();
       return {
-        additionalProps: getAdditionalProps(),
+        gradio,
+      additionalProps: getAdditionalProps(),
         _internal,
         as_item,
         restProps,
@@ -75,7 +76,7 @@
       slots={slots.value}
       src={proceedProps.additionalProps.src || src}
     >
-      {@render children()}
+      {@render children?.()}
     </Image>
   {/await}
 {/if}

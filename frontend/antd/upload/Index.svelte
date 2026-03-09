@@ -91,7 +91,7 @@
         });
       }}
     >
-      {@render children()}
+      {@render children?.()}
     </Upload>
   {/await}
 {/if}

@@ -68,7 +68,7 @@
 
 <react-portal-target bind:this={portalTarget}></react-portal-target>
 {#if children}
-  <svelte-slot bind:this={childrenSource}>{@render children()}</svelte-slot>
+  <svelte-slot bind:this={childrenSource}>{@render children?.()}</svelte-slot>
 {/if}
 
 <style>

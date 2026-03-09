@@ -10,7 +10,7 @@
   const AwaitedSkeletonNode = importComponent(() => import('./skeleton.node'));
 
   const props = $props();
-  const { getComponentProps, getAdditionalProps, children } = getProps<{
+  const { gradio, getComponentProps, getAdditionalProps, children } = getProps<{
     additional_props?: Record<string, any>;
     as_item?: string | undefined;
     _internal: Record<string, any>;
@@ -27,6 +27,7 @@
       ...restProps
     } = getComponentProps();
     return {
+      gradio,
       additionalProps: getAdditionalProps(),
       _internal,
       as_item,
@@ -52,7 +53,7 @@
       {...proceedProps.additionalProps}
       slots={slots.value}
     >
-      {@render children()}
+      {@render children?.()}
     </SkeletonNode>
   {/await}
 {/if}

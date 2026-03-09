@@ -9,7 +9,7 @@
     () => import('./iconfont-provider')
   );
   const props = $props();
-  const { getComponentProps, getAdditionalProps, children } = getProps<{
+  const { gradio, getComponentProps, getAdditionalProps, children } = getProps<{
     additionalProps: Record<string, any>;
   }>(() => props);
 
@@ -24,6 +24,7 @@
       ...restProps
     } = getComponentProps();
     return {
+      gradio,
       additionalProps: getAdditionalProps(),
       _internal,
       as_item,
@@ -45,7 +46,7 @@
       {...proceedProps.additionalProps}
       slots={{}}
     >
-      {@render children()}
+      {@render children?.()}
     </IconFontProvider>
   {/await}
 {/if}

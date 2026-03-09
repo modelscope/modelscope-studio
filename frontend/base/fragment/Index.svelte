@@ -9,7 +9,7 @@
 
   const props = $props();
 
-  const { getComponentProps, getAdditionalProps, children } = getProps<{}>(
+  const { gradio, getComponentProps, getAdditionalProps, children } = getProps<{}>(
     () => props
   );
 
@@ -17,6 +17,7 @@
     () => {
       const { visible, _internal, as_item, ...restProps } = getComponentProps();
       return {
+        gradio,
         additionalProps: getAdditionalProps(),
         _internal,
         as_item,
@@ -40,7 +41,7 @@
       {...proceedProps.additionalProps}
       slots={{}}
     >
-      {@render children()}
+      {@render children?.()}
     </Fragment>
   {/await}
 {/if}

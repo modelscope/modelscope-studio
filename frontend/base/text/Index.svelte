@@ -8,7 +8,7 @@
   const AwaitedText = importComponent(() => import('./text'));
   const props = $props();
 
-  const { getComponentProps, getAdditionalProps } = getProps<{
+  const { gradio, getComponentProps, getAdditionalProps } = getProps<{
     value?: string;
   }>(() => props);
 
@@ -16,6 +16,7 @@
     const { visible, _internal, value, as_item, ...restProps } =
       getComponentProps();
     return {
+      gradio,
       additionalProps: getAdditionalProps(),
       _internal,
       as_item,

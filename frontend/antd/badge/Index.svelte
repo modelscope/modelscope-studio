@@ -11,7 +11,7 @@
   const AwaitedBadge = importComponent(() => import('./badge'));
 
   const props = $props();
-  const { getComponentProps, getAdditionalProps, children } = getProps<{
+  const { gradio, getComponentProps, getAdditionalProps, children } = getProps<{
     additional_props?: Record<string, any>;
 
     as_item?: string | undefined;
@@ -31,6 +31,7 @@
       ...restProps
     } = getComponentProps();
     return {
+      gradio,
       additionalProps: getAdditionalProps(),
       _internal,
       as_item,
@@ -58,7 +59,7 @@
   {#await AwaitedBadge then Badge}
     {#if proceedProps._internal.layout}
       <Badge {...badge_props}>
-        {@render children()}
+        {@render children?.()}
       </Badge>
     {:else}
       <Badge {...badge_props} />

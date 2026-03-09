@@ -10,7 +10,7 @@
   const AwaitedWelcome = importComponent(() => import('./welcome'));
 
   const props = $props();
-  const { getComponentProps, getAdditionalProps, children } = getProps<{
+  const { gradio, getComponentProps, getAdditionalProps, children } = getProps<{
     additional_props?: Record<string, any>;
 
     as_item?: string | undefined;
@@ -34,6 +34,7 @@
       ...restProps
     } = getComponentProps();
     return {
+      gradio,
       additionalProps: getAdditionalProps(),
       _internal,
       as_item,
@@ -63,7 +64,7 @@
       urlRoot={proceedProps.root}
       urlProxyUrl={proceedProps.proxy_url}
     >
-      {@render children()}
+      {@render children?.()}
     </Welcome>
   {/await}
 {/if}

@@ -12,7 +12,7 @@
   const AwaitedMonacoEditor = importComponent(() => import('./monaco-editor'));
 
   const props = $props();
-  const { getComponentProps, getAdditionalProps, children, updateProps } =
+  const { gradio, getComponentProps, getAdditionalProps, children, updateProps } =
     getProps<{
       additional_props?: Record<string, any>;
 
@@ -40,6 +40,7 @@
       ...restProps
     } = getComponentProps();
     return {
+      gradio,
       additionalProps: getAdditionalProps(),
       _internal,
       as_item,
@@ -88,7 +89,7 @@
   {#await awaitedLoader then}
     {#await AwaitedMonacoEditor then MonacoEditor}
       <MonacoEditor {...editorProps}>
-        {@render children()}
+        {@render children?.()}
       </MonacoEditor>
     {/await}
   {/await}

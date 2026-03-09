@@ -10,7 +10,7 @@
   const AwaitedCard = importComponent(() => import('./card'));
 
   const props = $props();
-  const { getComponentProps, getAdditionalProps, children } = getProps<{
+  const { gradio, getComponentProps, getAdditionalProps, children } = getProps<{
     additional_props?: Record<string, any>;
 
     as_item?: string | undefined;
@@ -30,7 +30,8 @@
         ...restProps
       } = getComponentProps();
       return {
-        additionalProps: getAdditionalProps(),
+        gradio,
+      additionalProps: getAdditionalProps(),
         _internal,
         as_item,
         restProps,
@@ -60,7 +61,7 @@
       containsGrid={proceedProps._internal.contains_grid}
       slots={slots.value}
     >
-      {@render children()}
+      {@render children?.()}
     </Card>
   {/await}
 {/if}

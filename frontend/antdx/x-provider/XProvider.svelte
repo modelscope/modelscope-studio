@@ -35,6 +35,7 @@
       ...restProps
     } = getComponentProps();
     return {
+      gradio,
       additionalProps: getAdditionalProps(),
       _internal,
       as_item,
@@ -43,7 +44,6 @@
       elem_id,
       elem_classes,
       elem_style,
-      gradio,
     };
   });
   const proceedProps = $derived(getProceedProps());
@@ -80,7 +80,7 @@
         slotParamsFn = params;
       }}
     >
-      {@render children()}
+      {@render children?.()}
     </XProvider>
   {/await}
 {/if}

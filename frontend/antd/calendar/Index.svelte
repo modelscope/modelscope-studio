@@ -11,7 +11,7 @@
   const AwaitedCalender = importComponent(() => import('./calendar'));
 
   const props = $props();
-  const { getComponentProps, getAdditionalProps, children, updateProps } =
+  const { gradio, getComponentProps, getAdditionalProps, children, updateProps } =
     getProps<{
       additional_props?: Record<string, any>;
 
@@ -36,7 +36,8 @@
         ...restProps
       } = getComponentProps();
       return {
-        additionalProps: getAdditionalProps(),
+        gradio,
+      additionalProps: getAdditionalProps(),
         _internal,
         as_item,
         value,
@@ -72,7 +73,7 @@
         });
       }}
     >
-      {@render children()}
+      {@render children?.()}
     </Calender>
   {/await}
 {/if}

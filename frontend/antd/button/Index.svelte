@@ -34,6 +34,7 @@
         ...restProps
       } = getComponentProps();
       return {
+        gradio,
         additionalProps: getAdditionalProps(),
         _internal,
         as_item,
@@ -43,7 +44,6 @@
         elem_id,
         elem_classes,
         elem_style,
-        gradio,
       };
     },
     {
@@ -67,7 +67,7 @@
       slots={slots.value}
       value={proceedProps.value}
     >
-      {@render children()}
+      {@render children?.()}
     </Button>
   {/await}
 {/if}

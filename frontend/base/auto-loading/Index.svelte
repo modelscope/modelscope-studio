@@ -1,18 +1,18 @@
 <script lang="ts">
   import {
-    importComponent,
     getProps,
+    importComponent,
     processProps,
   } from '@svelte-preprocess-react/component';
   import { getConfigType } from '@svelte-preprocess-react/svelte-contexts/config.svelte';
   import { getLoadingStatus } from '@svelte-preprocess-react/svelte-contexts/loading-status.svelte';
-  import cls from 'classnames';
   import { getSlots } from '@svelte-preprocess-react/svelte-contexts/slot.svelte';
+  import cls from 'classnames';
 
   const AwaitedAutoLoading = importComponent(() => import('./auto-loading'));
   const props = $props();
 
-  const { getComponentProps, getAdditionalProps, children } = getProps<{
+  const { gradio, getComponentProps, getAdditionalProps, children } = getProps<{
     additionalProps: Record<string, any>;
     generating: boolean;
     showError: boolean;
@@ -32,7 +32,8 @@
         ...restProps
       } = getComponentProps();
       return {
-        additionalProps: getAdditionalProps(),
+        gradio,
+      additionalProps: getAdditionalProps(),
         restProps,
         _internal,
         as_item,
@@ -73,7 +74,7 @@
       configType={configType.value}
       loadingStatus={loadingStatus.value}
     >
-      {@render children()}
+      {@render children?.()}
     </AutoLoading>
   {/await}
 {/if}

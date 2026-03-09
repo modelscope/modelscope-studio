@@ -6,12 +6,13 @@
   } from '@svelte-preprocess-react/component';
   import { getSlots } from '@svelte-preprocess-react/svelte-contexts/slot.svelte';
   import cls from 'classnames';
+
   import type { SegmentedProps } from './segmented';
 
   const AwaitedSegmented = importComponent(() => import('./segmented'));
 
   const props = $props();
-  const { getComponentProps, getAdditionalProps, children, updateProps } =
+  const { gradio, getComponentProps, getAdditionalProps, children, updateProps } =
     getProps<{
       additional_props?: Record<string, any>;
 
@@ -36,7 +37,8 @@
         ...restProps
       } = getComponentProps();
       return {
-        additionalProps: getAdditionalProps(),
+        gradio,
+      additionalProps: getAdditionalProps(),
         _internal,
         as_item,
         restProps,
@@ -76,7 +78,7 @@
         });
       }}
     >
-      {@render children()}
+      {@render children?.()}
     </Segmented>
   {/await}
 {/if}

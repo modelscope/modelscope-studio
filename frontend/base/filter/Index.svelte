@@ -9,7 +9,7 @@
 
   const props = $props();
 
-  const { getComponentProps, getAdditionalProps, children } = getProps<{
+  const { gradio, getComponentProps, getAdditionalProps, children } = getProps<{
     params_mapping: string;
   }>(() => props);
 
@@ -17,6 +17,7 @@
     const { visible, _internal, as_item, params_mapping, ...restProps } =
       getComponentProps();
     return {
+      gradio,
       additionalProps: getAdditionalProps(),
       _internal,
       as_item,
@@ -38,7 +39,7 @@
       slots={{}}
       asItem={proceedProps.as_item}
     >
-      {@render children()}
+      {@render children?.()}
     </Filter>
   {/await}
 {/if}

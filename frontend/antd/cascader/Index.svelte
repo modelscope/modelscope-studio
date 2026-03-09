@@ -10,7 +10,7 @@
   const AwaitedCascader = importComponent(() => import('./cascader'));
 
   const props = $props();
-  const { getComponentProps, getAdditionalProps, children, updateProps } =
+  const { gradio, getComponentProps, getAdditionalProps, children, updateProps } =
     getProps<{
       value?: string[] | number[];
       additional_props?: Record<string, any>;
@@ -35,7 +35,8 @@
         ...restProps
       } = getComponentProps();
       return {
-        additionalProps: getAdditionalProps(),
+        gradio,
+      additionalProps: getAdditionalProps(),
         _internal,
         as_item,
         restProps,
@@ -71,7 +72,7 @@
         });
       }}
     >
-      {@render children()}
+      {@render children?.()}
     </Cascader>
   {/await}
 {/if}

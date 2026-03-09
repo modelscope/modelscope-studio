@@ -85,7 +85,7 @@
           __internal_slot_key={slotKey?.value}
           slots={{}}
         >
-          {@render children()}
+          {@render children?.()}
         </Each>
       {/await}
     {:else}
@@ -96,7 +96,7 @@
           index={(proceedProps._internal.index || 0) + (subIndex || 0)}
           subIndex={(subIndex?.value || 0) + i}
         >
-          {@render children()}
+          {@render children?.()}
         </EachItem>
       {/each}
     {/if}

@@ -5,15 +5,15 @@
     processProps,
   } from '@svelte-preprocess-react/component';
   import {
-    getSlots,
     getSlotKey,
+    getSlots,
   } from '@svelte-preprocess-react/svelte-contexts/slot.svelte';
   import cls from 'classnames';
 
   const AwaitedSliderMark = importComponent(() => import('./slider.mark'));
 
   const props = $props();
-  const { getComponentProps, getAdditionalProps, children } = getProps<{
+  const { gradio, getComponentProps, getAdditionalProps, children } = getProps<{
     additional_props?: Record<string, any>;
     as_item?: string | undefined;
     _internal: {
@@ -33,6 +33,7 @@
       ...restProps
     } = getComponentProps();
     return {
+      gradio,
       additionalProps: getAdditionalProps(),
       _internal,
       as_item,
@@ -66,7 +67,7 @@
   >
     {#if proceedProps.visible}
       <svelte-slot bind:this={slot}>
-        {@render children()}
+        {@render children?.()}
       </svelte-slot>
     {/if}
   </SliderMark>

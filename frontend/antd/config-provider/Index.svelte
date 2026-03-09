@@ -30,8 +30,8 @@
       ...restProps
     } = getComponentProps();
     return {
-      additionalProps: getAdditionalProps(),
       gradio,
+      additionalProps: getAdditionalProps(),
       _internal,
       as_item,
       restProps,
@@ -58,7 +58,7 @@
       slots={slots.value}
       themeMode={proceedProps.gradio.shared.theme || 'light'}
     >
-      {@render children()}
+      {@render children?.()}
     </ConfigProvider>
   {/await}
 {/if}

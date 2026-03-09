@@ -28,6 +28,7 @@
       ...restProps
     } = getComponentProps();
     return {
+      gradio,
       additionalProps: getAdditionalProps(),
       _internal,
       as_item,
@@ -56,7 +57,7 @@
       value={proceedProps.value}
       slots={slots.value}
     >
-      {@render children()}
+      {@render children?.()}
     </Markdown>
   {/await}
 {/if}

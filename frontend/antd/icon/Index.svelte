@@ -10,7 +10,7 @@
   const AwaitedIcon = importComponent(() => import('./icon'));
   const props = $props();
 
-  const { getComponentProps, getAdditionalProps, children } = getProps<{
+  const { gradio, getComponentProps, getAdditionalProps, children } = getProps<{
     additional_props?: Record<string, any>;
     _internal: {
       layout?: boolean;
@@ -30,6 +30,7 @@
       ...restProps
     } = getComponentProps();
     return {
+      gradio,
       additionalProps: getAdditionalProps(),
       _internal,
       as_item,
@@ -59,7 +60,7 @@
       {value}
       slots={slots.value}
     >
-      {@render children()}
+      {@render children?.()}
     </Icon>
   {/await}
 {/if}

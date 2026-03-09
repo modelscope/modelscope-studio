@@ -10,7 +10,7 @@
   const AwaitedSplitter = importComponent(() => import('./splitter'));
 
   const props = $props();
-  const { getComponentProps, getAdditionalProps, children } = getProps<{
+  const { gradio, getComponentProps, getAdditionalProps, children } = getProps<{
     additional_props?: Record<string, any>;
 
     as_item?: string | undefined;
@@ -34,7 +34,8 @@
         ...restProps
       } = getComponentProps();
       return {
-        additionalProps: getAdditionalProps(),
+        gradio,
+      additionalProps: getAdditionalProps(),
         _internal,
         as_item,
         restProps,
@@ -63,7 +64,7 @@
       {...proceedProps.additionalProps}
       slots={slots.value}
     >
-      {@render children()}
+      {@render children?.()}
     </Splitter>
   {/await}
 {/if}

@@ -30,7 +30,7 @@
 <Fragment _internal={{ index, subIndex: index + subIndex }}>
   {#await AwaitedEachItem then EachItem}
     <EachItem __internal_value={merged_value} slots={{}}>
-      {@render children()}
+      {@render children?.()}
     </EachItem>
   {/await}
 </Fragment>

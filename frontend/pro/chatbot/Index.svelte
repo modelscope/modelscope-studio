@@ -83,7 +83,7 @@
       themeMode={proceedProps.additionalProps.gradio?.theme}
       slots={slots.value}
     >
-      {@render children()}
+      {@render children?.()}
     </Chatbot>
   {/await}
 {/if}
