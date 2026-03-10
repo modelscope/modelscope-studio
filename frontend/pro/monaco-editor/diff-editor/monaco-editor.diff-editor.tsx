@@ -3,8 +3,8 @@ import {
   type DiffEditorProps,
   type OnValidate,
 } from '@monaco-editor/react';
+import { sveltify } from '@svelte-preprocess-react';
 import { ReactSlot } from '@svelte-preprocess-react/react-slot';
-import { sveltify } from '@svelte-preprocess-react/sveltify';
 import React, { useEffect, useMemo, useRef } from 'react';
 import { useFunction } from '@utils/hooks/useFunction';
 import { useMemoizedFn } from '@utils/hooks/useMemoizedFn';
