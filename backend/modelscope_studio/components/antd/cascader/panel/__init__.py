@@ -41,6 +41,8 @@ class AntdCascaderPanel(ModelScopeDataLayoutComponent):
             show_checked_strategy: Literal['SHOW_PARENT', 'SHOW_CHILD']
         | None = None,
             root_class_name: str | None = None,
+            class_names: dict | str | None = None,
+            styles: dict | str | None = None,
             as_item: str | None = None,
             _internal: None = None,
             # gradio properties
@@ -58,6 +60,8 @@ class AntdCascaderPanel(ModelScopeDataLayoutComponent):
                          as_item=as_item,
                          elem_style=elem_style,
                          **kwargs)
+        self.class_names = class_names
+        self.styles = styles
         self.additional_props = additional_props
         self.change_on_select = change_on_select
         self.default_value = default_value

@@ -59,6 +59,8 @@ class AntdTransfer(ModelScopeDataLayoutComponent):
             target_keys: list[str] | list[int | float] | None = None,
             titles: list[str] | None = None,
             root_class_name: str | None = None,
+            class_names: dict | str | None = None,
+            styles: dict | str | None = None,
             as_item: str | None = None,
             _internal: None = None,
             # gradio properties
@@ -78,6 +80,8 @@ class AntdTransfer(ModelScopeDataLayoutComponent):
                          key=key,
                          elem_style=elem_style,
                          **kwargs)
+        self.class_names = class_names
+        self.styles = styles
         self.additional_props = additional_props
         self.data_source = data_source
         self.disabled = disabled

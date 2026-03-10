@@ -66,6 +66,8 @@ class AntdInputNumber(ModelScopeDataLayoutComponent):
             variant: Literal['outlined', 'borderless', 'filled', 'underlined']
         | None = None,
             root_class_name: str | None = None,
+            class_names: dict | str | None = None,
+            styles: dict | str | None = None,
             as_item: str | None = None,
             _internal: None = None,
             # gradio properties
@@ -83,6 +85,8 @@ class AntdInputNumber(ModelScopeDataLayoutComponent):
                          as_item=as_item,
                          elem_style=elem_style,
                          **kwargs)
+        self.class_names = class_names
+        self.styles = styles
         self.additional_props = additional_props
         self.addon_after = addon_after
         self.addon_before = addon_before

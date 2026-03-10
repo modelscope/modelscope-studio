@@ -32,8 +32,8 @@ class AntdSpace(ModelScopeLayoutComponent):
             additional_props: dict | None = None,
             *,
             align: Literal['start', 'end', 'center', 'baseline'] | None = None,
-            class_names: dict | None = None,
-            styles: dict | None = None,
+            class_names: dict | str | None= None,
+            styles: dict | str | None= None,
             direction: Literal['vertical', 'horizontal'] | None = 'horizontal',
             size: Literal['small', 'middle', 'large'] | int | float
         | list[Literal['small', 'middle', 'large'] | int | float]
@@ -53,11 +53,11 @@ class AntdSpace(ModelScopeLayoutComponent):
         """
         Parameters:
             align: Align items.
-            class_names: Semantic className.
+            class_names: dict | str | None
             direction: The space direction.
             size: The space size.
             split: Set split.
-            styles: Semantic style.
+            styles: dict | str | None
             wrap: Auto wrap line, when horizontal effective.
         """
         super().__init__(visible=visible,

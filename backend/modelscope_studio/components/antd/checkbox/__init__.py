@@ -31,6 +31,8 @@ class AntdCheckbox(ModelScopeDataLayoutComponent):
             disabled: bool | None = None,
             indeterminate: bool | None = None,
             root_class_name: str | None = None,
+            class_names: dict | str | None = None,
+            styles: dict | str | None = None,
             as_item: str | None = None,
             _internal: None = None,
             # gradio properties
@@ -48,6 +50,8 @@ class AntdCheckbox(ModelScopeDataLayoutComponent):
                          as_item=as_item,
                          elem_style=elem_style,
                          **kwargs)
+        self.class_names = class_names
+        self.styles = styles
         self.additional_props = additional_props
         self.auto_focus = auto_focus
         self.default_checked = default_checked

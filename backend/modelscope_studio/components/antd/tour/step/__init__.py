@@ -49,6 +49,8 @@ class AntdTourStep(ModelScopeLayoutComponent):
             next_button_props: dict | None = None,
             prev_button_props: dict | None = None,
             scroll_into_view_options: bool | dict = True,
+            class_names: dict | str | None = None,
+            styles: dict | str | None = None,
             as_item: str | None = None,
             _internal: None = None,
             # gradio properties
@@ -65,6 +67,8 @@ class AntdTourStep(ModelScopeLayoutComponent):
                          as_item=as_item,
                          elem_style=elem_style,
                          **kwargs)
+        self.class_names = class_names
+        self.styles = styles
         self.additional_props = additional_props
         self.get_target = get_target
         self.arrow = arrow

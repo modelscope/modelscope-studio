@@ -47,6 +47,8 @@ class AntdFloatButtonBackTop(ModelScopeLayoutComponent):
             get_target: str | None = None,
             visibility_height: int | float = 400,
             root_class_name: str | None = None,
+            class_names: dict | str | None = None,
+            styles: dict | str | None = None,
             as_item: str | None = None,
             _internal: None = None,
             # gradio properties
@@ -77,6 +79,8 @@ class AntdFloatButtonBackTop(ModelScopeLayoutComponent):
                          as_item=as_item,
                          elem_style=elem_style,
                          **kwargs)
+        self.class_names = class_names
+        self.styles = styles
         self.additional_props = additional_props
         self.icon = icon
         self.description = description

@@ -55,7 +55,7 @@ class AntdButton(ModelScopeLayoutComponent):
             *,
             auto_insert_space: bool = True,
             block: bool | None = None,
-            class_names: dict | None = None,
+            class_names: dict | str | None = None,
             danger: bool | None = None,
             disabled: bool | None = None,
             ghost: bool | None = None,
@@ -66,7 +66,7 @@ class AntdButton(ModelScopeLayoutComponent):
             loading: bool | dict | None = None,
             shape: Literal["default", "circle", "round"] | None = None,
             size: Literal["large", "middle", "small"] | None = None,
-            styles: dict | None = None,
+            styles: dict | str | None = None,
             href_target: str | None = None,
             type: Literal["primary", "dashed", "link", "text", "default"]
         | None = None,

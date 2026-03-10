@@ -34,7 +34,7 @@ class AntdSlider(ModelScopeDataLayoutComponent):
             additional_props: dict | None = None,
             *,
             auto_focus: bool | None = None,
-            class_names: dict | None = None,
+            class_names: dict | str | None= None,
             default_value: int | float | tuple[int | float, int | float]
         | list[int | float] | None = None,
             disabled: bool | None = None,
@@ -47,7 +47,7 @@ class AntdSlider(ModelScopeDataLayoutComponent):
             range: bool | dict | None = False,
             reverse: bool | None = None,
             step: int | float | None = 1,
-            styles: dict | None = None,
+            styles: dict | str | None= None,
             tooltip: dict | None = None,
             vertical: bool | None = None,
             root_class_name: str | None = None,

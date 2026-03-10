@@ -42,6 +42,8 @@ class AntdTableExpandable(ModelScopeLayoutComponent):
             row_expandable: str | None = None,
             show_expand_column: bool | None = None,
             expanded_row_offset: int | None = None,
+            class_names: dict | str | None = None,
+            styles: dict | str | None = None,
             as_item: str | None = None,
             _internal: None = None,
             # gradio properties
@@ -58,6 +60,8 @@ class AntdTableExpandable(ModelScopeLayoutComponent):
                          as_item=as_item,
                          elem_style=elem_style,
                          **kwargs)
+        self.class_names = class_names
+        self.styles = styles
         self.additional_props = additional_props
         self.children_column_name = children_column_name
         self.column_title = column_title

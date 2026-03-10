@@ -61,6 +61,8 @@ class AntdTabs(ModelScopeLayoutComponent):
             destroy_on_hidden: bool | None = None,
             type: Literal["card", "line", "editable-card"] | None = None,
             root_class_name: str | None = None,
+            class_names: dict | str | None = None,
+            styles: dict | str | None = None,
             as_item: str | None = None,
             _internal: None = None,
             # gradio properties
@@ -77,6 +79,8 @@ class AntdTabs(ModelScopeLayoutComponent):
                          as_item=as_item,
                          elem_style=elem_style,
                          **kwargs)
+        self.class_names = class_names
+        self.styles = styles
         self.additional_props = additional_props
         self.active_key = active_key
         self.add_icon = add_icon

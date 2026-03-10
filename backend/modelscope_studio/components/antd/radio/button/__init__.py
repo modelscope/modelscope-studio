@@ -29,6 +29,8 @@ class AntdRadioButton(ModelScopeDataLayoutComponent):
             default_checked: bool | None = None,
             disabled: bool | None = None,
             root_class_name: str | None = None,
+            class_names: dict | str | None = None,
+            styles: dict | str | None = None,
             as_item: str | None = None,
             _internal: None = None,
             # gradio properties
@@ -46,6 +48,8 @@ class AntdRadioButton(ModelScopeDataLayoutComponent):
                          as_item=as_item,
                          elem_style=elem_style,
                          **kwargs)
+        self.class_names = class_names
+        self.styles = styles
         self.additional_props = additional_props
         self.group_value = group_value
         self.auto_focus = auto_focus

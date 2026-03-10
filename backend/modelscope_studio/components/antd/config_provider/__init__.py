@@ -48,6 +48,8 @@ class AntdConfigProvider(ModelScopeLayoutComponent):
                  | None = None,
                  virtual: bool | None = None,
                  warning: dict | None = None,
+                 class_names: dict | str | None = None,
+                 styles: dict | str | None = None,
                  as_item: str | None = None,
                  _internal: None = None,
                  visible: bool = True,
@@ -63,6 +65,8 @@ class AntdConfigProvider(ModelScopeLayoutComponent):
                          as_item=as_item,
                          elem_style=elem_style,
                          **kwargs)
+        self.class_names = class_names
+        self.styles = styles
         self.additional_props = additional_props
         self.component_disabled = component_disabled
         self.component_size = component_size

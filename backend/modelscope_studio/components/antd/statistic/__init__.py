@@ -34,6 +34,8 @@ class AntdStatistic(ModelScopeDataLayoutComponent):
             title: str | None = None,
             value_style: dict | None = None,
             root_class_name: str | None = None,
+            class_names: dict | str | None = None,
+            styles: dict | str | None = None,
             as_item: str | None = None,
             _internal: None = None,
             # gradio properties
@@ -51,6 +53,8 @@ class AntdStatistic(ModelScopeDataLayoutComponent):
                          as_item=as_item,
                          elem_style=elem_style,
                          **kwargs)
+        self.class_names = class_names
+        self.styles = styles
         self.additional_props = additional_props
         self.decimal_separator = decimal_separator
         self.formatter = formatter

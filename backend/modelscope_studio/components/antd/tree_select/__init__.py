@@ -106,8 +106,8 @@ class AntdTreeSelect(ModelScopeDataLayoutComponent):
             variant: Literal['outlined', 'borderless', 'solid', 'underlined']
         | None = None,
             virtual: bool | None = True,
-            class_names: dict | None = None,
-            styles: dict | None = None,
+            class_names: dict | str | None= None,
+            styles: dict | str | None= None,
             root_class_name: str | None = None,
             as_item: str | None = None,
             _internal: None = None,

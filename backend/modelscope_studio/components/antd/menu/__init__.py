@@ -55,6 +55,8 @@ class AntdMenu(ModelScopeLayoutComponent):
             theme: Literal['light', 'dark'] | None = None,
             trigger_sub_menu_action: Literal['click', 'hover'] = 'hover',
             root_class_name: str | None = None,
+            class_names: dict | str | None = None,
+            styles: dict | str | None = None,
             as_item: str | None = None,
             _internal: None = None,
             # gradio properties
@@ -71,6 +73,8 @@ class AntdMenu(ModelScopeLayoutComponent):
                          as_item=as_item,
                          elem_style=elem_style,
                          **kwargs)
+        self.class_names = class_names
+        self.styles = styles
         self.additional_props = additional_props
         self.open_keys = open_keys
         self.selected_keys = selected_keys

@@ -55,6 +55,8 @@ class AntdLayoutSider(ModelScopeLayoutComponent):
             trigger: str | None = 'default',
             width: int | float | str = 200,
             zero_width_trigger_style: dict | None = None,
+            class_names: dict | str | None = None,
+            styles: dict | str | None = None,
             as_item: str | None = None,
             _internal: None = None,
             # gradio properties
@@ -84,6 +86,8 @@ class AntdLayoutSider(ModelScopeLayoutComponent):
                          as_item=as_item,
                          elem_style=elem_style,
                          **kwargs)
+        self.class_names = class_names
+        self.styles = styles
         self.additional_props = additional_props
         self.breakpoint = breakpoint
         self.collapsed = collapsed

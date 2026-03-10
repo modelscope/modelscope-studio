@@ -33,6 +33,8 @@ class AntdIcon(ModelScopeDataLayoutComponent):
             rotate: int | float | None = None,
             two_tone_color: str | None = None,
             component: str | None = None,
+            class_names: dict | str | None = None,
+            styles: dict | str | None = None,
             as_item: str | None = None,
             _internal: None = None,
             # gradio properties
@@ -57,6 +59,8 @@ class AntdIcon(ModelScopeDataLayoutComponent):
                          as_item=as_item,
                          elem_style=elem_style,
                          **kwargs)
+        self.class_names = class_names
+        self.styles = styles
         self.additional_props = additional_props
         self.spin = spin
         self.rotate = rotate

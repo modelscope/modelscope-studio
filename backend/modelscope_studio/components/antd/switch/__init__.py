@@ -39,6 +39,8 @@ class AntdSwitch(ModelScopeDataLayoutComponent):
             size: Literal['default', 'small'] | None = None,
             un_checked_children: str | None = None,
             root_class_name: str | None = None,
+            class_names: dict | str | None = None,
+            styles: dict | str | None = None,
             as_item: str | None = None,
             _internal: None = None,
             # gradio properties
@@ -56,6 +58,8 @@ class AntdSwitch(ModelScopeDataLayoutComponent):
                          as_item=as_item,
                          elem_style=elem_style,
                          **kwargs)
+        self.class_names = class_names
+        self.styles = styles
         self.additional_props = additional_props
         self.auto_focus = auto_focus
         self.checked = checked

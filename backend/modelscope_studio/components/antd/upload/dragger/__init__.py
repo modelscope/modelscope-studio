@@ -83,6 +83,8 @@ class AntdUploadDragger(ModelScopeDataLayoutComponent):
             show_upload_list: bool | dict | None = True,
             with_credentials: bool | None = None,
             root_class_name: str | None = None,
+            class_names: dict | str | None = None,
+            styles: dict | str | None = None,
             as_item: str | None = None,
             _internal: None = None,
             # gradio properties
@@ -107,6 +109,8 @@ class AntdUploadDragger(ModelScopeDataLayoutComponent):
                          inputs=inputs,
                          render=render,
                          **kwargs)
+        self.class_names = class_names
+        self.styles = styles
 
         self.additional_props = additional_props
         self.accept = accept
