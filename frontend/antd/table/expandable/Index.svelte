@@ -28,6 +28,7 @@
     expand_icon?: string;
     column_title?: string;
   }>(() => props);
+  const slotKey = getSlotKey();
 
   const getProceedProps = processProps(
     () => {
@@ -47,7 +48,7 @@
       } = getComponentProps();
       return {
         gradio,
-      additionalProps: getAdditionalProps(),
+        additionalProps: getAdditionalProps(),
         _internal,
         as_item,
         restProps,
@@ -69,7 +70,6 @@
   const proceedProps = $derived(getProceedProps());
 
   const slots = getSlots();
-  const slotKey = getSlotKey();
   const itemProps = $derived({
     props: {
       style: proceedProps.elem_style,
@@ -99,10 +99,12 @@
       ...slots.value,
       expandIcon: {
         el: slots.value['expandIcon'],
+        withParams: true,
         clone: true,
       },
       expandedRowRender: {
         el: slots.value['expandedRowRender'],
+        withParams: true,
         clone: true,
       },
     },

@@ -19,7 +19,6 @@
   const { gradio, getComponentProps, getAdditionalProps, children } = getProps<{
     additional_props?: Record<string, any>;
     as_item?: string | undefined;
-    component: 'text' | 'title' | 'paragraph' | 'link';
     _internal: {
       layout?: boolean;
     };
@@ -38,12 +37,11 @@
         elem_id,
         elem_style,
         value,
-        component,
         ...restProps
       } = getComponentProps();
       return {
         gradio,
-      additionalProps: getAdditionalProps(),
+        additionalProps: getAdditionalProps(),
         _internal,
         as_item,
         restProps,
@@ -52,7 +50,6 @@
         elem_classes,
         elem_style,
         value,
-        component,
       };
     },
     {
@@ -68,7 +65,7 @@
 {#if proceedProps.visible}
   {#await AwaitedTypographyBase then TypographyBase}
     <TypographyBase
-      component={proceedProps.component}
+      component={props.component}
       style={proceedProps.elem_style}
       className={cls(proceedProps.elem_classes)}
       id={proceedProps.elem_id}

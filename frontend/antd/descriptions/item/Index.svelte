@@ -23,6 +23,7 @@
       index?: number;
     };
   }>(() => props);
+  const slotKey = getSlotKey();
 
   const getProceedProps = processProps(() => {
     const {
@@ -50,7 +51,6 @@
 
   let slot = $state<HTMLElement>();
   const slots = getSlots();
-  const slotKey = getSlotKey();
 </script>
 
 {#await AwaitedDescriptionsItem then DescriptionsItem}

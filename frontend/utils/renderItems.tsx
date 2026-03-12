@@ -48,7 +48,7 @@ export function renderItems<R>(
 
       const splits = slotKey.split('.');
       splits.forEach((split, index) => {
-        if (!current[split]) {
+        if (!current[split] || typeof current[split] !== 'object') {
           current[split] = {};
         }
         if (index !== splits.length - 1) {
@@ -58,24 +58,22 @@ export function renderItems<R>(
       const elOrObject = item.slots[slotKey];
 
       let el: HTMLElement | undefined;
-      let callback: ((key: string, params: any[]) => void) | undefined;
+      let withParams: boolean | undefined;
       let clone = options?.clone ?? false;
       let forceClone = options?.forceClone;
       if (elOrObject instanceof Element) {
         el = elOrObject;
       } else {
         el = elOrObject.el;
-        callback = elOrObject.callback;
+        withParams = elOrObject.withParams;
         clone = elOrObject.clone ?? clone;
         forceClone = elOrObject.forceClone ?? forceClone;
       }
 
-      forceClone = forceClone ?? (callback ? true : false);
+      forceClone = forceClone ?? (withParams ? true : false);
       current[splits[splits.length - 1]] = el
-        ? callback
+        ? withParams
           ? (...args: any[]) => {
-              callback(splits[splits.length - 1], args);
-
               return (
                 <ContextPropsProvider
                   {...item.ctx}

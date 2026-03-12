@@ -1,108 +1,151 @@
 import { useMemo } from 'react';
 import type {
-  BubbleDataType,
-  RolesType,
+  BubbleItemType,
+  RoleProps,
   RoleType,
-} from '@ant-design/x/es/bubble/BubbleList';
-import { useFunction } from '@utils/hooks/useFunction';
+} from '@ant-design/x/es/bubble/interface';
+import { createFunction } from '@utils/createFunction';
+import { useMemoizedEqualValue } from '@utils/hooks/useMemoizedEqualValue';
 import { useMemoizedFn } from '@utils/hooks/useMemoizedFn';
 import { patchSlots } from '@utils/patchSlots';
 import { renderItems } from '@utils/renderItems';
-import type { AvatarProps } from 'antd';
 import { isFunction, isObject } from 'lodash-es';
 
 import { useRoleItems } from './context';
 
 export const messageIndexSymbol = Symbol();
 
-function patchBubbleSlots(role: RoleType, params: any[]) {
+function patchBubbleSlots(role: RoleProps, params: any[]) {
   return patchSlots(params, (patchSlotRender) => {
     return {
       ...role,
-      avatar: isFunction(role.avatar)
-        ? patchSlotRender(role.avatar)
-        : isObject(role.avatar)
-          ? {
-              ...role.avatar,
-              icon: patchSlotRender((role.avatar as AvatarProps)?.icon),
-              src: patchSlotRender((role.avatar as AvatarProps)?.src),
-            }
-          : role.avatar,
+      avatar: patchSlotRender(role.avatar, {
+        unshift: true,
+      }),
+      extra: patchSlotRender(role.extra, {
+        unshift: true,
+      }),
       footer: patchSlotRender(role.footer, {
         unshift: true,
       }),
       header: patchSlotRender(role.header, {
         unshift: true,
       }),
-      loadingRender: patchSlotRender(role.loadingRender, true),
-      messageRender: patchSlotRender(role.messageRender, true),
+      loadingRender: patchSlotRender(role.loadingRender, {
+        unshift: true,
+      }),
+      contentRender: patchSlotRender(role.contentRender, {
+        unshift: true,
+      }),
     };
   });
 }
 
-export interface UseRolesRenderOptions<T = BubbleDataType> {
-  roles?: RolesType;
-  preProcess?: (bubbleProps: T, index: number) => RoleType;
-  postProcess?: (bubbleProps: T, index: number) => RoleType | void;
+export interface UseRoleOptions<T = BubbleItemType> {
+  role?: RoleType;
+  defaultRoleKeys?: string[];
+  preProcess?: (bubbleProps: T, index: number) => RoleProps;
+  defaultRolePostProcess?: (bubbleProps: T, index: number) => RoleProps | void;
 }
 
-export function useRolesRender<T = BubbleDataType>(
-  { roles: rolesProp, preProcess, postProcess }: UseRolesRenderOptions<T>,
+export function useRole<T = BubbleItemType>(
+  {
+    role: roleProp,
+    defaultRoleKeys,
+    preProcess,
+    defaultRolePostProcess,
+  }: UseRoleOptions<T>,
   deps: React.DependencyList = []
 ) {
-  const rolesFunction = useFunction(rolesProp);
   const memoizedPreProcess = useMemoizedFn(preProcess);
-  const memoizedPostProcess = useMemoizedFn(postProcess);
+  const memoizedDefaultRolePostProcess = useMemoizedFn(defaultRolePostProcess);
+  const memoizedDefaultRoleKeys = useMemoizedEqualValue(defaultRoleKeys);
 
   const {
-    items: { roles: roleItems },
-  } = useRoleItems<['roles']>();
-
-  const roles = useMemo(() => {
+    items: { role: roleItems },
+  } = useRoleItems<['role']>();
+  const role = useMemo(() => {
     return (
-      rolesProp ||
-      renderItems<
-        RoleType & {
-          role?: string;
-        }
-      >(roleItems, {
-        clone: true,
-        forceClone: true,
-      })?.reduce(
-        (acc, v) => {
-          if (v.role !== undefined) {
-            acc[v.role] = v;
+      roleProp ||
+      (roleItems?.length
+        ? renderItems<
+            RoleProps & {
+              role?: string;
+            }
+          >(roleItems || [], {
+            clone: true,
+            forceClone: true,
+          })?.reduce(
+            (acc, v) => {
+              if (v.role !== undefined) {
+                acc[v.role] = v;
+              }
+              return acc;
+            },
+            {} as Record<string, RoleProps>
+          )
+        : {}) ||
+      {}
+    );
+  }, [roleItems, roleProp]);
+  const resolvedRole = useMemo(() => {
+    const roleKeys = [
+      ...new Set([
+        ...(memoizedDefaultRoleKeys || []),
+        ...Object.keys(role || {}),
+      ]),
+    ];
+    if (roleKeys.length > 0) {
+      return Object.keys(role).reduce(
+        (acc, key) => {
+          if (typeof role[key] === 'string') {
+            const functionRole = createFunction(role[key]);
+            if (functionRole) {
+              acc[key] = functionRole;
+            }
+          } else {
+            acc[key] = (data) => {
+              const index = data[messageIndexSymbol];
+              const preProcessResult =
+                memoizedPreProcess(data as T, index) || data;
+              if (role[key]) {
+                return patchBubbleSlots(
+                  isFunction(role[key])
+                    ? role[key](preProcessResult as BubbleItemType)
+                    : role[key],
+                  [preProcessResult, index]
+                );
+              }
+              const postProcessResult = memoizedDefaultRolePostProcess(
+                preProcessResult as T,
+                index
+              );
+              if (postProcessResult) {
+                return postProcessResult;
+              }
+              return {
+                contentRender(content) {
+                  return (
+                    <>{isObject(content) ? JSON.stringify(content) : content}</>
+                  );
+                },
+              };
+            };
           }
           return acc;
         },
-        {} as Record<string, RoleType>
-      )
-    );
-  }, [roleItems, rolesProp]);
-  const rolesRender = useMemo(() => {
-    return (originalBubbleProps: BubbleDataType, i: number): RoleType => {
-      const index = i ?? originalBubbleProps[messageIndexSymbol];
-      const bubbleProps =
-        memoizedPreProcess(originalBubbleProps as T, index) ||
-        originalBubbleProps;
-      if (bubbleProps.role && (roles || {})[bubbleProps.role]) {
-        return patchBubbleSlots((roles || {})[bubbleProps.role], [
-          bubbleProps,
-          index,
-        ]) as RoleType;
-      }
-      let postProcessResult: RoleType | void = undefined;
-      postProcessResult = memoizedPostProcess(bubbleProps as T, index);
-      if (postProcessResult) {
-        return postProcessResult;
-      }
-      return {
-        messageRender(content) {
-          return <>{isObject(content) ? JSON.stringify(content) : content}</>;
-        },
-      };
-    };
+        {} as typeof role
+      );
+    }
+    return role;
+  }, [
+    memoizedDefaultRoleKeys,
+    role,
+    memoizedPreProcess,
+    memoizedDefaultRolePostProcess,
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [roles, memoizedPostProcess, memoizedPreProcess, ...deps]);
-  return rolesFunction || rolesRender;
+    ...deps,
+  ]);
+
+  return resolvedRole;
 }

@@ -7,6 +7,6 @@ export const {
   useItems: useRoleItems,
   withItemsContextProvider: withRoleItemsContextProvider,
   ItemHandler: RoleItemHandler,
-} = createItemsContext('antdx-bubble.list-roles');
+} = createItemsContext('antdx-bubble.list-role');
 
 export * from '@utils/createItemsContext';

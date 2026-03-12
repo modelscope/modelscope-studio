@@ -7,13 +7,13 @@ import { getFileUrl } from '@utils/upload';
 
 export const Welcome = sveltify<
   Omit<WelcomeProps, 'icon'> & {
-    urlRoot: string;
-    urlProxyUrl: string;
+    rootUrl: string;
+    apiPrefix: string;
     icon?: WelcomeProps['icon'] | FileData;
     children?: React.ReactNode;
   },
   ['description', 'icon', 'extra', 'title']
->(({ slots, children, urlProxyUrl, urlRoot, ...props }) => {
+>(({ slots, children, apiPrefix, rootUrl, ...props }) => {
   return (
     <>
       <div style={{ display: 'none' }}>{children}</div>
@@ -24,7 +24,7 @@ export const Welcome = sveltify<
           slots.icon ? (
             <ReactSlot slot={slots.icon} />
           ) : (
-            getFileUrl(props.icon, urlRoot, urlProxyUrl)
+            getFileUrl(props.icon, rootUrl, apiPrefix)
           )
         }
         title={slots.title ? <ReactSlot slot={slots.title} /> : props.title}

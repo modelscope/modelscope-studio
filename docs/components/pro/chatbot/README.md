@@ -71,10 +71,10 @@ The `message` object includes all configurations from `bot_config` and `user_con
 ### Slots
 
 ```python
-SLOTS=["roles"]
+SLOTS=["role"]
 ```
 
-Additionally, if the role style does not meet your expectations, you can also use `ms.Slot("roles")` to customize it, just like the `Bubble` component of `Ant ​​Design X`.
+Additionally, if the role style does not meet your expectations, you can also use `ms.Slot("role")` to customize it, just like the `Bubble` component of `Ant ​​Design X`.
 
 ### Types
 

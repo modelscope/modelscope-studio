@@ -46,8 +46,8 @@ export interface ChatbotFooterProps {
   extra?: string;
   onRetry?: (data: RetryData) => void;
   onLike?: (data: LikeData) => void;
-  urlRoot: string;
-  urlProxyUrl: string;
+  rootUrl: string;
+  apiPrefix: string;
 }
 
 export const CopyButton: React.FC<{
@@ -56,20 +56,12 @@ export const CopyButton: React.FC<{
   style?: React.CSSProperties;
   className?: string;
   disabled?: boolean;
-  urlRoot: string;
-  urlProxyUrl: string;
-}> = ({
-  content,
-  className,
-  style,
-  disabled,
-  urlRoot,
-  urlProxyUrl,
-  onCopy,
-}) => {
+  rootUrl: string;
+  apiPrefix: string;
+}> = ({ content, className, style, disabled, rootUrl, apiPrefix, onCopy }) => {
   const text = useMemo(
-    () => getCopyText(content, urlRoot, urlProxyUrl),
-    [content, urlProxyUrl, urlRoot]
+    () => getCopyText(content, rootUrl, apiPrefix),
+    [content, apiPrefix, rootUrl]
   );
   const copyButtonRef = useRef<HTMLButtonElement | null>(null);
 
@@ -119,8 +111,8 @@ const Action: React.FC<{
   onEdit: () => void;
   onLike: (liked: boolean) => void;
   onRetry: () => void;
-  urlRoot: string;
-  urlProxyUrl: string;
+  rootUrl: string;
+  apiPrefix: string;
 }> = ({
   action: actionOrActionObject,
   disabledActions,
@@ -130,8 +122,8 @@ const Action: React.FC<{
   onEdit,
   onLike,
   onRetry,
-  urlRoot,
-  urlProxyUrl,
+  rootUrl,
+  apiPrefix,
 }) => {
   const handleActionRef = useRef<() => void>();
   const getActionProps = () => {
@@ -159,8 +151,8 @@ const Action: React.FC<{
             disabled={disabled}
             content={message.content}
             onCopy={onCopy}
-            urlRoot={urlRoot}
-            urlProxyUrl={urlProxyUrl}
+            rootUrl={rootUrl}
+            apiPrefix={apiPrefix}
           />
         );
       case 'like':
@@ -277,8 +269,8 @@ export const ChatbotFooter: React.FC<ChatbotFooterProps> = ({
   index,
   actions,
   disabledActions,
-  urlRoot,
-  urlProxyUrl,
+  rootUrl,
+  apiPrefix,
 }) => {
   if (isEditing) {
     return (
@@ -333,8 +325,8 @@ export const ChatbotFooter: React.FC<ChatbotFooterProps> = ({
                   return (
                     <Action
                       key={`${action}-${i}`}
-                      urlRoot={urlRoot}
-                      urlProxyUrl={urlProxyUrl}
+                      rootUrl={rootUrl}
+                      apiPrefix={apiPrefix}
                       action={action}
                       disabledActions={disabledActions}
                       message={message}

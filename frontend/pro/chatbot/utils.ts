@@ -105,7 +105,7 @@ export const updateContent = (
 export const getCopyText = (
   content: ChatbotMessage['content'],
   root: string,
-  urlProxyUrl: string
+  apiPrefix: string
 ) => {
   if (typeof content === 'string') {
     return content;
@@ -113,7 +113,7 @@ export const getCopyText = (
   if (Array.isArray(content)) {
     return content
       .map((item) => {
-        return getCopyText(item, root, urlProxyUrl);
+        return getCopyText(item, root, apiPrefix);
       })
       .filter(Boolean)
       .join('\n');
@@ -129,7 +129,7 @@ export const getCopyText = (
     if (content.type === 'file') {
       return JSON.stringify(
         (content.content as ChatbotFileContent).map((item) =>
-          getFileUrl(item, root, urlProxyUrl)
+          getFileUrl(item, root, apiPrefix)
         )
       );
     }

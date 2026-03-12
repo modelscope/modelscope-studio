@@ -52,10 +52,10 @@ import {
 import './chatbot.less';
 
 export const Chatbot = sveltify<{
-  urlRoot: string;
-  urlProxyUrl: string;
+  rootUrl: string;
+  apiPrefix: string;
   themeMode: string;
-  roles?: BubbleListProps['roles'];
+  role?: BubbleListProps['role'];
   autoScroll?: boolean;
   showScrollToBottomButton?: boolean;
   scrollToBottomButtonOffset?: number;
@@ -78,7 +78,7 @@ export const Chatbot = sveltify<{
   onWelcomePromptSelect?: (v: WelcomePromptData) => void;
 }>(
   withRoleItemsContextProvider(
-    ['roles'],
+    ['role'],
     ({
       id,
       className,
@@ -87,9 +87,9 @@ export const Chatbot = sveltify<{
       minHeight,
       maxHeight,
       value,
-      roles,
-      urlRoot,
-      urlProxyUrl,
+      role,
+      rootUrl,
+      apiPrefix,
       themeMode,
       autoScroll = true,
       showScrollToBottomButton = true,
@@ -122,10 +122,10 @@ export const Chatbot = sveltify<{
           lineBreaks: true,
           renderMarkdown: true,
           ...convertObjectKeyToCamelCase(markdownConfig),
-          urlRoot,
+          rootUrl,
           themeMode,
         }),
-        [markdownConfig, themeMode, urlRoot]
+        [markdownConfig, themeMode, rootUrl]
       );
       const resolvedUserConfig = useMemo(() => {
         return (
@@ -302,8 +302,8 @@ export const Chatbot = sveltify<{
                   messageRender() {
                     return (
                       <WelcomeMessage
-                        urlRoot={urlRoot}
-                        urlProxyUrl={urlProxyUrl}
+                        rootUrl={rootUrl}
+                        apiPrefix={apiPrefix}
                         options={resolvedWelcomeConfig || {}}
                         onWelcomePromptSelect={handleWelcomePromptSelect}
                       />
@@ -361,8 +361,8 @@ export const Chatbot = sveltify<{
                             ? resolvedUserConfig?.footer
                             : resolvedBotConfig?.footer) as string)
                         }
-                        urlRoot={urlRoot}
-                        urlProxyUrl={urlProxyUrl}
+                        rootUrl={rootUrl}
+                        apiPrefix={apiPrefix}
                         editValues={editValues}
                         index={index}
                         actions={
@@ -390,8 +390,8 @@ export const Chatbot = sveltify<{
                     return (
                       <Message
                         index={index}
-                        urlProxyUrl={urlProxyUrl}
-                        urlRoot={urlRoot}
+                        apiPrefix={apiPrefix}
+                        rootUrl={rootUrl}
                         isEditing={editIndex === index}
                         message={bubbleProps}
                         isLastMessage={bubbleProps[lastMessageSymbol] || false}

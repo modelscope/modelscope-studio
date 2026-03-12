@@ -10,11 +10,11 @@ import { useFunction } from '@utils/hooks/useFunction';
 import { useTargets } from '@utils/hooks/useTargets';
 import { omitUndefinedProps } from '@utils/omitUndefinedProps';
 import { renderParamsSlot } from '@utils/renderParamsSlot';
-import { type UploadFile } from 'antd';
+import { type ImageProps, type UploadFile } from 'antd';
 import type { RcFile } from 'antd/es/upload';
 import { noop } from 'lodash-es';
 
-import type { FileCardProps } from './file-card/file-card';
+import type { BaseFileCardProps } from '../file-card/base';
 
 const isUploadFile = (file: FileData | UploadFile): file is UploadFile => {
   return !!(file as UploadFile).name;
@@ -25,6 +25,12 @@ function getConfig<T>(value: T): Partial<T & Record<PropertyKey, any>> {
     return value as any;
   }
   return {} as any;
+}
+
+declare module '@ant-design/x' {
+  export interface AttachmentsProps {
+    imageProps?: ImageProps;
+  }
 }
 
 export const Attachments = sveltify<
@@ -203,7 +209,7 @@ export const Attachments = sveltify<
                   ) : (
                     previewConfig.closeIcon
                   ),
-                }) as NonNullable<FileCardProps['imageProps']>['preview'])
+                }) as NonNullable<BaseFileCardProps['imageProps']>['preview'])
               : false,
             placeholder: slots['imageProps.placeholder'] ? (
               <ReactSlot slot={slots['imageProps.placeholder']} />

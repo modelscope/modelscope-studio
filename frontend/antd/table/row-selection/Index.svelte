@@ -29,6 +29,7 @@
     renderCell?: string;
     columnTitle?: string;
   }>(() => props);
+  const slotKey = getSlotKey();
 
   const getProceedProps = processProps(() => {
     const {
@@ -55,7 +56,6 @@
   const proceedProps = $derived(getProceedProps());
 
   const slots = getSlots();
-  const slotKey = getSlotKey();
 
   const itemProps = $derived({
     props: {
@@ -91,10 +91,12 @@
       selections: undefined,
       columnTitle: {
         el: slots.value.columnTitle,
+        withParams: true,
         clone: true,
       },
       renderCell: {
         el: slots.value.renderCell,
+        withParams: true,
         clone: true,
       },
     },

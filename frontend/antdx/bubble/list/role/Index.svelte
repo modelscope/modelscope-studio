@@ -1,13 +1,19 @@
 <script lang="ts">
   import { importComponent } from '@svelte-preprocess-react/component';
+  import type { Snippet } from 'svelte';
 
   const AwaitedBubbleListRole = importComponent(() => import('./Role.svelte'));
 
-  const props = $props();
+  const {
+    children,
+    ...props
+  }: {
+    children?: Snippet;
+  } = $props();
 </script>
 
 {#await AwaitedBubbleListRole then BubbleListRole}
   <BubbleListRole {...props}>
-    {@render props.children?.()}
+    {@render children?.()}
   </BubbleListRole>
 {/await}

@@ -28,8 +28,8 @@ export interface MessageProps {
   isLastMessage: boolean;
   markdownConfig: ChatbotMarkdownConfig;
   message: ChatbotMessage;
-  urlRoot: string;
-  urlProxyUrl: string;
+  rootUrl: string;
+  apiPrefix: string;
   onEdit: (itemIndex: number, value: string) => void;
   onSuggestionSelect: (value: SuggestionData) => void;
 }
@@ -44,8 +44,8 @@ export const Message: React.FC<MessageProps> = ({
   markdownConfig,
   onEdit,
   onSuggestionSelect,
-  urlProxyUrl,
-  urlRoot,
+  apiPrefix,
+  rootUrl,
 }) => {
   const containerRef = useRef<HTMLDivElement | null>(null);
 
@@ -114,8 +114,8 @@ export const Message: React.FC<MessageProps> = ({
             return (
               <FileMessage
                 value={item.content as ChatbotFileContent}
-                urlRoot={urlRoot}
-                urlProxyUrl={urlProxyUrl}
+                rootUrl={rootUrl}
+                apiPrefix={apiPrefix}
                 options={omitUndefinedProps(
                   (item.options || {}) as ChatbotFileContentConfig,
                   { omitNull: true }

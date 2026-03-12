@@ -18,39 +18,39 @@ with gr.Blocks() as demo:
     with ms.Application():
         with antdx.XProvider():
             with antdx.Actions() as actions:
-                with antdx.Actions.Item(key="retry", label="Retry"):
+                with antdx.Actions.ActionItem(key="retry", label="Retry"):
                     with ms.Slot("icon"):
                         antd.Icon("RedoOutlined")
-                with antdx.Actions.Item(key="copy", label="Copy"):
+                with antdx.Actions.ActionItem(key="copy", label="Copy"):
                     with ms.Slot("icon"):
                         antd.Icon("CopyOutlined")
-            antd.Divider("More Menu Items")
+            antd.Divider("More Menu ActionItems")
             with antdx.Actions() as actions2:
-                with antdx.Actions.Item(key="retry", label="Retry"):
+                with antdx.Actions.ActionItem(key="retry", label="Retry"):
                     with ms.Slot("icon"):
                         antd.Icon("RedoOutlined")
-                with antdx.Actions.Item(key="copy", label="Copy"):
+                with antdx.Actions.ActionItem(key="copy", label="Copy"):
                     with ms.Slot("icon"):
                         antd.Icon("CopyOutlined")
-                with antdx.Actions.Item(key="more"):
-                    with antdx.Actions.Item(key="share", label="Share"):
+                with antdx.Actions.ActionItem(key="more"):
+                    with antdx.Actions.ActionItem(key="share", label="Share"):
                         with ms.Slot("icon"):
                             antd.Icon("ShareAltOutlined")
-                        antdx.Actions.Item(key="qq", label="QQ")
-                        antdx.Actions.Item(key="wechat", label="WeChat")
-                    antdx.Actions.Item(key="import", label="Import")
-                    with antdx.Actions.Item(
+                        antdx.Actions.ActionItem(key="qq", label="QQ")
+                        antdx.Actions.ActionItem(key="wechat", label="WeChat")
+                    antdx.Actions.ActionItem(key="import", label="Import")
+                    with antdx.Actions.ActionItem(
                             key="delete", label="Delete",
-                            danger=True) as actions_delete_item:
+                            danger=True) as actions_delete_ActionItem:
                         with ms.Slot("icon"):
                             antd.Icon("DeleteOutlined")
-                with antdx.Actions.Item(key="clear", label="Clear"):
+                with antdx.Actions.ActionItem(key="clear", label="Clear"):
                     with ms.Slot("icon"):
                         antd.Icon("ClearOutlined")
 
     actions.click(fn=on_click)
     actions2.click(fn=on_click)
-    actions_delete_item.item_click(fn=on_delete)
+    actions_delete_ActionItem.ActionItem_click(fn=on_delete)
 
 if __name__ == "__main__":
     demo.queue().launch()

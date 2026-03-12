@@ -61,8 +61,8 @@
       {...proceedProps.restProps}
       {...proceedProps.additionalProps}
       slots={slots.value}
-      urlRoot={proceedProps.root}
-      urlProxyUrl={proceedProps.proxy_url}
+      rootUrl={proceedProps.root}
+      apiPrefix={proceedProps.proxy_url}
     >
       {@render children?.()}
     </Welcome>

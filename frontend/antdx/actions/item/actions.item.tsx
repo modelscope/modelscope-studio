@@ -1,20 +1,33 @@
 import { sveltify } from '@svelte-preprocess-react';
+import { ReactSlot } from '@svelte-preprocess-react/react-slot';
 import React from 'react';
-import type { ActionsProps } from '@ant-design/x';
-
-import { ItemHandler, type ItemHandlerProps } from '../context';
+import { Actions, type ActionsItemProps } from '@ant-design/x';
 
 export const ActionsItem = sveltify<
-  Partial<NonNullable<ActionsProps['items']>[number]> & ItemHandlerProps
->((props) => {
+  Partial<ActionsItemProps>,
+  ['defaultIcon', 'runningIcon']
+>(({ slots, children, ...props }) => {
   return (
-    <ItemHandler<['default']>
-      {...props}
-      allowedSlots={['default']}
-      itemChildren={(items) => {
-        return items.default.length > 0 ? items.default : undefined;
-      }}
-    />
+    <>
+      <div style={{ display: 'none' }}>{children}</div>
+      <Actions.Item
+        {...props}
+        defaultIcon={
+          slots.defaultIcon ? (
+            <ReactSlot slot={slots.defaultIcon} clone />
+          ) : (
+            props.defaultIcon
+          )
+        }
+        runningIcon={
+          slots.runningIcon ? (
+            <ReactSlot slot={slots.runningIcon} clone />
+          ) : (
+            props.runningIcon
+          )
+        }
+      />
+    </>
   );
 });
 

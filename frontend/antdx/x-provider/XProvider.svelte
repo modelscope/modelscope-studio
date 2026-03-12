@@ -5,11 +5,7 @@
     processProps,
   } from '@svelte-preprocess-react/component';
   import { setConfigType } from '@svelte-preprocess-react/svelte-contexts/config.svelte';
-  import {
-    getSlots,
-    setComponentSlotValue,
-    setSlotParamsMapping,
-  } from '@svelte-preprocess-react/svelte-contexts/slot.svelte';
+  import { getSlots } from '@svelte-preprocess-react/svelte-contexts/slot.svelte';
   import { XProvider as XXProvider } from '@ant-design/x';
   import cls from 'classnames';
 
@@ -48,18 +44,6 @@
   });
   const proceedProps = $derived(getProceedProps());
 
-  let slotParamsFn = $state<((...args: any[]) => any) | undefined>(undefined);
-
-  setSlotParamsMapping(() => slotParamsFn);
-
-  setComponentSlotValue(() => {
-    return {
-      slot: undefined,
-      index: proceedProps._internal.index,
-      subIndex: proceedProps._internal.subIndex,
-    };
-  });
-
   const slots = getSlots();
 
   setConfigType(() => 'antd');
@@ -75,10 +59,7 @@
       {...proceedProps.additionalProps}
       slots={slots.value}
       component={XXProvider}
-      themeMode={proceedProps.gradio.shared.theme}
-      setSlotParams={(params) => {
-        slotParamsFn = params;
-      }}
+      themeMode={proceedProps.gradio.shared.theme || 'light'}
     >
       {@render children?.()}
     </XProvider>

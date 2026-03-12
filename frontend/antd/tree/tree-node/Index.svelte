@@ -21,6 +21,7 @@
       index?: number;
     };
   }>(() => props);
+  const slotKey = getSlotKey();
 
   const getProceedProps = processProps(() => {
     const {
@@ -47,7 +48,6 @@
   const proceedProps = $derived(getProceedProps());
 
   const slots = getSlots();
-  const slotKey = getSlotKey();
 </script>
 
 {#await AwaitedTreeNode then TreeNode}
@@ -61,6 +61,7 @@
       ...slots.value,
       icon: {
         el: slots.value.icon,
+        withParams: true,
         clone: true,
       },
     }}

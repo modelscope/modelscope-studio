@@ -72,10 +72,10 @@
 ### 插槽
 
 ```python
-SLOTS=["roles"]
+SLOTS=["role"]
 ```
 
-另外，如果已有的 role 样式不符合预期，也可以和`Ant Design X`的`Bubble`组件一样使用`ms.Slot("roles")`进行自定义。
+另外，如果已有的 role 样式不符合预期，也可以和`Ant Design X`的`Bubble`组件一样使用`ms.Slot("role")`进行自定义。
 
 ### 类型
 

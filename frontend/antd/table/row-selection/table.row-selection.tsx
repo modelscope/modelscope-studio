@@ -24,7 +24,7 @@ export const TableRowSelection = sveltify<
           return {
             ...itemProps,
             selections:
-              selectionsItems.length > 0
+              selectionsItems?.length > 0
                 ? renderItems(selectionsItems)
                 : itemProps.selections,
           };

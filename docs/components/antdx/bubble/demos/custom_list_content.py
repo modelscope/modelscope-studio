@@ -68,8 +68,8 @@ with gr.Blocks() as demo:
                 "Customize the content of the bubble list, which is very useful for personalized customization scenarios."
             )
             with antdx.Bubble.List(items=items) as bubble_list:
-                # Define Roles
-                with ms.Slot("roles"):
+                # Define Role
+                with ms.Slot("role"):
                     with antdx.Bubble.List.Role(role="ai-markdown",
                                                 placement="start"):
                         with ms.Slot("avatar"):

@@ -13,25 +13,25 @@ class AntdXActionsItem(ModelScopeLayoutComponent):
     """
 
     EVENTS = [
-        EventListener(
-            "item_click",
-            callback=lambda block: block._internal.update(bind_itemClick_event=
-                                                          True),
-            doc="Callback function when the custom action button is clicked."),
+        EventListener("click",
+                      callback=lambda block: block._internal.update(
+                          bind_click_event=True)),
     ]
 
     # Supported slots
-    SLOTS = ['label', 'icon']
+    SLOTS = ['defaultIcon', 'runningIcon']
 
     def __init__(
             self,
-            label: str | None = None,
-            additional_props: dict | None = None,
             *,
-            key: str | None = None,
-            icon: str | None = None,
-            trigger_sub_menu_action: Literal['hover', 'click'] | None = None,
-            danger: bool | None = None,
+            status: Literal['loading', 'error', 'running', 'default']
+        | None = None,
+            label: str | None = None,
+            default_icon: str | None = None,
+            running_icon: str | None = None,
+            class_names: dict | str | None = None,
+            styles: dict | str | None = None,
+            additional_props: dict | None = None,
             as_item: str | None = None,
             _internal: None = None,
             # gradio properties
@@ -50,10 +50,11 @@ class AntdXActionsItem(ModelScopeLayoutComponent):
                          **kwargs)
         self.additional_props = additional_props
         self.label = label
-        self.icon = icon
-        self.trigger_sub_menu_action = trigger_sub_menu_action
-        self.danger = danger
-        self.key = key
+        self.status = status
+        self.default_icon = default_icon
+        self.running_icon = running_icon
+        self.class_names = class_names
+        self.styles = styles
 
     FRONTEND_DIR = resolve_frontend_dir("actions", "item", type="antdx")
 

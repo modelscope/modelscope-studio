@@ -26,7 +26,7 @@ class AntdXBubbleList(ModelScopeLayoutComponent):
     # supported slots
     SLOTS = [
         'items',
-        'roles',
+        'role',
     ]
 
     def __init__(
@@ -34,7 +34,7 @@ class AntdXBubbleList(ModelScopeLayoutComponent):
             additional_props: dict | None = None,
             *,
             items: list[dict] | None = None,
-            roles: list[dict] | None = None,
+            role: dict | None = None,
             auto_scroll: bool | None = None,
             root_class_name: str | None = None,
             class_names: dict | str | None = None,
@@ -59,7 +59,7 @@ class AntdXBubbleList(ModelScopeLayoutComponent):
         self.styles = styles
         self.additional_props = additional_props
         self.items = items
-        self.roles = roles
+        self.role = role
         self.auto_scroll = auto_scroll
         self.root_class_name = root_class_name
 

@@ -25,6 +25,7 @@
     built_in_selection?: string;
     text?: string;
   }>(() => props);
+  const slotKey = getSlotKey();
 
   const getProceedProps = processProps(() => {
     const {
@@ -53,7 +54,6 @@
   const proceedProps = $derived(getProceedProps());
 
   const slots = getSlots();
-  const slotKey = getSlotKey();
 </script>
 
 {#await AwaitedSelection then Selection}

@@ -52,8 +52,8 @@
       id={proceedProps.elem_id}
       {...proceedProps.restProps}
       {...proceedProps.additionalProps}
-      urlRoot={gradio.shared.root}
-      themeMode={gradio.shared.theme}
+      rootUrl={proceedProps.gradio.shared.root}
+      themeMode={proceedProps.gradio.shared.theme || 'light'}
       value={proceedProps.value}
       slots={slots.value}
     >

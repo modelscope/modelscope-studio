@@ -13,7 +13,6 @@ from gradio.utils import NamedString
 from gradio_client import handle_file
 
 from ....utils.dev import ModelScopeDataLayoutComponent, resolve_frontend_dir
-from .file_card import AntdXAttachmentsFileCard
 
 if TYPE_CHECKING:
     from gradio.components import Timer
@@ -24,8 +23,6 @@ class AntdXAttachments(ModelScopeDataLayoutComponent):
     """
     Ant Design: https://ant.design/components/attachments
     """
-
-    FileCard = AntdXAttachmentsFileCard
 
     EVENTS = [
         EventListener("change",
@@ -99,9 +96,9 @@ class AntdXAttachments(ModelScopeDataLayoutComponent):
             progress: dict | None = None,
             show_upload_list: bool | dict | None = True,
             with_credentials: bool | None = None,
-            class_names: dict | str | None= None,
+            class_names: dict | str | None = None,
             root_style: dict | None = None,
-            styles: dict | str | None= None,
+            styles: dict | str | None = None,
             root_class_name: str | None = None,
             as_item: str | None = None,
             _internal: None = None,

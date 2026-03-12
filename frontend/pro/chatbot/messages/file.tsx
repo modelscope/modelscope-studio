@@ -2,7 +2,7 @@ import type React from 'react';
 import { useMemo } from 'react';
 import { EyeOutlined } from '@ant-design/icons';
 import type { Attachment } from '@ant-design/x/es/attachments';
-import { get_fetchable_url_or_file } from '@utils/upload';
+import { getFetchableUrl } from '@utils/upload';
 import { Button, Flex, theme } from 'antd';
 
 import { FileCard } from '../../../antdx/attachments/file-card/file-card';
@@ -16,14 +16,14 @@ function matchExt(suffix: string, ext: string[]) {
 export interface FileMessageProps {
   options: ChatbotFileContentConfig;
   value?: ChatbotFileContent;
-  urlRoot: string;
-  urlProxyUrl: string;
+  rootUrl: string;
+  apiPrefix: string;
 }
 
 const resolveItem = (
   item: ChatbotFileContent[number],
-  urlRoot: string,
-  urlProxyUrl: string
+  rootUrl: string,
+  apiPrefix: string
 ): Attachment => {
   if (!item) {
     return {} as Attachment;
@@ -32,7 +32,7 @@ const resolveItem = (
     return {
       url: item.startsWith('http')
         ? item
-        : get_fetchable_url_or_file(item, urlRoot, urlProxyUrl),
+        : getFetchableUrl(item, rootUrl, apiPrefix),
       uid: item,
       name: item.split('/').pop(),
     } as Attachment;
@@ -42,7 +42,7 @@ const resolveItem = (
     uid: item.uid || item.path || item.url,
     name:
       item.name || item.orig_name || (item.url || item.path).split('/').pop(),
-    url: item.url || get_fetchable_url_or_file(item.path, urlRoot, urlProxyUrl),
+    url: item.url || getFetchableUrl(item.path, rootUrl, apiPrefix),
   } as Attachment;
 };
 
@@ -96,8 +96,8 @@ const FileContainer: React.FC<{
 
 export const FileMessage: React.FC<FileMessageProps> = ({
   value,
-  urlProxyUrl,
-  urlRoot,
+  apiPrefix,
+  rootUrl,
   options,
 }) => {
   const { imageProps } = options;
@@ -109,14 +109,14 @@ export const FileMessage: React.FC<FileMessageProps> = ({
       className="ms-gr-pro-chatbot-message-file-message"
     >
       {value?.map((file, index) => {
-        const item = resolveItem(file, urlRoot, urlProxyUrl);
+        const item = resolveItem(file, rootUrl, apiPrefix);
 
         return (
           <FileContainer key={`${item.uid}-${index}`} item={item}>
             <FileCard
               item={item as typeof file}
-              urlRoot={urlRoot}
-              urlProxyUrl={urlProxyUrl}
+              rootUrl={rootUrl}
+              apiPrefix={apiPrefix}
               imageProps={imageProps}
             />
           </FileContainer>

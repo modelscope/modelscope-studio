@@ -1,16 +1,19 @@
 from __future__ import annotations
 
-from typing import Literal, Union
+from typing import Literal
 
 from gradio.events import EventListener
 
 from .....utils.dev import ModelScopeLayoutComponent, resolve_frontend_dir
+from .item import AntdXFileCardListItem
 
 
-class AntdXAttachmentsFileCard(ModelScopeLayoutComponent):
+class AntdXFileCardList(ModelScopeLayoutComponent):
     """
-    Ant Design X: https://x.ant.design/components/attachments
+    Ant Design X: https://x.ant.design/components/file-card
     """
+    Item = AntdXFileCardListItem
+
     EVENTS = [
         EventListener("remove",
                       callback=lambda block: block._internal.update(
@@ -18,24 +21,19 @@ class AntdXAttachmentsFileCard(ModelScopeLayoutComponent):
     ]
 
     # supported slots
-    SLOTS = [
-        'imageProps.placeholder', 'imageProps.preview.mask',
-        'imageProps.preview.closeIcon', 'imageProps.preview.toolbarRender',
-        'imageProps.preview.imageRender', 'icon'
-    ]
+    SLOTS = ['items', 'extension']
 
     def __init__(
             self,
-            additional_props: dict | None = None,
+            items: list[dict] | None = None,
             *,
-            image_props: dict | None = None,
-            icon: Union[Literal['default', 'excel', 'image', 'markdown', 'pdf',
-                                'ppt', 'word', 'zip', 'video', 'audio'], str]
-        | None = None,
-            type: Literal['image', 'file'] | None = None,
-            item: dict | str | None = None,
+            size: Literal['small', 'default'] | None = None,
+            removable: bool | str | None = None,
+            extension: str | None = None,
+            overflow: Literal['scrollX', 'scrollY', 'wrap'] | None = None,
             class_names: dict | str | None = None,
             styles: dict | str | None = None,
+            additional_props: dict | None = None,
             as_item: str | None = None,
             _internal: None = None,
             # gradio properties
@@ -55,22 +53,13 @@ class AntdXAttachmentsFileCard(ModelScopeLayoutComponent):
         self.class_names = class_names
         self.styles = styles
         self.additional_props = additional_props
-        self.icon = icon
-        self.type = type
-        self.image_props = image_props
-        if isinstance(item, str):
-            self.item = self.serve_static_file(item)
-        elif isinstance(item, dict):
-            if not item.get("url", None) and item.get("path", None):
-                self.item = {
-                    **item,
-                    **self.serve_static_file(self.item["path"])
-                }
-            self.item = item
+        self.size = size
+        self.items = items
+        self.removable = removable
+        self.extension = extension
+        self.overflow = overflow
 
-    FRONTEND_DIR = resolve_frontend_dir("attachments",
-                                        'file-card',
-                                        type="antdx")
+    FRONTEND_DIR = resolve_frontend_dir('file-card', 'list', type="antdx")
 
     @property
     def skip_api(self):

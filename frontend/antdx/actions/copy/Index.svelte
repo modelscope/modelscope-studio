@@ -4,24 +4,16 @@
     importComponent,
     processProps,
   } from '@svelte-preprocess-react/component';
-  import {Keys
-    getSlots,
-    getSlotKey,
-  } from '@svelte-preprocess-react/svelte-contexts/slot.svelte';
+  import { getSlots } from '@svelte-preprocess-react/svelte-contexts/slot.svelte';
   import cls from 'classnames';
 
-  const AwaitedFileCard = importComponent(
-    () => import('./attachments.file-card')
-  );
+  const AwaitedActionsCopy = importComponent(() => import('./actions.copy'));
 
   const props = $props();
   const { gradio, getComponentProps, getAdditionalProps, children } = getProps<{
     additional_props?: Record<string, any>;
     as_item?: string | undefined;
-    _internal: {
-      layout?: boolean;
-      index?: number;
-    };
+    _internal: {};
   }>(() => props);
 
   const getProceedProps = processProps(() => {
@@ -49,25 +41,19 @@
   const proceedProps = $derived(getProceedProps());
 
   const slots = getSlots();
-  const slotKey = getSlotKey();
 </script>
 
 {#if proceedProps.visible}
-  {#await AwaitedFileCard then FileCard}
-    <FileCard
+  {#await AwaitedActionsCopy then ActionsCopy}
+    <ActionsCopy
       style={proceedProps.elem_style}
-      className={cls(
-        proceedProps.elem_classes,
-        'ms-gr-antdx-attachments-file-card'
-      )}
+      className={cls(proceedProps.elem_classes, 'ms-gr-antdx-actions-copy')}
       id={proceedProps.elem_id}
       {...proceedProps.restProps}
       {...proceedProps.additionalProps}
       slots={slots.value}
-      itemIndex={proceedProps._internal.index || 0}
-      itemSlotKey={slotKey?.value}
     >
       {@render children?.()}
-    </FileCard>
+    </ActionsCopy>
   {/await}
 {/if}

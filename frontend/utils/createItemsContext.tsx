@@ -25,10 +25,9 @@ export type Item<T extends string = 'children'> =
         | HTMLElement
         | {
             el?: HTMLElement;
-            // slot key, render args
-            callback?: (key: string, params: any[]) => void;
             clone?: boolean;
             forceClone?: boolean;
+            withParams?: boolean;
           }
       >;
       el?: HTMLElement;
@@ -65,10 +64,9 @@ export interface ItemHandlerProps<
     | undefined
     | {
         el?: HTMLElement;
-        // slot key, render args
-        callback?: (key: string, params: any[]) => void;
         clone?: boolean;
-        ß?: boolean;
+        forceClone?: boolean;
+        withParams?: boolean;
       }
   >;
   children?: React.ReactNode;

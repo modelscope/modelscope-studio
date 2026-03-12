@@ -1,12 +1,20 @@
 from .actions import AntdXActions as Actions
+from .actions.action_item import AntdXActionsActionItem as ActionsActionItem
+from .actions.copy import AntdXActionsCopy as ActionsCopy
+from .actions.feedback import AntdXActionsFeedback as ActionsFeedback
+from .actions.audio import AntdXActionsAudio as ActionsAudio
 from .actions.item import AntdXActionsItem as ActionsItem
 from .attachments import AntdXAttachments as Attachments
-from .attachments.file_card import \
-  AntdXAttachmentsFileCard as AttachmentsFileCard
+from .file_card import \
+  AntdXFileCard as FileCard
+from .file_card.list import AntdXFileCardList as FileCardList
+from .file_card.list.item import AntdXFileCardListItem as FileCardListItem
 from .bubble import AntdXBubble as Bubble
 from .bubble.list import AntdXBubbleList as BubbleList
 from .bubble.list.item import AntdXBubbleListItem as BubbleListItem
 from .bubble.list.role import AntdXBubbleListRole as BubbleListRole
+from .bubble.divider import AntdXBubbleDivider as BubbleDivider
+from .bubble.system import AntdXBubbleSystem as BubbleSystem
 from .conversations import AntdXConversations as Conversations
 from .conversations.item import AntdXConversationsItem as ConversationsItem
 from .prompts import AntdXPrompts as Prompts

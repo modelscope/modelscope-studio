@@ -34,6 +34,7 @@
     filter_icon?: TableColumnProps['filterIcon'];
     filter_dropdown?: TableColumnProps['filterDropdown'];
   }>(() => props);
+  const slotKey = getSlotKey();
 
   const getProceedProps = processProps(
     () => {
@@ -59,7 +60,7 @@
       } = getComponentProps();
       return {
         gradio,
-      additionalProps: getAdditionalProps(),
+        additionalProps: getAdditionalProps(),
         _internal,
         as_item,
         restProps,
@@ -88,7 +89,6 @@
   const proceedProps = $derived(getProceedProps());
 
   const slots = getSlots();
-  const slotKey = getSlotKey();
   const itemProps = $derived.by(() => {
     {
       const showSorterTooltip =
@@ -163,22 +163,27 @@
           ...slots.value,
           filterIcon: {
             el: slots.value.filterIcon,
+            withParams: true,
             clone: true,
           },
           filterDropdown: {
             el: slots.value.filterDropdown,
+            withParams: true,
             clone: true,
           },
           sortIcon: {
             el: slots.value.sortIcon,
+            withParams: true,
             clone: true,
           },
           title: {
             el: slots.value.title,
+            withParams: true,
             clone: true,
           },
           render: {
             el: slots.value.render,
+            withParams: true,
             clone: true,
           },
         },

@@ -4,10 +4,11 @@
     importComponent,
     processProps,
   } from '@svelte-preprocess-react/component';
-  import {Keys
-    getSlots,
+  import {
     getSlotKey,
+    getSlots,
   } from '@svelte-preprocess-react/svelte-contexts/slot.svelte';
+  import { createFunction } from '@utils/createFunction';
   import cls from 'classnames';
 
   const AwaitedBubbleListItem = importComponent(
@@ -19,52 +20,130 @@
     additional_props?: Record<string, any>;
     as_item?: string | undefined;
     _internal: {
-      layout?: boolean;
       index?: number;
     };
+    content?: string;
+    avatar?: string;
+    editable?: any;
+    loadingRender?: string;
+    contentRender?: string;
+    typing_complete?: any;
+    edit_confirm?: any;
+    edit_cancel?: any;
   }>(() => props);
+  const slotKey = getSlotKey();
 
-  const getProceedProps = processProps(() => {
-    const {
-      visible,
-      _internal,
-      as_item,
-      elem_classes,
-      elem_id,
-      elem_style,
-      ...restProps
-    } = getComponentProps();
-    return {
-      gradio,
-      additionalProps: getAdditionalProps(),
-      _internal,
-      as_item,
-      restProps,
-      visible,
-      elem_id,
-      elem_classes,
-      elem_style,
-    };
-  });
+  const getProceedProps = processProps(
+    () => {
+      const {
+        visible,
+        _internal,
+        as_item,
+        elem_classes,
+        elem_id,
+        elem_style,
+        ...restProps
+      } = getComponentProps();
+      return {
+        gradio,
+        additionalProps: getAdditionalProps(),
+        _internal,
+        as_item,
+        restProps,
+        visible,
+        elem_id,
+        elem_classes,
+        elem_style,
+      };
+    },
+    {
+      typing_complete: 'typingComplete',
+      edit_confirm: 'editConfirm',
+      edit_cancel: 'editCancel',
+    }
+  );
   const proceedProps = $derived(getProceedProps());
 
   const slots = getSlots();
-  const slotKey = getSlotKey();
+
+  const itemProps = $derived.by(() => {
+    const editable =
+      proceedProps.additionalProps.editable || proceedProps.restProps.editable;
+    return {
+      props: {
+        style: proceedProps.elem_style,
+        className: cls(
+          proceedProps.elem_classes,
+          'ms-gr-antdx-bubble-list-item'
+        ),
+        id: proceedProps.elem_id,
+        ...proceedProps.restProps,
+        ...proceedProps.additionalProps,
+        editable:
+          typeof editable === 'boolean'
+            ? {
+                editing: editable,
+              }
+            : editable,
+        content:
+          proceedProps.additionalProps.content ||
+          proceedProps.restProps.content ||
+          '',
+        loadingRender: createFunction(
+          proceedProps.additionalProps.loadingRender ||
+            proceedProps.restProps.loadingRender
+        ),
+        contentRender: createFunction(
+          proceedProps.additionalProps.contentRender ||
+            proceedProps.restProps.contentRender
+        ),
+      },
+      slots: {
+        ...slots.value,
+        loadingRender: {
+          el: slots.value.loadingRender,
+          clone: true,
+          withParams: true,
+        },
+        avatar: {
+          el: slots.value.avatar,
+          clone: true,
+          withParams: true,
+        },
+        header: {
+          el: slots.value.header,
+          clone: true,
+          withParams: true,
+        },
+        footer: {
+          el: slots.value.footer,
+          clone: true,
+          withParams: true,
+        },
+        extra: {
+          el: slots.value.extra,
+          clone: true,
+          withParams: true,
+        },
+        contentRender: {
+          el: slots.value.messageRender,
+          clone: true,
+          withParams: true,
+        },
+      },
+    };
+  });
 </script>
 
-{#if proceedProps.visible}
-  {#await AwaitedBubbleListItem then BubbleListItem}
-    <BubbleListItem
-      style={proceedProps.elem_style}
-      className={cls(proceedProps.elem_classes, 'ms-gr-antdx-bubble-list-item')}
-      id={proceedProps.elem_id}
-      {...proceedProps.restProps}
-      {...proceedProps.additionalProps}
-      slots={slots.value}
-      itemIndex={proceedProps._internal.index || 0}
-      itemSlotKey={slotKey?.value}
-    >
+{#await AwaitedBubbleListItem then BubbleListItem}
+  <BubbleListItem
+    {...itemProps.props}
+    slots={itemProps.slots}
+    itemIndex={proceedProps._internal.index || 0}
+    itemSlotKey={slotKey?.value}
+  >
+    {#if proceedProps.visible}
       {@render children?.()}
-    </BubbleListItem>
-  {/await}
-{/if}
+    {/if}
+  </BubbleListItem>
+{/await}

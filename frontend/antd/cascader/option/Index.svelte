@@ -4,9 +4,9 @@
     importComponent,
     processProps,
   } from '@svelte-preprocess-react/component';
-  import {Keys
-    getSlots,
+  import {
     getSlotKey,
+    getSlots,
   } from '@svelte-preprocess-react/svelte-contexts/slot.svelte';
   import cls from 'classnames';
 
@@ -23,6 +23,7 @@
       index?: number;
     };
   }>(() => props);
+  const slotKey = getSlotKey();
 
   const getProceedProps = processProps(() => {
     const {
@@ -49,7 +50,6 @@
   const proceedProps = $derived(getProceedProps());
 
   const slots = getSlots();
-  const slotKey = getSlotKey();
 </script>
 
 {#if proceedProps.visible}

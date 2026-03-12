@@ -17,7 +17,6 @@
   const { gradio, getComponentProps, getAdditionalProps, children } = getProps<{
     additional_props?: Record<string, any>;
 
-    component: 'header' | 'footer' | 'content' | 'layout';
     as_item?: string | undefined;
     _internal: {
       layout?: boolean;
@@ -32,7 +31,6 @@
       elem_classes,
       elem_id,
       elem_style,
-      component,
       ...restProps
     } = getComponentProps();
     return {
@@ -45,7 +43,6 @@
       elem_id,
       elem_classes,
       elem_style,
-      component,
     };
   });
   const proceedProps = $derived(getProceedProps());
@@ -56,7 +53,7 @@
 {#if proceedProps.visible}
   {#await AwaitedLayoutBase then LayoutBase}
     <LayoutBase
-      component={proceedProps.component}
+      component={props.component}
       style={proceedProps.elem_style}
       className={cls(proceedProps.elem_classes)}
       id={proceedProps.elem_id}

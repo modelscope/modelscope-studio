@@ -78,8 +78,8 @@
           value: v,
         });
       }}
-      urlRoot={proceedProps.gradio.shared.root}
-      urlProxyUrl={proceedProps.gradio.shared.proxy_url}
+      rootUrl={proceedProps.gradio.shared.root}
+      apiPrefix={proceedProps.gradio.shared.proxy_url}
       themeMode={proceedProps.additionalProps.gradio?.theme}
       slots={slots.value}
     >

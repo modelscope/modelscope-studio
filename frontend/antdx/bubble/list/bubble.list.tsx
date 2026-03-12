@@ -1,7 +1,6 @@
 import { sveltify } from '@svelte-preprocess-react';
 import React, { useMemo } from 'react';
-import { Bubble as XBubble } from '@ant-design/x';
-import type { BubbleListProps } from '@ant-design/x/es/bubble/BubbleList';
+import { Bubble as XBubble, type BubbleListProps } from '@ant-design/x';
 import { renderItems } from '@utils/renderItems';
 
 import {
@@ -9,38 +8,35 @@ import {
   withItemsContextProvider,
   withRoleItemsContextProvider,
 } from './context';
-import { useRolesRender } from './utils';
+import { useRole } from './utils';
 
 export const BubbleList = sveltify<BubbleListProps, ['items', 'roles']>(
   withRoleItemsContextProvider(
-    ['roles'],
+    ['role'],
     withItemsContextProvider(
       ['items', 'default'],
-      ({ items, roles, children, ...props }) => {
+      ({ items, role, children, ...props }) => {
         const { items: slotItems } = useItems<['items', 'default']>();
 
-        const rolesRender = useRolesRender({
-          roles,
-        });
-
-        const resolvedSlotItems =
-          slotItems.items.length > 0 ? slotItems.items : slotItems.default;
-
+        const resolvedRole = useRole({ role });
+        const resolvedSlotItems = slotItems.items?.length
+          ? slotItems.items
+          : slotItems.default;
         return (
           <>
             <div style={{ display: 'none' }}>{children}</div>
             <XBubble.List
               {...props}
+              role={resolvedRole}
               items={useMemo(() => {
                 const resolvedItems =
                   items ||
                   renderItems<NonNullable<BubbleListProps['items']>[number]>(
-                    resolvedSlotItems
+                    resolvedSlotItems || []
                   );
 
                 return resolvedItems;
               }, [items, resolvedSlotItems])}
-              roles={rolesRender}
             />
           </>
         );

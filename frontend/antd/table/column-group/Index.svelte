@@ -20,6 +20,7 @@
     as_item?: string | undefined;
     _internal: {};
   }>(() => props);
+  const slotKey = getSlotKey();
 
   const getProceedProps = processProps(() => {
     const {
@@ -46,7 +47,6 @@
   const proceedProps = $derived(getProceedProps());
 
   const slots = getSlots();
-  const slotKey = getSlotKey();
 </script>
 
 {#await AwaitedColumnGroup then ColumnGroup}

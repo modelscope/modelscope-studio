@@ -15,7 +15,20 @@ import { ItemHandler, type ItemHandlerProps } from '../context';
 export const BreadcrumbItem = sveltify<
   BreadcrumbItemProps &
     ItemHandlerProps & {
-      itemSlots: Record<string, HTMLElement>;
+      itemSlots: Record<
+        [
+          'title',
+          'menu.expandIcon',
+          'menu.overflowedIndicator',
+          'menu.items',
+          'dropdownProps.dropdownRender',
+          'dropdownProps.popupRender',
+          'dropdownProps.menu.expandIcon',
+          'dropdownProps.menu.overflowedIndicator',
+          'dropdownProps.menu.items',
+        ][number],
+        HTMLElement
+      >;
     }
 >(
   withMenuItemsContextProvider(
@@ -34,7 +47,7 @@ export const BreadcrumbItem = sveltify<
             const menu = {
               ...(itemProps.menu || {}),
               items:
-                itemProps.menu?.items || menuItems.length > 0
+                itemProps.menu?.items || menuItems?.length > 0
                   ? renderItems(menuItems, {
                       clone: true,
                     })
@@ -57,7 +70,7 @@ export const BreadcrumbItem = sveltify<
               ...(itemProps.dropdownProps?.menu || {}),
               items:
                 itemProps.dropdownProps?.menu?.items ||
-                dropdownMenuItems.length > 0
+                dropdownMenuItems?.length > 0
                   ? renderItems(dropdownMenuItems, {
                       clone: true,
                     })
@@ -106,8 +119,10 @@ export const BreadcrumbItem = sveltify<
                   ? dropdownMenu
                   : undefined,
             };
+
             return {
               ...itemProps,
+              title: renderSlot(slots.title) || itemProps.title,
               menu:
                 Object.values(menu).filter(Boolean).length > 0
                   ? menu

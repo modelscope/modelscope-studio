@@ -17,6 +17,7 @@
       index?: number;
     };
   }>(() => props);
+  const slotKey = getSlotKey();
 
   const getProceedProps = processProps(() => {
     const {
@@ -41,8 +42,6 @@
     };
   });
   const proceedProps = $derived(getProceedProps());
-
-  const slotKey = getSlotKey();
 
   const itemProps = $derived({
     props: {

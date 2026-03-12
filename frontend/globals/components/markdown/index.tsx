@@ -40,7 +40,7 @@ export interface MarkdownProps extends Omit<
   showCopyButton?: boolean;
   rtl?: boolean;
   themeMode: string;
-  urlRoot: string;
+  rootUrl: string;
   allowTags?: string[] | boolean;
   onCopy?: (options: { value: string }) => void;
   onChange?: () => void;
@@ -70,7 +70,7 @@ export const Markdown: React.FC<MarkdownProps> = ({
   rtl,
   themeMode,
   showCopyButton,
-  urlRoot,
+  rootUrl,
   onChange,
   onCopy,
   copyButtons,
@@ -131,7 +131,7 @@ export const Markdown: React.FC<MarkdownProps> = ({
     );
 
     if (sanitize_html) {
-      parsedValue = sanitize(parsedValue, urlRoot);
+      parsedValue = sanitize(parsedValue, rootUrl);
     }
 
     return parsedValue;

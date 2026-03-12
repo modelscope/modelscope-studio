@@ -5,8 +5,8 @@
     processProps,
   } from '@svelte-preprocess-react/component';
   import {
-    getSlots,
     getSlotKey,
+    getSlots,
   } from '@svelte-preprocess-react/svelte-contexts/slot.svelte';
   import cls from 'classnames';
 
@@ -23,6 +23,7 @@
       index?: number;
     };
   }>(() => props);
+  const slotKey = getSlotKey();
 
   const getProceedProps = processProps(() => {
     const {
@@ -49,18 +50,40 @@
   const proceedProps = $derived(getProceedProps());
 
   const slots = getSlots();
-  const slotKey = getSlotKey();
+  const itemProps = $derived({
+    props: {
+      style: proceedProps.elem_style,
+      className: cls(proceedProps.elem_classes, 'ms-gr-antd-suggestion-item'),
+      id: proceedProps.elem_id,
+      ...proceedProps.restProps,
+      ...proceedProps.additionalProps,
+    },
+    slots: {
+      ...slots.value,
+      extra: {
+        el: slots.value.extra,
+        clone: true,
+        withParams: true,
+      },
+      icon: {
+        el: slots.value.icon,
+        clone: true,
+        withParams: true,
+      },
+      label: {
+        el: slots.value.label,
+        clone: true,
+        withParams: true,
+      },
+    },
+  });
 </script>
 
 {#if proceedProps.visible}
   {#await AwaitedSuggestionItem then SuggestionItem}
     <SuggestionItem
-      style={proceedProps.elem_style}
-      className={cls(proceedProps.elem_classes, 'ms-gr-antdx-suggestion-item')}
-      id={proceedProps.elem_id}
-      {...proceedProps.restProps}
-      {...proceedProps.additionalProps}
-      slots={slots.value}
+      {...itemProps.props}
+      slots={itemProps.slots}
       itemIndex={proceedProps._internal.index || 0}
       itemSlotKey={slotKey?.value}
     >

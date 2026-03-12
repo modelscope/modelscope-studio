@@ -311,7 +311,7 @@ class ModelScopeProChatbot(ModelScopeDataLayoutComponent):
     ]
 
     # supported slots
-    SLOTS = ["roles"]
+    SLOTS = ["role"]
 
     def __init__(
             self,
@@ -321,7 +321,7 @@ class ModelScopeProChatbot(ModelScopeDataLayoutComponent):
             height: int | float | str = 400,
             min_height: int | float | str | None = None,
             max_height: int | float | str | None = None,
-            roles: str | dict | None = None,
+            role: dict | None = None,
             auto_scroll: bool = True,
             show_scroll_to_bottom_button: bool = True,
             scroll_to_bottom_button_offset: int | float = 200,
@@ -349,7 +349,7 @@ class ModelScopeProChatbot(ModelScopeDataLayoutComponent):
         self.height = height
         self.min_height = min_height
         self.max_height = max_height
-        self.roles = roles
+        self.role = role
         self.auto_scroll = auto_scroll
         self.show_scroll_to_bottom_button = show_scroll_to_bottom_button
         self.scroll_to_bottom_button_offset = scroll_to_bottom_button_offset

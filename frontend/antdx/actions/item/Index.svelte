@@ -4,10 +4,7 @@
     importComponent,
     processProps,
   } from '@svelte-preprocess-react/component';
-  import {Keys
-    getSlots,
-    getSlotKey,
-  } from '@svelte-preprocess-react/svelte-contexts/slot.svelte';
+  import { getSlots } from '@svelte-preprocess-react/svelte-contexts/slot.svelte';
   import cls from 'classnames';
 
   const AwaitedActionsItem = importComponent(() => import('./actions.item'));
@@ -16,10 +13,7 @@
   const { gradio, getComponentProps, getAdditionalProps, children } = getProps<{
     additional_props?: Record<string, any>;
     as_item?: string | undefined;
-    _internal: {
-      layout?: boolean;
-      index?: number;
-    };
+    _internal: {};
   }>(() => props);
 
   const getProceedProps = processProps(() => {
@@ -47,7 +41,6 @@
   const proceedProps = $derived(getProceedProps());
 
   const slots = getSlots();
-  const slotKey = getSlotKey();
 </script>
 
 {#if proceedProps.visible}
@@ -59,8 +52,6 @@
       {...proceedProps.restProps}
       {...proceedProps.additionalProps}
       slots={slots.value}
-      itemIndex={proceedProps._internal.index || 0}
-      itemSlotKey={slotKey?.value}
     >
       {@render children?.()}
     </ActionsItem>

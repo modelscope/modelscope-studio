@@ -68,8 +68,8 @@ with gr.Blocks() as demo:
                 with antdx.Bubble.List(items=default_history,
                                        elem_style=dict(maxHeight=500),
                                        elem_id="chatbot") as bubble_list:
-                    # Define Roles
-                    with ms.Slot("roles"):
+                    # Define Role
+                    with ms.Slot("role"):
                         with antdx.Bubble.List.Role(
                                 role="ai",
                                 placement="start",

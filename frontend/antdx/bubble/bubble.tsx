@@ -1,110 +1,118 @@
 import { sveltify } from '@svelte-preprocess-react';
 import { ReactSlot } from '@svelte-preprocess-react/react-slot';
-import React, { useMemo } from 'react';
+import React from 'react';
 import { Bubble as XBubble, type BubbleProps } from '@ant-design/x';
 import { useFunction } from '@utils/hooks/useFunction';
 import { renderParamsSlot } from '@utils/renderParamsSlot';
-import type { AvatarProps } from 'antd';
-import { isObject } from 'lodash-es';
 
+function getConfig<T>(value: T): Partial<T & Record<PropertyKey, any>> {
+  if (typeof value === 'object' && value !== null) {
+    return value as any;
+  }
+  return {} as any;
+}
 export const Bubble = sveltify<
-  BubbleProps & {
-  },
+  BubbleProps & {},
   [
     'avatar',
-    'avatar.icon',
-    'avatar.src',
-    'typing.suffix',
+    'editable.okText',
+    'editable.cancelText',
     'content',
     'footer',
     'header',
+    'extra',
     'loadingRender',
-    'messageRender',
+    'contentRender',
   ]
->(
-  ({
-    loadingRender,
-    messageRender,
-    slots,
-    children,
-    ...props
-  }) => {
-    const loadingRenderFunction = useFunction(loadingRender);
-    const messageRenderFunction = useFunction(messageRender);
-    const headerFunction = useFunction(props.header, true);
-    const footerFunction = useFunction(props.footer, true);
-    const avatar = useMemo(() => {
-      if (slots.avatar) {
-        return <ReactSlot slot={slots.avatar} />;
-      }
-      if (slots['avatar.icon'] || slots['avatar.src']) {
-        return {
-          ...(props.avatar || {}),
-          icon: slots['avatar.icon'] ? (
-            <ReactSlot slot={slots['avatar.icon']} />
+>(({ loadingRender, contentRender, slots, children, ...props }) => {
+  const loadingRenderFunction = useFunction(loadingRender);
+  const contentRenderFunction = useFunction(contentRender);
+  const headerFunction = useFunction(props.header, true);
+  const footerFunction = useFunction(props.footer, true);
+  const avatarFunction = useFunction(props.avatar, true);
+  const extraFunction = useFunction(props.extra, true);
+  const typingFunction = useFunction(props.typing);
+  const editableConfig = getConfig(props.editable);
+  const supportEdit =
+    props.editable || slots['editable.cancelText'] || slots['editable.okText'];
+  return (
+    <>
+      <div style={{ display: 'none' }}>{children}</div>
+      <XBubble
+        {...props}
+        editable={
+          supportEdit
+            ? {
+                ...editableConfig,
+                editing:
+                  editableConfig.editing ||
+                  (typeof props.editable === 'boolean'
+                    ? props.editable
+                    : undefined),
+                cancelText: slots['editable.cancelText'] ? (
+                  <ReactSlot slot={slots['editable.cancelText']} />
+                ) : (
+                  editableConfig.cancelText
+                ),
+                okText: slots['editable.okText'] ? (
+                  <ReactSlot slot={slots['editable.okText']} />
+                ) : (
+                  editableConfig.okText
+                ),
+              }
+            : props.editable
+        }
+        typing={typingFunction || props.typing}
+        content={
+          slots.content ? <ReactSlot slot={slots.content} /> : props.content
+        }
+        avatar={
+          slots.avatar ? (
+            <ReactSlot slot={slots.avatar} />
           ) : (
-            (props.avatar as AvatarProps)?.icon
-          ),
-          src: slots['avatar.src'] ? (
-            <ReactSlot slot={slots['avatar.src']} />
+            avatarFunction || props.avatar
+          )
+        }
+        extra={
+          slots.extra ? (
+            <ReactSlot slot={slots.extra} />
           ) : (
-            (props.avatar as AvatarProps)?.src
-          ),
-        };
-      }
-      return props.avatar;
-    }, [props.avatar, slots]);
-    return (
-      <>
-        <div style={{ display: 'none' }}>{children}</div>
-        <XBubble
-          {...props}
-          avatar={avatar}
-          typing={
-            slots['typing.suffix']
-              ? {
-                  ...(isObject(props.typing) ? props.typing : {}),
-                  suffix: <ReactSlot slot={slots['typing.suffix']} />,
-                }
-              : props.typing
-          }
-          content={
-            slots.content ? <ReactSlot slot={slots.content} /> : props.content
-          }
-          footer={
-            slots.footer ? (
-              <ReactSlot slot={slots.footer} />
-            ) : (
-              footerFunction || props.footer
-            )
-          }
-          header={
-            slots.header ? (
-              <ReactSlot slot={slots.header} />
-            ) : (
-              headerFunction || props.header
-            )
-          }
-          loadingRender={
-            slots.loadingRender
-              ? renderParamsSlot({
-                  slots,
-                  key: 'loadingRender',
-                })
-              : loadingRenderFunction
-          }
-          messageRender={
-            slots.messageRender
-              ? renderParamsSlot({
-                  slots,
-                  key: 'messageRender',
-                })
-              : messageRenderFunction
-          }
-        />
-      </>
-    );
-  }
-);
+            extraFunction || props.extra
+          )
+        }
+        footer={
+          slots.footer ? (
+            <ReactSlot slot={slots.footer} />
+          ) : (
+            footerFunction || props.footer
+          )
+        }
+        header={
+          slots.header ? (
+            <ReactSlot slot={slots.header} />
+          ) : (
+            headerFunction || props.header
+          )
+        }
+        loadingRender={
+          slots.loadingRender
+            ? renderParamsSlot({
+                slots,
+                key: 'loadingRender',
+              })
+            : loadingRenderFunction
+        }
+        contentRender={
+          slots.contentRender
+            ? renderParamsSlot({
+                slots,
+                key: 'contentRender',
+              })
+            : contentRenderFunction
+        }
+      />
+    </>
+  );
+});
 
 export default Bubble;

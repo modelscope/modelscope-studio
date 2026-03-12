@@ -19,6 +19,9 @@
     };
 
     typing_complete?: any;
+    edit_confirm?: any;
+    edit_cancel?: any;
+    content?: string;
   }>(() => props);
 
   const getProceedProps = processProps(
@@ -34,7 +37,7 @@
       } = getComponentProps();
       return {
         gradio,
-      additionalProps: getAdditionalProps(),
+        additionalProps: getAdditionalProps(),
         _internal,
         as_item,
         restProps,
@@ -46,6 +49,8 @@
     },
     {
       typing_complete: 'typingComplete',
+      edit_confirm: 'editConfirm',
+      edit_cancel: 'editCancel',
     }
   );
   const proceedProps = $derived(getProceedProps());
@@ -61,6 +66,9 @@
       id={proceedProps.elem_id}
       {...proceedProps.restProps}
       {...proceedProps.additionalProps}
+      content={proceedProps.additionalProps.content ||
+        proceedProps.restProps.content ||
+        ''}
       slots={slots.value}
     >
       {@render children?.()}

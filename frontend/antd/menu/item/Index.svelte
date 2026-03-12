@@ -21,6 +21,7 @@
     };
     title_click?: any;
   }>(() => props);
+  const slotKey = getSlotKey();
 
   const getProceedProps = processProps(
     () => {
@@ -35,7 +36,7 @@
       } = getComponentProps();
       return {
         gradio,
-      additionalProps: getAdditionalProps(),
+        additionalProps: getAdditionalProps(),
         _internal,
         as_item,
         restProps,
@@ -52,7 +53,6 @@
   const proceedProps = $derived(getProceedProps());
 
   const slots = getSlots();
-  const slotKey = getSlotKey();
 </script>
 
 {#await AwaitedMenuItem then MenuItem}

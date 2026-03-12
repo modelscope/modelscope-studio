@@ -575,8 +575,8 @@ with gr.Blocks(css=css, fill_width=True) as demo:
                     with antdx.Bubble.List(
                             items=DEFAULT_CONVERSATIONS_HISTORY,
                             elem_classes="chatbot-chat-messages") as chatbot:
-                        # Define Chatbot Roles
-                        with ms.Slot("roles"):
+                        # Define Chatbot Role
+                        with ms.Slot("role"):
                             # Placeholder Role
                             with antdx.Bubble.List.Role(
                                     role="placeholder",

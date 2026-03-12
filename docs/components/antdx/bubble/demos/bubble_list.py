@@ -29,7 +29,7 @@ with gr.Blocks() as demo:
         state = gr.State({"history_count": 3})
         with antdx.XProvider():
             antd.Typography.Paragraph(
-                "Preset Bubble list. Support auto scroll. Use roles to set default properties of Bubble."
+                "Preset Bubble list. Support auto scroll. Use role to set default properties of Bubble."
             )
             with antd.Flex(gap="small", vertical=True):
                 with antd.Flex(gap="small",
@@ -39,8 +39,8 @@ with gr.Blocks() as demo:
                 with antdx.Bubble.List(items=get_bubble_items(3),
                                        elem_style=dict(maxHeight=300),
                                        elem_id="bubble-list") as bubble_list:
-                    # Define Roles
-                    with ms.Slot("roles"):
+                    # Define Role
+                    with ms.Slot("role"):
                         with antdx.Bubble.List.Role(
                                 role="ai",
                                 placement="start",

@@ -4,7 +4,7 @@ import { useFunction } from '@utils/hooks/useFunction';
 import { omitUndefinedProps } from '@utils/omitUndefinedProps';
 import { renderParamsSlot } from '@utils/renderParamsSlot';
 
-import { FileCard, type FileCardProps } from './file-card';
+import { BaseFileCard, type BaseFileCardProps } from './base';
 
 function getConfig<T>(value: T): Partial<T & Record<PropertyKey, any>> {
   if (typeof value === 'object' && value !== null) {
@@ -12,8 +12,10 @@ function getConfig<T>(value: T): Partial<T & Record<PropertyKey, any>> {
   }
   return {} as any;
 }
-export const AttachmentsFileCard = sveltify<
-  FileCardProps & {
+
+// sync with FileCardListItem
+export const FileCard = sveltify<
+  BaseFileCardProps & {
     children?: React.ReactNode;
   },
   [
@@ -22,7 +24,12 @@ export const AttachmentsFileCard = sveltify<
     'imageProps.preview.closeIcon',
     'imageProps.preview.toolbarRender',
     'imageProps.preview.imageRender',
+    'description',
     'icon',
+    'mask',
+    'spinProps.icon',
+    'spinProps.description',
+    'spinProps.indicator',
   ]
 >(({ imageProps, slots, children, ...props }) => {
   const previewConfig = getConfig(imageProps?.preview);
@@ -39,9 +46,35 @@ export const AttachmentsFileCard = sveltify<
   return (
     <>
       <div style={{ display: 'none' }}>{children}</div>
-      <FileCard
+      <BaseFileCard
         {...props}
         icon={slots.icon ? <ReactSlot slot={slots.icon} /> : props.icon}
+        description={
+          slots.description ? (
+            <ReactSlot slot={slots.description} />
+          ) : (
+            props.description
+          )
+        }
+        mask={slots.mask ? <ReactSlot slot={slots.mask} /> : props.mask}
+        spinProps={{
+          ...props.spinProps,
+          icon: slots['spinProps.icon'] ? (
+            <ReactSlot slot={slots['spinProps.icon']} />
+          ) : (
+            props.spinProps?.icon
+          ),
+          description: slots['spinProps.description'] ? (
+            <ReactSlot slot={slots['spinProps.description']} />
+          ) : (
+            props.spinProps?.description
+          ),
+          indicator: slots['spinProps.indicator'] ? (
+            <ReactSlot slot={slots['spinProps.indicator']} />
+          ) : (
+            props.spinProps?.indicator
+          ),
+        }}
         imageProps={{
           ...imageProps,
           preview: supportPreview
@@ -76,7 +109,7 @@ export const AttachmentsFileCard = sveltify<
                 ) : (
                   previewConfig.closeIcon
                 ),
-              }) as NonNullable<FileCardProps['imageProps']>['preview'])
+              }) as NonNullable<BaseFileCardProps['imageProps']>['preview'])
             : false,
           placeholder: slots['imageProps.placeholder'] ? (
             <ReactSlot slot={slots['imageProps.placeholder']} />
@@ -89,4 +122,4 @@ export const AttachmentsFileCard = sveltify<
   );
 });
 
-export default AttachmentsFileCard;
+export default FileCard;

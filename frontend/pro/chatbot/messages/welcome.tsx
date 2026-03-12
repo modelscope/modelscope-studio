@@ -10,15 +10,15 @@ import type { ChatbotWelcomeConfig, WelcomePromptData } from '../type';
 
 export interface WelcomeMessageProps {
   options: ChatbotWelcomeConfig;
-  urlRoot: string;
-  urlProxyUrl: string;
+  rootUrl: string;
+  apiPrefix: string;
   onWelcomePromptSelect: (value: WelcomePromptData) => void;
 }
 
 export const WelcomeMessage: React.FC<WelcomeMessageProps> = ({
   options,
-  urlProxyUrl,
-  urlRoot,
+  apiPrefix,
+  rootUrl,
   onWelcomePromptSelect,
 }) => {
   const { prompts, ...welcome } = options;
@@ -29,7 +29,7 @@ export const WelcomeMessage: React.FC<WelcomeMessageProps> = ({
     <Flex vertical gap="middle">
       <Welcome
         {...welcome}
-        icon={getFileUrl(welcome.icon, urlRoot, urlProxyUrl)}
+        icon={getFileUrl(welcome.icon, rootUrl, apiPrefix)}
         styles={{
           ...welcome?.styles,
           icon: { flexShrink: 0, ...welcome?.styles?.icon },

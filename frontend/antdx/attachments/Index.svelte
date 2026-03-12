@@ -11,15 +11,19 @@
   const AwaitedAttachments = importComponent(() => import('./attachments'));
 
   const props = $props();
-  const { gradio, getComponentProps, getAdditionalProps, children, updateProps } =
-    getProps<{
-      additional_props?: Record<string, any>;
-
-      as_item?: string | undefined;
-      _internal: Record<string, any>;
-      root: string;
-      value?: FileData[];
-    }>(() => props);
+  const {
+    gradio,
+    getComponentProps,
+    getAdditionalProps,
+    children,
+    updateProps,
+  } = getProps<{
+    additional_props?: Record<string, any>;
+    as_item?: string | undefined;
+    _internal: Record<string, any>;
+    form_name?: string;
+    value?: FileData[];
+  }>(() => props);
 
   const getProceedProps = processProps(
     () => {
@@ -31,12 +35,11 @@
         elem_id,
         elem_style,
         value,
-        root,
         ...restProps
       } = getComponentProps();
       return {
         gradio,
-      additionalProps: getAdditionalProps(),
+        additionalProps: getAdditionalProps(),
         _internal,
         as_item,
         restProps,
@@ -45,7 +48,6 @@
         elem_classes,
         elem_style,
         value,
-        root,
       };
     },
     {
@@ -63,7 +65,7 @@
       style={proceedProps.elem_style}
       className={cls(proceedProps.elem_classes, 'ms-gr-antdx-attachments')}
       id={proceedProps.elem_id}
-      items={proceedProps.value}
+      items={proceedProps.value || []}
       {...proceedProps.restProps}
       {...proceedProps.additionalProps}
       slots={slots.value}
@@ -74,9 +76,9 @@
       }}
       upload={async (files) => {
         return (
-          (await proceedProps.additionalProps.gradio.client.upload(
+          (await proceedProps.gradio.shared.client.upload(
             await prepare_files(files),
-            proceedProps.root
+            proceedProps.gradio.shared.root
           )) || []
         ).map((file, i) => {
           if (!file) {

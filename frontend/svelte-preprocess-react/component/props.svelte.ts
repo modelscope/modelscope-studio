@@ -332,7 +332,6 @@ export function getProps<
     shared_props: SharedProps;
   } = getSvelteProps();
   const gradio = new Gradio<E, P>(props);
-
   const updateProps = (updatedProps: Partial<P & SharedProps>) => {
     gradio.update(updatedProps);
   };
