@@ -33,7 +33,7 @@
       } = getComponentProps();
       return {
         gradio,
-      additionalProps: getAdditionalProps(),
+        additionalProps: getAdditionalProps(),
         restProps,
         _internal,
         as_item,

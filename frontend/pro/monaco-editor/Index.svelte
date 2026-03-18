@@ -12,20 +12,25 @@
   const AwaitedMonacoEditor = importComponent(() => import('./monaco-editor'));
 
   const props = $props();
-  const { gradio, getComponentProps, getAdditionalProps, children, updateProps } =
-    getProps<{
-      additional_props?: Record<string, any>;
+  const {
+    gradio,
+    getComponentProps,
+    getAdditionalProps,
+    children,
+    updateProps,
+  } = getProps<{
+    additional_props?: Record<string, any>;
 
-      as_item?: string | undefined;
-      _internal: {
-        layout?: boolean;
-      };
-      value?: string | undefined;
-      _loader?: {
-        mode?: 'cdn' | 'local';
-        cdn_url?: string;
-      };
-    }>(() => props);
+    as_item?: string | undefined;
+    _internal: {
+      layout?: boolean;
+    };
+    value?: string | undefined;
+    _loader?: {
+      mode?: 'cdn' | 'local';
+      cdn_url?: string;
+    };
+  }>(() => props);
 
   const getProceedProps = processProps(() => {
     const {

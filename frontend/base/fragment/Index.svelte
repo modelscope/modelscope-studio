@@ -9,9 +9,8 @@
 
   const props = $props();
 
-  const { gradio, getComponentProps, getAdditionalProps, children } = getProps<{}>(
-    () => props
-  );
+  const { gradio, getComponentProps, getAdditionalProps, children } =
+    getProps<{}>(() => props);
 
   const getProceedProps = processProps(
     () => {
