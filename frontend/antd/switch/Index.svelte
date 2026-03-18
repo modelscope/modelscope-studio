@@ -10,14 +10,19 @@
   const AwaitedSwitch = importComponent(() => import('./switch'));
 
   const props = $props();
-  const { gradio, getComponentProps, getAdditionalProps, children, updateProps } =
-    getProps<{
-      additional_props?: Record<string, any>;
+  const {
+    gradio,
+    getComponentProps,
+    getAdditionalProps,
+    children,
+    updateProps,
+  } = getProps<{
+    additional_props?: Record<string, any>;
 
-      as_item?: string | undefined;
-      _internal: {};
-      value?: boolean;
-    }>(() => props);
+    as_item?: string | undefined;
+    _internal: {};
+    value?: boolean;
+  }>(() => props);
 
   const getProceedProps = processProps(() => {
     const {

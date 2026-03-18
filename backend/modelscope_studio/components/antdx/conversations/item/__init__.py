@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from typing import Any
+from typing import Any, Literal
 
 from .....utils.dev import ModelScopeLayoutComponent, resolve_frontend_dir
 
@@ -21,13 +21,14 @@ class AntdXConversationsItem(ModelScopeLayoutComponent):
     def __init__(
             self,
             label: str | None = None,
-            additional_props: dict | None = None,
             *,
             key: str | None = None,
-            timestamp: int | float | None = None,
+            type: Literal['divider'] | None = None,
             group: str | None = None,
             icon: str | None = None,
             disabled: bool | None = None,
+            dashed: bool | None = None,
+            additional_props: dict | None = None,
             as_item: str | None = None,
             _internal: None = None,
             # gradio properties
@@ -46,7 +47,8 @@ class AntdXConversationsItem(ModelScopeLayoutComponent):
                          **kwargs)
         self.additional_props = additional_props
         self.label = label
-        self.timestamp = timestamp
+        self.type = type
+        self.dashed = dashed
         self.group = group
         self.icon = icon
         self.disabled = disabled

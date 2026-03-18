@@ -10,19 +10,24 @@
   const AwaitedTimePicker = importComponent(() => import('./time-picker'));
 
   const props = $props();
-  const { gradio, getComponentProps, getAdditionalProps, children, updateProps } =
-    getProps<{
-      additional_props?: Record<string, any>;
+  const {
+    gradio,
+    getComponentProps,
+    getAdditionalProps,
+    children,
+    updateProps,
+  } = getProps<{
+    additional_props?: Record<string, any>;
 
-      as_item?: string | undefined;
-      _internal: {
-        layout?: boolean;
-      };
-      value?: string | number;
+    as_item?: string | undefined;
+    _internal: {
+      layout?: boolean;
+    };
+    value?: string | number;
 
-      open_change?: any;
-      calendar_change?: any;
-    }>(() => props);
+    open_change?: any;
+    calendar_change?: any;
+  }>(() => props);
 
   const getProceedProps = processProps(
     () => {
@@ -38,7 +43,7 @@
       } = getComponentProps();
       return {
         gradio,
-      additionalProps: getAdditionalProps(),
+        additionalProps: getAdditionalProps(),
         _internal,
         as_item,
         restProps,

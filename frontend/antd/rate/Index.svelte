@@ -10,19 +10,24 @@
   const AwaitedRate = importComponent(() => import('./rate'));
 
   const props = $props();
-  const { gradio, getComponentProps, getAdditionalProps, children, updateProps } =
-    getProps<{
-      additional_props?: Record<string, any>;
+  const {
+    gradio,
+    getComponentProps,
+    getAdditionalProps,
+    children,
+    updateProps,
+  } = getProps<{
+    additional_props?: Record<string, any>;
 
-      as_item?: string | undefined;
-      _internal: {
-        layout?: boolean;
-      };
-      value?: number;
+    as_item?: string | undefined;
+    _internal: {
+      layout?: boolean;
+    };
+    value?: number;
 
-      hover_change?: any;
-      key_down?: any;
-    }>(() => props);
+    hover_change?: any;
+    key_down?: any;
+  }>(() => props);
 
   const getProceedProps = processProps(
     () => {
@@ -38,7 +43,7 @@
       } = getComponentProps();
       return {
         gradio,
-      additionalProps: getAdditionalProps(),
+        additionalProps: getAdditionalProps(),
         _internal,
         as_item,
         restProps,

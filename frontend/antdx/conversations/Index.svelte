@@ -17,7 +17,7 @@
     _internal: {
       layout?: boolean;
     };
-
+    menu_open_change?: any;
     active_change?: any;
   }>(() => props);
 
@@ -34,7 +34,7 @@
       } = getComponentProps();
       return {
         gradio,
-      additionalProps: getAdditionalProps(),
+        additionalProps: getAdditionalProps(),
         _internal,
         as_item,
         restProps,
@@ -46,6 +46,7 @@
     },
     {
       active_change: 'activeChange',
+      menu_open_change: 'menu_openChange',
     }
   );
   const proceedProps = $derived(getProceedProps());

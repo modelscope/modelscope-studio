@@ -2,8 +2,8 @@ import { sveltify } from '@svelte-preprocess-react';
 import { ReactSlot } from '@svelte-preprocess-react/react-slot';
 import React, { useMemo } from 'react';
 import {
-  type PromptProps,
   Prompts as XPrompts,
+  type PromptsItemType,
   type PromptsProps,
 } from '@ant-design/x';
 import { renderItems } from '@utils/renderItems';
@@ -27,7 +27,7 @@ export const Prompts = sveltify<PromptsProps, ['title']>(
             items={useMemo(() => {
               return (
                 items ||
-                renderItems<PromptProps>(resolvedSlotItems, {
+                renderItems<PromptsItemType>(resolvedSlotItems, {
                   clone: true,
                 })
               );

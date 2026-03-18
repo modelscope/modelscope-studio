@@ -97,10 +97,6 @@ function BridgeInternal({
     return patchProps(omitNodeProps(originalNodeProps));
   }, [originalNodeProps]);
 
-  const subSlotKeys = useMemo(
-    () => node.nodes.map((subnode) => subnode.slotKey),
-    [node.nodes]
-  );
   let formItemContext = useFormItemContext();
   const slotKey = node.slotKey;
   if (slotKey) {
@@ -175,13 +171,13 @@ function BridgeInternal({
   if (node.nodes.length !== 0) {
     children = [
       children,
-      ...node.nodes.map((subnode, i) => {
+      ...node.nodes.map((subnode) => {
         return createElement(Bridge, {
           key: `bridge${subnode.key}`,
           createPortal,
           node: subnode,
           // slotKey
-          nodeSlotKey: subSlotKeys[i],
+          nodeSlotKey: subnode.slotKey,
         });
       }),
     ];

@@ -32,12 +32,18 @@ class AntdXConversations(ModelScopeLayoutComponent):
         EventListener("menu_select",
                       callback=lambda block: block._internal.update(
                           bind_menu_select_event=True)),
+        EventListener("groupable_expand",
+                      callback=lambda block: block._internal.update(
+                          bind_groupable_expand_event=True)),
+        EventListener("creation_click",
+                      callback=lambda block: block._internal.update(
+                          bind_creation_click_event=True)),
     ]
 
     # supported slots
     SLOTS = [
         'menu.expandIcon', 'menu.overflowedIndicator', 'menu.trigger',
-        'groupable.title', 'items'
+        'groupable.label', 'items', 'creation.icon', 'creation.label'
     ]
 
     def __init__(
@@ -49,8 +55,10 @@ class AntdXConversations(ModelScopeLayoutComponent):
             items: list[dict] | None = None,
             menu: str | dict | None = None,
             groupable: bool | dict | None = None,
-            styles: dict | str | None= None,
-            class_names: dict | str | None= None,
+            shortcut_keys: dict | None = None,
+            creation: dict | None = None,
+            styles: dict | str | None = None,
+            class_names: dict | str | None = None,
             root_class_name: str | None = None,
             as_item: str | None = None,
             _internal: None = None,
@@ -74,6 +82,8 @@ class AntdXConversations(ModelScopeLayoutComponent):
         self.items = items
         self.menu = menu
         self.groupable = groupable
+        self.shortcut_keys = shortcut_keys
+        self.creation = creation
         self.styles = styles
         self.class_names = class_names
         self.root_class_name = root_class_name

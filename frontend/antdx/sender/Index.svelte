@@ -11,22 +11,27 @@
   const AwaitedSender = importComponent(() => import('./sender'));
 
   const props = $props();
-  const { gradio, getComponentProps, getAdditionalProps, children, updateProps } =
-    getProps<{
-      additional_props?: Record<string, any>;
+  const {
+    gradio,
+    getComponentProps,
+    getAdditionalProps,
+    children,
+    updateProps,
+  } = getProps<{
+    additional_props?: Record<string, any>;
 
-      as_item?: string | undefined;
-      _internal: {
-        layout?: boolean;
-      };
-      root: string;
-      value?: string;
+    as_item?: string | undefined;
+    _internal: {
+      layout?: boolean;
+    };
+    root: string;
+    value?: string;
 
-      key_press?: any;
-      paste_file?: any;
-      key_down?: any;
-      allow_speech_recording_change?: any;
-    }>(() => props);
+    key_press?: any;
+    paste_file?: any;
+    key_down?: any;
+    allow_speech_recording_change?: any;
+  }>(() => props);
 
   const getProceedProps = processProps(
     () => {
@@ -43,7 +48,7 @@
       } = getComponentProps();
       return {
         gradio,
-      additionalProps: getAdditionalProps(),
+        additionalProps: getAdditionalProps(),
         _internal,
         as_item,
         restProps,

@@ -12,6 +12,22 @@ export type BaseFileCardProps = Omit<XFileCardProps, 'src'> & {
   src?: string | FileData;
 };
 
+export function resolveFileSrc(
+  src: string | FileData | undefined,
+  rootUrl: string,
+  apiPrefix: string
+) {
+  if (!src) {
+    return src;
+  }
+  if (typeof src === 'string') {
+    return src.startsWith('http')
+      ? src
+      : getFetchableUrl(src, rootUrl, apiPrefix);
+  }
+  return src.url || getFetchableUrl(src.path, rootUrl, apiPrefix);
+}
+
 export const BaseFileCard: React.FC<BaseFileCardProps> = ({
   src,
   rootUrl,
@@ -19,15 +35,7 @@ export const BaseFileCard: React.FC<BaseFileCardProps> = ({
   ...props
 }) => {
   const resolvedSrc = useMemo(() => {
-    if (!src) {
-      return src;
-    }
-    if (typeof src === 'string') {
-      return src.startsWith('http')
-        ? src
-        : getFetchableUrl(src, rootUrl, apiPrefix);
-    }
-    return src.url || getFetchableUrl(src.path, rootUrl, apiPrefix);
+    return resolveFileSrc(src, rootUrl, apiPrefix);
   }, [src, apiPrefix, rootUrl]);
   return <XFileCard {...props} src={resolvedSrc} />;
 };

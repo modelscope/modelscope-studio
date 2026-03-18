@@ -11,18 +11,23 @@
   const AwaitedAutoComplete = importComponent(() => import('./auto-complete'));
 
   const props = $props();
-  const { gradio, getComponentProps, getAdditionalProps, children, updateProps } =
-    getProps<{
-      additional_props?: Record<string, any>;
-      value: string;
+  const {
+    gradio,
+    getComponentProps,
+    getAdditionalProps,
+    children,
+    updateProps,
+  } = getProps<{
+    additional_props?: Record<string, any>;
+    value: string;
 
-      as_item?: string | undefined;
-      _internal: {
-        layout?: boolean;
-      };
-      dropdown_visible_change?: any;
-      popup_visible_change?: any;
-    }>(() => props);
+    as_item?: string | undefined;
+    _internal: {
+      layout?: boolean;
+    };
+    dropdown_visible_change?: any;
+    popup_visible_change?: any;
+  }>(() => props);
 
   const getProceedProps = processProps(
     () => {
@@ -38,7 +43,7 @@
       } = getComponentProps();
       return {
         gradio,
-      additionalProps: getAdditionalProps(),
+        additionalProps: getAdditionalProps(),
         _internal,
         as_item,
         restProps,

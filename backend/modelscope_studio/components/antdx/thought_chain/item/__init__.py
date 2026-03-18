@@ -13,20 +13,23 @@ class AntdXThoughtChainItem(ModelScopeLayoutComponent):
     EVENTS = []
 
     # supported slots
-    SLOTS = ['content', 'description', 'extra', 'footer', 'icon', 'title']
+    SLOTS = ['description', 'icon', 'title']
 
     def __init__(
             self,
-            content: str | None = None,
-            additional_props: dict | None = None,
             *,
-            key: str | None = None,
             description: str | None = None,
-            extra: str | None = None,
-            footer: str | None = None,
             icon: str | None = None,
             title: str | None = None,
-            status: Literal['pending', 'success', 'error'] | None = None,
+            status: Literal['pending', 'success', 'error', 'abort']
+        | None = None,
+            variant: Literal['solid', 'outlined', 'text']
+        | None = None,
+            blink: bool | None = None,
+            additional_props: dict | None = None,
+            prefix_cls: str | None = None,
+            class_names: dict | str | None = None,
+            styles: dict | str | None = None,
             as_item: str | None = None,
             _internal: None = None,
             # gradio properties
@@ -44,14 +47,15 @@ class AntdXThoughtChainItem(ModelScopeLayoutComponent):
                          elem_style=elem_style,
                          **kwargs)
         self.additional_props = additional_props
-        self.content = content
         self.description = description
-        self.extra = extra
-        self.footer = footer
         self.icon = icon
         self.title = title
         self.status = status
-        self.key = key
+        self.variant = variant
+        self.blink = blink
+        self.prefix_cls = prefix_cls
+        self.class_names = class_names
+        self.styles = styles
 
     FRONTEND_DIR = resolve_frontend_dir("thought-chain", "item", type="antdx")
 

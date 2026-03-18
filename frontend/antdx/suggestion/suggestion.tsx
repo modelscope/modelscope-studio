@@ -76,13 +76,21 @@ export const Suggestion = sveltify<
 >(
   withItemsContextProvider(
     ['default', 'items'],
-    ({ children, items, shouldTrigger, slots, ...props }) => {
+    ({
+      children,
+      items,
+      shouldTrigger,
+      getPopupContainer,
+      slots,
+      ...props
+    }) => {
       const [open, setOpen] = useState(() => props.open ?? false);
       const { items: slotItems } = useItems<['default', 'items']>();
       const resolvedSlotItems =
         slotItems.items.length > 0 ? slotItems.items : slotItems.default;
       const itemsFunction = useFunction(items);
       const shouldTriggerFunction = useFunction(shouldTrigger);
+      const getPopupContainerFunction = useFunction(getPopupContainer);
       const resolvedItems = useMemo(() => {
         return (items ||
           renderItems<SuggestionItem>(resolvedSlotItems, {
@@ -122,6 +130,7 @@ export const Suggestion = sveltify<
           <XSuggestion
             {...props}
             items={itemsFunction || itemsRender}
+            getPopupContainer={getPopupContainerFunction}
             onOpenChange={(suggestionOpen, ...args) => {
               if (isUndefined(props.open)) {
                 setOpen(suggestionOpen);

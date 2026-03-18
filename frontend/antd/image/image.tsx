@@ -13,8 +13,7 @@ function getConfig<T>(value: T): Partial<T & Record<PropertyKey, any>> {
 }
 type ImageProps = GetProps<typeof AImage>;
 export const Image = sveltify<
-  ImageProps & {
-  },
+  ImageProps & {},
   [
     'placeholder',
     'preview.mask',

@@ -10,16 +10,21 @@
   const AwaitedRadioGroup = importComponent(() => import('./radio.group'));
 
   const props = $props();
-  const { gradio, getComponentProps, getAdditionalProps, children, updateProps } =
-    getProps<{
-      additional_props?: Record<string, any>;
-      as_item?: string | undefined;
-      _internal: {
-        layout?: boolean;
-      };
-      form_name?: string;
-      value?: any;
-    }>(() => props);
+  const {
+    gradio,
+    getComponentProps,
+    getAdditionalProps,
+    children,
+    updateProps,
+  } = getProps<{
+    additional_props?: Record<string, any>;
+    as_item?: string | undefined;
+    _internal: {
+      layout?: boolean;
+    };
+    form_name?: string;
+    value?: any;
+  }>(() => props);
 
   const getProceedProps = processProps(
     () => {
@@ -34,7 +39,7 @@
       } = getComponentProps();
       return {
         gradio,
-      additionalProps: getAdditionalProps(),
+        additionalProps: getAdditionalProps(),
         _internal,
         as_item,
         restProps,

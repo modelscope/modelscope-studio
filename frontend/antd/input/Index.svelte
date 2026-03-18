@@ -10,17 +10,22 @@
   const AwaitedInput = importComponent(() => import('./input'));
 
   const props = $props();
-  const { gradio, getComponentProps, getAdditionalProps, children, updateProps } =
-    getProps<{
-      additional_props?: Record<string, any>;
+  const {
+    gradio,
+    getComponentProps,
+    getAdditionalProps,
+    children,
+    updateProps,
+  } = getProps<{
+    additional_props?: Record<string, any>;
 
-      _internal: {
-        layout?: boolean;
-      };
-      value?: string;
+    _internal: {
+      layout?: boolean;
+    };
+    value?: string;
 
-      press_enter?: any;
-    }>(() => props);
+    press_enter?: any;
+  }>(() => props);
 
   const getProceedProps = processProps(
     () => {
@@ -36,7 +41,7 @@
       } = getComponentProps();
       return {
         gradio,
-      additionalProps: getAdditionalProps(),
+        additionalProps: getAdditionalProps(),
         _internal,
         as_item,
         restProps,

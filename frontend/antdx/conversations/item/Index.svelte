@@ -19,7 +19,6 @@
     additional_props?: Record<string, any>;
     as_item?: string | undefined;
     _internal: {
-      layout?: boolean;
       index?: number;
     };
   }>(() => props);

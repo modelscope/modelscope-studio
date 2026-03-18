@@ -26,8 +26,7 @@ function getConfig<T>(value: T): Partial<T & Record<PropertyKey, any>> {
 
 type TableProps = GetProps<typeof ATable>;
 export const Table = sveltify<
-  TableProps & {
-  },
+  TableProps & {},
   [
     'footer',
     'title',

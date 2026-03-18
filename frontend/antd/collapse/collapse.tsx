@@ -8,21 +8,10 @@ import { Collapse as ACollapse, type GetProps } from 'antd';
 import { useItems, withItemsContextProvider } from './context';
 
 type CollapseProps = GetProps<typeof ACollapse>;
-export const Collapse = sveltify<
-  CollapseProps & {
-  },
-  ['expandIcon']
->(
+export const Collapse = sveltify<CollapseProps & {}, ['expandIcon']>(
   withItemsContextProvider(
     ['default', 'items'],
-    ({
-      slots,
-      items,
-      children,
-      onChange,
-      expandIcon,
-      ...props
-    }) => {
+    ({ slots, items, children, onChange, expandIcon, ...props }) => {
       const { items: slotItems } = useItems<['default', 'items']>();
       const resolvedSlotItems =
         slotItems.items.length > 0 ? slotItems.items : slotItems.default;

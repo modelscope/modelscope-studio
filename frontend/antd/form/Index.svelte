@@ -12,19 +12,24 @@
   const AwaitedForm = importComponent(() => import('./form'));
 
   const props = $props();
-  const { gradio, getComponentProps, getAdditionalProps, children, updateProps } =
-    getProps<{
-      additional_props?: Record<string, any>;
-      _internal: {
-        layout?: boolean;
-      };
-      value?: Record<string, any>;
-      form_action?: FormProps['formAction'] | null;
-      form_name?: string;
-      fields_change?: any;
-      finish_failed?: any;
-      values_change?: any;
-    }>(() => props);
+  const {
+    gradio,
+    getComponentProps,
+    getAdditionalProps,
+    children,
+    updateProps,
+  } = getProps<{
+    additional_props?: Record<string, any>;
+    _internal: {
+      layout?: boolean;
+    };
+    value?: Record<string, any>;
+    form_action?: FormProps['formAction'] | null;
+    form_name?: string;
+    fields_change?: any;
+    finish_failed?: any;
+    values_change?: any;
+  }>(() => props);
 
   const getProceedProps = processProps(
     () => {
@@ -41,7 +46,7 @@
       } = getComponentProps();
       return {
         gradio,
-      additionalProps: getAdditionalProps(),
+        additionalProps: getAdditionalProps(),
         _internal,
         as_item,
         restProps,

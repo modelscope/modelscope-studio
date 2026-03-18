@@ -10,16 +10,21 @@
   const AwaitedMessage = importComponent(() => import('./message'));
 
   const props = $props();
-  const { gradio, getComponentProps, getAdditionalProps, children, updateProps } =
-    getProps<{
-      additional_props?: Record<string, any>;
+  const {
+    gradio,
+    getComponentProps,
+    getAdditionalProps,
+    children,
+    updateProps,
+  } = getProps<{
+    additional_props?: Record<string, any>;
 
-      _internal: {
-        layout?: boolean;
-      };
-      key?: string;
-      content?: string;
-    }>(() => props);
+    _internal: {
+      layout?: boolean;
+    };
+    key?: string;
+    content?: string;
+  }>(() => props);
 
   const getProceedProps = processProps(() => {
     const {

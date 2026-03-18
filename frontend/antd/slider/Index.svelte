@@ -10,18 +10,23 @@
   const AwaitedSlider = importComponent(() => import('./slider'));
 
   const props = $props();
-  const { gradio, getComponentProps, getAdditionalProps, children, updateProps } =
-    getProps<{
-      additional_props?: Record<string, any>;
+  const {
+    gradio,
+    getComponentProps,
+    getAdditionalProps,
+    children,
+    updateProps,
+  } = getProps<{
+    additional_props?: Record<string, any>;
 
-      as_item?: string | undefined;
-      _internal: {
-        layout?: boolean;
-      };
-      value?: number | number[];
+    as_item?: string | undefined;
+    _internal: {
+      layout?: boolean;
+    };
+    value?: number | number[];
 
-      change_complete?: any;
-    }>(() => props);
+    change_complete?: any;
+  }>(() => props);
 
   const getProceedProps = processProps(
     () => {
@@ -37,7 +42,7 @@
       } = getComponentProps();
       return {
         gradio,
-      additionalProps: getAdditionalProps(),
+        additionalProps: getAdditionalProps(),
         _internal,
         as_item,
         restProps,

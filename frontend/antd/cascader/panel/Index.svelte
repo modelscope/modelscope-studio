@@ -12,16 +12,21 @@
   );
 
   const props = $props();
-  const { gradio, getComponentProps, getAdditionalProps, children, updateProps } =
-    getProps<{
-      additional_props?: Record<string, any>;
-      as_item?: string | undefined;
-      value?: string[] | number[];
-      _internal: {
-        layout?: boolean;
-      };
-      load_data?: any;
-    }>(() => props);
+  const {
+    gradio,
+    getComponentProps,
+    getAdditionalProps,
+    children,
+    updateProps,
+  } = getProps<{
+    additional_props?: Record<string, any>;
+    as_item?: string | undefined;
+    value?: string[] | number[];
+    _internal: {
+      layout?: boolean;
+    };
+    load_data?: any;
+  }>(() => props);
 
   const getProceedProps = processProps(
     () => {
@@ -36,7 +41,7 @@
       } = getComponentProps();
       return {
         gradio,
-      additionalProps: getAdditionalProps(),
+        additionalProps: getAdditionalProps(),
         _internal,
         as_item,
         restProps,

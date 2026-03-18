@@ -12,15 +12,20 @@
   );
 
   const props = $props();
-  const { gradio, getComponentProps, getAdditionalProps, children, updateProps } =
-    getProps<{
-      additional_props?: Record<string, any>;
-      value?: [string | number | null, string | number | null];
-      _internal: {
-        layout?: boolean;
-      };
-      calendar_change?: any;
-    }>(() => props);
+  const {
+    gradio,
+    getComponentProps,
+    getAdditionalProps,
+    children,
+    updateProps,
+  } = getProps<{
+    additional_props?: Record<string, any>;
+    value?: [string | number | null, string | number | null];
+    _internal: {
+      layout?: boolean;
+    };
+    calendar_change?: any;
+  }>(() => props);
 
   const getProceedProps = processProps(
     () => {
@@ -36,7 +41,7 @@
       } = getComponentProps();
       return {
         gradio,
-      additionalProps: getAdditionalProps(),
+        additionalProps: getAdditionalProps(),
         _internal,
         as_item,
         restProps,

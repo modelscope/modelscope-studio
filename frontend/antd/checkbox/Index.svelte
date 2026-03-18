@@ -10,16 +10,21 @@
   const AwaitedCheckbox = importComponent(() => import('./checkbox'));
 
   const props = $props();
-  const { gradio, getComponentProps, getAdditionalProps, children, updateProps } =
-    getProps<{
-      value?: boolean;
-      additional_props?: Record<string, any>;
+  const {
+    gradio,
+    getComponentProps,
+    getAdditionalProps,
+    children,
+    updateProps,
+  } = getProps<{
+    value?: boolean;
+    additional_props?: Record<string, any>;
 
-      as_item?: string | undefined;
-      _internal: {
-        layout?: boolean;
-      };
-    }>(() => props);
+    as_item?: string | undefined;
+    _internal: {
+      layout?: boolean;
+    };
+  }>(() => props);
 
   const getProceedProps = processProps(() => {
     const {

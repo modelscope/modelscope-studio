@@ -10,19 +10,24 @@
   const AwaitedTransfer = importComponent(() => import('./transfer'));
 
   const props = $props();
-  const { gradio, getComponentProps, getAdditionalProps, children, updateProps } =
-    getProps<{
-      additional_props?: Record<string, any>;
+  const {
+    gradio,
+    getComponentProps,
+    getAdditionalProps,
+    children,
+    updateProps,
+  } = getProps<{
+    additional_props?: Record<string, any>;
 
-      as_item?: string | undefined;
-      _internal: {
-        layout?: boolean;
-      };
-      value?: (string | number)[];
+    as_item?: string | undefined;
+    _internal: {
+      layout?: boolean;
+    };
+    value?: (string | number)[];
 
-      select_change?: any;
-      item_render?: any;
-    }>(() => props);
+    select_change?: any;
+    item_render?: any;
+  }>(() => props);
 
   const getProceedProps = processProps(
     () => {
@@ -38,7 +43,7 @@
       } = getComponentProps();
       return {
         gradio,
-      additionalProps: getAdditionalProps(),
+        additionalProps: getAdditionalProps(),
         _internal,
         as_item,
         restProps,

@@ -20,9 +20,11 @@ from .prompts import AntdXPrompts
 from .prompts.item import AntdXPromptsItem
 from .sender import AntdXSender
 from .sender.header import AntdXSenderHeader
+from .sender.switch import AntdXSenderSwitch
 from .suggestion import AntdXSuggestion
 from .suggestion.item import AntdXSuggestionItem
 from .thought_chain import AntdXThoughtChain
 from .thought_chain.item import AntdXThoughtChainItem
+from .thought_chain.thought_chain_item import AntdXThoughtChainThoughtChainItem
 from .welcome import AntdXWelcome
 from .x_provider import AntdXXProvider

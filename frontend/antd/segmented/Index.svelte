@@ -12,17 +12,22 @@
   const AwaitedSegmented = importComponent(() => import('./segmented'));
 
   const props = $props();
-  const { gradio, getComponentProps, getAdditionalProps, children, updateProps } =
-    getProps<{
-      additional_props?: Record<string, any>;
+  const {
+    gradio,
+    getComponentProps,
+    getAdditionalProps,
+    children,
+    updateProps,
+  } = getProps<{
+    additional_props?: Record<string, any>;
 
-      _internal: {
-        layout?: boolean;
-      };
-      value?: number | string;
-      form_name?: string;
-      options?: SegmentedProps['options'];
-    }>(() => props);
+    _internal: {
+      layout?: boolean;
+    };
+    value?: number | string;
+    form_name?: string;
+    options?: SegmentedProps['options'];
+  }>(() => props);
 
   const getProceedProps = processProps(
     () => {
@@ -38,7 +43,7 @@
       } = getComponentProps();
       return {
         gradio,
-      additionalProps: getAdditionalProps(),
+        additionalProps: getAdditionalProps(),
         _internal,
         as_item,
         restProps,

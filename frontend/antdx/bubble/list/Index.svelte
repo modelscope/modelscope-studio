@@ -16,6 +16,7 @@
     _internal: {
       layout?: boolean;
     };
+    items?: any[];
   }>(() => props);
 
   const getProceedProps = processProps(() => {
@@ -53,6 +54,9 @@
       id={proceedProps.elem_id}
       {...proceedProps.restProps}
       {...proceedProps.additionalProps}
+      items={proceedProps.additionalProps.items ||
+        proceedProps.restProps.items ||
+        []}
       slots={slots.value}
     >
       {@render children?.()}

@@ -7,6 +7,7 @@ from typing_extensions import Literal
 
 from ....utils.dev import ModelScopeDataLayoutComponent, resolve_frontend_dir
 from .header import AntdXSenderHeader
+from .switch import AntdXSenderSwitch
 
 
 # as inputs, outputs
@@ -15,6 +16,7 @@ class AntdXSender(ModelScopeDataLayoutComponent):
     Ant Design X: https://x.ant.design/components/sender
     """
     Header = AntdXSenderHeader
+    Switch = AntdXSenderSwitch
 
     EVENTS = [
         EventListener("change",
@@ -51,32 +53,41 @@ class AntdXSender(ModelScopeDataLayoutComponent):
         EventListener("paste_file",
                       callback=lambda block: block._internal.update(
                           bind_pasteFile_event=True)),
+        EventListener("skill_closable_close",
+                      callback=lambda block: block._internal.update(
+                          bind_skill_closable_close_event=True)),
     ]
 
     # supported slots
-    SLOTS = ['actions', 'header', 'prefix', 'footer']
+    SLOTS = [
+        'suffix', 'header', 'prefix', 'footer', 'skill.title',
+        'skill.toolTip.title'
+        'skill.closable.closeIcon'
+    ]
 
     def __init__(
             self,
             value: str | None = None,
-            additional_props: dict | None = None,
             *,
-            auto_size: bool | dict | None = None,
-            footer: str | None = None,
-            actions: str | bool | None = None,
             allow_speech: bool | dict | None = None,
-            class_names: dict | str | None= None,
+            class_names: dict | str | None = None,
             components: dict | None = None,
             default_value: str | None = None,
-            loading: bool | None = None,
             disabled: bool | None = None,
+            auto_size: bool | dict | None = None,
+            loading: bool | None = None,
+            suffix: str | bool | None = None,
+            footer: str | None = None,
             header: str | None = None,
             prefix: str | None = None,
             read_only: bool | None = None,
-            styles: dict | str | None= None,
+            styles: dict | str | None = None,
             submit_type: Literal['enter', 'shiftEnter'] | None = None,
             placeholder: str | None = None,
+            slot_config: list[dict] | None = None,
+            skill: dict | None = None,
             root_class_name: str | None = None,
+            additional_props: dict | None = None,
             as_item: str | None = None,
             _internal: None = None,
             # gradio properties
@@ -108,7 +119,9 @@ class AntdXSender(ModelScopeDataLayoutComponent):
         self.read_only = read_only
         self.loading = loading
         self.header = header
-        self.actions = actions
+        self.suffix = suffix
+        self.slot_config = slot_config
+        self.skill = skill
         self.placeholder = placeholder
         self.root_class_name = root_class_name
 

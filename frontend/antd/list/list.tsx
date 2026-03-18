@@ -6,8 +6,7 @@ import { renderParamsSlot } from '@utils/renderParamsSlot';
 import { type GetProps, List as AList } from 'antd';
 
 export const List = sveltify<
-  GetProps<typeof AList> & {
-  },
+  GetProps<typeof AList> & {},
   ['footer', 'header', 'loadMore', 'renderItem']
 >(({ slots, renderItem, ...props }) => {
   const renderItemFunction = useFunction(renderItem);

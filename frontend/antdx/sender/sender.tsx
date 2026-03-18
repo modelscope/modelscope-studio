@@ -4,8 +4,16 @@ import { ReactSlot } from '@svelte-preprocess-react/react-slot';
 import React from 'react';
 import { Sender as XSender, type SenderProps } from '@ant-design/x';
 import type { FileData } from '@gradio/client';
+import { createFunction } from '@utils/createFunction';
 import { useFunction } from '@utils/hooks/useFunction';
 import { useValueChange } from '@utils/hooks/useValueChange';
+
+function getConfig<T>(value: T): Partial<T & Record<PropertyKey, any>> {
+  if (typeof value === 'object' && value !== null) {
+    return value as any;
+  }
+  return {} as any;
+}
 
 export const Sender = sveltify<
   Omit<SenderProps, 'onPasteFile'> & {
@@ -14,7 +22,15 @@ export const Sender = sveltify<
     onPasteFile?: (value: string[]) => void;
     onValueChange: (value: string) => void;
   },
-  ['actions', 'header', 'prefix', 'footer']
+  [
+    'suffix',
+    'header',
+    'prefix',
+    'footer',
+    'skill.title',
+    'skill.toolTip.title',
+    'skill.closable.closeIcon',
+  ]
 >(
   ({
     slots,
@@ -23,11 +39,32 @@ export const Sender = sveltify<
     onChange,
     onPasteFile,
     upload,
+    slotConfig,
     elRef,
     ...props
   }) => {
-    const actionsFunction = useFunction(props.actions, true);
+    const suffixFunction = useFunction(props.suffix, true);
+    const headerFunction = useFunction(props.header, true);
+    const prefixFunction = useFunction(props.prefix, true);
     const footerFunction = useFunction(props.footer, true);
+    const supportSkill =
+      props.skill ||
+      slots['skill.title'] ||
+      slots['skill.toolTip.title'] ||
+      slots['skill.closable.closeIcon'];
+    const supportSkillTooltip =
+      slots['skill.toolTip.title'] || typeof props.skill?.toolTip === 'object';
+    const skillTooltipConfig = getConfig(props.skill?.toolTip);
+    const supportSkillClosable =
+      slots['skill.closable.closeIcon'] || props.skill?.closable;
+    const skillClosableConfig = getConfig(props.skill?.closable);
+
+    const skillTooltipAfterOpenChangeFunction = useFunction(
+      skillTooltipConfig.afterOpenChange
+    );
+    const skillTooltipGetPopupContainerFunction = useFunction(
+      skillTooltipConfig.getPopupContainer
+    );
     const [value, setValue] = useValueChange({
       onValueChange,
       value: props.value,
@@ -40,6 +77,52 @@ export const Sender = sveltify<
           {...props}
           value={value}
           ref={elRef}
+          skill={
+            supportSkill
+              ? {
+                  ...(props.skill || {}),
+                  title: slots['skill.title'] ? (
+                    <ReactSlot slot={slots['skill.title']} />
+                  ) : (
+                    props.skill?.title
+                  ),
+                  value: props.skill?.value || '',
+                  toolTip: supportSkillTooltip
+                    ? {
+                        ...skillTooltipConfig,
+                        afterOpenChange: skillTooltipAfterOpenChangeFunction,
+                        getPopupContainer:
+                          skillTooltipGetPopupContainerFunction,
+                        title: slots['showSorterTooltip.title'] ? (
+                          <ReactSlot slot={slots['showSorterTooltip.title']} />
+                        ) : (
+                          skillTooltipConfig.title
+                        ),
+                      }
+                    : props.skill?.toolTip,
+                  closable: supportSkillClosable
+                    ? {
+                        ...skillClosableConfig,
+                        closeIcon: slots['skill.closable.closeIcon'] ? (
+                          <ReactSlot slot={slots['skill.closable.closeIcon']} />
+                        ) : (
+                          skillClosableConfig.closeIcon
+                        ),
+                      }
+                    : props.skill?.closable,
+                }
+              : undefined
+          }
+          slotConfig={slotConfig?.map((c) => {
+            return {
+              ...c,
+              formatResult: createFunction(c.formatResult),
+              customRender:
+                c.type === 'custom'
+                  ? createFunction(c.customRender)
+                  : undefined,
+            };
+          })}
           onSubmit={(...args) => {
             if (!open) {
               props.onSubmit?.(...args);
@@ -49,21 +132,29 @@ export const Sender = sveltify<
             onChange?.(v);
             setValue(v);
           }}
-          onPasteFile={async (_file, files) => {
+          onPasteFile={async (files) => {
             const urls = await upload(Array.from(files));
             onPasteFile?.(urls.map((url) => url.path));
           }}
+          suffix={
+            slots.suffix ? (
+              <ReactSlot slot={slots.suffix} />
+            ) : (
+              suffixFunction || props.suffix
+            )
+          }
           header={
-            slots.header ? <ReactSlot slot={slots.header} /> : props.header
+            slots.header ? (
+              <ReactSlot slot={slots.header} />
+            ) : (
+              headerFunction || props.header
+            )
           }
           prefix={
-            slots.prefix ? <ReactSlot slot={slots.prefix} /> : props.prefix
-          }
-          actions={
-            slots.actions ? (
-              <ReactSlot slot={slots.actions} />
+            slots.prefix ? (
+              <ReactSlot slot={slots.prefix} />
             ) : (
-              actionsFunction || props.actions
+              prefixFunction || props.prefix
             )
           }
           footer={

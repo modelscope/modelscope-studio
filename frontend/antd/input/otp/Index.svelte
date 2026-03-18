@@ -10,15 +10,20 @@
   const AwaitedInputOTP = importComponent(() => import('./input.otp'));
 
   const props = $props();
-  const { gradio, getComponentProps, getAdditionalProps, children, updateProps } =
-    getProps<{
-      additional_props?: Record<string, any>;
-      as_item?: string | undefined;
-      _internal: {
-        layout?: boolean;
-      };
-      value?: string;
-    }>(() => props);
+  const {
+    gradio,
+    getComponentProps,
+    getAdditionalProps,
+    children,
+    updateProps,
+  } = getProps<{
+    additional_props?: Record<string, any>;
+    as_item?: string | undefined;
+    _internal: {
+      layout?: boolean;
+    };
+    value?: string;
+  }>(() => props);
 
   const getProceedProps = processProps(() => {
     const {

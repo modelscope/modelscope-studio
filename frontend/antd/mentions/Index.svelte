@@ -10,18 +10,23 @@
   const AwaitedMentions = importComponent(() => import('./mentions'));
 
   const props = $props();
-  const { gradio, getComponentProps, getAdditionalProps, children, updateProps } =
-    getProps<{
-      additional_props?: Record<string, any>;
+  const {
+    gradio,
+    getComponentProps,
+    getAdditionalProps,
+    children,
+    updateProps,
+  } = getProps<{
+    additional_props?: Record<string, any>;
 
-      as_item?: string | undefined;
-      _internal: {
-        layout?: boolean;
-      };
-      value?: string;
+    as_item?: string | undefined;
+    _internal: {
+      layout?: boolean;
+    };
+    value?: string;
 
-      popup_scroll?: any;
-    }>(() => props);
+    popup_scroll?: any;
+  }>(() => props);
 
   const getProceedProps = processProps(
     () => {
@@ -37,7 +42,7 @@
       } = getComponentProps();
       return {
         gradio,
-      additionalProps: getAdditionalProps(),
+        additionalProps: getAdditionalProps(),
         _internal,
         as_item,
         restProps,

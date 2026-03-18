@@ -166,7 +166,6 @@ export const Attachments = sveltify<
     }, [fileList]);
     const targets = useTargets(children);
     const uploadDisabled = props.disabled || uploading;
-
     return (
       <>
         <div style={{ display: 'none' }}>

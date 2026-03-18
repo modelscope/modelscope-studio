@@ -39,15 +39,15 @@ export async function initLocalLoader() {
       import('monaco-editor/esm/vs/language/css/css.worker?worker&inline').then(
         (m) => m.default
       ),
-      import(
-        'monaco-editor/esm/vs/language/html/html.worker?worker&inline'
-      ).then((m) => m.default),
-      import(
-        'monaco-editor/esm/vs/language/json/json.worker?worker&inline'
-      ).then((m) => m.default),
-      import(
-        'monaco-editor/esm/vs/language/typescript/ts.worker?worker&inline'
-      ).then((m) => m.default),
+      import('monaco-editor/esm/vs/language/html/html.worker?worker&inline').then(
+        (m) => m.default
+      ),
+      import('monaco-editor/esm/vs/language/json/json.worker?worker&inline').then(
+        (m) => m.default
+      ),
+      import('monaco-editor/esm/vs/language/typescript/ts.worker?worker&inline').then(
+        (m) => m.default
+      ),
     ]);
 
   window.MonacoEnvironment = {

@@ -10,21 +10,26 @@
   const AwaitedColorPicker = importComponent(() => import('./color-picker'));
 
   const props = $props();
-  const { gradio, getComponentProps, getAdditionalProps, children, updateProps } =
-    getProps<{
-      additional_props?: Record<string, any>;
+  const {
+    gradio,
+    getComponentProps,
+    getAdditionalProps,
+    children,
+    updateProps,
+  } = getProps<{
+    additional_props?: Record<string, any>;
 
-      as_item?: string | undefined;
-      _internal: {
-        layout?: boolean;
-      };
-      value?: string | { color: string; percent: number }[];
-      value_format?: 'rgb' | 'hex' | 'hsb';
+    as_item?: string | undefined;
+    _internal: {
+      layout?: boolean;
+    };
+    value?: string | { color: string; percent: number }[];
+    value_format?: 'rgb' | 'hex' | 'hsb';
 
-      change_complete?: any;
-      open_change?: any;
-      format_change?: any;
-    }>(() => props);
+    change_complete?: any;
+    open_change?: any;
+    format_change?: any;
+  }>(() => props);
 
   const getProceedProps = processProps(
     () => {
@@ -41,7 +46,7 @@
       } = getComponentProps();
       return {
         gradio,
-      additionalProps: getAdditionalProps(),
+        additionalProps: getAdditionalProps(),
         _internal,
         as_item,
         restProps,

@@ -10,17 +10,22 @@
   const AwaitedNotification = importComponent(() => import('./notification'));
 
   const props = $props();
-  const { gradio, getComponentProps, getAdditionalProps, children, updateProps } =
-    getProps<{
-      additional_props?: Record<string, any>;
+  const {
+    gradio,
+    getComponentProps,
+    getAdditionalProps,
+    children,
+    updateProps,
+  } = getProps<{
+    additional_props?: Record<string, any>;
 
-      as_item?: string | undefined;
-      _internal: {
-        layout?: boolean;
-      };
-      key?: string;
-      message?: string;
-    }>(() => props);
+    as_item?: string | undefined;
+    _internal: {
+      layout?: boolean;
+    };
+    key?: string;
+    message?: string;
+  }>(() => props);
 
   const getProceedProps = processProps(() => {
     const {

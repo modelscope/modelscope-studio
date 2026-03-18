@@ -12,8 +12,7 @@ import { useItems, withItemsContextProvider } from './context';
 import './menu.less';
 
 export const Menu = sveltify<
-  GetProps<typeof AMenu> & {
-  },
+  GetProps<typeof AMenu> & {},
   ['expandIcon', 'overflowedIndicator']
 >(
   withItemsContextProvider(

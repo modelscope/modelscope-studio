@@ -10,8 +10,7 @@ import { type GetProps, Tabs as ATabs } from 'antd';
 import { useItems, withItemsContextProvider } from './context';
 
 export const Tabs = sveltify<
-  GetProps<typeof ATabs> & {
-  },
+  GetProps<typeof ATabs> & {},
   [
     'addIcon',
     'removeIcon',

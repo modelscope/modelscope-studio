@@ -112,6 +112,7 @@ export const ReactSlot = forwardRef<HTMLElement, ReactSlotProps>(
       if (!ref.current || !slot) {
         return;
       }
+      // the cloned component cannot handle the eventListener
       let cloned = slot;
 
       function mountElementProps() {

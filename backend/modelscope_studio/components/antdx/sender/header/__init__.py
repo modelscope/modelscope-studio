@@ -21,14 +21,14 @@ class AntdXSenderHeader(ModelScopeLayoutComponent):
 
     def __init__(
             self,
-            additional_props: dict | None = None,
             *,
             closable: bool | None = None,
             force_render: bool | None = None,
-            styles: dict | str | None= None,
-            class_names: dict | str | None= None,
+            styles: dict | str | None = None,
+            class_names: dict | str | None = None,
             open: bool | None = None,
             title: str | None = None,
+            additional_props: dict | None = None,
             as_item: str | None = None,
             _internal: None = None,
             # gradio properties

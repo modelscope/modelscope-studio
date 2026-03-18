@@ -16,30 +16,36 @@
     _internal: {
       layout?: boolean;
     };
+    open_change?: any;
   }>(() => props);
 
-  const getProceedProps = processProps(() => {
-    const {
-      visible,
-      _internal,
-      as_item,
-      elem_classes,
-      elem_id,
-      elem_style,
-      ...restProps
-    } = getComponentProps();
-    return {
-      gradio,
-      additionalProps: getAdditionalProps(),
-      _internal,
-      as_item,
-      restProps,
-      visible,
-      elem_id,
-      elem_classes,
-      elem_style,
-    };
-  });
+  const getProceedProps = processProps(
+    () => {
+      const {
+        visible,
+        _internal,
+        as_item,
+        elem_classes,
+        elem_id,
+        elem_style,
+        ...restProps
+      } = getComponentProps();
+      return {
+        gradio,
+        additionalProps: getAdditionalProps(),
+        _internal,
+        as_item,
+        restProps,
+        visible,
+        elem_id,
+        elem_classes,
+        elem_style,
+      };
+    },
+    {
+      open_change: 'openChange',
+    }
+  );
   const proceedProps = $derived(getProceedProps());
 
   const slots = getSlots();

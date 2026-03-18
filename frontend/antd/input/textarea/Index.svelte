@@ -10,15 +10,20 @@
   const AwaitedTextArea = importComponent(() => import('./input.textarea'));
 
   const props = $props();
-  const { gradio, getComponentProps, getAdditionalProps, children, updateProps } =
-    getProps<{
-      additional_props?: Record<string, any>;
-      value?: string;
-      _internal: {
-        layout?: boolean;
-      };
-      press_enter?: any;
-    }>(() => props);
+  const {
+    gradio,
+    getComponentProps,
+    getAdditionalProps,
+    children,
+    updateProps,
+  } = getProps<{
+    additional_props?: Record<string, any>;
+    value?: string;
+    _internal: {
+      layout?: boolean;
+    };
+    press_enter?: any;
+  }>(() => props);
 
   const getProceedProps = processProps(
     () => {
@@ -33,7 +38,7 @@
       } = getComponentProps();
       return {
         gradio,
-      additionalProps: getAdditionalProps(),
+        additionalProps: getAdditionalProps(),
         _internal,
         as_item,
         restProps,

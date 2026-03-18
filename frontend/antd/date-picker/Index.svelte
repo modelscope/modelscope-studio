@@ -10,18 +10,23 @@
   const AwaitedDatePicker = importComponent(() => import('./date-picker'));
 
   const props = $props();
-  const { gradio, getComponentProps, getAdditionalProps, children, updateProps } =
-    getProps<{
-      additional_props?: Record<string, any>;
+  const {
+    gradio,
+    getComponentProps,
+    getAdditionalProps,
+    children,
+    updateProps,
+  } = getProps<{
+    additional_props?: Record<string, any>;
 
-      as_item?: string | undefined;
-      _internal: {
-        layout?: boolean;
-      };
-      value?: string | number | (string | number | null)[] | null;
-      panel_change?: any;
-      open_change?: any;
-    }>(() => props);
+    as_item?: string | undefined;
+    _internal: {
+      layout?: boolean;
+    };
+    value?: string | number | (string | number | null)[] | null;
+    panel_change?: any;
+    open_change?: any;
+  }>(() => props);
 
   const getProceedProps = processProps(
     () => {
@@ -37,7 +42,7 @@
       } = getComponentProps();
       return {
         gradio,
-      additionalProps: getAdditionalProps(),
+        additionalProps: getAdditionalProps(),
         _internal,
         as_item,
         restProps,

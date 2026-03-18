@@ -30,10 +30,7 @@ export const Pagination = sveltify<
           showTotal={showTotal ? showTotalFunction : undefined}
           itemRender={
             slots.itemRender
-              ? renderParamsSlot(
-                  { slots, key: 'itemRender' },
-                  { clone: true }
-                )
+              ? renderParamsSlot({ slots, key: 'itemRender' }, { clone: true })
               : itemRenderFunction
           }
           onChange={(page, pageSize) => {

@@ -36,14 +36,7 @@ export const Card = sveltify<
 >(
   withTabsItemsContextProvider(
     ['tabList'],
-    ({
-      children,
-      containsGrid,
-      slots,
-      tabList,
-      tabProps,
-      ...props
-    }) => {
+    ({ children, containsGrid, slots, tabList, tabProps, ...props }) => {
       const targets = useTargets(children, 'actions');
       const {
         items: { tabList: tabListItems },

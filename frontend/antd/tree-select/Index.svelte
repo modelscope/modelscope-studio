@@ -10,22 +10,27 @@
   const AwaitedTreeSelect = importComponent(() => import('./tree-select'));
 
   const props = $props();
-  const { gradio, getComponentProps, getAdditionalProps, children, updateProps } =
-    getProps<{
-      additional_props?: Record<string, any>;
+  const {
+    gradio,
+    getComponentProps,
+    getAdditionalProps,
+    children,
+    updateProps,
+  } = getProps<{
+    additional_props?: Record<string, any>;
 
-      as_item?: string | undefined;
-      _internal: {
-        layout?: boolean;
-      };
-      value?: string | string[];
+    as_item?: string | undefined;
+    _internal: {
+      layout?: boolean;
+    };
+    value?: string | string[];
 
-      tree_expand?: any;
-      popup_scroll?: any;
-      dropdown_visible_change?: any;
-      popup_visible_change?: any;
-      load_data?: any;
-    }>(() => props);
+    tree_expand?: any;
+    popup_scroll?: any;
+    dropdown_visible_change?: any;
+    popup_visible_change?: any;
+    load_data?: any;
+  }>(() => props);
 
   const getProceedProps = processProps(
     () => {
@@ -41,7 +46,7 @@
       } = getComponentProps();
       return {
         gradio,
-      additionalProps: getAdditionalProps(),
+        additionalProps: getAdditionalProps(),
         _internal,
         as_item,
         restProps,

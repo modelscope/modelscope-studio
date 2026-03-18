@@ -165,7 +165,7 @@ export const Chatbot = sveltify<{
       const chatbotRef = useRef<BubbleListRef | null>(null);
       const [editIndex, setEditIndex] = useState(-1);
       const [editValues, setEditValues] = useState<Record<number, string>>({});
-      const oldValueRef = useRef<typeof value>();
+      const oldValueRef = useRef<typeof value | undefined>(undefined);
 
       const handleEditValue = useMemoizedFn((itemIndex: number, v: string) => {
         setEditValues((prev) => ({ ...prev, [itemIndex]: v }));

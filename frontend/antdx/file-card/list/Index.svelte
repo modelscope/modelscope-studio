@@ -14,7 +14,7 @@
     additional_props?: Record<string, any>;
     as_item?: string | undefined;
     _internal: {};
-    filename?: string;
+    items?: any[];
   }>(() => props);
 
   const getProceedProps = processProps(() => {
@@ -25,7 +25,6 @@
       elem_classes,
       elem_id,
       elem_style,
-      filename,
       ...restProps
     } = getComponentProps();
     return {
@@ -38,7 +37,6 @@
       elem_id,
       elem_classes,
       elem_style,
-      name: filename,
     };
   });
   const proceedProps = $derived(getProceedProps());
@@ -54,7 +52,9 @@
       id={proceedProps.elem_id}
       {...proceedProps.restProps}
       {...proceedProps.additionalProps}
-      name={proceedProps.additionalProps.name || proceedProps.name || ''}
+      items={proceedProps.additionalProps.items ||
+        proceedProps.restProps.items ||
+        []}
       rootUrl={proceedProps.gradio.shared.root}
       apiPrefix={proceedProps.gradio.shared.api_prefix}
       slots={slots.value}

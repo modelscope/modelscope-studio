@@ -7,17 +7,30 @@ import { omitUndefinedProps } from '@utils/omitUndefinedProps';
 import { renderItems } from '@utils/renderItems';
 import type { ItemType } from 'antd/es/menu/interface';
 
+import { resolveFileSrc } from '../base';
+
 import { useItems, withItemsContextProvider } from './context';
 
 export const FileCardList = sveltify<
   FileCardListProps & {
     children?: React.ReactNode;
+    rootUrl: string;
+    apiPrefix: string;
   },
   ['extension']
 >(
   withItemsContextProvider(
     ['default', 'items'],
-    ({ slots, items, children, extension, removable, ...props }) => {
+    ({
+      slots,
+      items,
+      children,
+      extension,
+      removable,
+      rootUrl,
+      apiPrefix,
+      ...props
+    }) => {
       const { items: slotItems } = useItems<['default', 'items']>();
       const resolvedSlotItems = slotItems.items?.length
         ? slotItems.items
@@ -39,8 +52,11 @@ export const FileCardList = sveltify<
                 renderItems<ItemType>(resolvedSlotItems || [], {
                   clone: true,
                 })
-              );
-            }, [items, resolvedSlotItems])}
+              ).map((item) => ({
+                ...item,
+                src: resolveFileSrc(item.src, rootUrl, apiPrefix),
+              }));
+            }, [apiPrefix, items, resolvedSlotItems, rootUrl])}
           />
         </>
       );

@@ -3,12 +3,12 @@
   "type": "module",
   "exports": {
     ".": {
-      "default": "./Index.svelte",
-      "gradio": "./Index.svelte"
+      "gradio": "./Index.svelte",
+      "default": "./Index.svelte"
     },
     "./package.json": {
-      "default": "./package.json",
-      "gradio": "./package.json"
+      "gradio": "./package.json",
+      "default": "./package.json"
     },
     "./ShowFragment": "./ShowFragment.svelte"
   }

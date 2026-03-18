@@ -10,18 +10,23 @@
   const AwaitedCascader = importComponent(() => import('./cascader'));
 
   const props = $props();
-  const { gradio, getComponentProps, getAdditionalProps, children, updateProps } =
-    getProps<{
-      value?: string[] | number[];
-      additional_props?: Record<string, any>;
-      as_item?: string | undefined;
-      _internal: {
-        layout?: boolean;
-      };
-      dropdown_visible_change?: any;
-      popup_visible_change?: any;
-      load_data?: any;
-    }>(() => props);
+  const {
+    gradio,
+    getComponentProps,
+    getAdditionalProps,
+    children,
+    updateProps,
+  } = getProps<{
+    value?: string[] | number[];
+    additional_props?: Record<string, any>;
+    as_item?: string | undefined;
+    _internal: {
+      layout?: boolean;
+    };
+    dropdown_visible_change?: any;
+    popup_visible_change?: any;
+    load_data?: any;
+  }>(() => props);
 
   const getProceedProps = processProps(
     () => {
@@ -36,7 +41,7 @@
       } = getComponentProps();
       return {
         gradio,
-      additionalProps: getAdditionalProps(),
+        additionalProps: getAdditionalProps(),
         _internal,
         as_item,
         restProps,

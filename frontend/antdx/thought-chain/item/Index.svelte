@@ -4,10 +4,7 @@
     importComponent,
     processProps,
   } from '@svelte-preprocess-react/component';
-  import {
-    getSlotKey,
-    getSlots,
-  } from '@svelte-preprocess-react/svelte-contexts/slot.svelte';
+  import { getSlots } from '@svelte-preprocess-react/svelte-contexts/slot.svelte';
   import cls from 'classnames';
 
   const AwaitedThoughtChainItem = importComponent(
@@ -23,7 +20,6 @@
       index?: number;
     };
   }>(() => props);
-  const slotKey = getSlotKey();
 
   const getProceedProps = processProps(() => {
     const {
@@ -64,8 +60,6 @@
       {...proceedProps.restProps}
       {...proceedProps.additionalProps}
       slots={slots.value}
-      itemIndex={proceedProps._internal.index || 0}
-      itemSlotKey={slotKey?.value}
     >
       {@render children?.()}
     </ThoughtChainItem>
