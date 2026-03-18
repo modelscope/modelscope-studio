@@ -1,5 +1,6 @@
 import { type TreeNode } from '@svelte-preprocess-react';
 import React, { useMemo } from 'react';
+import { isNumber } from 'lodash-es';
 
 export function useTargets(children: React.ReactNode, slotKey?: string) {
   const targets = useMemo(() => {
@@ -22,7 +23,10 @@ export function useTargets(children: React.ReactNode, slotKey?: string) {
         );
       })
       .sort((a, b) => {
-        if (a.props.node.slotIndex && b.props.node.slotIndex) {
+        if (
+          isNumber(a.props.node.slotIndex) &&
+          isNumber(b.props.node.slotIndex)
+        ) {
           const slotIndexA = a.props.node.slotIndex || 0;
           const slotIndexB = b.props.node.slotIndex || 0;
           if (
@@ -43,6 +47,5 @@ export function useTargets(children: React.ReactNode, slotKey?: string) {
         return child.props.node.portalTarget;
       }) as HTMLElement[];
   }, [children, slotKey]);
-
   return targets;
 }

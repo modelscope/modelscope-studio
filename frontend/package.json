@@ -8,17 +8,17 @@
   "dependencies": {
     "@ant-design/cssinjs": "^2.1.2",
     "@ant-design/icons": "^6.1.0",
-    "@ant-design/x": "^2.3.0",
-    "@babel/standalone": "^7.29.1",
+    "@ant-design/x": "^2.4.0",
+    "@babel/standalone": "^7.29.2",
     "@gradio/client": "2.1.0",
     "@gradio/preview": "0.15.2",
     "@gradio/statustracker": "^0.12.5",
     "@gradio/utils": "0.11.3",
     "@monaco-editor/react": "^4.7.0",
     "amuchina": "^1.0.12",
-    "antd": "^6.3.2",
+    "antd": "^6.3.3",
     "classnames": "^2.5.1",
-    "dayjs": "^1.11.19",
+    "dayjs": "^1.11.20",
     "dequal": "^2.0.2",
     "github-slugger": "^2.0.0",
     "immer": "^11.1.4",
@@ -35,7 +35,7 @@
     "react-dom": "^19.2.4",
     "svelte": "5.53.9",
     "svelte-i18n": "^4.0.1",
-    "wavesurfer.js": "^7.12.1"
+    "wavesurfer.js": "^7.12.4"
   },
   "devDependencies": {
     "@babel/core": "^7.29.0",
@@ -47,8 +47,8 @@
     "@types/react": "^19.2.14",
     "@types/react-dom": "^19.2.3",
     "@types/sanitize-html": "^2.16.1",
-    "@vitejs/plugin-react-swc": "^4.2.3",
-    "less": "^4.5.1",
+    "@vitejs/plugin-react-swc": "^4.3.0",
+    "less": "^4.6.4",
     "typescript-json-schema": "^0.67.1",
     "vite": "^7.3.1"
   },

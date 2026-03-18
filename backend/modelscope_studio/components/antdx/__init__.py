@@ -27,5 +27,7 @@ from .suggestion.item import AntdXSuggestionItem as SuggestionItem
 from .thought_chain import AntdXThoughtChain as ThoughtChain
 from .thought_chain.item import AntdXThoughtChainItem as ThoughtChainItem
 from .thought_chain.thought_chain_item import AntdXThoughtChainThoughtChainItem as ThoughtChainThoughtChainItem
+from .think import AntdXThink as Think
 from .welcome import AntdXWelcome as Welcome
+from .notification import AntdXNotification as Notification
 from .x_provider import AntdXXProvider as XProvider
