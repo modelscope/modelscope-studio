@@ -1,0 +1,14 @@
+{
+  "name": "@modelscope-studio/antdx-sources",
+  "type": "module",
+  "exports": {
+    ".": {
+      "gradio": "./Index.svelte",
+      "default": "./Index.svelte"
+    },
+    "./package.json": {
+      "gradio": "./package.json",
+      "default": "./package.json"
+    }
+  }
+}

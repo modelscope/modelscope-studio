@@ -28,10 +28,13 @@ from .sender.header import AntdXSenderHeader as SenderHeader
 from .sender.switch import AntdXSenderSwitch as SenderSwitch
 from .suggestion import AntdXSuggestion as Suggestion
 from .suggestion.item import AntdXSuggestionItem as SuggestionItem
+from .sources import AntdXSources as Sources
+from .sources.item import AntdXSourcesItem as SourcesItem
 from .thought_chain import AntdXThoughtChain as ThoughtChain
 from .thought_chain.item import AntdXThoughtChainItem as ThoughtChainItem
 from .thought_chain.thought_chain_item import AntdXThoughtChainThoughtChainItem as ThoughtChainThoughtChainItem
 from .think import AntdXThink as Think
 from .welcome import AntdXWelcome as Welcome
+from .mermaid import AntdXMermaid as Mermaid
 from .notification import AntdXNotification as Notification
 from .x_provider import AntdXXProvider as XProvider

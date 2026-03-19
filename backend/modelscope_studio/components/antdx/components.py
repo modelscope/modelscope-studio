@@ -25,6 +25,8 @@ from .prompts.item import AntdXPromptsItem
 from .sender import AntdXSender
 from .sender.header import AntdXSenderHeader
 from .sender.switch import AntdXSenderSwitch
+from .sources import AntdXSources
+from .sources.item import AntdXSourcesItem
 from .suggestion import AntdXSuggestion
 from .suggestion.item import AntdXSuggestionItem
 from .thought_chain import AntdXThoughtChain
@@ -32,5 +34,6 @@ from .thought_chain.item import AntdXThoughtChainItem
 from .thought_chain.thought_chain_item import AntdXThoughtChainThoughtChainItem
 from .think import AntdXThink
 from .welcome import AntdXWelcome
+from .mermaid import AntdXMermaid
 from .notification import AntdXNotification
 from .x_provider import AntdXXProvider
