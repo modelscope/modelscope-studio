@@ -7,12 +7,13 @@
   import { getSlots } from '@svelte-preprocess-react/svelte-contexts/slot.svelte';
   import cls from 'classnames';
 
-  const AwaitedWelcome = importComponent(() => import('./welcome'));
+  const AwaitedCodeHighlighter = importComponent(
+    () => import('./code-highlighter')
+  );
 
   const props = $props();
   const { gradio, getComponentProps, getAdditionalProps, children } = getProps<{
     additional_props?: Record<string, any>;
-
     as_item?: string | undefined;
     _internal: {
       layout?: boolean;
@@ -47,18 +48,17 @@
 </script>
 
 {#if proceedProps.visible}
-  {#await AwaitedWelcome then Welcome}
-    <Welcome
+  {#await AwaitedCodeHighlighter then CodeHighlighter}
+    <CodeHighlighter
       style={proceedProps.elem_style}
-      className={cls(proceedProps.elem_classes, 'ms-gr-antdx-welcome')}
+      className={cls(proceedProps.elem_classes, 'ms-gr-antdx-code-highlighter')}
       id={proceedProps.elem_id}
       {...proceedProps.restProps}
       {...proceedProps.additionalProps}
+      themeMode={proceedProps.gradio.shared.theme || 'light'}
       slots={slots.value}
-      rootUrl={proceedProps.gradio.shared.root}
-      apiPrefix={proceedProps.gradio.shared.api_prefix}
     >
       {@render children?.()}
-    </Welcome>
+    </CodeHighlighter>
   {/await}
 {/if}

@@ -54,11 +54,11 @@ const Bridge: React.FC<BridgeProps> = ({ node, createPortal }) => {
       $effect.root(() => {
         $effect(() => {
           fresh.current = true;
-
           setResult(
             React.createElement(BridgeInternal, {
               // read the object when the property of node changes
               node: $state.snapshot(node) as TreeNode,
+
               createPortal,
             })
           );
@@ -94,7 +94,7 @@ function BridgeInternal({
     props: originalNodeProps,
   } = node;
   const nodeProps = useMemo(() => {
-    return patchProps(omitNodeProps(originalNodeProps));
+    return $state.snapshot(patchProps(omitNodeProps(originalNodeProps)));
   }, [originalNodeProps]);
 
   let formItemContext = useFormItemContext();
@@ -182,7 +182,6 @@ function BridgeInternal({
       }),
     ];
   }
-
   // eslint-disable-next-line react/no-children-prop
   const element = createElement(BridgeContext, {
     props,
@@ -193,8 +192,29 @@ function BridgeInternal({
   if (portalTarget) {
     // eslint-disable-next-line react-hooks/immutability
     portalTarget._reactElement = element;
+    // eslint-disable-next-line react-hooks/immutability
+    portalTarget._effects = portalTarget._effects || [];
+    // eslint-disable-next-line react-hooks/immutability
+    portalTarget._registerEffect = (cb) => {
+      portalTarget._effects.push(cb);
+      return () => {
+        portalTarget._effects = portalTarget._effects.filter((e) => e !== cb);
+      };
+    };
+  }
+
+  useEffect(() => {
+    if (portalTarget) {
+      portalTarget._effects.forEach((cb) => {
+        cb();
+      });
+    }
+  }, [portalTarget, props]);
+
+  if (portalTarget) {
     return createPortal(element, portalTarget);
   }
+
   return null;
 }
 export default Bridge;

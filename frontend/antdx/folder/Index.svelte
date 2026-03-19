@@ -5,31 +5,23 @@
     processProps,
   } from '@svelte-preprocess-react/component';
   import { getSlots } from '@svelte-preprocess-react/svelte-contexts/slot.svelte';
-  import { type FileData, prepare_files } from '@gradio/client';
   import cls from 'classnames';
 
-  const AwaitedSender = importComponent(() => import('./sender'));
+  const AwaitedFolder = importComponent(() => import('./folder'));
 
   const props = $props();
-  const {
-    gradio,
-    getComponentProps,
-    getAdditionalProps,
-    children,
-    updateProps,
-  } = getProps<{
+  const { gradio, getComponentProps, getAdditionalProps, children } = getProps<{
     additional_props?: Record<string, any>;
-
     as_item?: string | undefined;
     _internal: {
       layout?: boolean;
     };
-    value?: string;
-
-    key_press?: any;
-    paste_file?: any;
-    key_down?: any;
-    allow_speech_recording_change?: any;
+    tree_data?: any[];
+    file_content_service_load_file_content?: any;
+    selected_file_change?: any;
+    expanded_paths_change?: any;
+    file_click?: any;
+    folder_click?: any;
   }>(() => props);
 
   const getProceedProps = processProps(
@@ -41,7 +33,7 @@
         elem_classes,
         elem_id,
         elem_style,
-        value,
+        tree_data,
         ...restProps
       } = getComponentProps();
       return {
@@ -54,48 +46,37 @@
         elem_id,
         elem_classes,
         elem_style,
-        value,
+        treeData: tree_data,
       };
     },
     {
-      key_press: 'keyPress',
-      paste_file: 'pasteFile',
-      key_down: 'keyDown',
-      allow_speech_recording_change: 'allowSpeech_recordingChange',
+      file_content_service_load_file_content:
+        'fileContentService_loadFileContent',
+      expanded_paths_change: 'expandedPathsChange',
+      selected_file_change: 'selectedFileChange',
+      file_click: 'fileClick',
+      folder_click: 'folderClick',
     }
   );
   const proceedProps = $derived(getProceedProps());
 
   const slots = getSlots();
-
-  const upload = async (files: File[]) => {
-    return (
-      ((await proceedProps.additionalProps.gradio.client.upload(
-        await prepare_files(files),
-        proceedProps.gradio.shared.root
-      )) as FileData[]) || []
-    );
-  };
 </script>
 
 {#if proceedProps.visible}
-  {#await AwaitedSender then Sender}
-    <Sender
+  {#await AwaitedFolder then Folder}
+    <Folder
       style={proceedProps.elem_style}
-      className={cls(proceedProps.elem_classes, 'ms-gr-antdx-sender')}
+      className={cls(proceedProps.elem_classes, 'ms-gr-antdx-folder')}
       id={proceedProps.elem_id}
       {...proceedProps.restProps}
       {...proceedProps.additionalProps}
+      treeData={proceedProps.additionalProps.treeData ||
+        proceedProps.treeData ||
+        []}
       slots={slots.value}
-      value={proceedProps.additionalProps.value ?? proceedProps.value}
-      onValueChange={(v) => {
-        updateProps({
-          value: v,
-        });
-      }}
-      {upload}
     >
       {@render children?.()}
-    </Sender>
+    </Folder>
   {/await}
 {/if}

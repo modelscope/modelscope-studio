@@ -4,20 +4,26 @@
     importComponent,
     processProps,
   } from '@svelte-preprocess-react/component';
-  import { getSlots } from '@svelte-preprocess-react/svelte-contexts/slot.svelte';
+  import {
+    getSlotKey,
+    getSlots,
+  } from '@svelte-preprocess-react/svelte-contexts/slot.svelte';
   import cls from 'classnames';
 
-  const AwaitedWelcome = importComponent(() => import('./welcome'));
+  const AwaitedFolderTreeNode = importComponent(
+    () => import('./folder.tree-node')
+  );
 
   const props = $props();
   const { gradio, getComponentProps, getAdditionalProps, children } = getProps<{
     additional_props?: Record<string, any>;
-
     as_item?: string | undefined;
     _internal: {
       layout?: boolean;
+      index?: number;
     };
   }>(() => props);
+  const slotKey = getSlotKey();
 
   const getProceedProps = processProps(() => {
     const {
@@ -40,25 +46,25 @@
       elem_classes,
       elem_style,
     };
-  }, {});
+  });
   const proceedProps = $derived(getProceedProps());
 
   const slots = getSlots();
 </script>
 
-{#if proceedProps.visible}
-  {#await AwaitedWelcome then Welcome}
-    <Welcome
-      style={proceedProps.elem_style}
-      className={cls(proceedProps.elem_classes, 'ms-gr-antdx-welcome')}
-      id={proceedProps.elem_id}
-      {...proceedProps.restProps}
-      {...proceedProps.additionalProps}
-      slots={slots.value}
-      rootUrl={proceedProps.gradio.shared.root}
-      apiPrefix={proceedProps.gradio.shared.api_prefix}
-    >
+{#await AwaitedFolderTreeNode then FolderTreeNode}
+  <FolderTreeNode
+    style={proceedProps.elem_style}
+    className={cls(proceedProps.elem_classes, 'ms-gr-antdx-folder-tree-node')}
+    id={proceedProps.elem_id}
+    {...proceedProps.restProps}
+    {...proceedProps.additionalProps}
+    slots={slots.value}
+    itemIndex={proceedProps._internal.index || 0}
+    itemSlotKey={slotKey?.value}
+  >
+    {#if proceedProps.visible}
       {@render children?.()}
-    </Welcome>
-  {/await}
-{/if}
+    {/if}
+  </FolderTreeNode>
+{/await}

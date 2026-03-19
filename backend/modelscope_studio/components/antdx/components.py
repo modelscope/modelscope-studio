@@ -14,8 +14,12 @@ from .bubble.list.item import AntdXBubbleListItem
 from .bubble.list.role import AntdXBubbleListRole
 from .bubble.divider import AntdXBubbleDivider
 from .bubble.system import AntdXBubbleSystem
+from .code_highlighter import AntdXCodeHighlighter
 from .conversations import AntdXConversations
 from .conversations.item import AntdXConversationsItem
+from .folder import AntdXFolder
+from .folder.tree_node import AntdXFolderTreeNode
+from .folder.directory_icon import AntdXFolderDirectoryIcon
 from .prompts import AntdXPrompts
 from .prompts.item import AntdXPromptsItem
 from .sender import AntdXSender

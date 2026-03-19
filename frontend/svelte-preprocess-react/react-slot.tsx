@@ -12,10 +12,14 @@ export interface ReactSlotProps {
   className?: string;
 }
 
-function cloneElementWithEvents(element: HTMLElement) {
+function cloneElementWithEvents(element: HTMLElement, render: () => void) {
   const portals: React.ReactPortal[] = [];
   const clonedElement = element.cloneNode(false) as HTMLElement;
   if (element._reactElement) {
+    const unregister = element._registerEffect(() => {
+      render();
+      unregister();
+    });
     const resolvedChildren: Array<React.ReactNode> & {
       originalChildren: React.ReactNode;
     } = React.Children.toArray(element._reactElement.props.children).map(
@@ -30,8 +34,7 @@ function cloneElementWithEvents(element: HTMLElement) {
           child.props.__slot__
         ) {
           const { portals: childPortals, clonedElement: childClonedElement } =
-            cloneElementWithEvents(child.props.el);
-
+            cloneElementWithEvents(child.props.el, render);
           // Child Component
           return React.cloneElement(child, {
             ...child.props,
@@ -75,7 +78,7 @@ function cloneElementWithEvents(element: HTMLElement) {
     // element
     if (child.nodeType === 1) {
       const { clonedElement: clonedChild, portals: portalsChildren } =
-        cloneElementWithEvents(child as HTMLElement);
+        cloneElementWithEvents(child as HTMLElement, render);
       portals.push(...portalsChildren);
       clonedElement.appendChild(clonedChild);
       // clonedElement.replaceChild(clonedChild, clonedElement.children[i]);
@@ -112,9 +115,8 @@ export const ReactSlot = forwardRef<HTMLElement, ReactSlotProps>(
       if (!ref.current || !slot) {
         return;
       }
-      // the cloned component cannot handle the eventListener
+      // the cloned component change props
       let cloned = slot;
-
       function mountElementProps() {
         let child = cloned as Element;
         if (
@@ -150,8 +152,10 @@ export const ReactSlot = forwardRef<HTMLElement, ReactSlotProps>(
           if (ref.current?.contains(cloned)) {
             ref.current?.removeChild(cloned);
           }
-
-          const { portals, clonedElement } = cloneElementWithEvents(slot);
+          const { portals, clonedElement } = cloneElementWithEvents(
+            slot,
+            render
+          );
           cloned = clonedElement;
           setChildren(portals);
           cloned.style.display = 'contents';

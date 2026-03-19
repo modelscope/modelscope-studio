@@ -76,7 +76,7 @@
     return (
       ((await proceedProps.additionalProps.gradio.client.upload(
         await prepare_files(files),
-        proceedProps.root
+        proceedProps.gradio.shared.root
       )) as FileData[]) || []
     );
   };
