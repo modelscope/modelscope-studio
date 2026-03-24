@@ -11,5 +11,7 @@
     "@modelscope-studio/base": "1.6.1",
     "@modelscope-studio/pro": "1.6.1"
   },
-  "changesets": []
+  "changesets": [
+    "eleven-aliens-sell"
+  ]
 }

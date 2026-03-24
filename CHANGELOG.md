@@ -1,5 +1,11 @@
 # modelscope_studio
 
+## 2.0.0-beta.0
+
+### Misc Changes
+
+- [`26ea248`](https://github.com/modelscope/modelscope-studio/commit/26ea2485990098ea60e95ff8b3e71dad713a3aba) - migrate to Gradio 6.0, Ant Design 6.0, Ant Design X 2.0. Thanks [@Col0ring](https://github.com/Col0ring)!
+
 ## 1.6.1
 
 ### Features
