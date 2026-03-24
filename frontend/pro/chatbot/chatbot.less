@@ -12,31 +12,14 @@
     }
   }
 
-  &-message-file-message {
-    &-container {
-      position: relative;
-      overflow: hidden;
+  .ms-gr-ant-bubble-end {
+    .ms-gr-pro-chatbot-message-body {
+      align-items: end;
     }
+  }
 
-    &-toolbar {
-      position: absolute;
-      inset: 0;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      width: 100%;
-      height: 100%;
-      visibility: hidden;
-      opacity: 0;
-      transition: opacity 0.3s;
-      pointer-events: none;
-    }
-
-    &-container:hover &-toolbar {
-      visibility: visible;
-      opacity: 1;
-      pointer-events: auto;
-    }
+  &-message-content {
+    width: fit-content;
   }
 
   &-message-footer {

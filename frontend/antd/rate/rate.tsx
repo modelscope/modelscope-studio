@@ -27,8 +27,8 @@ export const Rate = sveltify<
           {...props}
           ref={elRef}
           onChange={(v) => {
-            onChange?.(v);
             onValueChange(v);
+            onChange?.(v);
           }}
           character={
             slots.character

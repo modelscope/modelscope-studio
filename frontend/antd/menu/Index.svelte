@@ -16,7 +16,7 @@
     _internal: {
       layout?: boolean;
     };
-
+    theme_value?: any;
     open_change?: any;
   }>(() => props);
 
@@ -29,6 +29,7 @@
         elem_classes,
         elem_id,
         elem_style,
+        theme_value,
         ...restProps
       } = getComponentProps();
       return {
@@ -41,6 +42,7 @@
         elem_id,
         elem_classes,
         elem_style,
+        theme: theme_value,
       };
     },
     {
@@ -60,6 +62,7 @@
       id={proceedProps.elem_id}
       {...proceedProps.restProps}
       {...proceedProps.additionalProps}
+      theme={proceedProps.additionalProps.theme || proceedProps.theme}
       slots={slots.value}
     >
       {@render children?.()}

@@ -1,16 +1,17 @@
 import type {
+  BubbleItemType,
   BubbleProps,
-  PromptProps,
+  FileCardProps,
+  PromptsItemType,
   PromptsProps,
   WelcomeProps,
 } from '@ant-design/x';
 import type { Attachment } from '@ant-design/x/es/attachments';
-import type { FileListProps } from '@ant-design/x/es/attachments/FileList';
-import type { BubbleDataType } from '@ant-design/x/es/bubble/BubbleList';
 import type { MarkdownProps } from '@globals/components';
 import type { FileData } from '@gradio/client';
 import type {
   AvatarProps,
+  DividerProps,
   FlexProps,
   PopconfirmProps,
   TooltipProps,
@@ -39,8 +40,14 @@ export interface ChatbotWelcomeConfig extends Omit<WelcomeProps, 'icon'> {
   elem_classes?: string | string[];
 }
 
-export type ChatbotFileContent = (string | (Attachment & FileData))[];
-export type ChatbotSuggestionContent = PromptProps[];
+export type ChatbotFileContent = (
+  | string
+  | (Attachment &
+      FileData & {
+        type?: FileCardProps['type'];
+      })
+)[];
+export type ChatbotSuggestionContent = PromptsItemType[];
 export type ChatbotToolContent = string;
 export type ChatbotTextContent = string;
 
@@ -53,7 +60,9 @@ export type ChatbotToolContentConfig = ChatbotMarkdownConfig & {
   title?: string;
 };
 export type ChatbotFileContentConfig = FlexProps & {
-  imageProps?: FileListProps['imageProps'];
+  imageProps?: FileCardProps['imageProps'];
+  videoProps?: FileCardProps['videoProps'];
+  audioProps?: FileCardProps['audioProps'];
 };
 
 export type ChatbotSuggestionContentConfig = ChatbotPromptsConfig;
@@ -126,7 +135,13 @@ export interface ChatbotMessageContentObject {
 }
 
 export interface ChatbotMessage extends ChatbotBotConfig {
-  role: 'user' | 'assistant' | 'system' | 'chatbot-internal-welcome';
+  role:
+    | 'user'
+    | 'assistant'
+    | 'system'
+    | 'divider'
+    | 'chatbot-internal-welcome';
+  divider_props?: DividerProps;
   key?: string | number;
   [lastMessageSymbol]?: boolean;
   [messageHeaderSymbol]?: string;
@@ -163,19 +178,19 @@ export interface EditData {
 
 export interface DeleteData {
   index: number;
-  value: BubbleDataType['content'];
+  value: BubbleItemType['content'];
 }
 
 export interface RetryData {
   index: number;
-  value: BubbleDataType['content'];
+  value: BubbleItemType['content'];
 }
 
 export interface SuggestionData {
   index: number;
-  value: PromptProps;
+  value: PromptsItemType;
 }
 
 export interface WelcomePromptData {
-  value: PromptProps;
+  value: PromptsItemType;
 }

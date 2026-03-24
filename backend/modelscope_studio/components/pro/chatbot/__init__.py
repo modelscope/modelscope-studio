@@ -208,6 +208,8 @@ class ChatbotDataFileContentOptions(GradioModel):
     gap: Optional[Union[Literal["small", "middle", "large"], str, int,
                         float]] = "small"
     image_props: Optional[dict] = None
+    video_props: Optional[dict] = None
+    audio_props: Optional[dict] = None
 
 
 # Ant Design X prompts props: https://x.ant.design/components/prompts
@@ -249,7 +251,8 @@ class ChatbotDataMessageContent(GradioModel):
 
 
 class ChatbotDataMessage(ChatbotBotConfig):
-    role: Union[Literal['user', 'assistant', 'system'], str] = None
+    role: Union[Literal['user', 'assistant', 'system', 'divider'], str] = None
+    divider_props: Optional[dict] = None
     key: Optional[Union[str, int, float]] = None
     # If status is 'pending', the message will not render the footer area (including 'actions' and 'footer').
     status: Optional[Literal['pending', 'done']] = None

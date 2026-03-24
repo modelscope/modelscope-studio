@@ -81,8 +81,8 @@ export const ColorPicker = sveltify<
                     color: colors[value_format],
                   };
                 });
-                onChange?.(gradientColors, ...args);
                 onValueChange(gradientColors);
+                onChange?.(gradientColors, ...args);
                 return;
               }
               const colors = {
@@ -90,8 +90,8 @@ export const ColorPicker = sveltify<
                 hex: v.toHexString(),
                 hsb: v.toHsbString(),
               };
-              onChange?.(colors[value_format], ...args);
               onValueChange(colors[value_format]);
+              onChange?.(colors[value_format], ...args);
             }}
           >
             {targets.length === 0 ? null : children}

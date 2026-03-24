@@ -11,6 +11,7 @@ import React, {
   useState,
 } from 'react';
 import { createFunction } from '@utils/createFunction';
+import { useMemoizedEqualValue } from '@utils/hooks/useMemoizedEqualValue';
 import { omitUndefinedProps } from '@utils/omitUndefinedProps';
 import { patchProps } from '@utils/patchProps';
 
@@ -41,37 +42,28 @@ export type BridgeProps = {
   ) => React.ReactPortal;
 };
 
+const watch = (_value: any) => {};
+
 const Bridge: React.FC<BridgeProps> = ({ node, createPortal }) => {
   const fresh = useRef(false);
-  const [result, setResult] = useState<React.ReactNode>(() => {
-    return React.createElement(BridgeInternal, {
-      node,
-      createPortal,
-    });
-  });
+  const [, rerender] = useState({});
   useEffect(
     () =>
       $effect.root(() => {
         $effect(() => {
-          fresh.current = true;
-          setResult(
-            React.createElement(BridgeInternal, {
-              // read the object when the property of node changes
-              node: $state.snapshot(node) as TreeNode,
-
-              createPortal,
-            })
-          );
+          watch(node.props);
+          if (!fresh.current) {
+            fresh.current = true;
+            return;
+          }
+          rerender({});
         });
       }),
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
     []
   );
 
-  if (fresh.current) {
-    fresh.current = false;
-    return result;
-  }
   return React.createElement(BridgeInternal, {
     node,
     createPortal,
@@ -157,6 +149,7 @@ function BridgeInternal({
     autoCompleteContext,
     suggestionContext,
   ]);
+  const memoizedProps = useMemoizedEqualValue(props);
 
   if (svelteChildren) {
     // console.log(childrenSource);
@@ -182,6 +175,7 @@ function BridgeInternal({
       }),
     ];
   }
+
   // eslint-disable-next-line react/no-children-prop
   const element = createElement(BridgeContext, {
     props,
@@ -206,10 +200,10 @@ function BridgeInternal({
   useEffect(() => {
     if (portalTarget) {
       portalTarget._effects.forEach((cb) => {
-        cb();
+        cb(memoizedProps);
       });
     }
-  }, [portalTarget, props]);
+  }, [portalTarget, memoizedProps]);
 
   if (portalTarget) {
     return createPortal(element, portalTarget);

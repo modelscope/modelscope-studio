@@ -21,8 +21,8 @@ export const Radio = sveltify<
       }
       ref={elRef}
       onChange={(e) => {
-        onChange?.(e);
         onValueChange(e.target.checked);
+        onChange?.(e);
       }}
     />
   );

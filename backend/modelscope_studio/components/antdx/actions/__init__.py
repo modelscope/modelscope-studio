@@ -6,10 +6,10 @@ from gradio.events import EventListener
 
 from ....utils.dev import ModelScopeLayoutComponent, resolve_frontend_dir
 from .action_item import AntdXActionsActionItem
-from .item import AntdXActionsItem
-from .feedback import AntdXActionsFeedback
-from .copy import AntdXActionsCopy
 from .audio import AntdXActionsAudio
+from .copy import AntdXActionsCopy
+from .feedback import AntdXActionsFeedback
+from .item import AntdXActionsItem
 
 
 class AntdXActions(ModelScopeLayoutComponent):

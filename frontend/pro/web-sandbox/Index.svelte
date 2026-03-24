@@ -14,11 +14,7 @@
   const props = $props();
   const { gradio, getComponentProps, getAdditionalProps, children } = getProps<{
     additional_props?: Record<string, any>;
-
-    as_item?: string | undefined;
-    _internal: {
-      layout?: boolean;
-    };
+    _internal: {};
     value?: WebSandboxProps['value'];
     compile_error?: any;
     compile_success?: any;
@@ -71,7 +67,7 @@
       {...proceedProps.additionalProps}
       value={proceedProps.value}
       slots={slots.value}
-      themeMode={proceedProps.additionalProps.gradio?.theme}
+      themeMode={proceedProps.gradio.shared.theme || 'light'}
     >
       {@render children?.()}
     </WebSandbox>

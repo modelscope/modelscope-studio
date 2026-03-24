@@ -13,6 +13,7 @@ import type React from 'react';
 import { SvelteSet } from 'svelte/reactivity';
 import { Gradio, type SharedProps } from '@gradio/utils';
 import { convertToCamelCase } from '@utils/convertToCamelCase';
+import { omitUndefinedProps } from '@utils/omitUndefinedProps';
 import { isPlainObject, mapKeys, omit } from 'lodash-es';
 import { type Snippet, untrack } from 'svelte';
 
@@ -337,22 +338,25 @@ export function getProps<
   };
 
   const getComponentProps = () =>
-    omit(
-      {
-        elem_id: gradio.shared.elem_id as string | undefined,
-        elem_classes: gradio.shared.elem_classes as
-          | string
-          | string[]
-          | undefined,
-        elem_style: gradio.props.elem_style as React.CSSProperties,
-        visible: gradio.shared.visible,
-        attached_events: gradio.shared.attached_events,
-        as_item: gradio.props.as_item as string | undefined,
-        _internal: gradio.props._internal as {},
-        loading_status: gradio.shared.loading_status,
-        ...gradio.props,
-      },
-      ['i18n', 'api_url', 'name', 'additional_props']
+    omitUndefinedProps(
+      omit(
+        {
+          elem_id: gradio.shared.elem_id as string | undefined,
+          elem_classes: gradio.shared.elem_classes as
+            | string
+            | string[]
+            | undefined,
+          elem_style: gradio.props.elem_style as React.CSSProperties,
+          visible: gradio.shared.visible,
+          attached_events: gradio.shared.attached_events,
+          as_item: gradio.props.as_item as string | undefined,
+          _internal: gradio.props._internal as {},
+          loading_status: gradio.shared.loading_status,
+          ...gradio.props,
+          label: gradio.shared.label,
+        },
+        ['i18n', 'api_url', 'name', 'additional_props']
+      )
     );
 
   let additionalProps = $state(

@@ -76,8 +76,8 @@ export const Select = sveltify<
               );
             }, [resolvedSlotItems, options])}
             onChange={(v, ...args) => {
-              onChange?.(v, ...args);
               onValueChange(v as string);
+              onChange?.(v, ...args);
             }}
             allowClear={
               slots['allowClear.clearIcon']

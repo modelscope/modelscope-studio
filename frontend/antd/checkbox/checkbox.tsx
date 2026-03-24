@@ -11,8 +11,8 @@ export const Checkbox = sveltify<
       {...props}
       ref={elRef}
       onChange={(e) => {
-        onChange?.(e);
         onValueChange(e.target.checked);
+        onChange?.(e);
       }}
     />
   );

@@ -68,8 +68,8 @@ class AntdDropdownButton(ModelScopeLayoutComponent):
             size: Literal["large", "middle", "small"] | None = None,
             type: Literal["primary", "dashed", "link", "text", "default"]
         | None = None,
-            class_names: dict | str | None= None,
-            styles: dict | str | None= None,
+            class_names: dict | str | None = None,
+            styles: dict | str | None = None,
             root_class_name: str | None = None,
             as_item: str | None = None,
             _internal: None = None,

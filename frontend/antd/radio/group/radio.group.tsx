@@ -31,8 +31,8 @@ export const RadioGroup = sveltify<
               );
             }, [optionItems, options])}
             onChange={(e) => {
-              onChange?.(e);
               onValueChange(e.target.value);
+              onChange?.(e);
             }}
           >
             <FormItemContext.Provider value={null}>

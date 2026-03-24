@@ -21,8 +21,8 @@ export const CheckableTag = sveltify<
         {...props}
         icon={slots.icon ? <ReactSlot slot={slots.icon} /> : props.icon}
         onChange={(v) => {
-          onChange?.(v);
           onValueChange(v);
+          onChange?.(v);
         }}
       >
         {targets.length > 0 ? children : label}

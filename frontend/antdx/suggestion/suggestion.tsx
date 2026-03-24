@@ -125,6 +125,7 @@ export const Suggestion = sveltify<
           setOpen(props.open);
         }
       }, [props.open]);
+
       return (
         <>
           <XSuggestion

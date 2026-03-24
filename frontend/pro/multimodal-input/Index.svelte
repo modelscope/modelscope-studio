@@ -23,13 +23,8 @@
     updateProps,
   } = getProps<{
     additional_props?: Record<string, any>;
-
-    as_item?: string | undefined;
-    _internal: {
-      layout?: boolean;
-    };
+    _internal: {};
     value?: MultimodalInputValue;
-    root?: string;
     key_press?: any;
     paste_file?: any;
     key_down?: any;
@@ -45,7 +40,6 @@
         elem_id,
         elem_style,
         value,
-        root,
         ...restProps
       } = getComponentProps();
       return {
@@ -59,7 +53,6 @@
         elem_classes,
         elem_style,
         value,
-        root,
       };
     },
     {
@@ -74,7 +67,7 @@
 
   const upload = async (files: File[]) => {
     return (
-      ((await proceedProps.additionalProps.gradio.client.upload(
+      ((await proceedProps.gradio.shared.client.upload(
         await prepare_files(files),
         proceedProps.gradio.shared.root
       )) as FileData[]) || []
@@ -91,7 +84,7 @@
       {...proceedProps.restProps}
       {...proceedProps.additionalProps}
       slots={slots.value}
-      value={proceedProps.value}
+      value={proceedProps.additionalProps.value ?? proceedProps.value}
       onValueChange={(v) => {
         updateProps({
           value: v,

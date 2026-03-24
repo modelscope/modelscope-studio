@@ -1,6 +1,6 @@
 import type React from 'react';
 import { useEffect, useRef, useState } from 'react';
-import type { BubbleListRef } from '@ant-design/x/es/bubble/BubbleList';
+import type { BubbleListRef } from '@ant-design/x/es/bubble';
 import { useMemoizedFn } from '@utils/hooks/useMemoizedFn';
 
 import type { ChatbotMessages } from '../type';
@@ -8,7 +8,7 @@ import type { ChatbotMessages } from '../type';
 export interface useScrollOptions {
   autoScroll?: boolean;
   scrollButtonOffset?: number;
-  ref: React.MutableRefObject<BubbleListRef | null>;
+  ref: React.RefObject<BubbleListRef | null>;
   value: ChatbotMessages;
 }
 
@@ -28,7 +28,7 @@ export function useScroll(options: useScrollOptions) {
 
       requestAnimationFrame(() => {
         ref.current?.scrollTo({
-          offset: ref.current.nativeElement.scrollHeight,
+          top: ref.current.scrollBoxNativeElement.scrollHeight,
           behavior,
         });
       });
@@ -40,7 +40,7 @@ export function useScroll(options: useScrollOptions) {
     if (!ref.current) {
       return false;
     }
-    const container = ref.current.nativeElement;
+    const container = ref.current.scrollBoxNativeElement;
     const currentScrollHeight = container.scrollHeight;
 
     const { scrollTop, clientHeight } = container;
@@ -63,8 +63,8 @@ export function useScroll(options: useScrollOptions) {
   }, [value, ref, autoScroll, scrollToBottom, isAtBottom]);
 
   useEffect(() => {
-    if (ref.current && autoScroll) {
-      const el = ref.current.nativeElement;
+    if (ref.current && ref.current.scrollBoxNativeElement && autoScroll) {
+      const el = ref.current.scrollBoxNativeElement;
       let lastScrollTop = 0;
       let lastScrollHeight = 0;
       const handleScroll = (e: Event) => {
@@ -95,7 +95,8 @@ export function useScroll(options: useScrollOptions) {
       };
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [autoScroll, isAtBottom, scrollButtonOffset]);
+  }, [autoScroll, isAtBottom, scrollButtonOffset, ref.current]);
+
   return {
     showScrollButton,
     scrollToBottom,

@@ -168,8 +168,8 @@ export const DateRangePicker = sveltify<
             }}
             onChange={(dates, ...args) => {
               const formattedDates = formatDates(dates);
-              onChange?.(formattedDates, ...args);
               onValueChange(formattedDates);
+              onChange?.(formattedDates, ...args);
             }}
             onCalendarChange={(dates, ...args) => {
               const formattedDates = formatDates(dates);

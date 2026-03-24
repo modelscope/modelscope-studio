@@ -5,9 +5,9 @@ from typing import Any, Literal
 from gradio.events import EventListener
 
 from ....utils.dev import ModelScopeLayoutComponent, resolve_frontend_dir
+from .divider import AntdXBubbleDivider
 from .list import AntdXBubbleList
 from .system import AntdXBubbleSystem
-from .divider import AntdXBubbleDivider
 
 
 class AntdXBubble(ModelScopeLayoutComponent):

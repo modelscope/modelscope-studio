@@ -63,7 +63,6 @@ export const CopyButton: React.FC<{
     () => getCopyText(content, rootUrl, apiPrefix),
     [content, apiPrefix, rootUrl]
   );
-  const copyButtonRef = useRef<HTMLButtonElement | null>(null);
 
   return (
     <Typography.Text
@@ -75,7 +74,6 @@ export const CopyButton: React.FC<{
         text,
         icon: [
           <Button
-            ref={copyButtonRef}
             variant="text"
             color="default"
             disabled={disabled}
@@ -125,7 +123,7 @@ const Action: React.FC<{
   rootUrl,
   apiPrefix,
 }) => {
-  const handleActionRef = useRef<() => void>();
+  const handleActionRef = useRef<(() => void) | null>(null);
   const getActionProps = () => {
     return isObject(actionOrActionObject)
       ? {
@@ -274,7 +272,7 @@ export const ChatbotFooter: React.FC<ChatbotFooterProps> = ({
 }) => {
   if (isEditing) {
     return (
-      <Flex justify="end">
+      <Flex justify="end" style={{ width: '100%' }}>
         <Button
           variant="text"
           color="default"
@@ -305,6 +303,7 @@ export const ChatbotFooter: React.FC<ChatbotFooterProps> = ({
     <Flex
       justify="space-between"
       align="center"
+      style={{ width: '100%' }}
       gap={extra && actions?.length ? 'small' : undefined}
     >
       {(message.role === 'user'

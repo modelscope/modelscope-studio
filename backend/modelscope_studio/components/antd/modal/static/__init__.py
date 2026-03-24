@@ -35,8 +35,8 @@ class AntdModalStatic(ModelScopeLayoutComponent):
             auto_focus_button: Literal['ok', 'cancel'] | None = 'ok',
             type: Literal['info', 'success', 'error', 'warning', 'confirm']
         | None = None,
-            class_names: dict | str | None= None,
-            styles: dict | str | None= None,
+            class_names: dict | str | None = None,
+            styles: dict | str | None = None,
             cancel_button_props: dict | None = None,
             cancel_text: str | None = None,
             centered: bool | None = None,

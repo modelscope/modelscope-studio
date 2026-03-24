@@ -1,14 +1,14 @@
 import { sveltify } from '@svelte-preprocess-react';
-import React from 'react';
-import {
-  CodeHighlighter as XCodeHighlighter,
-  type CodeHighlighterProps,
-} from '@ant-design/x';
 import { ReactSlot } from '@svelte-preprocess-react/react-slot';
+import React from 'react';
 import {
   materialDark,
   materialLight,
 } from 'react-syntax-highlighter/dist/esm/styles/prism';
+import {
+  CodeHighlighter as XCodeHighlighter,
+  type CodeHighlighterProps,
+} from '@ant-design/x';
 
 const customDarkStyle = {
   ...materialDark,

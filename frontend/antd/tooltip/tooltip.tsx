@@ -14,7 +14,9 @@ export const Tooltip = sveltify<GetProps<typeof ATooltip>, ['title']>(
           {...props}
           afterOpenChange={afterOpenChangeFunction}
           getPopupContainer={getPopupContainerFunction}
-          title={slots.title ? <ReactSlot slot={slots.title} /> : props.title}
+          title={
+            slots.title ? <ReactSlot slot={slots.title} clone /> : props.title
+          }
         >
           {children}
         </ATooltip>

@@ -5,8 +5,8 @@ from typing import Any
 from gradio.events import EventListener
 
 from ....utils.dev import ModelScopeLayoutComponent, resolve_frontend_dir
-from .tree_node import AntdXFolderTreeNode
 from .directory_icon import AntdXFolderDirectoryIcon
+from .tree_node import AntdXFolderTreeNode
 
 
 class AntdXFolder(ModelScopeLayoutComponent):

@@ -70,7 +70,7 @@
 
   const upload = async (files: File[]) => {
     return (
-      ((await proceedProps.additionalProps.gradio.client.upload(
+      ((await proceedProps.gradio.shared.client.upload(
         await prepare_files(files),
         proceedProps.gradio.shared.root
       )) as FileData[]) || []

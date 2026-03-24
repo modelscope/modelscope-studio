@@ -44,7 +44,7 @@ export const Folder = sveltify<
           useDirectoryIconItems<['directoryIcons']>();
         const previewRenderFunction = useFunction(previewRender, true);
         const previewTitleFunction = useFunction(previewTitle, true);
-       
+
         return (
           <>
             <div style={{ display: 'none' }}>{children}</div>

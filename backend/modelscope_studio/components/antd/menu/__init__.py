@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import warnings
 from typing import Any, Literal
 
 from gradio.events import EventListener
@@ -53,6 +54,7 @@ class AntdMenu(ModelScopeLayoutComponent):
             sub_menu_close_delay: int | float = 0.1,
             sub_menu_open_delay: int | float = 0,
             theme: Literal['light', 'dark'] | None = None,
+            theme_value: Literal['light', 'dark'] | None = None,
             trigger_sub_menu_action: Literal['click', 'hover'] = 'hover',
             root_class_name: str | None = None,
             class_names: dict | str | None = None,
@@ -92,6 +94,11 @@ class AntdMenu(ModelScopeLayoutComponent):
         self.sub_menu_close_delay = sub_menu_close_delay
         self.sub_menu_open_delay = sub_menu_open_delay
         self.theme = theme
+        if theme:
+            warnings.warn(
+                """<modelscope-studio>[antd.Menu.Item]:  the `theme` property conflicts with Gradio's preset properties. Please use `theme_value` instead."""
+            )
+        self.theme_value = theme_value
         self.trigger_sub_menu_action = trigger_sub_menu_action
         self.root_class_name = root_class_name
 

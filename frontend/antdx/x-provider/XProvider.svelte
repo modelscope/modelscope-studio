@@ -18,6 +18,8 @@
     additional_props?: Record<string, any>;
     as_item?: string | undefined;
     _internal: Record<string, any>;
+    theme_config?: any;
+    theme?: any;
   }>(() => props);
 
   const getProceedProps = processProps(() => {
@@ -28,6 +30,7 @@
       elem_classes,
       elem_id,
       elem_style,
+      theme_config,
       ...restProps
     } = getComponentProps();
     return {
@@ -40,6 +43,7 @@
       elem_id,
       elem_classes,
       elem_style,
+      themeConfig: theme_config,
     };
   });
   const proceedProps = $derived(getProceedProps());
@@ -59,6 +63,9 @@
       {...proceedProps.additionalProps}
       slots={slots.value}
       component={XXProvider}
+      theme={proceedProps.additionalProps.theme ||
+        proceedProps.restProps.theme ||
+        proceedProps.themeConfig}
       themeMode={proceedProps.gradio.shared.theme || 'light'}
     >
       {@render children?.()}

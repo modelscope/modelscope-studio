@@ -1,8 +1,9 @@
 from timeit import Timer
 from typing import Any, Callable, List, Set, Union
+
+from gradio.blocks import BlockContext
 from gradio.component_meta import ComponentMeta
 from gradio.components.base import Component
-from gradio.blocks import BlockContext
 
 from .app_context import AppContext
 

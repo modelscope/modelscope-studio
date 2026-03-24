@@ -55,8 +55,8 @@ export const Slider = sveltify<
       ...props
     }) => {
       const onSliderChange = (v: number | number[]) => {
-        onChange?.(v as any);
         onValueChange(v);
+        onChange?.(v as any);
       };
       const tooltipGetPopupContainerFunction = useFunction(
         tooltip?.getPopupContainer

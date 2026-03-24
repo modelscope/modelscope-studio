@@ -32,8 +32,8 @@ class AntdSpace(ModelScopeLayoutComponent):
             additional_props: dict | None = None,
             *,
             align: Literal['start', 'end', 'center', 'baseline'] | None = None,
-            class_names: dict | str | None= None,
-            styles: dict | str | None= None,
+            class_names: dict | str | None = None,
+            styles: dict | str | None = None,
             direction: Literal['vertical', 'horizontal'] | None = 'horizontal',
             size: Literal['small', 'middle', 'large'] | int | float
         | list[Literal['small', 'middle', 'large'] | int | float]

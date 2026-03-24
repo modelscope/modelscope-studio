@@ -76,8 +76,8 @@ class AntdAutoComplete(ModelScopeDataLayoutComponent):
             status: Literal['error', 'warning'] | None = None,
             variant: Literal['outlined', 'borderless', 'filled']
         | None = None,
-            class_names: dict | str | None= None,
-            styles: dict | str | None= None,
+            class_names: dict | str | None = None,
+            styles: dict | str | None = None,
             root_class_name: str | None = None,
             as_item: str | None = None,
             _internal: None = None,

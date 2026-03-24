@@ -47,10 +47,10 @@ export const Popconfirm = sveltify<
           props.cancelButtonProps?.icon
         ),
       }}
-      title={slots.title ? <ReactSlot slot={slots.title} /> : props.title}
+      title={slots.title ? <ReactSlot slot={slots.title} clone /> : props.title}
       description={
         slots.description ? (
-          <ReactSlot slot={slots.description} />
+          <ReactSlot slot={slots.description} clone />
         ) : (
           props.description
         )

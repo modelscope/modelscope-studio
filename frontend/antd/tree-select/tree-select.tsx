@@ -150,8 +150,8 @@ export const TreeSelect = sveltify<
             {...omitUndefinedProps(componentProps)}
             ref={elRef}
             onChange={(v, ...args) => {
-              onChange?.(v, ...args);
               onValueChange(v as string | string[]);
+              onChange?.(v, ...args);
             }}
           />
         </>

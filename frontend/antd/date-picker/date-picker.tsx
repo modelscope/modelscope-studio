@@ -165,8 +165,8 @@ export const DatePicker = sveltify<
             }}
             onChange={(date, ...args) => {
               const formattedDate = formatDate(date);
-              onChange?.(formattedDate, ...args);
               onValueChange(formattedDate);
+              onChange?.(formattedDate, ...args);
             }}
             renderExtraFooter={
               slots.renderExtraFooter

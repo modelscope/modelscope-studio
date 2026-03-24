@@ -59,6 +59,7 @@ export const FileCard = sveltify<
         mask={slots.mask ? <ReactSlot slot={slots.mask} /> : props.mask}
         spinProps={{
           ...props.spinProps,
+          size: props.spinProps?.size || 'default',
           icon: slots['spinProps.icon'] ? (
             <ReactSlot slot={slots['spinProps.icon']} />
           ) : (

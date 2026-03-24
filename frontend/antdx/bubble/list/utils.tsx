@@ -96,7 +96,7 @@ export function useRole<T = BubbleItemType>(
       ]),
     ];
     if (roleKeys.length > 0) {
-      return Object.keys(role).reduce(
+      return roleKeys.reduce(
         (acc, key) => {
           if (typeof role[key] === 'string') {
             const functionRole = createFunction(role[key]);

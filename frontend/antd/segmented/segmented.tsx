@@ -24,8 +24,8 @@ export const Segmented = sveltify<
           <ASegmented
             {...props}
             onChange={(v) => {
-              onChange?.(v);
               onValueChange(v as string | number);
+              onChange?.(v);
             }}
             options={useMemo(() => {
               // ['label','icon']

@@ -134,8 +134,8 @@ export const TimePicker = sveltify<
           }}
           onChange={(date, ...args) => {
             const formattedDate = formatDate(date);
-            onChange?.(formattedDate, ...args);
             onValueChange(formattedDate as number);
+            onChange?.(formattedDate, ...args);
           }}
           onCalendarChange={(date, ...args) => {
             const formattedDate = formatDate(date);

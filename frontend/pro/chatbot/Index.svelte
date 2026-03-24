@@ -72,21 +72,18 @@
       id={proceedProps.elem_id}
       {...proceedProps.restProps}
       {...proceedProps.additionalProps}
-      value={proceedProps.value}
+      value={proceedProps.value || []}
       onValueChange={(v) => {
         updateProps({
           value: v,
         });
       }}
       rootUrl={proceedProps.gradio.shared.root}
-      apiPrefix={proceedProps.gradio.shared.proxy_url}
-      themeMode={proceedProps.additionalProps.gradio?.theme}
+      apiPrefix={proceedProps.gradio.shared.api_prefix}
+      themeMode={proceedProps.gradio.shared.theme || 'light'}
       slots={slots.value}
     >
       {@render children?.()}
     </Chatbot>
   {/await}
 {/if}
-
-<style>
-</style>

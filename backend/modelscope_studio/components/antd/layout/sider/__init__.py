@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import warnings
 from typing import Any, Literal
 
 from gradio.events import EventListener
@@ -52,6 +53,7 @@ class AntdLayoutSider(ModelScopeLayoutComponent):
             default_collapsed: bool | None = None,
             reverse_arrow: bool | None = None,
             theme: Literal['light', 'dark'] | None = None,
+            theme_value: Literal['light', 'dark'] | None = None,
             trigger: str | None = 'default',
             width: int | float | str = 200,
             zero_width_trigger_style: dict | None = None,
@@ -96,6 +98,11 @@ class AntdLayoutSider(ModelScopeLayoutComponent):
         self.default_collapsed = default_collapsed
         self.reverse_arrow = reverse_arrow
         self.theme = theme
+        if theme:
+            warnings.warn(
+                """<modelscope-studio>[antd.Layout.Sider]:  the `theme` property conflicts with Gradio's preset properties. Please use `theme_value` instead."""
+            )
+        self.theme_value = theme_value
         self.trigger = trigger
         self.width = width
         self.zero_width_trigger_style = zero_width_trigger_style

@@ -1,11 +1,14 @@
 import { sveltify } from '@svelte-preprocess-react';
 import React from 'react';
 import { type MenuItemProps } from 'antd';
+import type { SubMenuProps } from 'antd/lib/menu';
 import cls from 'classnames';
 
 import { ItemHandler, type ItemHandlerProps } from '../context';
 
-export const MenuItem = sveltify<MenuItemProps & ItemHandlerProps>((props) => {
+export const MenuItem = sveltify<
+  MenuItemProps & SubMenuProps & ItemHandlerProps
+>((props) => {
   return (
     <ItemHandler<['default']>
       {...props}

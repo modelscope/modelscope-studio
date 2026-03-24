@@ -34,7 +34,7 @@ class AntdInputTextarea(ModelScopeDataLayoutComponent):
             *,
             auto_size: bool | dict | None = None,
             allow_clear: bool | dict | None = None,
-            class_names: dict | str | None= None,
+            class_names: dict | str | None = None,
             count: dict | None = None,
             default_value: str | None = None,
             read_only: bool | None = None,
@@ -43,7 +43,7 @@ class AntdInputTextarea(ModelScopeDataLayoutComponent):
             show_count: bool | dict = None,
             size: Literal['large', 'middle', 'small'] | None = None,
             status: Literal['error', 'warning'] | None = None,
-            styles: dict | str | None= None,
+            styles: dict | str | None = None,
             type: str | None = None,
             placeholder: str | None = None,
             variant: Literal['outlined', 'borderless', 'filled', 'underlined']

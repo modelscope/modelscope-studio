@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import warnings
 from typing import Any, Literal
 
 from ....utils.dev import ModelScopeLayoutComponent, resolve_frontend_dir
@@ -31,7 +32,8 @@ class AntdXXProvider(ModelScopeLayoutComponent):
                  popup_overflow: Literal['viewport', 'scroll'] | None = None,
                  prefix_cls: str | None = None,
                  render_empty: str | None = None,
-                 theme: dict | None = None,
+                 theme: str | None = None,
+                 theme_config: dict | None = None,
                  variant: Literal['outlined', 'filled', 'borderless']
                  | None = None,
                  virtual: bool | None = None,
@@ -69,6 +71,11 @@ class AntdXXProvider(ModelScopeLayoutComponent):
         self.prefix_cls = prefix_cls
         self.render_empty = render_empty
         self.theme = theme
+        if theme:
+            warnings.warn(
+                """<modelscope-studio>[antdx.XProvider]:  the `theme` property conflicts with Gradio's preset properties. Please use `theme_config` instead."""
+            )
+        self.theme_config = theme_config
         self.variant = variant
         self.virtual = virtual
         self.warning = warning

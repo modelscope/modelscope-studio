@@ -36,8 +36,8 @@ interface Element {
   _reactElement: React.ReactElement & {
     props: Record<string, any>;
   };
-  _effects: (() => void)[];
-  _registerEffect: (cb: () => void) => () => void;
+  _effects: ((props: Record<string, any>) => void)[];
+  _registerEffect: (cb: (props: Record<string, any>) => void) => () => void;
 }
 
 declare module '*.svelte' {

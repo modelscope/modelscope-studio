@@ -47,9 +47,7 @@ class AntdXSourcesItem(ModelScopeLayoutComponent):
         self.key = key
         self.url = url
 
-    FRONTEND_DIR = resolve_frontend_dir("sources",
-                                        "sources-item",
-                                        type="antdx")
+    FRONTEND_DIR = resolve_frontend_dir("sources", "item", type="antdx")
 
     @property
     def skip_api(self):

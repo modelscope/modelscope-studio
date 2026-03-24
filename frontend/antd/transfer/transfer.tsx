@@ -44,8 +44,8 @@ export const Transfer = sveltify<
         <ATransfer
           {...props}
           onChange={(targetKeys, ...args) => {
-            onChange?.(targetKeys, ...args);
             onValueChange(targetKeys as (string | number)[]);
+            onChange?.(targetKeys, ...args);
           }}
           selectionsIcon={
             slots.selectionsIcon ? (

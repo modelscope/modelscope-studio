@@ -22,7 +22,7 @@ export function applyPatchToProps(props: Record<string, any>) {
 }
 
 // ==== SLOT PROPS ====
-// eslint-disable-next-line react-refresh/only-export-components
+
 const PatchSlotPropsWrapper: React.FC<{
   children: (props: Record<string, any>) => React.ReactNode;
 }> = ({ children, ...args }) => {

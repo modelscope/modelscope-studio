@@ -16,9 +16,15 @@ export const Popover = sveltify<
         {...props}
         afterOpenChange={afterOpenChangeFunction}
         getPopupContainer={getPopupContainerFunction}
-        title={slots.title ? <ReactSlot slot={slots.title} /> : props.title}
+        title={
+          slots.title ? <ReactSlot slot={slots.title} clone /> : props.title
+        }
         content={
-          slots.content ? <ReactSlot slot={slots.content} /> : props.content
+          slots.content ? (
+            <ReactSlot slot={slots.content} clone />
+          ) : (
+            props.content
+          )
         }
       >
         {children}

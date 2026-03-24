@@ -16,7 +16,6 @@ export const CheckboxGroup = sveltify<
       const { items: slotItems } = useItems<['default', 'options']>();
       const resolvedSlotItems =
         slotItems.options.length > 0 ? slotItems.options : slotItems.default;
-
       return (
         <>
           <div style={{ display: 'none' }}>{children}</div>
@@ -34,8 +33,8 @@ export const CheckboxGroup = sveltify<
               );
             }, [resolvedSlotItems, options])}
             onChange={(v: any[]) => {
-              onChange?.(v);
               onValueChange(v);
+              onChange?.(v);
             }}
           />
         </>

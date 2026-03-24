@@ -20,11 +20,7 @@
     updateProps,
   } = getProps<{
     additional_props?: Record<string, any>;
-
-    as_item?: string | undefined;
-    _internal: {
-      layout?: boolean;
-    };
+    _internal: {};
     value?: string | undefined;
     _loader?: {
       mode?: 'cdn' | 'local';
@@ -73,20 +69,23 @@
         : undefined
   );
 
+  // Define this method outside of the $ block to avoid re-rendering
+  const onValueChange = (v: string | undefined) => {
+    updateProps({
+      value: v,
+    });
+  };
+
   const editorProps = $derived({
     style: proceedProps.elem_style,
     className: cls(proceedProps.elem_classes, 'ms-gr-pro-monaco-editor'),
     id: proceedProps.elem_id,
     ...proceedProps.restProps,
     ...proceedProps.additionalProps,
-    onValueChange: (v: string | undefined) => {
-      updateProps({
-        value: v,
-      });
-    },
+    onValueChange,
     value: proceedProps.value,
     slots: slots.value,
-    themeMode: proceedProps.additionalProps.gradio?.theme,
+    themeMode: proceedProps.gradio.shared.theme,
   });
 </script>
 
