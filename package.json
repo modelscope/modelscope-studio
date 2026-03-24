@@ -9,7 +9,7 @@
     "build": "rimraf dist && gradio cc build --no-generate-docs",
     "changeset": "changeset",
     "check-encoding": "python ./scripts/check_encoding.py",
-    "ci:create-tag-n-release": "tsx ./scripts/create-tag-n-release.ts",
+    "ci:create-tag-n-release": "tsx ./scripts/create-tag-n-release.mts",
     "ci:publish": "tsx ./scripts/publish-to-pypi.mts",
     "ci:version": "pnpm run version",
     "dev": "gradio cc dev docs/app.py",
