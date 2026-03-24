@@ -1,0 +1,15 @@
+{
+  "mode": "pre",
+  "tag": "beta",
+  "initialVersions": {
+    "modelscope_studio": "1.6.1",
+    "@modelscope-studio/changelog": "1.6.1",
+    "@modelscope-studio/lint-config": "1.6.1",
+    "@modelscope-studio/frontend": "1.6.1",
+    "@modelscope-studio/antd": "1.6.1",
+    "@modelscope-studio/antdx": "1.6.1",
+    "@modelscope-studio/base": "1.6.1",
+    "@modelscope-studio/pro": "1.6.1"
+  },
+  "changesets": []
+}
