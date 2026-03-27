@@ -8,11 +8,12 @@ export const ActionsActionItem = sveltify<
   Partial<NonNullable<ActionsProps['items']>[number]> & ItemHandlerProps
 >((props) => {
   return (
-    <ItemHandler<['default']>
+    <ItemHandler<['default', 'subItems']>
       {...props}
-      allowedSlots={['default']}
+      allowedSlots={['default', 'subItems']}
+      itemChildrenKey="subItems"
       itemChildren={(items) => {
-        return items.default.length > 0 ? items.default : undefined;
+        return items.subItems.length > 0 ? items.subItems : items.default;
       }}
     />
   );

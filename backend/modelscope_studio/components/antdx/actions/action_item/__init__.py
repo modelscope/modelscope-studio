@@ -21,7 +21,7 @@ class AntdXActionsActionItem(ModelScopeLayoutComponent):
     ]
 
     # Supported slots
-    SLOTS = ['label', 'icon', 'actionRender']
+    SLOTS = ['label', 'icon', 'actionRender', "subItems"]
 
     def __init__(
             self,

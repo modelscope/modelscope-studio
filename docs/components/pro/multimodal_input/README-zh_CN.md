@@ -39,11 +39,16 @@
 | placeholder   | `str \| None`                                            | None             | 输入框的提示信息。                                                              |
 | disabled      | `bool \| None`                                           | None             | 是否禁用。                                                                      |
 | upload_config | `MultimodalInputUploadConfig \| dict \| None`            | None             | 文件上传配置。                                                                  |
+| slot_config   | `dict \| None`                                           | None             | 词槽配置，配置后输入框将变为词槽模式，支持结构化输入，此模式 value 配置将无效。 |
+| skill         | `dict \| None`                                           | None             | 技能配置，输入框将变为词槽模式，支持结构化输入，此模式 value 配置将无效。       |
 
 ### 插槽
 
 ```python
-SLOTS=['actions', "prefix", 'footer', 'header']
+SLOTS = [
+    'suffix', 'header', 'prefix', 'footer', 'skill.title',
+    'skill.toolTip.title', 'skill.closable.closeIcon'
+]
 ```
 
 ### 类型
@@ -110,5 +115,4 @@ class MultimodalInputUploadConfig(GradioModel):
 class MultimodalInputValue(GradioModel):
     files: Optional[ListFiles] = None
     text: Optional[str] = None
-
 ```

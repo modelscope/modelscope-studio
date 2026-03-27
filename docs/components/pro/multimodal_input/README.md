@@ -28,22 +28,27 @@ A multimodal input component based on [Ant Design X](https://x.ant.design), supp
 
 ### Props
 
-| Attribute     | Type                                                     | Default Value    | Description                                                                                                     |
-| ------------- | -------------------------------------------------------- | ---------------- | --------------------------------------------------------------------------------------------------------------- |
-| value         | `dict \| MultimodalInputValue \| None`                   | None             | Default value to display, formatted as `{ "text":"", "files":[] }`.                                             |
-| loading       | `bool \| None`                                           | None             | Whether the input is in a loading state, in which case the `cancel` event can be triggered.                     |
-| mode          | `inline \| block`                                        | 'inline'         | The rending mode of the input box. If `block`, the input box and the submit button will be rendered separately. |
-| auto_size     | `bool \| { minRows?: number; maxRows?: number } \| None` | { "maxRows": 8 } | Height auto size feature, can be set to True \| False or an object { "minRows": 2, "maxRows": 6 }.              |
-| read_only     | `bool \| None`                                           | None             | Whether the input is read-only.                                                                                 |
-| submit_type   | `Literal['enter', 'shiftEnter'] \| None`                 | 'enter'          | How the input box triggers the `submit` event.                                                                  |
-| placeholder   | `str \| None`                                            | None             | Input placeholder text.                                                                                         |
-| disabled      | `bool \| None`                                           | None             | Whether to disable.                                                                                             |
-| upload_config | `MultimodalInputUploadConfig \| dict \| None`            | None             | File upload configuration.                                                                                      |
+| Attribute     | Type                                                     | Default Value    | Description                                                                                                                                                       |
+| ------------- | -------------------------------------------------------- | ---------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| value         | `dict \| MultimodalInputValue \| None`                   | None             | Default value to display, formatted as `{ "text":"", "files":[] }`.                                                                                               |
+| loading       | `bool \| None`                                           | None             | Whether the input is in a loading state, in which case the `cancel` event can be triggered.                                                                       |
+| mode          | `inline \| block`                                        | 'inline'         | The rending mode of the input box. If `block`, the input box and the submit button will be rendered separately.                                                   |
+| auto_size     | `bool \| { minRows?: number; maxRows?: number } \| None` | { "maxRows": 8 } | Height auto size feature, can be set to True \| False or an object { "minRows": 2, "maxRows": 6 }.                                                                |
+| read_only     | `bool \| None`                                           | None             | Whether the input is read-only.                                                                                                                                   |
+| submit_type   | `Literal['enter', 'shiftEnter'] \| None`                 | 'enter'          | How the input box triggers the `submit` event.                                                                                                                    |
+| placeholder   | `str \| None`                                            | None             | Input placeholder text.                                                                                                                                           |
+| disabled      | `bool \| None`                                           | None             | Whether to disable.                                                                                                                                               |
+| upload_config | `MultimodalInputUploadConfig \| dict \| None`            | None             | File upload configuration.                                                                                                                                        |
+| slot_config   | `dict \| None`                                           | None             | Slot configuration, after configuration the input box will switch to slot mode, supporting structured input. In this mode, value configurations will be invalid.  |
+| skill         | `dict \| None`                                           | None             | Skill configuration, after configuration the input box will switch to slot mode, supporting structured input. In this mode, value configurations will be invalid. |
 
 ### Slots
 
 ```python
-SLOTS=['actions', "prefix", 'footer', 'header']
+SLOTS = [
+    'suffix', 'header', 'prefix', 'footer', 'skill.title',
+    'skill.toolTip.title', 'skill.closable.closeIcon'
+]
 ```
 
 ### Types
@@ -105,6 +110,7 @@ class MultimodalInputUploadConfig(GradioModel):
                 "title": "Drop files here",
             }
         })
+
 
 class MultimodalInputValue(GradioModel):
     files: Optional[ListFiles] = None

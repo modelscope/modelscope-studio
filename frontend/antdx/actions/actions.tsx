@@ -106,6 +106,7 @@ export const Actions = sveltify<
                   items ||
                   renderItems<ItemType>(resolvedSlotItems, {
                     clone: true,
+                    children: 'subItems',
                   }) ||
                   []
                 );

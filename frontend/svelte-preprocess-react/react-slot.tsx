@@ -1,6 +1,7 @@
 import { useContextPropsContext } from '@svelte-preprocess-react/react-contexts';
 import React, { forwardRef, useEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
+import { useMemoizedEqualValue } from '@utils/hooks/useMemoizedEqualValue';
 import { styleObject2HtmlStyle } from '@utils/style';
 import { debounce } from 'lodash-es';
 
@@ -106,11 +107,15 @@ function mountElRef(elRef: React.ForwardedRef<HTMLElement>, el: HTMLElement) {
 
 // eslint-disable-next-line react/display-name
 export const ReactSlot = forwardRef<HTMLElement, ReactSlotProps>(
-  ({ slot, clone: cloneProp, className, style, observeAttributes }, elRef) => {
+  (
+    { slot, clone: cloneProp, className, style: styleProp, observeAttributes },
+    elRef
+  ) => {
     const ref = useRef<HTMLElement | null>(null);
     const [children, setChildren] = useState<React.ReactElement[]>([]);
     const { forceClone } = useContextPropsContext();
     const clone = forceClone ? true : cloneProp;
+    const style = useMemoizedEqualValue(styleProp);
     useEffect(() => {
       if (!ref.current || !slot) {
         return;
@@ -121,8 +126,11 @@ export const ReactSlot = forwardRef<HTMLElement, ReactSlotProps>(
         let child = cloned as Element;
         if (
           cloned.tagName.toLowerCase() === 'svelte-slot' &&
-          cloned.children.length === 1 &&
-          cloned.children[0]
+          ((cloned.children.length === 1 && cloned.children[0]) ||
+            (cloned.children.length === 2 &&
+              cloned.children[0].tagName.toLowerCase() ===
+                'react-portal-target' &&
+              cloned.children[1].tagName.toLowerCase() === 'svelte-slot'))
         ) {
           child = cloned.children[0];
           if (

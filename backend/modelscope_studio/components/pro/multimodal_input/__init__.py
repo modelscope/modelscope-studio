@@ -139,8 +139,7 @@ class ModelScopeProMultimodalInput(ModelScopeDataLayoutComponent):
     # supported slots
     SLOTS = [
         'suffix', 'header', 'prefix', 'footer', 'skill.title',
-        'skill.toolTip.title'
-        'skill.closable.closeIcon'
+        'skill.toolTip.title', 'skill.closable.closeIcon'
     ]
 
     def __init__(

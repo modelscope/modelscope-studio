@@ -104,6 +104,7 @@ export const ConfigProvider = sveltify<
       });
     }, [localeProp]);
     const ProviderComponent = component || AConfigProvider;
+
     return (
       <div id={id} className={className} style={style}>
         <StyleProvider hashPriority="high" container={document.body}>
