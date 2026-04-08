@@ -98,7 +98,7 @@ class AntdMenu(ModelScopeLayoutComponent):
             warnings.warn(
                 """<modelscope-studio>[antd.Menu.Item]:  the `theme` property conflicts with Gradio's preset properties. Please use `theme_value` instead."""
             )
-        self.theme_value = theme_value
+        self.theme_value = theme_value or theme
         self.trigger_sub_menu_action = trigger_sub_menu_action
         self.root_class_name = root_class_name
 

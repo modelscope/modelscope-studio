@@ -102,7 +102,7 @@ class AntdLayoutSider(ModelScopeLayoutComponent):
             warnings.warn(
                 """<modelscope-studio>[antd.Layout.Sider]:  the `theme` property conflicts with Gradio's preset properties. Please use `theme_value` instead."""
             )
-        self.theme_value = theme_value
+        self.theme_value = theme_value or theme
         self.trigger = trigger
         self.width = width
         self.zero_width_trigger_style = zero_width_trigger_style

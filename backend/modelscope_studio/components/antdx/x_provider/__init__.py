@@ -75,7 +75,7 @@ class AntdXXProvider(ModelScopeLayoutComponent):
             warnings.warn(
                 """<modelscope-studio>[antdx.XProvider]:  the `theme` property conflicts with Gradio's preset properties. Please use `theme_config` instead."""
             )
-        self.theme_config = theme_config
+        self.theme_config = theme_config or theme
         self.variant = variant
         self.virtual = virtual
         self.warning = warning
