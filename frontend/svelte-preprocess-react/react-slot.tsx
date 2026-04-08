@@ -128,9 +128,9 @@ export const ReactSlot = forwardRef<HTMLElement, ReactSlotProps>(
           cloned.tagName.toLowerCase() === 'svelte-slot' &&
           ((cloned.children.length === 1 && cloned.children[0]) ||
             (cloned.children.length === 2 &&
-              cloned.children[0].tagName.toLowerCase() ===
+              cloned.children[0]?.tagName?.toLowerCase() ===
                 'react-portal-target' &&
-              cloned.children[1].tagName.toLowerCase() === 'svelte-slot'))
+              cloned.children[1]?.tagName?.toLowerCase() === 'svelte-slot'))
         ) {
           child = cloned.children[0];
           if (
