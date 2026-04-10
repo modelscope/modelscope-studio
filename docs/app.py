@@ -225,6 +225,9 @@ antd_menu_items = [{
         "label": get_text("Layout", "Layout 布局"),
         "key": "layout"
     }, {
+        "label": get_text("Masonry", "Masonry 瀑布流"),
+        "key": "masonry"
+    }, {
         "label": get_text("Space", "Space 间距"),
         "key": "space"
     }, {
@@ -451,6 +454,9 @@ antdx_menu_items = [{
     }, {
         "label": get_text("Conversations", "Conversations 管理对话"),
         "key": "conversations"
+    }, {
+        "label": get_text("Notification", "Notification 系统通知"),
+        "key": "notification"
     }]
 }, {
     "label":
@@ -485,6 +491,9 @@ antdx_menu_items = [{
     "type":
     "group",
     "children": [{
+        "label": get_text("Think", "Think 思考过程"),
+        "key": "think"
+    }, {
         "label": get_text("ThoughtChain", "ThoughtChain 思考链"),
         "key": "thought_chain"
     }]
@@ -496,6 +505,21 @@ antdx_menu_items = [{
     "children": [{
         "label": get_text("Actions", "Actions 操作列表"),
         "key": "actions"
+    }, {
+        "label": get_text("CodeHighlighter", "CodeHighlighter 代码高亮"),
+        "key": "code_highlighter"
+    }, {
+        "label": get_text("FileCard", "FileCard 文件卡片"),
+        "key": "file_card"
+    }, {
+        "label": get_text("Folder", "Folder 文件夹"),
+        "key": "folder"
+    }, {
+        "label": get_text("Mermaid", "Mermaid 图表工具"),
+        "key": "mermaid"
+    }, {
+        "label": get_text("Sources", "Sources 来源引用"),
+        "key": "sources"
     }]
 }, {
     "label":
@@ -587,8 +611,8 @@ site = Site(
     default_active_tab=default_active_tab,
     logo=logo)
 
-demo = site.render()
+demo, css = site.render()
 
 if __name__ == "__main__":
     demo.queue(default_concurrency_limit=100,
-               max_size=100).launch(ssr_mode=False, max_threads=100)
+               max_size=100).launch(css=css, ssr_mode=False, max_threads=100)

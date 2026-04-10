@@ -9,7 +9,7 @@ export const Notification = sveltify<
     onVisible: (visible: boolean) => void;
     onPermission?: (permission: NotificationPermission) => void;
   }
->(({ slots, onClose, visible, onVisible, tag, onPermission, ...props }) => {
+>(({ onClose, visible, onVisible, tag, duration, onPermission, ...props }) => {
   const [{ permission }, { open, close, requestPermission }] =
     notification.useNotification();
   const onPermissionMemoized = useMemoizedFn(onPermission);
@@ -18,7 +18,13 @@ export const Notification = sveltify<
     onPermissionMemoized(permission);
   }, [permission, onPermissionMemoized]);
   useEffect(() => {
+    let timer: ReturnType<typeof setTimeout> | undefined;
     if (visible) {
+      if (typeof duration === 'number') {
+        timer = setTimeout(() => {
+          onVisible?.(false);
+        }, duration);
+      }
       const run = async () => {
         let result = permission;
         if (result !== 'granted') {
@@ -29,6 +35,7 @@ export const Notification = sveltify<
             ...props,
             tag,
             onClose(...args) {
+              timer && clearTimeout(timer);
               onVisible?.(false);
               onClose?.(...args);
             },
@@ -42,8 +49,10 @@ export const Notification = sveltify<
 
     return () => {
       close(tag ? [tag] : undefined);
+      timer && clearTimeout(timer);
     };
-  }, [visible, tag]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [visible, duration, tag]);
   return null;
 });
 

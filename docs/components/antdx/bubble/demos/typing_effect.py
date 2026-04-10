@@ -28,13 +28,16 @@ with gr.Blocks() as demo:
             with antd.Flex(vertical=True, gap="small"):
                 with antdx.Bubble(content=text,
                                   typing=dict(step=2, interval=50)) as bubble1:
-                    with ms.Slot("avatar.icon"):
-                        antd.Icon("UserOutlined")
+                    with ms.Slot("avatar"):
+                        with antd.Avatar():
+                            with ms.Slot("icon"):
+                                antd.Icon("UserOutlined")
                 with antdx.Bubble(content=text,
-                                  typing=dict(step=2, interval=50,
-                                              suffix="💗")) as bubble2:
-                    with ms.Slot("avatar.icon"):
-                        antd.Icon("UserOutlined")
+                                  typing=dict(step=2, interval=50)) as bubble2:
+                    with ms.Slot("avatar"):
+                        with antd.Avatar():
+                            with ms.Slot("icon"):
+                                antd.Icon("UserOutlined")
                 btn = antd.Button("Repeat 1 Times",
                                   elem_style=dict(alignSelf="flex-end"))
                 btn.click(fn=repeat,

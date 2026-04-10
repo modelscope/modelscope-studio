@@ -31,28 +31,32 @@ with gr.Blocks() as demo:
                         with antd.Avatar(elem_style=fooAvatar):
                             with ms.Slot("icon"):
                                 antd.Icon("UserOutlined")
-                antdx.Bubble(placement="start",
-                             content="What a beautiful day!",
-                             avatar=dict(),
-                             styles={"avatar": hideAvatar})
+                with antdx.Bubble(placement="start",
+                                  content="What a beautiful day!",
+                                  styles={"avatar": hideAvatar}):
+                    with ms.Slot("avatar"):
+                        antd.Avatar()
                 with antdx.Bubble(placement="end",
                                   content="Hi, good morning, I'm fine!"):
                     with ms.Slot("avatar"):
                         with antd.Avatar(elem_style=barAvatar):
                             with ms.Slot("icon"):
                                 antd.Icon("UserOutlined")
-                antdx.Bubble(placement="end",
-                             content="Thank you!",
-                             avatar=dict(),
-                             styles={"avatar": hideAvatar})
+                with antdx.Bubble(placement="end",
+                                  content="Thank you!",
+                                  styles={"avatar": hideAvatar}):
+                    with ms.Slot("avatar"):
+                        antd.Avatar()
 
             antd.Divider("Header and footer")
 
             with antdx.Bubble(
                     "Hello, welcome to use Ant Design X! Just ask if you have any questions.",
                     header="Ant Design X"):
-                with ms.Slot("avatar.icon"):
-                    antd.Icon("UserOutlined")
+                with ms.Slot("avatar"):
+                    with antd.Avatar():
+                        with ms.Slot("icon"):
+                            antd.Icon("UserOutlined")
                 with ms.Slot("footer"):
                     with antd.Space(size="small"):
                         with antd.Button(value=None,
@@ -73,16 +77,20 @@ with gr.Blocks() as demo:
                 ms.Span("Loading State")
                 loading_switch = antd.Switch(value=False)
             with antdx.Bubble("hello world !") as loading_bubble:
-                with ms.Slot("avatar.icon"):
-                    antd.Icon("UserOutlined")
+                with ms.Slot("avatar"):
+                    with antd.Avatar():
+                        with ms.Slot("icon"):
+                            antd.Icon("UserOutlined")
 
             loading_switch.change(fn=lambda x: gr.update(loading=x),
                                   inputs=[loading_switch],
                                   outputs=[loading_bubble])
             antd.Divider("Markdown")
             with antdx.Bubble():
-                with ms.Slot("avatar.icon"):
-                    antd.Icon("UserOutlined")
+                with ms.Slot("avatar"):
+                    with antd.Avatar():
+                        with ms.Slot("icon"):
+                            antd.Icon("UserOutlined")
                 with ms.Slot("content"):
                     ms.Markdown("Hello `Markdown`!")
 

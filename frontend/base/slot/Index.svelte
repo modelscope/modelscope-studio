@@ -8,10 +8,11 @@
   import { createFunction } from '@utils/createFunction';
 
   const props = $props();
+
   const { gradio, getComponentProps, getAdditionalProps, children } = getProps<{
     value: string;
     params_mapping: string;
-  }>(() => props);
+  }>(() => props, { i18n: false });
 
   const getProceedProps = processProps(() => {
     const { value, visible, as_item, _internal, params_mapping } =

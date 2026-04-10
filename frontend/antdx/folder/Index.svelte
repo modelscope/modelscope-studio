@@ -71,9 +71,7 @@
       id={proceedProps.elem_id}
       {...proceedProps.restProps}
       {...proceedProps.additionalProps}
-      treeData={proceedProps.additionalProps.treeData ||
-        proceedProps.treeData ||
-        []}
+      treeData={proceedProps.additionalProps.treeData || proceedProps.treeData}
       slots={slots.value}
     >
       {@render children?.()}

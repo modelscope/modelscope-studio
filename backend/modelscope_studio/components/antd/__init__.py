@@ -72,6 +72,8 @@ from .list.item import AntdListItem as ListItem
 from .list.item.meta import AntdListItemMeta as ListItemMeta
 from .mentions import AntdMentions as Mentions
 from .mentions.option import AntdMentionsOption as MentionsOption
+from .masonry import AntdMasonry as Masonry
+from .masonry.item import AntdMasonryItem as MasonryItem
 from .menu import AntdMenu as Menu
 from .menu.item import AntdMenuItem as MenuItem
 from .message import AntdMessage as Message

@@ -17,6 +17,15 @@ import { omitUndefinedProps } from '@utils/omitUndefinedProps';
 import { isPlainObject, mapKeys, omit } from 'lodash-es';
 import { type Snippet, untrack } from 'svelte';
 
+const gradioTranslatableProps = [
+  'label',
+  'info',
+  'placeholder',
+  'description',
+  'title',
+  'value',
+];
+
 const skippedGradioProps = [
   'interactive',
   'gradio',
@@ -326,21 +335,45 @@ export function processProps<
 export function getProps<
   P extends Record<string, any>,
   E extends Record<string, any> = Record<string, any>,
->(getSvelteProps: () => any) {
+>(
+  getSvelteProps: () => any,
+  options?: {
+    i18n?: boolean;
+  }
+) {
   const props: {
     children?: Snippet;
     props: P;
     shared_props: SharedProps;
+    gradio?: Gradio<E, P>;
+    [x: PropertyKey]: any;
   } = getSvelteProps();
-  const gradio = new Gradio<E, P>(props);
+  const enableI18n = options?.i18n ?? true;
+  const gradio = props.gradio ? props.gradio : new Gradio<E, P>(props);
   const updateProps = (updatedProps: Partial<P & SharedProps>) => {
     gradio.update(updatedProps);
   };
-
-  const getComponentProps = () =>
-    omitUndefinedProps(
+  const getComponentProps = () => {
+    const originalProps = props.props;
+    const originalSharedProps = props.shared_props;
+    return omitUndefinedProps(
       omit(
         {
+          ...gradio.props,
+          label: gradio.shared.label,
+          ...(enableI18n
+            ? {}
+            : gradioTranslatableProps.reduce(
+                (acc, key) => {
+                  if (originalProps[key] !== undefined) {
+                    acc[key] = originalProps[key];
+                  } else if (originalSharedProps[key] !== undefined) {
+                    acc[key] = originalSharedProps[key];
+                  }
+                  return acc;
+                },
+                {} as Record<string, any>
+              )),
           elem_id: gradio.shared.elem_id as string | undefined,
           elem_classes: gradio.shared.elem_classes as
             | string
@@ -349,15 +382,14 @@ export function getProps<
           elem_style: gradio.props.elem_style as React.CSSProperties,
           visible: gradio.shared.visible,
           attached_events: gradio.shared.attached_events,
-          as_item: gradio.props.as_item as string | undefined,
-          _internal: gradio.props._internal as {},
           loading_status: gradio.shared.loading_status,
-          ...gradio.props,
-          label: gradio.shared.label,
+          as_item: gradio.props.as_item as string | undefined,
+          _internal: props._internal || (gradio.props._internal as {}),
         },
         ['i18n', 'api_url', 'name', 'additional_props']
       )
     );
+  };
 
   let additionalProps = $state(
     (() => $state.snapshot(gradio.props.additional_props) || {})() as Record<

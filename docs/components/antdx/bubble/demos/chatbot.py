@@ -64,9 +64,8 @@ with gr.Blocks() as demo:
                 with antd.Flex(gap="small",
                                elem_style=dict(alignSelf="flex-end")):
                     add_bubble_btn = antd.Button("Add Bubble")
-                    scroll_btn = antd.Button("Scroll To First")
                 with antdx.Bubble.List(items=default_history,
-                                       elem_style=dict(maxHeight=500),
+                                       elem_style=dict(height=500),
                                        elem_id="chatbot") as bubble_list:
                     # Define Role
                     with ms.Slot("role"):
@@ -81,9 +80,9 @@ with gr.Blocks() as demo:
                                         backgroundColor="#fde3cf")):
                                     with ms.Slot("icon"):
                                         antd.Icon("UserOutlined")
-                            # use messageRender to render markdown content
+                            # use contentRender to render markdown content
                             with ms.Slot(
-                                    "messageRender",
+                                    "contentRender",
                                     params_mapping="""content => content"""):
                                 ms.Markdown()
 
@@ -149,17 +148,12 @@ with gr.Blocks() as demo:
                                     with ms.Slot("icon"):
                                         antd.Icon("UserOutlined")
                             with ms.Slot(
-                                    "messageRender",
+                                    "contentRender",
                                     params_mapping="(content) => content"):
                                 ms.Markdown()
             add_bubble_btn.click(fn=add_bubble,
                                  inputs=[state],
                                  outputs=[state, bubble_list])
-            scroll_btn.click(fn=None,
-                             js="""() => {
-                const bubbleList = document.getElementById("chatbot");
-                bubbleList.scrollTo({ top:0, behavior:'smooth' });
-}""")
 
 if __name__ == "__main__":
     demo.queue().launch()

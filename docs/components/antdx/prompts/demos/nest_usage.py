@@ -11,7 +11,7 @@ def item_click(e: gr.EventData):
 
 with gr.Blocks() as demo:
     with ms.Application():
-        with antdx.XProvider(theme=dict(algorithm=dict(dark=False))):
+        with antdx.XProvider(theme_config=dict(algorithm=dict(dark=False))):
             with antd.Card(elem_style=dict(borderRadius=0, border=0)):
                 with antdx.Prompts(
                         title="Do you want?",

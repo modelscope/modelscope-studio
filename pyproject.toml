@@ -78,6 +78,8 @@ artifacts = [
   "/backend/modelscope_studio/components/antd/dropdown/templates",
   "/backend/modelscope_studio/components/antd/dropdown/button/templates",
   "/backend/modelscope_studio/components/antd/flex/templates",
+  "/backend/modelscope_studio/components/antd/masonry/templates",
+  "/backend/modelscope_studio/components/antd/masonry/item/templates",
   "/backend/modelscope_studio/components/antd/layout/templates",
   "/backend/modelscope_studio/components/antd/layout/content/templates",
   "/backend/modelscope_studio/components/antd/layout/footer/templates",

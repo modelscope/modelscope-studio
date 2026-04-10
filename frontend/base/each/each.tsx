@@ -35,6 +35,7 @@ const Item: React.FC<{
 export const Each = sveltify<EachProps, ['children']>(
   ({ value, contextValue, children, __internal_slot_key }) => {
     const targets = useTargets(children, __internal_slot_key);
+
     return (
       <>
         <div style={{ display: 'none' }}>

@@ -9,26 +9,22 @@ import modelscope_studio.components.base as ms
 def run_next(each_value):
     each_value.append({
         "title": f'Thought Chain Item - {len(each_value) + 1}',
-        "status": 'pending',
+        "status": 'loading',
         "description": 'status: pending',
-        "icon": "LoadingOutlined",
         "key": str(len(each_value) + 1)
     })
     yield gr.update(value="Running", loading=True), gr.update(value=each_value)
     time.sleep(0.8)
     each_value[-1]["status"] = "error"
     each_value[-1]["description"] = 'status: error'
-    each_value[-1]["icon"] = "InfoCircleOutlined"
     yield gr.skip(), gr.update(value=each_value)
     time.sleep(0.8)
-    each_value[-1]["status"] = "pending"
+    each_value[-1]["status"] = "loading"
     each_value[-1]["description"] = 'status: pending'
-    each_value[-1]["icon"] = 'LoadingOutlined'
     yield gr.skip(), gr.update(value=each_value)
     time.sleep(0.8)
     each_value[-1]["status"] = "success"
     each_value[-1]["description"] = 'status: success'
-    each_value[-1]["icon"] = "CheckCircleOutlined"
     yield gr.update(value="Run Next",
                     loading=False), gr.update(value=each_value)
 
@@ -49,20 +45,16 @@ with gr.Blocks() as demo:
                                 "title": 'Thought Chain Item - 1',
                                 "status": 'success',
                                 "description": 'status: success',
-                                "icon": 'CheckCircleOutlined',
                                 "key": "1"
                             },
                             {
                                 "title": 'Thought Chain Item - 2',
                                 "status": 'error',
                                 "description": 'status: error',
-                                "icon": 'InfoCircleOutlined',
                                 "key": "2"
                             },
                         ]) as each:
-                            with antdx.ThoughtChain.Item():
-                                with ms.Slot("icon"):
-                                    antd.Icon(as_item="icon")
+                            antdx.ThoughtChain.ThoughtChainItem()
 
             btn.click(fn=run_next, inputs=[each], outputs=[btn, each])
 

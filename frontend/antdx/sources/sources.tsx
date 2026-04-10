@@ -13,13 +13,12 @@ export const Sources = sveltify<SourcesProps, ['title']>(
       const { items: slotItems } = useItems<['default', 'items']>();
       const resolvedSlotItems =
         slotItems.items.length > 0 ? slotItems.items : slotItems.default;
-
       return (
         <>
           <div style={{ display: 'none' }}>{children}</div>
           <XSources
             {...props}
-            title={slots.title ? <ReactSlot slot={slots.title} /> : slots.title}
+            title={slots.title ? <ReactSlot slot={slots.title} /> : props.title}
             items={useMemo(() => {
               return (
                 items ||

@@ -45,16 +45,14 @@ items = [
         "content": [
             {
                 "uid": '1',
-                "name": 'excel-file.xlsx',
-                "size": 111111,
+                "filename": 'excel-file.xlsx',
+                "byte": 111111,
                 "description": 'Checking the data',
             },
             {
                 "uid": '2',
-                "name": 'word-file.docx',
-                "size": 222222,
-                "status": 'uploading',
-                "percent": 23,
+                "filename": 'word-file.docx',
+                "byte": 222222
             },
         ],
     },
@@ -77,7 +75,7 @@ with gr.Blocks() as demo:
                                     backgroundColor="#fde3cf")):
                                 with ms.Slot("icon"):
                                     antd.Icon("UserOutlined")
-                        with ms.Slot("messageRender",
+                        with ms.Slot("contentRender",
                                      params_mapping="(content) => content"):
                             ms.Markdown()
                     with antdx.Bubble.List.Role(role="ai-error-message",
@@ -87,32 +85,28 @@ with gr.Blocks() as demo:
                                     backgroundColor="#fde3cf")):
                                 with ms.Slot("icon"):
                                     antd.Icon("UserOutlined")
-                        with ms.Slot("messageRender",
+                        with ms.Slot("contentRender",
                                      params_mapping="(content) => content"):
                             antd.Typography.Text(type="danger")
-                    with antdx.Bubble.List.Role(
-                            role="ai-suggestion",
-                            placement="start",
-                            variant="borderless",
-                            avatar=dict(style=dict(visibility='hidden'))):
-                        with ms.Slot("messageRender",
+                    with antdx.Bubble.List.Role(role="ai-suggestion",
+                                                placement="start",
+                                                variant="borderless"):
+                        with ms.Slot("contentRender",
                                      params_mapping="(items) => ({ items })"):
                             prompts = antdx.Prompts(vertical=True)
 
-                    with antdx.Bubble.List.Role(
-                            role="ai-file",
-                            placement="start",
-                            variant="borderless",
-                            avatar=dict(style=dict(visibility='hidden'))):
-                        with ms.Slot("messageRender",
+                    with antdx.Bubble.List.Role(role="ai-file",
+                                                placement="start",
+                                                variant="borderless"):
+                        with ms.Slot("contentRender",
                                      params_mapping="""(content) => {
                                             return {
-                                                each: content?.map(item => ({ item }))
+                                                each: content
                                             }
 }"""):
                             with antd.Flex(vertical=True, gap="middle"):
                                 with ms.Each(as_item="each"):
-                                    antdx.Attachments.FileCard()
+                                    antdx.FileCard()
 
 if __name__ == "__main__":
     demo.queue().launch()

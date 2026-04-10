@@ -65,7 +65,8 @@ export const Folder = sveltify<
                     {
                       clone: true,
                     }
-                  )
+                  ) ||
+                  []
                 );
               }, [props.treeData, resolvedTreeNodeItems])}
               directoryIcons={useMemo(() => {

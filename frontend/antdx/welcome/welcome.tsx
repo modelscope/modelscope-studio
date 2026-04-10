@@ -13,13 +13,20 @@ export const Welcome = sveltify<
     children?: React.ReactNode;
   },
   ['description', 'icon', 'extra', 'title']
->(({ slots, children, apiPrefix, rootUrl, ...props }) => {
+>(({ slots, children, apiPrefix, rootUrl, styles, ...props }) => {
   return (
     <>
       <div style={{ display: 'none' }}>{children}</div>
       <XWelcome
         {...props}
         extra={slots.extra ? <ReactSlot slot={slots.extra} /> : props.extra}
+        styles={{
+          ...styles,
+          icon: {
+            flexShrink: 0,
+            ...styles?.icon,
+          },
+        }}
         icon={
           slots.icon ? (
             <ReactSlot slot={slots.icon} />

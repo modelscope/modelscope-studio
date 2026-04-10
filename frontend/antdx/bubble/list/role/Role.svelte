@@ -124,7 +124,7 @@
           withParams: true,
         },
         contentRender: {
-          el: slots.value.messageRender,
+          el: slots.value.contentRender,
           clone: true,
           withParams: true,
         },

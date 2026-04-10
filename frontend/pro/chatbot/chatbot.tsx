@@ -138,21 +138,25 @@ export const Chatbot = sveltify<{
         const newValue = (value || []).map((item, i) => {
           const isLastMessage = i === value.length - 1;
           const resolvedItem = omitUndefinedProps(item, { omitNull: true });
-          return omitUndefinedProps({
-            ...omit(resolvedItem, [
-              'header',
-              'footer',
-              'avatar',
-              'divider_props',
-            ]),
-            dividerProps: resolvedItem.divider_props,
-            [messageIndexSymbol]: i,
-            [messageHeaderSymbol]: resolvedItem.header,
-            [messageFooterSymbol]: resolvedItem.footer,
-            [messageAvatarSymbol]: resolvedItem.avatar,
-            [lastMessageSymbol]: isLastMessage,
-            key: resolvedItem.key ?? `${i}`,
-          });
+          return {
+            ...omitUndefinedProps({
+              ...omit(resolvedItem, [
+                'header',
+                'footer',
+                'avatar',
+                'divider_props',
+              ]),
+              dividerProps: resolvedItem.divider_props,
+            }),
+            ...{
+              [messageIndexSymbol]: i,
+              [messageHeaderSymbol]: resolvedItem.header,
+              [messageFooterSymbol]: resolvedItem.footer,
+              [messageAvatarSymbol]: resolvedItem.avatar,
+              [lastMessageSymbol]: isLastMessage,
+              key: resolvedItem.key ?? `${i}`,
+            },
+          };
         }) as BubbleItemType[];
         return newValue.length > 0
           ? newValue
@@ -298,8 +302,6 @@ export const Chatbot = sveltify<{
               },
             };
           },
-          // system, divider will be skipped
-          defaultRoleKeys: ['chatbot-internal-welcome', 'user', 'assistant'],
           defaultRolePostProcess(bubbleProps, index) {
             const isUserRole = bubbleProps.role === 'user';
             switch (bubbleProps.role) {
@@ -436,6 +438,7 @@ export const Chatbot = sveltify<{
         autoScroll,
         scrollButtonOffset: scrollToBottomButtonOffset,
       });
+
       return (
         <div
           id={id}

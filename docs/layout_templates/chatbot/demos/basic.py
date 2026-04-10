@@ -468,7 +468,7 @@ def logo():
             ms.Span("Chatbot")
 
 
-with gr.Blocks(css=css, fill_width=True) as demo:
+with gr.Blocks(fill_width=True) as demo:
     state = gr.State({
         "conversations_history": {},
         "conversations": [],
@@ -476,7 +476,8 @@ with gr.Blocks(css=css, fill_width=True) as demo:
     })
 
     with ms.Application(), antdx.XProvider(
-            theme=DEFAULT_THEME, locale=DEFAULT_LOCALE), ms.AutoLoading():
+            theme_config=DEFAULT_THEME,
+            locale=DEFAULT_LOCALE), ms.AutoLoading():
         with antd.Row(gutter=[20, 20], wrap=False, elem_id="chatbot"):
             # Left Column
             with antd.Col(md=dict(flex="0 0 260px", span=24, order=0),
@@ -694,4 +695,4 @@ with gr.Blocks(css=css, fill_width=True) as demo:
                  queue=False)
 
 if __name__ == "__main__":
-    demo.queue().launch(ssr_mode=False)
+    demo.queue().launch(css=css, ssr_mode=False)

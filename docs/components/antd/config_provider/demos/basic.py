@@ -10,7 +10,7 @@ with gr.Blocks() as demo:
         with antd.ConfigProvider(
                 locale=default_locale,
                 direction=default_direction,
-                theme=dict(token=dict(
+                theme_config=dict(token=dict(
                     colorPrimary=default_color))) as config_provider:
             with antd.Card():
                 with ms.Div(elem_style=dict(marginBottom=16)):
@@ -61,7 +61,7 @@ with gr.Blocks() as demo:
                          outputs=[config_provider])
         gr.on(
             [theme.change, color.change],
-            fn=lambda _theme, _color: gr.update(theme=dict(
+            fn=lambda _theme, _color: gr.update(theme_config=dict(
                 token=dict(colorPrimary=_color) if _color else None,
                 algorithm=dict(dark=True
                                if _theme and 'dark' in _theme else False,

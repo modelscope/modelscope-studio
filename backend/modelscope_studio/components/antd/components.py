@@ -67,6 +67,8 @@ from .layout.sider import AntdLayoutSider
 from .list import AntdList
 from .list.item import AntdListItem
 from .list.item.meta import AntdListItemMeta
+from .masonry import AntdMasonry
+from .masonry.item import AntdMasonryItem
 from .mentions import AntdMentions
 from .mentions.option import AntdMentionsOption
 from .menu import AntdMenu

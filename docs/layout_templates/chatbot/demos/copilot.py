@@ -171,7 +171,7 @@ css = """
 }
 """
 
-with gr.Blocks(css=css) as demo, ms.Application() as app, antdx.XProvider():
+with gr.Blocks() as demo, ms.Application() as app, antdx.XProvider():
     with antd.Row(elem_classes="copilot-container", wrap=True):
         # Content column
         with antd.Col(md=16, xs=24,
@@ -322,4 +322,4 @@ achieve it.
               fn=resize_window,
               outputs=[copilot_open_btn, copilot_close_btn])
 if __name__ == "__main__":
-    demo.queue().launch()
+    demo.queue().launch(css=css)

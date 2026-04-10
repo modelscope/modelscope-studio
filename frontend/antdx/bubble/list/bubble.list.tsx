@@ -22,6 +22,7 @@ export const BubbleList = sveltify<BubbleListProps, ['items', 'roles']>(
         const resolvedSlotItems = slotItems.items?.length
           ? slotItems.items
           : slotItems.default;
+
         return (
           <>
             <div style={{ display: 'none' }}>{children}</div>

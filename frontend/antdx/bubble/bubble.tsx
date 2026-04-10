@@ -35,6 +35,7 @@ export const Bubble = sveltify<
   const editableConfig = getConfig(props.editable);
   const supportEdit =
     props.editable || slots['editable.cancelText'] || slots['editable.okText'];
+
   return (
     <>
       <div style={{ display: 'none' }}>{children}</div>

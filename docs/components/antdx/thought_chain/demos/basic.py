@@ -3,8 +3,6 @@ import modelscope_studio.components.antd as antd
 import modelscope_studio.components.antdx as antdx
 import modelscope_studio.components.base as ms
 
-default_collapsible = False
-
 
 def mock_content():
     with antd.Typography.Paragraph():
@@ -24,13 +22,10 @@ def mock_content():
 with gr.Blocks() as demo:
     with ms.Application():
         with antdx.XProvider():
-            collapsible = antd.Switch(default_collapsible,
-                                      checked_children="Collapsible",
-                                      un_checked_children="Not Collapsible")
             with antd.Card():
-                with antdx.ThoughtChain(
-                        collapsible=default_collapsible) as thought_chain:
-                    with antdx.ThoughtChain.Item(
+                with antdx.ThoughtChain():
+                    with antdx.ThoughtChain.ThoughtChainItem(
+                            collapsible=True,
                             title="Thought Chain Item Title 1",
                             description="description",
                             status="success"):
@@ -43,7 +38,7 @@ with gr.Blocks() as demo:
                         with ms.Slot("footer"):
                             antd.Button("Thought Chain Item Footer",
                                         block=True)
-                    with antdx.ThoughtChain.Item(
+                    with antdx.ThoughtChain.ThoughtChainItem(
                             title="Thought Chain Item Title 2",
                             description="description",
                             status="error"):
@@ -56,7 +51,7 @@ with gr.Blocks() as demo:
                         with ms.Slot("footer"):
                             antd.Button("Thought Chain Item Footer",
                                         block=True)
-                    with antdx.ThoughtChain.Item(
+                    with antdx.ThoughtChain.ThoughtChainItem(
                             title="Thought Chain Item Title 3",
                             description="description",
                             status="pending"):
@@ -69,8 +64,5 @@ with gr.Blocks() as demo:
                         with ms.Slot("footer"):
                             antd.Button("Thought Chain Item Footer",
                                         block=True)
-            collapsible.change(fn=lambda x: gr.update(collapsible=x),
-                               inputs=[collapsible],
-                               outputs=[thought_chain])
 if __name__ == "__main__":
     demo.queue().launch()

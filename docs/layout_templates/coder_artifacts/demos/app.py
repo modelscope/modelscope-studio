@@ -217,11 +217,12 @@ css = """
 }
 """
 
-with gr.Blocks(css=css) as demo:
+with gr.Blocks() as demo:
     # Global State
     state = gr.State({"system_prompt": DEFAULT_SYSTEM_PROMPT, "history": []})
     with ms.Application(elem_id="coder-artifacts") as app:
-        with antd.ConfigProvider(theme=DEFAULT_THEME, locale=DEFAULT_LOCALE):
+        with antd.ConfigProvider(theme_config=DEFAULT_THEME,
+                                 locale=DEFAULT_LOCALE):
             #  Header
             with antd.Flex(justify="center", align="center", gap="middle"):
                 antd.Typography.Title("Coder-Artifacts",
@@ -382,7 +383,6 @@ with gr.Blocks(css=css) as demo:
                             width="750px") as history_drawer:
                         history_output = gr.Chatbot(
                             show_label=False,
-                            type="messages",
                             height='100%',
                             elem_classes="history_chatbot")
                     # Tour
@@ -476,4 +476,4 @@ with gr.Blocks(css=css) as demo:
                                         outputs=[output_code_drawer])
 
 if __name__ == "__main__":
-    demo.queue().launch(ssr_mode=False)
+    demo.queue().launch(css=css, ssr_mode=False)

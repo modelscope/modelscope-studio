@@ -11,18 +11,27 @@ with gr.Blocks() as demo:
             )
             with antd.Flex(vertical=True, gap="middle"):
                 with antdx.Bubble(variant="filled", content="variant: filled"):
-                    with ms.Slot("avatar.icon"):
-                        antd.Icon("UserOutlined")
+                    with ms.Slot("avatar"):
+                        with antd.Avatar():
+                            with ms.Slot("icon"):
+                                antd.Icon("UserOutlined")
                 with antdx.Bubble(variant="outlined",
                                   content="variant: outlined"):
-                    with ms.Slot("avatar.icon"):
-                        antd.Icon("UserOutlined")
+
+                    with ms.Slot("avatar"):
+                        with antd.Avatar():
+                            with ms.Slot("icon"):
+                                antd.Icon("UserOutlined")
                 with antdx.Bubble(variant="shadow", content="variant: shadow"):
-                    with ms.Slot("avatar.icon"):
-                        antd.Icon("UserOutlined")
+                    with ms.Slot("avatar"):
+                        with antd.Avatar():
+                            with ms.Slot("icon"):
+                                antd.Icon("UserOutlined")
                 with antdx.Bubble(variant="borderless"):
-                    with ms.Slot("avatar.icon"):
-                        antd.Icon("UserOutlined")
+                    with ms.Slot("avatar"):
+                        with antd.Avatar():
+                            with ms.Slot("icon"):
+                                antd.Icon("UserOutlined")
                     with ms.Slot("content"):
                         with antdx.Prompts(
                                 vertical=True,

@@ -1,3 +1,4 @@
+import time
 import gradio as gr
 import modelscope_studio.components.antd as antd
 import modelscope_studio.components.antdx as antdx
@@ -14,6 +15,7 @@ def get_bubble_items(count):
             "content": content,
             "key": i - 1
         })
+    time.sleep(2)
     return result
 
 
@@ -27,7 +29,7 @@ with gr.Blocks() as demo:
 
     with ms.Application():
         state = gr.State({"history_count": 3})
-        with antdx.XProvider():
+        with antdx.XProvider(), ms.AutoLoading():
             antd.Typography.Paragraph(
                 "Preset Bubble list. Support auto scroll. Use role to set default properties of Bubble."
             )
@@ -35,10 +37,10 @@ with gr.Blocks() as demo:
                 with antd.Flex(gap="small",
                                elem_style=dict(alignSelf="flex-end")):
                     add_bubble_btn = antd.Button("Add Bubble")
-                    scroll_btn = antd.Button("Scroll To First")
-                with antdx.Bubble.List(items=get_bubble_items(3),
-                                       elem_style=dict(maxHeight=300),
-                                       elem_id="bubble-list") as bubble_list:
+                with antdx.Bubble.List(
+                        items=get_bubble_items(3),
+                        elem_style={"height": 300},
+                        class_names=dict(scroll="bubble-list")) as bubble_list:
                     # Define Role
                     with ms.Slot("role"):
                         with antdx.Bubble.List.Role(
@@ -51,9 +53,9 @@ with gr.Blocks() as demo:
                                         backgroundColor="#fde3cf")):
                                     with ms.Slot("icon"):
                                         antd.Icon("UserOutlined")
-                            # use messageRender to render markdown content
+                            # use contentRender to render markdown content
                             with ms.Slot(
-                                    "messageRender",
+                                    "contentRender",
                                     params_mapping="""content => content"""):
                                 ms.Markdown()
 
@@ -67,17 +69,12 @@ with gr.Blocks() as demo:
                                     with ms.Slot("icon"):
                                         antd.Icon("UserOutlined")
                             with ms.Slot(
-                                    "messageRender",
+                                    "contentRender",
                                     params_mapping="(content) => content"):
                                 ms.Markdown()
             add_bubble_btn.click(fn=add_bubble,
                                  inputs=[state],
                                  outputs=[state, bubble_list])
-            scroll_btn.click(fn=None,
-                             js="""() => {
-                const bubbleList = document.getElementById("bubble-list");
-                bubbleList.scrollTo({ top:0, behavior:'smooth' });
-}""")
 
 if __name__ == "__main__":
     demo.queue().launch()

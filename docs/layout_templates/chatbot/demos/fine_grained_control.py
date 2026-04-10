@@ -525,7 +525,7 @@ def logo():
             ms.Span("Chatbot")
 
 
-with gr.Blocks(css=css, fill_width=True) as demo:
+with gr.Blocks(fill_width=True) as demo:
     state = gr.State({
         "conversations_history": {},
         "conversations": [],
@@ -535,7 +535,8 @@ with gr.Blocks(css=css, fill_width=True) as demo:
     })
 
     with ms.Application(), antdx.XProvider(
-            theme=DEFAULT_THEME, locale=DEFAULT_LOCALE), ms.AutoLoading():
+            theme_config=DEFAULT_THEME,
+            locale=DEFAULT_LOCALE), ms.AutoLoading():
         with antd.Row(gutter=[20, 20], wrap=False, elem_id="chatbot"):
             # Left Column
             with antd.Col(md=dict(flex="0 0 260px", span=24, order=0),
@@ -580,9 +581,11 @@ with gr.Blocks(css=css, fill_width=True) as demo:
                             # Placeholder Role
                             with antdx.Bubble.List.Role(
                                     role="placeholder",
-                                    styles=dict(content=dict(width="100%")),
+                                    styles=dict(content=dict(width="100%"),
+                                                root=dict(paddingInlineEnd=0),
+                                                body=dict(width='100%')),
                                     variant="borderless"):
-                                with ms.Slot("messageRender"):
+                                with ms.Slot("contentRender"):
                                     with antd.Space(
                                             direction="vertical",
                                             size=16,
@@ -633,12 +636,12 @@ with gr.Blocks(css=css, fill_width=True) as demo:
                                     with antd.Avatar():
                                         with ms.Slot("icon"):
                                             antd.Icon("UserOutlined")
-                                with ms.Slot("messageRender",
+                                with ms.Slot("contentRender",
                                              params_mapping="""(content) => {
                                           if (typeof content === 'string') {
                                             return { content, files: [], files_container: { style: { display: 'none' }} }
                                           }
-                                          return { content: content.text, files_container: content.files?.length > 0 ? undefined : { style: { display: 'none' }}, files: (content.files || []).map(file => ({ item: file }))}
+                                          return { content: content.text, files_container: content.files?.length > 0 ? undefined : { style: { display: 'none' }}, files: (content.files || []).map(file => file)}
                                         }"""):
 
                                     with antd.Flex(vertical=True,
@@ -648,16 +651,17 @@ with gr.Blocks(css=css, fill_width=True) as demo:
                                                 wrap=True,
                                                 as_item="files_container"):
                                             with ms.Each(as_item="files"):
-                                                antdx.Attachments.FileCard()
+                                                antdx.FileCard()
                                         ms.Markdown(as_item="content")
                                 with ms.Slot("footer",
-                                             params_mapping="""(bubble) => {
+                                             params_mapping=
+                                             """(content, info, bubble) => {
                                                     return {
                                                       copy_btn: {
                                                         copyable: { text: typeof bubble.content === 'string' ? bubble.content : bubble.content?.text, tooltips: false },
                                                       },
-                                                      edit_btn: { conversationKey: bubble.key, disabled: bubble.meta.disabled },
-                                                      delete_btn: { conversationKey: bubble.key, disabled: bubble.meta.disabled },
+                                                      edit_btn: { conversationKey: bubble.key, disabled: bubble.meta?.disabled },
+                                                      delete_btn: { conversationKey: bubble.key, disabled: bubble.meta?.disabled },
                                                     };
                                              }"""):
                                     with antd.Typography.Text(
@@ -712,9 +716,9 @@ with gr.Blocks(css=css, fill_width=True) as demo:
                                     with antd.Avatar():
                                         with ms.Slot("icon"):
                                             antd.Icon("RobotOutlined")
-                                with ms.Slot(
-                                        "messageRender",
-                                        params_mapping="""(content, bubble) => {
+                                with ms.Slot("contentRender",
+                                             params_mapping=
+                                             """(content, info, bubble) => {
                                           if (bubble.meta?.canceled) {
                                             return { value: content }
                                           }
@@ -727,15 +731,16 @@ with gr.Blocks(css=css, fill_width=True) as demo:
                                         as_item="canceled",
                                         type="warning")
                                 with ms.Slot("footer",
-                                             params_mapping="""(bubble) => {
+                                             params_mapping=
+                                             """(content, info, bubble) => {
                                                   if (bubble?.meta?.end) {
                                                     return {
                                                       copy_btn: {
                                                         copyable: { text: bubble.content, tooltips: false },
                                                       },
-                                                      regenerate_btn: { conversationKey: bubble.key, disabled: bubble.meta.disabled },
-                                                      delete_btn: { conversationKey: bubble.key, disabled: bubble.meta.disabled },
-                                                      edit_btn: { conversationKey: bubble.key, disabled: bubble.meta.disabled },
+                                                      regenerate_btn: { conversationKey: bubble.key, disabled: bubble.meta?.disabled },
+                                                      delete_btn: { conversationKey: bubble.key, disabled: bubble.meta?.disabled },
+                                                      edit_btn: { conversationKey: bubble.key, disabled: bubble.meta?.disabled },
                                                       like_btn: {
                                                         conversationKey: bubble.key,
                                                         color: bubble.meta?.action === 'like' ? 'primary' : 'default',
@@ -1034,4 +1039,4 @@ with gr.Blocks(css=css, fill_width=True) as demo:
                   queue=False)
 
 if __name__ == "__main__":
-    demo.queue().launch(ssr_mode=False)
+    demo.queue().launch(css=css, ssr_mode=False)

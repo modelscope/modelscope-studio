@@ -7,8 +7,8 @@ with gr.Blocks() as demo:
     with ms.Application():
         with antdx.XProvider():
             with antd.Card():
-                with antdx.ThoughtChain(collapsible=True):
-                    with antdx.ThoughtChain.Item(
+                with antdx.ThoughtChain():
+                    with antdx.ThoughtChain.ThoughtChainItem(
                             title="1 - Thought Chain Item",
                             description="description"):
                         with ms.Slot("extra"):
@@ -17,7 +17,7 @@ with gr.Blocks() as demo:
                                     antd.Icon("MoreOutlined")
                         with ms.Slot("content"):
                             with antdx.ThoughtChain():
-                                with antdx.ThoughtChain.Item(
+                                with antdx.ThoughtChain.ThoughtChainItem(
                                         title="1-1 - Thought Chain Item",
                                         description="description"):
                                     with ms.Slot("extra"):
@@ -25,7 +25,7 @@ with gr.Blocks() as demo:
                                                          type="text"):
                                             with ms.Slot("icon"):
                                                 antd.Icon("MoreOutlined")
-                                with antdx.ThoughtChain.Item(
+                                with antdx.ThoughtChain.ThoughtChainItem(
                                         title="1-2 - Thought Chain Item",
                                         description="description"):
                                     with ms.Slot("extra"):
@@ -35,7 +35,7 @@ with gr.Blocks() as demo:
                                                 antd.Icon("MoreOutlined")
                         with ms.Slot("footer"):
                             antd.Button("1 - Thought Chain Item Footer")
-                    with antdx.ThoughtChain.Item(
+                    with antdx.ThoughtChain.ThoughtChainItem(
                             title="2 - Thought Chain Item",
                             description="description"):
                         with ms.Slot("extra"):
@@ -44,7 +44,7 @@ with gr.Blocks() as demo:
                                     antd.Icon("MoreOutlined")
                         with ms.Slot("content"):
                             with antdx.ThoughtChain():
-                                with antdx.ThoughtChain.Item(
+                                with antdx.ThoughtChain.ThoughtChainItem(
                                         title="2-1 - Thought Chain Item",
                                         description="description"):
                                     with ms.Slot("extra"):
@@ -52,7 +52,7 @@ with gr.Blocks() as demo:
                                                          type="text"):
                                             with ms.Slot("icon"):
                                                 antd.Icon("MoreOutlined")
-                                with antdx.ThoughtChain.Item(
+                                with antdx.ThoughtChain.ThoughtChainItem(
                                         title="2-2 - Thought Chain Item",
                                         description="description"):
                                     with ms.Slot("extra"):

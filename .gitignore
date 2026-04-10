@@ -61,3 +61,5 @@ yalc.lock
 .stylelintcache
 .DS_Store
 .pytest_cache
+
+.qoder

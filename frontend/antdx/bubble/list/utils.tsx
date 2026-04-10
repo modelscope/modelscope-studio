@@ -5,7 +5,6 @@ import type {
   RoleType,
 } from '@ant-design/x/es/bubble/interface';
 import { createFunction } from '@utils/createFunction';
-import { useMemoizedEqualValue } from '@utils/hooks/useMemoizedEqualValue';
 import { useMemoizedFn } from '@utils/hooks/useMemoizedFn';
 import { patchSlots } from '@utils/patchSlots';
 import { renderItems } from '@utils/renderItems';
@@ -20,22 +19,22 @@ function patchBubbleSlots(role: RoleProps, params: any[]) {
     return {
       ...role,
       avatar: patchSlotRender(role.avatar, {
-        unshift: true,
+        // unshift: true,
       }),
       extra: patchSlotRender(role.extra, {
-        unshift: true,
+        // unshift: true,
       }),
       footer: patchSlotRender(role.footer, {
-        unshift: true,
+        // unshift: true,
       }),
       header: patchSlotRender(role.header, {
-        unshift: true,
+        // unshift: true,
       }),
       loadingRender: patchSlotRender(role.loadingRender, {
-        unshift: true,
+        // unshift: true,
       }),
       contentRender: patchSlotRender(role.contentRender, {
-        unshift: true,
+        // unshift: true,
       }),
     };
   });
@@ -43,23 +42,16 @@ function patchBubbleSlots(role: RoleProps, params: any[]) {
 
 export interface UseRoleOptions<T = BubbleItemType> {
   role?: RoleType;
-  defaultRoleKeys?: string[];
   preProcess?: (bubbleProps: T, index: number) => RoleProps;
   defaultRolePostProcess?: (bubbleProps: T, index: number) => RoleProps | void;
 }
 
 export function useRole<T = BubbleItemType>(
-  {
-    role: roleProp,
-    defaultRoleKeys,
-    preProcess,
-    defaultRolePostProcess,
-  }: UseRoleOptions<T>,
+  { role: roleProp, preProcess, defaultRolePostProcess }: UseRoleOptions<T>,
   deps: React.DependencyList = []
 ) {
   const memoizedPreProcess = useMemoizedFn(preProcess);
   const memoizedDefaultRolePostProcess = useMemoizedFn(defaultRolePostProcess);
-  const memoizedDefaultRoleKeys = useMemoizedEqualValue(defaultRoleKeys);
 
   const {
     items: { role: roleItems },
@@ -88,26 +80,21 @@ export function useRole<T = BubbleItemType>(
       {}
     );
   }, [roleItems, roleProp]);
-  const resolvedRole = useMemo(() => {
-    const roleKeys = [
-      ...new Set([
-        ...(memoizedDefaultRoleKeys || []),
-        ...Object.keys(role || {}),
-      ]),
-    ];
-    if (roleKeys.length > 0) {
-      return roleKeys.reduce(
-        (acc, key) => {
+
+  const resolvedRole: typeof role = useMemo(() => {
+    return new Proxy(
+      {},
+      {
+        get: (_, key: string) => {
           if (typeof role[key] === 'string') {
             const functionRole = createFunction(role[key]);
             if (functionRole) {
-              acc[key] = functionRole;
+              return functionRole;
             }
           } else {
-            acc[key] = (data) => {
+            return (data: T) => {
               const index = data[messageIndexSymbol];
-              const preProcessResult =
-                memoizedPreProcess(data as T, index) || data;
+              const preProcessResult = memoizedPreProcess(data, index) || data;
               if (role[key]) {
                 return patchBubbleSlots(
                   isFunction(role[key])
@@ -124,7 +111,7 @@ export function useRole<T = BubbleItemType>(
                 return postProcessResult;
               }
               return {
-                contentRender(content) {
+                contentRender(content: any) {
                   return (
                     <>{isObject(content) ? JSON.stringify(content) : content}</>
                   );
@@ -132,14 +119,10 @@ export function useRole<T = BubbleItemType>(
               };
             };
           }
-          return acc;
         },
-        {} as typeof role
-      );
-    }
-    return role;
+      }
+    );
   }, [
-    memoizedDefaultRoleKeys,
     role,
     memoizedPreProcess,
     memoizedDefaultRolePostProcess,

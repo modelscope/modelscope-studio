@@ -85,7 +85,7 @@ export const AutoLoading = sveltify<
                   zIndex: token.zIndexPopupBase,
                   backgroundColor: showMask ? token.colorBgMask : undefined,
                 }}
-                tip={
+                description={
                   showLoadingText ? (
                     slots.loadingText ? (
                       renderParamsSlot({

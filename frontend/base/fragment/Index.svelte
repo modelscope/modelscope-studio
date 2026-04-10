@@ -15,6 +15,7 @@
   const getProceedProps = processProps(
     () => {
       const { visible, _internal, as_item, ...restProps } = getComponentProps();
+
       return {
         gradio,
         additionalProps: getAdditionalProps(),
@@ -44,6 +45,3 @@
     </Fragment>
   {/await}
 {/if}
-
-<style>
-</style>

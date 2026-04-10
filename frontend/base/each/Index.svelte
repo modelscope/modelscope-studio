@@ -93,8 +93,9 @@
         <EachItem
           context_value={merged_context_value || {}}
           value={item}
-          index={(proceedProps._internal.index || 0) + (subIndex || 0)}
+          index={(proceedProps._internal.index || 0) + (subIndex?.value || 0)}
           subIndex={(subIndex?.value || 0) + i}
+          gradio={proceedProps.gradio}
         >
           {@render children?.()}
         </EachItem>
