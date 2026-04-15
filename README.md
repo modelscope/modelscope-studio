@@ -33,12 +33,20 @@ However, when your application needs Gradio to handle more built-in data on the 
 
 ## Dependencies
 
-- Gradio >= 4.43.0
+- Gradio >= 6.0.0
+
+> Note: Your Gradio version must`<=6.8.0`, [why?](https://github.com/gradio-app/gradio/issues/13131)
 
 ## Installation
 
 ```sh
 pip install modelscope_studio
+```
+
+If you need to use `4.43.0 <= Gradio < 6.0.0`, please use 1.x version:
+
+```sh
+pip install modelscope_studio~=1.0
 ```
 
 ## Quick Start
@@ -60,22 +68,6 @@ demo.queue().launch()
 
 - ModelScope: [中文](https://modelscope.cn/studios/modelscope/modelscope-studio)
 - Hugging Face: [English](https://huggingface.co/spaces/modelscope/modelscope-studio)
-
-## Migration to 1.0
-
-If you have used the `modelscope_studio` component before and want to continue using it in the new version, you do not need to make any changes to the original component, just import `ms.Application` in the outer layer.
-
-```python
-import gradio as gr
-import modelscope_studio.components.base as ms
-import modelscope_studio.components.legacy as mgr
-
-with gr.Blocks() as demo:
-    with ms.Application():
-        mgr.Chatbot()
-
-demo.launch()
-```
 
 ## Development
 

@@ -33,12 +33,20 @@
 
 ## 依赖
 
-- Gradio >= 4.43.0
+- Gradio >= 6.0.0
+
+> 注意：您的 Gradio 版本必须`<=6.8.0`，[为什么？](https://github.com/gradio-app/gradio/issues/13131)
 
 ## 安装
 
 ```sh
 pip install modelscope_studio
+```
+
+如果您需要使用`4.43.0 <= Gradio < 6.0.0`，请使用 1.x 版本：
+
+```sh
+pip install modelscope_studio~=1.0
 ```
 
 ## 快速开始

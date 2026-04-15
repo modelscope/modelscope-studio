@@ -45,12 +45,20 @@ However, when your application needs Gradio to handle more built-in data on the 
 
 ## Dependencies
 
-- Gradio >= 4.43.0
+- Gradio >= 6.0.0
+
+> Note: Your Gradio version must`<=6.8.0`, [why?](https://github.com/gradio-app/gradio/issues/13131)
 
 ## Installation
 
 ```sh
 pip install modelscope_studio
+```
+
+If you need to use `4.43.0 <= Gradio < 6.0.0`, please use 1.x version:
+
+```sh
+pip install modelscope_studio~=1.0
 ```
 
 ## Examples
