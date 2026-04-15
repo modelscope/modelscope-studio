@@ -10,7 +10,7 @@ import { useItems, withItemsContextProvider } from './context';
 
 export const Breadcrumb = sveltify<
   GetProps<typeof ABreadcrumb>,
-  ['separator', 'itemRender']
+  ['separator', 'itemRender', 'dropdownIcon']
 >(
   withItemsContextProvider(
     ['default', 'items'],
@@ -23,6 +23,13 @@ export const Breadcrumb = sveltify<
           <div style={{ display: 'none' }}>{children}</div>
           <ABreadcrumb
             {...props}
+            dropdownIcon={
+              slots.dropdownIcon ? (
+                <ReactSlot slot={slots.dropdownIcon} clone />
+              ) : (
+                props.dropdownIcon
+              )
+            }
             itemRender={
               slots['itemRender']
                 ? renderParamsSlot(

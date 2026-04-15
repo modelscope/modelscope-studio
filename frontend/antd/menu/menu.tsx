@@ -1,6 +1,7 @@
 import { sveltify } from '@svelte-preprocess-react';
 import { ReactSlot } from '@svelte-preprocess-react/react-slot';
 import React, { useMemo } from 'react';
+import { useFunction } from '@utils/hooks/useFunction';
 import { omitUndefinedProps } from '@utils/omitUndefinedProps';
 import { renderItems } from '@utils/renderItems';
 import { renderParamsSlot } from '@utils/renderParamsSlot';
@@ -13,7 +14,7 @@ import './menu.less';
 
 export const Menu = sveltify<
   GetProps<typeof AMenu> & {},
-  ['expandIcon', 'overflowedIndicator']
+  ['expandIcon', 'overflowedIndicator', 'popupRender']
 >(
   withItemsContextProvider(
     ['default', 'items'],
@@ -29,6 +30,7 @@ export const Menu = sveltify<
       const { items: slotItems } = useItems<['default', 'items']>();
       const resolvedSlotItems =
         slotItems.items.length > 0 ? slotItems.items : slotItems.default;
+      const popupRenderFunction = useFunction(props.popupRender);
       return (
         <>
           <div style={{ display: 'none' }}>{children}</div>
@@ -71,6 +73,19 @@ export const Menu = sveltify<
               ) : (
                 props.overflowedIndicator
               )
+            }
+            popupRender={
+              slots.popupRender
+                ? renderParamsSlot(
+                    {
+                      key: 'popupRender',
+                      slots,
+                    },
+                    {
+                      clone: true,
+                    }
+                  )
+                : popupRenderFunction
             }
           />
         </>

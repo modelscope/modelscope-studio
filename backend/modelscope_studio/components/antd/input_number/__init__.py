@@ -54,6 +54,7 @@ class AntdInputNumber(ModelScopeDataLayoutComponent):
             keyboard: bool = True,
             max: int | float | None = None,
             min: int | float | None = None,
+            mode: Literal['default', 'spinner'] | None = None,
             parser: str | None = None,
             precision: int | float | None = None,
             prefix: str | None = None,
@@ -102,6 +103,7 @@ class AntdInputNumber(ModelScopeDataLayoutComponent):
         self.keyboard = keyboard
         self.max = max
         self.min = min
+        self.mode = mode
         self.parser = parser
         self.precision = precision
         self.prefix = prefix

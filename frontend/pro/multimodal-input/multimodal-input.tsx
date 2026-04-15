@@ -177,6 +177,19 @@ export const MultimodalInput = sveltify<
     );
     const uploadDisabled =
       disabled || uploadConfig?.disabled || loading || readOnly || uploading;
+    const accept = uploadConfig?.accept;
+    const acceptConfig = getConfig(accept);
+    const acceptFilterFunction = useFunction(acceptConfig.filter, true);
+    const resolvedAccept: typeof accept =
+      typeof accept === 'boolean'
+        ? accept
+        : accept
+          ? {
+              ...acceptConfig,
+              format: acceptConfig.format,
+              filter: acceptFilterFunction || acceptConfig.filter,
+            }
+          : undefined;
 
     const uploadFile = useMemoizedFn(async (file: File | File[]) => {
       try {
@@ -473,6 +486,7 @@ export const MultimodalInput = sveltify<
                     ]),
                     { omitNull: true }
                   )}
+                  accept={resolvedAccept}
                   imageProps={{
                     ...uploadConfig?.imageProps,
                   }}

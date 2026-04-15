@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+from gradio.events import EventListener
+
 from ....utils.dev import ModelScopeLayoutComponent, resolve_frontend_dir
 
 
@@ -7,7 +9,11 @@ class AntdWatermark(ModelScopeLayoutComponent):
     """
     Ant Design: https://ant.design/components/watermark
     """
-    EVENTS = []
+    EVENTS = [
+        EventListener("remove",
+                      callback=lambda block: block._internal.update(
+                          bind_remove_event=True)),
+    ]
 
     def __init__(
             self,

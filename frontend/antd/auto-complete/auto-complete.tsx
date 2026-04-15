@@ -29,6 +29,13 @@ const AutoCompleteChildrenWrapper = forwardRef<
   );
 });
 
+function getConfig<T>(value: T): Partial<T & Record<PropertyKey, any>> {
+  if (typeof value === 'object' && value !== null) {
+    return value as any;
+  }
+  return {} as any;
+}
+
 export const AutoComplete = sveltify<
   GetProps<typeof AAutoComplete> & {
     onValueChange: (value: string) => void;
@@ -53,9 +60,15 @@ export const AutoComplete = sveltify<
       getPopupContainer,
       dropdownRender,
       popupRender,
+      showSearch,
       elRef,
       ...props
     }) => {
+      const showSearchConfig = getConfig(showSearch);
+      const showSearchConfigFilterOption = useFunction(
+        showSearchConfig.filterOption
+      );
+
       const getPopupContainerFunction = useFunction(getPopupContainer);
       const filterOptionFunction = useFunction(filterOption);
       const dropdownRenderFunction = useFunction(dropdownRender);
@@ -75,6 +88,16 @@ export const AutoComplete = sveltify<
 
           <AAutoComplete
             {...props}
+            showSearch={
+              typeof showSearch === 'boolean'
+                ? showSearch
+                : typeof showSearch === 'object'
+                  ? {
+                      ...showSearchConfig,
+                      filterOption: showSearchConfigFilterOption,
+                    }
+                  : undefined
+            }
             value={value}
             ref={elRef}
             allowClear={

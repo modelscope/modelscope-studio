@@ -34,6 +34,7 @@ class AntdQRCode(ModelScopeComponent):
             error_level: Literal['L', 'M', 'Q', 'H'] | None = 'M',
             icon: str | None = None,
             icon_size: int | dict | None = 40,
+            margin_size: int | float | None = None,
             size: int = 160,
             status: Literal['active', 'expired', 'loading', 'scanned']
         | None = 'active',
@@ -69,6 +70,7 @@ class AntdQRCode(ModelScopeComponent):
         self.error_level = error_level
         self.icon = icon
         self.icon_size = icon_size
+        self.margin_size = margin_size
         self.size = size
         self.status = status
         self.status_render = status_render

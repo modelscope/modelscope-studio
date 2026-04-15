@@ -31,7 +31,7 @@ class AntdMenu(ModelScopeLayoutComponent):
     ]
 
     # supported slots
-    SLOTS = ["expandIcon", 'overflowedIndicator', "items"]
+    SLOTS = ["expandIcon", 'overflowedIndicator', "items", 'popupRender']
 
     def __init__(
             self,
@@ -56,6 +56,7 @@ class AntdMenu(ModelScopeLayoutComponent):
             theme: Literal['light', 'dark'] | None = None,
             theme_value: Literal['light', 'dark'] | None = None,
             trigger_sub_menu_action: Literal['click', 'hover'] = 'hover',
+            popup_render: str | None = None,
             root_class_name: str | None = None,
             class_names: dict | str | None = None,
             styles: dict | str | None = None,
@@ -94,6 +95,7 @@ class AntdMenu(ModelScopeLayoutComponent):
         self.sub_menu_close_delay = sub_menu_close_delay
         self.sub_menu_open_delay = sub_menu_open_delay
         self.theme = theme
+        self.popup_render = popup_render
         if theme:
             warnings.warn(
                 """<modelscope-studio>[antd.Menu.Item]:  the `theme` property conflicts with Gradio's preset properties. Please use `theme_value` instead."""

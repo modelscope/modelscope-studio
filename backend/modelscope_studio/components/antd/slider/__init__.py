@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from typing import Any
+from typing import Any, Literal
 
 from gradio.events import EventListener
 
@@ -49,6 +49,7 @@ class AntdSlider(ModelScopeDataLayoutComponent):
             step: int | float | None = 1,
             styles: dict | str | None = None,
             tooltip: dict | None = None,
+            orientation: Literal['horizontal', 'vertical'] | None = None,
             vertical: bool | None = None,
             root_class_name: str | None = None,
             as_item: str | None = None,
@@ -84,6 +85,7 @@ class AntdSlider(ModelScopeDataLayoutComponent):
         self.step = step
         self.styles = styles
         self.tooltip = tooltip
+        self.orientation = orientation
         self.vertical = vertical
         self.root_class_name = root_class_name
 

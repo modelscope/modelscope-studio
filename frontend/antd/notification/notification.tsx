@@ -13,7 +13,15 @@ export const Notification = sveltify<
       visible?: boolean;
       onVisible?: (visible: boolean) => void;
     },
-  ['btn', 'actions', 'closeIcon', 'description', 'icon', 'message']
+  [
+    'btn',
+    'actions',
+    'closeIcon',
+    'description',
+    'icon',
+    'message',
+    'closable.closeIcon',
+  ]
 >(
   ({
     slots,
@@ -41,6 +49,12 @@ export const Notification = sveltify<
           ...props,
           key: notificationKey,
           btn: slots.btn ? <ReactSlot slot={slots.btn} /> : props.btn,
+          closable: slots['closable.closeIcon']
+            ? {
+                ...(typeof props.closable === 'object' ? props.closable : {}),
+                closeIcon: <ReactSlot slot={slots['closable.closeIcon']} />,
+              }
+            : props.closable,
           actions: slots.actions ? (
             <ReactSlot slot={slots.actions} />
           ) : (

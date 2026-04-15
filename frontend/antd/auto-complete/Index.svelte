@@ -5,7 +5,6 @@
     processProps,
   } from '@svelte-preprocess-react/component';
   import { getSlots } from '@svelte-preprocess-react/svelte-contexts/slot.svelte';
-  import type React from 'react';
   import cls from 'classnames';
 
   const AwaitedAutoComplete = importComponent(() => import('./auto-complete'));
@@ -27,6 +26,7 @@
     };
     dropdown_visible_change?: any;
     popup_visible_change?: any;
+    show_search_search?: any;
   }>(() => props);
 
   const getProceedProps = processProps(
@@ -57,6 +57,7 @@
     {
       dropdown_visible_change: 'dropdownVisibleChange',
       popup_visible_change: 'popupVisibleChange',
+      show_search_search: 'showSearch_search',
     }
   );
   const proceedProps = $derived(getProceedProps());

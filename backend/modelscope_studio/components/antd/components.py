@@ -121,6 +121,8 @@ from .tabs import AntdTabs
 from .tabs.item import AntdTabsItem
 from .tag import AntdTag
 from .tag.checkable_tag import AntdTagCheckableTag
+from .tag.checkable_tag_group import AntdTagCheckableTagGroup
+from .tag.checkable_tag_group.option import AntdTagCheckableTagGroupOption
 from .time_picker import AntdTimePicker
 from .time_picker.range_picker import AntdTimePickerRangePicker
 from .timeline import AntdTimeline

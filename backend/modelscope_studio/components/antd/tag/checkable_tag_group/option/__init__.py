@@ -2,33 +2,25 @@ from __future__ import annotations
 
 from typing import Any
 
-from ....utils.dev import ModelScopeLayoutComponent, resolve_frontend_dir
-from .item import AntdBreadcrumbItem
+from ......utils.dev import ModelScopeLayoutComponent, resolve_frontend_dir
 
 
-class AntdBreadcrumb(ModelScopeLayoutComponent):
+class AntdTagCheckableTagGroupOption(ModelScopeLayoutComponent):
     """
-    Ant Design: https://ant.design/components/breadcrumb
+    Ant Design: https://ant.design/components/tag
     """
-    Item = AntdBreadcrumbItem
 
     EVENTS = []
 
     # supported slots
-    SLOTS = ['separator', 'itemRender', 'items', 'dropdownIcon']
+    SLOTS = ["label"]
 
     def __init__(
             self,
+            value: str | None = None,
+            label: str | None = None,
             additional_props: dict | None = None,
             *,
-            item_render: str | None = None,
-            params: dict | None = None,
-            items: list[dict] | None = None,
-            separator: str | None = None,
-            dropdown_icon: str | None = None,
-            root_class_name: str | None = None,
-            class_names: dict | str | None = None,
-            styles: dict | str | None = None,
             as_item: str | None = None,
             _internal: None = None,
             # gradio properties
@@ -45,17 +37,12 @@ class AntdBreadcrumb(ModelScopeLayoutComponent):
                          as_item=as_item,
                          elem_style=elem_style,
                          **kwargs)
-        self.class_names = class_names
-        self.styles = styles
         self.additional_props = additional_props
-        self.item_render = item_render
-        self.params = params
-        self.items = items
-        self.separator = separator
-        self.root_class_name = root_class_name
-        self.dropdown_icon = dropdown_icon
+        self.value = value
+        self.label = label
 
-    FRONTEND_DIR = resolve_frontend_dir("breadcrumb")
+    FRONTEND_DIR = resolve_frontend_dir("tag",
+                                        ['checkable-tag-group', 'option'])
 
     @property
     def skip_api(self):

@@ -34,6 +34,7 @@ export const Cascader = sveltify<
     'dropdownRender',
     'popupRender',
     'showSearch.render',
+    'optionRender',
   ]
 >(
   withItemsContextProvider(
@@ -110,7 +111,14 @@ export const Cascader = sveltify<
                 : showSearch
             }
             loadData={onLoadData}
-            optionRender={optionRenderFunction}
+            optionRender={
+              slots.optionRender
+                ? renderParamsSlot({
+                    slots,
+                    key: 'optionRender',
+                  })
+                : optionRenderFunction
+            }
             getPopupContainer={getPopupContainerFunction}
             prefix={
               slots.prefix ? <ReactSlot slot={slots.prefix} /> : props.prefix

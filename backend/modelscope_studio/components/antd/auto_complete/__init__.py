@@ -40,6 +40,9 @@ class AntdAutoComplete(ModelScopeDataLayoutComponent):
         EventListener("popup_visible_change",
                       callback=lambda block: block._internal.update(
                           bind_popupVisibleChange_event=True)),
+        EventListener("show_search_search",
+                      callback=lambda block: block._internal.update(
+                          bind_showSearch_search_event=True)),
     ]
 
     # supported slots
@@ -76,6 +79,7 @@ class AntdAutoComplete(ModelScopeDataLayoutComponent):
             status: Literal['error', 'warning'] | None = None,
             variant: Literal['outlined', 'borderless', 'filled']
         | None = None,
+            show_search: bool | dict | None = None,
             class_names: dict | str | None = None,
             styles: dict | str | None = None,
             root_class_name: str | None = None,
@@ -118,6 +122,7 @@ class AntdAutoComplete(ModelScopeDataLayoutComponent):
         self.variant = variant
         self.placement = placement
         self.size = size
+        self.show_search = show_search
         self.class_names = class_names
         self.styles = styles
         self.root_class_name = root_class_name

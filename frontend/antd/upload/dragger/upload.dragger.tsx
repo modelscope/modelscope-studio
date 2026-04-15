@@ -50,8 +50,21 @@ export const UploadDragger = sveltify<
     onRemove,
     fileList: fileListProp,
     maxCount,
+    accept,
     ...props
   }) => {
+    const acceptConfig = getConfig(accept);
+    const acceptFilterFunction = useFunction(acceptConfig.filter, true);
+    const resolvedAccept: typeof accept =
+      typeof accept === 'boolean'
+        ? accept
+        : accept
+          ? {
+              ...acceptConfig,
+              format: acceptConfig.format,
+              filter: acceptFilterFunction || acceptConfig.filter,
+            }
+          : undefined;
     const supportShowUploadListConfig =
       slots['showUploadList.downloadIcon'] ||
       slots['showUploadList.removeIcon'] ||
@@ -114,6 +127,7 @@ export const UploadDragger = sveltify<
     return (
       <AUpload.Dragger
         {...props}
+        accept={resolvedAccept}
         disabled={uploadDisabled}
         fileList={validFileList}
         data={dataFunction || data}

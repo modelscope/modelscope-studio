@@ -38,6 +38,7 @@ class AntdCollapse(ModelScopeLayoutComponent):
             destroy_on_hidden: bool | None = None,
             expand_icon: str | None = None,
             expand_icon_position: Literal['start', 'end'] | None = None,
+            expand_icon_placement: Literal['start', 'end'] | None = None,
             ghost: bool | None = None,
             items: list[dict] | None = None,
             size: Literal['large', 'middle', 'small'] | None = None,
@@ -72,6 +73,7 @@ class AntdCollapse(ModelScopeLayoutComponent):
         self.destroy_inactive_panel = destroy_inactive_panel
         self.expand_icon = expand_icon
         self.expand_icon_position = expand_icon_position
+        self.expand_icon_placement = expand_icon_placement
         self.ghost = ghost
         self.items = items
         self.size = size

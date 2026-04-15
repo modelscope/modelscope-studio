@@ -10,12 +10,18 @@
   } from '@svelte-preprocess-react/svelte-contexts/slot.svelte';
   import cls from 'classnames';
 
-  const AwaitedTimelineItem = importComponent(() => import('./timeline.item'));
+  const AwaitedCheckableTagGroupOption = importComponent(
+    () => import('./checkable-tag-group.option')
+  );
 
   const props = $props();
   const { gradio, getComponentProps, getAdditionalProps, children } = getProps<{
     additional_props?: Record<string, any>;
-    _internal: {};
+    as_item?: string | undefined;
+    _internal: {
+      layout?: boolean;
+      index?: number;
+    };
   }>(() => props);
   const slotKey = getSlotKey();
 
@@ -46,19 +52,22 @@
   const slots = getSlots();
 </script>
 
-{#await AwaitedTimelineItem then TimelineItem}
-  <TimelineItem
-    style={proceedProps.elem_style}
-    className={cls(proceedProps.elem_classes, 'ms-gr-antd-timeline-item')}
-    id={proceedProps.elem_id}
-    {...proceedProps.restProps}
-    {...proceedProps.additionalProps}
-    slots={slots.value}
-    itemIndex={proceedProps._internal.index || 0}
-    itemSlotKey={slotKey?.value}
-  >
-    {#if proceedProps.visible}
+{#if proceedProps.visible}
+  {#await AwaitedCheckableTagGroupOption then CheckableTagGroupOption}
+    <CheckableTagGroupOption
+      style={proceedProps.elem_style}
+      className={cls(
+        proceedProps.elem_classes,
+        'ms-gr-antd-checkable-tag-group-option'
+      )}
+      id={proceedProps.elem_id}
+      {...proceedProps.restProps}
+      {...proceedProps.additionalProps}
+      slots={slots.value}
+      itemIndex={proceedProps._internal.index || 0}
+      itemSlotKey={slotKey?.value}
+    >
       {@render children?.()}
-    {/if}
-  </TimelineItem>
-{/await}
+    </CheckableTagGroupOption>
+  {/await}
+{/if}

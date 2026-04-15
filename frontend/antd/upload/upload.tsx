@@ -51,8 +51,21 @@ export const Upload = sveltify<
     onRemove,
     maxCount,
     fileList: fileListProp,
+    accept,
     ...props
   }) => {
+    const acceptConfig = getConfig(accept);
+    const acceptFilterFunction = useFunction(acceptConfig.filter, true);
+    const resolvedAccept: typeof accept =
+      typeof accept === 'boolean'
+        ? accept
+        : accept
+          ? {
+              ...acceptConfig,
+              format: acceptConfig.format,
+              filter: acceptFilterFunction || acceptConfig.filter,
+            }
+          : undefined;
     const supportShowUploadListConfig =
       slots['showUploadList.downloadIcon'] ||
       slots['showUploadList.removeIcon'] ||
@@ -116,6 +129,7 @@ export const Upload = sveltify<
     return (
       <AUpload
         {...props}
+        accept={resolvedAccept}
         disabled={uploadDisabled}
         fileList={validFileList}
         data={dataFunction || data}

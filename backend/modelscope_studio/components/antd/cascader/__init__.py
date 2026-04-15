@@ -37,18 +37,10 @@ class AntdCascader(ModelScopeDataLayoutComponent):
 
     # supported slots
     SLOTS = [
-        'allowClear.clearIcon',
-        'suffixIcon',
-        'maxTagPlaceholder',
-        'notFoundContent',
-        'expandIcon',
-        'removeIcon',
-        'prefix',
-        'displayRender',
-        'tagRender',
-        'dropdownRender',
-        'popupRender'
-        'showSearch.render',
+        'allowClear.clearIcon', 'suffixIcon', 'maxTagPlaceholder',
+        'notFoundContent', 'expandIcon', 'removeIcon', 'prefix',
+        'displayRender', 'tagRender', 'dropdownRender', 'popupRender'
+        'showSearch.render', 'optionRender'
     ]
 
     def __init__(

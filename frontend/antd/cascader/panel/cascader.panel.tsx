@@ -1,8 +1,10 @@
 import { sveltify } from '@svelte-preprocess-react';
 import { ReactSlot } from '@svelte-preprocess-react/react-slot';
 import { useMemo } from 'react';
+import { useFunction } from '@utils/hooks/useFunction';
 import { useValueChange } from '@utils/hooks/useValueChange';
 import { renderItems } from '@utils/renderItems';
+import { renderParamsSlot } from '@utils/renderParamsSlot';
 import { Cascader as ACascader, type CascaderPanelProps } from 'antd';
 
 import { useItems, withItemsContextProvider } from '../context';
@@ -13,7 +15,7 @@ export const CascaderPanel = sveltify<
     onLoadData?: (...args: any[]) => void;
     children?: React.ReactNode;
   },
-  ['notFoundContent', 'expandIcon']
+  ['notFoundContent', 'expandIcon', 'optionRender']
 >(
   withItemsContextProvider(
     ['default', 'options'],
@@ -30,6 +32,7 @@ export const CascaderPanel = sveltify<
         onValueChange,
         value: props.value,
       });
+      const optionRenderFunction = useFunction(props.optionRender);
       const { items: slotItems } = useItems<['default', 'options']>();
       const resolvedSlotItems =
         slotItems.options.length > 0 ? slotItems.options : slotItems.default;
@@ -39,6 +42,11 @@ export const CascaderPanel = sveltify<
           <ACascader.Panel
             {...props}
             value={value}
+            optionRender={
+              slots.optionRender
+                ? renderParamsSlot({ slots, key: 'optionRender' })
+                : optionRenderFunction
+            }
             options={useMemo(() => {
               return (
                 options ||

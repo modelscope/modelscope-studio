@@ -57,7 +57,7 @@ class AntdUploadDragger(ModelScopeDataLayoutComponent):
             value: list[str] | Callable | None = None,
             additional_props: dict | None = None,
             *,
-            accept: str | None = None,
+            accept: str | dict | None = None,
             action: str | None = None,
             before_upload: str | None = None,
             custom_request: str | None = None,

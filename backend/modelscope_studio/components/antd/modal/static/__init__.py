@@ -45,6 +45,7 @@ class AntdModalStatic(ModelScopeLayoutComponent):
             confirm_loading: bool | None = None,
             destroy_on_close: bool | None = None,
             focus_trigger_after_close: bool | None = None,
+            focusable: dict | None = None,
             content: str | None = None,
             footer: str | None = None,
             force_render: bool | None = None,
@@ -92,6 +93,7 @@ class AntdModalStatic(ModelScopeLayoutComponent):
         self.close_icon = close_icon
         self.confirm_loading = confirm_loading
         self.destroy_on_close = destroy_on_close
+        self.focusable = focusable
         self.focus_trigger_after_close = focus_trigger_after_close
         self.content = content
         self.footer = footer

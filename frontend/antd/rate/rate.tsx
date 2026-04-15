@@ -20,6 +20,7 @@ export const Rate = sveltify<
     ...props
   }) => {
     const characterFunction = useFunction(character, true);
+
     return (
       <>
         <div style={{ display: 'none' }}>{children}</div>

@@ -21,7 +21,10 @@ class AntdNotification(ModelScopeLayoutComponent):
     ]
 
     # supported slots
-    SLOTS = ['actions', 'closeIcon', "description", "icon", "message"]
+    SLOTS = [
+        'actions', 'closable.closeIcon', 'closeIcon', "description", "icon",
+        "message", "title"
+    ]
 
     def __init__(
             self,
@@ -29,8 +32,10 @@ class AntdNotification(ModelScopeLayoutComponent):
             description: str | None = "",
             additional_props: dict | None = None,
             *,
+            title: str | None = None,
             type: Literal['success', 'info', 'warning', 'error'] | None = None,
             btn: str | None = None,
+            closable: bool | dict | None = None,
             close_icon: str | bool | None = None,
             duration: int | float | None = 4.5,
             show_progress: bool | None = None,
@@ -68,9 +73,11 @@ class AntdNotification(ModelScopeLayoutComponent):
         self.styles = styles
         self.additional_props = additional_props
         self.message = message
+        self.title = title
         self.type = type
         self.description = description
         self.btn = btn
+        self.closable = closable
         self.close_icon = close_icon
         self.duration = duration
         self.show_progress = show_progress

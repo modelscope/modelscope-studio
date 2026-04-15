@@ -31,7 +31,7 @@ class AntdTransfer(ModelScopeDataLayoutComponent):
     # supported slots
     SLOTS = [
         'selectionsIcon', 'titles', 'footer', 'locale.notFoundContent',
-        'selectAllLabels', 'render'
+        'selectAllLabels', 'render', 'actions'
     ]
 
     def __init__(
@@ -39,6 +39,7 @@ class AntdTransfer(ModelScopeDataLayoutComponent):
             value: list[float | int | str] | None = None,
             additional_props: dict | None = None,
             *,
+            actions: list[str] | None = None,
             data_source: list[dict] | None = None,
             disabled: bool | None = None,
             selections_icon: str | None = None,
@@ -83,6 +84,7 @@ class AntdTransfer(ModelScopeDataLayoutComponent):
         self.class_names = class_names
         self.styles = styles
         self.additional_props = additional_props
+        self.actions = actions
         self.data_source = data_source
         self.disabled = disabled
         self.selections_icon = selections_icon

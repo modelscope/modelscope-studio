@@ -25,12 +25,13 @@ class AntdDivider(ModelScopeLayoutComponent):
             *,
             dashed: bool | None = None,
             variant: Literal["dashed", "dotted", "solid"] = "solid",
-            orientation: Literal["left", "right", "center", "start",
-                                 "end"] = "center",
+            orientation: Literal["horizontal", "vertical"] = "horizontal",
             orientation_margin: str | int | float | None = None,
             plain: bool | None = None,
             type: Literal["horizontal", "vertical"] = "horizontal",
             size: Literal["small", "middle", "large"] | None = None,
+            title_placement: Literal["start", "end", "center"] | None = None,
+            vertical: bool | None = None,
             root_class_name: str | None = None,
             class_names: dict | str | None = None,
             styles: dict | str | None = None,
@@ -43,17 +44,6 @@ class AntdDivider(ModelScopeLayoutComponent):
             elem_style: dict | None = None,
             render: bool = True,
             **kwargs):
-        """
-        Parameters:
-            value: The wrapped title.
-            dashed: Whether line is dashed.
-            variant: Whether line is dashed, dotted or solid.
-            orientation: The position of title inside divider.
-            orientation_margin: The margin-left/right between the title and its closest border, while the orientation must be left or right, If a numeric value of type string is provided without a unit, it is assumed to be in pixels (px) by default.
-            plain: Divider text show as plain style.
-            type: The direction type of divider.
-            size: The size of divider. Only valid for horizontal layout.
-        """
         super().__init__(visible=visible,
                          elem_id=elem_id,
                          elem_classes=elem_classes,
@@ -69,6 +59,8 @@ class AntdDivider(ModelScopeLayoutComponent):
         self.variant = variant
         self.orientation = orientation
         self.orientation_margin = orientation_margin
+        self.title_placement = title_placement
+        self.vertical = vertical
         self.plain = plain
         self.type = type
         self.size = size

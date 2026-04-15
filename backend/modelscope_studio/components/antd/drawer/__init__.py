@@ -14,7 +14,16 @@ class AntdDrawer(ModelScopeLayoutComponent):
     EVENTS = [
         EventListener("close",
                       callback=lambda block: block._internal.update(
-                          bind_close_event=True))
+                          bind_close_event=True)),
+        EventListener("resizable_resize_start",
+                      callback=lambda block: block._internal.update(
+                          bind_resizable_resizeStart_event=True)),
+        EventListener("resizable_resize",
+                      callback=lambda block: block._internal.update(
+                          bind_resizable_resize_event=True)),
+        EventListener("resizable_resize_end",
+                      callback=lambda block: block._internal.update(
+                          bind_resizable_resizeEnd_event=True))
     ]
 
     # supported slots
@@ -35,6 +44,7 @@ class AntdDrawer(ModelScopeLayoutComponent):
             closable: bool | dict | None = None,
             destroy_on_close: bool | None = None,
             destroy_on_hidden: bool | None = None,
+            draggable: bool | None = None,
             extra: str | None = None,
             footer: str | None = None,
             force_render: bool | None = None,
@@ -45,6 +55,8 @@ class AntdDrawer(ModelScopeLayoutComponent):
             mask_closable: bool | None = None,
             placement: Literal['left', 'right', 'top', 'bottom'] | None = None,
             push: bool | dict | None = None,
+            resizable: bool | dict | None = None,
+            focusable: dict | None = None,
             size: Literal['default', 'large'] | None = None,
             styles: dict | str | None = None,
             title: str | None = None,
@@ -80,6 +92,8 @@ class AntdDrawer(ModelScopeLayoutComponent):
         self.class_names = class_names
         self.destroy_on_close = destroy_on_close
         self.destroy_on_hidden = destroy_on_hidden
+        self.draggable = draggable
+        self.focusable = focusable
         self.extra = extra
         self.footer = footer
         self.force_render = force_render
@@ -90,6 +104,7 @@ class AntdDrawer(ModelScopeLayoutComponent):
         self.mask_closable = mask_closable
         self.placement = placement
         self.push = push
+        self.resizable = resizable
         self.size = size
         self.styles = styles
         self.title = title

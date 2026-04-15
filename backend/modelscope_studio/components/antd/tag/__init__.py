@@ -6,6 +6,7 @@ from gradio.events import EventListener
 
 from ....utils.dev import ModelScopeLayoutComponent, resolve_frontend_dir
 from .checkable_tag import AntdTagCheckableTag
+from .checkable_tag_group import AntdTagCheckableTagGroup
 
 
 class AntdTag(ModelScopeLayoutComponent):
@@ -13,6 +14,7 @@ class AntdTag(ModelScopeLayoutComponent):
     Ant Design: https://ant.design/components/tag
     """
     CheckableTag = AntdTagCheckableTag
+    CheckableTagGroup = AntdTagCheckableTagGroup
 
     EVENTS = [
         EventListener("close",
@@ -28,6 +30,8 @@ class AntdTag(ModelScopeLayoutComponent):
             value: str | None = None,
             additional_props: dict | None = None,
             *,
+            disabled: bool | None = None,
+            href: str | None = None,
             bordered: bool | None = None,
             close_icon: str | bool | None = None,
             color: str | None = None,
@@ -60,6 +64,8 @@ class AntdTag(ModelScopeLayoutComponent):
         self.color = color
         self.icon = icon
         self.root_class_name = root_class_name
+        self.disabled = disabled
+        self.href = href
 
     FRONTEND_DIR = resolve_frontend_dir("tag")
 

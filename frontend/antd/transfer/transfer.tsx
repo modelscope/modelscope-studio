@@ -18,6 +18,7 @@ export const Transfer = sveltify<
     'locale.notFoundContent',
     'selectAllLabels',
     'render',
+    'actions',
   ]
 >(
   ({
@@ -34,6 +35,7 @@ export const Transfer = sveltify<
   }) => {
     const titles = useTargets(children, 'titles');
     const selectAllLabels = useTargets(children, 'selectAllLabels');
+    const actions = useTargets(children, 'actions');
     const renderFunction = useFunction(render);
     const listStyleFunction = useFunction(listStyle);
     const footerFunction = useFunction(footer);
@@ -87,6 +89,13 @@ export const Transfer = sveltify<
               : props.titles
           }
           listStyle={listStyleFunction || listStyle}
+          actions={
+            actions.length > 0
+              ? actions.map((target, index) => {
+                  return <ReactSlot slot={target} key={index} />;
+                })
+              : props.actions
+          }
           selectAllLabels={
             selectAllLabels.length > 0
               ? selectAllLabels.map((target, index) => {

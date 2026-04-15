@@ -37,6 +37,8 @@ class AntdProgress(ModelScopeComponent):
             gap_degree: int | float | None = None,
             gap_position: Literal['top', 'bottom', 'left', 'right']
         | None = None,
+            gap_placement: Literal['top', 'bottom', 'left', 'right']
+        | None = None,
             root_class_name: str | None = None,
             class_names: dict | str | None = None,
             styles: dict | str | None = None,
@@ -75,6 +77,7 @@ class AntdProgress(ModelScopeComponent):
         self.stroke_width = stroke_width
         self.gap_degree = gap_degree
         self.gap_position = gap_position
+        self.gap_placement = gap_placement
         self.root_class_name = root_class_name
 
     FRONTEND_DIR = resolve_frontend_dir("progress")

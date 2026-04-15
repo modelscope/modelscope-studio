@@ -1,46 +1,39 @@
 from __future__ import annotations
 
-from typing import Any, Literal
+from typing import Any
 
 from gradio.events import EventListener
 
 from .....utils.dev import ModelScopeDataLayoutComponent, resolve_frontend_dir
+from .option import AntdTagCheckableTagGroupOption
 
 
 # as inputs, outputs
-class AntdCascaderPanel(ModelScopeDataLayoutComponent):
+class AntdTagCheckableTagGroup(ModelScopeDataLayoutComponent):
     """
-    Ant Design: https://ant.design/components/cascader
+    Ant Design: https://ant.design/components/tag
     """
+    Option = AntdTagCheckableTagGroupOption
 
     EVENTS = [
         EventListener("change",
                       callback=lambda block: block._internal.update(
                           bind_change_event=True)),
-        EventListener("load_data",
-                      callback=lambda block: block._internal.update(
-                          bind_loadData_event=True)),
     ]
 
     # supported slots
-    SLOTS = ['notFoundContent', 'expandIcon', 'optionRender']
+    SLOTS = ["options"]
 
     def __init__(
             self,
-            value: list[str] | list[int | float] | None = None,
+            value: int | float | str | list[str | int | float] | None = None,
             additional_props: dict | None = None,
             *,
-            change_on_select: bool | None = None,
-            default_value: str | None = None,
-            expand_icon: str | None = None,
-            expand_trigger: Literal['click', 'hover'] = 'click',
-            filed_names: dict | None = None,
-            not_found_content: str | None = None,
-            options: list[dict] | None = None,
+            options: list[dict | int | float | str] | None = None,
+            disabled: bool | None = None,
             multiple: bool | None = None,
-            show_checked_strategy: Literal['SHOW_PARENT', 'SHOW_CHILD']
+            default_value: int | float | str | list[str | int | float]
         | None = None,
-            option_render: str | None = None,
             root_class_name: str | None = None,
             class_names: dict | str | None = None,
             styles: dict | str | None = None,
@@ -64,19 +57,13 @@ class AntdCascaderPanel(ModelScopeDataLayoutComponent):
         self.class_names = class_names
         self.styles = styles
         self.additional_props = additional_props
-        self.change_on_select = change_on_select
-        self.default_value = default_value
-        self.expand_icon = expand_icon
-        self.expand_trigger = expand_trigger
-        self.filed_names = filed_names
-        self.not_found_content = not_found_content
-        self.options = options
-        self.multiple = multiple
-        self.show_checked_strategy = show_checked_strategy
         self.root_class_name = root_class_name
-        self.option_render = option_render
+        self.options = options
+        self.disabled = disabled
+        self.multiple = multiple
+        self.default_value = default_value
 
-    FRONTEND_DIR = resolve_frontend_dir("cascader", "panel")
+    FRONTEND_DIR = resolve_frontend_dir("tag", 'checkable-tag-group')
 
     @property
     def skip_api(self):
@@ -85,28 +72,30 @@ class AntdCascaderPanel(ModelScopeDataLayoutComponent):
     def api_info(self) -> dict[str, Any]:
         return {
             "anyOf": [{
+                "type": "string"
+            }, {
+                "type": "number"
+            }, {
                 "type": "array",
                 "items": {
-                    "type": "string"
+                    "anyOf": [{
+                        "type": "number"
+                    }, {
+                        "type": "string"
+                    }]
                 }
-            }, {
-                "type": "string"
             }]
         }
 
-    def preprocess(
-        self, payload: None | list[str] | list[int | float]
-    ) -> None | list[str] | list[int | float]:
+    def preprocess(self, payload: bool | None) -> bool | None:
         return payload
 
-    def postprocess(
-        self, value: None | list[str] | list[int | float]
-    ) -> None | list[str] | list[int | float]:
+    def postprocess(self, value: bool | None) -> bool | None:
 
         return value
 
-    def example_payload(self) -> None:
+    def example_payload(self) -> Any:
         return None
 
-    def example_value(self) -> None:
+    def example_value(self) -> Any:
         return None

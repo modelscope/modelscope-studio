@@ -21,6 +21,7 @@ class AntdSegmentedOption(ModelScopeLayoutComponent):
             value: str | int | float | None = None,
             additional_props: dict | None = None,
             *,
+            tooltip: str | dict | None = None,
             icon: str | None = None,
             disabled: bool | None = None,
             as_item: str | None = None,
@@ -42,6 +43,7 @@ class AntdSegmentedOption(ModelScopeLayoutComponent):
         self.label = label
         self.value = value
         self.additional_props = additional_props
+        self.tooltip = tooltip
         self.icon = icon
         self.disabled = disabled
 

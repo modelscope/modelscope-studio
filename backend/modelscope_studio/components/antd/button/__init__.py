@@ -63,6 +63,7 @@ class AntdButton(ModelScopeLayoutComponent):
             html_type: Literal["button", "submit", "reset"] | None = None,
             icon: str | None = None,
             icon_position: Literal["start", "end"] | None = None,
+            icon_placement: Literal["start", "end"] | None = None,
             loading: bool | dict | None = None,
             shape: Literal["default", "circle", "round"] | None = None,
             size: Literal["large", "middle", "small"] | None = None,
@@ -124,6 +125,7 @@ class AntdButton(ModelScopeLayoutComponent):
         self.html_type = html_type
         self.icon = icon
         self.icon_position = icon_position
+        self.icon_placement = icon_placement
         self.loading = loading
         self.shape = shape
         self.size = size

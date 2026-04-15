@@ -36,6 +36,7 @@ class AntdRadioGroup(ModelScopeDataLayoutComponent):
             option_type: Literal['default', 'button'] | None = None,
             size: Literal['small', 'middle', 'large'] | None = None,
             block: bool | None = None,
+            vertical: bool | None = None,
             root_class_name: str | None = None,
             class_names: dict | str | None = None,
             styles: dict | str | None = None,
@@ -68,6 +69,7 @@ class AntdRadioGroup(ModelScopeDataLayoutComponent):
         self.size = size
         self.block = block
         self.root_class_name = root_class_name
+        self.vertical = vertical
 
     FRONTEND_DIR = resolve_frontend_dir("radio", "group")
 

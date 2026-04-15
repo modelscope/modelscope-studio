@@ -33,6 +33,7 @@ class AntdMessage(ModelScopeLayoutComponent):
             duration: float | int | None = None,
             icon: str | None = None,
             key: str | int | float | None = None,
+            pause_on_hover: bool | None = None,
             get_container: str | None = None,
             rtl: bool | None = None,
             top: int | float | None = None,
@@ -62,6 +63,7 @@ class AntdMessage(ModelScopeLayoutComponent):
         self.icon = icon
         self.type = type
         self.key = key
+        self.pause_on_hover = pause_on_hover
         self.get_container = get_container
         self.rtl = rtl
         self.top = top

@@ -50,6 +50,7 @@ class AntdTour(ModelScopeLayoutComponent):
             actions_render: str | None = None,
             z_index: int | None = None,
             get_popup_container: str | None = None,
+            keyboard: bool | None = None,
             root_class_name: str | None = None,
             class_names: dict | str | None = None,
             styles: dict | str | None = None,
@@ -86,6 +87,7 @@ class AntdTour(ModelScopeLayoutComponent):
         self.actions_render = actions_render
         self.z_index = z_index
         self.get_popup_container = get_popup_container
+        self.keyboard = keyboard
         self.root_class_name = root_class_name
 
     FRONTEND_DIR = resolve_frontend_dir("tour")

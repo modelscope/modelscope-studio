@@ -3,7 +3,7 @@ from __future__ import annotations
 import tempfile
 from dataclasses import field
 from pathlib import Path
-from typing import Optional
+from typing import Optional, Union
 
 import gradio_client.utils as client_utils
 from gradio import FileData, processing_utils
@@ -53,7 +53,7 @@ class MultimodalInputUploadConfig(GradioModel):
     allow_speech: Optional[bool] = False
     show_count: Optional[bool] = True
     upload_button_tooltip: Optional[str] = None
-    accept: Optional[str] = None
+    accept: Optional[Union[str, dict]] = None
     max_count: Optional[int] = None
     directory: Optional[bool] = False
     multiple: Optional[bool] = False

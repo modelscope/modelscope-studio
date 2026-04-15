@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from typing import Any
+
 from gradio.events import EventListener
 
 from ....utils.dev import ModelScopeLayoutComponent, resolve_frontend_dir

@@ -34,11 +34,13 @@ class AntdSpace(ModelScopeLayoutComponent):
             align: Literal['start', 'end', 'center', 'baseline'] | None = None,
             class_names: dict | str | None = None,
             styles: dict | str | None = None,
-            direction: Literal['vertical', 'horizontal'] | None = 'horizontal',
+            direction: Literal['vertical', 'horizontal'] | None = None,
+            orientation: Literal['vertical', 'horizontal'] | None = None,
             size: Literal['small', 'middle', 'large'] | int | float
         | list[Literal['small', 'middle', 'large'] | int | float]
         | None = None,
             split: str | None = None,
+            separator: str | None = None,
             wrap: bool | None = None,
             root_class_name: str | None = None,
             as_item: str | None = None,
@@ -55,8 +57,10 @@ class AntdSpace(ModelScopeLayoutComponent):
             align: Align items.
             class_names: dict | str | None
             direction: The space direction.
+            orientation: The space orientation (v6 alias for direction).
             size: The space size.
             split: Set split.
+            separator: Set separator (v6 alias for split).
             styles: dict | str | None
             wrap: Auto wrap line, when horizontal effective.
         """
@@ -72,8 +76,10 @@ class AntdSpace(ModelScopeLayoutComponent):
         self.class_names = class_names
         self.styles = styles
         self.direction = direction
+        self.orientation = orientation
         self.size = size
         self.split = split
+        self.separator = separator
         self.wrap = wrap
         self.root_class_name = root_class_name
 

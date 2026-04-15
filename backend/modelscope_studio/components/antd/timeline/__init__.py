@@ -20,9 +20,12 @@ class AntdTimeline(ModelScopeLayoutComponent):
             self,
             additional_props: dict | None = None,
             *,
-            mode: Literal["left", "alternate", "right"] | None = None,
+            mode: Literal["start", "alternate", "end"] | None = None,
             pending: str | bool | None = None,
             pending_dot: str | None = None,
+            orientation: Literal["horizontal", "vertical"] | None = None,
+            title_span: int | float | str | None = None,
+            variant: Literal["filled", "outlined"] | None = None,
             reverse: bool | None = None,
             items: list[dict] | None = None,
             root_class_name: str | None = None,
@@ -51,6 +54,9 @@ class AntdTimeline(ModelScopeLayoutComponent):
         self.pending = pending
         self.pending_dot = pending_dot
         self.reverse = reverse
+        self.orientation = orientation
+        self.title_span = title_span
+        self.variant = variant
         self.items = items
         self.root_class_name = root_class_name
 

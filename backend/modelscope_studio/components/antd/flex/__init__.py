@@ -22,6 +22,7 @@ class AntdFlex(ModelScopeLayoutComponent):
             self,
             additional_props: dict | None = None,
             *,
+            orientation: Literal['horizontal', 'vertical'] | None = None,
             vertical: bool | None = None,
             wrap: Literal['nowrap', 'wrap', 'wrap-reverse'] | bool = "nowrap",
             justify: Literal['normal', 'start', 'end', 'flex-start',
@@ -67,6 +68,7 @@ class AntdFlex(ModelScopeLayoutComponent):
         self.class_names = class_names
         self.styles = styles
         self.additional_props = additional_props
+        self.orientation = orientation
         self.vertical = vertical
         self.wrap = wrap
         self.justify = justify

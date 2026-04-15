@@ -43,6 +43,9 @@ class AntdSelect(ModelScopeDataLayoutComponent):
         EventListener("popup_visible_change",
                       callback=lambda block: block._internal.update(
                           bind_popupVisibleChange_event=True)),
+        EventListener("active",
+                      callback=lambda block: block._internal.update(
+                          bind_active_event=True)),
     ]
 
     # supported slots
@@ -86,7 +89,7 @@ class AntdSelect(ModelScopeDataLayoutComponent):
             mode: Literal['multiple', 'tags'] | None = None,
             not_found_content: str | None = None,
             open: bool | None = None,
-            option_filter_prop: str | None = None,
+            option_filter_prop: str | list[str] | None = None,
             option_label_prop: str | None = None,
             options: list[dict] | None = None,
             option_render: str | None = None,

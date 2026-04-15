@@ -20,6 +20,7 @@
 
     resize_start?: any;
     resize_end?: any;
+    dragger_double_click?: any;
   }>(() => props);
 
   const getProceedProps = processProps(
@@ -48,6 +49,7 @@
     {
       resize_start: 'resizeStart',
       resize_end: 'resizeEnd',
+      dragger_double_click: 'draggerDoubleClick',
     }
   );
   const proceedProps = $derived(getProceedProps());

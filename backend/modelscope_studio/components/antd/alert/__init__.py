@@ -16,7 +16,13 @@ class AntdAlert(ModelScopeLayoutComponent):
     EVENTS = [
         EventListener("close",
                       callback=lambda block: block._internal.update(
-                          bind_close_event=True))
+                          bind_close_event=True)),
+        EventListener("click",
+                      callback=lambda block: block._internal.update(
+                          bind_click_event=True)),
+        EventListener("closable_close",
+                      callback=lambda block: block._internal.update(
+                          bind_closable_close_event=True))
     ]
 
     # supported slots

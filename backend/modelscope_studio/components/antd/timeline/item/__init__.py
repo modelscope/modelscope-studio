@@ -12,16 +12,18 @@ class AntdTimelineItem(ModelScopeLayoutComponent):
     EVENTS = []
 
     # supported slots
-    SLOTS = ['dot', "label", "children"]
+    SLOTS = ['icon', "content", "title"]
 
     def __init__(
             self,
             additional_props: dict | None = None,
             *,
             color: str | None = None,
-            dot: str | None = None,
-            label: str | None = None,
-            position: Literal["left", "right"] | None = None,
+            icon: str | None = None,
+            content: str | None = None,
+            title: str | None = None,
+            placement: Literal["start", "end"] | None = None,
+            loading: bool | None = None,
             as_item: str | None = None,
             _internal: None = None,
             # gradio properties
@@ -40,9 +42,11 @@ class AntdTimelineItem(ModelScopeLayoutComponent):
                          **kwargs)
         self.additional_props = additional_props
         self.color = color
-        self.dot = dot
-        self.label = label
-        self.position = position
+        self.loading = loading
+        self.icon = icon
+        self.content = content
+        self.title = title
+        self.placement = placement
 
     FRONTEND_DIR = resolve_frontend_dir("timeline", "item")
 

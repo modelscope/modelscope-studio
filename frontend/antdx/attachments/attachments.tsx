@@ -79,8 +79,21 @@ export const Attachments = sveltify<
     children,
     maxCount,
     imageProps,
+    accept,
     ...props
   }) => {
+    const acceptConfig = getConfig(accept);
+    const acceptFilterFunction = useFunction(acceptConfig.filter, true);
+    const resolvedAccept: typeof accept =
+      typeof accept === 'boolean'
+        ? accept
+        : accept
+          ? {
+              ...acceptConfig,
+              format: acceptConfig.format,
+              filter: acceptFilterFunction || acceptConfig.filter,
+            }
+          : undefined;
     // imageProps
     const previewConfig = getConfig(imageProps?.preview);
     const supportPreview =
@@ -173,6 +186,7 @@ export const Attachments = sveltify<
         </div>
         <XAttachments
           {...props}
+          accept={resolvedAccept}
           disabled={uploadDisabled}
           imageProps={{
             ...imageProps,

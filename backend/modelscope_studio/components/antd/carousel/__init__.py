@@ -22,6 +22,8 @@ class AntdCarousel(ModelScopeLayoutComponent):
             adaptive_height: bool | None = None,
             dot_position: Literal['top', 'bottom', 'left', 'right']
         | None = 'bottom',
+            dot_placement: Literal['top', 'bottom', 'start', 'end']
+        | None = None,
             dots: bool | dict | None = True,
             draggable: bool | None = None,
             fade: bool | None = None,
@@ -59,6 +61,7 @@ class AntdCarousel(ModelScopeLayoutComponent):
         self.autoplay_speed = autoplay_speed
         self.adaptive_height = adaptive_height
         self.dot_position = dot_position
+        self.dot_placement = dot_placement
         self.dots = dots
         self.draggable = draggable
         self.fade = fade

@@ -36,6 +36,10 @@ class AntdSplitter(ModelScopeLayoutComponent):
                       doc="Callback when expanding or collapsing.",
                       callback=lambda block: block._internal.update(
                           bind_collapse_event=True)),
+        EventListener("dragger_double_click",
+                      doc="Callback when dragger double clicked.",
+                      callback=lambda block: block._internal.update(
+                          bind_draggerDoubleClick_event=True)),
     ]
 
     def __init__(
@@ -43,6 +47,8 @@ class AntdSplitter(ModelScopeLayoutComponent):
             additional_props: dict | None = None,
             *,
             layout: Literal['horizontal', 'vertical'] | None = 'horizontal',
+            orientation: Literal['horizontal', 'vertical'] | None = None,
+            vertical: bool | None = None,
             lazy: bool | None = None,
             root_class_name: str | None = None,
             class_names: dict | str | None = None,
@@ -56,10 +62,6 @@ class AntdSplitter(ModelScopeLayoutComponent):
             elem_style: dict | None = None,
             render: bool = True,
             **kwargs):
-        """
-        Parameters:
-            layout: Layout direction.
-        """
         super().__init__(visible=visible,
                          elem_id=elem_id,
                          elem_classes=elem_classes,
@@ -71,6 +73,8 @@ class AntdSplitter(ModelScopeLayoutComponent):
         self.styles = styles
         self.additional_props = additional_props
         self.layout = layout
+        self.vertical = vertical
+        self.orientation = orientation
         self.lazy = lazy
         self.root_class_name = root_class_name
 

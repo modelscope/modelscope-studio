@@ -4,6 +4,13 @@ import React from 'react';
 import { useFunction } from '@utils/hooks/useFunction';
 import { Alert as AAlert, type GetProps } from 'antd';
 
+function getConfig<T>(value: T): Partial<T & Record<PropertyKey, any>> {
+  if (typeof value === 'object' && value !== null) {
+    return value as any;
+  }
+  return {} as any;
+}
+
 export const Alert = sveltify<
   GetProps<typeof AAlert> & {
     children?: React.ReactNode;
@@ -11,6 +18,8 @@ export const Alert = sveltify<
   ['action', 'closable.closeIcon', 'description', 'icon', 'message']
 >(({ slots, afterClose, children, ...props }) => {
   const afterCloseFunction = useFunction(afterClose);
+  const closableConfig = getConfig(props.closable);
+  const closableAfterCloseFunction = useFunction(closableConfig.afterClose);
   return (
     <>
       <div style={{ display: 'none' }}>{children}</div>
@@ -21,7 +30,12 @@ export const Alert = sveltify<
         closable={
           slots['closable.closeIcon']
             ? {
-                ...(typeof props.closable === 'object' ? props.closable : {}),
+                ...(typeof props.closable === 'object'
+                  ? props.closable
+                  : {
+                      ...closableConfig,
+                      afterClose: closableAfterCloseFunction,
+                    }),
                 closeIcon: <ReactSlot slot={slots['closable.closeIcon']} />,
               }
             : props.closable

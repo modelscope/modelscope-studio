@@ -70,10 +70,10 @@ from .layout.sider import AntdLayoutSider as LayoutSider
 from .list import AntdList as List
 from .list.item import AntdListItem as ListItem
 from .list.item.meta import AntdListItemMeta as ListItemMeta
-from .mentions import AntdMentions as Mentions
-from .mentions.option import AntdMentionsOption as MentionsOption
 from .masonry import AntdMasonry as Masonry
 from .masonry.item import AntdMasonryItem as MasonryItem
+from .mentions import AntdMentions as Mentions
+from .mentions.option import AntdMentionsOption as MentionsOption
 from .menu import AntdMenu as Menu
 from .menu.item import AntdMenuItem as MenuItem
 from .message import AntdMessage as Message
@@ -125,6 +125,10 @@ from .tabs import AntdTabs as Tabs
 from .tabs.item import AntdTabsItem as TabsItem
 from .tag import AntdTag as Tag
 from .tag.checkable_tag import AntdTagCheckableTag as TagCheckableTag
+from .tag.checkable_tag_group import \
+  AntdTagCheckableTagGroup as TagCheckableTagGroup
+from .tag.checkable_tag_group.option import \
+  AntdTagCheckableTagGroupOption as TagCheckableTagGroupOption
 from .time_picker import AntdTimePicker as TimePicker
 from .time_picker.range_picker import \
   AntdTimePickerRangePicker as TimePickerRangePicker
