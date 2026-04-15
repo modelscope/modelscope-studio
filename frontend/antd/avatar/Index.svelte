@@ -5,7 +5,6 @@
     processProps,
   } from '@svelte-preprocess-react/component';
   import { getSlots } from '@svelte-preprocess-react/svelte-contexts/slot.svelte';
-  import type React from 'react';
   import type { FileData } from '@gradio/client';
   import cls from 'classnames';
 

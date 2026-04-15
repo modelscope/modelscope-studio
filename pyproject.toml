@@ -23,7 +23,7 @@ keywords = [
   'gradio-antdx',
 ]
 # Add dependencies here
-dependencies = ["6.0=<gradio<=6.8.0"]
+dependencies = ["gradio>=6.0,<=6.8.0"]
 classifiers = [
   'Development Status :: 3 - Alpha',
   'License :: OSI Approved :: Apache Software License',

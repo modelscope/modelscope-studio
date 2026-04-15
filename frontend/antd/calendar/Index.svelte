@@ -5,7 +5,6 @@
     processProps,
   } from '@svelte-preprocess-react/component';
   import { getSlots } from '@svelte-preprocess-react/svelte-contexts/slot.svelte';
-  import type React from 'react';
   import cls from 'classnames';
 
   const AwaitedCalender = importComponent(() => import('./calendar'));
