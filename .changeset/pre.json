@@ -11,7 +11,5 @@
     "@modelscope-studio/base": "1.6.1",
     "@modelscope-studio/pro": "1.6.1"
   },
-  "changesets": [
-    "eleven-aliens-sell"
-  ]
+  "changesets": ["eleven-aliens-sell", "pink-sails-itch"]
 }

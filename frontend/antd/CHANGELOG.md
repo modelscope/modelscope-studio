@@ -1,5 +1,11 @@
 # @modelscope-studio/antd
 
+## 2.0.0-beta.1
+
+### Features
+
+- [`e009cd0`](https://github.com/modelscope/modelscope-studio/commit/e009cd0408d4505f4105e494af192c6f832fa48c) - complete new features of antd & antdx. Thanks [@Col0ring](https://github.com/Col0ring)!
+
 ## 2.0.0-beta.0
 
 ### Misc Changes
