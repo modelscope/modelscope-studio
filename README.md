@@ -69,6 +69,10 @@ demo.queue().launch()
 - ModelScope: [中文](https://modelscope.cn/studios/modelscope/modelscope-studio)
 - Hugging Face: [English](https://huggingface.co/spaces/modelscope/modelscope-studio)
 
+## Wiki
+
+[Link](./.wiki/en)
+
 ## Development
 
 Clone this repo locally:

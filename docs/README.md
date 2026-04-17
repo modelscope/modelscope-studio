@@ -64,19 +64,3 @@ pip install modelscope_studio~=1.0
 ## Examples
 
 <demo name="example"></demo>
-
-## Migration to 1.0
-
-If you have used the `modelscope_studio` component before and want to continue using it in the new version, you do not need to make any changes to the original component, just import `ms.Application` in the outer layer.
-
-```python
-import gradio as gr
-import modelscope_studio.components.base as ms
-import modelscope_studio.components.legacy as mgr
-
-with gr.Blocks() as demo:
-    with ms.Application():
-        mgr.Chatbot()
-
-demo.launch()
-```

@@ -69,21 +69,9 @@ demo.queue().launch()
 - ModelScope: [中文](https://modelscope.cn/studios/modelscope/modelscope-studio)
 - Hugging Face: [English](https://huggingface.co/spaces/modelscope/modelscope-studio)
 
-## 迁移到 1.0
+## Wiki
 
-如果您在之前使用了`modelscope_studio`的组件，并且想要在新版本中继续使用。不需要对原有组件做任何修改，只需要在外层引入`ms.Application`即可。
-
-```python
-import gradio as gr
-import modelscope_studio.components.base as ms
-import modelscope_studio.components.legacy as mgr
-
-with gr.Blocks() as demo:
-    with ms.Application():
-        mgr.Chatbot()
-
-demo.launch()
-```
+[链接](./.wiki/zh)
 
 ## 开发
 
