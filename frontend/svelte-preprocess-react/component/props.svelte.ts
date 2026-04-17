@@ -270,7 +270,10 @@ export function processProps<
   }
 
   // for loading_status
-  if (shouldSetLoadingStatus) {
+  if (
+    shouldSetLoadingStatus &&
+    props.additionalProps?.ms_auto_loading !== false
+  ) {
     setLoadingStatus(() => props.restProps.loading_status);
   }
 

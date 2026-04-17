@@ -25,7 +25,7 @@ client = OpenAI(
     api_key=MODELSCOPE_ACCESS_TOKEN,
 )
 
-model = "Qwen/Qwen2.5-VL-72B-Instruct"
+model = "Qwen/Qwen3-VL-8B-Instruct"
 
 save_history = False
 

@@ -32,6 +32,7 @@ class Site:
                 if key in tab_docs:
                     with antd.Tabs.Item(
                             key=key,
+                            additional_props=dict(ms_auto_loading=False),
                             visible=True if tab.get("default_active_key")
                             == key else False) as docs_tab:
                         docs_tabs.append(docs_tab)
@@ -107,6 +108,8 @@ class Site:
                                 for tab in self.tabs:
                                     with antd.Tabs.Item(
                                             key=tab["key"],
+                                            additional_props=dict(
+                                                ms_auto_loading=False),
                                             elem_style=dict(
                                                 height=
                                                 "calc(100vh - var(--size-4) - var(--body-text-size) * 1.5 - 64px)"

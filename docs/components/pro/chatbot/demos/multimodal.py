@@ -19,7 +19,7 @@ client = OpenAI(
     api_key=os.getenv("MODELSCOPE_ACCESS_TOKEN"),  # ModelScope Token
 )
 
-model = "Qwen/Qwen2.5-VL-72B-Instruct"
+model = "Qwen/Qwen3-VL-8B-Instruct"
 
 
 def prompt_select(input_value, e: gr.EventData):

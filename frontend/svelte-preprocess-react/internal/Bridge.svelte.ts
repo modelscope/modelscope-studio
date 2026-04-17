@@ -21,7 +21,7 @@ import type { TreeNode } from './types';
 
 // omit attached_events
 function omitNodeProps(props: Record<string, any>) {
-  const excludes = ['attachedEvents', '$$slots'];
+  const excludes = ['attachedEvents', '$$slots', 'ms_auto_loading'];
   const newProps = { ...props };
   for (const exclude of excludes) {
     if (Reflect.has(newProps, exclude)) {
