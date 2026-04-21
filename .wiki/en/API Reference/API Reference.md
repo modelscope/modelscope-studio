@@ -159,7 +159,7 @@ Diagram Sources
 ### Python API Reference (Overview)
 
 - Version and Dependencies
-  - Version: 2.0.0-beta.1
+  - Version: 2.0.0
   - Dependencies: Gradio 6.0 ≤ v ≤ 6.8.0
 - Import Methods
   - `from modelscope_studio import ComponentName`
@@ -392,7 +392,7 @@ Section Sources
 
 - Python Side
   - Dependencies: Gradio 6.0 ≤ v ≤ 6.8.0
-  - Version: 2.0.0-beta.1
+  - Version: 2.0.0
 - Frontend Side
   - Build scripts: Component builds executed via Gradio CLI
   - Dev scripts: Start the documentation site dev server
@@ -501,7 +501,7 @@ This API reference document outlines ModelScope Studio's Python and frontend com
   - Frontend Components: Refer to the Svelte files under each sub-package
   - Utility Functions: Refer to hooks and renderers in the `utils` directory
 - Version and Compatibility
-  - Python: 2.0.0-beta.1
+  - Python: 2.0.0
   - Gradio: 6.0 ≤ v ≤ 6.8.0
 - Build and Development
   - Build command: `pnpm run build`

@@ -49,7 +49,7 @@ This guide is intended for first-time ModelScope Studio users, helping you compl
 - Component library import and usage patterns
 - Quick resolution of common issues
 
-**Important Update**: ModelScope Studio 2.0.0-beta.1 has migrated to the Gradio 6.0 ecosystem, supporting version ranges >=6.0.0 and <=6.8.0.
+**Important Update**: ModelScope Studio 2.0.0 has migrated to the Gradio 6.0 ecosystem, supporting version ranges >=6.0.0 and <=6.8.0.
 
 ## Project Structure
 
@@ -260,11 +260,11 @@ Feedback --> End(["Complete"])
 - Python environment and version
   - Python version requirement: >=3.8
   - **Gradio dependency range**: >=6.0.0 and <=6.8.0
-  - **Important note**: The current example uses 5.34.1, but version 2.0.0-beta.1 has migrated to the Gradio 6.0 ecosystem
+  - **Important note**: The current example uses 5.34.1, but version 2.0.0 has migrated to the Gradio 6.0 ecosystem
 - Frontend dependencies
   - Ant Design 6.x, Ant Design X 2.x, React 19, Svelte 5, @gradio/\* series, etc.
 - Documentation and example dependencies
-  - Example scripts and the documentation site use `modelscope_studio==2.0.0-beta.1`
+  - Example scripts and the documentation site use `modelscope_studio==2.0.0`
 
 **Important Update**: For version migration details, please refer to [Migration Guide](#migration-guide)
 
@@ -292,7 +292,7 @@ Front --> Antd["Antd 6 / Antd X 2 Components"]
 
 **Gradio 6.0 Migration Guide**
 
-ModelScope Studio 2.0.0-beta.1 has completed a major migration from Gradio 4.x to 6.x, involving the following key changes:
+ModelScope Studio 2.0.0 has completed a major migration from Gradio 4.x to 6.x, involving the following key changes:
 
 #### Version Range Description
 
@@ -313,11 +313,8 @@ pip install modelscope_studio~=1.0
 For new projects with Gradio 6.0+, use the latest version:
 
 ```bash
-pip install modelscope_studio==2.0.0-beta.1
+pip install modelscope_studio==2.0.0
 ```
-
-> **❗ Beta Version Stability Risk Notice**
-> `2.0.0-beta.1` is a pre-release version; the API may not yet be formally stable, and some features may change in subsequent versions. Production environments are recommended to wait for the official release before upgrading; if you need to experience new features in advance, please thoroughly evaluate the changelog and back up your current environment.
 
 #### Compatibility Notes
 
@@ -352,7 +349,7 @@ pip install modelscope_studio==2.0.0-beta.1
 - **Gradio version conflict**
   - Ensure Gradio version is in the range >=6.0.0 and <=6.8.0
   - If using an older version of Gradio, downgrade to modelscope_studio 1.x
-  - If using a newer version of Gradio, upgrade to modelscope_studio 2.0.0-beta.1
+  - If using a newer version of Gradio, upgrade to modelscope_studio 2.0.0
 
 **Section Sources**
 
@@ -423,7 +420,7 @@ It is recommended to progressively introduce more components in subsequent devel
 | Gradio Version    | ModelScope Studio Version | Support Status   |
 | ----------------- | ------------------------- | ---------------- |
 | >=4.43.0,<6.0.0   | 1.x                       | ✅ Supported     |
-| >=6.0.0,<=6.8.0   | 2.0.0-beta.1              | ✅ Supported     |
+| >=6.0.0,<=6.8.0   | 2.0.0                     | ✅ Supported     |
 | <4.43.0 or >6.8.0 | Any                       | ❌ Not Supported |
 
 > **⚠️ Note: Why Gradio >6.8.0 is not supported**

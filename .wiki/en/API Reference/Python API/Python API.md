@@ -429,5 +429,5 @@ ModelScope Studio's Python API, with its clear component family divisions and un
 
 ### Version Compatibility
 
-- Current version: 2.0.0-beta.1
+- Current version: 2.0.0
   - Reference: [backend/modelscope_studio/version.py:1-2](file://backend/modelscope_studio/version.py#L1-L2)

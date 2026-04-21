@@ -414,7 +414,7 @@ The Application component, as the application root container for modelscope-stud
 
 ## Appendix
 
-- Version information: v2.0.0-beta.1
+- Version information: v2.0.0
 - Related documentation: English and Chinese documentation for the Application component, including examples and API descriptions.
 
 Section Sources

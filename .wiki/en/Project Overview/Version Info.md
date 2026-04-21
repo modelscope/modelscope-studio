@@ -20,9 +20,9 @@
 
 **Changes**
 
-- Version number updated from 2.0.0-beta.0 to 2.0.0-beta.1
+- Version number updated from 2.0.0-beta.0 to 2.0.0
 - Gradio dependency version requirement updated to standard syntax format
-- Updated changelog to reflect features of 2.0.0-beta.1
+- Updated changelog to reflect features of 2.0.0
 
 ## Table of Contents
 
@@ -78,8 +78,8 @@ A --> J["Changelog<br/>CHANGELOG.md"]
 ## Core Components
 
 - **Current Version Status**
-  - Backend Python package version: 2.0.0-beta.1
-  - Frontend and workspace root package version: 2.0.0-beta.1
+  - Backend Python package version: 2.0.0
+  - Frontend and workspace root package version: 2.0.0
 - **Version Number Sources**
   - Backend Python package version is defined in [backend/modelscope_studio/version.py:1-2](file://backend/modelscope_studio/version.py#L1-L2)
   - Root package version is defined in [package.json:1-55](file://package.json#L1-L55)
@@ -134,11 +134,11 @@ GH-->>Dev : Publish completion notification
 
 ### Version History and Current Status
 
-- **Latest Stable / Pre-release Version**
-  - Current backend version: 2.0.0-beta.1
-  - Frontend and root package version: 2.0.0-beta.1
+- **Latest Stable Version**
+  - Current backend version: 2.0.0
+  - Frontend and root package version: 2.0.0
 - **Version History and Major Milestones**
-  - 2.0.0-beta.1: Added complete new features for Ant Design and Ant Design X
+  - 2.0.0: Added complete new features for Ant Design and Ant Design X
   - 2.0.0-beta.0: Full migration to Gradio 6.0, Ant Design 6.0, and Ant Design X 2.0
   - 1.x series: Includes many component enhancements, Pro component introduction, i18n support, form actions, etc.
   - 1.0.0: Migration from Gradio to version 5, integration of Ant Design
@@ -188,9 +188,9 @@ Test --> Done(["Complete"])
 
 - **Python Compatibility**
   - Python version requirement: >=3.8
-  - Gradio dependency range: gradio>=6.0,<=6.8.0 (current 2.0.0-beta.1)
+  - Gradio dependency range: gradio>=6.0,<=6.8.0 (current 2.0.0)
 - **Frontend-Backend Version Alignment**
-  - Both root package and backend Python package declare 2.0.0-beta.1; it is recommended to keep them in sync
+  - Both root package and backend Python package declare 2.0.0; it is recommended to keep them in sync
 - **Browser and Runtime Environment**
   - Recommended to develop and test in mainstream browsers
   - SSR must be disabled when deploying on Hugging Face Space
@@ -259,7 +259,7 @@ Test --> Done(["Complete"])
 ## Dependency Analysis
 
 - **Version Consistency**
-  - The backend Python package version and the root package version are kept consistent (2.0.0-beta.1), which facilitates publishing and rollback
+  - The backend Python package version and the root package version are kept consistent (2.0.0), which facilitates publishing and rollback
 - **Dependency Range**
   - Gradio dependency range is strictly defined to avoid incompatibilities with higher versions
 - **Release Chain**
@@ -267,7 +267,7 @@ Test --> Done(["Complete"])
 
 ```mermaid
 graph LR
-V["Version<br/>2.0.0-beta.1"] --> P["Python Package<br/>pyproject.toml"]
+V["Version<br/>2.0.0"] --> P["Python Package<br/>pyproject.toml"]
 V --> R["Root Package<br/>package.json"]
 P --> PYPI["PyPI"]
 R --> PYPI
@@ -316,12 +316,12 @@ PYPI --> REL["GitHub Releases"]
 
 ## Conclusion
 
-ModelScope Studio is currently in the 2.0.0-beta.1 pre-release stage. The comprehensive migration to Gradio 6 and Ant Design 6 brings significant feature enhancements and stability improvements. Version 2.0.0-beta.1 adds complete new features for Ant Design and Ant Design X, further improving the component ecosystem. For production environments that require stability, it is recommended to wait for the official release; for users who wish to experience new features in advance, the beta version can be selected after carefully evaluating the changelog and risks. The key to upgrading to 1.0 is wrapping the Application component at the outermost layer of the application, and disabling SSR when necessary to adapt to Hugging Face Space.
+ModelScope Studio current stable release is 2.0.0. The comprehensive migration to Gradio 6 and Ant Design 6 brings significant feature enhancements and stability improvements. This version adds complete new features for Ant Design and Ant Design X, further improving the component ecosystem. The key to upgrading to 1.0 is wrapping the Application component at the outermost layer of the application, and disabling SSR when necessary to adapt to Hugging Face Space.
 
 ## Appendix
 
 - **Quick Reference**
-  - Current version: 2.0.0-beta.1
+  - Current version: 2.0.0
   - Python compatibility: >=3.8
   - Gradio dependency: gradio>=6.0,<=6.8.0
   - Changelog: Root-level CHANGELOG.md

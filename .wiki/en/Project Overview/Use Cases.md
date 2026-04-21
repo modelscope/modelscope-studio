@@ -251,15 +251,15 @@ Section Sources
 
 ## Dependency Analysis
 
-- Version and naming: Both `@modelscope-studio/antd` and `@modelscope-studio/pro` frontend packages are labeled `2.0.0-beta.1`, and the backend `version.py` also points to the same semantic version, ensuring frontend-backend consistency.
+- Version and naming: Both `@modelscope-studio/antd` and `@modelscope-studio/pro` frontend packages are labeled `2.0.0`, and the backend `version.py` also points to the same semantic version, ensuring frontend-backend consistency.
 - Integration with Gradio: Components render and interact through Gradio shared state (root, api_prefix, theme), ensuring consistency across different deployment environments (including Hugging Face Space).
 - Deployment notes: When deploying in Hugging Face Space, set `ssr_mode=False` in `demo.launch()` to avoid SSR-related page rendering issues.
 
 ```mermaid
 graph LR
-VER["version.py<br/>2.0.0-beta.1"]
-ANTDPKG["@modelscope-studio/antd<br/>2.0.0-beta.1"]
-PROPkg["@modelscope-studio/pro<br/>2.0.0-beta.1"]
+VER["version.py<br/>2.0.0"]
+ANTDPKG["@modelscope-studio/antd<br/>2.0.0"]
+PROPkg["@modelscope-studio/pro<br/>2.0.0"]
 VER --> ANTDPKG
 VER --> PROPkg
 ```

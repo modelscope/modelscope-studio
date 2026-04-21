@@ -68,7 +68,7 @@ ModelScope Studio is a third-party component library based on Gradio, designed t
   - Documentation: Based on the docs site with dynamically loaded component examples, supporting multiple languages and layout templates
 
 - Development History and Versions
-  - Current version: 2.0.0-beta.1
+  - Current version: 2.0.0
   - License: Apache-2.0
   - Dependency range: Gradio >= 4.43.0 and <= 6.8.0
 
@@ -409,7 +409,7 @@ ModelScope Studio, with Gradio as its core, combines the rich component ecosyste
 ## Appendix
 
 - Version and License
-  - Version: 2.0.0-beta.1
+  - Version: 2.0.0
   - License: Apache-2.0
   - Author: ModelScope team
 

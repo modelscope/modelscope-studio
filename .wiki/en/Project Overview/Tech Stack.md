@@ -386,7 +386,7 @@ ModelScope Studio uses a Monorepo as its backbone, with the frontend powered by 
 ## Appendix
 
 - Version and Meta Information
-  - Repository version: 2.0.0-beta.1
+  - Repository version: 2.0.0
   - Python package version: Aligned with repository version
 - Key Configuration References
   - Frontend workspace and dependencies: [frontend/package.json:1-59](file://frontend/package.json#L1-L59)

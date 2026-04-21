@@ -429,7 +429,7 @@ ModelScope Studio, built on Gradio and integrating the Ant Design and Ant Design
   - Reference: [README.md:38-57](file://README.md#L38-L57), [README-zh_CN.md:38-57](file://README-zh_CN.md#L38-L57)
 
 - Version and Release
-  - Current version: 2.0.0-beta.1
+  - Current version: 2.0.0
   - Release scripts: build, dev, version, ci:\*, etc.
   - Reference: [backend/modelscope_studio/version.py:1-2](file://backend/modelscope_studio/version.py#L1-L2), [package.json:8-25](file://package.json#L8-L25)
 

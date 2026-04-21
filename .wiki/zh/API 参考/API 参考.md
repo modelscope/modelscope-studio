@@ -159,7 +159,7 @@ FE_COMP --> UTILS
 ### Python API 参考（概览）
 
 - 版本与依赖
-  - 版本：2.0.0-beta.1
+  - 版本：2.0.0
   - 依赖：Gradio 6.0 ≤ v ≤ 6.8.0
 - 导入方式
   - from modelscope_studio import 组件名
@@ -392,7 +392,7 @@ FE_COMP --> UTILS
 
 - Python 侧
   - 依赖：Gradio 6.0 ≤ v ≤ 6.8.0
-  - 版本：2.0.0-beta.1
+  - 版本：2.0.0
 - 前端侧
   - 构建脚本：通过 Gradio CLI 执行组件构建
   - 开发脚本：启动文档站点开发服务器
@@ -501,7 +501,7 @@ FE_SCRIPTS --> FE_OTHER
   - 前端组件：参考各子包下的 Svelte 文件
   - 工具函数：参考 utils 目录下的 hooks 与渲染器
 - 版本与兼容性
-  - Python：2.0.0-beta.1
+  - Python：2.0.0
   - Gradio：6.0 ≤ v ≤ 6.8.0
 - 构建与开发
   - 构建命令：pnpm run build

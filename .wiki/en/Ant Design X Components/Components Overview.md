@@ -66,10 +66,10 @@ A_pro["pro/__init__.py"]
 A_base["base/__init__.py"]
 end
 subgraph "Frontend NPM Packages"
-F_antd["@modelscope-studio/antd<br/>version: 2.0.0-beta.1"]
-F_antdx["@modelscope-studio/antdx<br/>version: 2.0.0-beta.1"]
-F_pro["@modelscope-studio/pro<br/>version: 2.0.0-beta.1"]
-F_base["@modelscope-studio/base<br/>version: 2.0.0-beta.1"]
+F_antd["@modelscope-studio/antd<br/>version: 2.0.0"]
+F_antdx["@modelscope-studio/antdx<br/>version: 2.0.0"]
+F_pro["@modelscope-studio/pro<br/>version: 2.0.0"]
+F_base["@modelscope-studio/base<br/>version: 2.0.0"]
 end
 A_init --> A_antd
 A_init --> A_antdx
@@ -270,7 +270,7 @@ BL-->>U : Display conversation bubbles
 ## Dependency Analysis
 
 - Version and Namespace
-  - All frontend packages use unified version number (2.0.0-beta.1), namespace is @modelscope-studio, convenient for publishing and management.
+  - All frontend packages use unified version number (2.0.0), namespace is @modelscope-studio, convenient for publishing and management.
 - Component Export and Grouping
   - Backend exports by functional domains: antd, antdx, pro, base, corresponding to Ant Design component family, AI specialized components, professional scenario components, and basic capabilities.
 - Frontend-Backend Mapping
