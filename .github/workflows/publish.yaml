@@ -42,7 +42,7 @@ jobs:
       - name: Install Pnpm
         if: |
           github.event.head_commit.message == 'chore: update versions'
-        run: npm i pnpm@latest -g
+        run: npm i pnpm@^10 -g
       - name: Install Node Dependencies
         if: |
           github.event.head_commit.message == 'chore: update versions'

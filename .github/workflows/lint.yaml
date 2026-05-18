@@ -26,7 +26,7 @@ jobs:
         with:
           node-version: 22
       - name: Install Pnpm
-        run: npm i pnpm@latest -g
+        run: npm i pnpm@^10 -g
       - name: Install Node Dependencies
         run: pnpm install
       - name: Run Lint
