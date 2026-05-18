@@ -4,7 +4,7 @@ import React from 'react';
 import { Think as XThink, type ThinkProps } from '@ant-design/x';
 
 export const Think = sveltify<ThinkProps, ['loading', 'icon', 'title']>(
-  ({ slots, ...props }) => {
+  ({ slots, children, ...props }) => {
     return (
       <>
         <XThink
@@ -14,7 +14,9 @@ export const Think = sveltify<ThinkProps, ['loading', 'icon', 'title']>(
           }
           icon={slots.icon ? <ReactSlot slot={slots.icon} /> : props.icon}
           title={slots.title ? <ReactSlot slot={slots.title} /> : props.title}
-        />
+        >
+          {children}
+        </XThink>
       </>
     );
   }
