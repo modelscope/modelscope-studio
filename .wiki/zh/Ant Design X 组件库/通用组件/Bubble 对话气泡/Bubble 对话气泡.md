@@ -251,7 +251,7 @@ BubbleListRole --> RoleItemHandler : "注入"
 - 功能定位：将角色配置（字符串函数或对象）转换为 @ant-design/x 所需的 RoleType，并进行插槽补丁与索引注入。
 - 关键点：
   - 支持默认键 defaultRoleKeys
-  - 支持 preProcess 与 defaultRolePostProcess 钩子
+  - 支持 preProcess 与 postProcess 钩子
   - 自动将角色配置中的 header/footer/avatar/extra/loadingRender/contentRender 等插槽与内容进行补丁合并
   - 默认 contentRender 会将对象序列化为字符串
 

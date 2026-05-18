@@ -59,6 +59,7 @@ class AntdTypographyLink(ModelScopeLayoutComponent):
             value: str | None = "",
             additional_props: dict | None = None,
             *,
+            actions: dict | None = None,
             href: str | None = None,
             href_target: str | None = None,
             code: bool | None = None,
@@ -112,6 +113,7 @@ class AntdTypographyLink(ModelScopeLayoutComponent):
         self.styles = styles
         self.value = value
         self.additional_props = additional_props
+        self.actions = actions
         self.code = code
         self.copyable = copyable
         self.delete = delete

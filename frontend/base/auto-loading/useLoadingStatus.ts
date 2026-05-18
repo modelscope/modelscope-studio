@@ -1,32 +1,28 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import type { ILoadingStatus } from '@gradio/statustracker';
 import { useMemoizedFn } from '@utils/hooks/useMemoizedFn';
 
 export function useLoadingStatus(loadingStatus?: ILoadingStatus | null) {
-  const [eta, setEta] = useState<number | null>(loadingStatus?.eta ?? null);
   const { status, progress, queue_position, message, queue_size } =
     loadingStatus || {};
   const [timerStart, setTimerStart] = useState(0);
   const [timerDiff, setTimerDiff] = useState(0);
-  const [oldEta, setOldEta] = useState<number | null>(null);
-  const [formattedEta, setFormattedEta] = useState<string | null>(null);
-  const [formattedTimer, setFormattedTimer] = useState<string | null>(null);
-
   const timerRef = useRef(false);
+  const runRef = useRef<() => void>(null!);
+  const oldEtaRef = useRef<number | null>(null);
 
   const run = useMemoizedFn(() => {
     requestAnimationFrame(() => {
       setTimerDiff((performance.now() - timerStart) / 1000);
       if (timerRef.current) {
-        run();
+        runRef.current();
       }
     });
   });
+  runRef.current = run;
 
   const startTimer = useMemoizedFn(() => {
-    setEta(null);
-    setOldEta(null);
-    setFormattedEta(null);
+    oldEtaRef.current = null;
     setTimerStart(performance.now());
     setTimerDiff(0);
     timerRef.current = true;
@@ -35,9 +31,7 @@ export function useLoadingStatus(loadingStatus?: ILoadingStatus | null) {
 
   const stopTimer = useMemoizedFn(() => {
     setTimerDiff(0);
-    setEta(null);
-    setOldEta(null);
-    setFormattedEta(null);
+    oldEtaRef.current = null;
     timerRef.current = false;
   });
 
@@ -49,27 +43,20 @@ export function useLoadingStatus(loadingStatus?: ILoadingStatus | null) {
     }
   }, [startTimer, status, stopTimer]);
 
-  useEffect(() => {
-    setEta(loadingStatus?.eta ?? null);
-  }, [loadingStatus?.eta]);
+  const currentEta = loadingStatus?.eta ?? null;
+  if (currentEta !== null) {
+    oldEtaRef.current = currentEta;
+  }
+  const eta = currentEta ?? oldEtaRef.current;
 
-  useEffect(() => {
-    let _eta = eta;
-    if (_eta === null) {
-      _eta = oldEta;
-      setEta(_eta);
+  const formattedEta = useMemo(() => {
+    if (eta !== null) {
+      return (timerDiff + eta).toFixed(1);
     }
-    if (_eta !== null && oldEta !== _eta) {
-      setFormattedEta(
-        ((performance.now() - timerStart) / 1000 + _eta).toFixed(1)
-      );
-      setOldEta(_eta);
-    }
-  }, [eta, oldEta, timerStart]);
+    return null;
+  }, [eta, timerDiff]);
 
-  useEffect(() => {
-    setFormattedTimer(timerDiff.toFixed(1));
-  }, [timerDiff]);
+  const formattedTimer = useMemo(() => timerDiff.toFixed(1), [timerDiff]);
 
   useEffect(() => {
     return () => {

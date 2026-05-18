@@ -7,6 +7,13 @@ import { omitUndefinedProps } from '@utils/omitUndefinedProps';
 import { renderParamsSlot } from '@utils/renderParamsSlot';
 import { type GetProps, Input as AInput } from 'antd';
 
+function getConfig<T>(value: T): Partial<T & Record<PropertyKey, any>> {
+  if (typeof value === 'object' && value !== null) {
+    return value as any;
+  }
+  return {} as any;
+}
+
 export const Input = sveltify<
   GetProps<typeof AInput> & {
     onValueChange: (value: string) => void;
@@ -36,6 +43,7 @@ export const Input = sveltify<
     const showCountFunction = useFunction(
       typeof showCount === 'object' ? showCount.formatter : undefined
     );
+    const allowClearConfig = getConfig(props.allowClear);
     const [value, setValue] = useValueChange({
       onValueChange,
       value: props.value,
@@ -99,6 +107,7 @@ export const Input = sveltify<
           allowClear={
             slots['allowClear.clearIcon']
               ? {
+                  ...allowClearConfig,
                   clearIcon: <ReactSlot slot={slots['allowClear.clearIcon']} />,
                 }
               : props.allowClear

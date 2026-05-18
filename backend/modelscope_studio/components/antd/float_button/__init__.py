@@ -38,6 +38,7 @@ class AntdFloatButton(ModelScopeLayoutComponent):
             icon: str | None = None,
             description: str | None = None,
             tooltip: str | dict | None = None,
+            disabled: bool | None = None,
             type: Literal['default', 'primary'] = 'default',
             shape: Literal['circle', 'square'] = 'circle',
             href: str | None = None,
@@ -81,6 +82,7 @@ class AntdFloatButton(ModelScopeLayoutComponent):
         self.icon = icon
         self.description = description
         self.tooltip = tooltip
+        self.disabled = disabled
         self.type = type
         self.shape = shape
         self.href = href

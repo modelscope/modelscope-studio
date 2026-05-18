@@ -167,10 +167,10 @@ Ctx-->>Dev : 渲染完成的消息气泡
 ### 显示逻辑与角色类型
 
 - 角色解析流程
-  - useRole 接收 role、defaultRoleKeys、preProcess、defaultRolePostProcess 等参数。
+  - useRole 接收 role、defaultRoleKeys、preProcess、postProcess 等参数。
   - 通过 useRoleItems 获取角色项集合，构建角色映射表。
   - 合并默认角色键与用户自定义角色键，按顺序解析为函数或对象。
-  - 对于每个消息项，先执行 preProcess，再将角色插槽通过 patchSlots 合并到消息项上，最后应用 defaultRolePostProcess 进行最终调整。
+  - 对于每个消息项，先执行 preProcess，再将角色插槽通过 patchSlots 合并到消息项上，最后应用 postProcess 进行最终调整。
 
 ```mermaid
 flowchart TD
@@ -180,7 +180,7 @@ BuildMap --> MergeKeys["合并默认键与自定义键"]
 MergeKeys --> ResolveEach["逐个解析角色键"]
 ResolveEach --> PreProcess["执行 preProcess 钩子"]
 PreProcess --> PatchSlots["合并角色插槽到消息项"]
-PatchSlots --> PostProcess["执行 defaultRolePostProcess 钩子"]
+PatchSlots --> PostProcess["执行 postProcess 钩子"]
 PostProcess --> End(["结束"])
 ```
 
@@ -256,7 +256,7 @@ ItemHandler <.. BubbleListItem : "委托"
 - 自定义角色样式
   - 通过 class_names 与 styles 为不同区域设置类名与内联样式；利用 shape 与 variant 控制外观。
 - 动态角色信息
-  - 结合 useRole 的 preProcess 与 defaultRolePostProcess，实现根据消息索引或上下文动态调整角色配置。
+  - 结合 useRole 的 preProcess 与 postProcess，实现根据消息索引或上下文动态调整角色配置。
 - 与 Bubble.Item 的组合
   - 在 BubbleList 中同时提供 items 与 roles，确保角色信息与消息内容协同渲染。
 

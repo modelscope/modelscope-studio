@@ -32,7 +32,7 @@ RenderList --> End(["Done"])
 ## Key Features
 
 - **Items merging**: Prioritizes `props.items`; if not provided, reads `slotItems.items` or `default` from context, then uses `renderItems` to normalize to an array.
-- **Role resolution**: Uses `useRole` to support role as string, function, or object, with `preProcess` and `defaultRolePostProcess` hooks.
+- **Role resolution**: Uses `useRole` to support role as string, function, or object, with `preProcess` and `postProcess` hooks.
 - **Slot patching**: Applies patches to slots so role's avatar/header/footer/extra/loadingRender/contentRender can be overridden in advance.
 - **Render and scroll**: Renders via @ant-design/x's `XBubble.List`, with auto-scroll binding and scroll event callbacks.
 

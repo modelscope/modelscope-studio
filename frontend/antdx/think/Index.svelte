@@ -17,8 +17,6 @@
     _internal: {
       layout?: boolean;
     };
-    root: string;
-    proxy_url: string;
   }>(() => props);
 
   const getProceedProps = processProps(() => {
@@ -29,8 +27,6 @@
       elem_classes,
       elem_id,
       elem_style,
-      root,
-      proxy_url,
       ...restProps
     } = getComponentProps();
     return {
@@ -43,8 +39,6 @@
       elem_id,
       elem_classes,
       elem_style,
-      root,
-      proxy_url,
     };
   }, {});
   const proceedProps = $derived(getProceedProps());

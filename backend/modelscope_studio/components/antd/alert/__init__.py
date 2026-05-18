@@ -32,6 +32,7 @@ class AntdAlert(ModelScopeLayoutComponent):
             self,
             additional_props: dict | None = None,
             *,
+            variant: Literal['filled', 'outlined'] | None = None,
             action: str | None = None,
             after_close: str | None = None,
             banner: bool | None = None,
@@ -63,6 +64,7 @@ class AntdAlert(ModelScopeLayoutComponent):
         self.class_names = class_names
         self.styles = styles
         self.additional_props = additional_props
+        self.variant = variant
         self.action = action
         self.after_close = after_close
         self.banner = banner

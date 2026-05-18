@@ -302,7 +302,7 @@ export const Chatbot = sveltify<{
               },
             };
           },
-          defaultRolePostProcess(bubbleProps, index) {
+          postProcess(bubbleProps, index) {
             const isUserRole = bubbleProps.role === 'user';
             switch (bubbleProps.role) {
               case 'chatbot-internal-welcome':

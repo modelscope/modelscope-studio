@@ -57,6 +57,7 @@ export const DatePicker = sveltify<
     'renderExtraFooter',
     'cellRender',
     'panelRender',
+    'tagRender',
   ]
 >(
   withItemsContextProvider(
@@ -88,6 +89,8 @@ export const DatePicker = sveltify<
       const getPopupContainerFunction = useFunction(getPopupContainer);
       const cellRenderFunction = useFunction(cellRender);
       const panelRenderFunction = useFunction(panelRender);
+      const tagRenderFunction = useFunction(props.tagRender);
+
       const validShowTime = useMemo(() => {
         if (typeof showTime === 'object') {
           return {
@@ -136,6 +139,11 @@ export const DatePicker = sveltify<
             disabledDate={disabledDateFunction}
             disabledTime={disabledTimeFunction}
             getPopupContainer={getPopupContainerFunction}
+            tagRender={
+              slots.tagRender
+                ? renderParamsSlot({ slots, key: 'tagRender' })
+                : tagRenderFunction
+            }
             cellRender={
               slots.cellRender
                 ? renderParamsSlot({ slots, key: 'cellRender' })

@@ -19,6 +19,7 @@ export const InputSearch = sveltify<
     'suffix',
     'enterButton',
     'showCount.formatter',
+    'searchIcon',
   ]
 >(
   ({
@@ -48,6 +49,13 @@ export const InputSearch = sveltify<
           {...props}
           value={value}
           ref={elRef}
+          searchIcon={
+            slots.searchIcon ? (
+              <ReactSlot slot={slots.searchIcon} />
+            ) : (
+              props.searchIcon
+            )
+          }
           onChange={(e) => {
             onChange?.(e);
             setValue(e.target.value);

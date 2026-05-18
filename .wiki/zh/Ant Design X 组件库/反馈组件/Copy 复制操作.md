@@ -80,7 +80,7 @@ L --> N
 
 ### 后端组件层
 
-- ****init**.py**: Python 后端组件定义，继承自 ModelScopeLayoutComponent
+- \***\*init**.py\*\*: Python 后端组件定义，继承自 ModelScopeLayoutComponent
 
 ### 工具函数层
 

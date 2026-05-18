@@ -42,12 +42,18 @@ class AntdSplitter(ModelScopeLayoutComponent):
                           bind_draggerDoubleClick_event=True)),
     ]
 
+    # supported slots
+    SLOTS = ['draggerIcon', 'collapsible.icon.start', 'collapsible.icon.end']
+
     def __init__(
             self,
             additional_props: dict | None = None,
             *,
             layout: Literal['horizontal', 'vertical'] | None = 'horizontal',
             orientation: Literal['horizontal', 'vertical'] | None = None,
+            collapsible: dict | None = None,
+            dragger_icon: str | None = None,
+            destroy_on_hidden: bool | None = None,
             vertical: bool | None = None,
             lazy: bool | None = None,
             root_class_name: str | None = None,
@@ -75,8 +81,11 @@ class AntdSplitter(ModelScopeLayoutComponent):
         self.layout = layout
         self.vertical = vertical
         self.orientation = orientation
+        self.dragger_icon = dragger_icon
         self.lazy = lazy
         self.root_class_name = root_class_name
+        self.destroy_on_hidden = destroy_on_hidden
+        self.collapsible = collapsible
 
     FRONTEND_DIR = resolve_frontend_dir("splitter")
 

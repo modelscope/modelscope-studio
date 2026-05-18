@@ -8,4 +8,7 @@ packages:
   - frontend/antdx
 
 onlyBuiltDependencies:
+  - '@parcel/watcher'
+  - '@swc/core'
+  - esbuild
   - svelte-preprocess
