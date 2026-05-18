@@ -77,7 +77,6 @@ export const Markdown: React.FC<MarkdownProps> = ({
   allowTags: allow_tags,
   ...props
 }) => {
-  const [markdown, setMarkdown] = useState('');
   const [copied, setCopied] = useState(false);
   const copyTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const ref = useRef<HTMLSpanElement | null>(null);
@@ -204,17 +203,16 @@ export const Markdown: React.FC<MarkdownProps> = ({
     );
   };
 
+  const markdown = useMemo(() => {
+    if (message && message.trim()) {
+      return process_message(message);
+    }
+    return '';
+  }, [message, process_message]);
+
   useEffect(() => {
     onChangeMemoized();
   }, [markdown, onChangeMemoized]);
-
-  useEffect(() => {
-    if (message && message.trim()) {
-      setMarkdown(process_message(message));
-    } else {
-      setMarkdown('');
-    }
-  }, [message, process_message]);
 
   useEffect(() => {
     markdown &&

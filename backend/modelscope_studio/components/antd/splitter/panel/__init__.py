@@ -25,6 +25,7 @@ class AntdSplitterPanel(ModelScopeLayoutComponent):
             min: int | str | None = None,
             max: int | str | None = None,
             size: int | str | None = None,
+            destroy_on_hidden: bool | None = None,
             collapsible: bool | dict | None = None,
             resizable: bool | None = None,
             root_class_name: str | None = None,
@@ -62,6 +63,7 @@ class AntdSplitterPanel(ModelScopeLayoutComponent):
         self.min = min
         self.max = max
         self.size = size
+        self.destroy_on_hidden = destroy_on_hidden
         self.collapsible = collapsible
         self.resizable = resizable
         self.root_class_name = root_class_name

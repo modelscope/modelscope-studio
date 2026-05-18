@@ -81,6 +81,7 @@ export const DateRangePicker = sveltify<
       const getPopupContainerFunction = useFunction(getPopupContainer);
       const cellRenderFunction = useFunction(cellRender);
       const panelRenderFunction = useFunction(panelRender);
+
       const validShowTime = useMemo(() => {
         if (typeof showTime === 'object') {
           return {

@@ -7,6 +7,12 @@ import { omitUndefinedProps } from '@utils/omitUndefinedProps';
 import { renderParamsSlot } from '@utils/renderParamsSlot';
 import { type GetProps, Input as AInput } from 'antd';
 
+function getConfig<T>(value: T): Partial<T & Record<PropertyKey, any>> {
+  if (typeof value === 'object' && value !== null) {
+    return value as any;
+  }
+  return {} as any;
+}
 export const InputTextarea = sveltify<
   GetProps<typeof AInput.TextArea> & {
     onValueChange: (value: string) => void;
@@ -29,6 +35,7 @@ export const InputTextarea = sveltify<
     const showCountFunction = useFunction(
       typeof showCount === 'object' ? showCount.formatter : undefined
     );
+    const allowClearConfig = getConfig(props.allowClear);
     const [value, setValue] = useValueChange({
       onValueChange,
       value: props.value,
@@ -44,6 +51,14 @@ export const InputTextarea = sveltify<
             onChange?.(e);
             setValue(e.target.value);
           }}
+          allowClear={
+            slots['allowClear.clearIcon']
+              ? {
+                  ...allowClearConfig,
+                  clearIcon: <ReactSlot slot={slots['allowClear.clearIcon']} />,
+                }
+              : props.allowClear
+          }
           showCount={
             slots['showCount.formatter']
               ? {
@@ -74,13 +89,6 @@ export const InputTextarea = sveltify<
               countShowFunction,
             ]
           )}
-          allowClear={
-            slots['allowClear.clearIcon']
-              ? {
-                  clearIcon: <ReactSlot slot={slots['allowClear.clearIcon']} />,
-                }
-              : props.allowClear
-          }
         />
       </>
     );

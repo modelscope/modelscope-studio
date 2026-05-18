@@ -143,7 +143,7 @@ FrontList-->>FrontIndex : "渲染 XBubble.List"
   - 优先使用外部传入的 items；若未提供，则从上下文读取 slotItems 中的 items 或 default。
   - 使用 renderItems 将插槽内容转换为可渲染的数组。
 - 角色解析
-  - useRole 支持 role 为字符串函数或对象，支持 preProcess 与 defaultRolePostProcess 钩子。
+  - useRole 支持 role 为字符串函数或对象，支持 preProcess 与 postProcess 钩子。
   - 对插槽进行补丁处理，使角色的 avatar/header/footer/extra/loadingRender/contentRender 能前置覆盖。
 - 渲染与滚动
   - 通过 @ant-design/x 的 XBubble.List 渲染，支持自动滚动绑定与滚动事件回调。

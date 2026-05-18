@@ -43,15 +43,15 @@ function patchBubbleSlots(role: RoleProps, params: any[]) {
 export interface UseRoleOptions<T = BubbleItemType> {
   role?: RoleType;
   preProcess?: (bubbleProps: T, index: number) => RoleProps;
-  defaultRolePostProcess?: (bubbleProps: T, index: number) => RoleProps | void;
+  postProcess?: (bubbleProps: T, index: number) => RoleProps | void;
 }
 
 export function useRole<T = BubbleItemType>(
-  { role: roleProp, preProcess, defaultRolePostProcess }: UseRoleOptions<T>,
+  { role: roleProp, preProcess, postProcess }: UseRoleOptions<T>,
   deps: React.DependencyList = []
 ) {
   const memoizedPreProcess = useMemoizedFn(preProcess);
-  const memoizedDefaultRolePostProcess = useMemoizedFn(defaultRolePostProcess);
+  const memoizedPostProcess = useMemoizedFn(postProcess);
 
   const {
     items: { role: roleItems },
@@ -103,7 +103,7 @@ export function useRole<T = BubbleItemType>(
                   [preProcessResult, index]
                 );
               }
-              const postProcessResult = memoizedDefaultRolePostProcess(
+              const postProcessResult = memoizedPostProcess(
                 preProcessResult as T,
                 index
               );
@@ -122,10 +122,11 @@ export function useRole<T = BubbleItemType>(
         },
       }
     );
+    // eslint-disable-next-line react-hooks/use-memo
   }, [
     role,
     memoizedPreProcess,
-    memoizedDefaultRolePostProcess,
+    memoizedPostProcess,
     // eslint-disable-next-line react-hooks/exhaustive-deps
     ...deps,
   ]);

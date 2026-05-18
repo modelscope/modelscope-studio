@@ -22,16 +22,24 @@
 
 ## Table of Contents
 
-1. [Introduction](#introduction)
-2. [Project Structure](#project-structure)
-3. [Core Components](#core-components)
-4. [Architecture Overview](#architecture-overview)
-5. [Component Details](#component-details)
-6. [Dependency Analysis](#dependency-analysis)
-7. [Performance and Maintainability](#performance-and-maintainability)
-8. [Troubleshooting Guide](#troubleshooting-guide)
-9. [Conclusion](#conclusion)
-10. [Appendix: Usage Examples and Best Practices](#appendix-usage-examples-and-best-practices)
+- [Bubble Chat Bubble](#bubble-chat-bubble)
+  - [Update Summary](#update-summary)
+  - [Table of Contents](#table-of-contents)
+  - [Introduction](#introduction)
+  - [Project Structure](#project-structure)
+  - [Core Components](#core-components)
+  - [Architecture Overview](#architecture-overview)
+  - [Component Details](#component-details)
+    - [Bubble Component](#bubble-component)
+    - [BubbleList Component](#bubblelist-component)
+    - [BubbleListItem and BubbleListRole](#bubblelistitem-and-bubblelistrole)
+    - [useRole - Role Resolution Utility](#userole---role-resolution-utility)
+    - [Divider Component](#divider-component)
+  - [Dependency Analysis](#dependency-analysis)
+  - [Performance and Maintainability](#performance-and-maintainability)
+  - [Troubleshooting Guide](#troubleshooting-guide)
+  - [Conclusion](#conclusion)
+  - [Appendix: Usage Examples and Best Practices](#appendix-usage-examples-and-best-practices)
 
 ## Introduction
 
@@ -160,7 +168,7 @@ RenderX --> End(["Done"])
 - **Purpose**: Converts role configuration (string, function, or object) to the RoleType required by @ant-design/x, with slot patching and index injection.
 - **Key Points**:
   - Supports `defaultRoleKeys`
-  - Supports `preProcess` and `defaultRolePostProcess` hooks
+  - Supports `preProcess` and `postProcess` hooks
   - Automatically patches header/footer/avatar/extra/loadingRender/contentRender slots
   - Default `contentRender` serializes objects to strings
 

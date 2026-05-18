@@ -77,6 +77,7 @@ class AntdTypographyTitle(ModelScopeLayoutComponent):
             value: str | None = "",
             additional_props: dict | None = None,
             *,
+            actions: dict | None = None,
             code: bool | None = None,
             copyable: bool | dict = False,
             delete: bool | None = None,
@@ -124,6 +125,7 @@ class AntdTypographyTitle(ModelScopeLayoutComponent):
                          **kwargs)
         self.class_names = class_names
         self.styles = styles
+        self.actions = actions
         self.value = value
         self.additional_props = additional_props
         self.code = code

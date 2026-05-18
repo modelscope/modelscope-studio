@@ -73,6 +73,7 @@ class AntdTypographyText(ModelScopeLayoutComponent):
             value: str | None = "",
             additional_props: dict | None = None,
             *,
+            actions: dict | None = None,
             code: bool | None = None,
             copyable: bool | dict = False,
             delete: bool | None = None,
@@ -124,6 +125,7 @@ class AntdTypographyText(ModelScopeLayoutComponent):
         self.styles = styles
         self.value = value
         self.additional_props = additional_props
+        self.actions = actions
         self.code = code
         self.copyable = copyable
         self.delete = delete

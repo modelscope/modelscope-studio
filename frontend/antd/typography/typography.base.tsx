@@ -17,13 +17,16 @@ function getConfig<T>(value: T): Partial<T & Record<PropertyKey, any>> {
 }
 
 export const TypographyBase = sveltify<
-  GetProps<typeof Typography.Paragraph> &
-    GetProps<typeof Typography.Text> &
-    GetProps<typeof Typography.Title> &
-    GetProps<typeof Typography.Link> & {
-      component: 'title' | 'paragraph' | 'text' | 'link';
-      value?: string;
-    },
+  Omit<
+    GetProps<typeof Typography.Paragraph> &
+      GetProps<typeof Typography.Text> &
+      GetProps<typeof Typography.Title> &
+      GetProps<typeof Typography.Link>,
+    'component'
+  > & {
+    component: 'title' | 'paragraph' | 'text' | 'link';
+    value?: string;
+  },
   [
     // list
     'copyable.icon',

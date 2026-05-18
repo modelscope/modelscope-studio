@@ -22,6 +22,7 @@ class AntdAnchorItem(ModelScopeLayoutComponent):
             title: str | None = None,
             additional_props: dict | None = None,
             *,
+            target_offset: int | float | None = None,
             key: str | None = None,
             replace: bool | None = None,
             href: str | None = None,
@@ -53,6 +54,7 @@ class AntdAnchorItem(ModelScopeLayoutComponent):
         self.additional_props = additional_props
         self.title = title
         self.key = key
+        self.target_offset = target_offset
         self.replace = replace
         self.href = href
         self.href_target = href_target

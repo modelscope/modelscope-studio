@@ -49,9 +49,11 @@ class AntdImage(ModelScopeDataLayoutComponent):
             *,
             alt: str | None = None,
             fallback: str | None = None,
+            mask: bool | dict | None = None,
             height: str | int | float | None = None,
             placeholder: bool | str | int | float | None = None,
             preview: bool | dict | None = None,
+            focus_trap: bool | None = None,
             width: str | int | float | None = None,
             root_class_name: str | None = None,
             class_names: dict | str | None = None,
@@ -79,6 +81,8 @@ class AntdImage(ModelScopeDataLayoutComponent):
         self.alt = alt
         self.fallback = fallback
         self.height = height
+        self.mask = mask
+        self.focus_trap = focus_trap
         self.placeholder = placeholder
         self.preview = preview
         self.width = width

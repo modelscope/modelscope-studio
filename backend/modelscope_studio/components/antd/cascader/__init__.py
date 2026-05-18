@@ -38,8 +38,8 @@ class AntdCascader(ModelScopeDataLayoutComponent):
     # supported slots
     SLOTS = [
         'allowClear.clearIcon', 'suffixIcon', 'maxTagPlaceholder',
-        'notFoundContent', 'expandIcon', 'removeIcon', 'prefix',
-        'displayRender', 'tagRender', 'dropdownRender', 'popupRender'
+        'notFoundContent', 'expandIcon', 'removeIcon', 'showSearch.searchIcon',
+        'prefix', 'displayRender', 'tagRender', 'dropdownRender', 'popupRender'
         'showSearch.render', 'optionRender'
     ]
 
@@ -61,6 +61,7 @@ class AntdCascader(ModelScopeDataLayoutComponent):
             popup_render: str | None = None,
             expand_icon: str | None = None,
             prefix: str | None = None,
+            search_icon: str | None = None,
             expand_trigger: Literal['click', 'hover'] = 'click',
             filed_names: dict | None = None,
             get_popup_container: str | None = None,
@@ -120,6 +121,7 @@ class AntdCascader(ModelScopeDataLayoutComponent):
         self.dropdown_render = dropdown_render
         self.popup_render = popup_render
         self.expand_icon = expand_icon
+        self.search_icon = search_icon
         self.expand_trigger = expand_trigger
         self.filed_names = filed_names
         self.get_popup_container = get_popup_container

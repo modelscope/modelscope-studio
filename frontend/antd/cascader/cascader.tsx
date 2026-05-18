@@ -33,6 +33,7 @@ export const Cascader = sveltify<
     'tagRender',
     'dropdownRender',
     'popupRender',
+    'showSearch.searchIcon',
     'showSearch.render',
     'optionRender',
   ]
@@ -65,7 +66,9 @@ export const Cascader = sveltify<
       const popupRenderFunction = useFunction(popupRender);
       const maxTagPlaceholderFunction = useFunction(maxTagPlaceholder);
       const supportShowSearchConfig =
-        typeof showSearch === 'object' || slots['showSearch.render'];
+        typeof showSearch === 'object' ||
+        slots['showSearch.render'] ||
+        slots['showSearch.searchIcon'];
       const showSearchConfig = getConfig(showSearch);
       const showSearchFilterFunction = useFunction(showSearchConfig.filter);
       const showSearchRenderFunction = useFunction(showSearchConfig.render);
@@ -99,6 +102,11 @@ export const Cascader = sveltify<
               supportShowSearchConfig
                 ? {
                     ...showSearchConfig,
+                    searchIcon: slots['showSearch.searchIcon'] ? (
+                      <ReactSlot slot={slots['showSearch.searchIcon']} />
+                    ) : (
+                      showSearchConfig.searchIcon
+                    ),
                     filter: showSearchFilterFunction || showSearchConfig.filter,
                     render: slots['showSearch.render']
                       ? renderParamsSlot({

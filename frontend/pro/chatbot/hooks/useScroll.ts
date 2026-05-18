@@ -32,8 +32,6 @@ export function useScroll(options: useScrollOptions) {
           behavior,
         });
       });
-
-      setShowScrollButton(false);
     }
   );
   const isAtBottom = useMemoizedFn((offset: number = 100) => {

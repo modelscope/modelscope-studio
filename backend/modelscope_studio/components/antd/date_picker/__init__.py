@@ -44,6 +44,7 @@ class AntdDatePicker(ModelScopeDataLayoutComponent):
         'renderExtraFooter',
         'cellRender',
         'panelRender',
+        'tagRender',
     ]
 
     def __init__(
@@ -53,6 +54,7 @@ class AntdDatePicker(ModelScopeDataLayoutComponent):
             *,
             allow_clear: bool | dict = True,
             auto_focus: bool | None = None,
+            tag_render: str | None = None,
             cell_render: str | None = None,
             components: dict | None = None,
             disabled: bool | None = None,
@@ -127,6 +129,7 @@ class AntdDatePicker(ModelScopeDataLayoutComponent):
         self.locale = locale
         self.allow_clear = allow_clear
         self.auto_focus = auto_focus
+        self.tag_render = tag_render
         self.cell_render = cell_render
         self.disabled = disabled
         self.disabled_date = disabled_date

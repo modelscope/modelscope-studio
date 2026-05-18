@@ -1,5 +1,5 @@
 import type React from 'react';
-import { useEffect, useState } from 'react';
+import { useRef, useState } from 'react';
 import { Markdown } from '@globals/components';
 import { Collapse } from 'antd';
 
@@ -13,9 +13,12 @@ export interface ToolMessageProps {
 export const ToolMessage: React.FC<ToolMessageProps> = ({ value, options }) => {
   const { renderMarkdown, status, title, ...markdownProps } = options;
   const [collapsed, setCollapsed] = useState(() => status !== 'done');
-  useEffect(() => {
+  const prevStatusRef = useRef(status);
+
+  if (prevStatusRef.current !== status) {
+    prevStatusRef.current = status;
     setCollapsed(status !== 'done');
-  }, [status]);
+  }
 
   return (
     <>
