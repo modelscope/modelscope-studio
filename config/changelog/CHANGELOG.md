@@ -1,5 +1,11 @@
 # @modelscope-studio/changelog
 
+## 2.0.2
+
+### Features
+
+- [#122](https://github.com/modelscope/modelscope-studio/pull/122) [`825ec9d`](https://github.com/modelscope/modelscope-studio/commit/825ec9dde7b248ec02113adcafa2d8f104fe2f93) - synchronize deps to antd 6.4.0 and antdx 2.7.0. Thanks [@Col0ring](https://github.com/Col0ring)!
+
 ## 2.0.1
 
 No significant changes to this package were made in this release.
