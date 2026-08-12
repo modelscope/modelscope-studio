@@ -50,5 +50,10 @@
     "tsx": "^4.23.12",
     "typescript": "^6.0.3"
   },
+  "pnpm": {
+    "overrides": {
+      "tsup>typescript": "^5.9.3"
+    }
+  },
   "main_changeset": true
 }
