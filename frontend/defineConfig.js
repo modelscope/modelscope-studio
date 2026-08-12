@@ -1,13 +1,17 @@
-import react from '@vitejs/plugin-react-swc';
+import react from '@vitejs/plugin-react';
 
-import { ModelScopeStudioVitePlugin } from './plugin.js';
+import { GradioDevModePlugin, ModelScopeStudioVitePlugin } from './plugin.js';
 
 /**
  * @type {(options:{ external?: boolean | { excludes:string[] } }) => any}
  */
 export default ({ external } = { external: true }) => {
   return {
-    plugins: [react(), ModelScopeStudioVitePlugin({ external })],
+    plugins: [
+      react(),
+      ModelScopeStudioVitePlugin({ external }),
+      GradioDevModePlugin(),
+    ],
     svelte: {
       preprocess: [],
     },

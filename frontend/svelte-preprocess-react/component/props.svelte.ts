@@ -270,11 +270,12 @@ export function processProps<
   }
 
   // for loading_status
-  if (
-    shouldSetLoadingStatus &&
-    props.additionalProps?.ms_auto_loading !== false
-  ) {
-    setLoadingStatus(() => props.restProps.loading_status);
+  if (shouldSetLoadingStatus) {
+    setLoadingStatus(() =>
+      props.additionalProps?.ms_auto_loading === false
+        ? null
+        : props.restProps.loading_status
+    );
   }
 
   // for ms.Each

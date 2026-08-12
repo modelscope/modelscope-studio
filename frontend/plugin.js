@@ -1,4 +1,4 @@
-import { parse, transformFromAstSync, traverse, types as t } from '@babel/core';
+import { parseSync, transformFromAstSync, traverse, types as t } from '@babel/core';
 import path from 'node:path';
 import url from 'node:url';
 
@@ -48,6 +48,31 @@ const baseGlobals = {
 
 const dirname = path.dirname(url.fileURLToPath(import.meta.url));
 
+/**
+ * `t.identifier` only accepts a valid identifier name, so a dotted global path
+ * like `window.ms_globals.React` has to be built as a member expression.
+ */
+function createGlobalExpression(variable) {
+  const [object, ...properties] = variable.split('.');
+  return properties.reduce(
+    (expression, property) =>
+      t.memberExpression(expression, t.identifier(property)),
+    t.identifier(object)
+  );
+}
+
+/**
+ * Access the imported/exported name on the global expression, string literal
+ * names (eg: `import { 'a-b' as c } from 'react'`) must be computed.
+ */
+function createGlobalMemberExpression(variable, property) {
+  return t.memberExpression(
+    createGlobalExpression(variable),
+    t.cloneNode(property),
+    t.isStringLiteral(property)
+  );
+}
+
 function generateSveltePreprocessReactAliases() {
   const baseDir = 'svelte-preprocess-react';
   const baseAlias = {
@@ -61,6 +86,32 @@ function generateSveltePreprocessReactAliases() {
     ...moduleAliases,
   };
 }
+
+/**
+ * `@gradio/preview` switches the Gradio SPA into custom component dev mode by
+ * replacing the `"_NORMAL_"` marker with `"_CC_"`, but the Gradio bundle emits
+ * that marker as a template literal (`globalThis.__MODE__ ??= `_NORMAL_``), so
+ * the replacement silently misses: `virtual:cc-init` is never imported and the
+ * page requests `/config` from the Vite dev server instead of the backend.
+ * Rewrite the marker ourselves, whatever quote style is used.
+ *
+ * @type {() => import('vite').Plugin}
+ */
+export const GradioDevModePlugin = () => {
+  return {
+    name: 'modelscope-studio-gradio-dev-mode',
+    apply: 'serve',
+    transform(code) {
+      if (!code.includes('globalThis.__MODE__')) {
+        return;
+      }
+      return code.replace(
+        /(["'`])_NORMAL_\1/,
+        (_match, quote) => `${quote}_CC_${quote}`
+      );
+    },
+  };
+};
 
 /**
  * @type {(options:{ external?: { excludes:string[] } | boolean }) => import('vite').Plugin}
@@ -85,9 +136,10 @@ export const ModelScopeStudioVitePlugin = ({ external = true } = {}) => {
         };
         userConfig.build ??= {};
         if (external) {
-          userConfig.build.rollupOptions ??= {};
-          userConfig.build.rollupOptions.external = [
-            ...(userConfig.build.rollupOptions.external || []),
+          userConfig.build ??= {};
+          userConfig.build.rolldownOptions ??= {};
+          userConfig.build.rolldownOptions.external = [
+            ...(userConfig.build.rolldownOptions.external || []),
             ...Object.keys(globals),
           ];
         }
@@ -108,7 +160,7 @@ export const ModelScopeStudioVitePlugin = ({ external = true } = {}) => {
           id.endsWith(ext)
         )
       ) {
-        const ast = parse(code, {
+        const ast = parseSync(code, {
           sourceType: 'module',
         });
         traverse(ast, {
@@ -126,10 +178,7 @@ export const ModelScopeStudioVitePlugin = ({ external = true } = {}) => {
                   const decls = specifiers.map((specifier) => {
                     return t.variableDeclarator(
                       specifier.local,
-                      t.memberExpression(
-                        t.identifier(entry.ref),
-                        specifier.local
-                      )
+                      createGlobalMemberExpression(variable, specifier.local)
                     );
                   });
                   nodePath.insertBefore(t.variableDeclaration('const', decls));
@@ -160,25 +209,20 @@ export const ModelScopeStudioVitePlugin = ({ external = true } = {}) => {
                         // `<ref>` itself already is the default value.
                         return t.variableDeclarator(
                           specifier.local,
-                          entry.namespace
-                            ? t.memberExpression(
-                                t.identifier(entry.ref),
-                                t.identifier('default')
-                              )
-                            : t.identifier(entry.ref)
+                          createGlobalExpression(variable)
                         );
                       case 'ImportSpecifier':
                         return t.variableDeclarator(
                           specifier.local,
-                          t.memberExpression(
-                            t.identifier(entry.ref),
+                          createGlobalMemberExpression(
+                            variable,
                             specifier.imported
                           )
                         );
                       case 'ImportNamespaceSpecifier':
                         return t.variableDeclarator(
                           specifier.local,
-                          t.identifier(entry.ref)
+                          createGlobalExpression(variable)
                         );
                       default:
                         throw new Error(

@@ -28,6 +28,8 @@ declare module '*?raw' {
 
 declare module '*css' {}
 
+declare module '*less' {}
+
 interface Window {
   __gradio_space__: any;
 }
