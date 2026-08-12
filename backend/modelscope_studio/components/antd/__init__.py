@@ -9,6 +9,7 @@ from .avatar import AntdAvatar as Avatar
 from .avatar.group import AntdAvatarGroup as AvatarGroup
 from .badge import AntdBadge as Badge
 from .badge.ribbon import AntdBadgeRibbon as BadgeRibbon
+from .border_beam import AntdBorderBeam as BorderBeam
 from .breadcrumb import AntdBreadcrumb as Breadcrumb
 from .breadcrumb.item import AntdBreadcrumbItem as BreadcrumbItem
 from .button import AntdButton as Button
@@ -70,6 +71,7 @@ from .layout.sider import AntdLayoutSider as LayoutSider
 from .list import AntdList as List
 from .list.item import AntdListItem as ListItem
 from .list.item.meta import AntdListItemMeta as ListItemMeta
+from .listy import AntdListy as Listy
 from .masonry import AntdMasonry as Masonry
 from .masonry.item import AntdMasonryItem as MasonryItem
 from .mentions import AntdMentions as Mentions

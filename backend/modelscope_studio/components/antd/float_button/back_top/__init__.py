@@ -45,6 +45,7 @@ class AntdFloatButtonBackTop(ModelScopeLayoutComponent):
             badge: dict | None = None,
             duration: int | float = 450,
             get_target: str | None = None,
+            show_progress: bool | None = None,
             visibility_height: int | float = 400,
             root_class_name: str | None = None,
             class_names: dict | str | None = None,
@@ -93,6 +94,7 @@ class AntdFloatButtonBackTop(ModelScopeLayoutComponent):
         self.duration = duration
         self.visibility_height = visibility_height
         self.get_target = get_target
+        self.show_progress = show_progress
         self.root_class_name = root_class_name
 
     FRONTEND_DIR = resolve_frontend_dir("float-button", "back-top")

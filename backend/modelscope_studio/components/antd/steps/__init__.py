@@ -32,6 +32,7 @@ class AntdSteps(ModelScopeLayoutComponent):
             label_placement: Literal['horizontal', 'vertical'] | None = None,
             title_placement: Literal['horizontal', 'vertical'] | None = None,
             percent: int | None = None,
+            max_count: int | None = None,
             progress_dot: bool | str = False,
             responsive: bool = True,
             size: Literal['small', 'default'] | None = None,
@@ -66,6 +67,7 @@ class AntdSteps(ModelScopeLayoutComponent):
         self.label_placement = label_placement
         self.title_placement = title_placement
         self.percent = percent
+        self.max_count = max_count
         self.progress_dot = progress_dot
         self.responsive = responsive
         self.size = size

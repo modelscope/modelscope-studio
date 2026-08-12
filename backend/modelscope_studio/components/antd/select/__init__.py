@@ -105,7 +105,7 @@ class AntdSelect(ModelScopeDataLayoutComponent):
             prefix: str | None = None,
             tag_render: str | None = None,
             label_render: str | None = None,
-            token_separators: list[str] | None = None,
+            token_separators: list[str] | str | None = None,
             variant: Literal['outlined', 'borderless', 'filled', 'underlined']
         | None = None,
             virtual: bool | None = True,

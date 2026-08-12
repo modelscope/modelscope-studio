@@ -17,7 +17,7 @@ class AntdWatermark(ModelScopeLayoutComponent):
 
     def __init__(
             self,
-            content: str | list[str] | None = "",
+            content: str | dict | list[str | dict] | None = "",
             additional_props: dict | None = None,
             *,
             width: int | float | None = None,

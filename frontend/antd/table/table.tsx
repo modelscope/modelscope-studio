@@ -34,6 +34,7 @@ export const Table = sveltify<
     'loading.indicator',
     'pagination.showQuickJumper.goButton',
     'pagination.itemRender',
+    'pagination.components.sizeChanger',
     'showSorterTooltip.title',
     'summary',
   ]
@@ -80,7 +81,8 @@ export const Table = sveltify<
           const loadingConfig = getConfig(loading);
           const supportPaginationConfig =
             slots['pagination.showQuickJumper.goButton'] ||
-            slots['pagination.itemRender'];
+            slots['pagination.itemRender'] ||
+            slots['pagination.components.sizeChanger'];
           const paginationConfig = getConfig(pagination);
           const paginationShowTotalFunction = useFunction(
             paginationConfig.showTotal
@@ -235,6 +237,15 @@ export const Table = sveltify<
                               key: 'pagination.itemRender',
                             })
                           : paginationConfig.itemRender,
+                        components: slots['pagination.components.sizeChanger']
+                          ? {
+                              ...paginationConfig.components,
+                              sizeChanger: renderParamsSlot({
+                                slots,
+                                key: 'pagination.components.sizeChanger',
+                              }),
+                            }
+                          : paginationConfig.components,
                       })
                     : pagination
                 }

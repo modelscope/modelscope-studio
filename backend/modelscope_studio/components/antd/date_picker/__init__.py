@@ -30,6 +30,9 @@ class AntdDatePicker(ModelScopeDataLayoutComponent):
         EventListener("open_change",
                       callback=lambda block: block._internal.update(
                           bind_openChange_event=True)),
+        EventListener("clear",
+                      callback=lambda block: block._internal.update(
+                          bind_clear_event=True)),
     ]
 
     # supported slots

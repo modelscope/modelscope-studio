@@ -37,7 +37,7 @@ class AntdSlider(ModelScopeDataLayoutComponent):
             class_names: dict | str | None = None,
             default_value: int | float | tuple[int | float, int | float]
         | list[int | float] | None = None,
-            disabled: bool | None = None,
+            disabled: bool | list[bool] | None = None,
             dots: bool | None = None,
             included: bool | None = True,
             keyboard: bool | None = True,

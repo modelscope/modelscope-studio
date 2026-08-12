@@ -30,6 +30,7 @@ class AntdXThoughtChainThoughtChainItem(ModelScopeLayoutComponent):
         | None = None,
             collapsible: bool | None = None,
             blink: bool | None = None,
+            destroy_on_hidden: bool | None = None,
             as_item: str | None = None,
             _internal: None = None,
             # gradio properties
@@ -57,6 +58,7 @@ class AntdXThoughtChainThoughtChainItem(ModelScopeLayoutComponent):
         self.key = key
         self.collapsible = collapsible
         self.blink = blink
+        self.destroy_on_hidden = destroy_on_hidden
 
     FRONTEND_DIR = resolve_frontend_dir("thought-chain",
                                         "thought-chain-item",

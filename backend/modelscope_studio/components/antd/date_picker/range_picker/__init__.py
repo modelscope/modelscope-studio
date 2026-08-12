@@ -26,6 +26,9 @@ class AntdDatePickerRangePicker(ModelScopeDataLayoutComponent):
         EventListener("blur",
                       callback=lambda block: block._internal.update(
                           bind_blur_event=True)),
+        EventListener("clear",
+                      callback=lambda block: block._internal.update(
+                          bind_clear_event=True)),
     ]
 
     # supported slots

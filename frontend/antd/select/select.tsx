@@ -43,6 +43,7 @@ export const Select = sveltify<
       tagRender,
       labelRender,
       filterSort,
+      tokenSeparators,
       elRef,
       ...props
     }) => {
@@ -54,6 +55,7 @@ export const Select = sveltify<
       const optionRenderFunction = useFunction(optionRender);
       const tagRenderFunction = useFunction(tagRender);
       const labelRenderFunction = useFunction(labelRender);
+      const tokenSeparatorsFunction = useFunction(tokenSeparators);
       const { items: slotItems } = useItems<['options', 'default']>();
       const resolvedSlotItems =
         slotItems.options.length > 0 ? slotItems.options : slotItems.default;
@@ -120,6 +122,7 @@ export const Select = sveltify<
               )
             }
             filterOption={filterOptionFunction || filterOption}
+            tokenSeparators={tokenSeparatorsFunction || tokenSeparators}
             maxTagPlaceholder={
               slots.maxTagPlaceholder
                 ? renderParamsSlot({

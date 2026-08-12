@@ -14,9 +14,9 @@ LocaleType = Literal['ar_EG', 'az_AZ', 'bg_BG', 'bn_BD', 'by_BY', 'ca_ES',
                      'ko_KR', 'ku_IQ', 'lt_LT', 'lv_LV', 'mk_MK', 'ml_IN',
                      'mn_MN', 'ms_MY', 'my_MM', 'nb_NO', 'ne_NP', 'nl_BE',
                      'nl_NL', 'pl_PL', 'pt_BR', 'pt_PT', 'ro_RO', 'ru_RU',
-                     'si_LK', 'sk_SK', 'sl_SI', 'sr_RS', 'sv_SE', 'ta_IN',
-                     'th_TH', 'tk_TK', 'tr_TR', 'uk_UA', 'ur_PK', 'uz_UZ',
-                     'vi_VN', 'zh_CN', 'zh_HK', 'zh_TW']
+                     'si_LK', 'sk_SK', 'sl_SI', 'sq_AL', 'sr_RS', 'sv_SE',
+                     'ta_IN', 'th_TH', 'tk_TK', 'tr_TR', 'uk_UA', 'ur_PK',
+                     'uz_UZ', 'vi_VN', 'zh_CN', 'zh_HK', 'zh_TW']
 
 
 class AntdConfigProvider(ModelScopeLayoutComponent):

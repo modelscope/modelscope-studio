@@ -32,6 +32,7 @@ export const Folder = sveltify<
         previewRender,
         previewTitle,
         fileContentService,
+        contextMenu,
         ...props
       }) => {
         const { items: treeNodeItems } =
@@ -44,12 +45,14 @@ export const Folder = sveltify<
           useDirectoryIconItems<['directoryIcons']>();
         const previewRenderFunction = useFunction(previewRender, true);
         const previewTitleFunction = useFunction(previewTitle, true);
+        const contextMenuFunction = useFunction(contextMenu, true);
 
         return (
           <>
             <div style={{ display: 'none' }}>{children}</div>
             <XFolder
               {...props}
+              contextMenu={contextMenuFunction || contextMenu}
               fileContentService={
                 fileContentService?.onLoadFileContent
                   ? {

@@ -19,6 +19,7 @@ export const Tabs = sveltify<
     'tabBarExtraContent.left',
     'tabBarExtraContent.right',
     'more.icon',
+    'more.popupRender',
   ]
 >(
   withItemsContextProvider(
@@ -37,6 +38,7 @@ export const Tabs = sveltify<
       const getMorePopupContainerFunction = useFunction(
         more?.getPopupContainer
       );
+      const morePopupRenderFunction = useFunction(more?.popupRender);
       const renderTabBarFunction = useFunction(renderTabBar);
       const { items: slotItems } = useItems<['default', 'items']>();
       const resolvedSlotItems =
@@ -74,6 +76,12 @@ export const Tabs = sveltify<
               ...(more || {}),
               getPopupContainer:
                 getMorePopupContainerFunction || more?.getPopupContainer,
+              popupRender: slots['more.popupRender']
+                ? renderParamsSlot({
+                    slots,
+                    key: 'more.popupRender',
+                  })
+                : morePopupRenderFunction || more?.popupRender,
               icon: slots['more.icon'] ? (
                 <ReactSlot slot={slots['more.icon']} />
               ) : (

@@ -32,7 +32,7 @@ class AntdTabs(ModelScopeLayoutComponent):
     SLOTS = [
         'addIcon', 'removeIcon', 'renderTabBar', 'tabBarExtraContent',
         'tabBarExtraContent.left', 'tabBarExtraContent.right', 'more.icon',
-        'items'
+        'more.popupRender', 'items'
     ]
 
     def __init__(
