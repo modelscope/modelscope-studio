@@ -1,4 +1,9 @@
-import { parseSync, transformFromAstSync, traverse, types as t } from '@babel/core';
+import {
+  parseSync,
+  transformFromAstSync,
+  traverse,
+  types as t,
+} from '@babel/core';
 import path from 'node:path';
 import url from 'node:url';
 
