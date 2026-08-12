@@ -178,7 +178,7 @@ export const ModelScopeStudioVitePlugin = ({ external = true } = {}) => {
                   const decls = specifiers.map((specifier) => {
                     return t.variableDeclarator(
                       specifier.local,
-                      createGlobalMemberExpression(variable, specifier.local)
+                      createGlobalMemberExpression(entry.ref, specifier.local)
                     );
                   });
                   nodePath.insertBefore(t.variableDeclaration('const', decls));
@@ -209,20 +209,25 @@ export const ModelScopeStudioVitePlugin = ({ external = true } = {}) => {
                         // `<ref>` itself already is the default value.
                         return t.variableDeclarator(
                           specifier.local,
-                          createGlobalExpression(variable)
+                          entry.namespace
+                            ? createGlobalMemberExpression(
+                                entry.ref,
+                                t.identifier('default')
+                              )
+                            : createGlobalExpression(entry.ref)
                         );
                       case 'ImportSpecifier':
                         return t.variableDeclarator(
                           specifier.local,
                           createGlobalMemberExpression(
-                            variable,
+                            entry.ref,
                             specifier.imported
                           )
                         );
                       case 'ImportNamespaceSpecifier':
                         return t.variableDeclarator(
                           specifier.local,
-                          createGlobalExpression(variable)
+                          createGlobalExpression(entry.ref)
                         );
                       default:
                         throw new Error(
