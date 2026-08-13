@@ -6,6 +6,7 @@ import {
 } from '@babel/core';
 import path from 'node:path';
 import url from 'node:url';
+import { esmExternalRequirePlugin } from 'vite';
 
 // Each entry mirrors how the global is exposed in
 // `frontend/svelte-preprocess-react/inject.ts`:
@@ -119,7 +120,7 @@ export const GradioDevModePlugin = () => {
 };
 
 /**
- * @type {(options:{ external?: { excludes:string[] } | boolean }) => import('vite').Plugin}
+ * @type {(options:{ external?: { excludes:string[] } | boolean }) => import('vite').Plugin[]}
  */
 export const ModelScopeStudioVitePlugin = ({ external = true } = {}) => {
   const globals = external?.excludes
@@ -130,127 +131,139 @@ export const ModelScopeStudioVitePlugin = ({ external = true } = {}) => {
         return aliases;
       }, {})
     : baseGlobals;
-  return {
-    name: 'modelscope-studio-vite-plugin',
-    config(userConfig, { command }) {
-      const isBuild = command === 'build';
-      if (isBuild) {
-        userConfig.define = {
-          ...userConfig.define,
-          'process.env.NODE_ENV': JSON.stringify('production'),
-        };
-        userConfig.build ??= {};
-        if (external) {
+  const externalNames = external ? Object.keys(globals) : [];
+  return [
+    // Rolldown handles `require(<external>)` in bundled CJS modules through a
+    // runtime shim that throws in the browser. `esmExternalRequirePlugin` fixes
+    // that at the correct layer: it rewrites each such `require` into an ES
+    // import (via a virtual facade `import * as m from '<mod>'; module.exports
+    // = m`), so the shim never gets called and the resulting ES imports flow
+    // through our own renderChunk transform below, which turns them into
+    // `window.ms_globals.*` references alongside the code's native imports.
+    //
+    // The plugin owns the entire external list, so nothing gets pinned onto
+    // `build.rolldownOptions.external`; duplicating the list there would let
+    // the top-level `external` win during resolution and silently disable this
+    // plugin (rolldown docs).
+    ...(externalNames.length
+      ? [esmExternalRequirePlugin({ external: externalNames })]
+      : []),
+    {
+      name: 'modelscope-studio-vite-plugin',
+      config(userConfig, { command }) {
+        const isBuild = command === 'build';
+        if (isBuild) {
+          userConfig.define = {
+            ...userConfig.define,
+            'process.env.NODE_ENV': JSON.stringify('production'),
+          };
           userConfig.build ??= {};
-          userConfig.build.rolldownOptions ??= {};
-          userConfig.build.rolldownOptions.external = [
-            ...(userConfig.build.rolldownOptions.external || []),
-            ...Object.keys(globals),
-          ];
         }
-      }
 
-      userConfig.resolve ??= {};
-      userConfig.resolve.alias = {
-        ...(userConfig.resolve.alias || {}),
-        '@utils': path.resolve(dirname, 'utils'),
-        '@globals': path.resolve(dirname, 'globals'),
-        ...generateSveltePreprocessReactAliases(),
-      };
-    },
-    renderChunk(code, chunk) {
-      const id = chunk.fileName;
-      if (
-        ['.jsx', '.js', '.cjs', '.esm', '.tsx', '.ts'].some((ext) =>
-          id.endsWith(ext)
-        )
-      ) {
-        const ast = parseSync(code, {
-          sourceType: 'module',
-        });
-        traverse(ast, {
-          Program: {
-            enter(enterPath) {
-              enterPath.traverse({
-                ExportNamedDeclaration(nodePath) {
-                  const source = nodePath.node.source?.value;
-                  const entry = globals[source];
-                  if (!entry) {
-                    return;
-                  }
-                  const { specifiers } = nodePath.node;
-
-                  const decls = specifiers.map((specifier) => {
-                    return t.variableDeclarator(
-                      specifier.local,
-                      createGlobalMemberExpression(entry.ref, specifier.local)
-                    );
-                  });
-                  nodePath.insertBefore(t.variableDeclaration('const', decls));
-                  nodePath.insertAfter(
-                    t.exportNamedDeclaration(null, specifiers)
-                  );
-                  nodePath.remove();
-                },
-                ImportDeclaration(nodePath) {
-                  const source = nodePath.node.source.value;
-                  const entry = globals[source];
-
-                  if (!entry) {
-                    return;
-                  }
-
-                  const { specifiers } = nodePath.node;
-                  // eg: import "react";
-                  if (specifiers.length === 0) {
-                    nodePath.remove();
-                    return;
-                  }
-                  const decls = specifiers.map((specifier) => {
-                    switch (specifier.type) {
-                      case 'ImportDefaultSpecifier':
-                        // For namespace-style globals, the default export
-                        // lives at `<ref>.default`. For value-style globals,
-                        // `<ref>` itself already is the default value.
-                        return t.variableDeclarator(
-                          specifier.local,
-                          entry.namespace
-                            ? createGlobalMemberExpression(
-                                entry.ref,
-                                t.identifier('default')
-                              )
-                            : createGlobalExpression(entry.ref)
-                        );
-                      case 'ImportSpecifier':
-                        return t.variableDeclarator(
-                          specifier.local,
-                          createGlobalMemberExpression(
-                            entry.ref,
-                            specifier.imported
-                          )
-                        );
-                      case 'ImportNamespaceSpecifier':
-                        return t.variableDeclarator(
-                          specifier.local,
-                          createGlobalExpression(entry.ref)
-                        );
-                      default:
-                        throw new Error(
-                          `Unsupported import specifier type ${specifier.type}`
-                        );
+        userConfig.resolve ??= {};
+        userConfig.resolve.alias = {
+          ...(userConfig.resolve.alias || {}),
+          '@utils': path.resolve(dirname, 'utils'),
+          '@globals': path.resolve(dirname, 'globals'),
+          ...generateSveltePreprocessReactAliases(),
+        };
+      },
+      renderChunk(code, chunk) {
+        const id = chunk.fileName;
+        if (
+          ['.jsx', '.js', '.cjs', '.esm', '.tsx', '.ts'].some((ext) =>
+            id.endsWith(ext)
+          )
+        ) {
+          const ast = parseSync(code, {
+            sourceType: 'module',
+          });
+          traverse(ast, {
+            Program: {
+              enter(enterPath) {
+                enterPath.traverse({
+                  ExportNamedDeclaration(nodePath) {
+                    const source = nodePath.node.source?.value;
+                    const entry = globals[source];
+                    if (!entry) {
+                      return;
                     }
-                  });
-                  nodePath.insertAfter(t.variableDeclaration('const', decls));
-                  nodePath.remove();
-                },
-              });
-            },
-          },
-        });
-        const transformed = transformFromAstSync(ast);
+                    const { specifiers } = nodePath.node;
 
-        return transformed.code;
-      }
+                    const decls = specifiers.map((specifier) => {
+                      return t.variableDeclarator(
+                        specifier.local,
+                        createGlobalMemberExpression(entry.ref, specifier.local)
+                      );
+                    });
+                    nodePath.insertBefore(
+                      t.variableDeclaration('const', decls)
+                    );
+                    nodePath.insertAfter(
+                      t.exportNamedDeclaration(null, specifiers)
+                    );
+                    nodePath.remove();
+                  },
+                  ImportDeclaration(nodePath) {
+                    const source = nodePath.node.source.value;
+                    const entry = globals[source];
+
+                    if (!entry) {
+                      return;
+                    }
+
+                    const { specifiers } = nodePath.node;
+                    // eg: import "react";
+                    if (specifiers.length === 0) {
+                      nodePath.remove();
+                      return;
+                    }
+                    const decls = specifiers.map((specifier) => {
+                      switch (specifier.type) {
+                        case 'ImportDefaultSpecifier':
+                          // For namespace-style globals, the default export
+                          // lives at `<ref>.default`. For value-style globals,
+                          // `<ref>` itself already is the default value.
+                          return t.variableDeclarator(
+                            specifier.local,
+                            entry.namespace
+                              ? createGlobalMemberExpression(
+                                  entry.ref,
+                                  t.identifier('default')
+                                )
+                              : createGlobalExpression(entry.ref)
+                          );
+                        case 'ImportSpecifier':
+                          return t.variableDeclarator(
+                            specifier.local,
+                            createGlobalMemberExpression(
+                              entry.ref,
+                              specifier.imported
+                            )
+                          );
+                        case 'ImportNamespaceSpecifier':
+                          return t.variableDeclarator(
+                            specifier.local,
+                            createGlobalExpression(entry.ref)
+                          );
+                        default:
+                          throw new Error(
+                            `Unsupported import specifier type ${specifier.type}`
+                          );
+                      }
+                    });
+                    nodePath.insertAfter(t.variableDeclaration('const', decls));
+                    nodePath.remove();
+                  },
+                });
+              },
+            },
+          });
+          const transformed = transformFromAstSync(ast);
+
+          return transformed.code;
+        }
+      },
     },
-  };
+  ];
 };

@@ -148,7 +148,11 @@ export function make_gradio_plugin({
 				return resolved_v_id_2;
 			}
 
-			if (id.startsWith("svelte")) {
+			if (id === "svelte" || id.startsWith("svelte/")) {
+				// Only the `svelte` package and its subpaths share the app runtime.
+				// A prefix-only check would also swallow separate packages like
+				// `svelte-i18n`, whose slice happens to end up as `svelte_i18n.js`,
+				// a file the app does not serve.
 				// Point at the runtime the app itself uses, so that component and app
 				// share one instance. Mixing two instances breaks snippets and
 				// context: whichever runtime did not create an effect sees a `null`
