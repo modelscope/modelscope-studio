@@ -1,4 +1,4 @@
-import { getInfo, getInfoFromPullRequest } from '@changesets/get-github-info';
+import { getCommitInfo, getPullRequestInfo } from '@changesets/get-github-info';
 import type { ChangelogFunctions } from '@changesets/types';
 import { getPackagesSync } from '@manypkg/get-packages';
 import { existsSync, readFileSync, writeFileSync } from 'fs';
@@ -13,6 +13,25 @@ function find_packages_dir(package_name: string) {
   if (!_package) throw new Error(`Package ${package_name} not found`);
 
   return _package.dir;
+}
+
+/**
+ * `changelogOpts` is typed as `null | Record<string, unknown>`, so the repo has
+ * to be both null checked and narrowed to a string before it can be used.
+ *
+ * @param {null | Record<string, unknown>} options The changelog options
+ * @returns {string} The `org/repo` slug
+ */
+function get_repo(options: null | Record<string, unknown>): string {
+  const repo = options?.repo;
+
+  if (typeof repo !== 'string' || !repo) {
+    throw new Error(
+      'Please provide a repo to this changelog generator like this:\n"changelog": ["@changesets/changelog-github", { "repo": "org/repo" }]'
+    );
+  }
+
+  return repo;
 }
 
 /**
@@ -42,22 +61,19 @@ const changelogFunctions: ChangelogFunctions = {
     dependenciesUpdated,
     options
   ) => {
-    if (!options.repo) {
-      throw new Error(
-        'Please provide a repo to this changelog generator like this:\n"changelog": ["@changesets/changelog-github", { "repo": "org/repo" }]'
-      );
-    }
+    const repo = get_repo(options);
+
     if (dependenciesUpdated.length === 0) return '';
 
     const changesetLink = `- Updated dependencies [${(
       await Promise.all(
         changesets.map(async (cs) => {
           if (cs.commit) {
-            const { links } = await getInfo({
-              repo: options.repo,
+            const info = await getCommitInfo({
+              repo,
               commit: cs.commit,
             });
-            return links.commit;
+            return info?.commit.markdownLink;
           }
         })
       )
@@ -72,11 +88,7 @@ const changelogFunctions: ChangelogFunctions = {
     return [changesetLink, ...updatedDepenenciesList].join('\n');
   },
   getReleaseLine: async (changeset, _type, options) => {
-    if (!options || !options.repo) {
-      throw new Error(
-        'Please provide a repo to this changelog generator like this:\n"changelog": ["@changesets/changelog-github", { "repo": "org/repo" }]'
-      );
-    }
+    const repo = get_repo(options);
 
     let prFromSummary: number | undefined;
     let commitFromSummary: string | undefined;
@@ -102,28 +114,38 @@ const changelogFunctions: ChangelogFunctions = {
       .split('\n')
       .map((l) => l.trimEnd());
 
-    const links = await (async () => {
+    const links: {
+      commit: string | null;
+      pull: string | null;
+      user: string | null;
+    } = await (async () => {
       if (prFromSummary !== undefined) {
-        let { links: _links } = await getInfoFromPullRequest({
-          repo: options.repo,
+        const info = await getPullRequestInfo({
+          repo,
           pull: prFromSummary,
         });
-        if (commitFromSummary) {
-          const shortCommitId = commitFromSummary.slice(0, 7);
-          _links = {
-            ..._links,
-            commit: `[\`${shortCommitId}\`](https://github.com/${options.repo}/commit/${commitFromSummary})`,
-          };
-        }
-        return _links;
+        return {
+          commit: commitFromSummary
+            ? `[\`${commitFromSummary.slice(
+                0,
+                7
+              )}\`](https://github.com/${repo}/commit/${commitFromSummary})`
+            : (info?.commit?.markdownLink ?? null),
+          pull: info?.pull.markdownLink ?? null,
+          user: info?.author?.markdownLink ?? null,
+        };
       }
       const commitToFetchFrom = commitFromSummary || changeset.commit;
       if (commitToFetchFrom) {
-        const info = await getInfo({
-          repo: options.repo,
+        const info = await getCommitInfo({
+          repo,
           commit: commitToFetchFrom,
         });
-        return info.links;
+        return {
+          commit: info?.commit.markdownLink ?? null,
+          pull: info?.pull?.markdownLink ?? null,
+          user: info?.author?.markdownLink ?? null,
+        };
       }
       return {
         commit: null,

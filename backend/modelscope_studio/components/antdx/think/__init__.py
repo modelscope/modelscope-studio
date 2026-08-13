@@ -31,6 +31,7 @@ class AntdXThink(ModelScopeLayoutComponent):
             default_expanded: bool | None = None,
             expanded: bool | None = None,
             blink: bool | None = None,
+            destroy_on_hidden: bool | None = None,
             as_item: str | None = None,
             _internal: None = None,
             # gradio properties
@@ -55,6 +56,7 @@ class AntdXThink(ModelScopeLayoutComponent):
         self.default_expanded = default_expanded
         self.expanded = expanded
         self.blink = blink
+        self.destroy_on_hidden = destroy_on_hidden
         self.title = title
         self.root_class_name = root_class_name
 

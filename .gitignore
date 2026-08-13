@@ -7,7 +7,7 @@ __pycache__/
 __tmp/*
 *.pyi
 templates
-
+/gradio
 # common
 
 !.*ignore

@@ -9,7 +9,7 @@ export const Pagination = sveltify<
   GetProps<typeof APagination> & {
     children?: React.ReactNode;
   },
-  ['showQuickJumper.goButton', 'itemRender']
+  ['showQuickJumper.goButton', 'itemRender', 'components.sizeChanger']
 >(
   ({
     slots,
@@ -18,6 +18,7 @@ export const Pagination = sveltify<
     onChange,
     children,
     itemRender,
+    components,
     ...props
   }) => {
     const itemRenderFunction = useFunction(itemRender);
@@ -28,6 +29,17 @@ export const Pagination = sveltify<
         <APagination
           {...props}
           showTotal={showTotal ? showTotalFunction : undefined}
+          components={
+            slots['components.sizeChanger']
+              ? {
+                  ...components,
+                  sizeChanger: renderParamsSlot({
+                    slots,
+                    key: 'components.sizeChanger',
+                  }),
+                }
+              : components
+          }
           itemRender={
             slots.itemRender
               ? renderParamsSlot({ slots, key: 'itemRender' }, { clone: true })

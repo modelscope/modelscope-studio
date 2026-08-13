@@ -33,19 +33,19 @@ export async function initLocalLoader() {
   const [monaco, editorWorker, cssWorker, htmlWorker, jsonWorker, tsWorker] =
     await Promise.all([
       import('monaco-editor'),
-      import('monaco-editor/esm/vs/editor/editor.worker?worker&inline').then(
+      import('monaco-editor/editor/editor.worker?worker&inline').then(
         (m) => m.default
       ),
-      import('monaco-editor/esm/vs/language/css/css.worker?worker&inline').then(
+      import('monaco-editor/language/css/css.worker?worker&inline').then(
         (m) => m.default
       ),
-      import('monaco-editor/esm/vs/language/html/html.worker?worker&inline').then(
+      import('monaco-editor/language/html/html.worker?worker&inline').then(
         (m) => m.default
       ),
-      import('monaco-editor/esm/vs/language/json/json.worker?worker&inline').then(
+      import('monaco-editor/language/json/json.worker?worker&inline').then(
         (m) => m.default
       ),
-      import('monaco-editor/esm/vs/language/typescript/ts.worker?worker&inline').then(
+      import('monaco-editor/language/typescript/ts.worker?worker&inline').then(
         (m) => m.default
       ),
     ]);

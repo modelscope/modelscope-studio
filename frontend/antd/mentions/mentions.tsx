@@ -4,6 +4,7 @@ import { useMemo } from 'react';
 import { useFunction } from '@utils/hooks/useFunction';
 import { useValueChange } from '@utils/hooks/useValueChange';
 import { renderItems } from '@utils/renderItems';
+import { renderParamsSlot } from '@utils/renderParamsSlot';
 import { type GetProps, Mentions as AMentions } from 'antd';
 
 import { useItems, withItemsContextProvider } from './context';
@@ -12,7 +13,7 @@ export const Mentions = sveltify<
   GetProps<typeof AMentions> & {
     onValueChange: (value: string) => void;
   },
-  ['allowClear.clearIcon', 'notFoundContent']
+  ['allowClear.clearIcon', 'notFoundContent', 'popupRender']
 >(
   withItemsContextProvider(
     ['options', 'default'],
@@ -25,12 +26,14 @@ export const Mentions = sveltify<
       options,
       validateSearch,
       getPopupContainer,
+      popupRender,
       elRef,
       ...props
     }) => {
       const getPopupContainerFunction = useFunction(getPopupContainer);
       const filterOptionFunction = useFunction(filterOption);
       const validateSearchFunction = useFunction(validateSearch);
+      const popupRenderFunction = useFunction(popupRender);
       const [value, setValue] = useValueChange({
         onValueChange,
         value: props.value,
@@ -69,6 +72,11 @@ export const Mentions = sveltify<
             }
             filterOption={filterOptionFunction || filterOption}
             getPopupContainer={getPopupContainerFunction}
+            popupRender={
+              slots.popupRender
+                ? renderParamsSlot({ slots, key: 'popupRender' })
+                : popupRenderFunction
+            }
           />
         </>
       );

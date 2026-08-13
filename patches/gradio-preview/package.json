@@ -1,0 +1,32 @@
+{
+  "name": "@modelscope-studio/gradio-preview",
+  "version": "0.17.0",
+  "private": true,
+  "type": "module",
+  "description": "Vendored @gradio/preview with fixes for the custom component dev server",
+  "repository": "git@github.com:modelscope/modelscope-studio.git",
+  "license": "Apache-2.0",
+  "main": "dist/index.js",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "default": "./dist/index.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "scripts": {
+    "build": "tsup && node ./scripts/copy-assets.mjs"
+  },
+  "dependencies": {
+    "@sveltejs/vite-plugin-svelte": "^7.0.0",
+    "rollup": "^4.59.0",
+    "svelte-preprocess": "^6.0.3",
+    "vite": "^8.0.9"
+  },
+  "devDependencies": {
+    "@types/node": "^26.2.0",
+    "tsup": "^8.5.1",
+    "typescript": "^5.9.3"
+  }
+}

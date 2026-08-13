@@ -70,6 +70,7 @@ export const lang2RegionMap = {
   si: 'si_LK', // Sinhala
   sk: 'sk_SK',
   sl: 'sl_SI',
+  sq: 'sq_AL', // Albanian
   sr: 'sr_RS', // Serbian
   sv: 'sv_SE',
   ta: 'ta_IN', // Tamil
@@ -714,6 +715,17 @@ export const locales: Record<
     return {
       antd,
       dayjs: 'sl',
+    };
+  },
+
+  sq_AL: async () => {
+    const [{ default: antd }] = await Promise.all([
+      import('antd/locale/sq_AL'),
+      import('dayjs/locale/sq'), // Albanian
+    ]);
+    return {
+      antd,
+      dayjs: 'sq',
     };
   },
 

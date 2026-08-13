@@ -32,6 +32,9 @@ class AntdXFolder(ModelScopeLayoutComponent):
         EventListener("file_content_service_load_file_content",
                       callback=lambda block: block._internal.update(
                           bind_fileContentService_loadFileContent_event=True)),
+        EventListener("right_click",
+                      callback=lambda block: block._internal.update(
+                          bind_rightClick_event=True)),
     ]
 
     # supported slots
@@ -57,6 +60,7 @@ class AntdXFolder(ModelScopeLayoutComponent):
             directory_title: str | None = None,
             preview_title: str | None = None,
             directory_icons: dict | None = None,
+            context_menu: list[dict] | str | None = None,
             root_class_name: str | None = None,
             class_names: dict | str | None = None,
             styles: dict | str | None = None,
@@ -93,6 +97,7 @@ class AntdXFolder(ModelScopeLayoutComponent):
         self.directory_title = directory_title
         self.preview_title = preview_title
         self.directory_icons = directory_icons
+        self.context_menu = context_menu
 
     FRONTEND_DIR = resolve_frontend_dir("folder", type="antdx")
 

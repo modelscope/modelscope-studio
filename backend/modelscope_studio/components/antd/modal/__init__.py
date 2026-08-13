@@ -55,6 +55,7 @@ class AntdModal(ModelScopeLayoutComponent):
             mask: bool | None = None,
             mask_closable: bool | None = None,
             modal_render: str | None = None,
+            scroll_lock: bool | None = None,
             ok_text: str | None = None,
             ok_type: str | None = None,
             ok_button_props: dict | None = None,
@@ -103,6 +104,7 @@ class AntdModal(ModelScopeLayoutComponent):
         self.mask = mask
         self.mask_closable = mask_closable
         self.modal_render = modal_render
+        self.scroll_lock = scroll_lock
         self.ok_text = ok_text
         self.ok_type = ok_type
         self.ok_button_props = ok_button_props

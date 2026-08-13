@@ -19,13 +19,13 @@
     "build": "tsup"
   },
   "dependencies": {
-    "@changesets/get-github-info": "^0.8.0",
+    "@changesets/get-github-info": "^1.0.0",
     "@manypkg/get-packages": "^3.1.0",
     "detect-indent": "^7.0.2"
   },
   "devDependencies": {
-    "@changesets/types": "^6.1.0",
-    "@types/node": "^25.8.0",
+    "@changesets/types": "^7.0.0",
+    "@types/node": "^26.2.0",
     "tsup": "^8.5.1"
   }
 }

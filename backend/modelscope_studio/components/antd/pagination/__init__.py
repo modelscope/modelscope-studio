@@ -21,7 +21,9 @@ class AntdPagination(ModelScopeLayoutComponent):
     ]
 
     # supported slots
-    SLOTS = ['showQuickJumper.goButton', 'itemRender']
+    SLOTS = [
+        'showQuickJumper.goButton', 'itemRender', 'components.sizeChanger'
+    ]
 
     def __init__(
             self,

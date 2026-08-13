@@ -270,11 +270,12 @@ export function processProps<
   }
 
   // for loading_status
-  if (
-    shouldSetLoadingStatus &&
-    props.additionalProps?.ms_auto_loading !== false
-  ) {
-    setLoadingStatus(() => props.restProps.loading_status);
+  if (shouldSetLoadingStatus) {
+    setLoadingStatus(() =>
+      props.additionalProps?.ms_auto_loading === false
+        ? null
+        : props.restProps.loading_status
+    );
   }
 
   // for ms.Each
@@ -379,9 +380,7 @@ export function getProps<
               )),
           elem_id: gradio.shared.elem_id as string | undefined,
           elem_classes: gradio.shared.elem_classes as
-            | string
-            | string[]
-            | undefined,
+            string | string[] | undefined,
           elem_style: gradio.props.elem_style as React.CSSProperties,
           visible: gradio.shared.visible,
           attached_events: gradio.shared.attached_events,

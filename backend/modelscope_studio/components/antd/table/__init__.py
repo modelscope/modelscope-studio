@@ -44,11 +44,12 @@ class AntdTable(ModelScopeLayoutComponent):
         'title',
         'summary',
         "expandable",
-        "rowSelection"
+        "rowSelection",
         'loading.tip',
         'loading.indicator',
         'pagination.showQuickJumper.goButton',
         'pagination.itemRender',
+        'pagination.components.sizeChanger',
         'showSorterTooltip.title',
     ]
 

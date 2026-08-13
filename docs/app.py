@@ -354,6 +354,9 @@ antd_menu_items = [{
         "label": get_text("List", "List 列表"),
         "key": "list"
     }, {
+        "label": get_text("Listy", "Listy 虚拟列表"),
+        "key": "listy"
+    }, {
         "label": get_text("Popover", "Popover 气泡卡片"),
         "key": "popover"
     }, {
@@ -434,6 +437,9 @@ antd_menu_items = [{
     "children": [{
         "label": get_text("Affix", "Affix 固钉"),
         "key": "affix"
+    }, {
+        "label": get_text("BorderBeam", "BorderBeam 边框流光"),
+        "key": "border_beam"
     }, {
         "label": get_text("ConfigProvider", "ConfigProvider 全局化配置"),
         "key": "config_provider"

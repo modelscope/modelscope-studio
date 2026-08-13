@@ -43,7 +43,9 @@ class AntdMentions(ModelScopeDataLayoutComponent):
     ]
 
     # supported slots
-    SLOTS = ['allowClear.clearIcon', 'notFoundContent', "options"]
+    SLOTS = [
+        'allowClear.clearIcon', 'notFoundContent', 'popupRender', "options"
+    ]
 
     def __init__(
             self,
@@ -60,6 +62,7 @@ class AntdMentions(ModelScopeDataLayoutComponent):
             read_only: bool | None = None,
             get_popup_container: str | None = None,
             popup_class_name: str | None = None,
+            popup_render: str | None = None,
             not_found_content: str | None = None,
             options: list[dict] | None = None,
             loading: bool | None = None,
@@ -101,6 +104,7 @@ class AntdMentions(ModelScopeDataLayoutComponent):
         self.read_only = read_only
         self.get_popup_container = get_popup_container
         self.popup_class_name = popup_class_name
+        self.popup_render = popup_render
         self.not_found_content = not_found_content
         self.options = options
         self.placeholder = placeholder

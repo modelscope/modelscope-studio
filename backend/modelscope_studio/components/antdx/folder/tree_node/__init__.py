@@ -21,6 +21,7 @@ class AntdXFolderTreeNode(ModelScopeLayoutComponent):
             title: str | None = None,
             path: str | None = None,
             content: str | None = None,
+            context_menu: list[dict] | bool | None = None,
             additional_props: dict | None = None,
             as_item: str | None = None,
             _internal: None = None,
@@ -42,6 +43,7 @@ class AntdXFolderTreeNode(ModelScopeLayoutComponent):
         self.additional_props = additional_props
         self.path = path
         self.content = content
+        self.context_menu = context_menu
 
     FRONTEND_DIR = resolve_frontend_dir("folder", "tree-node", type="antdx")
 

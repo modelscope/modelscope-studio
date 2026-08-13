@@ -25,6 +25,9 @@ class AntdTimePicker(ModelScopeDataLayoutComponent):
         EventListener("calendar_change",
                       callback=lambda block: block._internal.update(
                           bind_calendarChange_event=True)),
+        EventListener("clear",
+                      callback=lambda block: block._internal.update(
+                          bind_clear_event=True)),
     ]
 
     # supported slots

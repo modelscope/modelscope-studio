@@ -16,15 +16,16 @@
     "allowSyntheticDefaultImports": true,
     "resolveJsonModule": true,
     "noImplicitOverride": true,
-    "baseUrl": "./frontend",
     "paths": {
-      "@svelte-preprocess-react": ["svelte-preprocess-react/index.ts"],
-      "@svelte-preprocess-react/*": [
-        "svelte-preprocess-react/*/index.ts",
-        "svelte-preprocess-react/*"
+      "@svelte-preprocess-react": [
+        "./frontend/svelte-preprocess-react/index.ts"
       ],
-      "@utils/*": ["utils/*"],
-      "@globals/*": ["globals/*"]
+      "@svelte-preprocess-react/*": [
+        "./frontend/svelte-preprocess-react/*/index.ts",
+        "./frontend/svelte-preprocess-react/*"
+      ],
+      "@utils/*": ["./frontend/utils/*"],
+      "@globals/*": ["./frontend/globals/*"]
     }
   },
   "include": ["frontend", "config"],

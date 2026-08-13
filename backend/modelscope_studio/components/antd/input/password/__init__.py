@@ -39,7 +39,7 @@ class AntdInputPassword(ModelScopeDataLayoutComponent):
             additional_props: dict | None = None,
             *,
             icon_render: str | None = None,
-            visiable_toggle: bool | dict | None = True,
+            visibility_toggle: bool | dict | None = None,
             addon_after: str | None = None,
             addon_before: str | None = None,
             allow_clear: bool | dict | None = None,
@@ -79,7 +79,7 @@ class AntdInputPassword(ModelScopeDataLayoutComponent):
                          **kwargs)
         self.additional_props = additional_props
         self.icon_render = icon_render
-        self.visiable_toggle = visiable_toggle
+        self.visibility_toggle = visibility_toggle
         self.addon_after = addon_after
         self.addon_before = addon_before
         self.allow_clear = allow_clear
