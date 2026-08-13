@@ -250,7 +250,12 @@ artifacts = [
 ]
 
 [tool.yapfignore]
-ignore_patterns = ["node_modules/**", "__pycache__/**", "**/*.pyi"]
+ignore_patterns = [
+  "node_modules/**",
+  "__pycache__/**",
+  "**/*.pyi",
+  "patches/**",
+]
 
 [tool.hatch.build.targets.sdist]
 exclude = ["__pycache__"]

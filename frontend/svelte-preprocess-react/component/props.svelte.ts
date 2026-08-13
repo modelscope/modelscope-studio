@@ -380,9 +380,7 @@ export function getProps<
               )),
           elem_id: gradio.shared.elem_id as string | undefined,
           elem_classes: gradio.shared.elem_classes as
-            | string
-            | string[]
-            | undefined,
+            string | string[] | undefined,
           elem_style: gradio.props.elem_style as React.CSSProperties,
           visible: gradio.shared.visible,
           attached_events: gradio.shared.attached_events,

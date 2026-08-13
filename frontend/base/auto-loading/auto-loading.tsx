@@ -47,8 +47,7 @@ export const AutoLoading = sveltify<
     loadingText,
   }) => {
     let loadingContent:
-      | React.ReactNode
-      | ((...args: any[]) => React.ReactNode) = null;
+      React.ReactNode | ((...args: any[]) => React.ReactNode) = null;
     let errorContent: React.ReactNode | ((...args: any[]) => React.ReactNode) =
       null;
     const {

@@ -262,8 +262,7 @@ export const WebSandbox = sveltify<WebSandboxProps, ['compileErrorRender']>(
         const iframeMessageListener = (e: MessageEvent) => {
           if (e.source === iframeRef.current?.contentWindow) {
             const data = e.data as
-              | { type?: string; message?: string }
-              | undefined;
+              { type?: string; message?: string } | undefined;
             switch (data?.type) {
               case 'sandbox-error':
                 if (showRenderError) {

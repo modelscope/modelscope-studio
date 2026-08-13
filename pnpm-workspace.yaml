@@ -1,6 +1,7 @@
 packages:
   - .
   - config/*
+  - patches/*
   - frontend
   - frontend/base
   - frontend/pro

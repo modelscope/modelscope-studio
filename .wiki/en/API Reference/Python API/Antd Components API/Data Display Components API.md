@@ -428,7 +428,7 @@ ModelScopeLayoutComponent <|-- AntdTimeline
 
 **Section sources**
 
-- [backend/modelscope_studio/components/antd/segmented/__init__.py]
+- [backend/modelscope_studio/components/antd/segmented/**init**.py]
 
 ### Statistic
 
@@ -441,7 +441,7 @@ ModelScopeLayoutComponent <|-- AntdTimeline
 
 **Section sources**
 
-- [backend/modelscope_studio/components/antd/statistic/__init__.py]
+- [backend/modelscope_studio/components/antd/statistic/**init**.py]
 
 ### Table
 
@@ -454,7 +454,7 @@ ModelScopeLayoutComponent <|-- AntdTimeline
 
 **Section sources**
 
-- [backend/modelscope_studio/components/antd/table/__init__.py]
+- [backend/modelscope_studio/components/antd/table/**init**.py]
 
 ### Tabs
 
@@ -467,7 +467,7 @@ ModelScopeLayoutComponent <|-- AntdTimeline
 
 **Section sources**
 
-- [backend/modelscope_studio/components/antd/tabs/__init__.py]
+- [backend/modelscope_studio/components/antd/tabs/**init**.py]
 
 ### Tag
 
@@ -513,7 +513,7 @@ ModelScopeLayoutComponent <|-- AntdTimeline
 
 **Section sources**
 
-- [backend/modelscope_studio/components/antd/tooltip/__init__.py]
+- [backend/modelscope_studio/components/antd/tooltip/**init**.py]
 
 ### Tour
 
@@ -526,7 +526,7 @@ ModelScopeLayoutComponent <|-- AntdTimeline
 
 **Section sources**
 
-- [backend/modelscope_studio/components/antd/tour/__init__.py]
+- [backend/modelscope_studio/components/antd/tour/**init**.py]
 
 ### Tree
 
@@ -539,7 +539,7 @@ ModelScopeLayoutComponent <|-- AntdTimeline
 
 **Section sources**
 
-- [backend/modelscope_studio/components/antd/tree/__init__.py]
+- [backend/modelscope_studio/components/antd/tree/**init**.py]
 
 ### Checkable Tag Group Components
 

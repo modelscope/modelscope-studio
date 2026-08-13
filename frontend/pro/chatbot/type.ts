@@ -136,11 +136,7 @@ export interface ChatbotMessageContentObject {
 
 export interface ChatbotMessage extends ChatbotBotConfig {
   role:
-    | 'user'
-    | 'assistant'
-    | 'system'
-    | 'divider'
-    | 'chatbot-internal-welcome';
+    'user' | 'assistant' | 'system' | 'divider' | 'chatbot-internal-welcome';
   divider_props?: DividerProps;
   key?: string | number;
   [lastMessageSymbol]?: boolean;

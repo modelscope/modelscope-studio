@@ -7,7 +7,9 @@ with gr.Blocks() as demo:
         with antd.ConfigProvider():
             with antd.Space(size="large"):
                 for count in [1, 2, 4]:
-                    with antd.BorderBeam(count=count, duration=4):
+                    with antd.BorderBeam(count=count,
+                                         duration=4,
+                                         elem_style=dict(borderRadius=8)):
                         with antd.Card(title=f"count={count}",
                                        elem_style=dict(width=240,
                                                        marginBottom=0)):
