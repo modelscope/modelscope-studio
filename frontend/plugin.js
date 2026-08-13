@@ -94,32 +94,6 @@ function generateSveltePreprocessReactAliases() {
 }
 
 /**
- * `@gradio/preview` switches the Gradio SPA into custom component dev mode by
- * replacing the `"_NORMAL_"` marker with `"_CC_"`, but the Gradio bundle emits
- * that marker as a template literal (`globalThis.__MODE__ ??= `_NORMAL_``), so
- * the replacement silently misses: `virtual:cc-init` is never imported and the
- * page requests `/config` from the Vite dev server instead of the backend.
- * Rewrite the marker ourselves, whatever quote style is used.
- *
- * @type {() => import('vite').Plugin}
- */
-export const GradioDevModePlugin = () => {
-  return {
-    name: 'modelscope-studio-gradio-dev-mode',
-    apply: 'serve',
-    transform(code) {
-      if (!code.includes('globalThis.__MODE__')) {
-        return;
-      }
-      return code.replace(
-        /(["'`])_NORMAL_\1/,
-        (_match, quote) => `${quote}_CC_${quote}`
-      );
-    },
-  };
-};
-
-/**
  * @type {(options:{ external?: { excludes:string[] } | boolean }) => import('vite').Plugin[]}
  */
 export const ModelScopeStudioVitePlugin = ({ external = true } = {}) => {
