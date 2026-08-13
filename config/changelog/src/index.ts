@@ -48,11 +48,12 @@ function handle_line(str: string, prefix: string, suffix: string): string {
     ''
   )}. ${suffix}`;
 
-  if (_s.length === 1) {
+  if (lines.length === 0) {
     return desc;
   }
 
-  return [desc, ...lines.map((l) => `  ${l}`)].join('/n');
+  // Indent continuation lines so nested bullets stay inside the changelog entry.
+  return [desc, '', ...lines.map((l) => `  ${l}`)].join('\n');
 }
 
 const changelogFunctions: ChangelogFunctions = {
@@ -211,9 +212,12 @@ const changelogFunctions: ChangelogFunctions = {
           .trim();
       }
 
+      // `.` does not match newlines, so capture the rest of the summary with an
+      // explicit `[\s\S]` class: everything after the conventional-commit
+      // prefix, including nested bullet lists, belongs to this entry.
       const [, type, , summary] = changeset.summary
         .trim()
-        .match(/^(\w+)(\(.*\))?:\s*(.*)$/im) || [
+        .match(/^(\w+)(\(.*\))?:\s*([\s\S]*)$/) || [
         null,
         'chore',
         null, // chore(feat): xxx => feat
