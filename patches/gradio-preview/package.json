@@ -1,6 +1,6 @@
 {
   "name": "@modelscope-studio/gradio-preview",
-  "version": "0.17.0",
+  "version": "2.0.3",
   "private": true,
   "type": "module",
   "description": "Vendored @gradio/preview with fixes for the custom component dev server",

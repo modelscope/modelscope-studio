@@ -1,5 +1,11 @@
 # @modelscope-studio/changelog
 
+## 2.0.3
+
+### Fixes
+
+- [#125](https://github.com/modelscope/modelscope-studio/pull/125) [`4f54f56`](https://github.com/modelscope/modelscope-studio/commit/4f54f5640ee49bc4b71cb2e51967da6a438b0e88) - migrate to the `@changesets/get-github-info` v1 API (`getCommitInfo` / `getPullRequestInfo`). Thanks [@Col0ring](https://github.com/Col0ring)!
+
 ## 2.0.2
 
 ### Features

@@ -1,5 +1,25 @@
 # @modelscope-studio/antd
 
+## 2.0.3
+
+### Features
+
+- [#125](https://github.com/modelscope/modelscope-studio/pull/125) [`4f54f56`](https://github.com/modelscope/modelscope-studio/commit/4f54f5640ee49bc4b71cb2e51967da6a438b0e88) - add `antd.BorderBeam` and `antd.Listy` components. Thanks [@Col0ring](https://github.com/Col0ring)!
+- [#125](https://github.com/modelscope/modelscope-studio/pull/125) [`4f54f56`](https://github.com/modelscope/modelscope-studio/commit/4f54f5640ee49bc4b71cb2e51967da6a438b0e88) - sync antd APIs from 6.4.2 to 6.6.0. Thanks [@Col0ring](https://github.com/Col0ring)!
+
+  - New `clear` event on `DatePicker`, `DatePicker.RangePicker`, `TimePicker`, `TimePicker.RangePicker`
+  - New props: `Modal.scroll_lock` / `Modal.Static.scroll_lock`, `Steps.max_count`, `FloatButton.BackTop.show_progress`, `Mentions.popup_render`
+  - New slots: `Tabs` `more.popupRender`, `Pagination` / `Table` `components.sizeChanger`
+  - `Slider.disabled` accepts a list, `Watermark.content` accepts per-line font styles, `Select.token_separators` accepts a JS function string
+  - `Dropdown` / `Dropdown.Button` `placement` completed to the full set
+  - `ConfigProvider` new locale `sq_AL`
+  - Add `Input.Password.visibility_toggle` (with `visiable_toggle` kept as a compatibility alias)
+  - Fix a missing comma in `Table` `SLOTS` that dropped one slot
+
+### Misc Changes
+
+- [#125](https://github.com/modelscope/modelscope-studio/pull/125) [`4f54f56`](https://github.com/modelscope/modelscope-studio/commit/4f54f5640ee49bc4b71cb2e51967da6a438b0e88) - upgrade antd to 6.6.0, antdx to 2.9.0 and refresh the build stack (Vite 8 + rolldown, React 19.2.8, svelte 5.56.8, Babel 8, monaco-editor 0.56, TypeScript 6, Gradio 6.8.0). Thanks [@Col0ring](https://github.com/Col0ring)!
+
 ## 2.0.2
 
 ### Features

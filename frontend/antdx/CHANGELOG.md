@@ -1,5 +1,19 @@
 # @modelscope-studio/antdx
 
+## 2.0.3
+
+### Features
+
+- [#125](https://github.com/modelscope/modelscope-studio/pull/125) [`4f54f56`](https://github.com/modelscope/modelscope-studio/commit/4f54f5640ee49bc4b71cb2e51967da6a438b0e88) - sync antdx APIs from 2.7.0 to 2.9.0. Thanks [@Col0ring](https://github.com/Col0ring)!
+
+  - `Folder`: new `context_menu` (items or JS function string) and `right_click` event
+  - `Folder.TreeNode`: new `context_menu` (items or `False` to disable per-node)
+  - `Think` and `ThoughtChain.ThoughtChainItem`: new `destroy_on_hidden`
+
+### Misc Changes
+
+- [#125](https://github.com/modelscope/modelscope-studio/pull/125) [`4f54f56`](https://github.com/modelscope/modelscope-studio/commit/4f54f5640ee49bc4b71cb2e51967da6a438b0e88) - upgrade antd to 6.6.0, antdx to 2.9.0 and refresh the build stack (Vite 8 + rolldown, React 19.2.8, svelte 5.56.8, Babel 8, monaco-editor 0.56, TypeScript 6, Gradio 6.8.0). Thanks [@Col0ring](https://github.com/Col0ring)!
+
 ## 2.0.2
 
 ### Features
