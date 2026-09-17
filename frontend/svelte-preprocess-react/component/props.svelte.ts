@@ -388,7 +388,7 @@ export function getProps<
           as_item: gradio.props.as_item as string | undefined,
           _internal: props._internal || (gradio.props._internal as {}),
         },
-        ['i18n', 'api_url', 'name', 'additional_props']
+        ['i18n', 'api_url', 'name', 'additional_props', 'i18n_store']
       )
     );
   };
