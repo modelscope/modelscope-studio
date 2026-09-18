@@ -1,3 +1,4 @@
+import type { PluginObject } from '@babel/core';
 import { packages, transform } from '@babel/standalone';
 import path from 'path-browserify-esm';
 
@@ -62,8 +63,21 @@ export class WebSandboxParser {
         plugins: ['typescript', 'jsx'],
       });
 
-      // Traverse AST to find import declarations
-      packages.traverse.default(ast, {
+      // Traverse AST to find import declarations.
+      // `@babel/standalone` types `packages.traverse` as a type-only member,
+      // so cast to reach the runtime `.default`. `node` is kept loose because
+      // the parser and traverse types resolve slightly different `@babel/types`
+      // copies; the visitor still gets full typing from `PluginObject`.
+      (
+        packages as unknown as {
+          traverse: {
+            default: (
+              node: unknown,
+              visitor: NonNullable<PluginObject['visitor']>
+            ) => void;
+          };
+        }
+      ).traverse.default(ast, {
         ImportDeclaration: (nodePath) => {
           const importPath = nodePath.node.source.value;
 
@@ -192,7 +206,7 @@ export class WebSandboxParser {
         const result = transform(fileInfo.code, {
           presets: [['react', { runtime: 'automatic' }], 'typescript'],
           plugins: [
-            {
+            (): PluginObject => ({
               visitor: {
                 ImportDeclaration: (nodePath) => {
                   const source = nodePath.node.source;
@@ -230,7 +244,7 @@ export class WebSandboxParser {
                   }
                 },
               },
-            },
+            }),
           ],
           filename: filePath,
         });

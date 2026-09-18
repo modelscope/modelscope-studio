@@ -10,7 +10,12 @@ import { examine_module } from "./index";
 
 const vite_messages_to_ignore = [
 	"Default and named imports from CSS files are deprecated.",
-	"The above dynamic import cannot be analyzed by Vite."
+	"The above dynamic import cannot be analyzed by Vite.",
+	// gradio ships `static/js/iframeResizer.contentWindow.min.js` with a
+	// `sourceMappingURL` comment but without the `.map` file, so Vite warns with a
+	// full stack trace that reads like a fatal error. The script itself is served
+	// fine, so there is nothing to act on.
+	"iframeResizer.contentWindow"
 ];
 
 const logger = createLogger();

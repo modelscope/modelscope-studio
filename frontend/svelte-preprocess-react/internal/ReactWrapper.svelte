@@ -54,7 +54,6 @@
       return componentSlotValue?.value.subSlotIndex;
     },
   });
-
   setReactWrapperContext(node);
 
   onDestroy(() => {

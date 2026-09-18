@@ -236,10 +236,14 @@ const Action: React.FC<{
       },
     };
     return React.createElement(
-      actionOrActionObject.popconfirm ? Popconfirm : React.Fragment,
+      (actionOrActionObject.popconfirm
+        ? Popconfirm
+        : React.Fragment) as React.ElementType,
       actionOrActionObject.popconfirm ? popconfirmProps : undefined,
       React.createElement(
-        actionOrActionObject.tooltip ? Tooltip : React.Fragment,
+        (actionOrActionObject.tooltip
+          ? Tooltip
+          : React.Fragment) as React.ElementType,
         actionOrActionObject.tooltip
           ? typeof actionOrActionObject.tooltip === 'string'
             ? { title: actionOrActionObject.tooltip }
