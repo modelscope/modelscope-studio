@@ -1,5 +1,11 @@
 # modelscope_studio
 
+## 2.1.0
+
+### Features
+
+- [#127](https://github.com/modelscope/modelscope-studio/pull/127) [`e1c2508`](https://github.com/modelscope/modelscope-studio/commit/e1c25087b81c480df1c30b0d3fd6f788ff7d13e7) - support Gradio `6.28.0`. Thanks [@Col0ring](https://github.com/Col0ring)!
+
 ## 2.0.3
 
 ### Features
