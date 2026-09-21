@@ -85,7 +85,7 @@ class AntdXFileCardListItem(ModelScopeLayoutComponent):
             self.src = self.serve_static_file(src)
         elif isinstance(src, dict):
             if not src.get("url", None) and src.get("path", None):
-                self.src = {**src, **self.serve_static_file(self.item["path"])}
+                src = {**src, **self.serve_static_file(src["path"])}
             self.src = src
 
     FRONTEND_DIR = resolve_frontend_dir('file-card', ['list', 'item'],
