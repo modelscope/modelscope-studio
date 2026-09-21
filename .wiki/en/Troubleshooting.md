@@ -283,7 +283,7 @@ Pub["publish.yaml"] --> BE
 
 - Dependency versions
   - Backend depends on Gradio version ranges; ensure compatibility with the current environment
-  - **Gradio 6.0+ specific**: When using modelscope_studio 2.x, ensure gradio>=6.0,<=6.8.0
+  - **Gradio version specific**: When using modelscope_studio 2.x, ensure gradio>=6.28.0
 - Frontend dependencies
   - Use pnpm to install dependencies and run builds; development mode is started via docs/app.py
 - Common symptoms

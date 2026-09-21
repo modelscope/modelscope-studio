@@ -160,7 +160,7 @@ Diagram Sources
 
 - Version and Dependencies
   - Version: 2.0.0
-  - Dependencies: Gradio 6.0 ≤ v ≤ 6.8.0
+  - Dependencies: Gradio >= 6.28.0
 - Import Methods
   - `from modelscope_studio import ComponentName`
   - Or `from modelscope_studio.components.antd import ComponentName`
@@ -391,7 +391,7 @@ Section Sources
 ## Dependency Analysis
 
 - Python Side
-  - Dependencies: Gradio 6.0 ≤ v ≤ 6.8.0
+  - Dependencies: Gradio >= 6.28.0
   - Version: 2.0.0
 - Frontend Side
   - Build scripts: Component builds executed via Gradio CLI
@@ -404,7 +404,7 @@ Section Sources
 
 ```mermaid
 graph TB
-PY_DEPS["Python Dependencies<br/>Gradio 6.0 ≤ v ≤ 6.8.0"]
+PY_DEPS["Python Dependencies<br/>Gradio >= 6.28.0"]
 FE_SCRIPTS["Frontend Scripts<br/>Build/Dev"]
 FE_HOOKS["hooks Utility Set"]
 FE_RENDER["Renderers"]
@@ -469,7 +469,7 @@ Section Sources
 
 - Version Incompatibility
   - Symptom: Runtime errors or functional anomalies
-  - Diagnosis: Confirm the Gradio version is within the 6.0 ≤ v ≤ 6.8.0 range
+  - Diagnosis: Confirm the Gradio version is within the >= 6.28.0 range
 - Component Not Taking Effect
   - Symptom: Frontend component not displaying or unresponsive
   - Diagnosis: Check that the component is correctly imported; confirm that the build artifacts have been generated; verify props being passed
@@ -502,7 +502,7 @@ This API reference document outlines ModelScope Studio's Python and frontend com
   - Utility Functions: Refer to hooks and renderers in the `utils` directory
 - Version and Compatibility
   - Python: 2.0.0
-  - Gradio: 6.0 ≤ v ≤ 6.8.0
+  - Gradio: >= 6.28.0
 - Build and Development
   - Build command: `pnpm run build`
   - Dev command: `pnpm run dev`

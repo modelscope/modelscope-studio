@@ -160,7 +160,7 @@ FE_COMP --> UTILS
 
 - 版本与依赖
   - 版本：2.0.0
-  - 依赖：Gradio 6.0 ≤ v ≤ 6.8.0
+  - 依赖：Gradio >= 6.28.0
 - 导入方式
   - from modelscope_studio import 组件名
   - 或 from modelscope_studio.components.antd import 组件名
@@ -391,7 +391,7 @@ FE_COMP --> UTILS
 ## 依赖分析
 
 - Python 侧
-  - 依赖：Gradio 6.0 ≤ v ≤ 6.8.0
+  - 依赖：Gradio >= 6.28.0
   - 版本：2.0.0
 - 前端侧
   - 构建脚本：通过 Gradio CLI 执行组件构建
@@ -404,7 +404,7 @@ FE_COMP --> UTILS
 
 ```mermaid
 graph TB
-PY_DEPS["Python 依赖<br/>Gradio 6.0 ≤ v ≤ 6.8.0"]
+PY_DEPS["Python 依赖<br/>Gradio >= 6.28.0"]
 FE_SCRIPTS["前端脚本<br/>构建/开发"]
 FE_HOOKS["hooks 工具集"]
 FE_RENDER["渲染器"]
@@ -469,7 +469,7 @@ FE_SCRIPTS --> FE_OTHER
 
 - 版本不兼容
   - 症状：运行时报错或功能异常
-  - 排查：确认 Gradio 版本在 6.0 ≤ v ≤ 6.8.0 范围内
+  - 排查：确认 Gradio 版本在 >= 6.28.0 范围内
 - 组件未生效
   - 症状：前端组件不显示或无响应
   - 排查：检查组件是否正确导入；确认构建产物已生成；核对 props 传入
@@ -502,7 +502,7 @@ FE_SCRIPTS --> FE_OTHER
   - 工具函数：参考 utils 目录下的 hooks 与渲染器
 - 版本与兼容性
   - Python：2.0.0
-  - Gradio：6.0 ≤ v ≤ 6.8.0
+  - Gradio：>= 6.28.0
 - 构建与开发
   - 构建命令：pnpm run build
   - 开发命令：pnpm run dev

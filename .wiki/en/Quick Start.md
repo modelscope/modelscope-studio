@@ -49,7 +49,7 @@ This guide is intended for first-time ModelScope Studio users, helping you compl
 - Component library import and usage patterns
 - Quick resolution of common issues
 
-**Important Update**: ModelScope Studio 2.0.0 has migrated to the Gradio 6.0 ecosystem, supporting version ranges >=6.0.0 and <=6.8.0.
+**Important Update**: ModelScope Studio 2.0.0 has migrated to the Gradio 6.0 ecosystem, supporting version >= 6.28.0.
 
 ## Project Structure
 
@@ -259,7 +259,7 @@ Feedback --> End(["Complete"])
 
 - Python environment and version
   - Python version requirement: >=3.8
-  - **Gradio dependency range**: >=6.0.0 and <=6.8.0
+  - **Gradio dependency range**: >= 6.28.0
   - **Important note**: The current example uses 5.34.1, but version 2.0.0 has migrated to the Gradio 6.0 ecosystem
 - Frontend dependencies
   - Ant Design 6.x, Ant Design X 2.x, React 19, Svelte 5, @gradio/\* series, etc.
@@ -271,7 +271,7 @@ Feedback --> End(["Complete"])
 ```mermaid
 graph LR
 PyVer["Python >=3.8"] --> Install["pip install modelscope_studio"]
-Install --> Gradio["Gradio 6.0 Ecosystem<br/>(>=6.0.0, <=6.8.0)"]
+Install --> Gradio["Gradio >= 6.28.0"]
 Gradio --> Front["Frontend Component Runtime"]
 Front --> Antd["Antd 6 / Antd X 2 Components"]
 ```
@@ -296,8 +296,8 @@ ModelScope Studio 2.0.0 has completed a major migration from Gradio 4.x to 6.x, 
 
 #### Version Range Description
 
-- **Supported versions**: >=6.0.0 and <=6.8.0
-- **Unsupported versions**: <6.0.0 or >6.8.0
+- **Supported versions**: >= 6.28.0
+- **Unsupported versions**: < 6.28.0
 - **Migration reason**: Gradio 6.0 introduced major architectural changes that require corresponding component adaptations
 
 #### Using Pre-Migration Versions
@@ -347,7 +347,7 @@ pip install modelscope_studio==2.0.0
 - Slow responses or no feedback
   - Missing AutoLoading container causes no loading feedback; it is recommended to add `ms.AutoLoading` at the application top level
 - **Gradio version conflict**
-  - Ensure Gradio version is in the range >=6.0.0 and <=6.8.0
+  - Ensure Gradio version is in the range >= 6.28.0
   - If using an older version of Gradio, downgrade to modelscope_studio 1.x
   - If using a newer version of Gradio, upgrade to modelscope_studio 2.0.0
 
@@ -419,12 +419,12 @@ It is recommended to progressively introduce more components in subsequent devel
 
 | Gradio Version    | ModelScope Studio Version | Support Status   |
 | ----------------- | ------------------------- | ---------------- |
-| >=4.43.0,<6.0.0   | 1.x                       | ✅ Supported     |
-| >=6.0.0,<=6.8.0   | 2.0.0                     | ✅ Supported     |
-| <4.43.0 or >6.8.0 | Any                       | ❌ Not Supported |
+| >=4.43.0,<6.0.0 | 1.x   | ✅ Supported     |
+| >=6.28.0        | 2.x   | ✅ Supported     |
+| Other versions  | Any   | ❌ Not Supported |
 
-> **⚠️ Note: Why Gradio >6.8.0 is not supported**
-> The current version has not yet been fully tested and adapted for Gradio versions above 6.8.0. New versions of Gradio may contain changes to component APIs, boundary behaviors, and internal interfaces; use is not recommended until full coverage has been verified. If you need to use a higher version, please follow the official repository's compatibility update announcements.
+> **⚠️ Note: Please use Gradio >= 6.28.0**
+> Gradio versions below 6.28.0 are incompatible with the current component library; please upgrade to >= 6.28.0. See https://github.com/gradio-app/gradio/issues/13131
 
 **Section Sources**
 

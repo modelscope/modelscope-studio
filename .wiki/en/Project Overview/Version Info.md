@@ -188,7 +188,7 @@ Test --> Done(["Complete"])
 
 - **Python Compatibility**
   - Python version requirement: >=3.8
-  - Gradio dependency range: gradio>=6.0,<=6.8.0 (current 2.0.0)
+  - Gradio dependency range: gradio>=6.28.0 (current 2.0.0)
 - **Frontend-Backend Version Alignment**
   - Both root package and backend Python package declare 2.0.0; it is recommended to keep them in sync
 - **Browser and Runtime Environment**
@@ -233,7 +233,7 @@ Test --> Done(["Complete"])
 - **Development and Experimentation**
   - Beta versions can be chosen to experience new features, but watch for potential API changes and compatibility issues
 - **Integration with the Gradio Ecosystem**
-  - Ensure the Gradio version meets the dependency range (gradio>=6.0,<=6.8.0)
+  - Ensure the Gradio version meets the dependency range (gradio>=6.28.0)
 
 **Section Sources**
 
@@ -323,7 +323,7 @@ ModelScope Studio current stable release is 2.0.0. The comprehensive migration t
 - **Quick Reference**
   - Current version: 2.0.0
   - Python compatibility: >=3.8
-  - Gradio dependency: gradio>=6.0,<=6.8.0
+  - Gradio dependency: gradio>=6.28.0
   - Changelog: Root-level CHANGELOG.md
   - Release workflow: .github/workflows/publish.yaml
 

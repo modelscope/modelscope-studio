@@ -359,7 +359,7 @@ Deploy --> End(["End"])
 
 ```mermaid
 graph TB
-GR["Gradio(>=4.43.0)"] --> PY["Python Package<br/>pyproject.toml"]
+GR["Gradio(>=6.28.0)"] --> PY["Python Package<br/>pyproject.toml"]
 TS["TypeScript/Svelte"] --> FE["@modelscope-studio/* Frontend Packages"]
 ESLINT["ESLint"] --> FE
 STYLE["Stylelint"] --> FE

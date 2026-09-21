@@ -36,7 +36,7 @@
 
 This document is aimed at developers and maintainers of the ModelScope Studio project. It systematically reviews and explains the project's technology stack and architecture design, with key coverage of:
 
-- Python backend tech stack: Gradio 6.0–6.8.0, component library organization and packaging strategy
+- Python backend tech stack: Gradio >= 6.28.0, component library organization and packaging strategy
 - Frontend tech stack: Svelte 5.55.2, Ant Design 6.3.5, Ant Design X, React 19.2.4, Vite build and plugin system
 - Monorepo architecture: Workspace division, package management and build process
 - Development toolchain: ESLint, Stylelint, Prettier, TypeScript, Svelte checking
@@ -86,7 +86,7 @@ Section Sources
 ## Core Components
 
 - Python Backend
-  - Gradio 6.0–6.8.0: The foundational framework for component runtime and page rendering, responsible for component lifecycle, events, and state management.
+  - Gradio >= 6.28.0: The foundational framework for component runtime and page rendering, responsible for component lifecycle, events, and state management.
   - Component organization: Split into antd, antdx, pro, base four namespaces by functional domain for on-demand imports and documentation generation.
   - Packaging and distribution: Built with Hatchling; artifacts explicitly export each component's template resources; wheel contains only the backend package path.
 - Frontend
@@ -120,7 +120,7 @@ Vite["Vite Build"]
 Plugin["ModelScopeStudioVitePlugin"]
 end
 subgraph "Backend"
-Gradio["Gradio 6.0–6.8.0"]
+Gradio["Gradio >= 6.28.0"]
 PyPkg["Python Packaging (Hatchling)"]
 Components["Component Exports (antd/antdx/pro/base)"]
 end
@@ -299,7 +299,7 @@ Section Sources
   - Ant Design X: Provides conversational and collaborative component ecosystem
   - Monaco Editor and React ecosystem: For code editing and highlighting
 - Backend dependencies
-  - Gradio 6.0–6.8.0: Component runtime and page rendering
+  - Gradio >= 6.28.0: Component runtime and page rendering
   - Build tools: Hatchling, Hatch-requirements-txt, Fancy-PyPI-Readme
   - artifacts explicitly export each component template; wheel contains only the backend path
 - Toolchain
@@ -317,7 +317,7 @@ ME["Monaco Editor"]
 VR["Vite + Plugin"]
 end
 subgraph "Backend"
-GR["Gradio 6.0–6.8.0"]
+GR["Gradio >= 6.28.0"]
 HN["Hatchling"]
 ART["artifacts Template Exports"]
 end
@@ -364,7 +364,7 @@ Section Sources
   - Confirm that the global variable `window.ms_globals` exposes the required modules
 - Component not displaying or style missing
   - Verify that artifact paths and template exports match
-  - Ensure Gradio version is within the 6.0–6.8.0 range
+  - Ensure Gradio version is within the >= 6.28.0 range
 - Documentation site fails to start
   - Check the scanning logic and menu building in `docs/app.py`
   - Confirm that the component's `app.py` exists and contains the `docs` field
