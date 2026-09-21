@@ -27,9 +27,7 @@
 
 ## 依赖
 
-- Gradio >= 6.0.0
-
-> 注意：您的 Gradio 版本必须`<=6.8.0`，[为什么？](https://github.com/gradio-app/gradio/issues/13131)
+- Gradio >= 6.28.0
 
 ## 安装
 
