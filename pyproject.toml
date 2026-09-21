@@ -23,7 +23,6 @@ keywords = [
   'gradio-antdx',
 ]
 # Add dependencies here
-# gradio 6.9.0 ~ 6.27.0 are not supported, see https://github.com/gradio-app/gradio/issues/13131
 dependencies = ["gradio>=6.28.0"]
 classifiers = [
   'Development Status :: 3 - Alpha',

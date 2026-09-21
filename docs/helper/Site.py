@@ -250,8 +250,8 @@ class Site:
                                         screen_width = e._data["screen"][
                                             "width"]
                                         return gr.update(
-                                            default_size=82 if screen_width <
-                                            576 else 213)
+                                            size=82 if screen_width <
+                                            576 else None)
 
                                     app.mount(on_app_mount,
                                               outputs=[sider_panel])

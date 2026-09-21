@@ -33,9 +33,7 @@ However, when your application needs Gradio to handle more built-in data on the 
 
 ## Dependencies
 
-- Gradio >= 6.0.0
-
-> Note: Your Gradio version must`<=6.8.0`, [why?](https://github.com/gradio-app/gradio/issues/13131)
+- Gradio >= 6.28.0
 
 ## Installation
 

@@ -10,14 +10,14 @@ bootstrap, the build entry composition, the Vite version it ships with).
 
 ## Why not just pin a stock `@gradio/preview`?
 
-- **`0.17.0` (Gradio 6.9+/6.23 era)** ships the right Vite (`vite ^8`,
+- **`0.17.1` (Gradio 6.9+/6.28 era)** ships the right Vite (`vite ^8`,
   `@sveltejs/vite-plugin-svelte ^7`) but has the dev-bootstrap bugs listed below.
 - **`0.15.2` (Gradio <= 6.8 era)** boots the shared-runtime app correctly but
   depends on `vite ^7` / `@sveltejs/vite-plugin-svelte ^6`, which is incompatible
   with this repo's `vite 8` (rolldown) toolchain — it fails with
   `Missing field 'moduleType'`.
 
-So this package takes the `0.17.0` source (for the `vite 8` deps + fixes) and
+So this package takes the `0.17.1` source (for the `vite 8` deps + fixes) and
 makes it work across both Gradio generations via `detect_generation`.
 
 ## Vendor baseline
@@ -25,9 +25,9 @@ makes it work across both Gradio generations via `detect_generation`.
 | | |
 | --- | --- |
 | Upstream | `gradio-app/gradio` `js/preview` |
-| Version | `0.17.0` |
-| Commit | `a9e8382c4` |
-| Deps | `vite ^8`, `@sveltejs/vite-plugin-svelte ^7` (kept from `0.17.0`) |
+| Version | `0.17.1` |
+| Commit | `81b7b77` |
+| Deps | `vite ^8`, `@sveltejs/vite-plugin-svelte ^7` (kept from `0.17.1`) |
 
 Re-syncing means diffing `src/` against that path upstream, taking their changes
 and re-applying the fixes below, then `pnpm -F @modelscope-studio/gradio-preview build`.
@@ -83,8 +83,9 @@ and `frontend/`:
   provides `register_component` via `shared_props` (`@gradio/utils` 0.14.x). The
   wrong one silently no-ops registration and the app hangs on its loading screen.
 
-Currently validated against **Gradio 6.8.0** (`shared`): `@gradio/utils@0.11.3`,
-`@gradio/client@2.1.0`, `@gradio/statustracker@^0.13.1`, `svelte@5.48.0`.
+Currently validated against **Gradio 6.28.0** (`bridge`): `@gradio/utils@0.14.2`,
+`@gradio/client@2.7.0`, `@gradio/statustracker@^0.15.3`, `svelte@5.56.9` (the
+version Gradio 6.28.0 bundles — a newer compiler breaks `$$restProps`).
 
 ## License
 
