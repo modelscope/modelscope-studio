@@ -210,8 +210,7 @@ class ModelScopeProMultimodalInput(ModelScopeDataLayoutComponent):
         file.name = file_name
         return NamedString(file_name)
 
-    def preprocess(self,
-                   payload: MultimodalInputValue | None) -> list[str] | None:
+    def preprocess(self, payload: MultimodalInputValue | None) -> dict:
         if payload is None:
             return dict(text=None, files=[])
 

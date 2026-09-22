@@ -40,7 +40,7 @@ class AntdXFileCard(ModelScopeLayoutComponent):
             loading: bool | None = None,
             type: Literal['image', 'file', 'audio', 'video'] | str
         | None = None,
-            src: str | None = None,
+            src: str | dict | None = None,
             mask: str | None = None,
             icon: Union[Literal['default', 'excel', 'image', 'markdown', 'pdf',
                                 'ppt', 'word', 'zip', 'video', 'audio', 'java',

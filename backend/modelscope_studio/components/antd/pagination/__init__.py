@@ -37,7 +37,7 @@ class AntdPagination(ModelScopeLayoutComponent):
             disabled: bool | None = None,
             hide_on_single_page: bool | None = None,
             item_render: str | None = None,
-            page_size_options: list[str] | list[int] = [10, 20, 50, 100],
+            page_size_options: list[str] | list[int] | None = None,
             responsive: bool | None = None,
             show_less_items: bool | None = None,
             show_quick_jumper: bool | dict | None = None,
@@ -78,6 +78,8 @@ class AntdPagination(ModelScopeLayoutComponent):
         self.disabled = disabled
         self.hide_on_single_page = hide_on_single_page
         self.item_render = item_render
+        if page_size_options is None:
+            page_size_options = [10, 20, 50, 100]
         self.page_size_options = page_size_options
         self.responsive = responsive
         self.show_less_items = show_less_items

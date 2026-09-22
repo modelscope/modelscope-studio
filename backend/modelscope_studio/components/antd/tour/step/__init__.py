@@ -40,9 +40,8 @@ class AntdTourStep(ModelScopeLayoutComponent):
             title: str | None = None,
             description: str | None = None,
             placement: Literal['center', 'left', 'leftTop', 'leftBottom',
-                               'right'
-                               'rightTop', 'rightBottom', 'top', 'topLeft',
-                               'topRight', 'bottom', 'bottomLeft',
+                               'right', 'rightTop', 'rightBottom', 'top',
+                               'topLeft', 'topRight', 'bottom', 'bottomLeft',
                                'bottomRight'] = 'bottom',
             mask: bool | dict = True,
             type: Literal['default', 'primary'] = 'default',

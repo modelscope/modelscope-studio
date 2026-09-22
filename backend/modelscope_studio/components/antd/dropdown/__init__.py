@@ -58,8 +58,8 @@ class AntdDropdown(ModelScopeLayoutComponent):
                                'top', 'bottom', 'left', 'leftTop',
                                'leftBottom', 'right', 'rightTop',
                                'rightBottom'] = "bottomLeft",
-            trigger: list[Literal['click', 'hover',
-                                  'contextMenu']] = ['hover'],
+            trigger: list[Literal['click', 'hover', 'contextMenu']]
+        | None = None,
             open: bool | None = None,
             inner_elem_style: dict | None = None,
             class_names: dict | str | None = None,
@@ -95,6 +95,8 @@ class AntdDropdown(ModelScopeLayoutComponent):
         self.overlay_class_name = overlay_class_name
         self.overlay_style = overlay_style
         self.placement = placement
+        if trigger is None:
+            trigger = ['hover']
         self.trigger = trigger
         self.open = open
         self.inner_elem_style = inner_elem_style

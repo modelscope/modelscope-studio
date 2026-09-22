@@ -93,8 +93,8 @@ export const Sender = sveltify<
                         afterOpenChange: skillTooltipAfterOpenChangeFunction,
                         getPopupContainer:
                           skillTooltipGetPopupContainerFunction,
-                        title: slots['showSorterTooltip.title'] ? (
-                          <ReactSlot slot={slots['showSorterTooltip.title']} />
+                        title: slots['skill.toolTip.title'] ? (
+                          <ReactSlot slot={slots['skill.toolTip.title']} />
                         ) : (
                           skillTooltipConfig.title
                         ),
