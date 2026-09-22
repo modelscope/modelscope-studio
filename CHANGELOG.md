@@ -1,5 +1,11 @@
 # modelscope_studio
 
+## 2.1.1
+
+### Fixes
+
+- [#128](https://github.com/modelscope/modelscope-studio/pull/128) [`c061f04`](https://github.com/modelscope/modelscope-studio/commit/c061f04f422404835fe7ee4dc958d3a34c41b1f9) - `antdx.FileCard` and `antdx.FileCard.List.Item` raise `AttributeError` when `src` is a file dict without a `url`. Thanks [@Linxiushen](https://github.com/Linxiushen)!
+
 ## 2.1.0
 
 ### Features
