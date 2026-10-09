@@ -1,5 +1,13 @@
 # modelscope_studio
 
+## 2.1.2
+
+### Fixes
+
+- [#129](https://github.com/modelscope/modelscope-studio/pull/129) [`63b7692`](https://github.com/modelscope/modelscope-studio/commit/63b7692dffc823de4229641db98fc5dd3f3ee011) - `antdx.CodeHighlighter` fails to load Prism languages (`Failed to resolve module specifier`) and renders code without highlighting in the production build. Thanks [@Col0ring](https://github.com/Col0ring)!
+- [#129](https://github.com/modelscope/modelscope-studio/pull/129) [`63b7692`](https://github.com/modelscope/modelscope-studio/commit/63b7692dffc823de4229641db98fc5dd3f3ee011) - share `@ant-design/x` across components instead of bundling a copy into each of them. Thanks [@Col0ring](https://github.com/Col0ring)!
+- [#129](https://github.com/modelscope/modelscope-studio/pull/129) [`63b7692`](https://github.com/modelscope/modelscope-studio/commit/63b7692dffc823de4229641db98fc5dd3f3ee011) - components stop updating after the first render in the production build, e.g. revisited tabs or menu items no longer switch the content and `ms.AutoLoading` no longer shows up. Thanks [@Col0ring](https://github.com/Col0ring)!
+
 ## 2.1.1
 
 ### Fixes
