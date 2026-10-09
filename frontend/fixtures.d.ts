@@ -2,6 +2,8 @@ declare module 'virtual:component-loader' {
   export const load_component;
 }
 
+declare module 'virtual:ms-svelte-runtime' {}
+
 declare module '*?worker' {
   const workerConstructor: {
     new (options?: { name?: string }): Worker;

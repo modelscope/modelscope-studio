@@ -1,6 +1,6 @@
-import * as internalReactContexts from './react-contexts';
 import type { loader as monacoLoader } from '@monaco-editor/react';
 import { loader } from '@monaco-editor/react';
+import * as internalReactContexts from '@svelte-preprocess-react/react-contexts';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import ReactDOMClient from 'react-dom/client';
@@ -14,6 +14,10 @@ import dayjs from 'dayjs';
 import { noop } from 'lodash-es';
 
 import './polyfills';
+// Provide the Svelte runtime shared by all the other components in the build,
+// see `frontend/plugins/sharedSvelteRuntime.js`.
+// eslint-disable-next-line import/no-unresolved -- virtual module of the plugin
+import 'virtual:ms-svelte-runtime';
 
 import type { TreeNode } from './internal/types';
 
@@ -52,12 +56,21 @@ declare global {
 
       // globals
       components: typeof globalComponents;
+
+      // shared svelte runtime, see `frontend/plugins/sharedSvelteRuntime.js`
+      svelteRuntime?: {
+        promise: Promise<unknown>;
+        resolve: (runtime: unknown) => void;
+      };
     };
   }
 }
 
 window.ms_globals ??= {} as typeof window.ms_globals;
 
+// The shared libraries of the build are read from this object, see
+// `frontend/plugins/globals.js`. Import them with the specifier the other
+// components use.
 window.ms_globals = {
   dispatch: noop,
   initialize: noop,
@@ -75,6 +88,7 @@ window.ms_globals = {
   autokey: 0,
   loadingKey: 0,
   sharedRoot: undefined,
+  // @external @monaco-editor/loader
   monacoLoader: loader,
   monacoLoaderPromise: null,
   // render items

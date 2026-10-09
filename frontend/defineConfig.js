@@ -1,6 +1,6 @@
 import react from '@vitejs/plugin-react';
 
-import { ModelScopeStudioVitePlugin } from './plugin.js';
+import { ModelScopeStudioVitePlugin } from './plugins/index.js';
 
 /**
  * @type {(options:{ external?: boolean | { excludes:string[] } }) => any}
